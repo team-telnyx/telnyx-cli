@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 Telnyx LLC
+Copyright © Telnyx LLC
 
 */
 package cmd
