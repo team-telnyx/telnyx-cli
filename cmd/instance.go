@@ -7,11 +7,17 @@ package cmd
 import (
 	"fmt"
 	"strconv"
+	"sync"
 
 	"github.com/fatih/color"
 	"github.com/hashicorp/consul/api"
 	"github.com/spf13/cobra"
 )
+
+type instanceGroup struct {
+	dc        string
+	instances []*api.CatalogService
+}
 
 func init() {
 	instanceCmd.Flags().StringP("env", "e", "dev", "The Consul environment to use")
@@ -47,20 +53,38 @@ func listAllInstancesByEnv(env string, svc string) {
 		cobra.CheckErr(err)
 	}
 
-	for _, dc := range dcs {
-		listInstancesByDc(dc, svc)
+	ch := make(chan *instanceGroup)
+
+	go func() {
+		var wg sync.WaitGroup
+		wg.Add(len(dcs))
+
+		for _, dc := range dcs {
+			go listInstancesByDcAsync(dc, svc, ch, &wg)
+		}
+
+		wg.Wait()
+		close(ch)
+	}()
+
+	for res := range ch {
+		printDatacenter(res.dc)
+		printInstances(res.instances)
 	}
 }
 
-func listInstancesByDc(dc string, svc string) {
-	printDatacenter(dc)
+func listInstancesByDcAsync(dc string, svc string, ch chan<- *instanceGroup, wg *sync.WaitGroup) {
+	defer wg.Done()
 
 	instances, err := fetchInstancesByDc(dc, svc)
 	if err != nil {
 		cobra.CheckErr(err)
 	}
 
-	printInstances(instances)
+	ch <- &instanceGroup{
+		dc:        dc,
+		instances: instances,
+	}
 }
 
 func fetchInstancesByDc(dc string, svc string) ([]*api.CatalogService, error) {
@@ -76,6 +100,16 @@ func fetchInstancesByDc(dc string, svc string) ([]*api.CatalogService, error) {
 	svcs, _, err := client.Catalog().Service(svc, "", q)
 
 	return svcs, err
+}
+
+func listInstancesByDc(dc string, svc string) {
+	instances, err := fetchInstancesByDc(dc, svc)
+	if err != nil {
+		cobra.CheckErr(err)
+	}
+
+	printDatacenter(dc)
+	printInstances(instances)
 }
 
 func printInstances(svcs []*api.CatalogService) {
