@@ -6,10 +6,8 @@ package cmd
 
 import (
 	"github.com/fatih/color"
-	"github.com/hashicorp/consul/api"
-	"github.com/hashicorp/go-cleanhttp"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+	"github.com/team-telnyx/telnyx-cli/consul"
 )
 
 func init() {
@@ -26,7 +24,7 @@ var datacenterCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		env, _ := cmd.Flags().GetString("env")
 
-		dcs, err := fetchDatacenters(env)
+		dcs, err := consul.FetchDatacenters(env)
 		if err != nil {
 			cobra.CheckErr(err)
 		}
@@ -35,31 +33,6 @@ var datacenterCmd = &cobra.Command{
 			printDatacenter(dc)
 		}
 	},
-}
-
-func fetchDatacenters(env string) ([]string, error) {
-	client, err := api.NewClient(consulConfig(env))
-	if err != nil {
-		cobra.CheckErr(err)
-	}
-
-	return client.Catalog().Datacenters()
-}
-
-func consulConfig(env string) *api.Config {
-	var consulUrl string
-
-	if env == "dev" {
-		consulUrl = viper.GetString("consul_dev_url")
-	} else {
-		consulUrl = viper.GetString("consul_prod_url")
-	}
-
-	return &api.Config{
-		Address:   consulUrl,
-		Scheme:    "http",
-		Transport: cleanhttp.DefaultTransport(),
-	}
 }
 
 func printDatacenter(dc string) {

@@ -8,17 +8,12 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"sync"
 
 	"github.com/fatih/color"
 	"github.com/hashicorp/consul/api"
 	"github.com/spf13/cobra"
+	"github.com/team-telnyx/telnyx-cli/consul"
 )
-
-type instanceGroup struct {
-	dc        string
-	instances []*api.CatalogService
-}
 
 func init() {
 	instanceCmd.Flags().StringP("env", "e", "dev", "The Consul environment to use")
@@ -40,9 +35,9 @@ var instanceCmd = &cobra.Command{
 		var svcs map[string][]string
 
 		if dc != "" {
-			svcs = getServicesByDc(dc)
+			svcs = consul.GetServicesByDc(dc)
 		} else {
-			svcs = getServicesByEnv(env)
+			svcs = consul.GetServicesByEnv(env)
 		}
 
 		var completions []string
@@ -62,112 +57,17 @@ var instanceCmd = &cobra.Command{
 		printService(svc)
 
 		if dc == "" {
-			listAllInstancesByEnv(env, svc)
+			ists := consul.ListAllInstancesByEnv(env, svc)
+			for _, ist := range ists {
+				printDatacenter(ist.Dc)
+				printInstances(ist.Instances)
+			}
 		} else {
-			listInstancesByDc(dc, svc)
+			ists := consul.ListInstancesByDc(dc, svc)
+			printDatacenter(dc)
+			printInstances(ists)
 		}
 	},
-}
-
-func getServicesByEnv(env string) map[string][]string {
-	dcs, err := fetchDatacenters(env)
-	if err != nil {
-		cobra.CheckErr(err)
-	}
-
-	ch := make(chan map[string][]string)
-
-	go func() {
-		var wg sync.WaitGroup
-		wg.Add(len(dcs))
-
-		for _, dc := range dcs {
-			go listServicesByEnvAsync(dc, ch, &wg)
-		}
-
-		wg.Wait()
-		close(ch)
-	}()
-
-	svcs := make(map[string][]string)
-	for res := range ch {
-		for k, v := range res {
-			svcs[k] = v
-		}
-	}
-
-	return svcs
-}
-
-func listServicesByEnvAsync(dc string, ch chan<- map[string][]string, wg *sync.WaitGroup) {
-	defer wg.Done()
-
-	ch <- getServicesByDc(dc)
-}
-
-func listAllInstancesByEnv(env string, svc string) {
-	dcs, err := fetchDatacenters(env)
-	if err != nil {
-		cobra.CheckErr(err)
-	}
-
-	ch := make(chan *instanceGroup)
-
-	go func() {
-		var wg sync.WaitGroup
-		wg.Add(len(dcs))
-
-		for _, dc := range dcs {
-			go listInstancesByDcAsync(dc, svc, ch, &wg)
-		}
-
-		wg.Wait()
-		close(ch)
-	}()
-
-	for res := range ch {
-		printDatacenter(res.dc)
-		printInstances(res.instances)
-	}
-}
-
-func listInstancesByDcAsync(dc string, svc string, ch chan<- *instanceGroup, wg *sync.WaitGroup) {
-	defer wg.Done()
-
-	instances, err := fetchInstancesByDc(dc, svc)
-	if err != nil {
-		cobra.CheckErr(err)
-	}
-
-	ch <- &instanceGroup{
-		dc:        dc,
-		instances: instances,
-	}
-}
-
-func fetchInstancesByDc(dc string, svc string) ([]*api.CatalogService, error) {
-	client, err := api.NewClient(consulConfigForDc(dc))
-	if err != nil {
-		cobra.CheckErr(err)
-	}
-
-	q := &api.QueryOptions{
-		Datacenter: dc,
-	}
-
-	svcs, _, err := client.Catalog().Service(svc, "", q)
-
-	return svcs, err
-}
-
-func listInstancesByDc(dc string, svc string) {
-	instances, err := fetchInstancesByDc(dc, svc)
-	if err != nil {
-		cobra.CheckErr(err)
-	}
-
-	printDatacenter(dc)
-	printInstances(instances)
 }
 
 func printInstances(svcs []*api.CatalogService) {
