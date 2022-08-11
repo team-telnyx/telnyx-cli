@@ -33,21 +33,9 @@ var serviceCmd = &cobra.Command{
 		dc, _ := cmd.Flags().GetString("datacenter")
 		filter, _ := cmd.Flags().GetString("filter")
 
-		client, err := api.NewClient(consulConfigForDc(dc))
-		if err != nil {
-			cobra.CheckErr(err)
-		}
-
-		q := &api.QueryOptions{
-			Datacenter: dc,
-		}
-
-		var svcs map[string][]string
-		if svcs, _, err = client.Catalog().Services(q); err != nil {
-			cobra.CheckErr(err)
-		}
-
 		printDatacenter(dc)
+
+		svcs := getServicesByDc(dc)
 
 		for svc, tags := range svcs {
 			if filter == "" || strings.Contains(svc, filter) {
@@ -56,6 +44,25 @@ var serviceCmd = &cobra.Command{
 			}
 		}
 	},
+}
+
+// TODO: move Map into its own type to improve readability
+func getServicesByDc(dc string) map[string][]string {
+	client, err := api.NewClient(consulConfigForDc(dc))
+	if err != nil {
+		cobra.CheckErr(err)
+	}
+
+	q := &api.QueryOptions{
+		Datacenter: dc,
+	}
+
+	var svcs map[string][]string
+	if svcs, _, err = client.Catalog().Services(q); err != nil {
+		cobra.CheckErr(err)
+	}
+
+	return svcs
 }
 
 func consulConfigForDc(dc string) *api.Config {

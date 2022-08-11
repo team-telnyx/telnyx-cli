@@ -7,6 +7,7 @@ package cmd
 import (
 	"fmt"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/fatih/color"
@@ -28,10 +29,31 @@ func init() {
 
 // instanceCmd represents the instances command
 var instanceCmd = &cobra.Command{
-	Use:     "instances",
+	Use:     "instances service",
 	Aliases: []string{"ist"},
-	Short:   "List instances of a service from Consul",
+	Short:   "List the instances from a service in Consul",
 	Args:    cobra.ExactArgs(1),
+	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		dc, _ := cmd.Flags().GetString("datacenter")
+		env, _ := cmd.Flags().GetString("env")
+
+		var svcs map[string][]string
+
+		if dc != "" {
+			svcs = getServicesByDc(dc)
+		} else {
+			svcs = getServicesByEnv(env)
+		}
+
+		var completions []string
+		for s, _ := range svcs {
+			if strings.HasPrefix(s, toComplete) {
+				completions = append(completions, s)
+			}
+		}
+
+		return completions, cobra.ShellCompDirectiveNoFileComp
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		svc := args[0]
 		env, _ := cmd.Flags().GetString("env")
@@ -45,6 +67,42 @@ var instanceCmd = &cobra.Command{
 			listInstancesByDc(dc, svc)
 		}
 	},
+}
+
+func getServicesByEnv(env string) map[string][]string {
+	dcs, err := fetchDatacenters(env)
+	if err != nil {
+		cobra.CheckErr(err)
+	}
+
+	ch := make(chan map[string][]string)
+
+	go func() {
+		var wg sync.WaitGroup
+		wg.Add(len(dcs))
+
+		for _, dc := range dcs {
+			go listServicesByEnvAsync(dc, ch, &wg)
+		}
+
+		wg.Wait()
+		close(ch)
+	}()
+
+	svcs := make(map[string][]string)
+	for res := range ch {
+		for k, v := range res {
+			svcs[k] = v
+		}
+	}
+
+	return svcs
+}
+
+func listServicesByEnvAsync(dc string, ch chan<- map[string][]string, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	ch <- getServicesByDc(dc)
 }
 
 func listAllInstancesByEnv(env string, svc string) {
