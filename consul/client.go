@@ -1,3 +1,8 @@
+/*
+Copyright © Telnyx LLC
+
+*/
+
 package consul
 
 import (
@@ -10,7 +15,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-type instanceGroup struct {
+type dcInstances struct {
 	Dc        string
 	Instances []*api.CatalogService
 }
@@ -25,6 +30,7 @@ func FetchDatacenters(env string) ([]string, error) {
 }
 
 // TODO: move Map into its own type to improve readability
+// TODO: refactor function to use cache
 func GetServicesByDc(dc string) map[string][]string {
 	client, err := api.NewClient(consulConfigForDc(dc))
 	if err != nil {
@@ -44,6 +50,18 @@ func GetServicesByDc(dc string) map[string][]string {
 }
 
 func GetServicesByEnv(env string) map[string][]string {
+	svcs := make(map[string][]string)
+
+	if cacheExists(env) {
+		svcNames := readCache(env)
+
+		for _, n := range svcNames {
+			svcs[n] = nil
+		}
+
+		return svcs
+	}
+
 	dcs, err := FetchDatacenters(env)
 	if err != nil {
 		cobra.CheckErr(err)
@@ -56,50 +74,49 @@ func GetServicesByEnv(env string) map[string][]string {
 		wg.Add(len(dcs))
 
 		for _, dc := range dcs {
-			go listServicesByEnvAsync(dc, ch, &wg)
+			go func(dc string, ch chan<- map[string][]string, wg *sync.WaitGroup) {
+				defer wg.Done()
+
+				ch <- GetServicesByDc(dc)
+			}(dc, ch, &wg)
 		}
 
 		wg.Wait()
 		close(ch)
 	}()
 
-	svcs := make(map[string][]string)
 	for res := range ch {
 		for k, v := range res {
 			svcs[k] = v
 		}
 	}
 
+	saveCache(env, svcs)
+
 	return svcs
 }
 
-func listServicesByEnvAsync(dc string, ch chan<- map[string][]string, wg *sync.WaitGroup) {
-	defer wg.Done()
-
-	ch <- GetServicesByDc(dc)
-}
-
-func ListAllInstancesByEnv(env string, svc string) []*instanceGroup {
+func GetInstancesByEnv(env string, svc string) []*dcInstances {
 	dcs, err := FetchDatacenters(env)
 	if err != nil {
 		cobra.CheckErr(err)
 	}
 
-	ch := make(chan *instanceGroup)
+	ch := make(chan *dcInstances)
 
 	go func() {
 		var wg sync.WaitGroup
 		wg.Add(len(dcs))
 
 		for _, dc := range dcs {
-			go listInstancesByDcAsync(dc, svc, ch, &wg)
+			go fetchInstancesByDcAsync(dc, svc, ch, &wg)
 		}
 
 		wg.Wait()
 		close(ch)
 	}()
 
-	var ists []*instanceGroup
+	var ists []*dcInstances
 	for res := range ch {
 		ists = append(ists, res)
 	}
@@ -107,21 +124,18 @@ func ListAllInstancesByEnv(env string, svc string) []*instanceGroup {
 	return ists
 }
 
-func listInstancesByDcAsync(dc string, svc string, ch chan<- *instanceGroup, wg *sync.WaitGroup) {
+func fetchInstancesByDcAsync(dc string, svc string, ch chan<- *dcInstances, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	instances, err := FetchInstancesByDc(dc, svc)
-	if err != nil {
-		cobra.CheckErr(err)
-	}
+	instances := GetInstancesByDc(dc, svc)
 
-	ch <- &instanceGroup{
+	ch <- &dcInstances{
 		Dc:        dc,
 		Instances: instances,
 	}
 }
 
-func FetchInstancesByDc(dc string, svc string) ([]*api.CatalogService, error) {
+func GetInstancesByDc(dc string, svc string) []*api.CatalogService {
 	client, err := api.NewClient(consulConfigForDc(dc))
 	if err != nil {
 		cobra.CheckErr(err)
@@ -131,13 +145,7 @@ func FetchInstancesByDc(dc string, svc string) ([]*api.CatalogService, error) {
 		Datacenter: dc,
 	}
 
-	svcs, _, err := client.Catalog().Service(svc, "", q)
-
-	return svcs, err
-}
-
-func ListInstancesByDc(dc string, svc string) []*api.CatalogService {
-	instances, err := FetchInstancesByDc(dc, svc)
+	instances, _, err := client.Catalog().Service(svc, "", q)
 	if err != nil {
 		cobra.CheckErr(err)
 	}

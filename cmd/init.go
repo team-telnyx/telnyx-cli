@@ -7,6 +7,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path"
 
 	"github.com/spf13/cobra"
 	"github.com/team-telnyx/telnyx-cli/config"
@@ -16,7 +17,7 @@ import (
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initializes the configuration file",
+	Short: "Initializes the configuration files for the CLI",
 	Run: func(cmd *cobra.Command, args []string) {
 		res, err := config.ConfigExists()
 		if res {
@@ -32,6 +33,10 @@ var initCmd = &cobra.Command{
 		}
 
 		if err := os.Mkdir(config.DefaultConfigFolder(), os.ModePerm); err != nil {
+			cobra.CheckErr(err)
+		}
+
+		if err := os.Mkdir(path.Join(config.DefaultConfigFolder(), config.CacheFolder), os.ModePerm); err != nil {
 			cobra.CheckErr(err)
 		}
 

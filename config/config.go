@@ -10,6 +10,7 @@ import (
 
 const ConfigFolder = ".telnyx-cli"
 const ConfigFile = "config.yaml"
+const CacheFolder = "cache"
 
 type Config struct {
 	ConsulDevUrl  string `yaml:"consul_dev_url"`

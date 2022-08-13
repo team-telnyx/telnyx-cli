@@ -57,13 +57,13 @@ var instanceCmd = &cobra.Command{
 		printService(svc)
 
 		if dc == "" {
-			ists := consul.ListAllInstancesByEnv(env, svc)
+			ists := consul.GetInstancesByEnv(env, svc)
 			for _, ist := range ists {
 				printDatacenter(ist.Dc)
 				printInstances(ist.Instances)
 			}
 		} else {
-			ists := consul.ListInstancesByDc(dc, svc)
+			ists := consul.GetInstancesByDc(dc, svc)
 			printDatacenter(dc)
 			printInstances(ists)
 		}
