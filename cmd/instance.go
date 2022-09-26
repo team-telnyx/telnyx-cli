@@ -113,11 +113,12 @@ func printInstance(svc *api.CatalogService) {
 	healthColor := colorByHealthStatus(healthStatus).SprintFunc()
 
 	fmt.Printf(
-		"    » [%s][%s:%s][%s][%s]\n",
+		"    » [%s][%s:%s][%s]%s[%s]\n",
 		color.CyanString(svc.Node),
 		color.CyanString(svc.ServiceAddress),
 		color.CyanString(strconv.Itoa(svc.ServicePort)),
 		color.CyanString(version),
+		printTags(svc),
 		healthColor(svc.Checks.AggregatedStatus()),
 	)
 }
@@ -136,4 +137,22 @@ func colorByHealthStatus(status string) *color.Color {
 	}
 
 	return c
+}
+
+func printTags(svc *api.CatalogService) string {
+	if isCanary(svc) {
+		return fmt.Sprintf("[%s]", color.YellowString("canary"))
+	}
+
+	return ""
+}
+
+func isCanary(svc *api.CatalogService) bool {
+	for _, tag := range svc.ServiceTags {
+		if tag == "canary" {
+			return true
+		}
+	}
+
+	return false
 }
