@@ -15,18 +15,12 @@ import (
 	"github.com/team-telnyx/telnyx-cli/metaservice"
 )
 
-// telnyx-cli deployments call-control-agent -s 2022-10-10 -e 2022-10-25
-// startDate defaults to 1 week ago
-// if endDate is not provided, consider today
-// if only endDate is provided, startDate defaults to 1 week before that
-// gap between startDate and endDate cannot be greater than 2 weeks
-
 func init() {
 	defaultStartDate := time.Now().UTC().AddDate(0, 0, -7)
 	defaultEndDate := time.Now().UTC()
 
-	deploymentCmd.Flags().StringP("startDate", "s", formatTime(defaultStartDate), "The starting date of the deployments to check")
-	deploymentCmd.Flags().StringP("endDate", "e", formatTime(defaultEndDate), "The end date of the deployments to check")
+	deploymentCmd.Flags().StringP("startDate", "s", formatTime(defaultStartDate), "The starting date of the deployments to check. Format: YYYY-MM-DD.")
+	deploymentCmd.Flags().StringP("endDate", "e", formatTime(defaultEndDate), "The end date of the deployments to check. Format: YYYY-MM-DD.")
 
 	rootCmd.AddCommand(deploymentCmd)
 }
@@ -50,7 +44,27 @@ var deploymentCmd = &cobra.Command{
 		return completions, cobra.ShellCompDirectiveNoFileComp
 	},
 	PreRun: func(cmd *cobra.Command, args []string) {
-		// TODO: validate flags here
+		s, _ := cmd.Flags().GetString("startDate")
+		e, _ := cmd.Flags().GetString("endDate")
+
+		startDate, err := time.Parse("2006-01-02", s)
+		if err != nil {
+			cobra.CheckErr(err)
+		}
+
+		endDate, err := time.Parse("2006-01-02", e)
+		if err != nil {
+			cobra.CheckErr(err)
+		}
+
+		if endDate.Before(startDate) {
+			cobra.CheckErr("endDate happens before startDate")
+		}
+
+		difference := endDate.Sub(startDate)
+		if difference.Hours() > 168 {
+			cobra.CheckErr("cannot exceed 1 week")
+		}
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		svc := args[0]
@@ -81,7 +95,8 @@ func printDeployment(dp metaservice.Deployment) {
 			"Description: %s\n"+
 			"Enable K8s single region cluster: %s\n"+
 			"K8s cluster: %s\n"+
-			"Host Group: %s\n",
+			"Host Group: %s\n"+
+			"------------------------------------\n",
 		color.CyanString(dp.StartTimeStamp),
 		color.CyanString(dp.Version),
 		color.CyanString(dp.StartedByUser),

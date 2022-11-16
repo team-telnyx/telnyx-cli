@@ -1,6 +1,10 @@
 /*
 Copyright © Telnyx LLC
 
+Package metaservice implements routines for interacting with infra's
+meta service, responsible for storing Jenkins build metadata.
+
+Check https://github.com/team-telnyx/couchdb-build-metadata for more details.
 */
 
 package metaservice
@@ -16,16 +20,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// curl -H 'Content-Type: application/json; charset=utf-8' \
-//   -X GET 'http://meta.service.ch1b-prod.consul:5984/build/_design/prod-success/_view/prod-success-view?startkey="2022-10-16"'
-
-// {"total_rows":51243,"offset":0,"rows":[
-// 	{"id":"dfb850131570bb17953c8ecf50f6f818","key":"2022-11-02T13:55:06.862Z","value":""},
-// 	{"id":"dfb850131570bb17953c8ecf50f705c9","key":"2022-11-02T13:53:52.125Z","value":"telephony-backend-consul-kv"},
-
-// TODO: use a generic struct so rows can be of the given type
-// see https://itnext.io/how-to-use-golang-generics-with-structs-8cabc9353d75
-type Response struct {
+type ViewResponse struct {
 	TotalRows int                    `json:"total_rows"`
 	Offset    int                    `json:"offset"`
 	Rows      []SuccessfulDeployment `json:"rows"`
@@ -37,7 +32,7 @@ type SuccessfulDeployment struct {
 	Value string `json:"value"`
 }
 
-type ResponseTwo struct {
+type DeploymentResponse struct {
 	Bookmark    string       `json:"bookmark"`
 	Deployments []Deployment `json:"docs"`
 }
@@ -77,7 +72,7 @@ func FetchDeployments(svc string, startDate string, endDate string) ([]Deploymen
 	return deployments, nil
 }
 
-func fetchDeploymentsFromView(startDate string, endDate string) *Response {
+func fetchDeploymentsFromView(startDate string, endDate string) *ViewResponse {
 	url := fmt.Sprintf(
 		"http://meta.service.ch1b-prod.consul:5984/build/_design/prod-success/_view/prod-success-view?startkey=\"%s\"&endKey=\"%s\"&limit=1000",
 		startDate,
@@ -110,7 +105,7 @@ func fetchDeploymentsFromView(startDate string, endDate string) *Response {
 		cobra.CheckErr(readErr)
 	}
 
-	var response Response
+	var response ViewResponse
 	if err = json.Unmarshal(body, &response); err != nil {
 		cobra.CheckErr(err)
 	}
@@ -118,7 +113,7 @@ func fetchDeploymentsFromView(startDate string, endDate string) *Response {
 	return &response
 }
 
-func filterDeploymentsByService(response *Response, svc string) []SuccessfulDeployment {
+func filterDeploymentsByService(response *ViewResponse, svc string) []SuccessfulDeployment {
 	var deployments []SuccessfulDeployment
 
 	for _, d := range response.Rows {
@@ -170,7 +165,7 @@ func fetchDeploymentById(id string) Deployment {
 		cobra.CheckErr(readErr)
 	}
 
-	var response ResponseTwo
+	var response DeploymentResponse
 	if err = json.Unmarshal(body, &response); err != nil {
 		cobra.CheckErr(err)
 	}
