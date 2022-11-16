@@ -4,6 +4,8 @@ Copyright © Telnyx LLC
 */
 package cmd
 
+// TODO: fix issue with IndexOutOfBand: to reproduce, list ❯ telnyx-cli instances -e prod recorder
+
 import (
 	"fmt"
 	"strconv"
