@@ -70,9 +70,9 @@ var instanceCmd = &cobra.Command{
 	},
 }
 
-func printInstances(svcs []*api.CatalogService) {
+func printInstances(svcs []*api.ServiceEntry) {
 	// Group by version
-	groupedInstances := make(map[string][]*api.CatalogService)
+	groupedInstances := make(map[string][]*api.ServiceEntry)
 	for _, s := range svcs {
 		grp := groupedInstances[instanceVersion(s)]
 		groupedInstances[instanceVersion(s)] = append(grp, s)
@@ -86,14 +86,14 @@ func printInstances(svcs []*api.CatalogService) {
 	}
 }
 
-func instanceVersion(svc *api.CatalogService) string {
+func instanceVersion(svc *api.ServiceEntry) string {
 	var version string
 
-	if svc.ServiceMeta["version"] != "" {
-		version = "v" + svc.ServiceMeta["version"]
+	if svc.Service.Meta["version"] != "" {
+		version = "v" + svc.Service.Meta["version"]
 	} else {
-		if len(svc.ServiceTags) > 0 {
-			version = svc.ServiceTags[len(svc.ServiceTags)-1]
+		if len(svc.Service.Tags) > 0 {
+			version = svc.Service.Tags[len(svc.Service.Tags)-1]
 		}
 	}
 
@@ -104,19 +104,19 @@ func printService(svc string) {
 	color.Magenta("▶ %s", svc)
 }
 
-func printInstance(svc *api.CatalogService) {
+func printInstance(svc *api.ServiceEntry) {
 	version := instanceVersion(svc)
 	healthStatus := svc.Checks.AggregatedStatus()
-	healthColor := colorByHealthStatus(healthStatus).SprintFunc()
+	healthColorFunc := colorByHealthStatus(healthStatus).SprintFunc()
 
 	fmt.Printf(
 		"    » [%s][%s:%s][%s]%s[%s]\n",
-		color.CyanString(svc.Node),
-		color.CyanString(svc.ServiceAddress),
-		color.CyanString(strconv.Itoa(svc.ServicePort)),
+		color.CyanString(svc.Node.Node),
+		color.CyanString(svc.Service.Address),
+		color.CyanString(strconv.Itoa(svc.Service.Port)),
 		color.CyanString(version),
 		printTags(svc),
-		healthColor(svc.Checks.AggregatedStatus()),
+		healthColorFunc(svc.Checks.AggregatedStatus()),
 	)
 }
 
@@ -126,17 +126,21 @@ func colorByHealthStatus(status string) *color.Color {
 	case api.HealthAny:
 		c = color.New(color.FgWhite)
 	case api.HealthWarning:
-		c = color.New(color.FgWhite)
+		c = color.New(color.FgHiMagenta)
 	case api.HealthCritical:
 		c = color.New(color.FgRed)
+	case api.HealthMaint:
+		c = color.New(color.FgYellow)
 	case api.HealthPassing:
 		c = color.New(color.FgGreen)
+	default:
+		c = color.New(color.FgWhite)
 	}
 
 	return c
 }
 
-func printTags(svc *api.CatalogService) string {
+func printTags(svc *api.ServiceEntry) string {
 	if isCanary(svc) {
 		return fmt.Sprintf("[%s]", color.YellowString("canary"))
 	}
@@ -144,8 +148,8 @@ func printTags(svc *api.CatalogService) string {
 	return ""
 }
 
-func isCanary(svc *api.CatalogService) bool {
-	for _, tag := range svc.ServiceTags {
+func isCanary(svc *api.ServiceEntry) bool {
+	for _, tag := range svc.Service.Tags {
 		if tag == "canary" {
 			return true
 		}

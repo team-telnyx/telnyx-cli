@@ -17,7 +17,7 @@ import (
 
 type dcInstances struct {
 	Dc        string
-	Instances []*api.CatalogService
+	Instances []*api.ServiceEntry
 }
 
 func FetchDatacenters(env string) ([]string, error) {
@@ -135,7 +135,7 @@ func fetchInstancesByDcAsync(dc string, svc string, ch chan<- *dcInstances, wg *
 	}
 }
 
-func GetInstancesByDc(dc string, svc string) []*api.CatalogService {
+func GetInstancesByDc(dc string, svc string) []*api.ServiceEntry {
 	client, err := api.NewClient(consulConfigForDc(dc))
 	if err != nil {
 		cobra.CheckErr(err)
@@ -145,12 +145,18 @@ func GetInstancesByDc(dc string, svc string) []*api.CatalogService {
 		Datacenter: dc,
 	}
 
-	instances, _, err := client.Catalog().Service(svc, "", q)
+	instances, _, err := client.Health().Service(svc, "", false, q)
+	// instances, _, err := client.Catalog().Service(svc, "", q)
 	if err != nil {
 		cobra.CheckErr(err)
 	}
 
-	return instances
+	var x []*api.ServiceEntry
+	for _, y := range instances {
+		x = append(x, y)
+	}
+
+	return x
 }
 
 // HTTP client configuration
