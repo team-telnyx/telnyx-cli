@@ -4,8 +4,6 @@ Copyright © Telnyx LLC
 */
 package cmd
 
-// TODO: fix issue with IndexOutOfBand: to reproduce, list ❯ telnyx-cli instances -e prod recorder
-
 import (
 	"fmt"
 	"strconv"
@@ -90,10 +88,13 @@ func printInstances(svcs []*api.CatalogService) {
 
 func instanceVersion(svc *api.CatalogService) string {
 	var version string
+
 	if svc.ServiceMeta["version"] != "" {
 		version = "v" + svc.ServiceMeta["version"]
 	} else {
-		version = svc.ServiceTags[len(svc.ServiceTags)-1]
+		if len(svc.ServiceTags) > 0 {
+			version = svc.ServiceTags[len(svc.ServiceTags)-1]
+		}
 	}
 
 	return version
@@ -104,13 +105,7 @@ func printService(svc string) {
 }
 
 func printInstance(svc *api.CatalogService) {
-	var version string
-	if svc.ServiceMeta["version"] != "" {
-		version = "v" + svc.ServiceMeta["version"]
-	} else {
-		version = svc.ServiceTags[len(svc.ServiceTags)-1]
-	}
-
+	version := instanceVersion(svc)
 	healthStatus := svc.Checks.AggregatedStatus()
 	healthColor := colorByHealthStatus(healthStatus).SprintFunc()
 
