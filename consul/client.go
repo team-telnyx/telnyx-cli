@@ -146,17 +146,29 @@ func GetInstancesByDc(dc string, svc string) []*api.ServiceEntry {
 	}
 
 	instances, _, err := client.Health().Service(svc, "", false, q)
-	// instances, _, err := client.Catalog().Service(svc, "", q)
 	if err != nil {
 		cobra.CheckErr(err)
 	}
 
-	var x []*api.ServiceEntry
-	for _, y := range instances {
-		x = append(x, y)
+	return instances
+}
+
+func EnableInstanceMaintenance(svc *api.ServiceEntry, dc string) error {
+	client, err := api.NewClient(consulConfigForInstance(svc, dc))
+	if err != nil {
+		cobra.CheckErr(err)
 	}
 
-	return x
+	return client.Agent().EnableServiceMaintenance(svc.Service.ID, "telnyx-cli")
+}
+
+func DisableInstanceMaintenance(svc *api.ServiceEntry, dc string) error {
+	client, err := api.NewClient(consulConfigForInstance(svc, dc))
+	if err != nil {
+		cobra.CheckErr(err)
+	}
+
+	return client.Agent().DisableServiceMaintenance(svc.Service.ID)
 }
 
 // HTTP client configuration
@@ -194,4 +206,22 @@ func consulConfigForDc(dc string) *api.Config {
 		Scheme:    "http",
 		Transport: cleanhttp.DefaultTransport(),
 	}
+}
+
+func consulConfigForInstance(svc *api.ServiceEntry, dc string) *api.Config {
+	port := consulPort(dc)
+	addr := strings.Join([]string{svc.Node.Meta["host-ip"], port}, ":")
+
+	return &api.Config{
+		Address:   addr,
+		Scheme:    "http",
+		Transport: cleanhttp.DefaultTransport(),
+	}
+}
+
+func consulPort(dc string) string {
+	if strings.Contains(dc, "prod") {
+		return "28500"
+	}
+	return "18500"
 }
