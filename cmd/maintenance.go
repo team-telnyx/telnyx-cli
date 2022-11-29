@@ -55,7 +55,7 @@ var maintCmd = &cobra.Command{
 		svc := args[0]
 		dc := args[1]
 
-		err := confirm("maintenance", svc, dc)
+		err := confirm(disable, svc, dc)
 		if err != nil {
 			return err
 		}
@@ -79,8 +79,15 @@ var maintCmd = &cobra.Command{
 	},
 }
 
-func confirm(operation, dc, site string) error {
-	fmt.Printf("Starting %s service: %s, site: %s. Continue? [Y|n]: ", operation, dc, site)
+func confirm(disable bool, dc, site string) error {
+	var operation string
+	if disable {
+		operation = "Disabling maintenance"
+	} else {
+		operation = "Starting maintenance"
+	}
+
+	fmt.Printf("%s service: %s, site: %s. Continue? [Y|n]: ", operation, dc, site)
 
 	reader := bufio.NewReader(os.Stdin)
 	char, _, err := reader.ReadRune()
