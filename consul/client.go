@@ -210,12 +210,20 @@ func consulConfigForDc(dc string) *api.Config {
 
 func consulConfigForInstance(svc *api.ServiceEntry, dc string) *api.Config {
 	port := consulPort(dc)
-	addr := strings.Join([]string{svc.Node.Meta["host-ip"], port}, ":")
+	addr := strings.Join([]string{consulAgentHost(svc), port}, ":")
 
 	return &api.Config{
 		Address:   addr,
 		Scheme:    "http",
 		Transport: cleanhttp.DefaultTransport(),
+	}
+}
+
+func consulAgentHost(svc *api.ServiceEntry) string {
+	if hostIp, ok := svc.Node.Meta["host-ip"]; ok {
+		return hostIp
+	} else {
+		return svc.Node.Address
 	}
 }
 
