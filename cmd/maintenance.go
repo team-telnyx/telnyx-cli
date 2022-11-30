@@ -7,40 +7,51 @@ import (
 	"os"
 	"strings"
 
+	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/cobra"
 	"github.com/team-telnyx/telnyx-cli/consul"
 )
 
 // maintCmd represents the maintenance command
 var maintCmd = &cobra.Command{
-	Use:     "maintenance (SERVICE) (SITE)",
+	Use:     "maintenance [(-d|--disable)] service site",
 	Aliases: []string{"maint"},
-	Short:   "Puts all service instances with given site into maintenance in Consul",
-	Args:    cobra.MinimumNArgs(1),
+	Short:   "(BETA) Enable/disable services maintenance in Consul",
+	Example: "maintenance --disable call-control-agent ch1-dev",
+	Args:    cobra.ExactArgs(2),
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		// Checks the current args so we know which one to auto-complete. Perhaps there is a better way to do this.
 		switch len(args) {
 		case 0:
-			dcs, err := consul.FetchDatacenters("dev")
-			if err != nil {
-				cobra.CheckErr(err)
-			}
+			// We fetch only the services from PROD to speed up the lookup process
+			svcs := consul.GetServicesByEnv("prod")
 
 			var completions []string
-			for _, dc := range dcs {
-				if strings.HasPrefix(dc, toComplete) {
-					completions = append(completions, dc)
+			for s, _ := range svcs {
+				if strings.HasPrefix(s, toComplete) {
+					completions = append(completions, s)
 				}
 			}
 
 			return completions, cobra.ShellCompDirectiveNoFileComp
 
 		case 1:
-			svcs := consul.GetServicesByEnv("dev")
+			devDcs, err := consul.FetchDatacenters("dev")
+			if err != nil {
+				cobra.CheckErr(err)
+			}
+
+			prodDcs, err := consul.FetchDatacenters("prod")
+			if err != nil {
+				cobra.CheckErr(err)
+			}
+
+			dcs := append(devDcs, prodDcs...)
 
 			var completions []string
-			for s, _ := range svcs {
-				if strings.HasPrefix(s, toComplete) {
-					completions = append(completions, s)
+			for _, dc := range dcs {
+				if strings.HasPrefix(dc, toComplete) {
+					completions = append(completions, dc)
 				}
 			}
 
@@ -61,20 +72,37 @@ var maintCmd = &cobra.Command{
 		}
 
 		instances := consul.GetInstancesByDc(dc, svc)
+		bar := progressbar.NewOptions(
+			len(instances),
+			progressbar.OptionEnableColorCodes(true),
+			progressbar.OptionShowBytes(false),
+			progressbar.OptionSetWidth(15),
+			progressbar.OptionShowCount(),
+			progressbar.OptionSetDescription("[yellow]Toogling maintenance in Consul...[reset]"),
+			progressbar.OptionSetTheme(progressbar.Theme{
+				Saucer:        "[green]=[reset]",
+				SaucerHead:    "[green]>[reset]",
+				SaucerPadding: " ",
+				BarStart:      "[",
+				BarEnd:        "]",
+			}),
+		)
 
 		if disable {
 			for _, inst := range instances {
-				err = consul.DisableInstanceMaintenance(inst, dc)
+				err := consul.DisableInstanceMaintenance(inst, dc)
 				cobra.CheckErr(err)
+				bar.Add(1)
 			}
 		} else {
 			for _, inst := range instances {
-				err = consul.EnableInstanceMaintenance(inst, dc)
+				err := consul.EnableInstanceMaintenance(inst, dc)
 				cobra.CheckErr(err)
+				bar.Add(1)
 			}
 		}
 
-		fmt.Println("Done!")
+		fmt.Println("\nDone!")
 		return nil
 	},
 }
@@ -101,6 +129,6 @@ func confirm(disable bool, dc, site string) error {
 }
 
 func init() {
-	maintCmd.Flags().BoolP("disable", "d", false, "Disables maintenance in Consul")
+	maintCmd.Flags().BoolP("disable", "d", false, "Disables the service maintenance in Consul")
 	rootCmd.AddCommand(maintCmd)
 }
