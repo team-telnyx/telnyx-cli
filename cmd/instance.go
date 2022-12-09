@@ -90,11 +90,9 @@ func instanceVersion(svc *api.ServiceEntry) string {
 	var version string
 
 	if svc.Service.Meta["version"] != "" {
-		version = "v" + svc.Service.Meta["version"]
+		version = svc.Service.Meta["version"]
 	} else {
-		if len(svc.Service.Tags) > 0 {
-			version = svc.Service.Tags[len(svc.Service.Tags)-1]
-		}
+		version = consul.GetInstanceVersion(svc)
 	}
 
 	return version

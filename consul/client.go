@@ -6,8 +6,13 @@ Copyright © Telnyx LLC
 package consul
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/hashicorp/consul/api"
 	"github.com/hashicorp/go-cleanhttp"
@@ -18,6 +23,10 @@ import (
 type dcInstances struct {
 	Dc        string
 	Instances []*api.ServiceEntry
+}
+
+type ServiceVersion struct {
+	Version string `json:"version"`
 }
 
 func FetchDatacenters(env string) ([]string, error) {
@@ -169,6 +178,42 @@ func DisableInstanceMaintenance(svc *api.ServiceEntry, dc string) error {
 	}
 
 	return client.Agent().DisableServiceMaintenance(svc.Service.ID)
+}
+
+func GetInstanceVersion(svc *api.ServiceEntry) string {
+	url := fmt.Sprintf("http://%s:%d/version", svc.Service.Address, svc.Service.Port)
+	httpClient := http.Client{
+		Timeout: time.Second * 2, // Timeout after 2 seconds
+	}
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		cobra.CheckErr(err)
+	}
+
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	req.Header.Set("User-Agent", "telnyx-cli")
+
+	res, getErr := httpClient.Do(req)
+	if getErr != nil {
+		return "unavailable"
+	}
+
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	body, readErr := ioutil.ReadAll(res.Body)
+	if readErr != nil {
+		cobra.CheckErr(readErr)
+	}
+
+	var response ServiceVersion
+	if err = json.Unmarshal(body, &response); err != nil {
+		return "unavailable"
+	}
+
+	return response.Version
 }
 
 // HTTP client configuration
