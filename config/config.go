@@ -13,14 +13,18 @@ const ConfigFile = "config.yaml"
 const CacheFolder = "cache"
 
 type Config struct {
-	ConsulDevUrl  string `yaml:"consul_dev_url"`
-	ConsulProdUrl string `yaml:"consul_prod_url"`
+	ConsulDevUrl      string `yaml:"consul_dev_url"`
+	ConsulProdUrl     string `yaml:"consul_prod_url"`
+	PrivateApiDevUrl  string `yaml:"private_api_dev_url"`
+	PrivateApiProdUrl string `yaml:"private_api_prod_url"`
 }
 
 func DefaultConfig() *Config {
 	return &Config{
-		ConsulDevUrl:  "https://consuldev.internal.telnyx.com",
-		ConsulProdUrl: "https://consul.internal.telnyx.com",
+		ConsulDevUrl:      "https://consuldev.internal.telnyx.com",
+		ConsulProdUrl:     "https://consul.internal.telnyx.com",
+		PrivateApiDevUrl:  "http://privateapi.query.dev.telnyx.io:8082",
+		PrivateApiProdUrl: "http://privateapi.query.prod.telnyx.io:8082",
 	}
 }
 
