@@ -2,7 +2,7 @@
 Copyright © Telnyx LLC
 
 */
-package cmd
+package get
 
 import (
 	"github.com/fatih/color"
@@ -11,16 +11,16 @@ import (
 )
 
 func init() {
-	datacenterCmd.Flags().StringP("env", "e", "dev", "The Consul environment to use")
+	datacenterCmd.Flags().StringP("env", "e", "prod", "The Consul environment to use")
 
-	rootCmd.AddCommand(datacenterCmd)
+	getCmd.AddCommand(datacenterCmd)
 }
 
-// datacenterCmd represents the datacenters command
+// datacenterCmd represents the datacenter command
 var datacenterCmd = &cobra.Command{
-	Use:     "datacenters",
-	Aliases: []string{"dcs"},
-	Short:   "List datacenters from Consul",
+	Use:     "datacenter",
+	Aliases: []string{"dc"},
+	Short:   "List Consul datacenters",
 	Run: func(cmd *cobra.Command, args []string) {
 		env, _ := cmd.Flags().GetString("env")
 

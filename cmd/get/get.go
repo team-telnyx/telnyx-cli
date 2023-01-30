@@ -2,14 +2,15 @@
 Copyright © Telnyx LLC
 
 The get command works as a placeholder where other subcommands can be nested upon, e.g. `get user`.
-It does nothing besides providing some documentation. Check each nested subcommand file for its
+It does nothing besides providing some documentation. Check each nested subcommand file for the
 actual implementation.
 
 */
-package cmd
+package get
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/team-telnyx/telnyx-cli/cmd"
 )
 
 // getCmd represents the get command
@@ -24,16 +25,8 @@ telnyx-cli get user --organization-id <organization_id>
 
 # Search for user with given email, displaying the user's full information
 telnyx-cli get user --email <email> --long
-
-
-Options:
-	-e, --env=prod:
-		The environment to use. Defaults to "prod".
-
-	-l, --long=false:
-		Display's the resource's full information. Defaults to "false".`,
-}
+`}
 
 func init() {
-	rootCmd.AddCommand(getCmd)
+	cmd.RootCmd.AddCommand(getCmd)
 }

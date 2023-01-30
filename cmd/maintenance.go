@@ -130,5 +130,5 @@ func confirm(disable bool, dc, site string) error {
 
 func init() {
 	maintCmd.Flags().BoolP("disable", "d", false, "Disables the service maintenance in Consul")
-	rootCmd.AddCommand(maintCmd)
+	RootCmd.AddCommand(maintCmd)
 }

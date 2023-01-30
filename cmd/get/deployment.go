@@ -2,7 +2,7 @@
 Copyright © Telnyx LLC
 
 */
-package cmd
+package get
 
 import (
 	"fmt"
@@ -22,15 +22,33 @@ func init() {
 	deploymentCmd.Flags().StringP("startDate", "s", formatTime(defaultStartDate), "The starting date of the deployments to check. Format: YYYY-MM-DD.")
 	deploymentCmd.Flags().StringP("endDate", "e", formatTime(defaultEndDate), "The end date of the deployments to check. Format: YYYY-MM-DD.")
 
-	rootCmd.AddCommand(deploymentCmd)
+	getCmd.AddCommand(deploymentCmd)
 }
 
-// deploymentCmd represents the deployments command
+// deploymentCmd represents the deployment command
 var deploymentCmd = &cobra.Command{
-	Use:     "deployments",
-	Aliases: []string{"dp"},
+	Use:     "deployment <service>",
+	Aliases: []string{"d"},
 	Args:    cobra.ExactArgs(1),
-	Short:   "List latest successful production deployments from a service via Jenkins.",
+	Short:   "List successful production deployments from a service via Jenkins.",
+	Long: `
+Lists the deployments via Jenkins of the given service. Defaults to listing the
+deployments from the last 7 days. You can define both the 'startDate' and 'endDate'
+of the deployments, with the maximum window being 7 days.
+Both 'startDate' and 'endDate' are optional, and when missing, the CLI will consider
+a 7 days window based on the given parameter.
+
+Examples:
+
+# List the successful deployments from past 7 days for call-control service
+telnyx-cli get deployment call-control
+
+# List the successful deployments from call-control service during the first week of Jan/2023
+telnyx-cli get deployment call-control --startDate 2023-01-01
+
+# List the successful deployments from call-control service in the week ending on 2023-01-01
+telnyx-cli get deployment call-control --endDate 2023-01-01
+  `,
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		svcs := consul.GetServicesByEnv("prod")
 

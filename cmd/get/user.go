@@ -2,7 +2,7 @@
 Copyright © Telnyx LLC
 
 */
-package cmd
+package get
 
 // TODO
 //  - Add connection_id to look for users
@@ -18,8 +18,9 @@ import (
 
 // userCmd represents the user command
 var userCmd = &cobra.Command{
-	Use:   "user",
-	Short: "Display one or more users",
+	Use:     "user",
+	Aliases: []string{"u"},
+	Short:   "Display one or more users",
 	Run: func(cmd *cobra.Command, args []string) {
 		env, _ := cmd.Flags().GetString("env")
 		userId, _ := cmd.Flags().GetString("id")

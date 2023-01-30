@@ -2,7 +2,7 @@
 Copyright © Telnyx LLC
 
 */
-package cmd
+package get
 
 import (
 	"fmt"
@@ -16,18 +16,24 @@ import (
 )
 
 func init() {
-	instanceCmd.Flags().StringP("env", "e", "dev", "The Consul environment to use")
+	instanceCmd.Flags().StringP("env", "e", "prod", "The Consul environment to use")
 	instanceCmd.Flags().StringP("datacenter", "d", "", "The Consul datacenter to use")
 
-	rootCmd.AddCommand(instanceCmd)
+	getCmd.AddCommand(instanceCmd)
 }
 
 // instanceCmd represents the instances command
 var instanceCmd = &cobra.Command{
-	Use:     "instances service",
-	Aliases: []string{"ist"},
-	Short:   "List the instances from a service in Consul",
-	Args:    cobra.ExactArgs(1),
+	Use:     "instance <service>",
+	Aliases: []string{"i"},
+	Short:   "List the running instances of a given service",
+	Long: `
+Lists the running instances of a given service. Instances will be grouped by datacenter,
+and will be printed following the format:
+
+	[node-name][ipv4][version][canary|empty][health status]
+	`,
+	Args: cobra.ExactArgs(1),
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		dc, _ := cmd.Flags().GetString("datacenter")
 		env, _ := cmd.Flags().GetString("env")

@@ -2,7 +2,7 @@
 Copyright © Telnyx LLC
 
 */
-package cmd
+package get
 
 import (
 	"fmt"
@@ -19,14 +19,14 @@ func init() {
 
 	serviceCmd.MarkFlagRequired("datacenter")
 
-	rootCmd.AddCommand(serviceCmd)
+	getCmd.AddCommand(serviceCmd)
 }
 
-// serviceCmd represents the services command
+// serviceCmd represents the service command
 var serviceCmd = &cobra.Command{
-	Use:     "services",
-	Aliases: []string{"svcs"},
-	Short:   "List services from Consul",
+	Use:     "service",
+	Aliases: []string{"s"},
+	Short:   "List services registered in Consul",
 	Run: func(cmd *cobra.Command, args []string) {
 		dc, _ := cmd.Flags().GetString("datacenter")
 		filter, _ := cmd.Flags().GetString("filter")

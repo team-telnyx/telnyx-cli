@@ -2,7 +2,7 @@
 Copyright © Telnyx LLC
 
 */
-package cmd
+package get
 
 import (
 	"encoding/json"
@@ -15,7 +15,7 @@ import (
 // connCmd represents the connection command
 var connCmd = &cobra.Command{
 	Use:     "connection",
-	Aliases: []string{"conn"},
+	Aliases: []string{"c"},
 	Short:   "Display one or more connections",
 	Run: func(cmd *cobra.Command, args []string) {
 		env, _ := cmd.Flags().GetString("env")
