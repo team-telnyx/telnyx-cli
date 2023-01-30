@@ -46,7 +46,7 @@ type UserShort struct {
 	AccountBlockedAt           string `json:"account_blocked_at"`
 	AccountBlocked             bool   `json:"account_blocked"`
 	AutoRechargeEnabled        bool   `json:"auto_recharge_enabled"`
-	VerifiedByTelnyx           string `json:"verified_by_telnyx"`
+	VerifiedByTelnyx           bool   `json:"verified_by_telnyx"`
 	E911Accepted               bool   `json:"e911_accepted"`
 }
 
@@ -60,7 +60,7 @@ type User struct {
 	GlobalOutboundChannelLimit       int    `json:"global_outbound_channel_limit"`
 	AccountBlockedAt                 string `json:"account_blocked_at"`
 	PortingUserInfoStrategy          string `json:"porting_user_info_strategy"`
-	VerifiedByTelnyx                 string `json:"verified_by_telnyx"`
+	VerifiedByTelnyx                 bool   `json:"verified_by_telnyx"`
 	City                             string `json:"city"`
 	FirstName                        string `json:"first_name"`
 	Id                               string `json:"user_id"`
