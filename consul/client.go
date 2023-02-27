@@ -162,13 +162,13 @@ func GetInstancesByDc(dc string, svc string) []*api.ServiceEntry {
 	return instances
 }
 
-func EnableInstanceMaintenance(svc *api.ServiceEntry, dc string) error {
+func EnableInstanceMaintenance(svc *api.ServiceEntry, dc, reason string) error {
 	client, err := api.NewClient(consulConfigForInstance(svc, dc))
 	if err != nil {
 		cobra.CheckErr(err)
 	}
 
-	return client.Agent().EnableServiceMaintenance(svc.Service.ID, "telnyx-cli")
+	return client.Agent().EnableServiceMaintenance(svc.Service.ID, reason)
 }
 
 func DisableInstanceMaintenance(svc *api.ServiceEntry, dc string) error {

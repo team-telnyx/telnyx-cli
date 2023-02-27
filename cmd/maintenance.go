@@ -15,7 +15,7 @@ import (
 
 // maintCmd represents the maintenance command
 var maintCmd = &cobra.Command{
-	Use:     "maintenance [(-d|--disable)] service site [(-n|--node) node]",
+	Use:     "maintenance [(-d|--disable)] service site [(-n|--node) node] [(-r|--reason) reason]",
 	Aliases: []string{"maint"},
 	Short:   "Toggle service maintenance in Consul",
 	Long: `
@@ -29,8 +29,8 @@ inside the first [] characters.
 
 Examples:
 
-# Enable maintenance mode on all call-control instances present in sv1-dev
-telnyx-cli maintenance sv1-dev call-control
+# Enable maintenance mode on all call-control instances present in sv1-dev with provided reason
+telnyx-cli maintenance sv1-dev call-control --reason "Something wrong happened"
 
 # Disable maintenance mode on all call-control instances present in sv1-dev
 telnyx-cli maintenance --disable sv1-dev call-control
@@ -88,6 +88,7 @@ telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.co
 	RunE: func(cmd *cobra.Command, args []string) error {
 		disable, _ := cmd.Flags().GetBool("disable")
 		node, _ := cmd.Flags().GetString("node")
+		reason, _ := cmd.Flags().GetString("reason")
 
 		if node == "" {
 			svc := args[0]
@@ -114,7 +115,7 @@ telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.co
 				}
 			} else {
 				for _, inst := range instances {
-					err := consul.EnableInstanceMaintenance(inst, dc)
+					err := consul.EnableInstanceMaintenance(inst, dc, reason)
 					cobra.CheckErr(err)
 					bar.Add(1)
 				}
@@ -147,7 +148,7 @@ telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.co
 				err := consul.DisableInstanceMaintenance(instances[0], dc)
 				cobra.CheckErr(err)
 			} else {
-				err := consul.EnableInstanceMaintenance(instances[0], dc)
+				err := consul.EnableInstanceMaintenance(instances[0], dc, reason)
 				cobra.CheckErr(err)
 			}
 		}
@@ -204,5 +205,11 @@ func confirm(disable bool, svc, siteOrNode string, instances []*api.ServiceEntry
 func init() {
 	maintCmd.Flags().BoolP("disable", "d", false, "Disable the service maintenance in Consul")
 	maintCmd.Flags().StringP("node", "n", "", "Defines the instance to be put/removed into maintenance in Consul")
+	maintCmd.Flags().StringP(
+		"reason",
+		"r",
+		"Maintenance enabled via telnyx-cli, no reason provided (default message)",
+		"Reason for putting the service under maintenance",
+	)
 	RootCmd.AddCommand(maintCmd)
 }
