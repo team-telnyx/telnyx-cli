@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/hashicorp/consul/api"
 	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/cobra"
 	"github.com/team-telnyx/telnyx-cli/consul"
@@ -14,16 +15,37 @@ import (
 
 // maintCmd represents the maintenance command
 var maintCmd = &cobra.Command{
-	Use:     "maintenance [(-d|--disable)] service site",
+	Use:     "maintenance [(-d|--disable)] service site [(-n|--node) node]",
 	Aliases: []string{"maint"},
-	Short:   "(BETA) Enable/disable services maintenance in Consul",
+	Short:   "Toggle service maintenance in Consul",
+	Long: `
+Enable or disables maintenance in Consul for a given service. By default, it
+tries to enable maintenance mode, unless the flag -d|--disable is provided.
+
+Tip: the "--node" identifier can be found by listing the service instances via
+"telnyx-cli get instance <service>". The node identifier is the value defined
+inside the first [] characters.
+
+
+Examples:
+
+# Enable maintenance mode on all call-control instances present in sv1-dev
+telnyx-cli maintenance sv1-dev call-control
+
+# Disable maintenance mode on all call-control instances present in sv1-dev
+telnyx-cli maintenance --disable sv1-dev call-control
+
+# Enable maintenance mode on the call-control instance present in node ip-10-48-192-204.us-west-1.compute.internal
+telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.compute.internal
+	`,
 	Example: "maintenance --disable call-control-agent ch1-dev",
 	Args:    cobra.ExactArgs(2),
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		// Checks the current args so we know which one to auto-complete. Perhaps there is a better way to do this.
 		switch len(args) {
+		// Auto-complete services
 		case 0:
-			// We fetch only the services from PROD to speed up the lookup process
+			// We fetch only the services from PROD to speed up the lookup process. This implies that services
+			// not present in PROD might not show up for completion when dealing with dev environment.
 			svcs := consul.GetServicesByEnv("prod")
 
 			var completions []string
@@ -35,7 +57,10 @@ var maintCmd = &cobra.Command{
 
 			return completions, cobra.ShellCompDirectiveNoFileComp
 
+		// Auto-complete Consul datacenters
 		case 1:
+			var completions []string
+
 			devDcs, err := consul.FetchDatacenters("dev")
 			if err != nil {
 				cobra.CheckErr(err)
@@ -48,7 +73,6 @@ var maintCmd = &cobra.Command{
 
 			dcs := append(devDcs, prodDcs...)
 
-			var completions []string
 			for _, dc := range dcs {
 				if strings.HasPrefix(dc, toComplete) {
 					completions = append(completions, dc)
@@ -63,72 +87,122 @@ var maintCmd = &cobra.Command{
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 		disable, _ := cmd.Flags().GetBool("disable")
-		svc := args[0]
-		dc := args[1]
+		node, _ := cmd.Flags().GetString("node")
 
-		err := confirm(disable, svc, dc)
-		if err != nil {
-			return err
-		}
+		if node == "" {
+			svc := args[0]
+			dc := args[1]
+			instances := consul.GetInstancesByDc(dc, svc)
 
-		instances := consul.GetInstancesByDc(dc, svc)
-		bar := progressbar.NewOptions(
-			len(instances),
-			progressbar.OptionEnableColorCodes(true),
-			progressbar.OptionShowBytes(false),
-			progressbar.OptionSetWidth(15),
-			progressbar.OptionShowCount(),
-			progressbar.OptionSetDescription("[yellow]Toogling maintenance in Consul...[reset]"),
-			progressbar.OptionSetTheme(progressbar.Theme{
-				Saucer:        "[green]=[reset]",
-				SaucerHead:    "[green]>[reset]",
-				SaucerPadding: " ",
-				BarStart:      "[",
-				BarEnd:        "]",
-			}),
-		)
-
-		if disable {
-			for _, inst := range instances {
-				err := consul.DisableInstanceMaintenance(inst, dc)
+			if len(instances) == 0 {
+				err := fmt.Errorf("service %s was not found on %s", svc, dc)
 				cobra.CheckErr(err)
-				bar.Add(1)
+			}
+
+			err := confirm(disable, svc, dc, instances)
+			if err != nil {
+				cobra.CheckErr(err)
+			}
+
+			bar := buildProgressBar(instances)
+
+			if disable {
+				for _, inst := range instances {
+					err := consul.DisableInstanceMaintenance(inst, dc)
+					cobra.CheckErr(err)
+					bar.Add(1)
+				}
+			} else {
+				for _, inst := range instances {
+					err := consul.EnableInstanceMaintenance(inst, dc)
+					cobra.CheckErr(err)
+					bar.Add(1)
+				}
 			}
 		} else {
-			for _, inst := range instances {
-				err := consul.EnableInstanceMaintenance(inst, dc)
+			svc := args[0]
+			dc := args[1]
+			node, _ := cmd.Flags().GetString("node")
+
+			dcInstances := consul.GetInstancesByDc(dc, svc)
+			var instances []*api.ServiceEntry
+
+			for _, inst := range dcInstances {
+				if inst.Node.Node == node {
+					instances = append(instances, inst)
+				}
+			}
+
+			if len(instances) == 0 {
+				err := fmt.Errorf("service %s was not found on %s", svc, dc)
 				cobra.CheckErr(err)
-				bar.Add(1)
+			}
+
+			err := confirm(disable, svc, node, instances)
+			if err != nil {
+				cobra.CheckErr(err)
+			}
+
+			if disable {
+				err := consul.DisableInstanceMaintenance(instances[0], dc)
+				cobra.CheckErr(err)
+			} else {
+				err := consul.EnableInstanceMaintenance(instances[0], dc)
+				cobra.CheckErr(err)
 			}
 		}
-
 		fmt.Println("\nDone!")
 		return nil
 	},
 }
 
-func confirm(disable bool, dc, site string) error {
+func buildProgressBar(instances []*api.ServiceEntry) *progressbar.ProgressBar {
+	return progressbar.NewOptions(
+		len(instances),
+		progressbar.OptionEnableColorCodes(true),
+		progressbar.OptionShowBytes(false),
+		progressbar.OptionSetWidth(15),
+		progressbar.OptionShowCount(),
+		progressbar.OptionSetDescription("[yellow]Toogling maintenance in Consul...[reset]"),
+		progressbar.OptionSetTheme(progressbar.Theme{
+			Saucer:        "[green]=[reset]",
+			SaucerHead:    "[green]>[reset]",
+			SaucerPadding: " ",
+			BarStart:      "[",
+			BarEnd:        "]",
+		}),
+	)
+}
+
+func confirm(disable bool, svc, siteOrNode string, instances []*api.ServiceEntry) error {
 	var operation string
 	if disable {
-		operation = "Disabling maintenance"
+		operation = "Disabling"
 	} else {
-		operation = "Starting maintenance"
+		operation = "Enabling"
 	}
 
-	fmt.Printf("%s service: %s, site: %s. Continue? [Y|n]: ", operation, dc, site)
+	fmt.Printf(
+		"%s maintenance for %s in %s. %d instance(s) will be affected. Continue?[y|n] ",
+		operation,
+		svc,
+		siteOrNode,
+		len(instances),
+	)
 
 	reader := bufio.NewReader(os.Stdin)
 	char, _, err := reader.ReadRune()
 	if err != nil {
-		return errors.New("Error getting user's input: " + err.Error())
+		return errors.New("error getting user's input: " + err.Error())
 	}
 	if char == 'Y' || char == 'y' {
 		return nil
 	}
-	return errors.New("Aborted")
+	return errors.New("operation aborted")
 }
 
 func init() {
-	maintCmd.Flags().BoolP("disable", "d", false, "Disables the service maintenance in Consul")
+	maintCmd.Flags().BoolP("disable", "d", false, "Disable the service maintenance in Consul")
+	maintCmd.Flags().StringP("node", "n", "", "Defines the instance to be put/removed into maintenance in Consul")
 	RootCmd.AddCommand(maintCmd)
 }
