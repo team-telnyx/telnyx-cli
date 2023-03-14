@@ -122,7 +122,7 @@ type ConnectionShort struct {
 	DefaultOnHoldConfortNoiseEnabled bool                `json:"default_on_hold_comfort_noise_enabled"`
 	SipSubdomain                     string              `json:"sip_subdomain"`
 	IpPorts                          []*ConnectionIpPort `json:"ips_ports"`
-	Fqdns                            []string            `json:"fqdns"`
+	Fqdns                            []*ConnectionFqdn   `json:"fqdns"`
 }
 
 type Connection struct {
@@ -166,7 +166,7 @@ type Connection struct {
 	OnnetT38PassthroughEnabled       bool                `json:"onnet_t38_passthrough_enabled"`
 	ConnectionId                     int                 `json:"connection_id"`
 	SipSubdomain                     string              `json:"sip_subdomain"`
-	Fqdns                            []string            `json:"fqdns"`
+	Fqdns                            []*ConnectionFqdn   `json:"fqdns"`
 	InboundGenerateRingbackTone      bool                `json:"inbound_generate_ringback_tone"`
 	AuthenticationPassword           string              `json:"authentication_password"`
 	OutboundProfileId                string              `json:"outbound_profile_id"`
@@ -202,6 +202,12 @@ type ConnectionIpPort struct {
 	Ip             string `json:"ip"`
 	Port           int    `json:"port"`
 	AuthorizedIpId string `json:"authorized_ip_id"`
+}
+
+type ConnectionFqdn struct {
+	FqdnId string `json:"fqdn_id"`
+	Fqdn   string `json:"fqdn"`
+	Port   int    `json:"port"`
 }
 
 func (u *User) ToShort() *UserShort {
