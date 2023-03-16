@@ -299,12 +299,18 @@ func FetchUsers(env string, q *UserQuery) ([]*User, error) {
 		return nil, readErr
 	}
 
-	var response []*User
-	if err = json.Unmarshal(body, &response); err != nil {
-		return nil, err
+	switch res.StatusCode {
+	case 200:
+		var response []*User
+		if err = json.Unmarshal(body, &response); err != nil {
+			return nil, err
+		}
+		return response, nil
+	case 404:
+		return nil, fmt.Errorf("not found")
 	}
 
-	return response, nil
+	return nil, fmt.Errorf("error: %s", body)
 }
 
 func FetchConnections(env string, q *ConnectionQuery) ([]*Connection, error) {
@@ -342,12 +348,18 @@ func FetchConnections(env string, q *ConnectionQuery) ([]*Connection, error) {
 		return nil, readErr
 	}
 
-	var response []*Connection
-	if err = json.Unmarshal(body, &response); err != nil {
-		return nil, err
+	switch res.StatusCode {
+	case 200:
+		var response []*Connection
+		if err = json.Unmarshal(body, &response); err != nil {
+			return nil, err
+		}
+		return response, nil
+	case 404:
+		return nil, fmt.Errorf("not found")
 	}
 
-	return response, nil
+	return nil, fmt.Errorf("error: %s", body)
 }
 
 func privateApiUrlForEnv(env string) (string, error) {
