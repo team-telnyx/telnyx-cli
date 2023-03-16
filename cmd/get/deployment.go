@@ -21,6 +21,7 @@ func init() {
 
 	deploymentCmd.Flags().StringP("startDate", "s", formatTime(defaultStartDate), "The starting date of the deployments to check. Format: YYYY-MM-DD.")
 	deploymentCmd.Flags().StringP("endDate", "e", formatTime(defaultEndDate), "The end date of the deployments to check. Format: YYYY-MM-DD.")
+	deploymentCmd.Flags().Bool("last", false, "List the latest successful deployment from the given service.")
 
 	getCmd.AddCommand(deploymentCmd)
 }
@@ -86,8 +87,17 @@ telnyx-cli get deployment call-control --endDate 2023-01-01
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		svc := args[0]
+		last, _ := cmd.Flags().GetBool("last")
 		startDate, _ := cmd.Flags().GetString("startDate")
 		endDate, _ := cmd.Flags().GetString("endDate")
+
+		if last {
+			dp, err := getLastDeployment(svc)
+			if err != nil {
+				cobra.CheckErr(err)
+			}
+			printDeployment(*dp)
+		}
 
 		dps, err := metaservice.FetchDeployments(svc, startDate, endDate)
 		if err != nil {
@@ -98,6 +108,27 @@ telnyx-cli get deployment call-control --endDate 2023-01-01
 			printDeployment(dp)
 		}
 	},
+}
+
+// getLastDeployment returns the latest deployment from the given service
+// It will look for the latest deployment in the last 20 week, and return
+// the latest deployment found
+func getLastDeployment(svc string) (*metaservice.Deployment, error) {
+	for i := 0; i < 20; i++ {
+		fmt.Printf("Looking for deployments in the last %d weeks...\n", i+1)
+
+		startDate := time.Now().UTC().AddDate(0, 0, -7*(i+1)).Format("2006-01-02")
+		endDate := time.Now().UTC().AddDate(0, 0, -7*i).Format("2006-01-02")
+		dps, err := metaservice.FetchDeployments(svc, startDate, endDate)
+		if err != nil {
+			return nil, err
+		}
+		if len(dps) > 0 {
+			return &dps[0], nil
+		}
+	}
+
+	return nil, fmt.Errorf("no deployment found for service %s in the last 20 weeks", svc)
 }
 
 func formatTime(t time.Time) string {
