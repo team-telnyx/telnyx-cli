@@ -18,6 +18,7 @@ import (
 func init() {
 	instanceCmd.Flags().StringP("env", "e", "prod", "The Consul environment to use")
 	instanceCmd.Flags().StringP("datacenter", "d", "", "The Consul datacenter to use")
+	instanceCmd.Flags().BoolP("canary", "c", false, "Filters only canary instances")
 
 	getCmd.AddCommand(instanceCmd)
 }
@@ -59,6 +60,7 @@ and will be printed following the format:
 		svc := args[0]
 		env, _ := cmd.Flags().GetString("env")
 		dc, _ := cmd.Flags().GetString("datacenter")
+		filterCanary, _ := cmd.Flags().GetBool("canary")
 
 		printService(svc)
 
@@ -66,17 +68,17 @@ and will be printed following the format:
 			ists := consul.GetInstancesByEnv(env, svc)
 			for _, ist := range ists {
 				printDatacenter(ist.Dc)
-				printInstances(ist.Instances)
+				printInstances(ist.Instances, filterCanary)
 			}
 		} else {
 			ists := consul.GetInstancesByDc(dc, svc)
 			printDatacenter(dc)
-			printInstances(ists)
+			printInstances(ists, filterCanary)
 		}
 	},
 }
 
-func printInstances(svcs []*api.ServiceEntry) {
+func printInstances(svcs []*api.ServiceEntry, filterCanary bool) {
 	// Group by version
 	groupedInstances := make(map[string][]*api.ServiceEntry)
 	for _, s := range svcs {
@@ -87,7 +89,7 @@ func printInstances(svcs []*api.ServiceEntry) {
 	for version, svcs := range groupedInstances {
 		fmt.Printf("  • %d instances running version %s\n", len(svcs), version)
 		for _, svc := range svcs {
-			printInstance(svc)
+			printInstance(svc, filterCanary)
 		}
 	}
 }
@@ -108,7 +110,11 @@ func printService(svc string) {
 	color.Magenta("▶ %s", svc)
 }
 
-func printInstance(svc *api.ServiceEntry) {
+func printInstance(svc *api.ServiceEntry, filterCanary bool) {
+	if filterCanary && !isCanary(svc) {
+		return
+	}
+
 	version := instanceVersion(svc)
 	healthStatus := svc.Checks.AggregatedStatus()
 	healthColorFunc := colorByHealthStatus(healthStatus).SprintFunc()
