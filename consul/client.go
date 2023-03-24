@@ -20,9 +20,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-type dcInstances struct {
+type DcInstances struct {
 	Dc        string
 	Instances []*api.ServiceEntry
+	Error     error
 }
 
 type ServiceVersion struct {
@@ -105,13 +106,13 @@ func GetServicesByEnv(env string) map[string][]string {
 	return svcs
 }
 
-func GetInstancesByEnv(env string, svc string) []*dcInstances {
+func GetInstancesByEnv(env string, svc string) []*DcInstances {
 	dcs, err := FetchDatacenters(env)
 	if err != nil {
 		cobra.CheckErr(err)
 	}
 
-	ch := make(chan *dcInstances)
+	ch := make(chan *DcInstances)
 
 	go func() {
 		var wg sync.WaitGroup
@@ -125,7 +126,7 @@ func GetInstancesByEnv(env string, svc string) []*dcInstances {
 		close(ch)
 	}()
 
-	var ists []*dcInstances
+	var ists []*DcInstances
 	for res := range ch {
 		ists = append(ists, res)
 	}
@@ -133,18 +134,19 @@ func GetInstancesByEnv(env string, svc string) []*dcInstances {
 	return ists
 }
 
-func fetchInstancesByDcAsync(dc string, svc string, ch chan<- *dcInstances, wg *sync.WaitGroup) {
+func fetchInstancesByDcAsync(dc string, svc string, ch chan<- *DcInstances, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	instances := GetInstancesByDc(dc, svc)
+	instances, err := GetInstancesByDc(dc, svc)
 
-	ch <- &dcInstances{
+	ch <- &DcInstances{
 		Dc:        dc,
 		Instances: instances,
+		Error:     err,
 	}
 }
 
-func GetInstancesByDc(dc string, svc string) []*api.ServiceEntry {
+func GetInstancesByDc(dc string, svc string) ([]*api.ServiceEntry, error) {
 	client, err := api.NewClient(consulConfigForDc(dc))
 	if err != nil {
 		cobra.CheckErr(err)
@@ -156,10 +158,10 @@ func GetInstancesByDc(dc string, svc string) []*api.ServiceEntry {
 
 	instances, _, err := client.Health().Service(svc, "", false, q)
 	if err != nil {
-		cobra.CheckErr(err)
+		return nil, err
 	}
 
-	return instances
+	return instances, nil
 }
 
 func EnableInstanceMaintenance(svc *api.ServiceEntry, dc, reason string) error {

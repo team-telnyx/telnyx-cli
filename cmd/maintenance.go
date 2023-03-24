@@ -93,14 +93,17 @@ telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.co
 		if node == "" {
 			svc := args[0]
 			dc := args[1]
-			instances := consul.GetInstancesByDc(dc, svc)
+			instances, err := consul.GetInstancesByDc(dc, svc)
+			if err != nil {
+				cobra.CheckErr(err)
+			}
 
 			if len(instances) == 0 {
 				err := fmt.Errorf("service %s was not found on %s", svc, dc)
 				cobra.CheckErr(err)
 			}
 
-			err := confirm(disable, svc, dc, instances)
+			err = confirm(disable, svc, dc, instances)
 			if err != nil {
 				cobra.CheckErr(err)
 			}
@@ -125,7 +128,10 @@ telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.co
 			dc := args[1]
 			node, _ := cmd.Flags().GetString("node")
 
-			dcInstances := consul.GetInstancesByDc(dc, svc)
+			dcInstances, err := consul.GetInstancesByDc(dc, svc)
+			if err != nil {
+				cobra.CheckErr(err)
+			}
 			var instances []*api.ServiceEntry
 
 			for _, inst := range dcInstances {
@@ -139,7 +145,7 @@ telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.co
 				cobra.CheckErr(err)
 			}
 
-			err := confirm(disable, svc, node, instances)
+			err = confirm(disable, svc, node, instances)
 			if err != nil {
 				cobra.CheckErr(err)
 			}

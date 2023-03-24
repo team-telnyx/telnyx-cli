@@ -65,20 +65,34 @@ and will be printed following the format:
 		printService(svc)
 
 		if dc == "" {
-			ists := consul.GetInstancesByEnv(env, svc)
-			for _, ist := range ists {
-				printDatacenter(ist.Dc)
-				printInstances(ist.Instances, filterCanary)
+			dcInsts := consul.GetInstancesByEnv(env, svc)
+			for _, dcIst := range dcInsts {
+				printDatacenter(dcIst.Dc)
+				printInstances(dcIst, filterCanary)
 			}
 		} else {
-			ists := consul.GetInstancesByDc(dc, svc)
+			ists, err := consul.GetInstancesByDc(dc, svc)
+			if err != nil {
+				printDatacenter(dc)
+				fmt.Printf("  • %s\n", err)
+				return
+			}
 			printDatacenter(dc)
-			printInstances(ists, filterCanary)
+			doPrintInstances(ists, filterCanary)
 		}
 	},
 }
 
-func printInstances(svcs []*api.ServiceEntry, filterCanary bool) {
+func printInstances(dcInstance *consul.DcInstances, filterCanary bool) {
+	if dcInstance.Error != nil {
+		fmt.Printf("  • %s\n", dcInstance.Error)
+		return
+	}
+
+	doPrintInstances(dcInstance.Instances, filterCanary)
+}
+
+func doPrintInstances(svcs []*api.ServiceEntry, filterCanary bool) {
 	// Group by version
 	groupedInstances := make(map[string][]*api.ServiceEntry)
 	for _, s := range svcs {
