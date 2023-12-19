@@ -10,7 +10,7 @@ Package privateapi implements routines for interacting with private-api service.
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"time"
 
@@ -27,6 +27,15 @@ type UserQuery struct {
 type ConnectionQuery struct {
 	Id     string `url:"connection_id"`
 	UserId string `url:"user_id"`
+}
+
+type NumberQuery struct {
+	TnE164       string `url:"tn_e164"`
+	ConnectionId string `url:"connection_id"`
+	UserId       string `url:"user_id"`
+	Fqdn         string `url:"fqdn"`
+	Ip           string `url:"ip"`
+	Username     string `url:"username"`
 }
 
 type UserShort struct {
@@ -210,6 +219,67 @@ type ConnectionFqdn struct {
 	Port   int    `json:"port"`
 }
 
+type Number struct {
+	UserId                       string           `json:"user_id"`
+	UserType                     string           `json:"user_type"`
+	NumberId                     int64            `json:"number_id"`
+	ConnectionId                 string           `json:"connection_id"`
+	NumberValue                  string           `json:"number_value"`
+	Tn                           string           `json:"tn"`
+	TnE164                       string           `json:"tn_e164"`
+	CreatedAt                    string           `json:"created_at"`
+	UpdatedAt                    string           `json:"updated_at"`
+	IgnoreTechPrefix             bool             `json:"ignore_tech_prefix"`
+	EnableTechPrefix             bool             `json:"enable_tech_prefix"`
+	ForwardsTo                   string           `json:"forwards_to"`
+	ForwardingType               string           `json:"forwarding_type"`
+	AddressId                    string           `json:"address_id"`
+	E911Enabled                  bool             `json:"e911_enabled"`
+	E911Provider                 string           `json:"e911_provider"`
+	E911AddressId                string           `json:"e911_address_id"`
+	EmergencyEnabled             bool             `json:"emergency_enabled"`
+	EmergencyProvider            string           `json:"emergency_provider"`
+	EmergencyAddressId           string           `json:"emergency_address_id"`
+	EnableOnNetCalling           bool             `json:"enable_on_net_calling"`
+	EnableCallerIdName           bool             `json:"enable_caller_id_name"`
+	UsagePaymentMethod           string           `json:"usage_payment_method"`
+	EnableRTPAutoAdjust          bool             `json:"enable_rtp_auto_adjust"`
+	MediaHandlingMode            string           `json:"media_handling_mode"`
+	RoutingMethod                string           `json:"routing_method"`
+	PortingStatus                string           `json:"porting_status"`
+	Translated                   string           `json:"translated"`
+	Status                       string           `json:"status"`
+	TagList                      []string         `json:"tag_list"`
+	CNAM                         *NumberCNAM      `json:"cnam"`
+	Enabled                      bool             `json:"enabled"`
+	Details                      string           `json:"details"`
+	IpsPorts                     []*NumberIpPort  `json:"ips_ports"`
+	Gateways                     []*NumberGateway `json:"gateways"`
+	FQDNs                        []*FQDN          `json:"fqdns"`
+	T38FaxGatewayEnabled         bool             `json:"t38_fax_gateway_enabled"`
+	AcceptAnyRTPPacketsEnabled   bool             `json:"accept_any_rtp_packets_enabled"`
+	ExternalPin                  string           `json:"external_pin"`
+	InboundCallRecordingEnabled  bool             `json:"inbound_call_recording_enabled"`
+	InboundCallRecordingChannels string           `json:"inbound_call_recording_channels"`
+	InboundCallRecordingFormat   string           `json:"inbound_call_recording_format"`
+	BillingGroupId               string           `json:"billing_group_id"`
+	NumberLevelRouting           string           `json:"number_level_routing"`
+}
+
+type NumberCNAM struct {
+	Enabled bool   `json:"enabled"`
+	Details string `json:"details"`
+}
+
+type NumberIpPort struct {
+}
+
+type NumberGateway struct {
+}
+
+type FQDN struct {
+}
+
 func (u *User) ToShort() *UserShort {
 	return &UserShort{
 		Id:                         u.Id,
@@ -273,44 +343,7 @@ func FetchUsers(env string, q *UserQuery) ([]*User, error) {
 	v, _ := query.Values(q)
 	url := fmt.Sprintf("%s/accounts?%s", e, v.Encode())
 
-	httpClient := http.Client{
-		Timeout: time.Second * 5,
-	}
-
-	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("Content-Type", "application/json; charset=utf-8")
-	req.Header.Set("User-Agent", "telnyx-cli")
-
-	res, getErr := httpClient.Do(req)
-	if getErr != nil {
-		return nil, getErr
-	}
-
-	if res.Body != nil {
-		defer res.Body.Close()
-	}
-
-	body, readErr := ioutil.ReadAll(res.Body)
-	if readErr != nil {
-		return nil, readErr
-	}
-
-	switch res.StatusCode {
-	case 200:
-		var response []*User
-		if err = json.Unmarshal(body, &response); err != nil {
-			return nil, err
-		}
-		return response, nil
-	case 404:
-		return nil, fmt.Errorf("not found")
-	}
-
-	return nil, fmt.Errorf("error: %s", body)
+	return doRequest[User](url)
 }
 
 func FetchConnections(env string, q *ConnectionQuery) ([]*Connection, error) {
@@ -322,6 +355,22 @@ func FetchConnections(env string, q *ConnectionQuery) ([]*Connection, error) {
 	v, _ := query.Values(q)
 	url := fmt.Sprintf("%s/connections?%s", e, v.Encode())
 
+	return doRequest[Connection](url)
+}
+
+func FetchNumbers(env string, q *NumberQuery) ([]*Number, error) {
+	e, err := privateApiUrlForEnv(env)
+	if err != nil {
+		return nil, err
+	}
+
+	v, _ := query.Values(q)
+	url := fmt.Sprintf("%s/numbers?%s", e, v.Encode())
+
+	return doRequest[Number](url)
+}
+
+func doRequest[T any](url string) ([]*T, error) {
 	httpClient := http.Client{
 		Timeout: time.Second * 5,
 	}
@@ -343,14 +392,14 @@ func FetchConnections(env string, q *ConnectionQuery) ([]*Connection, error) {
 		defer res.Body.Close()
 	}
 
-	body, readErr := ioutil.ReadAll(res.Body)
+	body, readErr := io.ReadAll(res.Body)
 	if readErr != nil {
 		return nil, readErr
 	}
 
 	switch res.StatusCode {
 	case 200:
-		var response []*Connection
+		var response []*T
 		if err = json.Unmarshal(body, &response); err != nil {
 			return nil, err
 		}

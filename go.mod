@@ -1,6 +1,6 @@
 module github.com/team-telnyx/telnyx-cli
 
-go 1.18
+go 1.21.5
 
 require (
 	github.com/fatih/color v1.13.0
