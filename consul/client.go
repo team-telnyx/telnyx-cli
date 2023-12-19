@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -36,7 +37,14 @@ func FetchDatacenters(env string) ([]string, error) {
 		cobra.CheckErr(err)
 	}
 
-	return client.Catalog().Datacenters()
+	dcs, err := client.Catalog().Datacenters()
+	if err != nil {
+		return nil, err
+	}
+
+	sort.Strings(dcs)
+
+	return dcs, nil
 }
 
 // TODO: move Map into its own type to improve readability
@@ -130,6 +138,11 @@ func GetInstancesByEnv(env string, svc string) []*DcInstances {
 	for res := range ch {
 		ists = append(ists, res)
 	}
+
+	// Sort by DC name
+	sort.Slice(ists, func(i, j int) bool {
+		return ists[i].Dc < ists[j].Dc
+	})
 
 	return ists
 }
