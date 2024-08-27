@@ -6,11 +6,12 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
+	
 	"github.com/hashicorp/consul/api"
 	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/cobra"
 	"github.com/team-telnyx/telnyx-cli/consul"
+	"github.com/team-telnyx/telnyx-cli/tailscale"
 )
 
 // maintCmd represents the maintenance command
@@ -89,6 +90,7 @@ telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.co
 		disable, _ := cmd.Flags().GetBool("disable")
 		node, _ := cmd.Flags().GetString("node")
 		reason, _ := cmd.Flags().GetString("reason")
+		reason = tailscale.GetTailscaleUser() + " - " + reason
 
 		if node == "" {
 			svc := args[0]
