@@ -1,6 +1,5 @@
 /*
 Copyright © Telnyx LLC
-
 */
 package get
 
@@ -32,7 +31,7 @@ var instanceCmd = &cobra.Command{
 Lists the running instances of a given service. Instances will be grouped by datacenter,
 and will be printed following the format:
 
-	[node-name][ipv4][version][canary|empty][health status]
+	[node-name][ipv4][version][canary|empty][health status | notes|empty]
 	`,
 	Args: cobra.ExactArgs(1),
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
@@ -132,7 +131,6 @@ func printInstance(svc *api.ServiceEntry, filterCanary bool) {
 	version := instanceVersion(svc)
 	healthStatus := svc.Checks.AggregatedStatus()
 	healthColorFunc := colorByHealthStatus(healthStatus).SprintFunc()
-
 	fmt.Printf(
 		"    » [%s][%s:%s][%s]%s[%s]\n",
 		color.CyanString(svc.Node.Node),
@@ -140,7 +138,8 @@ func printInstance(svc *api.ServiceEntry, filterCanary bool) {
 		color.CyanString(strconv.Itoa(svc.Service.Port)),
 		color.CyanString(version),
 		printTags(svc),
-		healthColorFunc(svc.Checks.AggregatedStatus()),
+		printStatus(healthColorFunc, svc),
+		// printNotes(svc),
 	)
 }
 
@@ -169,6 +168,20 @@ func printTags(svc *api.ServiceEntry) string {
 		return fmt.Sprintf("[%s]", color.YellowString("canary"))
 	}
 
+	return ""
+}
+
+func printStatus(healthColorFunc func(a ...interface{}) string, svc *api.ServiceEntry) string {
+	// return healthColorFunc(svc.Checks.AggregatedStatus())
+	return healthColorFunc(svc.Checks.AggregatedStatus()) + printNotes(svc)
+}
+
+func printNotes(svc *api.ServiceEntry) string {
+	for _, check := range svc.Checks {
+		if check.Type == "maintenance" {
+			return fmt.Sprintf(" | %s", color.BlueString(check.Notes))
+		}
+	}
 	return ""
 }
 
