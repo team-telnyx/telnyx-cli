@@ -7,7 +7,7 @@ on:
 
 jobs:
   goreleaser:
-    runs-on: telnyx-small
+    runs-on: telnyx-2xlarge
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,4 +26,4 @@ jobs:
           version: latest
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
