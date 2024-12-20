@@ -89,6 +89,7 @@ telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.comput
 	RunE: func(cmd *cobra.Command, args []string) error {
 		disable, _ := cmd.Flags().GetBool("disable")
 		nodes, _ := cmd.Flags().GetStringSlice("node")
+		nodes = removeDuplicates(nodes)
 		reason, _ := cmd.Flags().GetString("reason")
 		reason = tailscale.GetTailscaleUser() + " - " + reason
 
@@ -102,7 +103,8 @@ telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.comput
 			}
 
 			if len(instances) == 0 {
-				err := fmt.Errorf("service %s was not found on %s", svc, dc)
+				err := fmt.Errorf("no instances found for service %s in %s. Specified nodes: %s",
+					svc, dc, strings.Join(nodes, ", "))
 				cobra.CheckErr(err)
 			}
 
@@ -217,6 +219,23 @@ func confirm(disable bool, svc, siteOrNode string, instances []*api.ServiceEntry
 		return nil
 	}
 	return errors.New("operation aborted")
+}
+
+// removeDuplicates filters out duplicate and empty node names while preserving order
+func removeDuplicates(nodes []string) []string {
+	seen := make(map[string]struct{})
+	result := []string{}
+	for _, node := range nodes {
+		// Skip empty nodes
+		if node = strings.TrimSpace(node); node == "" {
+			continue
+		}
+		if _, exists := seen[node]; !exists {
+			seen[node] = struct{}{}
+			result = append(result, node)
+		}
+	}
+	return result
 }
 
 func init() {
