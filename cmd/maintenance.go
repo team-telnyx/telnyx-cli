@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	
+
 	"github.com/hashicorp/consul/api"
 	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/cobra"
@@ -16,7 +16,7 @@ import (
 
 // maintCmd represents the maintenance command
 var maintCmd = &cobra.Command{
-	Use:     "maintenance [(-d|--disable)] service site [(-n|--node) node] [(-r|--reason) reason]",
+	Use:     "maintenance [(-d|--disable)] service site [(-n|--node) node...] [(-r|--reason) reason]",
 	Aliases: []string{"maint"},
 	Short:   "Toggle service maintenance in Consul",
 	Long: `
@@ -25,7 +25,7 @@ tries to enable maintenance mode, unless the flag -d|--disable is provided.
 
 Tip: the "--node" identifier can be found by listing the service instances via
 "telnyx-cli get instance <service>". The node identifier is the value defined
-inside the first [] characters.
+inside the first [] characters. You can specify multiple nodes using multiple -n flags.
 
 
 Examples:
@@ -36,8 +36,8 @@ telnyx-cli maintenance sv1-dev call-control --reason "Something wrong happened"
 # Disable maintenance mode on all call-control instances present in sv1-dev
 telnyx-cli maintenance --disable sv1-dev call-control
 
-# Enable maintenance mode on the call-control instance present in node ip-10-48-192-204.us-west-1.compute.internal
-telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.compute.internal
+# Enable maintenance mode on specific call-control instances present in multiple nodes
+telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.compute.internal -n ip-10-48-192-205.us-west-1.compute.internal
 	`,
 	Example: "maintenance --disable call-control-agent ch1-dev",
 	Args:    cobra.ExactArgs(2),
@@ -88,13 +88,14 @@ telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.co
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 		disable, _ := cmd.Flags().GetBool("disable")
-		node, _ := cmd.Flags().GetString("node")
+		nodes, _ := cmd.Flags().GetStringSlice("node")
 		reason, _ := cmd.Flags().GetString("reason")
 		reason = tailscale.GetTailscaleUser() + " - " + reason
 
-		if node == "" {
-			svc := args[0]
-			dc := args[1]
+		svc := args[0]
+		dc := args[1]
+
+		if len(nodes) == 0 {
 			instances, err := consul.GetInstancesByDc(dc, svc)
 			if err != nil {
 				cobra.CheckErr(err)
@@ -126,38 +127,46 @@ telnyx-cli maintenance sv1-dev call-control --node ip-10-48-192-204.us-west-1.co
 				}
 			}
 		} else {
-			svc := args[0]
-			dc := args[1]
-			node, _ := cmd.Flags().GetString("node")
-
 			dcInstances, err := consul.GetInstancesByDc(dc, svc)
 			if err != nil {
 				cobra.CheckErr(err)
 			}
 			var instances []*api.ServiceEntry
 
+			// Filter instances by the provided nodes
 			for _, inst := range dcInstances {
-				if inst.Node.Node == node {
-					instances = append(instances, inst)
+				for _, node := range nodes {
+					if inst.Node.Node == node {
+						instances = append(instances, inst)
+						break
+					}
 				}
 			}
 
 			if len(instances) == 0 {
-				err := fmt.Errorf("service %s was not found on %s", svc, dc)
+				err := fmt.Errorf("no matching instances found for service %s in %s with specified nodes", svc, dc)
 				cobra.CheckErr(err)
 			}
 
-			err = confirm(disable, svc, node, instances)
+			err = confirm(disable, svc, fmt.Sprintf("%s (nodes: %s)", dc, strings.Join(nodes, ", ")), instances)
 			if err != nil {
 				cobra.CheckErr(err)
 			}
 
+			bar := buildProgressBar(instances)
+
 			if disable {
-				err := consul.DisableInstanceMaintenance(instances[0], dc)
-				cobra.CheckErr(err)
+				for _, inst := range instances {
+					err := consul.DisableInstanceMaintenance(inst, dc)
+					cobra.CheckErr(err)
+					bar.Add(1)
+				}
 			} else {
-				err := consul.EnableInstanceMaintenance(instances[0], dc, reason)
-				cobra.CheckErr(err)
+				for _, inst := range instances {
+					err := consul.EnableInstanceMaintenance(inst, dc, reason)
+					cobra.CheckErr(err)
+					bar.Add(1)
+				}
 			}
 		}
 		fmt.Println("\nDone!")
@@ -212,7 +221,7 @@ func confirm(disable bool, svc, siteOrNode string, instances []*api.ServiceEntry
 
 func init() {
 	maintCmd.Flags().BoolP("disable", "d", false, "Disable the service maintenance in Consul")
-	maintCmd.Flags().StringP("node", "n", "", "Defines the instance to be put/removed into maintenance in Consul")
+	maintCmd.Flags().StringSliceP("node", "n", []string{}, "Defines the instance(s) to be put/removed into maintenance in Consul (can be specified multiple times)")
 	maintCmd.Flags().StringP(
 		"reason",
 		"r",
