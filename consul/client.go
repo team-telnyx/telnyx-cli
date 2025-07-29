@@ -42,9 +42,17 @@ func FetchDatacenters(env string) ([]string, error) {
 		return nil, err
 	}
 
-	sort.Strings(dcs)
+	// Filter datacenters to only include those with "dev" or "prod" in the name
+	var validDcs []string
+	for _, dc := range dcs {
+		if strings.Contains(dc, "dev") || strings.Contains(dc, "prod") {
+			validDcs = append(validDcs, dc)
+		}
+	}
 
-	return dcs, nil
+	sort.Strings(validDcs)
+
+	return validDcs, nil
 }
 
 // TODO: move Map into its own type to improve readability
