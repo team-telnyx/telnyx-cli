@@ -1,1 +1,5 @@
 telnyx-cli
+
+# IDEs
+.idea
+.vscode
