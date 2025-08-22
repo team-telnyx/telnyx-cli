@@ -5,23 +5,60 @@ and [Viper](https://github.com/spf13/viper) libraries, which provide a foundatio
 
 ## Getting started
 
-**Install Go in your system**
+**Option 1: Install from GitHub Releases**
 
-I suggest using a tool like [asdf](https://asdf-vm.com/) to manage the Go versions in your system. This [plugin](https://github.com/kennyp/asdf-golang) should
-get the job done.
+1. Visit the [Releases](https://github.com/team-telnyx/telnyx-cli/releases) page of the repository
+2. Download the appropriate version for your platform:
+   - For Mac M1/M2 (Apple Silicon): `telnyx-cli_Darwin_arm64.tar.gz`
+   - For Mac Intel: `telnyx-cli_Darwin_x86_64.tar.gz`
+   - For Linux: `telnyx-cli_Linux_x86_64.tar.gz`
+3. Extract the archive:
+   ```bash
+   tar -xzf telnyx-cli_<OS>_<ARCH>.tar.gz
+   ```
+4. Move the binary to a location in your PATH:
+   ```bash
+   sudo mv telnyx-cli /usr/local/bin/
+   ```
 
-**Download the CLI**
+**Option 2: Install using Go**
 
-You will first need to configure your Github credentials so Go can download the CLI from the Telnyx-owned private repository:
+Before installing the CLI, you need to set up Go in your system:
 
-1) Create a Github Personal Access Token following [these instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
-2) Add the following line `machine github.com login your_github_username password your_github_access_token` to `~/.netrc` (create the file if it doesn't exist).
+1. Install Go:
+   - Using asdf (recommended):
+     ```bash
+     # Install asdf if you haven't already
+     git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.13.1
+     
+     # Add to your shell (for bash)
+     echo '. "$HOME/.asdf/asdf.sh"' >> ~/.bashrc
+     echo '. "$HOME/.asdf/completions/asdf.bash"' >> ~/.bashrc
+     
+     # Install Go plugin
+     asdf plugin add golang https://github.com/kennyp/asdf-golang.git
+     
+     # Install Go 1.21.5
+     asdf install golang 1.21.5
+     asdf global golang 1.21.5
+     ```
+   
+   - Alternative methods:
+     - macOS: `brew install go`
+     - Linux: Use your distribution's package manager
+     - Windows: Download from [Go's official website](https://golang.org/dl/)
 
-This will allow you to install the CLI binary directly:
+2. Configure GitHub credentials (required for private repository access):
+   - Create a GitHub Personal Access Token following [these instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+   - Add the following line to `~/.netrc` (create the file if it doesn't exist):
+     ```
+     machine github.com login your_github_username password your_github_access_token
+     ```
 
-```
-GOPRIVATE=github.com/team-telnyx go install github.com/team-telnyx/telnyx-cli@latest
-```
+3. Install the CLI:
+   ```bash
+   GOPRIVATE=github.com/team-telnyx go install github.com/team-telnyx/telnyx-cli@latest
+   ```
 
 **Initialize the CLI**
 
