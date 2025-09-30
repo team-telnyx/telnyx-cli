@@ -42,23 +42,15 @@ func FetchDatacenters(env string) ([]string, error) {
 		return nil, err
 	}
 
-	// Filter datacenters to only include those with "dev" or "prod" in the name
-	var validDcs []string
-	for _, dc := range dcs {
-		if strings.Contains(dc, "dev") || strings.Contains(dc, "prod") {
-			validDcs = append(validDcs, dc)
-		}
-	}
+	sort.Strings(dcs)
 
-	sort.Strings(validDcs)
-
-	return validDcs, nil
+	return dcs, nil
 }
 
 // TODO: move Map into its own type to improve readability
 // TODO: refactor function to use cache
-func GetServicesByDc(dc string) map[string][]string {
-	client, err := api.NewClient(consulConfigForDc(dc))
+func GetServicesByDc(dc string, env string) map[string][]string {
+	client, err := api.NewClient(ConsulConfigForDc(dc, env))
 	if err != nil {
 		cobra.CheckErr(err)
 	}
@@ -103,7 +95,7 @@ func GetServicesByEnv(env string) map[string][]string {
 			go func(dc string, ch chan<- map[string][]string, wg *sync.WaitGroup) {
 				defer wg.Done()
 
-				ch <- GetServicesByDc(dc)
+				ch <- GetServicesByDc(dc, env)
 			}(dc, ch, &wg)
 		}
 
@@ -135,7 +127,7 @@ func GetInstancesByEnv(env string, svc string) []*DcInstances {
 		wg.Add(len(dcs))
 
 		for _, dc := range dcs {
-			go fetchInstancesByDcAsync(dc, svc, ch, &wg)
+			go fetchInstancesByDcAsync(dc, svc, env, ch, &wg)
 		}
 
 		wg.Wait()
@@ -155,10 +147,10 @@ func GetInstancesByEnv(env string, svc string) []*DcInstances {
 	return ists
 }
 
-func fetchInstancesByDcAsync(dc string, svc string, ch chan<- *DcInstances, wg *sync.WaitGroup) {
+func fetchInstancesByDcAsync(dc string, svc string, env string, ch chan<- *DcInstances, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	instances, err := GetInstancesByDc(dc, svc)
+	instances, err := GetInstancesByDc(dc, svc, env)
 
 	ch <- &DcInstances{
 		Dc:        dc,
@@ -167,8 +159,8 @@ func fetchInstancesByDcAsync(dc string, svc string, ch chan<- *DcInstances, wg *
 	}
 }
 
-func GetInstancesByDc(dc string, svc string) ([]*api.ServiceEntry, error) {
-	client, err := api.NewClient(consulConfigForDc(dc))
+func GetInstancesByDc(dc string, svc string, env string) ([]*api.ServiceEntry, error) {
+	client, err := api.NewClient(ConsulConfigForDc(dc, env))
 	if err != nil {
 		cobra.CheckErr(err)
 	}
@@ -185,8 +177,8 @@ func GetInstancesByDc(dc string, svc string) ([]*api.ServiceEntry, error) {
 	return instances, nil
 }
 
-func EnableInstanceMaintenance(svc *api.ServiceEntry, dc, reason string) error {
-	client, err := api.NewClient(consulConfigForInstance(svc, dc))
+func EnableInstanceMaintenance(svc *api.ServiceEntry, dc, env, reason string) error {
+	client, err := api.NewClient(consulConfigForInstance(svc, dc, env))
 	if err != nil {
 		cobra.CheckErr(err)
 	}
@@ -194,8 +186,8 @@ func EnableInstanceMaintenance(svc *api.ServiceEntry, dc, reason string) error {
 	return client.Agent().EnableServiceMaintenance(svc.Service.ID, reason)
 }
 
-func DisableInstanceMaintenance(svc *api.ServiceEntry, dc string) error {
-	client, err := api.NewClient(consulConfigForInstance(svc, dc))
+func DisableInstanceMaintenance(svc *api.ServiceEntry, dc, env string) error {
+	client, err := api.NewClient(consulConfigForInstance(svc, dc, env))
 	if err != nil {
 		cobra.CheckErr(err)
 	}
@@ -257,16 +249,13 @@ func consulConfigForEnv(env string) *api.Config {
 	}
 }
 
-func consulConfigForDc(dc string) *api.Config {
+func ConsulConfigForDc(dc string, env string) *api.Config {
 	var consulUrl string
 
-	if strings.Contains(dc, "dev") {
+	if env == "dev" {
 		consulUrl = viper.GetString("consul_dev_url")
-	} else if strings.Contains(dc, "prod") {
-		consulUrl = viper.GetString("consul_prod_url")
 	} else {
-		err := "invalid datacenter"
-		cobra.CheckErr(err)
+		consulUrl = viper.GetString("consul_prod_url")
 	}
 
 	return &api.Config{
@@ -276,8 +265,8 @@ func consulConfigForDc(dc string) *api.Config {
 	}
 }
 
-func consulConfigForInstance(svc *api.ServiceEntry, dc string) *api.Config {
-	port := consulPort(dc)
+func consulConfigForInstance(svc *api.ServiceEntry, dc string, env string) *api.Config {
+	port := consulPort(env)
 	addr := strings.Join([]string{consulAgentHost(svc), port}, ":")
 
 	return &api.Config{
@@ -295,8 +284,8 @@ func consulAgentHost(svc *api.ServiceEntry) string {
 	}
 }
 
-func consulPort(dc string) string {
-	if strings.Contains(dc, "prod") {
+func consulPort(env string) string {
+	if env == "prod" {
 		return "28500"
 	}
 	return "18500"

@@ -16,7 +16,7 @@ import (
 
 // maintCmd represents the maintenance command
 var maintCmd = &cobra.Command{
-	Use:     "maintenance [(-d|--disable)] service site [(-n|--node) node...] [(-r|--reason) reason]",
+	Use:     "maintenance service datacenter [(-d|--disable)] [(-e|--env) environment] [(-n|--node) node...] [(-r|--reason) reason]",
 	Aliases: []string{"maint"},
 	Short:   "Toggle service maintenance in Consul",
 	Long: `
@@ -31,15 +31,15 @@ inside the first [] characters. You can specify multiple nodes using multiple -n
 Examples:
 
 # Enable maintenance mode on all call-control instances present in sv1-dev with provided reason
-telnyx-cli maintenance sv1-dev call-control --reason "Something wrong happened"
+telnyx-cli maintenance call-control sv1-dev -e dev --reason "Something wrong happened"
 
 # Disable maintenance mode on all call-control instances present in sv1-dev
-telnyx-cli maintenance --disable sv1-dev call-control
+telnyx-cli maintenance call-control sv1-dev -e dev --disable
 
 # Enable maintenance mode on specific call-control instances present in multiple nodes
-telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.compute.internal -n ip-10-48-192-205.us-west-1.compute.internal
+telnyx-cli maintenance call-control sv1-dev -e dev -n ip-10-48-192-204.us-west-1.compute.internal -n ip-10-48-192-205.us-west-1.compute.internal
 	`,
-	Example: "maintenance --disable call-control-agent ch1-dev",
+	Example: "maintenance call-control ch1-dev -e dev --disable",
 	Args:    cobra.ExactArgs(2),
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		switch len(args) {
@@ -92,12 +92,13 @@ telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.comput
 		nodes = removeDuplicates(nodes)
 		reason, _ := cmd.Flags().GetString("reason")
 		reason = tailscale.GetTailscaleUser() + " - " + reason
+		env, _ := cmd.Flags().GetString("env")
 
 		svc := args[0]
 		dc := args[1]
 
 		if len(nodes) == 0 {
-			instances, err := consul.GetInstancesByDc(dc, svc)
+			instances, err := consul.GetInstancesByDc(dc, svc, env)
 			if err != nil {
 				cobra.CheckErr(err)
 			}
@@ -117,19 +118,19 @@ telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.comput
 
 			if disable {
 				for _, inst := range instances {
-					err := consul.DisableInstanceMaintenance(inst, dc)
+					err := consul.DisableInstanceMaintenance(inst, dc, env)
 					cobra.CheckErr(err)
 					bar.Add(1)
 				}
 			} else {
 				for _, inst := range instances {
-					err := consul.EnableInstanceMaintenance(inst, dc, reason)
+					err := consul.EnableInstanceMaintenance(inst, dc, env, reason)
 					cobra.CheckErr(err)
 					bar.Add(1)
 				}
 			}
 		} else {
-			dcInstances, err := consul.GetInstancesByDc(dc, svc)
+			dcInstances, err := consul.GetInstancesByDc(dc, svc, env)
 			if err != nil {
 				cobra.CheckErr(err)
 			}
@@ -159,13 +160,13 @@ telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.comput
 
 			if disable {
 				for _, inst := range instances {
-					err := consul.DisableInstanceMaintenance(inst, dc)
+					err := consul.DisableInstanceMaintenance(inst, dc, env)
 					cobra.CheckErr(err)
 					bar.Add(1)
 				}
 			} else {
 				for _, inst := range instances {
-					err := consul.EnableInstanceMaintenance(inst, dc, reason)
+					err := consul.EnableInstanceMaintenance(inst, dc, env, reason)
 					cobra.CheckErr(err)
 					bar.Add(1)
 				}
@@ -240,6 +241,7 @@ func removeDuplicates(nodes []string) []string {
 
 func init() {
 	maintCmd.Flags().BoolP("disable", "d", false, "Disable the service maintenance in Consul")
+	maintCmd.Flags().StringP("env", "e", "prod", "The Consul environment to use (dev or prod)")
 	maintCmd.Flags().StringSliceP("node", "n", []string{}, "Defines the instance(s) to be put/removed into maintenance in Consul (can be specified multiple times)")
 	maintCmd.Flags().StringP(
 		"reason",

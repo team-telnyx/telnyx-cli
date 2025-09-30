@@ -1,0 +1,20 @@
+[meta]
+version=1.0
+format_rules=Simple guidelines, one instruction per line. Written in clear English.
+source=https://platform-handbook.internal.telnyx.com/static/decision_record/guidelines/llm-repo-instructions
+
+[ai_agent_software_engineer]
+# This repository follows the central LLM instructions defined in the platform handbook
+For the complete set of instructions, please follow the instructions in this url (under [ai_agent_software_engineer]):
+https://platform-handbook.internal.telnyx.com/static/decision_record/guidelines/llm-repo-instructions
+
+# Repository-specific customizations can be added in .llm-repo-instructions-extra file
+Read .llm-repo-instructions-extra file in the root of the repository for additional instructions (under [ai_agent_software_engineer]).
+
+[ai_agent_code_reviewer]
+# This repository follows the central LLM instructions defined in the platform handbook
+For the complete set of instructions, please follow the instructions in this url (under [ai_agent_code_reviewer]):
+https://platform-handbook.internal.telnyx.com/static/decision_record/guidelines/llm-repo-instructions
+
+# Repository-specific customizations can be added in .llm-repo-instructions-extra file
+Read .llm-repo-instructions-extra file in the root of the repository for additional instructions (under [ai_agent_code_reviewer]).
