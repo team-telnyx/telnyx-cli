@@ -55,7 +55,12 @@ var initCmd = &cobra.Command{
 
 		f.Sync()
 
-		fmt.Println("Done")
+		fmt.Println("Done!")
+		fmt.Println()
+		fmt.Println("Note: To use 'telnyx-cli get service-diff', configure your GitHub token:")
+		fmt.Println("  1. Create token at: https://github.com/settings/tokens (needs 'repo' scope)")
+		fmt.Println("  2. Edit ~/.telnyx-cli/config.yaml and add:")
+		fmt.Println("     github_token: your_token_here")
 	},
 }
 

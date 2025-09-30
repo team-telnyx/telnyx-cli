@@ -31,6 +31,15 @@ type ServiceVersion struct {
 	Version string `json:"version"`
 }
 
+type VersionsByDatacenter struct {
+	Service       string
+	Env           string
+	Versions      map[string]string // datacenter -> version
+	UniqueVersion string            // set only if all DCs have same version
+	HasConflict   bool
+	Error         error
+}
+
 func FetchDatacenters(env string) ([]string, error) {
 	client, err := api.NewClient(consulConfigForEnv(env))
 	if err != nil {
@@ -289,4 +298,65 @@ func consulPort(env string) string {
 		return "28500"
 	}
 	return "18500"
+}
+
+func GetServiceVersions(service, env string) (*VersionsByDatacenter, error) {
+	result := &VersionsByDatacenter{
+		Service:  service,
+		Env:      env,
+		Versions: make(map[string]string),
+	}
+
+	// Reuse existing GetInstancesByEnv which fetches all DCs in parallel
+	dcInstances := GetInstancesByEnv(env, service)
+
+	if len(dcInstances) == 0 {
+		return result, fmt.Errorf("service '%s' not found in environment '%s'", service, env)
+	}
+
+	versionCounts := make(map[string]int)
+
+	for _, dcInst := range dcInstances {
+		if dcInst.Error != nil {
+			// Skip datacenters with errors but continue processing others
+			continue
+		}
+
+		if len(dcInst.Instances) == 0 {
+			// No instances in this datacenter
+			continue
+		}
+
+		// Get version from first instance in this datacenter
+		// All instances in a DC should have the same version
+		version := extractVersionFromInstance(dcInst.Instances[0])
+		result.Versions[dcInst.Dc] = version
+		versionCounts[version]++
+	}
+
+	if len(result.Versions) == 0 {
+		return result, fmt.Errorf("no instances found for service '%s' in environment '%s'", service, env)
+	}
+
+	// Check for version consistency
+	if len(versionCounts) == 1 {
+		result.HasConflict = false
+		// Get the single version
+		for v := range versionCounts {
+			result.UniqueVersion = v
+			break
+		}
+	} else {
+		result.HasConflict = true
+		result.UniqueVersion = ""
+	}
+
+	return result, nil
+}
+
+func extractVersionFromInstance(svc *api.ServiceEntry) string {
+	if svc.Service.Meta["version"] != "" {
+		return svc.Service.Meta["version"]
+	}
+	return GetInstanceVersion(svc)
 }

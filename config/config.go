@@ -17,6 +17,8 @@ type Config struct {
 	ConsulProdUrl     string `yaml:"consul_prod_url"`
 	PrivateApiDevUrl  string `yaml:"private_api_dev_url"`
 	PrivateApiProdUrl string `yaml:"private_api_prod_url"`
+	MetaserviceUrl    string `yaml:"metaservice_url"`
+	GithubToken       string `yaml:"github_token"`
 }
 
 func DefaultConfig() *Config {
@@ -25,6 +27,8 @@ func DefaultConfig() *Config {
 		ConsulProdUrl:     "https://consul.internal.telnyx.com",
 		PrivateApiDevUrl:  "http://privateapi.query.dev.telnyx.io:8082",
 		PrivateApiProdUrl: "http://privateapi.query.prod.telnyx.io:8082",
+		MetaserviceUrl:    "http://meta.query.prod.telnyx.io:5984",
+		GithubToken:       "",
 	}
 }
 

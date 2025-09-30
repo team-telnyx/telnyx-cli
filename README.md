@@ -65,6 +65,33 @@ Before installing the CLI, you need to set up Go in your system:
 The CLI depends on some local configuration files to work properly. You can auto-generate them by running `telnyx-cli init`. This will create the folder `$HOME/.telnyx-cli/`
 and add the initial configuration files there.
 
+**(Optional) Configure GitHub Token for Service Diffs**
+
+The `get service-diff` command compares service versions between environments using GitHub. To use this feature:
+
+1. Create a GitHub Personal Access Token:
+   - Go to https://github.com/settings/tokens
+   - Click "Generate new token (classic)"
+   - Select scope: `repo` (Full control of private repositories)
+   - Generate and copy the token
+
+2. Add token to configuration:
+   ```bash
+   # Edit ~/.telnyx-cli/config.yaml and add:
+   github_token: ghp_your_token_here
+   ```
+
+3. Test the configuration:
+   ```bash
+   telnyx-cli get service-diff call-control
+
+   # Plain format (parsable with awk/cut/grep)
+   telnyx-cli get service-diff call-control --format plain
+
+   # JSON format (parsable with jq)
+   telnyx-cli get service-diff call-control --format json
+   ```
+
 **(Optional) Configure shell autocompletion**
 
 You can generate shell autocompletion scripts by running the command `telnyx-cli completion (SHELL)`. The currently supported shells are:

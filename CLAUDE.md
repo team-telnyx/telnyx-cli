@@ -33,7 +33,7 @@ The CLI uses Cobra's hierarchical command pattern:
 
 - **Root command** (`cmd/root.go`): Base command with global config initialization
 - **Top-level commands** (`cmd/*.go`): `init`, `maintenance`, `deregister`
-- **Nested commands** (`cmd/get/*.go`): All `get` subcommands like `get user`, `get logs`, `get prometheus`
+- **Nested commands** (`cmd/get/*.go`): All `get` subcommands like `get user`, `get logs`, `get prometheus`, `get service-diff`
 
 Commands register themselves via `init()` functions that call `RootCmd.AddCommand()` or parent command's `AddCommand()`.
 
@@ -43,7 +43,7 @@ Main entry point (`main.go`) imports command packages with blank imports to trig
 
 - **Config location**: `~/.telnyx-cli/config.yaml`
 - **Cache location**: `~/.telnyx-cli/cache/`
-- **Config struct** (`config/config.go`): Defines Consul and Private API URLs for dev/prod environments
+- **Config struct** (`config/config.go`): Defines Consul and Private API URLs for dev/prod environments, Metaservice URL, and GitHub token
 - **Viper integration**: Loads YAML config and supports environment variable overrides
 
 ### Service Clients
@@ -60,6 +60,12 @@ Main entry point (`main.go`) imports command packages with blank imports to trig
 
 **Metaservice Client** (`metaservice/client.go`):
 - Deployment and connection information
+- Repository name lookup for GitHub integration
+
+**GitHub Client** (`github/client.go`):
+- Compares commits between versions via GitHub API
+- Extracts Jira ticket IDs from commit messages
+- Parses version strings to extract commit SHAs
 
 **Tailscale Integration** (`tailscale/user.go`):
 - Retrieves current Tailscale user for audit trails

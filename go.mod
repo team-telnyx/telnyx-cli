@@ -16,6 +16,7 @@ require (
 require (
 	github.com/armon/go-metrics v0.3.10 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
+	github.com/google/go-github/v58 v58.0.0 // indirect
 	github.com/hashicorp/go-hclog v1.2.0 // indirect
 	github.com/hashicorp/go-immutable-radix v1.3.1 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect

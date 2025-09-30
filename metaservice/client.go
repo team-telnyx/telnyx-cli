@@ -18,6 +18,7 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 type ViewResponse struct {
@@ -30,6 +31,14 @@ type SuccessfulDeployment struct {
 	Id    string `json:"id"`
 	Key   string `json:"key"`
 	Value string `json:"value"`
+}
+
+type ServiceMeta struct {
+	ID    string `json:"_id"`
+	Names struct {
+		Service string `json:"service"`
+		GitHub  string `json:"github"`
+	} `json:"names"`
 }
 
 type DeploymentResponse struct {
@@ -171,4 +180,62 @@ func fetchDeploymentById(id string) Deployment {
 	}
 
 	return response.Deployments[0]
+}
+
+func GetRepoName(service string) (string, error) {
+	metaserviceUrl := viper.GetString("metaservice_url")
+	if metaserviceUrl == "" {
+		metaserviceUrl = "http://meta.query.prod.telnyx.io:5984"
+	}
+	url := fmt.Sprintf("%s/service/%s", metaserviceUrl, service)
+
+	httpClient := http.Client{
+		Timeout: time.Second * 2,
+	}
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return "", err
+	}
+
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	req.Header.Set("User-Agent", "telnyx-cli")
+
+	res, getErr := httpClient.Do(req)
+	if getErr != nil {
+		return "", fmt.Errorf("failed to fetch service metadata: %w", getErr)
+	}
+
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	if res.StatusCode == 404 {
+		return "", fmt.Errorf("service '%s' not found in metaservice database", service)
+	}
+
+	if res.StatusCode != 200 {
+		return "", fmt.Errorf("metaservice returned status %d", res.StatusCode)
+	}
+
+	body, readErr := ioutil.ReadAll(res.Body)
+	if readErr != nil {
+		return "", fmt.Errorf("failed to read response body: %w", readErr)
+	}
+
+	var response ServiceMeta
+	if err = json.Unmarshal(body, &response); err != nil {
+		return "", fmt.Errorf("failed to parse service metadata: %w", err)
+	}
+
+	// Prefer github name, fallback to service name
+	if response.Names.GitHub != "" {
+		return response.Names.GitHub, nil
+	}
+
+	if response.Names.Service != "" {
+		return response.Names.Service, nil
+	}
+
+	return "", fmt.Errorf("no repository name found for service '%s'", service)
 }
