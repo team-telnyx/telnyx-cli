@@ -1,6 +1,5 @@
 /*
 Copyright © Telnyx LLC
-
 */
 package get
 
@@ -33,7 +32,8 @@ var serviceCmd = &cobra.Command{
 
 		printDatacenter(dc)
 
-		svcs := consul.GetServicesByDc(dc)
+		env := consul.DetermineEnvForDc(dc)
+		svcs := consul.GetServicesByDc(dc, env)
 
 		for svc, tags := range svcs {
 			if filter == "" || strings.HasPrefix(svc, filter) {

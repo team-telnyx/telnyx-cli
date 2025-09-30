@@ -41,7 +41,7 @@ and will be printed following the format:
 		var svcs map[string][]string
 
 		if dc != "" {
-			svcs = consul.GetServicesByDc(dc)
+			svcs = consul.GetServicesByDc(dc, env)
 		} else {
 			svcs = consul.GetServicesByEnv(env)
 		}
@@ -70,7 +70,7 @@ and will be printed following the format:
 				printInstances(dcIst, filterCanary)
 			}
 		} else {
-			ists, err := consul.GetInstancesByDc(dc, svc)
+			ists, err := consul.GetInstancesByDc(dc, svc, env)
 			if err != nil {
 				printDatacenter(dc)
 				fmt.Printf("  • %s\n", err)

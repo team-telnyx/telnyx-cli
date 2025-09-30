@@ -96,8 +96,11 @@ telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.comput
 		svc := args[0]
 		dc := args[1]
 
+		// Determine environment by checking both dev and prod datacenters
+		env := consul.DetermineEnvForDc(dc)
+
 		if len(nodes) == 0 {
-			instances, err := consul.GetInstancesByDc(dc, svc)
+			instances, err := consul.GetInstancesByDc(dc, svc, env)
 			if err != nil {
 				cobra.CheckErr(err)
 			}
@@ -117,19 +120,19 @@ telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.comput
 
 			if disable {
 				for _, inst := range instances {
-					err := consul.DisableInstanceMaintenance(inst, dc)
+					err := consul.DisableInstanceMaintenance(inst, dc, env)
 					cobra.CheckErr(err)
 					bar.Add(1)
 				}
 			} else {
 				for _, inst := range instances {
-					err := consul.EnableInstanceMaintenance(inst, dc, reason)
+					err := consul.EnableInstanceMaintenance(inst, dc, env, reason)
 					cobra.CheckErr(err)
 					bar.Add(1)
 				}
 			}
 		} else {
-			dcInstances, err := consul.GetInstancesByDc(dc, svc)
+			dcInstances, err := consul.GetInstancesByDc(dc, svc, env)
 			if err != nil {
 				cobra.CheckErr(err)
 			}
@@ -159,13 +162,13 @@ telnyx-cli maintenance sv1-dev call-control -n ip-10-48-192-204.us-west-1.comput
 
 			if disable {
 				for _, inst := range instances {
-					err := consul.DisableInstanceMaintenance(inst, dc)
+					err := consul.DisableInstanceMaintenance(inst, dc, env)
 					cobra.CheckErr(err)
 					bar.Add(1)
 				}
 			} else {
 				for _, inst := range instances {
-					err := consul.EnableInstanceMaintenance(inst, dc, reason)
+					err := consul.EnableInstanceMaintenance(inst, dc, env, reason)
 					cobra.CheckErr(err)
 					bar.Add(1)
 				}
