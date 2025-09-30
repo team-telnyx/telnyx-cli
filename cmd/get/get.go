@@ -4,7 +4,6 @@ Copyright © Telnyx LLC
 The get command works as a placeholder where other subcommands can be nested upon, e.g. `get user`.
 It does nothing besides providing some documentation. Check each nested subcommand file for the
 actual implementation.
-
 */
 package get
 

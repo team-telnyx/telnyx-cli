@@ -1,6 +1,5 @@
 /*
 Copyright © Telnyx LLC
-
 */
 package cmd
 
