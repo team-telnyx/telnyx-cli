@@ -15,7 +15,7 @@ import (
 )
 
 var deregisterCmd = &cobra.Command{
-	Use:     "deregister [service] [datacenter] [(-n|--node) node...]",
+	Use:     "deregister [service] [datacenter] [(-e|--env) environment] [(-n|--node) node...]",
 	Aliases: []string{"dereg"},
 	Short:   "Deregister service instances or nodes from Consul catalog",
 	Long: `
@@ -25,21 +25,21 @@ you to remove specific service instances or entire nodes from Consul's service d
 By default, this command will deregister all instances of a service in the specified datacenter.
 You can use the --node flag to specify particular nodes to deregister.
 
-Note: This operation directly modifies the Consul catalog. Use with caution as 
+Note: This operation directly modifies the Consul catalog. Use with caution as
 deregistered services will no longer be discoverable until re-registered.
 
 Examples:
 
 # Deregister all instances of call-control service in sv1-dev datacenter
-telnyx-cli deregister call-control sv1-dev
+telnyx-cli deregister call-control sv1-dev -e dev
 
 # Deregister specific call-control instances on particular nodes
-telnyx-cli deregister call-control sv1-dev -n ip-10-48-192-204.us-west-1.compute.internal -n ip-10-48-192-205.us-west-1.compute.internal
+telnyx-cli deregister call-control sv1-dev -e dev -n ip-10-48-192-204.us-west-1.compute.internal -n ip-10-48-192-205.us-west-1.compute.internal
 
 # Deregister an entire node (all services on that node)
-telnyx-cli deregister --node-only sv1-dev -n ip-10-48-192-204.us-west-1.compute.internal
+telnyx-cli deregister sv1-dev -e dev --node-only -n ip-10-48-192-204.us-west-1.compute.internal
 	`,
-	Example: "deregister call-control sv1-dev --node ip-10-48-192-204.us-west-1.compute.internal",
+	Example: "deregister call-control sv1-dev -e dev --node ip-10-48-192-204.us-west-1.compute.internal",
 	Args:    cobra.RangeArgs(1, 2),
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		switch len(args) {
@@ -79,6 +79,7 @@ telnyx-cli deregister --node-only sv1-dev -n ip-10-48-192-204.us-west-1.compute.
 		nodes, _ := cmd.Flags().GetStringSlice("node")
 		nodes = removeDuplicates(nodes)
 		nodeOnly, _ := cmd.Flags().GetBool("node-only")
+		env, _ := cmd.Flags().GetString("env")
 
 		if nodeOnly {
 			if len(args) != 1 {
@@ -88,7 +89,7 @@ telnyx-cli deregister --node-only sv1-dev -n ip-10-48-192-204.us-west-1.compute.
 				return errors.New("when using --node-only, you must specify at least one node with --node")
 			}
 			dc := args[0]
-			return deregisterNodes(dc, nodes)
+			return deregisterNodes(dc, env, nodes)
 		}
 
 		if len(args) != 2 {
@@ -98,12 +99,11 @@ telnyx-cli deregister --node-only sv1-dev -n ip-10-48-192-204.us-west-1.compute.
 		svc := args[0]
 		dc := args[1]
 
-		return deregisterService(svc, dc, nodes)
+		return deregisterService(svc, dc, env, nodes)
 	},
 }
 
-func deregisterService(svc, dc string, nodes []string) error {
-	env := consul.DetermineEnvForDc(dc)
+func deregisterService(svc, dc, env string, nodes []string) error {
 	instances, err := consul.GetInstancesByDc(dc, svc, env)
 	if err != nil {
 		return fmt.Errorf("failed to get instances: %w", err)
@@ -168,13 +168,12 @@ func deregisterService(svc, dc string, nodes []string) error {
 	return nil
 }
 
-func deregisterNodes(dc string, nodes []string) error {
+func deregisterNodes(dc, env string, nodes []string) error {
 	err := confirmDeregistration(fmt.Sprintf("nodes %s in %s", strings.Join(nodes, ", "), dc), len(nodes))
 	if err != nil {
 		return err
 	}
 
-	env := consul.DetermineEnvForDc(dc)
 	client, err := api.NewClient(consul.ConsulConfigForDc(dc, env))
 	if err != nil {
 		return fmt.Errorf("failed to create consul client: %w", err)
@@ -257,6 +256,7 @@ func confirmDeregistration(target string, count int) error {
 }
 
 func init() {
+	deregisterCmd.Flags().StringP("env", "e", "prod", "The Consul environment to use (dev or prod)")
 	deregisterCmd.Flags().StringSliceP("node", "n", []string{}, "Specific nodes to deregister services from (can be specified multiple times)")
 	deregisterCmd.Flags().Bool("node-only", false, "Deregister entire nodes instead of services")
 	RootCmd.AddCommand(deregisterCmd)

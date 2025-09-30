@@ -290,19 +290,3 @@ func consulPort(env string) string {
 	}
 	return "18500"
 }
-
-// DetermineEnvForDc checks which environment contains the given datacenter
-func DetermineEnvForDc(dc string) string {
-	// Try dev first
-	devDcs, err := FetchDatacenters("dev")
-	if err == nil {
-		for _, d := range devDcs {
-			if d == dc {
-				return "dev"
-			}
-		}
-	}
-
-	// Default to prod
-	return "prod"
-}

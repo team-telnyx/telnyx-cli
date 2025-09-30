@@ -14,6 +14,7 @@ import (
 
 func init() {
 	serviceCmd.Flags().StringP("datacenter", "d", "", "The Consul datacenter to use")
+	serviceCmd.Flags().StringP("env", "e", "prod", "The Consul environment to use (dev or prod)")
 	serviceCmd.Flags().StringP("filter", "f", "", "Filter by service name starting with the given string")
 
 	serviceCmd.MarkFlagRequired("datacenter")
@@ -28,11 +29,11 @@ var serviceCmd = &cobra.Command{
 	Short:   "List services registered in Consul",
 	Run: func(cmd *cobra.Command, args []string) {
 		dc, _ := cmd.Flags().GetString("datacenter")
+		env, _ := cmd.Flags().GetString("env")
 		filter, _ := cmd.Flags().GetString("filter")
 
 		printDatacenter(dc)
 
-		env := consul.DetermineEnvForDc(dc)
 		svcs := consul.GetServicesByDc(dc, env)
 
 		for svc, tags := range svcs {
