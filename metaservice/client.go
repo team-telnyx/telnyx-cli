@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -39,6 +40,9 @@ type ServiceMeta struct {
 		Service string `json:"service"`
 		GitHub  string `json:"github"`
 	} `json:"names"`
+	Deploy struct {
+		ServiceImages map[string]interface{} `json:"service_images"`
+	} `json:"deploy"`
 }
 
 type DeploymentResponse struct {
@@ -228,6 +232,30 @@ func GetRepoName(service string) (string, error) {
 		return "", fmt.Errorf("failed to parse service metadata: %w", err)
 	}
 
+	// Check if this is an ArgoCD deploy repo (starts with "deploy-")
+	if response.Names.GitHub != "" && strings.HasPrefix(response.Names.GitHub, "deploy-") {
+		// This is a deployment repo, look for the actual code repo via OCI image name
+		// Get the first service image name (e.g., "call-control-oci")
+		if len(response.Deploy.ServiceImages) > 0 {
+			var ociServiceName string
+			for name := range response.Deploy.ServiceImages {
+				ociServiceName = name
+				break
+			}
+
+			// Query metaservice for the OCI service to get actual code repo
+			if ociServiceName != "" {
+				codeRepo, err := getRepoNameForOCIService(ociServiceName, metaserviceUrl)
+				if err == nil && codeRepo != "" {
+					return codeRepo, nil
+				}
+				// If OCI lookup fails, fall through to return deploy repo
+			}
+		}
+		// If no OCI service found, return the deploy repo name as fallback
+		return response.Names.GitHub, nil
+	}
+
 	// Prefer github name, fallback to service name
 	if response.Names.GitHub != "" {
 		return response.Names.GitHub, nil
@@ -238,4 +266,50 @@ func GetRepoName(service string) (string, error) {
 	}
 
 	return "", fmt.Errorf("no repository name found for service '%s'", service)
+}
+
+// getRepoNameForOCIService queries metaservice for an OCI service and returns its GitHub repo
+func getRepoNameForOCIService(ociService, metaserviceUrl string) (string, error) {
+	url := fmt.Sprintf("%s/service/%s", metaserviceUrl, ociService)
+
+	httpClient := http.Client{
+		Timeout: time.Second * 2,
+	}
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return "", err
+	}
+
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	req.Header.Set("User-Agent", "telnyx-cli")
+
+	res, getErr := httpClient.Do(req)
+	if getErr != nil {
+		return "", fmt.Errorf("failed to fetch OCI service metadata: %w", getErr)
+	}
+
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	if res.StatusCode != 200 {
+		return "", fmt.Errorf("OCI service '%s' returned status %d", ociService, res.StatusCode)
+	}
+
+	body, readErr := io.ReadAll(res.Body)
+	if readErr != nil {
+		return "", fmt.Errorf("failed to read OCI service response: %w", readErr)
+	}
+
+	var response ServiceMeta
+	if err = json.Unmarshal(body, &response); err != nil {
+		return "", fmt.Errorf("failed to parse OCI service metadata: %w", err)
+	}
+
+	if response.Names.GitHub != "" {
+		return response.Names.GitHub, nil
+	}
+
+	return "", fmt.Errorf("no GitHub repo found for OCI service '%s'", ociService)
 }
