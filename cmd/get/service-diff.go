@@ -29,6 +29,7 @@ type commandOptions struct {
 	force          bool
 	format         string
 	githubToken    string
+	repoOverride   string
 }
 
 // fetchResult holds the results of parallel data fetching
@@ -73,6 +74,7 @@ func init() {
 	serviceDiffCmd.Flags().String("new-env", "dev", "New environment (default: dev)")
 	serviceDiffCmd.Flags().Bool("force", false, "Proceed despite version conflicts")
 	serviceDiffCmd.Flags().StringP("format", "f", "default", "Output format: default, plain, json")
+	serviceDiffCmd.Flags().StringP("repo", "r", "", "Manual override for GitHub repository name")
 
 	getCmd.AddCommand(serviceDiffCmd)
 }
@@ -87,20 +89,23 @@ the GitHub diff including commits, authors, and Jira tickets.
 
 Examples:
 
-# Compare prod (old) vs dev (new) versions
-telnyx-cli get service-diff call-control
+# Compare prod (old) vs dev (new) versions for a service with repo in metaservice
+telnyx-cli get service-diff billing
 
-# Compare specific versions manually
-telnyx-cli get service-diff call-control --old-version 2025.09.24.10.55.48d3bae --new-version 2025.09.30.09.21.ab4b47e
+# Override GitHub repository name (for ArgoCD-deployed services)
+telnyx-cli get service-diff call-control --repo call-control-agent
+
+# Compare specific versions with repo override
+telnyx-cli get service-diff call-control --repo call-control-agent --old-version 2025.09.24.10.55.48d3bae --new-version 2025.09.30.09.21.ab4b47e
 
 # Compare dev vs staging
-telnyx-cli get service-diff call-control --old-env dev --new-env staging
+telnyx-cli get service-diff billing --old-env dev --new-env staging
 
 # Output in plain format (parsable)
-telnyx-cli get service-diff call-control --format plain
+telnyx-cli get service-diff billing --format plain
 
 # Output in JSON format (programmatic)
-telnyx-cli get service-diff call-control --format json
+telnyx-cli get service-diff billing --format json
 `,
 	Args: cobra.ExactArgs(1),
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
@@ -164,6 +169,7 @@ func parseCommandOptions(cmd *cobra.Command, args []string) commandOptions {
 	newEnv, _ := cmd.Flags().GetString("new-env")
 	force, _ := cmd.Flags().GetBool("force")
 	format, _ := cmd.Flags().GetString("format")
+	repoOverride, _ := cmd.Flags().GetString("repo")
 
 	return commandOptions{
 		service:        args[0],
@@ -174,6 +180,7 @@ func parseCommandOptions(cmd *cobra.Command, args []string) commandOptions {
 		force:          force,
 		format:         format,
 		githubToken:    viper.GetString("github_token"),
+		repoOverride:   repoOverride,
 	}
 }
 
@@ -230,19 +237,23 @@ func fetchServiceData(opts commandOptions) fetchResult {
 		}()
 	}
 
-	// Fetch repository name
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		r, err := metaservice.GetRepoName(opts.service)
-		mu.Lock()
-		defer mu.Unlock()
-		if err != nil {
-			result.errors = append(result.errors, err)
-		} else {
-			result.repoName = r
-		}
-	}()
+	// Fetch repository name (skip if manually overridden)
+	if opts.repoOverride != "" {
+		result.repoName = opts.repoOverride
+	} else {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			r, err := metaservice.GetRepoName(opts.service)
+			mu.Lock()
+			defer mu.Unlock()
+			if err != nil {
+				result.errors = append(result.errors, err)
+			} else {
+				result.repoName = r
+			}
+		}()
+	}
 
 	wg.Wait()
 	return result

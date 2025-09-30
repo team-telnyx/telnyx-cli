@@ -83,13 +83,14 @@ The `get service-diff` command compares service versions between environments us
 
 3. Test the configuration:
    ```bash
-   telnyx-cli get service-diff call-control
+   # Compare prod vs dev versions
+   telnyx-cli get service-diff billing
 
    # Plain format (parsable with awk/cut/grep)
-   telnyx-cli get service-diff call-control --format plain
+   telnyx-cli get service-diff billing --format plain
 
    # JSON format (parsable with jq)
-   telnyx-cli get service-diff call-control --format json
+   telnyx-cli get service-diff billing --format json
    ```
 
 **(Optional) Configure shell autocompletion**
