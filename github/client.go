@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/google/go-github/v58/github"
-	"github.com/spf13/cobra"
 )
 
 // ComparisonResult contains structured information about a GitHub commit comparison.
@@ -97,15 +96,25 @@ func ExtractJiraTickets(messages []string) []string {
 
 // ExtractCommitFromVersion extracts the commit SHA from a version string.
 // Version format: YYYY.MM.DD.HH.MM.COMMIT_SHA (e.g., 2025.09.30.09.21.ab4b47e)
-// Returns the last segment after the final dot.
-func ExtractCommitFromVersion(version string) string {
+// Returns the last segment after the final dot, or an error if the format is invalid.
+func ExtractCommitFromVersion(version string) (string, error) {
+	if version == "" {
+		return "", fmt.Errorf("version string is empty")
+	}
+
 	// Version format: YYYY.MM.DD.HH.MM.COMMIT_SHA
 	// Extract last segment after final dot
 	parts := strings.Split(version, ".")
-	if len(parts) == 0 {
-		cobra.CheckErr(fmt.Errorf("invalid version format: %s", version))
+	if len(parts) < 6 {
+		return "", fmt.Errorf("invalid version format '%s' - expected YYYY.MM.DD.HH.MM.COMMIT_SHA", version)
 	}
-	return parts[len(parts)-1]
+
+	commitSHA := parts[len(parts)-1]
+	if commitSHA == "" {
+		return "", fmt.Errorf("commit SHA is empty in version '%s'", version)
+	}
+
+	return commitSHA, nil
 }
 
 func extractFirstLine(message string) string {

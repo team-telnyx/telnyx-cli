@@ -13,7 +13,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"time"
 
@@ -109,7 +109,7 @@ func fetchDeploymentsFromView(startDate string, endDate string) *ViewResponse {
 		defer res.Body.Close()
 	}
 
-	body, readErr := ioutil.ReadAll(res.Body)
+	body, readErr := io.ReadAll(res.Body)
 	if readErr != nil {
 		cobra.CheckErr(readErr)
 	}
@@ -169,7 +169,7 @@ func fetchDeploymentById(id string) Deployment {
 		defer res.Body.Close()
 	}
 
-	body, readErr := ioutil.ReadAll(res.Body)
+	body, readErr := io.ReadAll(res.Body)
 	if readErr != nil {
 		cobra.CheckErr(readErr)
 	}
@@ -218,7 +218,7 @@ func GetRepoName(service string) (string, error) {
 		return "", fmt.Errorf("metaservice returned status %d", res.StatusCode)
 	}
 
-	body, readErr := ioutil.ReadAll(res.Body)
+	body, readErr := io.ReadAll(res.Body)
 	if readErr != nil {
 		return "", fmt.Errorf("failed to read response body: %w", readErr)
 	}

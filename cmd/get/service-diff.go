@@ -6,6 +6,7 @@ package get
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"sort"
 	"strings"
 	"sync"
@@ -323,18 +324,38 @@ func resolveVersions(opts commandOptions, result fetchResult) (oldVersion, newVe
 // handleIdenticalVersions handles the case when old and new versions are the same
 func handleIdenticalVersions(opts commandOptions, result fetchResult, oldVersion, newVersion string) {
 	if opts.format == "json" {
+		oldCommit, err := ghclient.ExtractCommitFromVersion(oldVersion)
+		if err != nil {
+			errorOutput := map[string]string{
+				"error": fmt.Sprintf("Invalid old version format: %v", err),
+			}
+			jsonData, _ := json.MarshalIndent(errorOutput, "", "  ")
+			fmt.Println(string(jsonData))
+			return
+		}
+
+		newCommit, err := ghclient.ExtractCommitFromVersion(newVersion)
+		if err != nil {
+			errorOutput := map[string]string{
+				"error": fmt.Sprintf("Invalid new version format: %v", err),
+			}
+			jsonData, _ := json.MarshalIndent(errorOutput, "", "  ")
+			fmt.Println(string(jsonData))
+			return
+		}
+
 		identicalOutput := DiffOutput{
 			Service:    opts.service,
 			Repository: result.repoName,
 			OldVersion: VersionInfo{
 				Environment: opts.oldEnv,
 				Version:     oldVersion,
-				Commit:      ghclient.ExtractCommitFromVersion(oldVersion),
+				Commit:      oldCommit,
 			},
 			NewVersion: VersionInfo{
 				Environment: opts.newEnv,
 				Version:     newVersion,
-				Commit:      ghclient.ExtractCommitFromVersion(newVersion),
+				Commit:      newCommit,
 			},
 			Error: "Versions are identical",
 		}
@@ -361,16 +382,32 @@ func handleIdenticalVersions(opts commandOptions, result fetchResult, oldVersion
 
 // fetchGitHubComparison fetches the GitHub commit comparison
 func fetchGitHubComparison(opts commandOptions, result fetchResult, oldVersion, newVersion string) (*ghclient.ComparisonResult, error) {
-	oldCommit := ghclient.ExtractCommitFromVersion(oldVersion)
-	newCommit := ghclient.ExtractCommitFromVersion(newVersion)
+	oldCommit, err := ghclient.ExtractCommitFromVersion(oldVersion)
+	if err != nil {
+		return nil, fmt.Errorf("invalid old version format: %w", err)
+	}
+
+	newCommit, err := ghclient.ExtractCommitFromVersion(newVersion)
+	if err != nil {
+		return nil, fmt.Errorf("invalid new version format: %w", err)
+	}
 
 	return ghclient.CompareCommits(opts.githubToken, result.repoName, oldCommit, newCommit)
 }
 
 // displayDiff displays the diff in the requested format
 func displayDiff(opts commandOptions, result fetchResult, oldVersion, newVersion string, comparison *ghclient.ComparisonResult) {
-	oldCommit := ghclient.ExtractCommitFromVersion(oldVersion)
-	newCommit := ghclient.ExtractCommitFromVersion(newVersion)
+	oldCommit, err := ghclient.ExtractCommitFromVersion(oldVersion)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		return
+	}
+
+	newCommit, err := ghclient.ExtractCommitFromVersion(newVersion)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		return
+	}
 
 	switch opts.format {
 	case "plain":
@@ -408,8 +445,12 @@ func printVersionAnalysis(label, env string, versions *consul.VersionsByDatacent
 		fmt.Printf("    Version: %s (%d datacenters)\n",
 			versions.UniqueVersion,
 			len(versions.Versions))
-		commit := ghclient.ExtractCommitFromVersion(versions.UniqueVersion)
-		fmt.Printf("    Commit:  %s\n", commit)
+		commit, err := ghclient.ExtractCommitFromVersion(versions.UniqueVersion)
+		if err != nil {
+			fmt.Printf("    Commit:  %s\n", color.RedString("invalid version format"))
+		} else {
+			fmt.Printf("    Commit:  %s\n", commit)
+		}
 	}
 }
 
