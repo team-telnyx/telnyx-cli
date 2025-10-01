@@ -72,7 +72,7 @@ func init() {
 	serviceDiffCmd.Flags().StringP("new-version", "n", "", "Manual override for new version")
 	serviceDiffCmd.Flags().String("old-env", "prod", "Old environment (default: prod)")
 	serviceDiffCmd.Flags().String("new-env", "dev", "New environment (default: dev)")
-	serviceDiffCmd.Flags().Bool("force", false, "Proceed despite version conflicts")
+	serviceDiffCmd.Flags().Bool("force", false, "Proceed despite version conflicts (uses most common version, or newest if tied)")
 	serviceDiffCmd.Flags().StringP("format", "f", "default", "Output format: default, plain, json")
 	serviceDiffCmd.Flags().StringP("repo", "r", "", "Manual override for GitHub repository name")
 
@@ -301,7 +301,12 @@ func resolveVersions(opts commandOptions, result fetchResult) (oldVersion, newVe
 			}
 			return "", "", false
 		}
-		oldVersion = result.oldVersions.UniqueVersion
+		if result.oldVersions.HasConflict && opts.force {
+			// Pick the most common version when forcing through conflicts
+			oldVersion = getMostCommonVersion(result.oldVersions.Versions)
+		} else {
+			oldVersion = result.oldVersions.UniqueVersion
+		}
 	}
 
 	// Resolve new version
@@ -322,7 +327,12 @@ func resolveVersions(opts commandOptions, result fetchResult) (oldVersion, newVe
 			}
 			return "", "", false
 		}
-		newVersion = result.newVersions.UniqueVersion
+		if result.newVersions.HasConflict && opts.force {
+			// Pick the most common version when forcing through conflicts
+			newVersion = getMostCommonVersion(result.newVersions.Versions)
+		} else {
+			newVersion = result.newVersions.UniqueVersion
+		}
 	}
 
 	if opts.format == "default" {
@@ -549,6 +559,39 @@ func printDiff(oldVersion, newVersion, oldCommit, newCommit string, comparison *
 	}
 	sort.Strings(authors)
 	fmt.Printf("\n%s %s\n", color.YellowString("Authors:"), strings.Join(authors, ", "))
+}
+
+// getMostCommonVersion returns the version that appears in the most datacenters
+// If there's a tie (e.g., 2 versions with 1 DC each), returns the newest version
+func getMostCommonVersion(versions map[string]string) string {
+	versionCounts := make(map[string]int)
+	for _, version := range versions {
+		versionCounts[version]++
+	}
+
+	// Find the maximum count
+	maxCount := 0
+	for _, count := range versionCounts {
+		if count > maxCount {
+			maxCount = count
+		}
+	}
+
+	// Get all versions with max count
+	var candidateVersions []string
+	for version, count := range versionCounts {
+		if count == maxCount {
+			candidateVersions = append(candidateVersions, version)
+		}
+	}
+
+	// If there's a tie, return the newest version (lexicographically largest)
+	if len(candidateVersions) > 1 {
+		sort.Strings(candidateVersions)
+		return candidateVersions[len(candidateVersions)-1]
+	}
+
+	return candidateVersions[0]
 }
 
 func printGitHubTokenError() {
