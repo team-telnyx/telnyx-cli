@@ -427,7 +427,7 @@ func displayDiff(opts commandOptions, result fetchResult, oldVersion, newVersion
 		printJSONDiff(opts.service, result.repoName, opts.oldEnv, opts.newEnv, oldVersion, newVersion,
 			result.oldVersions, result.newVersions, oldCommit, newCommit, comparison)
 	default:
-		printDiff(oldCommit, newCommit, comparison)
+		printDiff(oldVersion, newVersion, oldCommit, newCommit, comparison)
 	}
 }
 
@@ -511,26 +511,36 @@ func printConflictSolutions(env string, versions *consul.VersionsByDatacenter) {
 	fmt.Println(strings.Repeat("─", 60))
 }
 
-func printDiff(oldCommit, newCommit string, comparison *ghclient.ComparisonResult) {
-	fmt.Println(strings.Repeat("═", 60))
-	fmt.Printf("GitHub: %s\n", color.CyanString(comparison.HTMLURL))
-	fmt.Println(strings.Repeat("═", 60))
-	fmt.Println()
+func printDiff(oldVersion, newVersion, oldCommit, newCommit string, comparison *ghclient.ComparisonResult) {
+	// Print separator and revision/rollback versions
+	fmt.Println(strings.Repeat("═", 79))
+	fmt.Printf("(%s %s %s %s)\n",
+		color.CyanString("revision:"),
+		color.GreenString(newVersion),
+		color.CyanString("rollback:"),
+		color.YellowString(oldVersion))
 
-	fmt.Printf("Commits (%s → %s):\n", oldCommit[:7], newCommit[:7])
+	fmt.Printf("%s\n\n", color.CyanString(comparison.HTMLURL))
 
 	// Extract unique authors and messages for Jira tickets
 	authorSet := make(map[string]bool)
 	messages := make([]string, 0, len(comparison.Commits))
 
+	fmt.Printf("%s\n", color.YellowString("Git log from: ("+oldCommit[:7]+" → "+newCommit[:7]+"):"))
 	for _, commit := range comparison.Commits {
-		fmt.Printf("  %s %s\n", commit.SHA[:7], commit.Message)
+		fmt.Printf("%s %s\n", commit.SHA[:7], commit.Message)
 		authorSet[commit.Author] = true
 		messages = append(messages, commit.Message)
 	}
 
-	fmt.Println()
-	fmt.Println(strings.Repeat("─", 60))
+	// Print Jira tickets as URLs
+	tickets := ghclient.ExtractJiraTickets(messages)
+	if len(tickets) > 0 {
+		fmt.Printf("\n%s\n", color.YellowString("Jira Tickets:"))
+		for _, ticket := range tickets {
+			fmt.Printf("https://telnyx.atlassian.net/browse/%s\n", ticket)
+		}
+	}
 
 	// Print authors
 	authors := make([]string, 0, len(authorSet))
@@ -538,15 +548,7 @@ func printDiff(oldCommit, newCommit string, comparison *ghclient.ComparisonResul
 		authors = append(authors, author)
 	}
 	sort.Strings(authors)
-	fmt.Printf("Authors: %s\n", strings.Join(authors, ", "))
-
-	// Print Jira tickets
-	tickets := ghclient.ExtractJiraTickets(messages)
-	if len(tickets) > 0 {
-		fmt.Printf("Jira: %s\n", strings.Join(tickets, ", "))
-	}
-
-	fmt.Println(strings.Repeat("─", 60))
+	fmt.Printf("\n%s %s\n", color.YellowString("Authors:"), strings.Join(authors, ", "))
 }
 
 func printGitHubTokenError() {
