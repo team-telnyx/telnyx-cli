@@ -297,7 +297,7 @@ func resolveVersions(opts commandOptions, result fetchResult) (oldVersion, newVe
 		}
 		if result.oldVersions.HasConflict && !opts.force {
 			if opts.format == "default" {
-				printConflictSolutions(opts.oldEnv, result.oldVersions)
+				printConflictSolutions(opts.oldEnv, result.oldVersions, "old")
 			}
 			return "", "", false
 		}
@@ -323,7 +323,7 @@ func resolveVersions(opts commandOptions, result fetchResult) (oldVersion, newVe
 		}
 		if result.newVersions.HasConflict && !opts.force {
 			if opts.format == "default" {
-				printConflictSolutions(opts.newEnv, result.newVersions)
+				printConflictSolutions(opts.newEnv, result.newVersions, "new")
 			}
 			return "", "", false
 		}
@@ -475,7 +475,7 @@ func printVersionAnalysis(label, env string, versions *consul.VersionsByDatacent
 	}
 }
 
-func printConflictSolutions(env string, versions *consul.VersionsByDatacenter) {
+func printConflictSolutions(env string, versions *consul.VersionsByDatacenter, side string) {
 	fmt.Println()
 
 	// Group datacenters by version
@@ -516,7 +516,14 @@ func printConflictSolutions(env string, versions *consul.VersionsByDatacenter) {
 		color.RedString("✗ ERROR:"))
 	fmt.Println("Solutions:")
 	fmt.Printf("  1. Complete deployment across all datacenters in %s\n", env)
-	fmt.Printf("  2. Specify version manually: --old-version %s\n", versionCounts[0].version)
+
+	// Suggest the correct flag and version using same heuristic as --force
+	versionFlag := "--old-version"
+	if side == "new" {
+		versionFlag = "--new-version"
+	}
+	suggestedVersion := getMostCommonVersion(versions.Versions)
+	fmt.Printf("  2. Specify version manually: %s %s\n", versionFlag, suggestedVersion)
 	fmt.Println("  3. Force (not recommended): --force")
 	fmt.Println(strings.Repeat("─", 60))
 }
