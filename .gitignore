@@ -1,4 +1,3 @@
-.prism.log
-dist/
-/telnyx
-*.exe
+node_modules/
+.env
+*.log
