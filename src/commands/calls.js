@@ -17,6 +17,45 @@ const yellow = chalk.yellow;
 const green = chalk.green;
 const red = chalk.red;
 
+// Helper to format output based on --json and --output flags
+function formatOutput(data, format) {
+  if (format === 'json') {
+    console.log(JSON.stringify(data, null, 2));
+    return;
+  }
+  
+  if (format === 'csv') {
+    if (Array.isArray(data) && data.length > 0) {
+      const firstItem = data[0].data || data[0];
+      const headers = Object.keys(firstItem);
+      console.log(headers.join(','));
+      
+      data.forEach(item => {
+        const row = item.data || item;
+        const values = headers.map(h => {
+          const val = row[h];
+          if (val === null || val === undefined) return '';
+          if (typeof val === 'object') return JSON.stringify(val).replace(/,/g, ';');
+          return String(val).replace(/,/g, ';');
+        });
+        console.log(values.join(','));
+      });
+    } else {
+      console.log('data');
+      console.log(JSON.stringify(data));
+    }
+    return;
+  }
+  
+  return false;
+}
+
+function getOutputFormat(options) {
+  if (options.json) return 'json';
+  if (options.output) return options.output;
+  return 'table';
+}
+
 // ==================== CALL DIAL ====================
 
 const dial = new Command('dial')
@@ -27,10 +66,14 @@ const dial = new Command('dial')
   .option('-c, --connection <id>', 'Connection ID for call routing')
   .option('--texml <url>', 'TeXML URL for call handling')
   .option('--webhook <url>', 'Webhook URL for call events')
-  .option('--timeout <seconds>', 'Call timeout in seconds', '30')
+  .option('--call-timeout <seconds>', 'Call timeout in seconds', '30')
   .option('--no-confirm', 'Skip confirmation prompt')
+  .option('--dry-run', 'Show what would be dialed without making the call')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
-    let { from, to, connection, texml, webhook, timeout, confirm } = options;
+    let { from, to, connection, texml, webhook, callTimeout, confirm, dryRun } = options;
+    const outputFormat = getOutputFormat(options);
     
     // Interactive prompts for missing fields
     const prompts = [];
@@ -111,6 +154,52 @@ const dial = new Command('dial')
       process.exit(1);
     }
     
+    // Build call options
+    const callOptions = {
+      to: to,
+      from: from,
+      timeout: parseInt(callTimeout)
+    };
+    
+    if (connection) {
+      callOptions.connection_id = connection;
+    }
+    if (texml) {
+      callOptions.texml = texml;
+    }
+    if (webhook) {
+      callOptions.webhook_url = webhook;
+    }
+    
+    // Dry run mode
+    if (dryRun) {
+      console.log('');
+      console.log('┌─────────────────────────────────────────────────────────┐');
+      console.log('│  🔍 ' + primary('DRY RUN - No call will be placed') + '                          │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log(`│  From:       ${from.substring(0, 45).padEnd(45)}│`);
+      console.log(`│  To:         ${to.substring(0, 45).padEnd(45)}│`);
+      
+      if (connection) {
+        console.log(`│  Connection: ${connection.substring(0, 45).padEnd(45)}│`);
+      }
+      if (texml) {
+        console.log(`│  TeXML URL:  ${texml.substring(0, 45).padEnd(45)}│`);
+      }
+      if (webhook) {
+        console.log(`│  Webhook:    ${webhook.substring(0, 45).padEnd(45)}│`);
+      }
+      
+      console.log(`│  Timeout:    ${(callTimeout + ' seconds').padEnd(45)}│`);
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log('│  Would call: POST /v2/calls                             │');
+      console.log(`│  Payload: ${JSON.stringify({ data: callOptions }).substring(0, 40).padEnd(40)}│`);
+      console.log('└─────────────────────────────────────────────────────────┘');
+      console.log('');
+      showInfo('Remove --dry-run to actually place the call');
+      return;
+    }
+    
     // Show preview
     console.log('');
     console.log('┌─────────────────────────────────────────────────────────┐');
@@ -129,7 +218,7 @@ const dial = new Command('dial')
       console.log(`│  Webhook:    ${webhook.substring(0, 45).padEnd(45)}│`);
     }
     
-    console.log(`│  Timeout:    ${(timeout + ' seconds').padEnd(45)}│`);
+    console.log(`│  Timeout:    ${(callTimeout + ' seconds').padEnd(45)}│`);
     console.log('└─────────────────────────────────────────────────────────┘');
     console.log('');
     
@@ -156,25 +245,15 @@ const dial = new Command('dial')
     }).start();
     
     try {
-      const callOptions = {
-        to: to,
-        from: from,
-        timeout: parseInt(timeout)
-      };
-      
-      if (connection) {
-        callOptions.connection_id = connection;
-      }
-      if (texml) {
-        callOptions.texml = texml;
-      }
-      if (webhook) {
-        callOptions.webhook_url = webhook;
-      }
-      
       const data = await createCall(callOptions);
       
       spinner.stop();
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data || data, outputFormat);
+        return;
+      }
       
       showSuccess('✅ Call initiated successfully!');
       console.log('');
@@ -196,7 +275,8 @@ const dial = new Command('dial')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -207,8 +287,12 @@ const hangup = new Command('hangup')
   .alias('end')
   .argument('[callId]', 'Call Control ID to hang up')
   .option('-y, --yes', 'Skip confirmation prompt')
+  .option('--dry-run', 'Show what would happen without hanging up')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (callId, options) => {
     let targetCallId = callId;
+    const outputFormat = getOutputFormat(options);
     
     // If no call ID provided, prompt for one
     if (!targetCallId) {
@@ -221,6 +305,20 @@ const hangup = new Command('hangup')
         }
       ]);
       targetCallId = id;
+    }
+    
+    // Dry run mode
+    if (options.dryRun) {
+      console.log('');
+      console.log('┌─────────────────────────────────────────────────────────┐');
+      console.log('│  🔍 ' + primary('DRY RUN - Call will not be hung up') + '                     │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log(`│  Call ID:     ${targetCallId.substring(0, 45).padEnd(45)}│`);
+      console.log('│  Would call: POST /v2/calls/{id}/actions/hangup         │');
+      console.log('└─────────────────────────────────────────────────────────┘');
+      console.log('');
+      showInfo('Remove --dry-run to actually hang up the call');
+      return;
     }
     
     // Confirm before hanging up
@@ -246,14 +344,22 @@ const hangup = new Command('hangup')
     }).start();
     
     try {
-      await hangupCall(targetCallId);
+      const data = await hangupCall(targetCallId);
       
       spinner.stop();
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data || data, outputFormat);
+        return;
+      }
+      
       showSuccess(`✅ Call ${targetCallId} hung up successfully`);
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -265,8 +371,11 @@ const list = new Command('list')
   .option('-s, --status <status>', 'Filter by status: initiated, ringing, answered, hangup')
   .option('-n, --limit <number>', 'Number of results', '20')
   .option('--active', 'Show only active calls (initiated, ringing, answered)')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
     const { status, limit, active } = options;
+    const outputFormat = getOutputFormat(options);
     
     let filterStatus = status;
     if (active) {
@@ -306,6 +415,12 @@ const list = new Command('list')
         return;
       }
       
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(calls, outputFormat);
+        return;
+      }
+      
       showSuccess(`Found ${calls.length} call(s)`);
       console.log('');
       
@@ -340,7 +455,8 @@ const list = new Command('list')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -364,27 +480,6 @@ function formatDuration(seconds) {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
   return `${mins}:${secs.toString().padStart(2, '0')}`;
-}
-
-function handleApiError(error) {
-  if (error.response?.status === 401) {
-    showError('🔐 Authentication failed. Run: telnyx auth login');
-  } else if (error.response?.status === 403) {
-    showError('🚫 Permission denied. Your account may not have voice calling enabled.');
-    showInfo('   Contact Telnyx support to enable voice on your account.');
-  } else if (error.response?.status === 404) {
-    showError('❌ Call not found. The call may have already ended or the ID is incorrect.');
-  } else if (error.response?.status === 422) {
-    const detail = error.response.data?.errors?.[0]?.detail || 
-                   error.response.data?.errors?.[0]?.title || 
-                   'Invalid request';
-    showError(`❌ ${detail}`);
-  } else if (error.response?.status === 429) {
-    showError('⏱️  Rate limit exceeded. Please wait a moment and try again.');
-  } else {
-    showError(`❌ ${error.message}`);
-  }
-  process.exit(1);
 }
 
 module.exports = {

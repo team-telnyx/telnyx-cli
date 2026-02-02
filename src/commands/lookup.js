@@ -12,6 +12,41 @@ const yellow = chalk.yellow;
 const green = chalk.green;
 const red = chalk.red;
 
+// Helper to format output based on --json and --output flags
+function formatOutput(data, format) {
+  if (format === 'json') {
+    console.log(JSON.stringify(data, null, 2));
+    return;
+  }
+  
+  if (format === 'csv') {
+    if (data.data) {
+      const item = data.data;
+      const headers = Object.keys(item);
+      console.log(headers.join(','));
+      const values = headers.map(h => {
+        const val = item[h];
+        if (val === null || val === undefined) return '';
+        if (typeof val === 'object') return JSON.stringify(val).replace(/,/g, ';');
+        return String(val).replace(/,/g, ';');
+      });
+      console.log(values.join(','));
+    } else {
+      console.log('data');
+      console.log(JSON.stringify(data));
+    }
+    return;
+  }
+  
+  return false;
+}
+
+function getOutputFormat(options) {
+  if (options.json) return 'json';
+  if (options.output) return options.output;
+  return 'table';
+}
+
 // ==================== LOOKUP COMMAND ====================
 
 const lookup = new Command('lookup')
@@ -21,9 +56,11 @@ const lookup = new Command('lookup')
   .option('-t, --type <type>', 'Lookup type: caller-name, carrier, portability', 'caller-name')
   .option('-f, --fields <fields>', 'Comma-separated fields to include')
   .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (phoneNumber, options) => {
     let targetNumber = phoneNumber;
-    const { type, fields, json } = options;
+    const { type, fields } = options;
+    const outputFormat = getOutputFormat(options);
     
     // Interactive prompt for missing phone number
     if (!targetNumber) {
@@ -72,8 +109,9 @@ const lookup = new Command('lookup')
       
       const result = data.data;
       
-      if (json) {
-        console.log(JSON.stringify(data, null, 2));
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(result, outputFormat);
         return;
       }
       
@@ -157,7 +195,8 @@ const lookup = new Command('lookup')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -168,33 +207,11 @@ const batch = new Command('batch')
   .argument('<file>', 'Path to file containing phone numbers (one per line)')
   .option('-t, --type <type>', 'Lookup type', 'caller-name')
   .option('-o, --output <file>', 'Output file for results')
+  .option('-j, --json', 'Output raw JSON')
   .action(async (file, options) => {
     showInfo('Batch lookup feature coming soon!');
     showInfo('For now, use multiple individual lookup commands.');
   });
-
-// ==================== HELPERS ====================
-
-function handleApiError(error) {
-  if (error.response?.status === 401) {
-    showError('🔐 Authentication failed. Run: telnyx auth login');
-  } else if (error.response?.status === 403) {
-    showError('🚫 Permission denied. Number lookup may not be enabled on your account.');
-    showInfo('   Contact Telnyx support to enable number lookup.');
-  } else if (error.response?.status === 404) {
-    showError('❌ Number not found or invalid format.');
-  } else if (error.response?.status === 422) {
-    const detail = error.response.data?.errors?.[0]?.detail || 
-                   error.response.data?.errors?.[0]?.title || 
-                   'Invalid request';
-    showError(`❌ ${detail}`);
-  } else if (error.response?.status === 429) {
-    showError('⏱️  Rate limit exceeded. Please wait a moment and try again.');
-  } else {
-    showError(`❌ ${error.message}`);
-  }
-  process.exit(1);
-}
 
 module.exports = {
   lookup,

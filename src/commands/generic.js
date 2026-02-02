@@ -156,6 +156,12 @@ const RESOURCES = {
   }
 };
 
+function getOutputFormat(options) {
+  if (options.json) return 'json';
+  if (options.output) return options.output;
+  return 'table';
+}
+
 // ==================== GENERIC LIST COMMAND ====================
 
 function createListCommand(resourceKey, resourceDef) {
@@ -166,8 +172,10 @@ function createListCommand(resourceKey, resourceDef) {
     .option('-s, --status <status>', 'Filter by status')
     .option('-t, --type <type>', 'Filter by type')
     .option('-j, --json', 'Output raw JSON')
+    .option('-o, --output <format>', 'Output format: json, table', 'table')
     .action(async (options) => {
-      const { limit, status, type, json } = options;
+      const { limit, status, type } = options;
+      const outputFormat = getOutputFormat(options);
       
       const spinner = ora({
         text: `Fetching ${resourceDef.display.toLowerCase()}s...`,
@@ -183,7 +191,7 @@ function createListCommand(resourceKey, resourceDef) {
         
         spinner.stop();
         
-        if (json) {
+        if (outputFormat === 'json') {
           console.log(JSON.stringify(data, null, 2));
           return;
         }
@@ -220,8 +228,9 @@ function createGetCommand(resourceKey, resourceDef) {
     .alias('show')
     .argument('<id>', `${resourceDef.display} ID`)
     .option('-j, --json', 'Output raw JSON')
+    .option('-o, --output <format>', 'Output format: json, table', 'table')
     .action(async (id, options) => {
-      const { json } = options;
+      const outputFormat = getOutputFormat(options);
       
       const spinner = ora({
         text: `Fetching ${resourceDef.display.toLowerCase()}...`,
@@ -233,7 +242,7 @@ function createGetCommand(resourceKey, resourceDef) {
         
         spinner.stop();
         
-        if (json) {
+        if (outputFormat === 'json') {
           console.log(JSON.stringify(data, null, 2));
           return;
         }
@@ -266,8 +275,10 @@ function createCreateCommand(resourceKey, resourceDef) {
     .option('-d, --data <json>', 'JSON data for the resource')
     .option('-f, --file <path>', 'JSON file containing resource data')
     .option('-j, --json', 'Output raw JSON')
+    .option('-o, --output <format>', 'Output format: json, table', 'table')
     .action(async (options) => {
-      const { data: jsonData, file, json } = options;
+      const { data: jsonData, file } = options;
+      const outputFormat = getOutputFormat(options);
       
       let resourceData = {};
       
@@ -303,7 +314,7 @@ function createCreateCommand(resourceKey, resourceDef) {
         
         spinner.stop();
         
-        if (json) {
+        if (outputFormat === 'json') {
           console.log(JSON.stringify(data, null, 2));
           return;
         }
@@ -334,8 +345,10 @@ function createUpdateCommand(resourceKey, resourceDef) {
     .option('-d, --data <json>', 'JSON data with updates')
     .option('-f, --file <path>', 'JSON file containing updates')
     .option('-j, --json', 'Output raw JSON')
+    .option('-o, --output <format>', 'Output format: json, table', 'table')
     .action(async (id, options) => {
-      const { data: jsonData, file, json } = options;
+      const { data: jsonData, file } = options;
+      const outputFormat = getOutputFormat(options);
       
       let updates = {};
       
@@ -371,7 +384,7 @@ function createUpdateCommand(resourceKey, resourceDef) {
         
         spinner.stop();
         
-        if (json) {
+        if (outputFormat === 'json') {
           console.log(JSON.stringify(data, null, 2));
           return;
         }
@@ -395,8 +408,10 @@ function createDeleteCommand(resourceKey, resourceDef) {
     .argument('<id>', `${resourceDef.display} ID`)
     .option('-y, --yes', 'Skip confirmation prompt')
     .option('-j, --json', 'Output raw JSON')
+    .option('-o, --output <format>', 'Output format: json, table', 'table')
     .action(async (id, options) => {
-      const { yes, json } = options;
+      const { yes } = options;
+      const outputFormat = getOutputFormat(options);
       
       // Confirm before deleting
       if (!yes) {
@@ -425,7 +440,7 @@ function createDeleteCommand(resourceKey, resourceDef) {
         
         spinner.stop();
         
-        if (json) {
+        if (outputFormat === 'json') {
           console.log(JSON.stringify(data, null, 2));
           return;
         }
@@ -553,20 +568,7 @@ function printObject(obj, title) {
 }
 
 function handleApiError(error) {
-  if (error.response?.status === 401) {
-    showError('🔐 Authentication failed. Run: telnyx auth login');
-  } else if (error.response?.status === 403) {
-    showError('🚫 Permission denied. This feature may not be enabled on your account.');
-  } else if (error.response?.status === 404) {
-    showError('❌ Resource not found.');
-  } else if (error.response?.status === 422) {
-    const detail = error.response.data?.errors?.[0]?.detail || 'Invalid request';
-    showError(`❌ ${detail}`);
-  } else if (error.response?.status === 429) {
-    showError('⏱️  Rate limit exceeded. Please wait a moment and try again.');
-  } else {
-    showError(`❌ ${error.message}`);
-  }
+  showError(error.message);
   process.exit(1);
 }
 

@@ -2,6 +2,8 @@
 
 const { Command } = require('commander');
 const { showBanner, showMenu } = require('../src/ui/layout');
+const { setVerbose, setTimeout } = require('../src/api/client');
+const { getActiveProfile } = require('../src/config/store');
 const authCommands = require('../src/commands/auth');
 const numberCommands = require('../src/commands/numbers');
 const messageCommands = require('../src/commands/messages');
@@ -16,10 +18,30 @@ const genericCommands = require('../src/commands/generic');
 
 const program = new Command();
 
+// Global options
 program
   .name('telnyx')
   .description('Command-line interface for Telnyx APIs')
-  .version('1.0.0');
+  .version('1.0.0')
+  .option('-p, --profile <name>', 'Use a specific profile', getActiveProfile())
+  .option('-v, --verbose', 'Show HTTP request/response details', false)
+  .option('--timeout <seconds>', 'Request timeout in seconds', '30')
+  .option('--json', 'Output raw JSON (equivalent to --output json)')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
+  .hook('preAction', (thisCommand) => {
+    const opts = thisCommand.opts();
+    
+    // Set verbose mode
+    if (opts.verbose) {
+      setVerbose(true);
+    }
+    
+    // Set timeout
+    if (opts.timeout) {
+      const timeoutMs = parseInt(opts.timeout) * 1000;
+      setTimeout(timeoutMs);
+    }
+  });
 
 // Show banner and menu when no command is provided
 program
@@ -34,7 +56,14 @@ program
   .command('auth')
   .description('Authentication commands')
   .addCommand(authCommands.whoami)
-  .addCommand(authCommands.login);
+  .addCommand(authCommands.login)
+  .addCommand(authCommands.logout);
+
+// Profile commands
+program
+  .command('profile')
+  .description('Manage authentication profiles')
+  .addCommand(authCommands.profile);
 
 // Number commands
 program

@@ -17,6 +17,45 @@ const yellow = chalk.yellow;
 const green = chalk.green;
 const red = chalk.red;
 
+// Helper to format output based on --json and --output flags
+function formatOutput(data, format) {
+  if (format === 'json') {
+    console.log(JSON.stringify(data, null, 2));
+    return;
+  }
+  
+  if (format === 'csv') {
+    if (Array.isArray(data) && data.length > 0) {
+      const firstItem = data[0].data || data[0];
+      const headers = Object.keys(firstItem);
+      console.log(headers.join(','));
+      
+      data.forEach(item => {
+        const row = item.data || item;
+        const values = headers.map(h => {
+          const val = row[h];
+          if (val === null || val === undefined) return '';
+          if (typeof val === 'object') return JSON.stringify(val).replace(/,/g, ';');
+          return String(val).replace(/,/g, ';');
+        });
+        console.log(values.join(','));
+      });
+    } else {
+      console.log('data');
+      console.log(JSON.stringify(data));
+    }
+    return;
+  }
+  
+  return false;
+}
+
+function getOutputFormat(options) {
+  if (options.json) return 'json';
+  if (options.output) return options.output;
+  return 'table';
+}
+
 // ==================== VERIFY SEND ====================
 
 const send = new Command('send')
@@ -29,8 +68,12 @@ const send = new Command('send')
   .option('--code-length <length>', 'Length of verification code', '6')
   .option('--locale <locale>', 'Locale for voice messages', 'en-US')
   .option('--no-confirm', 'Skip confirmation prompt')
+  .option('--dry-run', 'Show preview without sending')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
-    let { number, type, profile, timeout, codeLength, locale, confirm } = options;
+    let { number, type, profile, timeout, codeLength, locale, confirm, dryRun } = options;
+    const outputFormat = getOutputFormat(options);
     
     // Interactive prompts for missing fields
     const prompts = [];
@@ -58,6 +101,37 @@ const send = new Command('send')
     if (!number) {
       showError('❌ Phone number is required');
       process.exit(1);
+    }
+    
+    // Build verify options
+    const verifyOptions = {
+      type,
+      timeout: parseInt(timeout)
+    };
+    
+    if (profile) verifyOptions.profileId = profile;
+    if (codeLength) verifyOptions.code_length = parseInt(codeLength);
+    if (locale) verifyOptions.locale = locale;
+    
+    // Dry run mode
+    if (dryRun) {
+      console.log('');
+      console.log('┌─────────────────────────────────────────────────────────┐');
+      console.log('│  🔍 ' + primary('DRY RUN - No verification will be sent') + '              │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log(`│  Phone Number:    ${number.substring(0, 45).padEnd(45)}│`);
+      console.log(`│  Type:            ${type.padEnd(45)}│`);
+      console.log(`│  Timeout:         ${(timeout + ' seconds').padEnd(45)}│`);
+      if (profile) {
+        console.log(`│  Profile ID:      ${profile.substring(0, 45).padEnd(45)}│`);
+      }
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log('│  Would call: POST /v2/verifications                     │');
+      console.log(`│  Payload: ${JSON.stringify({ data: { phone_number: number, ...verifyOptions }}).substring(0, 40).padEnd(40)}│`);
+      console.log('└─────────────────────────────────────────────────────────┘');
+      console.log('');
+      showInfo('Remove --dry-run to actually send the verification');
+      return;
     }
     
     // Show preview
@@ -97,18 +171,15 @@ const send = new Command('send')
     }).start();
     
     try {
-      const verifyOptions = {
-        type,
-        timeout: parseInt(timeout)
-      };
-      
-      if (profile) verifyOptions.profileId = profile;
-      if (codeLength) verifyOptions.code_length = parseInt(codeLength);
-      if (locale) verifyOptions.locale = locale;
-      
       const data = await createVerification(number, verifyOptions);
       
       spinner.stop();
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data || data, outputFormat);
+        return;
+      }
       
       showSuccess('✅ Verification code sent!');
       console.log('');
@@ -143,7 +214,8 @@ const send = new Command('send')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -155,8 +227,11 @@ const check = new Command('check')
   .option('-n, --number <number>', 'Phone number being verified')
   .option('-c, --code <code>', 'Verification code received')
   .option('-p, --profile <id>', 'Verify profile ID')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
     let { number, code, profile } = options;
+    const outputFormat = getOutputFormat(options);
     
     // Interactive prompts for missing fields
     const prompts = [];
@@ -216,6 +291,12 @@ const check = new Command('check')
       
       const result = data.data;
       
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(result, outputFormat);
+        return;
+      }
+      
       if (result.verified || result.status === 'verified') {
         showSuccess('✅ Verification successful!');
         console.log('');
@@ -244,7 +325,8 @@ const check = new Command('check')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -255,8 +337,10 @@ const status = new Command('status')
   .alias('info')
   .argument('[verificationId]', 'Verification ID to check')
   .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (verificationId, options) => {
     let targetId = verificationId;
+    const outputFormat = getOutputFormat(options);
     
     // If no ID provided, prompt for one
     if (!targetId) {
@@ -288,8 +372,9 @@ const status = new Command('status')
       
       const verification = data.data;
       
-      if (options.json) {
-        console.log(JSON.stringify(data, null, 2));
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(verification, outputFormat);
         return;
       }
       
@@ -330,7 +415,8 @@ const status = new Command('status')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -341,8 +427,11 @@ const list = new Command('list')
   .alias('ls')
   .option('-s, --status <status>', 'Filter by status: pending, verified, expired, failed')
   .option('-n, --limit <number>', 'Number of results', '20')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
     const { status, limit } = options;
+    const outputFormat = getOutputFormat(options);
     
     const spinner = ora({
       text: 'Fetching verifications...',
@@ -359,6 +448,12 @@ const list = new Command('list')
       
       if (!data.data || data.data.length === 0) {
         showInfo('📭 No verifications found.');
+        return;
+      }
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data, outputFormat);
         return;
       }
       
@@ -394,7 +489,8 @@ const list = new Command('list')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -410,32 +506,6 @@ function getStatusIcon(status) {
     'max_attempts_reached': '❌'
   };
   return icons[status?.toLowerCase()] || '•';
-}
-
-function handleApiError(error) {
-  if (error.response?.status === 401) {
-    showError('🔐 Authentication failed. Run: telnyx auth login');
-  } else if (error.response?.status === 403) {
-    showError('🚫 Permission denied. Verify API may not be enabled on your account.');
-    showInfo('   Contact Telnyx support to enable verification services.');
-  } else if (error.response?.status === 404) {
-    showError('❌ Verification not found. Check the ID and try again.');
-  } else if (error.response?.status === 422) {
-    const detail = error.response.data?.errors?.[0]?.detail || 
-                   error.response.data?.errors?.[0]?.title || 
-                   'Invalid request';
-    showError(`❌ ${detail}`);
-    
-    if (detail.includes('code') || detail.includes('expired')) {
-      showInfo('   Tip: Verification codes expire after the timeout period');
-      showInfo('   Use "telnyx verify send" to generate a new code');
-    }
-  } else if (error.response?.status === 429) {
-    showError('⏱️  Rate limit exceeded. Please wait a moment and try again.');
-  } else {
-    showError(`❌ ${error.message}`);
-  }
-  process.exit(1);
 }
 
 module.exports = {

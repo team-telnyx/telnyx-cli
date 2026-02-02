@@ -17,6 +17,45 @@ const gray = chalk.gray;
 const yellow = chalk.yellow;
 const red = chalk.red;
 
+// Helper to format output based on --json and --output flags
+function formatOutput(data, format) {
+  if (format === 'json') {
+    console.log(JSON.stringify(data, null, 2));
+    return;
+  }
+  
+  if (format === 'csv') {
+    if (Array.isArray(data) && data.length > 0) {
+      const firstItem = data[0].data || data[0];
+      const headers = Object.keys(firstItem);
+      console.log(headers.join(','));
+      
+      data.forEach(item => {
+        const row = item.data || item;
+        const values = headers.map(h => {
+          const val = row[h];
+          if (val === null || val === undefined) return '';
+          if (typeof val === 'object') return JSON.stringify(val).replace(/,/g, ';');
+          return String(val).replace(/,/g, ';');
+        });
+        console.log(values.join(','));
+      });
+    } else {
+      console.log('data');
+      console.log(JSON.stringify(data));
+    }
+    return;
+  }
+  
+  return false;
+}
+
+function getOutputFormat(options) {
+  if (options.json) return 'json';
+  if (options.output) return options.output;
+  return 'table';
+}
+
 // ==================== DEBUGGER LIST ====================
 
 const list = new Command('list')
@@ -28,8 +67,11 @@ const list = new Command('list')
   .option('--webhooks', 'Show webhook deliveries instead of events')
   .option('--failed', 'Show only failed deliveries')
   .option('--since <hours>', 'Show events from last N hours', '24')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
     const { type, status, limit, webhooks, failed, since } = options;
+    const outputFormat = getOutputFormat(options);
     
     // Calculate since timestamp
     const sinceHours = parseInt(since);
@@ -40,14 +82,16 @@ const list = new Command('list')
       await listWebhookDeliveries({ 
         status: failed ? 'failed' : status, 
         limit: parseInt(limit),
-        since: sinceIso
+        since: sinceIso,
+        outputFormat
       });
     } else {
       await listEventsList({ 
         type, 
         status, 
         limit: parseInt(limit),
-        since: sinceIso
+        since: sinceIso,
+        outputFormat
       });
     }
   });
@@ -71,6 +115,12 @@ async function listEventsList(filters) {
     if (!data.data || data.data.length === 0) {
       showInfo('📭 No events found.');
       showInfo(`   Try: --since 48 for events from last 48 hours`);
+      return;
+    }
+    
+    // Handle JSON/CSV output
+    if (filters.outputFormat !== 'table') {
+      formatOutput(data.data, filters.outputFormat);
       return;
     }
     
@@ -105,7 +155,8 @@ async function listEventsList(filters) {
     
   } catch (error) {
     spinner.stop();
-    handleApiError(error);
+    showError(error.message);
+    process.exit(1);
   }
 }
 
@@ -125,6 +176,12 @@ async function listWebhookDeliveries(filters) {
     
     if (!data.data || data.data.length === 0) {
       showInfo('📭 No webhook deliveries found.');
+      return;
+    }
+    
+    // Handle JSON/CSV output
+    if (filters.outputFormat !== 'table') {
+      formatOutput(data.data, filters.outputFormat);
       return;
     }
     
@@ -171,7 +228,8 @@ async function listWebhookDeliveries(filters) {
     
   } catch (error) {
     spinner.stop();
-    handleApiError(error);
+    showError(error.message);
+    process.exit(1);
   }
 }
 
@@ -182,7 +240,10 @@ const inspect = new Command('inspect')
   .alias('view')
   .argument('<eventId>', 'Event ID to inspect')
   .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (eventId, options) => {
+    const outputFormat = getOutputFormat(options);
+    
     const spinner = ora({
       text: 'Fetching event details...',
       spinner: 'dots'
@@ -200,8 +261,9 @@ const inspect = new Command('inspect')
       
       const event = data.data;
       
-      if (options.json) {
-        console.log(JSON.stringify(data, null, 2));
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(event, outputFormat);
         return;
       }
       
@@ -247,7 +309,8 @@ const inspect = new Command('inspect')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -258,7 +321,26 @@ const resend = new Command('resend')
   .alias('retry')
   .argument('<webhookId>', 'Webhook delivery ID to resend')
   .option('-y, --yes', 'Skip confirmation prompt')
+  .option('--dry-run', 'Show what would happen without resending')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (webhookId, options) => {
+    const outputFormat = getOutputFormat(options);
+    
+    // Dry run mode
+    if (options.dryRun) {
+      console.log('');
+      console.log('┌─────────────────────────────────────────────────────────┐');
+      console.log('│  🔍 ' + primary('DRY RUN - Webhook will not be resent') + '                 │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log(`│  Webhook ID:  ${webhookId.substring(0, 45).padEnd(45)}│`);
+      console.log('│  Would call: POST /v2/webhook_deliveries/{id}/resend    │');
+      console.log('└─────────────────────────────────────────────────────────┘');
+      console.log('');
+      showInfo('Remove --dry-run to actually resend the webhook');
+      return;
+    }
+    
     // Confirm before resending
     if (!options.yes) {
       const { confirm } = await inquirer.prompt([
@@ -282,14 +364,22 @@ const resend = new Command('resend')
     }).start();
     
     try {
-      await resendWebhook(webhookId);
+      const data = await resendWebhook(webhookId);
       
       spinner.stop();
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data || data, outputFormat);
+        return;
+      }
+      
       showSuccess(`✅ Webhook ${webhookId} resent successfully`);
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -319,24 +409,6 @@ function truncate(str, maxLength) {
   if (!str) return 'N/A';
   if (str.length <= maxLength) return str;
   return str.substring(0, maxLength - 3) + '...';
-}
-
-function handleApiError(error) {
-  if (error.response?.status === 401) {
-    showError('🔐 Authentication failed. Run: telnyx auth login');
-  } else if (error.response?.status === 403) {
-    showError('🚫 Permission denied. Your account may not have access to events.');
-  } else if (error.response?.status === 404) {
-    showError('❌ Event or webhook not found.');
-  } else if (error.response?.status === 422) {
-    const detail = error.response.data?.errors?.[0]?.detail || 'Invalid request';
-    showError(`❌ ${detail}`);
-  } else if (error.response?.status === 429) {
-    showError('⏱️  Rate limit exceeded. Please wait a moment and try again.');
-  } else {
-    showError(`❌ ${error.message}`);
-  }
-  process.exit(1);
 }
 
 module.exports = {

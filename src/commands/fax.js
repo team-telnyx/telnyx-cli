@@ -12,6 +12,45 @@ const primary = chalk.hex(COLORS.primary);
 const gray = chalk.gray;
 const yellow = chalk.yellow;
 
+// Helper to format output based on --json and --output flags
+function formatOutput(data, format) {
+  if (format === 'json') {
+    console.log(JSON.stringify(data, null, 2));
+    return;
+  }
+  
+  if (format === 'csv') {
+    if (Array.isArray(data) && data.length > 0) {
+      const firstItem = data[0].data || data[0];
+      const headers = Object.keys(firstItem);
+      console.log(headers.join(','));
+      
+      data.forEach(item => {
+        const row = item.data || item;
+        const values = headers.map(h => {
+          const val = row[h];
+          if (val === null || val === undefined) return '';
+          if (typeof val === 'object') return JSON.stringify(val).replace(/,/g, ';');
+          return String(val).replace(/,/g, ';');
+        });
+        console.log(values.join(','));
+      });
+    } else {
+      console.log('data');
+      console.log(JSON.stringify(data));
+    }
+    return;
+  }
+  
+  return false;
+}
+
+function getOutputFormat(options) {
+  if (options.json) return 'json';
+  if (options.output) return options.output;
+  return 'table';
+}
+
 // ==================== FAX SEND ====================
 
 const send = new Command('send')
@@ -26,8 +65,12 @@ const send = new Command('send')
   .option('--cover-page', 'Include cover page', false)
   .option('--cover-sheet', 'Include cover sheet', false)
   .option('--no-confirm', 'Skip confirmation prompt')
+  .option('--dry-run', 'Show preview without sending')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
-    let { to, from, media, file, connection, webhook, coverPage, coverSheet, confirm } = options;
+    let { to, from, media, file, connection, webhook, coverPage, coverSheet, confirm, dryRun } = options;
+    const outputFormat = getOutputFormat(options);
     
     // Interactive prompts for missing fields
     const prompts = [];
@@ -119,6 +162,36 @@ const send = new Command('send')
       process.exit(1);
     }
     
+    // Build fax options
+    const faxOptions = {};
+    if (connection) faxOptions.connection_id = connection;
+    if (webhook) faxOptions.webhook_url = webhook;
+    if (coverPage || coverSheet) faxOptions.cover_page = true;
+    
+    // Dry run mode
+    if (dryRun) {
+      console.log('');
+      console.log('┌─────────────────────────────────────────────────────────┐');
+      console.log('│  🔍 ' + primary('DRY RUN - No fax will be sent') + '                          │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log(`│  To:           ${to.substring(0, 45).padEnd(45)}│`);
+      console.log(`│  From:         ${from.substring(0, 45).padEnd(45)}│`);
+      console.log(`│  Media URL:    ${(media || 'N/A').substring(0, 45).padEnd(45)}│`);
+      if (connection) {
+        console.log(`│  Connection:   ${connection.substring(0, 45).padEnd(45)}│`);
+      }
+      if (coverPage || coverSheet) {
+        console.log(`│  Cover Page:   ${'Yes'.padEnd(45)}│`);
+      }
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log('│  Would call: POST /v2/faxes                             │');
+      console.log(`│  Payload: ${JSON.stringify({ data: { to, from, media_url: media, ...faxOptions }}).substring(0, 40).padEnd(40)}│`);
+      console.log('└─────────────────────────────────────────────────────────┘');
+      console.log('');
+      showInfo('Remove --dry-run to actually send the fax');
+      return;
+    }
+    
     // Show preview
     console.log('');
     console.log('┌─────────────────────────────────────────────────────────┐');
@@ -161,14 +234,15 @@ const send = new Command('send')
     }).start();
     
     try {
-      const faxOptions = {};
-      if (connection) faxOptions.connection_id = connection;
-      if (webhook) faxOptions.webhook_url = webhook;
-      if (coverPage || coverSheet) faxOptions.cover_page = true;
-      
       const data = await sendFax(to, from, media, faxOptions);
       
       spinner.stop();
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data || data, outputFormat);
+        return;
+      }
       
       showSuccess('✅ Fax queued successfully!');
       console.log('');
@@ -190,7 +264,8 @@ const send = new Command('send')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -203,8 +278,11 @@ const list = new Command('list')
   .option('-n, --limit <number>', 'Number of results', '20')
   .option('--inbound', 'Show only inbound faxes')
   .option('--outbound', 'Show only outbound faxes')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
     const { status, limit, inbound, outbound } = options;
+    const outputFormat = getOutputFormat(options);
     
     const spinner = ora({
       text: 'Fetching faxes...',
@@ -243,6 +321,12 @@ const list = new Command('list')
         return;
       }
       
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(faxes, outputFormat);
+        return;
+      }
+      
       showSuccess(`Found ${faxes.length} fax(es)`);
       console.log('');
       
@@ -275,7 +359,8 @@ const list = new Command('list')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -286,8 +371,10 @@ const status = new Command('status')
   .alias('info')
   .argument('[faxId]', 'Fax ID to check')
   .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (faxId, options) => {
     let targetFaxId = faxId;
+    const outputFormat = getOutputFormat(options);
     
     // If no fax ID provided, prompt for one
     if (!targetFaxId) {
@@ -319,8 +406,9 @@ const status = new Command('status')
       
       const fax = data.data;
       
-      if (options.json) {
-        console.log(JSON.stringify(data, null, 2));
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(fax, outputFormat);
         return;
       }
       
@@ -368,7 +456,8 @@ const status = new Command('status')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -379,8 +468,12 @@ const cancel = new Command('cancel')
   .alias('stop')
   .argument('[faxId]', 'Fax ID to cancel')
   .option('-y, --yes', 'Skip confirmation prompt')
+  .option('--dry-run', 'Show what would happen without cancelling')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (faxId, options) => {
     let targetFaxId = faxId;
+    const outputFormat = getOutputFormat(options);
     
     // If no fax ID provided, prompt for one
     if (!targetFaxId) {
@@ -393,6 +486,20 @@ const cancel = new Command('cancel')
         }
       ]);
       targetFaxId = id;
+    }
+    
+    // Dry run mode
+    if (options.dryRun) {
+      console.log('');
+      console.log('┌─────────────────────────────────────────────────────────┐');
+      console.log('│  🔍 ' + primary('DRY RUN - Fax will not be cancelled') + '                  │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log(`│  Fax ID:      ${targetFaxId.substring(0, 45).padEnd(45)}│`);
+      console.log('│  Would call: POST /v2/faxes/{id}/actions/cancel         │');
+      console.log('└─────────────────────────────────────────────────────────┘');
+      console.log('');
+      showInfo('Remove --dry-run to actually cancel the fax');
+      return;
     }
     
     // Confirm before cancelling
@@ -418,14 +525,22 @@ const cancel = new Command('cancel')
     }).start();
     
     try {
-      await cancelFax(targetFaxId);
+      const data = await cancelFax(targetFaxId);
       
       spinner.stop();
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data || data, outputFormat);
+        return;
+      }
+      
       showSuccess(`✅ Fax ${targetFaxId} cancelled successfully`);
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -441,31 +556,6 @@ function getStatusIcon(status) {
     'cancelled': '❌'
   };
   return icons[status?.toLowerCase()] || '•';
-}
-
-function handleApiError(error) {
-  if (error.response?.status === 401) {
-    showError('🔐 Authentication failed. Run: telnyx auth login');
-  } else if (error.response?.status === 403) {
-    showError('🚫 Permission denied. Fax may not be enabled on your account.');
-    showInfo('   Contact Telnyx support to enable fax services.');
-  } else if (error.response?.status === 404) {
-    showError('❌ Fax not found. The fax may have already completed or the ID is incorrect.');
-  } else if (error.response?.status === 422) {
-    const detail = error.response.data?.errors?.[0]?.detail || 
-                   error.response.data?.errors?.[0]?.title || 
-                   'Invalid request';
-    showError(`❌ ${detail}`);
-    
-    if (detail.includes('media') || detail.includes('url')) {
-      showInfo('   Tip: Media URLs must be publicly accessible and in PDF/TIFF format');
-    }
-  } else if (error.response?.status === 429) {
-    showError('⏱️  Rate limit exceeded. Please wait a moment and try again.');
-  } else {
-    showError(`❌ ${error.message}`);
-  }
-  process.exit(1);
 }
 
 module.exports = {

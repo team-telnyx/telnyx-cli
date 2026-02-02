@@ -6,7 +6,8 @@ const chalk = require('chalk');
 const { 
   searchAvailableNumbers, 
   listPhoneNumbers, 
-  orderPhoneNumber 
+  orderPhoneNumber,
+  deletePhoneNumber
 } = require('../api/client');
 const { showSuccess, showError, showInfo, COLORS } = require('../ui/layout');
 
@@ -14,11 +15,53 @@ const primary = chalk.hex(COLORS.primary);
 const gray = chalk.gray;
 const yellow = chalk.yellow;
 
+// Helper to format output based on --json and --output flags
+function formatOutput(data, format) {
+  if (format === 'json') {
+    console.log(JSON.stringify(data, null, 2));
+    return;
+  }
+  
+  if (format === 'csv') {
+    // Simple CSV conversion for array data
+    if (Array.isArray(data) && data.length > 0) {
+      const firstItem = data[0].data || data[0];
+      const headers = Object.keys(firstItem);
+      console.log(headers.join(','));
+      
+      data.forEach(item => {
+        const row = item.data || item;
+        const values = headers.map(h => {
+          const val = row[h];
+          if (val === null || val === undefined) return '';
+          if (typeof val === 'object') return JSON.stringify(val).replace(/,/g, ';');
+          return String(val).replace(/,/g, ';');
+        });
+        console.log(values.join(','));
+      });
+    } else {
+      console.log('data');
+      console.log(JSON.stringify(data));
+    }
+    return;
+  }
+  
+  // Table format - handled by individual commands
+  return false;
+}
+
+// Get output format from command options
+function getOutputFormat(options) {
+  if (options.json) return 'json';
+  if (options.output) return options.output;
+  return 'table';
+}
+
 // ==================== NUMBER SEARCH ====================
 
 const search = new Command('search')
   .description('Search for available phone numbers')
-  .alias('s')  // Short alias like original CLI
+  .alias('s')
   .option('-c, --country <code>', 'Country code (e.g., US, GB, CA)')
   .option('-l, --locality <city>', 'City/Locality (e.g., Chicago)')
   .option('-t, --type <type>', 'Number type: local, toll_free, mobile', 'local')
@@ -31,12 +74,16 @@ const search = new Command('search')
   .option('--quickship', 'Show only quickship numbers (US toll-free, ready immediately)')
   .option('--best-effort', 'Return similar results if exact matches not found')
   .option('--state <state>', 'State/Province code (US/CA only, e.g., IL, CA)')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
     let { 
       country, locality, type, limit, areaCode, 
       startsWith, endsWith, contains, features, 
       quickship, bestEffort, state 
     } = options;
+    
+    const outputFormat = getOutputFormat(options);
     
     // Interactive prompts for missing required fields
     const prompts = [];
@@ -110,7 +157,7 @@ const search = new Command('search')
     }
     
     // Ask for features if not provided
-    if (!features) {
+    if (!features && outputFormat === 'table') {
       const { enableFeatures } = await inquirer.prompt([{
         type: 'checkbox',
         name: 'enableFeatures',
@@ -160,6 +207,12 @@ const search = new Command('search')
         return;
       }
       
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data, outputFormat);
+        return;
+      }
+      
       showSuccess(`Found ${data.data.length} available ${type} number(s)`);
       console.log('');
       
@@ -194,7 +247,8 @@ const search = new Command('search')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error, 'search');
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -202,13 +256,16 @@ const search = new Command('search')
 
 const list = new Command('list')
   .description('List your purchased phone numbers')
-  .alias('ls')  // Common alias
+  .alias('ls')
   .option('-s, --status <status>', 'Filter by status: active, disabled, pending', 'active')
   .option('-t, --type <type>', 'Filter by type: local, toll_free, mobile')
   .option('-n, --limit <number>', 'Number of results', '20')
   .option('--no-features', 'Hide features column for compact view')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
     const { status, type, limit, features } = options;
+    const outputFormat = getOutputFormat(options);
     
     const spinner = ora({
       text: 'Fetching your phone numbers...',
@@ -228,6 +285,12 @@ const list = new Command('list')
         showInfo('📭 You have no phone numbers.');
         console.log('');
         showInfo('Run "telnyx number search" to find and purchase numbers.');
+        return;
+      }
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data, outputFormat);
         return;
       }
       
@@ -287,7 +350,8 @@ const list = new Command('list')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error, 'list');
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -295,15 +359,19 @@ const list = new Command('list')
 
 const order = new Command('order')
   .description('Purchase a phone number')
-  .alias('buy')  // More intuitive alias
+  .alias('buy')
   .argument('[phoneNumber]', 'Phone number to purchase (E.164 format, e.g., +13125551234)')
   .option('-m, --messaging', 'Enable messaging', true)
   .option('-v, --voice', 'Enable voice', true)
   .option('-y, --yes', 'Skip confirmation prompt')
   .option('--profile <id>', 'Messaging profile ID to assign')
   .option('--app <id>', 'TeXML application ID for voice')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
+  .option('--dry-run', 'Show what would be ordered without purchasing')
   .action(async (phoneNumber, options) => {
     let targetNumber = phoneNumber;
+    const outputFormat = getOutputFormat(options);
     
     // If no number provided, prompt for one
     if (!targetNumber) {
@@ -331,6 +399,37 @@ const order = new Command('order')
       showError('❌ Phone number must be in E.164 format (e.g., +13125551234)');
       showInfo('   E.164 format: +[country code][number]');
       process.exit(1);
+    }
+    
+    // Build order options
+    const orderOptions = {};
+    if (options.messaging) orderOptions.messaging_enabled = true;
+    if (options.voice) orderOptions.voice_enabled = true;
+    if (options.profile) orderOptions.messaging_profile_id = options.profile;
+    if (options.app) orderOptions.texml_application_id = options.app;
+    
+    // Dry run mode
+    if (options.dryRun) {
+      console.log('');
+      console.log('┌─────────────────────────────────────────────────────────┐');
+      console.log('│  🔍 ' + primary('DRY RUN - No purchase will be made') + '                      │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log(`│  Phone Number:  ${targetNumber.padEnd(40)}│`);
+      console.log(`│  Messaging:     ${(options.messaging ? '✓ Enabled' : '✗ Disabled').padEnd(40)}│`);
+      console.log(`│  Voice:         ${(options.voice ? '✓ Enabled' : '✗ Disabled').padEnd(40)}│`);
+      if (options.profile) {
+        console.log(`│  Msg Profile:   ${options.profile.substring(0, 40).padEnd(40)}│`);
+      }
+      if (options.app) {
+        console.log(`│  Voice App:     ${options.app.substring(0, 40).padEnd(40)}│`);
+      }
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log('│  Would call: POST /v2/phone_numbers                     │');
+      console.log(`│  Payload: ${JSON.stringify({ data: { phone_number: targetNumber, ...orderOptions }}).substring(0, 40).padEnd(40)}│`);
+      console.log('└─────────────────────────────────────────────────────────┘');
+      console.log('');
+      showInfo('Remove --dry-run to actually purchase this number');
+      return;
     }
     
     // Show order summary and confirm
@@ -374,15 +473,15 @@ const order = new Command('order')
     }).start();
     
     try {
-      const orderOptions = {};
-      if (options.messaging) orderOptions.messaging_enabled = true;
-      if (options.voice) orderOptions.voice_enabled = true;
-      if (options.profile) orderOptions.messaging_profile_id = options.profile;
-      if (options.app) orderOptions.texml_application_id = options.app;
-      
       const data = await orderPhoneNumber(targetNumber, orderOptions);
       
       spinner.stop();
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data || data, outputFormat);
+        return;
+      }
       
       showSuccess(`🎉 Successfully purchased ${targetNumber}`);
       console.log('');
@@ -405,49 +504,100 @@ const order = new Command('order')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error, 'order');
+      showError(error.message);
+      process.exit(1);
     }
   });
 
-// ==================== ERROR HANDLER ====================
+// ==================== NUMBER DELETE ====================
 
-function handleApiError(error, context) {
-  if (error.response?.status === 401) {
-    showError('🔐 Authentication failed. Run: telnyx auth login');
-  } else if (error.response?.status === 403) {
-    showError('🚫 Permission denied. Your account may not have access to this feature.');
-  } else if (error.response?.status === 422) {
-    const detail = error.response.data?.errors?.[0]?.detail || 
-                   error.response.data?.errors?.[0]?.title || 
-                   'Invalid request parameters';
+const remove = new Command('remove')
+  .description('Remove a phone number from your account')
+  .alias('delete')
+  .alias('rm')
+  .argument('<numberId>', 'Phone number ID or E.164 number to remove')
+  .option('-y, --yes', 'Skip confirmation prompt')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
+  .option('--dry-run', 'Show what would be deleted without removing')
+  .action(async (numberId, options) => {
+    const outputFormat = getOutputFormat(options);
     
-    if (context === 'search') {
-      showError(`🔍 Search failed: ${detail}`);
-      showInfo('   Tip: Use --best-effort flag for more flexible results');
-    } else if (context === 'order') {
-      showError(`📦 Order failed: ${detail}`);
-      if (detail.includes('unavailable') || detail.includes('taken')) {
-        showInfo('   This number may have been purchased by someone else.');
-        showInfo('   Run "telnyx number search" to find similar numbers.');
-      }
-    } else {
-      showError(`❌ ${detail}`);
+    // Dry run mode
+    if (options.dryRun) {
+      console.log('');
+      console.log('┌─────────────────────────────────────────────────────────┐');
+      console.log('│  🔍 ' + primary('DRY RUN - No deletion will occur') + '                        │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log(`│  Target:        ${numberId.padEnd(40)}│`);
+      console.log('│  Would call: DELETE /v2/phone_numbers/{id}              │');
+      console.log('│  ⚠️  This will permanently remove the number!           │');
+      console.log('└─────────────────────────────────────────────────────────┘');
+      console.log('');
+      showInfo('Remove --dry-run to actually delete this number');
+      return;
     }
-  } else if (error.response?.status === 402) {
-    showError('💳 Insufficient balance. Please add funds to your account.');
-    showInfo('   Visit: https://portal.telnyx.com/#/app/account/billing');
-  } else if (error.response?.status === 429) {
-    showError('⏱️  Rate limit exceeded. Please wait a moment and try again.');
-  } else if (error.code === 'ECONNABORTED') {
-    showError('⏱️  Request timed out. Please try again.');
-  } else {
-    showError(`❌ ${error.message}`);
-  }
-  process.exit(1);
-}
+    
+    // Confirm before deleting
+    if (!options.yes) {
+      console.log('');
+      console.log('┌─────────────────────────────────────────────────────────┐');
+      console.log('│  ⚠️  ' + primary('WARNING: DESTRUCTIVE ACTION') + '                            │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log(`│  You are about to DELETE: ${numberId.padEnd(30)}│`);
+      console.log('│                                                          │');
+      console.log('│  This will:                                              │');
+      console.log('│  • Remove the number from your account                   │');
+      console.log('│  • Stop all associated services (voice, messaging)       │');
+      console.log('│  • Release the number (may not be recoverable)           │');
+      console.log('├─────────────────────────────────────────────────────────┤');
+      console.log('│  This action CANNOT be undone!                           │');
+      console.log('└─────────────────────────────────────────────────────────┘');
+      console.log('');
+      
+      const { confirm } = await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'confirm',
+          message: 'Are you sure you want to delete this number?',
+          default: false
+        }
+      ]);
+      
+      if (!confirm) {
+        showInfo('Deletion cancelled.');
+        return;
+      }
+    }
+    
+    const spinner = ora({
+      text: `Removing ${numberId}...`,
+      spinner: 'dots'
+    }).start();
+    
+    try {
+      const data = await deletePhoneNumber(numberId);
+      
+      spinner.stop();
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data || data, outputFormat);
+        return;
+      }
+      
+      showSuccess(`✅ Number ${numberId} removed successfully`);
+      
+    } catch (error) {
+      spinner.stop();
+      showError(error.message);
+      process.exit(1);
+    }
+  });
 
 module.exports = {
   search,
   list,
-  order
+  order,
+  remove
 };

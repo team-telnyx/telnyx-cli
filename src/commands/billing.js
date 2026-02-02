@@ -10,14 +10,52 @@ const yellow = chalk.yellow;
 const green = chalk.green;
 const red = chalk.red;
 
+// Helper to format output based on --json and --output flags
+function formatOutput(data, format) {
+  if (format === 'json') {
+    console.log(JSON.stringify(data, null, 2));
+    return;
+  }
+  
+  if (format === 'csv') {
+    if (data.data) {
+      const item = data.data;
+      const headers = Object.keys(item);
+      console.log(headers.join(','));
+      const values = headers.map(h => {
+        const val = item[h];
+        if (val === null || val === undefined) return '';
+        if (typeof val === 'object') return JSON.stringify(val).replace(/,/g, ';');
+        return String(val).replace(/,/g, ';');
+      });
+      console.log(values.join(','));
+    } else {
+      console.log('data');
+      console.log(JSON.stringify(data));
+    }
+    return;
+  }
+  
+  return false;
+}
+
+function getOutputFormat(options) {
+  if (options.json) return 'json';
+  if (options.output) return options.output;
+  return 'table';
+}
+
 // ==================== BILLING BALANCE ====================
 
 const balance = new Command('balance')
   .description('Check your account balance and billing information')
   .alias('bal')
   .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .option('--no-tips', 'Hide usage tips')
   .action(async (options) => {
+    const outputFormat = getOutputFormat(options);
+    
     const spinner = ora({
       text: 'Fetching billing information...',
       spinner: 'dots'
@@ -28,8 +66,9 @@ const balance = new Command('balance')
       
       spinner.stop();
       
-      if (options.json) {
-        console.log(JSON.stringify(data, null, 2));
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data, outputFormat);
         return;
       }
       
@@ -123,7 +162,8 @@ const balance = new Command('balance')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -153,21 +193,6 @@ function getCurrencySymbol(currency) {
   };
   
   return symbols[currency] || currency + ' ';
-}
-
-function handleApiError(error) {
-  if (error.response?.status === 401) {
-    showError('🔐 Authentication failed. Run: telnyx auth login');
-  } else if (error.response?.status === 403) {
-    showError('🚫 You do not have permission to view billing information.');
-    showInfo('   Contact your account administrator.');
-  } else if (error.response?.status === 404) {
-    showError('💳 Billing information not found.');
-    showInfo('   Your account may not be fully set up yet.');
-  } else {
-    showError(`❌ Failed to fetch balance: ${error.message}`);
-  }
-  process.exit(1);
 }
 
 module.exports = {

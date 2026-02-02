@@ -10,6 +10,45 @@ const primary = chalk.hex(COLORS.primary);
 const gray = chalk.gray;
 const yellow = chalk.yellow;
 
+// Helper to format output based on --json and --output flags
+function formatOutput(data, format) {
+  if (format === 'json') {
+    console.log(JSON.stringify(data, null, 2));
+    return;
+  }
+  
+  if (format === 'csv') {
+    if (Array.isArray(data) && data.length > 0) {
+      const firstItem = data[0].data || data[0];
+      const headers = Object.keys(firstItem);
+      console.log(headers.join(','));
+      
+      data.forEach(item => {
+        const row = item.data || item;
+        const values = headers.map(h => {
+          const val = row[h];
+          if (val === null || val === undefined) return '';
+          if (typeof val === 'object') return JSON.stringify(val).replace(/,/g, ';');
+          return String(val).replace(/,/g, ';');
+        });
+        console.log(values.join(','));
+      });
+    } else {
+      console.log('data');
+      console.log(JSON.stringify(data));
+    }
+    return;
+  }
+  
+  return false;
+}
+
+function getOutputFormat(options) {
+  if (options.json) return 'json';
+  if (options.output) return options.output;
+  return 'table';
+}
+
 // ==================== MESSAGE SEND ====================
 
 const send = new Command('send')
@@ -23,8 +62,11 @@ const send = new Command('send')
   .option('--webhook <url>', 'Webhook URL for delivery status')
   .option('--no-confirm', 'Skip confirmation prompt')
   .option('--dry-run', 'Show preview without sending')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
     let { to, from, text, media, subject, webhook, confirm, dryRun } = options;
+    const outputFormat = getOutputFormat(options);
     
     // Interactive prompts for missing fields
     const prompts = [];
@@ -94,7 +136,7 @@ const send = new Command('send')
     
     // Calculate estimated cost
     const segmentCount = text ? Math.ceil(text.length / 160) : 0;
-    const estimatedCost = (segmentCount * 0.004) + (media.length * 0.02); // Rough estimate
+    const estimatedCost = (segmentCount * 0.004) + (media.length * 0.02);
     
     // Show preview
     console.log('');
@@ -135,7 +177,8 @@ const send = new Command('send')
     console.log('');
     
     if (dryRun) {
-      showInfo('Dry run - message not sent.');
+      showInfo('🔍 Dry run - message not sent.');
+      showInfo('Remove --dry-run to actually send the message');
       return;
     }
     
@@ -178,6 +221,12 @@ const send = new Command('send')
       
       spinner.stop();
       
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data || data, outputFormat);
+        return;
+      }
+      
       showSuccess('✅ Message sent successfully!');
       console.log('');
       
@@ -207,7 +256,8 @@ const send = new Command('send')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -220,8 +270,11 @@ const list = new Command('list')
   .option('-t, --to <number>', 'Filter by recipient')
   .option('-s, --status <status>', 'Filter by status: queued, sending, sent, delivered, failed')
   .option('-n, --limit <number>', 'Number of results', '20')
+  .option('-j, --json', 'Output raw JSON')
+  .option('-o, --output <format>', 'Output format: json, table, csv', 'table')
   .action(async (options) => {
     const { from, to, status, limit } = options;
+    const outputFormat = getOutputFormat(options);
     
     const spinner = ora({
       text: 'Fetching messages...',
@@ -235,6 +288,12 @@ const list = new Command('list')
       
       if (!data.data || data.data.length === 0) {
         showInfo('📭 No messages found.');
+        return;
+      }
+      
+      // Handle JSON/CSV output
+      if (outputFormat !== 'table') {
+        formatOutput(data.data, outputFormat);
         return;
       }
       
@@ -268,7 +327,8 @@ const list = new Command('list')
       
     } catch (error) {
       spinner.stop();
-      handleApiError(error);
+      showError(error.message);
+      process.exit(1);
     }
   });
 
@@ -288,33 +348,6 @@ function getStatusIcon(status) {
     'received': '📥'
   };
   return icons[status] || '•';
-}
-
-function handleApiError(error) {
-  if (error.response?.status === 401) {
-    showError('🔐 Authentication failed. Run: telnyx auth login');
-  } else if (error.response?.status === 403) {
-    showError('🚫 The "from" number is not valid or not enabled for messaging.');
-    showInfo('   Run "telnyx number list" to see your available numbers.');
-    showInfo('   Or visit: https://portal.telnyx.com/#/app/numbers/my-numbers');
-  } else if (error.response?.status === 422) {
-    const detail = error.response.data?.errors?.[0]?.detail || 
-                   error.response.data?.errors?.[0]?.title || 
-                   'Invalid request';
-    showError(`❌ ${detail}`);
-    
-    if (detail.includes('media') || detail.includes('url')) {
-      showInfo('   Tip: Media URLs must be publicly accessible and valid image/video files');
-    }
-  } else if (error.response?.status === 429) {
-    showError('⏱️  Rate limit exceeded. Please wait a moment and try again.');
-  } else if (error.code === 'ECONNABORTED') {
-    showError('⏱️  Request timed out. The message may still be sent.');
-    showInfo('   Check message status in the portal or list recent messages.');
-  } else {
-    showError(`❌ ${error.message}`);
-  }
-  process.exit(1);
 }
 
 module.exports = {
