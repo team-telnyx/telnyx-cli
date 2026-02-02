@@ -1,5 +1,29 @@
+# Dependencies
 node_modules/
-.env
-*.log
+
+# Test coverage
 coverage/
-node_modules/
+
+# Build output
+dist/
+*.tgz
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment files
+.env
+.env.local
+.env.*.local

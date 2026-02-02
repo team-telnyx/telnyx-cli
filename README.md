@@ -1,290 +1,147 @@
-# Telnyx CLI v2
+# Telnyx CLI
 
-A fully functional, production-ready command-line interface for Telnyx APIs.
+[![CI](https://github.com/team-telnyx/telnyx-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/team-telnyx/telnyx-cli/actions/workflows/ci.yml)
+[![npm version](https://badge.fury.io/js/@telnyx%2Fcli.svg)](https://www.npmjs.com/package/@telnyx/cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-## Features
-
-### Phase 1 - Core Commands ✅
-- **Auth**: Login, Whoami
-- **Numbers**: Search, List, Order
-- **Messages**: Send, List
-- **Billing**: Balance
-
-### Phase 2 - Advanced Commands ✅
-- **Calls**: Dial, Hangup, List
-- **Debugger**: List events, Inspect, Resend webhooks
-- **Lookup**: Phone number lookup (caller name, carrier, portability)
-- **SIMs**: List, Show, Update IoT SIM cards
-- **Fax**: Send, List, Status, Cancel
-- **Verify**: Send, Check, Status, List (2FA)
-
-### Phase 3 - Generic API Support ✅
-- **Generic CRUD**: List, Get, Create, Update, Delete for 17+ API resources
-- **Resources Command**: View all available API endpoints
+A powerful command-line interface for the [Telnyx API](https://developers.telnyx.com). Manage phone numbers, send messages, make calls, and more — all from your terminal.
 
 ## Installation
 
 ```bash
-cd telnyx-cli
-npm install
+npm install -g @telnyx/cli
 ```
 
-## Usage
-
-### Getting Started
+Or with yarn:
 
 ```bash
-# Show the welcome menu
-telnyx
+yarn global add @telnyx/cli
+```
 
-# Authenticate
+**Requirements:** Node.js 18 or higher
+
+## Quick Start
+
+```bash
+# Authenticate with your API key
 telnyx auth login
 
-# Check account info
+# Check your account
 telnyx auth whoami
 
-# View all commands
-telnyx --help
+# Search for phone numbers
+telnyx number search --country US --locality "San Francisco"
+
+# Send an SMS
+telnyx message send --from +15551234567 --to +15559876543 --text "Hello from Telnyx CLI!"
+```
+
+## Features
+
+- **Interactive Prompts** — Guided workflows when arguments are omitted
+- **Multi-Profile Support** — Manage multiple API keys (sandbox, production, etc.)
+- **Human-Friendly Output** — Colored tables, spinners, and clear formatting
+- **Flexible Output Formats** — `--json`, `--output csv`, or default tables
+- **Verbose Mode** — Debug HTTP requests with `--verbose`
+- **Dry-Run Mode** — Preview destructive operations before executing
+
+## Commands
+
+### Authentication
+
+```bash
+telnyx auth login              # Authenticate with API key
+telnyx auth logout             # Clear stored credentials
+telnyx auth whoami             # Show current account info
+
+# Multi-profile support
+telnyx profile list            # List all profiles
+telnyx profile add production  # Add a new profile
+telnyx profile use production  # Switch active profile
 ```
 
 ### Phone Numbers
 
 ```bash
-# Search for available numbers
-telnyx number search --country US --locality "Chicago"
-telnyx number search --country US --area-code 312
-
-# List your numbers
+telnyx number search --country US --area-code 415
 telnyx number list
-
-# Purchase a number
-telnyx number order +13125551234
+telnyx number order +14155551234
+telnyx number delete <number_id> --dry-run
 ```
 
 ### Messaging
 
 ```bash
-# Send SMS (interactive)
-telnyx message send
-
-# Send SMS (direct)
-telnyx message send --to +13125551234 --from +13125555678 --text "Hello!"
-
-# List recent messages
-telnyx message list
+telnyx message send --from +15551234567 --to +15559876543 --text "Hello!"
+telnyx message list --limit 10
 ```
 
 ### Voice Calls
 
 ```bash
-# Make a call (interactive)
-telnyx call dial
-
-# Make a call (direct)
-telnyx call dial --from +13125555678 --to +13125551234 --connection <conn_id>
-
-# List active calls
+telnyx call dial --from +15551234567 --to +15559876543 --connection <id>
 telnyx call list --active
-
-# Hang up a call
 telnyx call hangup <call_control_id>
 ```
 
-### Number Lookup
+### Additional Commands
 
-```bash
-# Lookup a number (interactive)
-telnyx lookup
+| Category | Commands |
+|----------|----------|
+| **Billing** | `balance` |
+| **Debugger** | `list`, `inspect`, `resend` |
+| **Lookup** | `lookup` (carrier, caller-name, portability) |
+| **SIMs** | `list`, `show`, `update` |
+| **Fax** | `send`, `list`, `status`, `cancel` |
+| **Verify** | `send`, `check`, `status`, `list` |
 
-# Lookup with specific type
-telnyx lookup +13125551234 --type caller-name
-telnyx lookup +13125551234 --type carrier
-telnyx lookup +13125551234 --type portability
-```
+Run `telnyx --help` for the full command list, or `telnyx <command> --help` for details.
 
-### IoT SIMs
+## Global Options
 
-```bash
-# List SIM cards
-telnyx sim list
-telnyx sim list --active
-
-# Show SIM details
-telnyx sim show <sim_id>
-
-# Update SIM tags
-telnyx sim update <sim_id> --tags "device1,iot,production"
-```
-
-### Fax
-
-```bash
-# Send a fax (interactive)
-telnyx fax send
-
-# Send a fax (direct)
-telnyx fax send --to +13125551234 --from +13125555678 --media https://example.com/doc.pdf
-
-# List faxes
-telnyx fax list
-telnyx fax list --outbound
-
-# Check fax status
-telnyx fax status <fax_id>
-
-# Cancel a pending fax
-telnyx fax cancel <fax_id>
-```
-
-### 2FA Verification
-
-```bash
-# Send verification code (interactive)
-telnyx verify send
-
-# Send verification code (direct)
-telnyx verify send --number +13125551234 --type sms
-
-# Check/submit code (interactive)
-telnyx verify check
-
-# Check/submit code (direct)
-telnyx verify check --number +13125551234 --code 123456
-
-# List verifications
-telnyx verify list
-```
-
-### Webhook Debugging
-
-```bash
-# List recent events
-telnyx debugger list
-telnyx debugger list --since 48
-
-# List webhook deliveries
-telnyx debugger list --webhooks
-telnyx debugger list --failed
-
-# Inspect an event
-telnyx debugger inspect <event_id>
-
-# Resend a failed webhook
-telnyx debugger resend <webhook_id>
-```
-
-### Billing
-
-```bash
-# Check balance
-telnyx billing balance
-telnyx billing balance --json
-```
-
-### Generic API Resources
-
-```bash
-# List all available resources
-telnyx resources
-
-# Messaging profiles
-telnyx messaging-profile list
-telnyx messaging-profile get <id>
-
-# SIP connections
-telnyx connection list
-telnyx connection get <id>
-
-# TeXML applications
-telnyx texml-application list
-telnyx texml-application create --data '{"name": "My App"}'
-
-# Call control applications
-telnyx call-control-application list
-
-# Storage buckets
-telnyx bucket list
-
-# AI assistants
-telnyx assistant list
-
-# And more...
-```
-
-## Interactive Mode
-
-Most commands support interactive prompts when arguments are omitted:
-
-```bash
-# This will prompt for all required fields
-telnyx call dial
-telnyx message send
-telnyx verify send
-```
-
-## Environment Variables
-
-```bash
-# Set API key via environment (optional)
-export TELNYX_API_KEY="your-api-key"
-```
+| Option | Description |
+|--------|-------------|
+| `-p, --profile <name>` | Use a specific profile |
+| `-v, --verbose` | Show HTTP request/response details |
+| `--timeout <seconds>` | Request timeout (default: 30) |
+| `--json` | Output raw JSON |
+| `-o, --output <format>` | Output format: `json`, `table`, `csv` |
 
 ## Configuration
 
-The CLI stores your API key securely using the `conf` package:
-- macOS: `~/Library/Preferences/telnyx-cli`
-- Linux: `~/.config/telnyx-cli`
-- Windows: `%APPDATA%/telnyx-cli`
+Credentials are stored securely using your OS keychain:
+
+| OS | Location |
+|----|----------|
+| macOS | `~/Library/Preferences/@telnyx/cli` |
+| Linux | `~/.config/@telnyx/cli` |
+| Windows | `%APPDATA%/@telnyx/cli` |
+
+You can also set `TELNYX_API_KEY` as an environment variable.
 
 ## API Reference
 
-This CLI uses the [Telnyx API v2](https://developers.telnyx.com/docs/api/v2/overview).
+This CLI wraps the [Telnyx API v2](https://developers.telnyx.com/docs/api/v2/overview). Get your API key from the [Telnyx Portal](https://portal.telnyx.com/#/app/api-keys).
 
-## Project Structure
+## Contributing
 
+Contributions are welcome! Please read our [contributing guidelines](CONTRIBUTING.md) before submitting a PR.
+
+```bash
+# Clone the repo
+git clone https://github.com/team-telnyx/telnyx-cli.git
+cd telnyx-cli
+
+# Install dependencies
+npm install
+
+# Run tests
+npm test
+
+# Run in development
+node bin/telnyx --help
 ```
-telnyx-cli/
-├── bin/
-│   └── telnyx              # Main entry point
-├── src/
-│   ├── api/
-│   │   └── client.js       # API client with all methods
-│   ├── commands/
-│   │   ├── auth.js         # Authentication commands
-│   │   ├── billing.js      # Billing commands
-│   │   ├── calls.js        # Voice call commands
-│   │   ├── debugger.js     # Webhook debugging commands
-│   │   ├── fax.js          # Fax commands
-│   │   ├── generic.js      # Generic API resource commands
-│   │   ├── lookup.js       # Number lookup commands
-│   │   ├── messages.js     # Messaging commands
-│   │   ├── numbers.js      # Phone number commands
-│   │   ├── sims.js         # IoT SIM commands
-│   │   └── verify.js       # 2FA verification commands
-│   ├── config/
-│   │   └── store.js        # Configuration storage
-│   └── ui/
-│       └── layout.js       # UI components and styling
-├── package.json
-└── README.md
-```
-
-## Command Summary
-
-| Category | Commands | Status |
-|----------|----------|--------|
-| Auth | login, whoami | ✅ |
-| Numbers | search, list, order | ✅ |
-| Messages | send, list | ✅ |
-| Calls | dial, hangup, list | ✅ |
-| Debugger | list, inspect, resend | ✅ |
-| Lookup | lookup, batch | ✅ |
-| SIMs | list, show, update | ✅ |
-| Fax | send, list, status, cancel | ✅ |
-| Verify | send, check, status, list | ✅ |
-| Billing | balance | ✅ |
-| Generic | 17+ resource types | ✅ |
 
 ## License
 
-ISC
+[MIT](LICENSE) © Telnyx
