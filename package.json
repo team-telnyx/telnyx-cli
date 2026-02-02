@@ -1,7 +1,7 @@
 {
-  "name": "telnyx-cli",
-  "version": "1.0.0",
-  "description": "Command-line interface for Telnyx APIs",
+  "name": "@telnyx/cli",
+  "version": "2.0.0",
+  "description": "Command-line interface for Telnyx APIs - manage phone numbers, messaging, voice calls, and more",
   "main": "bin/telnyx",
   "bin": {
     "telnyx": "./bin/telnyx"
@@ -9,17 +9,48 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "npm test"
   },
   "keywords": [
     "telnyx",
     "cli",
     "api",
     "voice",
-    "messaging"
+    "messaging",
+    "sms",
+    "mms",
+    "phone-numbers",
+    "voip",
+    "telephony",
+    "fax",
+    "sip",
+    "2fa",
+    "verification"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Telnyx <support@telnyx.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team-telnyx/telnyx-cli.git"
+  },
+  "homepage": "https://developers.telnyx.com",
+  "bugs": {
+    "url": "https://github.com/team-telnyx/telnyx-cli/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    "src/api/",
+    "src/commands/",
+    "src/config/",
+    "src/ui/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
   "type": "commonjs",
   "dependencies": {
     "axios": "^1.13.4",

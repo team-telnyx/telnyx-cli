@@ -1,0 +1,23 @@
+# Development files
+.git/
+.github/
+coverage/
+node_modules/
+
+# Test files
+src/__tests__/
+*.test.js
+jest.config.js
+
+# Build artifacts
+*.log
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Screenshots and docs assets
+screenshot.jpg
