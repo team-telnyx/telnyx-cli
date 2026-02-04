@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortingOrdersActionRequirementsList(t *testing.T) {
@@ -16,7 +16,8 @@ func TestPortingOrdersActionRequirementsList(t *testing.T) {
 		"porting-orders:action-requirements", "list",
 		"--porting-order-id", "porting_order_id",
 		"--filter", "{id: [182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e], action_type: au_id_verification, requirement_type_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e, status: created}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "{value: created_at}",
 	)
 
@@ -32,8 +33,8 @@ func TestPortingOrdersActionRequirementsList(t *testing.T) {
 		"--filter.action-type", "au_id_verification",
 		"--filter.requirement-type-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter.status", "created",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort.value", "created_at",
 	)
 }

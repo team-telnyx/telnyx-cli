@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestManagedAccountsCreate(t *testing.T) {
@@ -48,7 +48,8 @@ func TestManagedAccountsList(t *testing.T) {
 		"managed-accounts", "list",
 		"--filter", "{email: {contains: john, eq: eq}, organization_name: {contains: contains, eq: Example Company LLC}}",
 		"--include-cancelled-accounts=true",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "email",
 	)
 
@@ -62,8 +63,8 @@ func TestManagedAccountsList(t *testing.T) {
 		"--filter.email", "{contains: john, eq: eq}",
 		"--filter.organization-name", "{contains: contains, eq: Example Company LLC}",
 		"--include-cancelled-accounts=true",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "email",
 	)
 }

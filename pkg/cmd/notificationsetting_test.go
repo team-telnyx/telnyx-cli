@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestNotificationSettingsCreate(t *testing.T) {
@@ -50,7 +50,8 @@ func TestNotificationSettingsList(t *testing.T) {
 		t,
 		"notification-settings", "list",
 		"--filter", "{associated_record_type: {eq: phone_number}, channel_type_id: {eq: webhook}, notification_channel: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, notification_event_condition_id: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, notification_profile_id: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, status: {eq: enable-received}}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -66,8 +67,8 @@ func TestNotificationSettingsList(t *testing.T) {
 		"--filter.notification-event-condition-id", "{eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}",
 		"--filter.notification-profile-id", "{eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}",
 		"--filter.status", "{eq: enable-received}",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

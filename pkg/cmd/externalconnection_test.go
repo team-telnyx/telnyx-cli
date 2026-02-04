@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestExternalConnectionsCreate(t *testing.T) {
@@ -97,7 +97,8 @@ func TestExternalConnectionsList(t *testing.T) {
 		t,
 		"external-connections", "list",
 		"--filter", "{id: '1930241863466354012', connection_name: {contains: My Connection}, created_at: '2022-12-31', external_sip_connection: zoom, phone_number: {contains: '+15555555555'}}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -112,8 +113,8 @@ func TestExternalConnectionsList(t *testing.T) {
 		"--filter.created-at", "2022-12-31",
 		"--filter.external-sip-connection", "zoom",
 		"--filter.phone-number", "{contains: '+15555555555'}",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

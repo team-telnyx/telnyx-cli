@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortingOrdersPhoneNumberBlocksCreate(t *testing.T) {
@@ -41,7 +41,8 @@ func TestPortingOrdersPhoneNumberBlocksList(t *testing.T) {
 		"porting-orders:phone-number-blocks", "list",
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter", "{activation_status: Active, phone_number: ['+12003151212'], portability_status: confirmed, porting_order_id: [f3575e15-32ce-400e-a4c0-dd78800c20b0], status: in-process, support_key: sr_a12345}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "{value: created_at}",
 	)
 
@@ -59,8 +60,8 @@ func TestPortingOrdersPhoneNumberBlocksList(t *testing.T) {
 		"--filter.porting-order-id", "[f3575e15-32ce-400e-a4c0-dd78800c20b0]",
 		"--filter.status", "in-process",
 		"--filter.support-key", "sr_a12345",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort.value", "created_at",
 	)
 }

@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -291,22 +291,31 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 		return err
 	}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Texml.Accounts.Queues.List(
-		ctx,
-		cmd.Value("account-sid").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:queues list", obj, format, transform)
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.Texml.Accounts.Queues.List(
+			ctx,
+			cmd.Value("account-sid").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(os.Stdout, "texml:accounts:queues list", obj, format, transform)
+	} else {
+		iter := client.Texml.Accounts.Queues.ListAutoPaging(
+			ctx,
+			cmd.Value("account-sid").(string),
+			params,
+			options...,
+		)
+		return ShowJSONIterator(os.Stdout, "texml:accounts:queues list", iter, format, transform)
+	}
 }
 
 func handleTexmlAccountsQueuesDelete(ctx context.Context, cmd *cli.Command) error {

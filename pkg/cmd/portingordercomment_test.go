@@ -5,8 +5,7 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
 func TestPortingOrdersCommentsCreate(t *testing.T) {
@@ -25,18 +24,7 @@ func TestPortingOrdersCommentsList(t *testing.T) {
 		t,
 		"porting-orders:comments", "list",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page", "{number: 1, size: 1}",
-	)
-
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(portingOrdersCommentsList)
-
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"porting-orders:comments", "list",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

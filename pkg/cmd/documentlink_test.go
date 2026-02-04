@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestDocumentLinksList(t *testing.T) {
@@ -15,7 +15,8 @@ func TestDocumentLinksList(t *testing.T) {
 		t,
 		"document-links", "list",
 		"--filter", "{linked_record_type: porting_order, linked_resource_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -27,7 +28,7 @@ func TestDocumentLinksList(t *testing.T) {
 		"document-links", "list",
 		"--filter.linked-record-type", "porting_order",
 		"--filter.linked-resource-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortingOrdersAssociatedPhoneNumbersCreate(t *testing.T) {
@@ -40,7 +40,8 @@ func TestPortingOrdersAssociatedPhoneNumbersList(t *testing.T) {
 		"porting-orders:associated-phone-numbers", "list",
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter", "{action: keep, phone_number: '+441234567890'}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "{value: '-created_at'}",
 	)
 
@@ -54,8 +55,8 @@ func TestPortingOrdersAssociatedPhoneNumbersList(t *testing.T) {
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter.action", "keep",
 		"--filter.phone-number", "+441234567890",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort.value", "-created_at",
 	)
 }

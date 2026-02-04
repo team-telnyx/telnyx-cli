@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -246,10 +246,13 @@ var portingOrdersList = requestflag.WithInnerFlags(cli.Command{
 			Default:   true,
 			QueryPath: "include_phone_numbers",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "sort",
@@ -291,18 +294,6 @@ var portingOrdersList = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "filter.phone-numbers",
 			InnerField: "phone_numbers",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
 		},
 	},
 	"sort": {
@@ -351,7 +342,7 @@ var portingOrdersRetrieveExceptionTypes = cli.Command{
 	HideHelpCommand: true,
 }
 
-var portingOrdersRetrieveRequirements = requestflag.WithInnerFlags(cli.Command{
+var portingOrdersRetrieveRequirements = cli.Command{
 	Name:    "retrieve-requirements",
 	Usage:   "Returns a list of all requirements based on country/number type for this porting\norder.",
 	Suggest: true,
@@ -360,28 +351,18 @@ var portingOrdersRetrieveRequirements = requestflag.WithInnerFlags(cli.Command{
 			Name:     "id",
 			Required: true,
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handlePortingOrdersRetrieveRequirements,
 	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
-		},
-	},
-})
+}
 
 var portingOrdersRetrieveSubRequest = cli.Command{
 	Name:    "retrieve-sub-request",

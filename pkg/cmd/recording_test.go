@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestRecordingsRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestRecordingsList(t *testing.T) {
 		t,
 		"recordings", "list",
 		"--filter", "{call_leg_id: 428c31b6-7af4-4bcb-b7f5-5013ef9657c1, call_session_id: 428c31b6-7af4-4bcb-b7f5-5013ef9657c1, conference_id: 428c31b6-7af4-4bcb-b7f5-5013ef9657c1, connection_id: '175237942907135762', created_at: {gte: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, from: '1234567890', sip_call_id: 428c31b6-7af4-4bcb-b7f5-5013ef9657c1, to: '1234567890'}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -42,8 +43,8 @@ func TestRecordingsList(t *testing.T) {
 		"--filter.from", "1234567890",
 		"--filter.sip-call-id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",
 		"--filter.to", "1234567890",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

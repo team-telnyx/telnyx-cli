@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -39,10 +39,13 @@ var connectionsList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[connection_name], filter[fqdn], filter[outbound_voice_profile_id], filter[outbound.outbound_voice_profile_id]",
 			QueryPath: "filter",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[string]{
 			Name:      "sort",
@@ -71,21 +74,9 @@ var connectionsList = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "outbound_voice_profile_id",
 		},
 	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
-		},
-	},
 })
 
-var connectionsListActiveCalls = requestflag.WithInnerFlags(cli.Command{
+var connectionsListActiveCalls = cli.Command{
 	Name:    "list-active-calls",
 	Usage:   "Lists all active calls for given connection. Acceptable connections are either\nSIP connections with webhook_url or xml_request_url, call control or texml.\nReturned results are cursor paginated.",
 	Suggest: true,
@@ -93,11 +84,6 @@ var connectionsListActiveCalls = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "connection-id",
 			Required: true,
-		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[after], page[before], page[limit], page[size], page[number]",
-			QueryPath: "page",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -110,25 +96,7 @@ var connectionsListActiveCalls = requestflag.WithInnerFlags(cli.Command{
 	},
 	Action:          handleConnectionsListActiveCalls,
 	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"page": {
-		&requestflag.InnerFlag[string]{
-			Name:       "page.after",
-			Usage:      "Opaque identifier of next page",
-			InnerField: "after",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "page.before",
-			Usage:      "Opaque identifier of previous page",
-			InnerField: "before",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.limit",
-			Usage:      "Limit of records per single page",
-			InnerField: "limit",
-		},
-	},
-})
+}
 
 func handleConnectionsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)

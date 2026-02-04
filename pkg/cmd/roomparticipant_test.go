@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestRoomParticipantsRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestRoomParticipantsList(t *testing.T) {
 		t,
 		"room-participants", "list",
 		"--filter", "{context: Alice, date_joined_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_left_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_updated_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, session_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -39,7 +40,7 @@ func TestRoomParticipantsList(t *testing.T) {
 		"--filter.date-left-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.date-updated-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPhoneNumbersRetrieve(t *testing.T) {
@@ -40,7 +40,8 @@ func TestPhoneNumbersList(t *testing.T) {
 		"phone-numbers", "list",
 		"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', country_iso_alpha2: US, customer_reference: customer_reference, emergency_address_id: '9102160989215728032', number_type: {eq: local}, phone_number: phone_number, source: ported, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel, without_tags: 'true'}",
 		"--handle-messaging-profile-error", "false",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "connection_name",
 	)
 
@@ -65,8 +66,8 @@ func TestPhoneNumbersList(t *testing.T) {
 		"--filter.voice-usage-payment-method", "channel",
 		"--filter.without-tags", "true",
 		"--handle-messaging-profile-error", "false",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "connection_name",
 	)
 }
@@ -88,7 +89,8 @@ func TestPhoneNumbersSlimList(t *testing.T) {
 		"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', country_iso_alpha2: US, customer_reference: customer_reference, emergency_address_id: '9102160989215728032', number_type: {eq: local}, phone_number: phone_number, source: ported, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel}",
 		"--include-connection=true",
 		"--include-tags=true",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "connection_name",
 	)
 
@@ -113,8 +115,8 @@ func TestPhoneNumbersSlimList(t *testing.T) {
 		"--filter.voice-usage-payment-method", "channel",
 		"--include-connection=true",
 		"--include-tags=true",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "connection_name",
 	)
 }

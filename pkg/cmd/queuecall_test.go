@@ -5,8 +5,7 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
 func TestQueuesCallsRetrieve(t *testing.T) {
@@ -36,22 +35,6 @@ func TestQueuesCallsList(t *testing.T) {
 		t,
 		"queues:calls", "list",
 		"--queue-name", "queue_name",
-		"--page", "{after: after, before: before, limit: 1}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
-
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(queuesCallsList)
-
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"queues:calls", "list",
-		"--queue-name", "queue_name",
-		"--page.after", "after",
-		"--page.before", "before",
-		"--page.limit", "1",
 		"--page-number", "0",
 		"--page-size", "0",
 	)

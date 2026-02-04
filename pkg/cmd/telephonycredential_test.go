@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestTelephonyCredentialsCreate(t *testing.T) {
@@ -49,7 +49,8 @@ func TestTelephonyCredentialsList(t *testing.T) {
 		t,
 		"telephony-credentials", "list",
 		"--filter", "{name: name, resource_id: resource_id, sip_username: sip_username, status: status, tag: tag}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -64,8 +65,8 @@ func TestTelephonyCredentialsList(t *testing.T) {
 		"--filter.sip-username", "sip_username",
 		"--filter.status", "status",
 		"--filter.tag", "tag",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

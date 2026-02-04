@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortingOrdersCreate(t *testing.T) {
@@ -92,7 +92,8 @@ func TestPortingOrdersList(t *testing.T) {
 		"porting-orders", "list",
 		"--filter", "{activation_settings: {fast_port_eligible: true, foc_datetime_requested: {gt: '2021-03-25T10:00:00.000Z', lt: '2021-03-25T10:00:00.000Z'}}, customer_group_reference: customer_group_reference, customer_reference: customer_reference, end_user: {admin: {auth_person_name: auth_person_name, entity_name: entity_name}}, misc: {type: full}, parent_support_key: parent_support_key, phone_numbers: {carrier_name: carrier_name, country_code: country_code, phone_number: {contains: contains}}}",
 		"--include-phone-numbers=true",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "{value: created_at}",
 	)
 
@@ -111,8 +112,8 @@ func TestPortingOrdersList(t *testing.T) {
 		"--filter.parent-support-key", "parent_support_key",
 		"--filter.phone-numbers", "{carrier_name: carrier_name, country_code: country_code, phone_number: {contains: contains}}",
 		"--include-phone-numbers=true",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort.value", "created_at",
 	)
 }
@@ -149,19 +150,8 @@ func TestPortingOrdersRetrieveRequirements(t *testing.T) {
 		t,
 		"porting-orders", "retrieve-requirements",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page", "{number: 1, size: 1}",
-	)
-
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(portingOrdersRetrieveRequirements)
-
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"porting-orders", "retrieve-requirements",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

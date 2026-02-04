@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestMobileNetworkOperatorsList(t *testing.T) {
@@ -15,7 +15,8 @@ func TestMobileNetworkOperatorsList(t *testing.T) {
 		t,
 		"mobile-network-operators", "list",
 		"--filter", "{country_code: US, mcc: '310', mnc: '410', name: {contains: T&T, ends_with: T, starts_with: AT}, network_preferences_enabled: true, tadig: USACG}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -31,7 +32,7 @@ func TestMobileNetworkOperatorsList(t *testing.T) {
 		"--filter.name", "{contains: T&T, ends_with: T, starts_with: AT}",
 		"--filter.network-preferences-enabled=true",
 		"--filter.tadig", "USACG",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestMobilePushCredentialsCreate(t *testing.T) {
@@ -33,7 +33,8 @@ func TestMobilePushCredentialsList(t *testing.T) {
 		t,
 		"mobile-push-credentials", "list",
 		"--filter", "{alias: LucyCredential, type: ios}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -45,8 +46,8 @@ func TestMobilePushCredentialsList(t *testing.T) {
 		"mobile-push-credentials", "list",
 		"--filter.alias", "LucyCredential",
 		"--filter.type", "ios",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

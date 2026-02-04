@@ -10,7 +10,7 @@ import (
 	"os"
 	"slices"
 
-	"github.com/stainless-sdks/telnyx-cli/pkg/cmd"
+	"github.com/team-telnyx/telnyx-cli/pkg/cmd"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"

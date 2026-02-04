@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestShortCodesRetrieve(t *testing.T) {
@@ -35,7 +35,8 @@ func TestShortCodesList(t *testing.T) {
 		t,
 		"short-codes", "list",
 		"--filter", "{messaging_profile_id: messaging_profile_id}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -46,7 +47,7 @@ func TestShortCodesList(t *testing.T) {
 		t,
 		"short-codes", "list",
 		"--filter.messaging-profile-id", "messaging_profile_id",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

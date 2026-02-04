@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortingPhoneNumbersList(t *testing.T) {
@@ -15,7 +15,8 @@ func TestPortingPhoneNumbersList(t *testing.T) {
 		t,
 		"porting-phone-numbers", "list",
 		"--filter", "{porting_order_status: in-process}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -26,7 +27,7 @@ func TestPortingPhoneNumbersList(t *testing.T) {
 		t,
 		"porting-phone-numbers", "list",
 		"--filter.porting-order-status", "in-process",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

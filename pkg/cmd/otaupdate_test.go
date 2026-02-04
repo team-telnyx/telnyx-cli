@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestOtaUpdatesRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestOtaUpdatesList(t *testing.T) {
 		t,
 		"ota-updates", "list",
 		"--filter", "{sim_card_id: sim_card_id, status: in-progress, type: sim_card_network_preferences}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -37,7 +38,7 @@ func TestOtaUpdatesList(t *testing.T) {
 		"--filter.sim-card-id", "sim_card_id",
 		"--filter.status", "in-progress",
 		"--filter.type", "sim_card_network_preferences",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

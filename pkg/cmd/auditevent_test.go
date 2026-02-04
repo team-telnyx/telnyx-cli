@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestAuditEventsList(t *testing.T) {
@@ -15,7 +15,8 @@ func TestAuditEventsList(t *testing.T) {
 		t,
 		"audit-events", "list",
 		"--filter", "{created_after: '2021-01-01T00:00:00Z', created_before: '2021-01-01T00:00:00Z'}",
-		"--page", "{number: 1, size: 10}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "desc",
 	)
 
@@ -28,8 +29,8 @@ func TestAuditEventsList(t *testing.T) {
 		"audit-events", "list",
 		"--filter.created-after", "2021-01-01T00:00:00Z",
 		"--filter.created-before", "2021-01-01T00:00:00Z",
-		"--page.number", "1",
-		"--page.size", "10",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "desc",
 	)
 }

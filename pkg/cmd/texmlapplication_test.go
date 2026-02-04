@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestTexmlApplicationsCreate(t *testing.T) {
@@ -132,7 +132,8 @@ func TestTexmlApplicationsList(t *testing.T) {
 		t,
 		"texml-applications", "list",
 		"--filter", "{friendly_name: friendly_name, outbound_voice_profile_id: '1293384261075731499'}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "friendly_name",
 	)
 
@@ -145,8 +146,8 @@ func TestTexmlApplicationsList(t *testing.T) {
 		"texml-applications", "list",
 		"--filter.friendly-name", "friendly_name",
 		"--filter.outbound-voice-profile-id", "1293384261075731499",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "friendly_name",
 	)
 }

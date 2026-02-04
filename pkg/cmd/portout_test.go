@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortoutsRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestPortoutsList(t *testing.T) {
 		t,
 		"portouts", "list",
 		"--filter", "{carrier_name: carrier_name, country_code: US, country_code_in: [CA, US], foc_date: '2024-09-04T00:00:00.000Z', inserted_at: {gte: '2024-09-04T00:00:00.000Z', lte: '2024-09-04T00:00:00.000Z'}, phone_number: '+13035551212', pon: pon, ported_out_at: {gte: '2024-09-04T00:00:00.000Z', lte: '2024-09-04T00:00:00.000Z'}, spid: spid, status: pending, status_in: [pending], support_key: PO_abc123}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -46,8 +47,8 @@ func TestPortoutsList(t *testing.T) {
 		"--filter.status", "pending",
 		"--filter.status-in", "[pending]",
 		"--filter.support-key", "PO_abc123",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

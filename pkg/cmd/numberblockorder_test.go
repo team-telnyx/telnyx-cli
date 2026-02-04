@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestNumberBlockOrdersCreate(t *testing.T) {
@@ -37,7 +37,8 @@ func TestNumberBlockOrdersList(t *testing.T) {
 		t,
 		"number-block-orders", "list",
 		"--filter", "{created_at: {gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}, phone_numbers.starting_number: '+19705555000', status: pending}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -50,7 +51,7 @@ func TestNumberBlockOrdersList(t *testing.T) {
 		"--filter.created-at", "{gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}",
 		"--filter.phone-numbers-starting-number", "+19705555000",
 		"--filter.status", "pending",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

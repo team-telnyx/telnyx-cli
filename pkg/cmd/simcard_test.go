@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestSimCardsRetrieve(t *testing.T) {
@@ -65,7 +65,8 @@ func TestSimCardsList(t *testing.T) {
 		"--filter", "{iccid: '89310410106543789301', msisdn: '+13109976224', status: [enabled], tags: [personal, customers, active-customers]}",
 		"--filter-sim-card-group-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 		"--include-sim-card-group=true",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "current_billing_period_consumed_data.amount",
 	)
 
@@ -82,8 +83,8 @@ func TestSimCardsList(t *testing.T) {
 		"--filter.tags", "[personal, customers, active-customers]",
 		"--filter-sim-card-group-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 		"--include-sim-card-group=true",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "current_billing_period_consumed_data.amount",
 	)
 }

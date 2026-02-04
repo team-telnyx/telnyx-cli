@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestCustomerServiceRecordsCreate(t *testing.T) {
@@ -56,7 +56,8 @@ func TestCustomerServiceRecordsList(t *testing.T) {
 		t,
 		"customer-service-records", "list",
 		"--filter", "{created_at: {gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}, phone_number: {eq: '+12441239999', in: ['+12441239999']}, status: {eq: pending, in: [pending]}}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "{value: created_at}",
 	)
 
@@ -70,8 +71,8 @@ func TestCustomerServiceRecordsList(t *testing.T) {
 		"--filter.created-at", "{gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}",
 		"--filter.phone-number", "{eq: '+12441239999', in: ['+12441239999']}",
 		"--filter.status", "{eq: pending, in: [pending]}",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort.value", "created_at",
 	)
 }

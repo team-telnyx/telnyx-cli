@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestRoomRecordingsRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestRoomRecordingsList(t *testing.T) {
 		t,
 		"room-recordings", "list",
 		"--filter", "{date_ended_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_started_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, duration_secs: 20, participant_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, room_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, session_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, status: completed, type: audio}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -42,8 +43,8 @@ func TestRoomRecordingsList(t *testing.T) {
 		"--filter.session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		"--filter.status", "completed",
 		"--filter.type", "audio",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 
@@ -62,7 +63,8 @@ func TestRoomRecordingsDeleteBulk(t *testing.T) {
 		t,
 		"room-recordings", "delete-bulk",
 		"--filter", "{date_ended_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_started_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, duration_secs: 20, participant_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, room_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, session_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, status: completed, type: audio}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -80,7 +82,7 @@ func TestRoomRecordingsDeleteBulk(t *testing.T) {
 		"--filter.session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		"--filter.status", "completed",
 		"--filter.type", "audio",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
