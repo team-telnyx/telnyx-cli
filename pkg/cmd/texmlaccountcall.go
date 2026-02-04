@@ -290,6 +290,11 @@ var texmlAccountsCallsCalls = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "SupervisingRole",
 		},
 		&requestflag.Flag[string]{
+			Name:     "texml",
+			Usage:    "TeXML to be used as instructions for the call. If provided, the call will execute these instructions instead of fetching from the Url.",
+			BodyPath: "Texml",
+		},
+		&requestflag.Flag[string]{
 			Name:     "trim",
 			Usage:    "Whether to trim any leading and trailing silence from the recording. Defaults to `trim-silence`.",
 			BodyPath: "Trim",
