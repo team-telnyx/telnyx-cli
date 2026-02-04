@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPhoneNumberBlocksJobsRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestPhoneNumberBlocksJobsList(t *testing.T) {
 		t,
 		"phone-number-blocks:jobs", "list",
 		"--filter", "{status: in_progress, type: delete_phone_number_block}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "created_at",
 	)
 
@@ -37,8 +38,8 @@ func TestPhoneNumberBlocksJobsList(t *testing.T) {
 		"phone-number-blocks:jobs", "list",
 		"--filter.status", "in_progress",
 		"--filter.type", "delete_phone_number_block",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "created_at",
 	)
 }

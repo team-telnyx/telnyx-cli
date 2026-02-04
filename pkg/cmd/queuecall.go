@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -56,7 +56,7 @@ var queuesCallsUpdate = cli.Command{
 	HideHelpCommand: true,
 }
 
-var queuesCallsList = requestflag.WithInnerFlags(cli.Command{
+var queuesCallsList = cli.Command{
 	Name:    "list",
 	Usage:   "Retrieve the list of calls in an existing queue",
 	Suggest: true,
@@ -64,11 +64,6 @@ var queuesCallsList = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "queue-name",
 			Required: true,
-		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[after], page[before], page[limit], page[size], page[number]",
-			QueryPath: "page",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -81,25 +76,7 @@ var queuesCallsList = requestflag.WithInnerFlags(cli.Command{
 	},
 	Action:          handleQueuesCallsList,
 	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"page": {
-		&requestflag.InnerFlag[string]{
-			Name:       "page.after",
-			Usage:      "Opaque identifier of next page",
-			InnerField: "after",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "page.before",
-			Usage:      "Opaque identifier of previous page",
-			InnerField: "before",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.limit",
-			Usage:      "Limit of records per single page",
-			InnerField: "limit",
-		},
-	},
-})
+}
 
 var queuesCallsRemove = cli.Command{
 	Name:    "remove",

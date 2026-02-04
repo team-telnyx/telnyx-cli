@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -82,10 +82,13 @@ var bundlePricingUserBundlesList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter (deepObject style). Supports filtering by country_iso and resource. Examples: filter[country_iso]=US or filter[resource]=+15617819942",
 			QueryPath: "filter",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[string]{
 			Name:       "authorization-bearer",
@@ -106,18 +109,6 @@ var bundlePricingUserBundlesList = requestflag.WithInnerFlags(cli.Command{
 			Name:       "filter.resource",
 			Usage:      "Filter by resource.",
 			InnerField: "resource",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load.",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page.",
-			InnerField: "size",
 		},
 	},
 })

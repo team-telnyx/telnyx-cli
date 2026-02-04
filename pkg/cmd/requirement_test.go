@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestRequirementsRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestRequirementsList(t *testing.T) {
 		t,
 		"requirements", "list",
 		"--filter", "{action: porting, country_code: US, phone_number_type: local}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "country_code",
 	)
 
@@ -38,8 +39,8 @@ func TestRequirementsList(t *testing.T) {
 		"--filter.action", "porting",
 		"--filter.country-code", "US",
 		"--filter.phone-number-type", "local",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "country_code",
 	)
 }

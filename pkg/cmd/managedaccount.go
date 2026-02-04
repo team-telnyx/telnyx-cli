@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -100,10 +100,13 @@ var managedAccountsList = requestflag.WithInnerFlags(cli.Command{
 			Default:   false,
 			QueryPath: "include_cancelled_accounts",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[number], page[size]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[string]{
 			Name:      "sort",
@@ -123,18 +126,6 @@ var managedAccountsList = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "filter.organization-name",
 			InnerField: "organization_name",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
 		},
 	},
 })

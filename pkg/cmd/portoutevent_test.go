@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortoutsEventsRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestPortoutsEventsList(t *testing.T) {
 		t,
 		"portouts:events", "list",
 		"--filter", "{created_at: {gte: '2021-01-01T00:00:00Z', lte: '2021-01-01T00:00:00Z'}, event_type: portout.status_changed, portout_id: 34dc46a9-53ed-4e01-9454-26227ea13326}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -37,8 +38,8 @@ func TestPortoutsEventsList(t *testing.T) {
 		"--filter.created-at", "{gte: '2021-01-01T00:00:00Z', lte: '2021-01-01T00:00:00Z'}",
 		"--filter.event-type", "portout.status_changed",
 		"--filter.portout-id", "34dc46a9-53ed-4e01-9454-26227ea13326",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

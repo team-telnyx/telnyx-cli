@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -39,10 +39,13 @@ var simCardsActionsList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter for SIM card actions (deepObject style). Originally: filter[sim_card_id], filter[status], filter[bulk_sim_card_action_id], filter[action_type]",
 			QueryPath: "filter",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated pagination parameter (deepObject style). Originally: page[number], page[size]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleSimCardsActionsList,
@@ -68,18 +71,6 @@ var simCardsActionsList = requestflag.WithInnerFlags(cli.Command{
 			Name:       "filter.status",
 			Usage:      "Filter by a specific status of the resource's lifecycle.",
 			InnerField: "status",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load.",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page.",
-			InnerField: "size",
 		},
 	},
 })

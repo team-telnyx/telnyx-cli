@@ -21,27 +21,76 @@ Register-ArgumentCompleter -Native -CommandName __APPNAME__ -ScriptBlock {
   }
   $exitCode = $LASTEXITCODE
 
-  switch ($exitCode) {
-    10 {
-      # File completion behavior
-      Get-ChildItem -Path "$wordToComplete*" | ForEach-Object {
-        $completionText = if ($_.PSIsContainer) { $_.Name + "/" } else { $_.Name }
-        [System.Management.Automation.CompletionResult]::new(
-          $completionText,
-          $completionText,
-          'ProviderItem',
-          $completionText
-        )
+  # Check for custom file completion patterns
+  # Patterns can appear anywhere in the word (e.g., inside quotes: 'my file is @file://path')
+  $prefix = ""
+  $filePart = $wordToComplete
+  $forceFileCompletion = $false
+
+  # PowerShell includes quotes in $wordToComplete - strip them for pattern matching
+  # but preserve them in the prefix for the completion result
+  $wordContent = $wordToComplete
+  $leadingQuote = ""
+  if ($wordToComplete -match '^([''"])(.*)(\1)$') {
+    # Fully quoted: "content" or 'content'
+    $leadingQuote = $Matches[1]
+    $wordContent = $Matches[2]
+  } elseif ($wordToComplete -match '^([''"])(.*)$') {
+    # Opening quote only: "content or 'content
+    $leadingQuote = $Matches[1]
+    $wordContent = $Matches[2]
+  }
+
+  if ($wordContent -match '^(.*)@(file://|data://)?(.*)$') {
+    $prefix = $leadingQuote + $Matches[1] + '@' + $Matches[2]
+    $filePart = $Matches[3]
+    $forceFileCompletion = $true
+  }
+
+  if ($forceFileCompletion) {
+    # Handle empty filePart (e.g., "@" or "@file://") by listing current directory
+    $items = if ([string]::IsNullOrEmpty($filePart)) {
+      Get-ChildItem -ErrorAction SilentlyContinue
+    } else {
+      Get-ChildItem -Path "$filePart*" -ErrorAction SilentlyContinue
+    }
+    $items | ForEach-Object {
+      $completionText = if ($_.PSIsContainer) { $prefix + $_.Name + "/" } else { $prefix + $_.Name }
+      [System.Management.Automation.CompletionResult]::new(
+        $completionText,
+        $completionText,
+        'ProviderItem',
+        $completionText
+      )
+    }
+  } else {
+    switch ($exitCode) {
+      10 {
+        # File completion behavior
+        $items = if ([string]::IsNullOrEmpty($wordToComplete)) {
+          Get-ChildItem -ErrorAction SilentlyContinue
+        } else {
+          Get-ChildItem -Path "$wordToComplete*" -ErrorAction SilentlyContinue
+        }
+        $items | ForEach-Object {
+          $completionText = if ($_.PSIsContainer) { $_.Name + "/" } else { $_.Name }
+          [System.Management.Automation.CompletionResult]::new(
+            $completionText,
+            $completionText,
+            'ProviderItem',
+            $completionText
+          )
+        }
       }
-    }
-    11 {
-      # No reasonable suggestions
-      [System.Management.Automation.CompletionResult]::new(' ', ' ', 'ParameterValue', ' ')
-    }
-    default {
-      # Default behavior - show command completions
-      $output | ForEach-Object {
-        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+      11 {
+        # No reasonable suggestions
+        [System.Management.Automation.CompletionResult]::new(' ', ' ', 'ParameterValue', ' ')
+      }
+      default {
+        # Default behavior - show command completions
+        $output | ForEach-Object {
+          [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
       }
     }
   }

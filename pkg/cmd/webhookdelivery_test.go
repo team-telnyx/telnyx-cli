@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestWebhookDeliveriesRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestWebhookDeliveriesList(t *testing.T) {
 		t,
 		"webhook-deliveries", "list",
 		"--filter", "{attempts: {contains: https://fallback.example.com/webhooks}, event_type: 'call_initiated,call.initiated', finished_at: {gte: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, started_at: {gte: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, status: {eq: delivered}, webhook: {contains: call.initiated}}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -40,7 +41,7 @@ func TestWebhookDeliveriesList(t *testing.T) {
 		"--filter.started-at", "{gte: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}",
 		"--filter.status", "{eq: delivered}",
 		"--filter.webhook", "{contains: call.initiated}",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

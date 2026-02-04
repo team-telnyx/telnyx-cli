@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -298,11 +298,6 @@ var callControlApplicationsList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[application_name][contains], filter[outbound.outbound_voice_profile_id], filter[leg_id], filter[application_session_id], filter[connection_id], filter[product], filter[failed], filter[from], filter[to], filter[name], filter[type], filter[occurred_at][eq/gt/gte/lt/lte], filter[status]",
 			QueryPath: "filter",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[after], page[before], page[limit], page[size], page[number]",
-			QueryPath: "page",
-		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
 			QueryPath: "page[number]",
@@ -386,23 +381,6 @@ var callControlApplicationsList = requestflag.WithInnerFlags(cli.Command{
 			Name:       "filter.type",
 			Usage:      "Event type",
 			InnerField: "type",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[string]{
-			Name:       "page.after",
-			Usage:      "Opaque identifier of next page",
-			InnerField: "after",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "page.before",
-			Usage:      "Opaque identifier of previous page",
-			InnerField: "before",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.limit",
-			Usage:      "Limit of records per single page",
-			InnerField: "limit",
 		},
 	},
 })

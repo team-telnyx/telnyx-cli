@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestSimCardsActionsRetrieve(t *testing.T) {
@@ -24,7 +24,8 @@ func TestSimCardsActionsList(t *testing.T) {
 		t,
 		"sim-cards:actions", "list",
 		"--filter", "{action_type: disable, bulk_sim_card_action_id: 47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9, sim_card_id: 47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9, status: in-progress}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -38,8 +39,8 @@ func TestSimCardsActionsList(t *testing.T) {
 		"--filter.bulk-sim-card-action-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 		"--filter.sim-card-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 		"--filter.status", "in-progress",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -39,10 +39,13 @@ var roomRecordingsList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[date_ended_at][eq], filter[date_ended_at][gte], filter[date_ended_at][lte], filter[date_started_at][eq], filter[date_started_at][gte], filter[date_started_at][lte], filter[room_id], filter[participant_id], filter[session_id], filter[status], filter[type], filter[duration_secs]",
 			QueryPath: "filter",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleRoomRecordingsList,
@@ -88,18 +91,6 @@ var roomRecordingsList = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "type",
 		},
 	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load.",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page.",
-			InnerField: "size",
-		},
-	},
 })
 
 var roomRecordingsDelete = cli.Command{
@@ -126,10 +117,13 @@ var roomRecordingsDeleteBulk = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[date_ended_at][eq], filter[date_ended_at][gte], filter[date_ended_at][lte], filter[date_started_at][eq], filter[date_started_at][gte], filter[date_started_at][lte], filter[room_id], filter[participant_id], filter[session_id], filter[status], filter[type], filter[duration_secs]",
 			QueryPath: "filter",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleRoomRecordingsDeleteBulk,
@@ -173,18 +167,6 @@ var roomRecordingsDeleteBulk = requestflag.WithInnerFlags(cli.Command{
 			Name:       "filter.type",
 			Usage:      "type for filtering room recordings.",
 			InnerField: "type",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load.",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page.",
-			InnerField: "size",
 		},
 	},
 })

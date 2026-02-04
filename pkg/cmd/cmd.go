@@ -11,7 +11,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/autocomplete"
+	"github.com/team-telnyx/telnyx-cli/internal/autocomplete"
 	docs "github.com/urfave/cli-docs/v3"
 	"github.com/urfave/cli/v3"
 )
@@ -2374,15 +2374,6 @@ func init() {
 					&texmlAccountsQueuesUpdate,
 					&texmlAccountsQueuesList,
 					&texmlAccountsQueuesDelete,
-				},
-			},
-			{
-				Name:     "texml:calls",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&texmlCallsUpdate,
-					&texmlCallsInitiate,
 				},
 			},
 			{

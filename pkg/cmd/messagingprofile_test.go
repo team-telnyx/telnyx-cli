@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestMessagingProfilesCreate(t *testing.T) {
@@ -136,7 +136,8 @@ func TestMessagingProfilesList(t *testing.T) {
 		t,
 		"messaging-profiles", "list",
 		"--filter", "{name: name}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -147,8 +148,8 @@ func TestMessagingProfilesList(t *testing.T) {
 		t,
 		"messaging-profiles", "list",
 		"--filter.name", "name",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 
@@ -167,19 +168,8 @@ func TestMessagingProfilesListPhoneNumbers(t *testing.T) {
 		t,
 		"messaging-profiles", "list-phone-numbers",
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page", "{number: 1, size: 1}",
-	)
-
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(messagingProfilesListPhoneNumbers)
-
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-profiles", "list-phone-numbers",
-		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 
@@ -189,18 +179,7 @@ func TestMessagingProfilesListShortCodes(t *testing.T) {
 		t,
 		"messaging-profiles", "list-short-codes",
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page", "{number: 1, size: 1}",
-	)
-
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(messagingProfilesListShortCodes)
-
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-profiles", "list-short-codes",
-		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -123,10 +123,13 @@ var simCardsList = requestflag.WithInnerFlags(cli.Command{
 			Default:   false,
 			QueryPath: "include_sim_card_group",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated pagination parameter (deepObject style). Originally: page[number], page[size]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[string]{
 			Name:      "sort",
@@ -157,18 +160,6 @@ var simCardsList = requestflag.WithInnerFlags(cli.Command{
 			Name:       "filter.tags",
 			Usage:      "A list of SIM card tags to filter on.<br/><br/>\n If the SIM card contains <b><i>all</i></b> of the given <code>tags</code> they will be found.<br/><br/>\nFor example, if the SIM cards have the following tags: <ul>\n  <li><code>['customers', 'staff', 'test']</code>\n  <li><code>['test']</code></li>\n  <li><code>['customers']</code></li>\n</ul>\nSearching for <code>['customers', 'test']</code> returns only the first because it's the only one with both tags.<br/> Searching for <code>test</code> returns the first two SIMs, because both of them have such tag.<br/> Searching for <code>customers</code> returns the first and last SIMs.<br/>\n",
 			InnerField: "tags",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load.",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page.",
-			InnerField: "size",
 		},
 	},
 })

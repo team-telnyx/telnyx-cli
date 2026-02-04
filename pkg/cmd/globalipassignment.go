@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -57,33 +57,23 @@ var globalIPAssignmentsUpdate = cli.Command{
 	HideHelpCommand: true,
 }
 
-var globalIPAssignmentsList = requestflag.WithInnerFlags(cli.Command{
+var globalIPAssignmentsList = cli.Command{
 	Name:    "list",
 	Usage:   "List all Global IP assignments.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[number], page[size]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleGlobalIPAssignmentsList,
 	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
-		},
-	},
-})
+}
 
 var globalIPAssignmentsDelete = cli.Command{
 	Name:    "delete",

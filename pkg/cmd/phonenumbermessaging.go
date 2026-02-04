@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -53,33 +53,23 @@ var phoneNumbersMessagingUpdate = cli.Command{
 	HideHelpCommand: true,
 }
 
-var phoneNumbersMessagingList = requestflag.WithInnerFlags(cli.Command{
+var phoneNumbersMessagingList = cli.Command{
 	Name:    "list",
 	Usage:   "List phone numbers with messaging settings",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[number], page[size]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handlePhoneNumbersMessagingList,
 	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
-		},
-	},
-})
+}
 
 func handlePhoneNumbersMessagingRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)

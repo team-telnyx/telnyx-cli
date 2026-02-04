@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestAddressesCreate(t *testing.T) {
@@ -47,7 +47,8 @@ func TestAddressesList(t *testing.T) {
 		t,
 		"addresses", "list",
 		"--filter", "{address_book: {eq: eq}, customer_reference: string, street_address: {contains: contains}, used_as_emergency: used_as_emergency}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "street_address",
 	)
 
@@ -62,8 +63,8 @@ func TestAddressesList(t *testing.T) {
 		"--filter.customer-reference", "string",
 		"--filter.street-address", "{contains: contains}",
 		"--filter.used-as-emergency", "used_as_emergency",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "street_address",
 	)
 }

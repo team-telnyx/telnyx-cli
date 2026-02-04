@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestExternalConnectionsUploadsCreate(t *testing.T) {
@@ -43,7 +43,8 @@ func TestExternalConnectionsUploadsList(t *testing.T) {
 		"external-connections:uploads", "list",
 		"--id", "id",
 		"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+1970', eq: '+19705555098'}, status: {eq: [pending_upload, pending]}}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -58,8 +59,8 @@ func TestExternalConnectionsUploadsList(t *testing.T) {
 		"--filter.location-id", "{eq: '19995665508264022121'}",
 		"--filter.phone-number", "{contains: '+1970', eq: '+19705555098'}",
 		"--filter.status", "{eq: [pending_upload, pending]}",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

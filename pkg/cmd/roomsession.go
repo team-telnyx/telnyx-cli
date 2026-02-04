@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -49,10 +49,13 @@ var roomsSessionsList0 = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "To decide if room participants should be included in the response.",
 			QueryPath: "include_participants",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleRoomsSessionsList0,
@@ -82,18 +85,6 @@ var roomsSessionsList0 = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "room_id",
 		},
 	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load.",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page.",
-			InnerField: "size",
-		},
-	},
 })
 
 var roomsSessionsList1 = requestflag.WithInnerFlags(cli.Command{
@@ -115,10 +106,13 @@ var roomsSessionsList1 = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "To decide if room participants should be included in the response.",
 			QueryPath: "include_participants",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleRoomsSessionsList1,
@@ -143,18 +137,6 @@ var roomsSessionsList1 = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "date_updated_at",
 		},
 	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load.",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page.",
-			InnerField: "size",
-		},
-	},
 })
 
 var roomsSessionsRetrieveParticipants = requestflag.WithInnerFlags(cli.Command{
@@ -171,10 +153,13 @@ var roomsSessionsRetrieveParticipants = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[date_joined_at][eq], filter[date_joined_at][gte], filter[date_joined_at][lte], filter[date_updated_at][eq], filter[date_updated_at][gte], filter[date_updated_at][lte], filter[date_left_at][eq], filter[date_left_at][gte], filter[date_left_at][lte], filter[context]",
 			QueryPath: "filter",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleRoomsSessionsRetrieveParticipants,
@@ -197,18 +182,6 @@ var roomsSessionsRetrieveParticipants = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "filter.date-updated-at",
 			InnerField: "date_updated_at",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load.",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page.",
-			InnerField: "size",
 		},
 	},
 })

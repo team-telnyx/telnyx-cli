@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -67,10 +67,13 @@ var portingOrdersAssociatedPhoneNumbersList = requestflag.WithInnerFlags(cli.Com
 			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[phone_number], filter[action]",
 			QueryPath: "filter",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[size], page[number]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "sort",
@@ -91,18 +94,6 @@ var portingOrdersAssociatedPhoneNumbersList = requestflag.WithInnerFlags(cli.Com
 			Name:       "filter.phone-number",
 			Usage:      "Filter results by a phone number. It should be in E.164 format.",
 			InnerField: "phone_number",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
 		},
 	},
 	"sort": {

@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestRoomCompositionsCreate(t *testing.T) {
@@ -39,7 +39,8 @@ func TestRoomCompositionsList(t *testing.T) {
 		t,
 		"room-compositions", "list",
 		"--filter", "{date_created_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, session_id: 92e7d459-bcc5-4386-9f5f-6dd14a82588d, status: completed}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -52,8 +53,8 @@ func TestRoomCompositionsList(t *testing.T) {
 		"--filter.date-created-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.session-id", "92e7d459-bcc5-4386-9f5f-6dd14a82588d",
 		"--filter.status", "completed",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

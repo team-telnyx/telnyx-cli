@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortingOrdersVerificationCodesList(t *testing.T) {
@@ -16,7 +16,8 @@ func TestPortingOrdersVerificationCodesList(t *testing.T) {
 		"porting-orders:verification-codes", "list",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter", "{verified: true}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "{value: created_at}",
 	)
 
@@ -29,8 +30,8 @@ func TestPortingOrdersVerificationCodesList(t *testing.T) {
 		"porting-orders:verification-codes", "list",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter.verified=true",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort.value", "created_at",
 	)
 }

@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestMessagingOptoutsList(t *testing.T) {
@@ -16,7 +16,8 @@ func TestMessagingOptoutsList(t *testing.T) {
 		"messaging-optouts", "list",
 		"--created-at", "{gte: '2019-12-27T18:11:19.117Z', lte: '2019-12-27T18:11:19.117Z'}",
 		"--filter", "{from: from, messaging_profile_id: messaging_profile_id}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--redaction-enabled", "redaction_enabled",
 	)
 
@@ -31,8 +32,8 @@ func TestMessagingOptoutsList(t *testing.T) {
 		"--created-at.lte", "2019-12-27T18:11:19.117Z",
 		"--filter.from", "from",
 		"--filter.messaging-profile-id", "messaging_profile_id",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--redaction-enabled", "redaction_enabled",
 	)
 }

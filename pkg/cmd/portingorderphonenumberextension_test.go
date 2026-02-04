@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortingOrdersPhoneNumberExtensionsCreate(t *testing.T) {
@@ -43,7 +43,8 @@ func TestPortingOrdersPhoneNumberExtensionsList(t *testing.T) {
 		"porting-orders:phone-number-extensions", "list",
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter", "{porting_phone_number_id: 04f8f1b9-310c-4a3c-963e-7dfc54765140}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "{value: created_at}",
 	)
 
@@ -56,8 +57,8 @@ func TestPortingOrdersPhoneNumberExtensionsList(t *testing.T) {
 		"porting-orders:phone-number-extensions", "list",
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter.porting-phone-number-id", "04f8f1b9-310c-4a3c-963e-7dfc54765140",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort.value", "created_at",
 	)
 }

@@ -5,8 +5,7 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
 func TestGlobalIPAssignmentsCreate(t *testing.T) {
@@ -41,18 +40,8 @@ func TestGlobalIPAssignmentsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-assignments", "list",
-		"--page", "{number: 1, size: 1}",
-	)
-
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(globalIPAssignmentsList)
-
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"global-ip-assignments", "list",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 

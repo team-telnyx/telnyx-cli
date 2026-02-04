@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -30,10 +30,13 @@ var virtualCrossConnectsCoverageList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filters parameter (deepObject style). Originally: filters[available_bandwidth][contains]",
 			QueryPath: "filters",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[number], page[size]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleVirtualCrossConnectsCoverageList,
@@ -76,18 +79,6 @@ var virtualCrossConnectsCoverageList = requestflag.WithInnerFlags(cli.Command{
 			Name:       "filters.available-bandwidth",
 			Usage:      "Filter by exact available bandwidth match",
 			InnerField: "available_bandwidth",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
 		},
 	},
 })

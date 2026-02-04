@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestDocumentsRetrieve(t *testing.T) {
@@ -35,7 +35,8 @@ func TestDocumentsList(t *testing.T) {
 		t,
 		"documents", "list",
 		"--filter", "{created_at: {gt: '2021-01-01T00:00:00Z', lt: '2021-04-09T22:25:27.521Z'}, customer_reference: {eq: MY REF 001, in: [REF001, REF002]}, filename: {contains: invoice}}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "filename",
 	)
 
@@ -49,8 +50,8 @@ func TestDocumentsList(t *testing.T) {
 		"--filter.created-at", "{gt: '2021-01-01T00:00:00Z', lt: '2021-04-09T22:25:27.521Z'}",
 		"--filter.customer-reference", "{eq: MY REF 001, in: [REF001, REF002]}",
 		"--filter.filename", "{contains: invoice}",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "filename",
 	)
 }

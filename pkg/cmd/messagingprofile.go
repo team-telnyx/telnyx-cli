@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
@@ -332,10 +332,13 @@ var messagingProfilesList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[name]",
 			QueryPath: "filter",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[number], page[size]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleMessagingProfilesList,
@@ -346,18 +349,6 @@ var messagingProfilesList = requestflag.WithInnerFlags(cli.Command{
 			Name:       "filter.name",
 			Usage:      "Filter by name",
 			InnerField: "name",
-		},
-	},
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
 		},
 	},
 })
@@ -376,7 +367,7 @@ var messagingProfilesDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
-var messagingProfilesListPhoneNumbers = requestflag.WithInnerFlags(cli.Command{
+var messagingProfilesListPhoneNumbers = cli.Command{
 	Name:    "list-phone-numbers",
 	Usage:   "List phone numbers associated with a messaging profile",
 	Suggest: true,
@@ -385,30 +376,20 @@ var messagingProfilesListPhoneNumbers = requestflag.WithInnerFlags(cli.Command{
 			Name:     "messaging-profile-id",
 			Required: true,
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[number], page[size]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleMessagingProfilesListPhoneNumbers,
 	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
-		},
-	},
-})
+}
 
-var messagingProfilesListShortCodes = requestflag.WithInnerFlags(cli.Command{
+var messagingProfilesListShortCodes = cli.Command{
 	Name:    "list-short-codes",
 	Usage:   "List short codes associated with a messaging profile",
 	Suggest: true,
@@ -417,28 +398,18 @@ var messagingProfilesListShortCodes = requestflag.WithInnerFlags(cli.Command{
 			Name:     "messaging-profile-id",
 			Required: true,
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "page",
-			Usage:     "Consolidated page parameter (deepObject style). Originally: page[number], page[size]",
-			QueryPath: "page",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
 		},
 	},
 	Action:          handleMessagingProfilesListShortCodes,
 	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"page": {
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.number",
-			Usage:      "The page number to load",
-			InnerField: "number",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "page.size",
-			Usage:      "The size of the page",
-			InnerField: "size",
-		},
-	},
-})
+}
 
 func handleMessagingProfilesCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)

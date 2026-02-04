@@ -14,7 +14,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/jsonview"
+	"github.com/team-telnyx/telnyx-cli/internal/jsonview"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 
 	"github.com/charmbracelet/x/term"

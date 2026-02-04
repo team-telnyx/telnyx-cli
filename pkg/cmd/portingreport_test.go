@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestPortingReportsCreate(t *testing.T) {
@@ -45,7 +45,8 @@ func TestPortingReportsList(t *testing.T) {
 		t,
 		"porting:reports", "list",
 		"--filter", "{report_type: export_porting_orders_csv, status: completed}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -57,7 +58,7 @@ func TestPortingReportsList(t *testing.T) {
 		"porting:reports", "list",
 		"--filter.report-type", "export_porting_orders_csv",
 		"--filter.status", "completed",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

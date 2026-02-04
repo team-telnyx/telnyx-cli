@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestNetworksCreate(t *testing.T) {
@@ -43,7 +43,8 @@ func TestNetworksList(t *testing.T) {
 		t,
 		"networks", "list",
 		"--filter", "{name: test network}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -54,8 +55,8 @@ func TestNetworksList(t *testing.T) {
 		t,
 		"networks", "list",
 		"--filter.name", "test network",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 
@@ -75,7 +76,8 @@ func TestNetworksListInterfaces(t *testing.T) {
 		"networks", "list-interfaces",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--filter", "{name: test interface, type: wireguard_interface}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -88,7 +90,7 @@ func TestNetworksListInterfaces(t *testing.T) {
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--filter.name", "test interface",
 		"--filter.type", "wireguard_interface",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }

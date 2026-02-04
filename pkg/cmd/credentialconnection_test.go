@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestCredentialConnectionsCreate(t *testing.T) {
@@ -214,7 +214,8 @@ func TestCredentialConnectionsList(t *testing.T) {
 		t,
 		"credential-connections", "list",
 		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: outbound_voice_profile_id}",
-		"--page", "{number: 1, size: 1}",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "connection_name",
 	)
 
@@ -228,8 +229,8 @@ func TestCredentialConnectionsList(t *testing.T) {
 		"--filter.connection-name", "{contains: contains}",
 		"--filter.fqdn", "fqdn",
 		"--filter.outbound-voice-profile-id", "outbound_voice_profile_id",
-		"--page.number", "1",
-		"--page.size", "1",
+		"--page-number", "0",
+		"--page-size", "0",
 		"--sort", "connection_name",
 	)
 }
