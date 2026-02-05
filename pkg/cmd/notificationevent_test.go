@@ -1,0 +1,19 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package cmd
+
+import (
+	"testing"
+
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+)
+
+func TestNotificationEventsList(t *testing.T) {
+	t.Skip("Prism tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"notification-events", "list",
+		"--page-number", "0",
+		"--page-size", "0",
+	)
+}
