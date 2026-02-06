@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0 (2026-02-06)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* Revert "fix emergency settings -schema" ([c19077a](https://github.com/team-telnyx/telnyx-cli/commit/c19077a34da37bc0680b244c8615c06ca39b6061))
+
+
+### Bug Fixes
+
+* fix for when terminal width is not available ([ef7727f](https://github.com/team-telnyx/telnyx-cli/commit/ef7727fbe4e2625e42fd7d78b8b397f88b5f6971))
+
 ## 0.1.0 (2026-02-05)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.0.1...v0.1.0)
