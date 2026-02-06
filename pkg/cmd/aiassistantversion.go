@@ -177,6 +177,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Configuration for noise suppression. Only applicable when noise_suppression is 'deepfilternet'.",
 			InnerField: "noise_suppression_config",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "telephony-settings.recording-settings",
+			Usage:      "Configuration for call recording format and channel settings.",
+			InnerField: "recording_settings",
+		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "telephony-settings.supports-unauthenticated-web-calls",
 			Usage:      "When enabled, allows users to interact with your AI assistant directly from your website without requiring authentication. This is required for FE widgets that work with assistants that have telephony enabled.",
