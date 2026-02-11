@@ -19,6 +19,7 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 		"--telnyx-conversation-channel", "phone_call",
 		"--telnyx-end-user-target", "telnyx_end_user_target",
 		"--conversation-metadata", "{foo: string}",
+		"--dynamic-variables", "{foo: string}",
 		"--text", "text",
 	)
 }
