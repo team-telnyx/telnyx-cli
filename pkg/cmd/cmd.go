@@ -501,6 +501,15 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:openai:embeddings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiOpenAIEmbeddingsCreate,
+					&aiOpenAIEmbeddingsListModels,
+				},
+			},
+			{
 				Name:     "audit-events",
 				Category: "API RESOURCE",
 				Suggest:  true,
