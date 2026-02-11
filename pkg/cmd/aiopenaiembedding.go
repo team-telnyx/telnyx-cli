@@ -15,8 +15,8 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var aiOpenAIEmbeddingsCreate = cli.Command{
-	Name:    "create",
+var aiOpenAIEmbeddingsCreateEmbeddings = cli.Command{
+	Name:    "create-embeddings",
 	Usage:   "Creates an embedding vector representing the input text. This endpoint is\ncompatible with the\n[OpenAI Embeddings API](https://platform.openai.com/docs/api-reference/embeddings)\nand may be used with the OpenAI JS or Python SDK by setting the base URL to\n`https://api.telnyx.com/v2/ai/openai`.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -49,20 +49,20 @@ var aiOpenAIEmbeddingsCreate = cli.Command{
 			BodyPath: "user",
 		},
 	},
-	Action:          handleAIOpenAIEmbeddingsCreate,
+	Action:          handleAIOpenAIEmbeddingsCreateEmbeddings,
 	HideHelpCommand: true,
 }
 
-var aiOpenAIEmbeddingsListModels = cli.Command{
-	Name:            "list-models",
+var aiOpenAIEmbeddingsListEmbeddingModels = cli.Command{
+	Name:            "list-embedding-models",
 	Usage:           "Returns a list of available embedding models. This endpoint is compatible with\nthe OpenAI Models API format.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
-	Action:          handleAIOpenAIEmbeddingsListModels,
+	Action:          handleAIOpenAIEmbeddingsListEmbeddingModels,
 	HideHelpCommand: true,
 }
 
-func handleAIOpenAIEmbeddingsCreate(ctx context.Context, cmd *cli.Command) error {
+func handleAIOpenAIEmbeddingsCreateEmbeddings(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -70,7 +70,7 @@ func handleAIOpenAIEmbeddingsCreate(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIOpenAIEmbeddingNewParams{}
+	params := telnyx.AIOpenAIEmbeddingNewEmbeddingsParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -85,7 +85,7 @@ func handleAIOpenAIEmbeddingsCreate(ctx context.Context, cmd *cli.Command) error
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.OpenAI.Embeddings.New(ctx, params, options...)
+	_, err = client.AI.OpenAI.Embeddings.NewEmbeddings(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -93,10 +93,10 @@ func handleAIOpenAIEmbeddingsCreate(ctx context.Context, cmd *cli.Command) error
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:openai:embeddings create", obj, format, transform)
+	return ShowJSON(os.Stdout, "ai:openai:embeddings create-embeddings", obj, format, transform)
 }
 
-func handleAIOpenAIEmbeddingsListModels(ctx context.Context, cmd *cli.Command) error {
+func handleAIOpenAIEmbeddingsListEmbeddingModels(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -117,7 +117,7 @@ func handleAIOpenAIEmbeddingsListModels(ctx context.Context, cmd *cli.Command) e
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.OpenAI.Embeddings.ListModels(ctx, options...)
+	_, err = client.AI.OpenAI.Embeddings.ListEmbeddingModels(ctx, options...)
 	if err != nil {
 		return err
 	}
@@ -125,5 +125,5 @@ func handleAIOpenAIEmbeddingsListModels(ctx context.Context, cmd *cli.Command) e
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:openai:embeddings list-models", obj, format, transform)
+	return ShowJSON(os.Stdout, "ai:openai:embeddings list-embedding-models", obj, format, transform)
 }
