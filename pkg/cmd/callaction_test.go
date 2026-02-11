@@ -523,7 +523,7 @@ func TestCallsActionsStartRecording(t *testing.T) {
 		"--timeout-secs", "0",
 		"--transcription=true",
 		"--transcription-engine", "B",
-		"--transcription-language", "en-US",
+		"--transcription-language", "en",
 		"--transcription-max-speaker-count", "4",
 		"--transcription-min-speaker-count", "4",
 		"--transcription-profanity-filter=true",
