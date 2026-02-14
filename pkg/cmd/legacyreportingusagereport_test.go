@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestLegacyReportingUsageReportsRetrieveSpeechToText(t *testing.T) {

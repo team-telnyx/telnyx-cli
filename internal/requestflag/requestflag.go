@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode"
 
 	"github.com/goccy/go-yaml"
 	"github.com/urfave/cli/v3"
@@ -359,12 +360,21 @@ func parseCLIArg[
 		}
 
 	default:
-		var yamlValue T
-		err = yaml.Unmarshal([]byte(value), &yamlValue)
-		if err != nil {
-			err = fmt.Errorf("failed to parse as YAML: %w", err)
+		if strings.HasPrefix(value, "@") {
+			// File literals like @file.txt should work here
+			parsedValue = value
+		} else {
+			var yamlValue T
+			err = yaml.Unmarshal([]byte(value), &yamlValue)
+			if err == nil {
+				parsedValue = yamlValue
+			} else if allowAsLiteralString(value) {
+				parsedValue = value
+			} else {
+				parsedValue = nil
+				err = fmt.Errorf("failed to parse as YAML: %w", err)
+			}
 		}
-		parsedValue = yamlValue
 	}
 
 	// Nil needs to be handled specially because unmarshalling a YAML `null`
@@ -383,6 +393,21 @@ func parseCLIArg[
 	}
 	return empty, err
 
+}
+
+// Assuming this string failed to parse as valid YAML, this function will
+// return true for strings that can reasonably be interpreted as a string literal,
+// like identifiers (`foo_bar`), UUIDs (`945b2f0c-8e89-487a-b02c-f851c69ea459`),
+// base64 (`aGVsbG8=`), and qualified identifiers (`color.Red`). This should
+// not include strings that look like mistyped YAML (e.g. `{key:`)
+func allowAsLiteralString(s string) bool {
+	for _, c := range s {
+		if !unicode.IsLetter(c) && !unicode.IsDigit(c) &&
+			c != '_' && c != '-' && c != '.' && c != '=' {
+			return false
+		}
+	}
+	return true
 }
 
 // Parse the input string and set result as the cliValue's value

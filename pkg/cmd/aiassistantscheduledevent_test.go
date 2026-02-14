@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
@@ -19,6 +20,7 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 		"--telnyx-conversation-channel", "phone_call",
 		"--telnyx-end-user-target", "telnyx_end_user_target",
 		"--conversation-metadata", "{foo: string}",
+		"--dynamic-variables", "{foo: string}",
 		"--text", "text",
 	)
 }

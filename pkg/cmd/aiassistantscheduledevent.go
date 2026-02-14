@@ -52,6 +52,11 @@ var aiAssistantsScheduledEventsCreate = cli.Command{
 			Usage:    "Metadata associated with the conversation. Telnyx provides several pieces of metadata, but customers can also add their own.",
 			BodyPath: "conversation_metadata",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "dynamic-variables",
+			Usage:    "A map of dynamic variable names to values. These variables can be referenced in the assistant's instructions and messages using {{variable_name}} syntax.",
+			BodyPath: "dynamic_variables",
+		},
 		&requestflag.Flag[string]{
 			Name:     "text",
 			Usage:    "Required for sms scheduled events. The text to be sent to the end user.",

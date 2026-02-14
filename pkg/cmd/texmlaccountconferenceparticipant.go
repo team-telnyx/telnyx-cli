@@ -259,6 +259,11 @@ var texmlAccountsConferencesParticipantsParticipants = requestflag.WithInnerFlag
 			BodyPath: "From",
 		},
 		&requestflag.Flag[string]{
+			Name:     "label",
+			Usage:    "A unique label for the participant that will be added to the conference. The label can be used to reference the participant for updates via the TeXML REST API.",
+			BodyPath: "Label",
+		},
+		&requestflag.Flag[string]{
 			Name:     "machine-detection",
 			Usage:    "Whether to detect if a human or an answering machine picked up the call. Use `Enable` if you would like to ne notified as soon as the called party is identified. Use `DetectMessageEnd`, if you would like to leave a message on an answering machine.",
 			BodyPath: "MachineDetection",

@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestAIMcpServersCreate(t *testing.T) {
@@ -16,7 +17,7 @@ func TestAIMcpServersCreate(t *testing.T) {
 		"--name", "name",
 		"--type", "type",
 		"--url", "url",
-		"--allowed-tool", "string",
+		"--allowed-tool", "[string]",
 		"--api-key-ref", "api_key_ref",
 	)
 }
@@ -37,7 +38,7 @@ func TestAIMcpServersUpdate(t *testing.T) {
 		"ai:mcp-servers", "update",
 		"--mcp-server-id", "mcp_server_id",
 		"--id", "id",
-		"--allowed-tool", "string",
+		"--allowed-tool", "[string]",
 		"--api-key-ref", "api_key_ref",
 		"--created-at", "2019-12-27T18:11:19.117Z",
 		"--name", "name",
