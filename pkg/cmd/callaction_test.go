@@ -17,7 +17,7 @@ func TestCallsActionsAddAIAssistantMessages(t *testing.T) {
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
-		"--message", "{content: Get the user's favorite color, role: system, metadata: {}}",
+		"--message", "{content: Get the user's favorite color, role: system, metadata: {foo: bar}}",
 	)
 }
 
