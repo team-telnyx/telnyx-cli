@@ -1499,6 +1499,8 @@ var callsActionsStartRecording = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "transcription-language",
+			Usage:    "Language code for transcription. Note: Not all languages are supported by all transcription engines (google, telnyx, deepgram). See engine-specific documentation for supported values.",
+			Default:  "en-US",
 			BodyPath: "transcription_language",
 		},
 		&requestflag.Flag[int64]{
