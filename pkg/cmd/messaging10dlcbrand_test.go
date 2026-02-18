@@ -118,16 +118,6 @@ func TestMessaging10dlcBrandGetFeedback(t *testing.T) {
 	)
 }
 
-func TestMessaging10dlcBrandGetSMSOtpByReference(t *testing.T) {
-	t.Skip("Prism tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:brand", "get-sms-otp-by-reference",
-		"--reference-id", "OTP4B2001",
-		"--brand-id", "B123ABC",
-	)
-}
-
 func TestMessaging10dlcBrandResend2faEmail(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	mocktest.TestRunMockTestWithFlags(

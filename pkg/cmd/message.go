@@ -134,6 +134,12 @@ var messagesSend = cli.Command{
 			BodyPath: "auto_detect",
 		},
 		&requestflag.Flag[string]{
+			Name:     "encoding",
+			Usage:    "Encoding to use for the message. `auto` (default) uses smart encoding to automatically select the most efficient encoding. `gsm7` forces GSM-7 encoding (returns 400 if message contains characters that cannot be encoded). `ucs2` forces UCS-2 encoding and disables smart encoding. When set, this overrides the messaging profile's `smart_encoding` setting.",
+			Default:  "auto",
+			BodyPath: "encoding",
+		},
+		&requestflag.Flag[string]{
 			Name:     "from",
 			Usage:    "Sending address (+E.164 formatted phone number, alphanumeric sender ID, or short code).\n\n**Required if sending with a phone number, short code, or alphanumeric sender ID.**\n",
 			BodyPath: "from",
@@ -265,6 +271,12 @@ var messagesSendLongCode = cli.Command{
 			Default:  false,
 			BodyPath: "auto_detect",
 		},
+		&requestflag.Flag[string]{
+			Name:     "encoding",
+			Usage:    "Encoding to use for the message. `auto` (default) uses smart encoding to automatically select the most efficient encoding. `gsm7` forces GSM-7 encoding (returns 400 if message contains characters that cannot be encoded). `ucs2` forces UCS-2 encoding and disables smart encoding. When set, this overrides the messaging profile's `smart_encoding` setting.",
+			Default:  "auto",
+			BodyPath: "encoding",
+		},
 		&requestflag.Flag[[]string]{
 			Name:     "media-url",
 			Usage:    "A list of media URLs. The total media size must be less than 1 MB.\n\n**Required for MMS**",
@@ -329,6 +341,12 @@ var messagesSendNumberPool = cli.Command{
 			Default:  false,
 			BodyPath: "auto_detect",
 		},
+		&requestflag.Flag[string]{
+			Name:     "encoding",
+			Usage:    "Encoding to use for the message. `auto` (default) uses smart encoding to automatically select the most efficient encoding. `gsm7` forces GSM-7 encoding (returns 400 if message contains characters that cannot be encoded). `ucs2` forces UCS-2 encoding and disables smart encoding. When set, this overrides the messaging profile's `smart_encoding` setting.",
+			Default:  "auto",
+			BodyPath: "encoding",
+		},
 		&requestflag.Flag[[]string]{
 			Name:     "media-url",
 			Usage:    "A list of media URLs. The total media size must be less than 1 MB.\n\n**Required for MMS**",
@@ -392,6 +410,12 @@ var messagesSendShortCode = cli.Command{
 			Usage:    "Automatically detect if an SMS message is unusually long and exceeds a recommended limit of message parts.",
 			Default:  false,
 			BodyPath: "auto_detect",
+		},
+		&requestflag.Flag[string]{
+			Name:     "encoding",
+			Usage:    "Encoding to use for the message. `auto` (default) uses smart encoding to automatically select the most efficient encoding. `gsm7` forces GSM-7 encoding (returns 400 if message contains characters that cannot be encoded). `ucs2` forces UCS-2 encoding and disables smart encoding. When set, this overrides the messaging profile's `smart_encoding` setting.",
+			Default:  "auto",
+			BodyPath: "encoding",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "media-url",
