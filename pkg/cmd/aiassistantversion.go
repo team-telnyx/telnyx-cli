@@ -240,6 +240,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Optional background audio to play on the call. Use a predefined media bed, or supply a looped MP3 URL. If a media URL is chosen in the portal, customers can preview it before saving.",
 			InnerField: "background_audio",
 		},
+		&requestflag.InnerFlag[any]{
+			Name:       "voice-settings.language-boost",
+			Usage:      "Enhances recognition for specific languages and dialects during MiniMax TTS synthesis. Default is null (no boost). Set to 'auto' for automatic language detection. Only applicable when using MiniMax voices.",
+			InnerField: "language_boost",
+		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "voice-settings.similarity-boost",
 			Usage:      "Determines how closely the AI should adhere to the original voice when attempting to replicate it. Only applicable when using ElevenLabs.",
