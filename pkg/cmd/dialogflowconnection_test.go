@@ -9,7 +9,7 @@ import (
 )
 
 func TestDialogflowConnectionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dialogflow-connections", "create",
@@ -23,7 +23,7 @@ func TestDialogflowConnectionsCreate(t *testing.T) {
 }
 
 func TestDialogflowConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dialogflow-connections", "retrieve",
@@ -32,7 +32,7 @@ func TestDialogflowConnectionsRetrieve(t *testing.T) {
 }
 
 func TestDialogflowConnectionsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dialogflow-connections", "update",
@@ -46,7 +46,7 @@ func TestDialogflowConnectionsUpdate(t *testing.T) {
 }
 
 func TestDialogflowConnectionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dialogflow-connections", "delete",

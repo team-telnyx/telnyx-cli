@@ -10,7 +10,7 @@ import (
 )
 
 func TestTexmlAccountsConferencesParticipantsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "retrieve",
@@ -21,7 +21,7 @@ func TestTexmlAccountsConferencesParticipantsRetrieve(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesParticipantsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "update",
@@ -43,7 +43,7 @@ func TestTexmlAccountsConferencesParticipantsUpdate(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesParticipantsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "delete",
@@ -54,7 +54,7 @@ func TestTexmlAccountsConferencesParticipantsDelete(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "participants",
@@ -170,7 +170,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesParticipantsRetrieveParticipants(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "retrieve-participants",

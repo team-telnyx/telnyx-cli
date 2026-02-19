@@ -10,7 +10,7 @@ import (
 )
 
 func TestTexmlAccountsCallsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "retrieve",
@@ -20,7 +20,7 @@ func TestTexmlAccountsCallsRetrieve(t *testing.T) {
 }
 
 func TestTexmlAccountsCallsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "update",
@@ -38,7 +38,7 @@ func TestTexmlAccountsCallsUpdate(t *testing.T) {
 }
 
 func TestTexmlAccountsCallsCalls(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "calls",
@@ -138,7 +138,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 }
 
 func TestTexmlAccountsCallsRetrieveCalls(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "retrieve-calls",
@@ -159,7 +159,7 @@ func TestTexmlAccountsCallsRetrieveCalls(t *testing.T) {
 }
 
 func TestTexmlAccountsCallsSiprecJson(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "siprec-json",
@@ -178,7 +178,7 @@ func TestTexmlAccountsCallsSiprecJson(t *testing.T) {
 }
 
 func TestTexmlAccountsCallsStreamsJson(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "streams-json",

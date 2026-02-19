@@ -10,7 +10,7 @@ import (
 )
 
 func TestInexplicitNumberOrdersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inexplicit-number-orders", "create",
@@ -47,7 +47,7 @@ func TestInexplicitNumberOrdersCreate(t *testing.T) {
 }
 
 func TestInexplicitNumberOrdersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inexplicit-number-orders", "retrieve",
@@ -56,7 +56,7 @@ func TestInexplicitNumberOrdersRetrieve(t *testing.T) {
 }
 
 func TestInexplicitNumberOrdersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inexplicit-number-orders", "list",

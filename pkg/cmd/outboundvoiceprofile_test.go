@@ -10,7 +10,7 @@ import (
 )
 
 func TestOutboundVoiceProfilesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"outbound-voice-profiles", "create",
@@ -64,7 +64,7 @@ func TestOutboundVoiceProfilesCreate(t *testing.T) {
 }
 
 func TestOutboundVoiceProfilesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"outbound-voice-profiles", "retrieve",
@@ -73,7 +73,7 @@ func TestOutboundVoiceProfilesRetrieve(t *testing.T) {
 }
 
 func TestOutboundVoiceProfilesUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"outbound-voice-profiles", "update",
@@ -129,7 +129,7 @@ func TestOutboundVoiceProfilesUpdate(t *testing.T) {
 }
 
 func TestOutboundVoiceProfilesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"outbound-voice-profiles", "list",
@@ -154,7 +154,7 @@ func TestOutboundVoiceProfilesList(t *testing.T) {
 }
 
 func TestOutboundVoiceProfilesDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"outbound-voice-profiles", "delete",

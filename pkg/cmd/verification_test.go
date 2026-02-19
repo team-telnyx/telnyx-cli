@@ -9,7 +9,7 @@ import (
 )
 
 func TestVerificationsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications", "retrieve",
@@ -18,7 +18,7 @@ func TestVerificationsRetrieve(t *testing.T) {
 }
 
 func TestVerificationsTriggerCall(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications", "trigger-call",
@@ -31,7 +31,7 @@ func TestVerificationsTriggerCall(t *testing.T) {
 }
 
 func TestVerificationsTriggerFlashcall(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications", "trigger-flashcall",
@@ -42,7 +42,7 @@ func TestVerificationsTriggerFlashcall(t *testing.T) {
 }
 
 func TestVerificationsTriggerSMS(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications", "trigger-sms",

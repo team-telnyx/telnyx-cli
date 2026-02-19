@@ -10,7 +10,7 @@ import (
 )
 
 func TestTelephonyCredentialsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"telephony-credentials", "create",
@@ -22,7 +22,7 @@ func TestTelephonyCredentialsCreate(t *testing.T) {
 }
 
 func TestTelephonyCredentialsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"telephony-credentials", "retrieve",
@@ -31,7 +31,7 @@ func TestTelephonyCredentialsRetrieve(t *testing.T) {
 }
 
 func TestTelephonyCredentialsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"telephony-credentials", "update",
@@ -44,7 +44,7 @@ func TestTelephonyCredentialsUpdate(t *testing.T) {
 }
 
 func TestTelephonyCredentialsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"telephony-credentials", "list",
@@ -71,7 +71,7 @@ func TestTelephonyCredentialsList(t *testing.T) {
 }
 
 func TestTelephonyCredentialsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"telephony-credentials", "delete",

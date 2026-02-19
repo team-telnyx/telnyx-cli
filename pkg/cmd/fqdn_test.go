@@ -10,7 +10,7 @@ import (
 )
 
 func TestFqdnsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdns", "create",
@@ -22,7 +22,7 @@ func TestFqdnsCreate(t *testing.T) {
 }
 
 func TestFqdnsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdns", "retrieve",
@@ -31,7 +31,7 @@ func TestFqdnsRetrieve(t *testing.T) {
 }
 
 func TestFqdnsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdns", "update",
@@ -44,7 +44,7 @@ func TestFqdnsUpdate(t *testing.T) {
 }
 
 func TestFqdnsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdns", "list",
@@ -70,7 +70,7 @@ func TestFqdnsList(t *testing.T) {
 }
 
 func TestFqdnsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdns", "delete",

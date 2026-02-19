@@ -10,7 +10,7 @@ import (
 )
 
 func TestPhoneNumbersVoiceRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voice", "retrieve",
@@ -19,7 +19,7 @@ func TestPhoneNumbersVoiceRetrieve(t *testing.T) {
 }
 
 func TestPhoneNumbersVoiceUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voice", "update",
@@ -63,7 +63,7 @@ func TestPhoneNumbersVoiceUpdate(t *testing.T) {
 }
 
 func TestPhoneNumbersVoiceList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voice", "list",

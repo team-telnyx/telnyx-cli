@@ -9,7 +9,7 @@ import (
 )
 
 func TestConferencesActionsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "update",
@@ -24,7 +24,7 @@ func TestConferencesActionsUpdate(t *testing.T) {
 }
 
 func TestConferencesActionsEndConference(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "end-conference",
@@ -34,7 +34,7 @@ func TestConferencesActionsEndConference(t *testing.T) {
 }
 
 func TestConferencesActionsGatherDtmfAudio(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "gather-dtmf-audio",
@@ -59,7 +59,7 @@ func TestConferencesActionsGatherDtmfAudio(t *testing.T) {
 }
 
 func TestConferencesActionsHold(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "hold",
@@ -72,7 +72,7 @@ func TestConferencesActionsHold(t *testing.T) {
 }
 
 func TestConferencesActionsJoin(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "join",
@@ -96,7 +96,7 @@ func TestConferencesActionsJoin(t *testing.T) {
 }
 
 func TestConferencesActionsLeave(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "leave",
@@ -109,7 +109,7 @@ func TestConferencesActionsLeave(t *testing.T) {
 }
 
 func TestConferencesActionsMute(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "mute",
@@ -120,7 +120,7 @@ func TestConferencesActionsMute(t *testing.T) {
 }
 
 func TestConferencesActionsPlay(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "play",
@@ -134,7 +134,7 @@ func TestConferencesActionsPlay(t *testing.T) {
 }
 
 func TestConferencesActionsRecordPause(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "record-pause",
@@ -146,7 +146,7 @@ func TestConferencesActionsRecordPause(t *testing.T) {
 }
 
 func TestConferencesActionsRecordResume(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "record-resume",
@@ -158,7 +158,7 @@ func TestConferencesActionsRecordResume(t *testing.T) {
 }
 
 func TestConferencesActionsRecordStart(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "record-start",
@@ -173,7 +173,7 @@ func TestConferencesActionsRecordStart(t *testing.T) {
 }
 
 func TestConferencesActionsRecordStop(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "record-stop",
@@ -186,7 +186,7 @@ func TestConferencesActionsRecordStop(t *testing.T) {
 }
 
 func TestConferencesActionsSendDtmf(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "send-dtmf",
@@ -199,7 +199,7 @@ func TestConferencesActionsSendDtmf(t *testing.T) {
 }
 
 func TestConferencesActionsSpeak(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "speak",
@@ -216,7 +216,7 @@ func TestConferencesActionsSpeak(t *testing.T) {
 }
 
 func TestConferencesActionsStop(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "stop",
@@ -227,7 +227,7 @@ func TestConferencesActionsStop(t *testing.T) {
 }
 
 func TestConferencesActionsUnhold(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "unhold",
@@ -238,7 +238,7 @@ func TestConferencesActionsUnhold(t *testing.T) {
 }
 
 func TestConferencesActionsUnmute(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "unmute",

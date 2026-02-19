@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortingLoaConfigurationsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "create",
@@ -43,7 +43,7 @@ func TestPortingLoaConfigurationsCreate(t *testing.T) {
 }
 
 func TestPortingLoaConfigurationsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "retrieve",
@@ -52,7 +52,7 @@ func TestPortingLoaConfigurationsRetrieve(t *testing.T) {
 }
 
 func TestPortingLoaConfigurationsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "update",
@@ -87,7 +87,7 @@ func TestPortingLoaConfigurationsUpdate(t *testing.T) {
 }
 
 func TestPortingLoaConfigurationsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "list",
@@ -97,7 +97,7 @@ func TestPortingLoaConfigurationsList(t *testing.T) {
 }
 
 func TestPortingLoaConfigurationsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "delete",

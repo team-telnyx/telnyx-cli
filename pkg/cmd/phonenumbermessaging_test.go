@@ -9,7 +9,7 @@ import (
 )
 
 func TestPhoneNumbersMessagingRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:messaging", "retrieve",
@@ -18,7 +18,7 @@ func TestPhoneNumbersMessagingRetrieve(t *testing.T) {
 }
 
 func TestPhoneNumbersMessagingUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:messaging", "update",
@@ -29,7 +29,7 @@ func TestPhoneNumbersMessagingUpdate(t *testing.T) {
 }
 
 func TestPhoneNumbersMessagingList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:messaging", "list",

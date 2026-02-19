@@ -10,7 +10,7 @@ import (
 )
 
 func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:canary-deploys", "create",
@@ -32,7 +32,7 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 }
 
 func TestAIAssistantsCanaryDeploysRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:canary-deploys", "retrieve",
@@ -41,7 +41,7 @@ func TestAIAssistantsCanaryDeploysRetrieve(t *testing.T) {
 }
 
 func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:canary-deploys", "update",
@@ -63,7 +63,7 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 }
 
 func TestAIAssistantsCanaryDeploysDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:canary-deploys", "delete",

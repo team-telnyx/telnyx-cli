@@ -10,7 +10,7 @@ import (
 )
 
 func TestPhoneNumbersCsvDownloadsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:csv-downloads", "create",
@@ -40,7 +40,7 @@ func TestPhoneNumbersCsvDownloadsCreate(t *testing.T) {
 }
 
 func TestPhoneNumbersCsvDownloadsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:csv-downloads", "retrieve",
@@ -49,7 +49,7 @@ func TestPhoneNumbersCsvDownloadsRetrieve(t *testing.T) {
 }
 
 func TestPhoneNumbersCsvDownloadsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:csv-downloads", "list",

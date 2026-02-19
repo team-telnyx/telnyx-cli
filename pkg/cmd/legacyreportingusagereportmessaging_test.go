@@ -9,7 +9,7 @@ import (
 )
 
 func TestLegacyReportingUsageReportsMessagingCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:messaging", "create",
@@ -25,7 +25,7 @@ func TestLegacyReportingUsageReportsMessagingCreate(t *testing.T) {
 }
 
 func TestLegacyReportingUsageReportsMessagingRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:messaging", "retrieve",
@@ -34,7 +34,7 @@ func TestLegacyReportingUsageReportsMessagingRetrieve(t *testing.T) {
 }
 
 func TestLegacyReportingUsageReportsMessagingList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:messaging", "list",
@@ -44,7 +44,7 @@ func TestLegacyReportingUsageReportsMessagingList(t *testing.T) {
 }
 
 func TestLegacyReportingUsageReportsMessagingDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:messaging", "delete",

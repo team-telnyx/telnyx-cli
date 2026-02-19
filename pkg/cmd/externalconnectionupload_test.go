@@ -10,7 +10,7 @@ import (
 )
 
 func TestExternalConnectionsUploadsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "create",
@@ -27,7 +27,7 @@ func TestExternalConnectionsUploadsCreate(t *testing.T) {
 }
 
 func TestExternalConnectionsUploadsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "retrieve",
@@ -37,7 +37,7 @@ func TestExternalConnectionsUploadsRetrieve(t *testing.T) {
 }
 
 func TestExternalConnectionsUploadsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "list",
@@ -65,7 +65,7 @@ func TestExternalConnectionsUploadsList(t *testing.T) {
 }
 
 func TestExternalConnectionsUploadsPendingCount(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "pending-count",
@@ -74,7 +74,7 @@ func TestExternalConnectionsUploadsPendingCount(t *testing.T) {
 }
 
 func TestExternalConnectionsUploadsRefreshStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "refresh-status",
@@ -83,7 +83,7 @@ func TestExternalConnectionsUploadsRefreshStatus(t *testing.T) {
 }
 
 func TestExternalConnectionsUploadsRetry(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "retry",

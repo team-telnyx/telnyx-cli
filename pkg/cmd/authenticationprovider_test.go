@@ -10,7 +10,7 @@ import (
 )
 
 func TestAuthenticationProvidersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "create",
@@ -40,7 +40,7 @@ func TestAuthenticationProvidersCreate(t *testing.T) {
 }
 
 func TestAuthenticationProvidersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "retrieve",
@@ -49,7 +49,7 @@ func TestAuthenticationProvidersRetrieve(t *testing.T) {
 }
 
 func TestAuthenticationProvidersUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "update",
@@ -81,7 +81,7 @@ func TestAuthenticationProvidersUpdate(t *testing.T) {
 }
 
 func TestAuthenticationProvidersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "list",
@@ -92,7 +92,7 @@ func TestAuthenticationProvidersList(t *testing.T) {
 }
 
 func TestAuthenticationProvidersDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "delete",

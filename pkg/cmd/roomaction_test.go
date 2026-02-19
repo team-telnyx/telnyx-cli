@@ -9,7 +9,7 @@ import (
 )
 
 func TestRoomsActionsGenerateJoinClientToken(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:actions", "generate-join-client-token",
@@ -20,7 +20,7 @@ func TestRoomsActionsGenerateJoinClientToken(t *testing.T) {
 }
 
 func TestRoomsActionsRefreshClientToken(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:actions", "refresh-client-token",

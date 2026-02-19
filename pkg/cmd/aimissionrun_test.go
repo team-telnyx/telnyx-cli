@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIMissionsRunsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs", "create",
@@ -20,7 +20,7 @@ func TestAIMissionsRunsCreate(t *testing.T) {
 }
 
 func TestAIMissionsRunsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs", "retrieve",
@@ -30,7 +30,7 @@ func TestAIMissionsRunsRetrieve(t *testing.T) {
 }
 
 func TestAIMissionsRunsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs", "update",
@@ -45,7 +45,7 @@ func TestAIMissionsRunsUpdate(t *testing.T) {
 }
 
 func TestAIMissionsRunsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs", "list",
@@ -57,7 +57,7 @@ func TestAIMissionsRunsList(t *testing.T) {
 }
 
 func TestAIMissionsRunsCancelRun(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs", "cancel-run",
@@ -67,7 +67,7 @@ func TestAIMissionsRunsCancelRun(t *testing.T) {
 }
 
 func TestAIMissionsRunsListRuns(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs", "list-runs",
@@ -78,7 +78,7 @@ func TestAIMissionsRunsListRuns(t *testing.T) {
 }
 
 func TestAIMissionsRunsPauseRun(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs", "pause-run",
@@ -88,7 +88,7 @@ func TestAIMissionsRunsPauseRun(t *testing.T) {
 }
 
 func TestAIMissionsRunsResumeRun(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs", "resume-run",

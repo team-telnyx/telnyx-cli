@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortoutsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "retrieve",
@@ -19,7 +19,7 @@ func TestPortoutsRetrieve(t *testing.T) {
 }
 
 func TestPortoutsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "list",
@@ -53,7 +53,7 @@ func TestPortoutsList(t *testing.T) {
 }
 
 func TestPortoutsListRejectionCodes(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "list-rejection-codes",
@@ -74,7 +74,7 @@ func TestPortoutsListRejectionCodes(t *testing.T) {
 }
 
 func TestPortoutsUpdateStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "update-status",

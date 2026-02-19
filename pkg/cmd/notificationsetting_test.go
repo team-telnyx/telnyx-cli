@@ -10,7 +10,7 @@ import (
 )
 
 func TestNotificationSettingsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "create",
@@ -36,7 +36,7 @@ func TestNotificationSettingsCreate(t *testing.T) {
 }
 
 func TestNotificationSettingsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "retrieve",
@@ -45,7 +45,7 @@ func TestNotificationSettingsRetrieve(t *testing.T) {
 }
 
 func TestNotificationSettingsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "list",
@@ -73,7 +73,7 @@ func TestNotificationSettingsList(t *testing.T) {
 }
 
 func TestNotificationSettingsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "delete",

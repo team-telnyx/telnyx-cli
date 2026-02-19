@@ -10,7 +10,7 @@ import (
 )
 
 func TestExternalConnectionsLogMessagesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:log-messages", "retrieve",
@@ -19,7 +19,7 @@ func TestExternalConnectionsLogMessagesRetrieve(t *testing.T) {
 }
 
 func TestExternalConnectionsLogMessagesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:log-messages", "list",
@@ -43,7 +43,7 @@ func TestExternalConnectionsLogMessagesList(t *testing.T) {
 }
 
 func TestExternalConnectionsLogMessagesDismiss(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:log-messages", "dismiss",

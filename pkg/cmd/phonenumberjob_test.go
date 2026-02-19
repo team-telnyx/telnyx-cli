@@ -10,7 +10,7 @@ import (
 )
 
 func TestPhoneNumbersJobsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "retrieve",
@@ -19,7 +19,7 @@ func TestPhoneNumbersJobsRetrieve(t *testing.T) {
 }
 
 func TestPhoneNumbersJobsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "list",
@@ -44,7 +44,7 @@ func TestPhoneNumbersJobsList(t *testing.T) {
 }
 
 func TestPhoneNumbersJobsDeleteBatch(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "delete-batch",
@@ -55,7 +55,7 @@ func TestPhoneNumbersJobsDeleteBatch(t *testing.T) {
 }
 
 func TestPhoneNumbersJobsUpdateBatch(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "update-batch",
@@ -111,7 +111,7 @@ func TestPhoneNumbersJobsUpdateBatch(t *testing.T) {
 }
 
 func TestPhoneNumbersJobsUpdateEmergencySettingsBatch(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "update-emergency-settings-batch",

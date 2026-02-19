@@ -10,7 +10,7 @@ import (
 )
 
 func TestSimCardOrdersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-orders", "create",
@@ -20,7 +20,7 @@ func TestSimCardOrdersCreate(t *testing.T) {
 }
 
 func TestSimCardOrdersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-orders", "retrieve",
@@ -29,7 +29,7 @@ func TestSimCardOrdersRetrieve(t *testing.T) {
 }
 
 func TestSimCardOrdersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-orders", "list",

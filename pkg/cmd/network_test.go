@@ -10,7 +10,7 @@ import (
 )
 
 func TestNetworksCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "create",
@@ -19,7 +19,7 @@ func TestNetworksCreate(t *testing.T) {
 }
 
 func TestNetworksRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "retrieve",
@@ -28,7 +28,7 @@ func TestNetworksRetrieve(t *testing.T) {
 }
 
 func TestNetworksUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "update",
@@ -38,7 +38,7 @@ func TestNetworksUpdate(t *testing.T) {
 }
 
 func TestNetworksList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "list",
@@ -61,7 +61,7 @@ func TestNetworksList(t *testing.T) {
 }
 
 func TestNetworksDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "delete",
@@ -70,7 +70,7 @@ func TestNetworksDelete(t *testing.T) {
 }
 
 func TestNetworksListInterfaces(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "list-interfaces",

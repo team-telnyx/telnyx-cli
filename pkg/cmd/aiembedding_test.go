@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIEmbeddingsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "create",
@@ -22,7 +22,7 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 }
 
 func TestAIEmbeddingsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "retrieve",
@@ -31,7 +31,7 @@ func TestAIEmbeddingsRetrieve(t *testing.T) {
 }
 
 func TestAIEmbeddingsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "list",
@@ -40,7 +40,7 @@ func TestAIEmbeddingsList(t *testing.T) {
 }
 
 func TestAIEmbeddingsSimilaritySearch(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "similarity-search",
@@ -51,7 +51,7 @@ func TestAIEmbeddingsSimilaritySearch(t *testing.T) {
 }
 
 func TestAIEmbeddingsURL(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "url",

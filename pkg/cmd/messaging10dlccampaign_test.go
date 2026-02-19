@@ -9,7 +9,7 @@ import (
 )
 
 func TestMessaging10dlcCampaignRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "retrieve",
@@ -18,7 +18,7 @@ func TestMessaging10dlcCampaignRetrieve(t *testing.T) {
 }
 
 func TestMessaging10dlcCampaignUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "update",
@@ -38,7 +38,7 @@ func TestMessaging10dlcCampaignUpdate(t *testing.T) {
 }
 
 func TestMessaging10dlcCampaignList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "list",
@@ -50,7 +50,7 @@ func TestMessaging10dlcCampaignList(t *testing.T) {
 }
 
 func TestMessaging10dlcCampaignAcceptSharing(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "accept-sharing",
@@ -59,7 +59,7 @@ func TestMessaging10dlcCampaignAcceptSharing(t *testing.T) {
 }
 
 func TestMessaging10dlcCampaignDeactivate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "deactivate",
@@ -68,7 +68,7 @@ func TestMessaging10dlcCampaignDeactivate(t *testing.T) {
 }
 
 func TestMessaging10dlcCampaignGetMnoMetadata(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "get-mno-metadata",
@@ -77,7 +77,7 @@ func TestMessaging10dlcCampaignGetMnoMetadata(t *testing.T) {
 }
 
 func TestMessaging10dlcCampaignGetOperationStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "get-operation-status",
@@ -86,7 +86,7 @@ func TestMessaging10dlcCampaignGetOperationStatus(t *testing.T) {
 }
 
 func TestMessaging10dlcCampaignGetSharingStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "get-sharing-status",
@@ -95,7 +95,7 @@ func TestMessaging10dlcCampaignGetSharingStatus(t *testing.T) {
 }
 
 func TestMessaging10dlcCampaignSubmitAppeal(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "submit-appeal",

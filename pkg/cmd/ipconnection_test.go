@@ -10,7 +10,7 @@ import (
 )
 
 func TestIPConnectionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "create",
@@ -105,7 +105,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 }
 
 func TestIPConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "retrieve",
@@ -114,7 +114,7 @@ func TestIPConnectionsRetrieve(t *testing.T) {
 }
 
 func TestIPConnectionsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "update",
@@ -214,7 +214,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 }
 
 func TestIPConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "list",
@@ -241,7 +241,7 @@ func TestIPConnectionsList(t *testing.T) {
 }
 
 func TestIPConnectionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "delete",

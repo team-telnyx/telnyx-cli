@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIAssistantsTestsRunsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests:runs", "retrieve",
@@ -19,7 +19,7 @@ func TestAIAssistantsTestsRunsRetrieve(t *testing.T) {
 }
 
 func TestAIAssistantsTestsRunsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests:runs", "list",
@@ -31,7 +31,7 @@ func TestAIAssistantsTestsRunsList(t *testing.T) {
 }
 
 func TestAIAssistantsTestsRunsTrigger(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests:runs", "trigger",

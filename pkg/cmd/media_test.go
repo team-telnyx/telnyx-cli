@@ -10,7 +10,7 @@ import (
 )
 
 func TestMediaRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "retrieve",
@@ -19,7 +19,7 @@ func TestMediaRetrieve(t *testing.T) {
 }
 
 func TestMediaUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "update",
@@ -30,7 +30,7 @@ func TestMediaUpdate(t *testing.T) {
 }
 
 func TestMediaList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "list",
@@ -49,7 +49,7 @@ func TestMediaList(t *testing.T) {
 }
 
 func TestMediaDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "delete",
@@ -58,7 +58,7 @@ func TestMediaDelete(t *testing.T) {
 }
 
 func TestMediaUpload(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "upload",

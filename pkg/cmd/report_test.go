@@ -9,7 +9,7 @@ import (
 )
 
 func TestReportsListMdrs(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports", "list-mdrs",
@@ -26,7 +26,7 @@ func TestReportsListMdrs(t *testing.T) {
 }
 
 func TestReportsListWdrs(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports", "list-wdrs",

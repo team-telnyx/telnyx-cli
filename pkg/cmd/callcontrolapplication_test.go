@@ -10,7 +10,7 @@ import (
 )
 
 func TestCallControlApplicationsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"call-control-applications", "create",
@@ -59,7 +59,7 @@ func TestCallControlApplicationsCreate(t *testing.T) {
 }
 
 func TestCallControlApplicationsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"call-control-applications", "retrieve",
@@ -68,7 +68,7 @@ func TestCallControlApplicationsRetrieve(t *testing.T) {
 }
 
 func TestCallControlApplicationsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"call-control-applications", "update",
@@ -123,7 +123,7 @@ func TestCallControlApplicationsUpdate(t *testing.T) {
 }
 
 func TestCallControlApplicationsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"call-control-applications", "list",
@@ -160,7 +160,7 @@ func TestCallControlApplicationsList(t *testing.T) {
 }
 
 func TestCallControlApplicationsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"call-control-applications", "delete",

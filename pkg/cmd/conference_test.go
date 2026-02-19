@@ -10,7 +10,7 @@ import (
 )
 
 func TestConferencesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "create",
@@ -30,7 +30,7 @@ func TestConferencesCreate(t *testing.T) {
 }
 
 func TestConferencesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "retrieve",
@@ -40,7 +40,7 @@ func TestConferencesRetrieve(t *testing.T) {
 }
 
 func TestConferencesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "list",
@@ -77,7 +77,7 @@ func TestConferencesList(t *testing.T) {
 }
 
 func TestConferencesListParticipants(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "list-participants",
@@ -106,7 +106,7 @@ func TestConferencesListParticipants(t *testing.T) {
 }
 
 func TestConferencesRetrieveParticipant(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "retrieve-participant",
@@ -116,7 +116,7 @@ func TestConferencesRetrieveParticipant(t *testing.T) {
 }
 
 func TestConferencesUpdateParticipant(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "update-participant",

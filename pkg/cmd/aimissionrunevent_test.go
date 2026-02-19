@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIMissionsRunsEventsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:events", "list",
@@ -24,7 +24,7 @@ func TestAIMissionsRunsEventsList(t *testing.T) {
 }
 
 func TestAIMissionsRunsEventsGetEventDetails(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:events", "get-event-details",
@@ -35,7 +35,7 @@ func TestAIMissionsRunsEventsGetEventDetails(t *testing.T) {
 }
 
 func TestAIMissionsRunsEventsLog(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:events", "log",

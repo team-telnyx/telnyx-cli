@@ -9,7 +9,7 @@ import (
 )
 
 func TestLegacyReportingUsageReportsNumberLookupCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:number-lookup", "create",
@@ -22,7 +22,7 @@ func TestLegacyReportingUsageReportsNumberLookupCreate(t *testing.T) {
 }
 
 func TestLegacyReportingUsageReportsNumberLookupRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:number-lookup", "retrieve",
@@ -31,7 +31,7 @@ func TestLegacyReportingUsageReportsNumberLookupRetrieve(t *testing.T) {
 }
 
 func TestLegacyReportingUsageReportsNumberLookupList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:number-lookup", "list",
@@ -39,7 +39,7 @@ func TestLegacyReportingUsageReportsNumberLookupList(t *testing.T) {
 }
 
 func TestLegacyReportingUsageReportsNumberLookupDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:number-lookup", "delete",

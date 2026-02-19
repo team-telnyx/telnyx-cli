@@ -9,7 +9,7 @@ import (
 )
 
 func TestWellKnownRetrieveAuthorizationServerMetadata(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"well-known", "retrieve-authorization-server-metadata",
@@ -17,7 +17,7 @@ func TestWellKnownRetrieveAuthorizationServerMetadata(t *testing.T) {
 }
 
 func TestWellKnownRetrieveProtectedResourceMetadata(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"well-known", "retrieve-protected-resource-metadata",

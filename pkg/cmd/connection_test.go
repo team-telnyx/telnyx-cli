@@ -10,7 +10,7 @@ import (
 )
 
 func TestConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "retrieve",
@@ -19,7 +19,7 @@ func TestConnectionsRetrieve(t *testing.T) {
 }
 
 func TestConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "list",
@@ -46,7 +46,7 @@ func TestConnectionsList(t *testing.T) {
 }
 
 func TestConnectionsListActiveCalls(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "list-active-calls",

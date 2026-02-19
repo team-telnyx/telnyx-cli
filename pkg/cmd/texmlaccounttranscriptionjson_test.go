@@ -9,7 +9,7 @@ import (
 )
 
 func TestTexmlAccountsTranscriptionsJsonDeleteRecordingTranscriptionSidJson(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:transcriptions:json", "delete-recording-transcription-sid-json",
@@ -19,7 +19,7 @@ func TestTexmlAccountsTranscriptionsJsonDeleteRecordingTranscriptionSidJson(t *t
 }
 
 func TestTexmlAccountsTranscriptionsJsonRetrieveRecordingTranscriptionSidJson(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:transcriptions:json", "retrieve-recording-transcription-sid-json",

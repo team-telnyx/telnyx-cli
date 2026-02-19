@@ -10,7 +10,7 @@ import (
 )
 
 func TestNumberOrderPhoneNumbersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-order-phone-numbers", "retrieve",
@@ -19,7 +19,7 @@ func TestNumberOrderPhoneNumbersRetrieve(t *testing.T) {
 }
 
 func TestNumberOrderPhoneNumbersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-order-phone-numbers", "list",
@@ -38,7 +38,7 @@ func TestNumberOrderPhoneNumbersList(t *testing.T) {
 }
 
 func TestNumberOrderPhoneNumbersUpdateRequirementGroup(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-order-phone-numbers", "update-requirement-group",
@@ -48,7 +48,7 @@ func TestNumberOrderPhoneNumbersUpdateRequirementGroup(t *testing.T) {
 }
 
 func TestNumberOrderPhoneNumbersUpdateRequirements(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-order-phone-numbers", "update-requirements",

@@ -9,7 +9,7 @@ import (
 )
 
 func TestRoomsSessionsActionsEnd(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions:actions", "end",
@@ -18,7 +18,7 @@ func TestRoomsSessionsActionsEnd(t *testing.T) {
 }
 
 func TestRoomsSessionsActionsKick(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions:actions", "kick",
@@ -29,7 +29,7 @@ func TestRoomsSessionsActionsKick(t *testing.T) {
 }
 
 func TestRoomsSessionsActionsMute(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions:actions", "mute",
@@ -40,7 +40,7 @@ func TestRoomsSessionsActionsMute(t *testing.T) {
 }
 
 func TestRoomsSessionsActionsUnmute(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions:actions", "unmute",

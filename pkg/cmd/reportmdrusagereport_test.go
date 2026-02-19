@@ -9,7 +9,7 @@ import (
 )
 
 func TestReportsMdrUsageReportsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports:mdr-usage-reports", "create",
@@ -21,7 +21,7 @@ func TestReportsMdrUsageReportsCreate(t *testing.T) {
 }
 
 func TestReportsMdrUsageReportsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports:mdr-usage-reports", "retrieve",
@@ -30,7 +30,7 @@ func TestReportsMdrUsageReportsRetrieve(t *testing.T) {
 }
 
 func TestReportsMdrUsageReportsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports:mdr-usage-reports", "list",
@@ -40,7 +40,7 @@ func TestReportsMdrUsageReportsList(t *testing.T) {
 }
 
 func TestReportsMdrUsageReportsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports:mdr-usage-reports", "delete",
@@ -49,7 +49,7 @@ func TestReportsMdrUsageReportsDelete(t *testing.T) {
 }
 
 func TestReportsMdrUsageReportsFetchSync(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports:mdr-usage-reports", "fetch-sync",

@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIMissionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "create",
@@ -23,7 +23,7 @@ func TestAIMissionsCreate(t *testing.T) {
 }
 
 func TestAIMissionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "retrieve",
@@ -32,7 +32,7 @@ func TestAIMissionsRetrieve(t *testing.T) {
 }
 
 func TestAIMissionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "list",
@@ -42,7 +42,7 @@ func TestAIMissionsList(t *testing.T) {
 }
 
 func TestAIMissionsCloneMission(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "clone-mission",
@@ -51,7 +51,7 @@ func TestAIMissionsCloneMission(t *testing.T) {
 }
 
 func TestAIMissionsDeleteMission(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "delete-mission",
@@ -60,7 +60,7 @@ func TestAIMissionsDeleteMission(t *testing.T) {
 }
 
 func TestAIMissionsListEvents(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "list-events",
@@ -71,7 +71,7 @@ func TestAIMissionsListEvents(t *testing.T) {
 }
 
 func TestAIMissionsUpdateMission(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "update-mission",

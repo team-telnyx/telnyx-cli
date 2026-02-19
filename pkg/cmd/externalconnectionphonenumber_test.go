@@ -10,7 +10,7 @@ import (
 )
 
 func TestExternalConnectionsPhoneNumbersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:phone-numbers", "retrieve",
@@ -20,7 +20,7 @@ func TestExternalConnectionsPhoneNumbersRetrieve(t *testing.T) {
 }
 
 func TestExternalConnectionsPhoneNumbersUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:phone-numbers", "update",
@@ -31,7 +31,7 @@ func TestExternalConnectionsPhoneNumbersUpdate(t *testing.T) {
 }
 
 func TestExternalConnectionsPhoneNumbersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:phone-numbers", "list",

@@ -10,7 +10,7 @@ import (
 )
 
 func TestMessagingProfilesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "create",
@@ -64,7 +64,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 }
 
 func TestMessagingProfilesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "retrieve",
@@ -73,7 +73,7 @@ func TestMessagingProfilesRetrieve(t *testing.T) {
 }
 
 func TestMessagingProfilesUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "update",
@@ -131,7 +131,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 }
 
 func TestMessagingProfilesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "list",
@@ -154,7 +154,7 @@ func TestMessagingProfilesList(t *testing.T) {
 }
 
 func TestMessagingProfilesDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "delete",
@@ -163,7 +163,7 @@ func TestMessagingProfilesDelete(t *testing.T) {
 }
 
 func TestMessagingProfilesListPhoneNumbers(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "list-phone-numbers",
@@ -174,7 +174,7 @@ func TestMessagingProfilesListPhoneNumbers(t *testing.T) {
 }
 
 func TestMessagingProfilesListShortCodes(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "list-short-codes",
