@@ -821,8 +821,8 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&conferencesActionsUpdate,
-					&conferencesActionsEndConference,
-					&conferencesActionsGatherDtmfAudio,
+					&conferencesActionsEnd,
+					&conferencesActionsGatherUsingAudio,
 					&conferencesActionsHold,
 					&conferencesActionsJoin,
 					&conferencesActionsLeave,
