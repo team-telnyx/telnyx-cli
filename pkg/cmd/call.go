@@ -216,6 +216,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "sound_modifications",
 		},
 		&requestflag.Flag[string]{
+			Name:     "stream-auth-token",
+			Usage:    "An authentication token to be sent as part of the WebSocket connection when using streaming. Maximum length is 4000 characters.",
+			BodyPath: "stream_auth_token",
+		},
+		&requestflag.Flag[string]{
 			Name:     "stream-bidirectional-codec",
 			Usage:    "Indicates codec for bidirectional streaming RTP payloads. Used only with stream_bidirectional_mode=rtp. Case sensitive.",
 			Default:  "PCMU",

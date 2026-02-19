@@ -535,6 +535,11 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "command_id",
 		},
 		&requestflag.Flag[string]{
+			Name:     "gather-ended-speech",
+			Usage:    "Text that will be played when the gathering has finished. There is a 3,000 character limit.",
+			BodyPath: "gather_ended_speech",
+		},
+		&requestflag.Flag[string]{
 			Name:     "greeting",
 			Usage:    "Text that will be played when the gathering starts, if none then nothing will be played when the gathering starts. The greeting can be text for any voice or SSML for `AWS.Polly.<voice_id>` voices. There is a 3,000 character limit.",
 			BodyPath: "greeting",
@@ -572,7 +577,7 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[int64]{
 			Name:     "user-response-timeout-ms",
-			Usage:    "The number of milliseconds to wait for a user response before the voice assistant times out and check if the user is still there.",
+			Usage:    "The maximum time in milliseconds to wait for user response before timing out.",
 			Default:  10000,
 			BodyPath: "user_response_timeout_ms",
 		},
@@ -1151,6 +1156,10 @@ var callsActionsSpeak = cli.Command{
 			Usage:    "The language you want spoken. This parameter is ignored when a `Polly.*` voice is specified.",
 			BodyPath: "language",
 		},
+		&requestflag.Flag[any]{
+			Name:     "loop",
+			BodyPath: "loop",
+		},
 		&requestflag.Flag[string]{
 			Name:     "payload-type",
 			Usage:    "The type of the provided payload. The payload can either be plain text, or Speech Synthesis Markup Language (SSML).",
@@ -1167,6 +1176,12 @@ var callsActionsSpeak = cli.Command{
 			Name:     "stop",
 			Usage:    "When specified, it stops the current audio being played. Specify `current` to stop the current audio being played, and to play the next file in the queue. Specify `all` to stop the current audio file being played and to also clear all audio files from the queue.",
 			BodyPath: "stop",
+		},
+		&requestflag.Flag[string]{
+			Name:     "target-legs",
+			Usage:    "Specifies which legs of the call should receive the spoken audio.",
+			Default:  "self",
+			BodyPath: "target_legs",
 		},
 		&requestflag.Flag[any]{
 			Name:     "voice-settings",
@@ -1608,6 +1623,11 @@ var callsActionsStartStreaming = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Use this field to avoid duplicate commands. Telnyx will ignore any command with the same `command_id` for the same `call_control_id`.",
 			BodyPath: "command_id",
 		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "custom-parameter",
+			Usage:    "Custom parameters to be sent as part of the WebSocket connection.",
+			BodyPath: "custom_parameters",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "dialogflow-config",
 			BodyPath: "dialogflow_config",
@@ -1617,6 +1637,11 @@ var callsActionsStartStreaming = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Enables Dialogflow for the current call. The default value is false.",
 			Default:  false,
 			BodyPath: "enable_dialogflow",
+		},
+		&requestflag.Flag[string]{
+			Name:     "stream-auth-token",
+			Usage:    "An authentication token to be sent as part of the WebSocket connection. Maximum length is 4000 characters.",
+			BodyPath: "stream_auth_token",
 		},
 		&requestflag.Flag[string]{
 			Name:     "stream-bidirectional-codec",
@@ -1663,6 +1688,18 @@ var callsActionsStartStreaming = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleCallsActionsStartStreaming,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"custom-parameter": {
+		&requestflag.InnerFlag[string]{
+			Name:       "custom-parameter.name",
+			Usage:      "The name of the custom parameter.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "custom-parameter.value",
+			Usage:      "The value of the custom parameter.",
+			InnerField: "value",
+		},
+	},
 	"dialogflow-config": {
 		&requestflag.InnerFlag[bool]{
 			Name:       "dialogflow-config.analyze-sentiment",
@@ -2066,6 +2103,11 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "park_after_unbridge",
 		},
 		&requestflag.Flag[string]{
+			Name:     "preferred-codecs",
+			Usage:    "The list of comma-separated codecs in order of preference to be used during the call. The codecs supported are `G722`, `PCMU`, `PCMA`, `G729`, `OPUS`, `VP8`, `H264`, `AMR-WB`.",
+			BodyPath: "preferred_codecs",
+		},
+		&requestflag.Flag[string]{
 			Name:     "record",
 			Usage:    "Start recording automatically after an event. Disabled by default.",
 			BodyPath: "record",
@@ -2159,6 +2201,11 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 			Default:  30,
 			BodyPath: "timeout_secs",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook-retries-policies",
+			Usage:    "A map of event types to retry policies. Each retry policy contains an array of `retries_ms` specifying the delays between retry attempts in milliseconds. Maximum 5 retries, total delay cannot exceed 60 seconds.",
+			BodyPath: "webhook_retries_policies",
+		},
 		&requestflag.Flag[string]{
 			Name:     "webhook-url",
 			Usage:    "Use this field to override the URL for which Telnyx will send subsequent webhooks to for this call.",
@@ -2169,6 +2216,17 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "HTTP request type used for `webhook_url`.",
 			Default:  "POST",
 			BodyPath: "webhook_url_method",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook-urls",
+			Usage:    "A map of event types to webhook URLs. When an event of the specified type occurs, the webhook URL associated with that event type will be called instead of `webhook_url`. Events not mapped here will use the default `webhook_url`.",
+			BodyPath: "webhook_urls",
+		},
+		&requestflag.Flag[string]{
+			Name:     "webhook-urls-method",
+			Usage:    "HTTP request method to invoke `webhook_urls`.",
+			Default:  "POST",
+			BodyPath: "webhook_urls_method",
 		},
 	},
 	Action:          handleCallsActionsTransfer,

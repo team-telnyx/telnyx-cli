@@ -86,6 +86,7 @@ telnyx calls dial \
   --sip-region Canada \
   --sip-transport-protocol TLS \
   --sound-modifications '{octaves: 0.1, pitch: 0.8, semitone: -2, track: both}' \
+  --stream-auth-token your-auth-token \
   --stream-bidirectional-codec G722 \
   --stream-bidirectional-mode rtp \
   --stream-bidirectional-sampling-rate 16000 \
