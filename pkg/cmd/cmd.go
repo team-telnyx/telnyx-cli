@@ -2763,7 +2763,6 @@ func init() {
 					&messaging10dlcBrandList,
 					&messaging10dlcBrandDelete,
 					&messaging10dlcBrandGetFeedback,
-					&messaging10dlcBrandGetSMSOtpByReference,
 					&messaging10dlcBrandResend2faEmail,
 					&messaging10dlcBrandRetrieveSMSOtpStatus,
 					&messaging10dlcBrandRevet,

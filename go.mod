@@ -11,7 +11,7 @@ require (
 	github.com/itchyny/json2yaml v0.1.4
 	github.com/muesli/reflow v0.3.0
 	github.com/stretchr/testify v1.10.0
-	github.com/team-telnyx/telnyx-go/v4 v4.25.0
+	github.com/team-telnyx/telnyx-go/v4 v4.16.1
 	github.com/tidwall/gjson v1.18.0
 	github.com/tidwall/pretty v1.2.1
 	github.com/urfave/cli-docs/v3 v3.0.0-alpha6
@@ -37,6 +37,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/standard-webhooks/standard-webhooks/libraries v0.0.0-20260114220421-3f69fd681bb0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/sjson v1.2.5 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
