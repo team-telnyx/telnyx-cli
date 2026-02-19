@@ -56,8 +56,8 @@ var conferencesActionsUpdate = cli.Command{
 	HideHelpCommand: true,
 }
 
-var conferencesActionsEndConference = cli.Command{
-	Name:    "end-conference",
+var conferencesActionsEnd = cli.Command{
+	Name:    "end",
 	Usage:   "End a conference and terminate all active participants.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -71,12 +71,12 @@ var conferencesActionsEndConference = cli.Command{
 			BodyPath: "command_id",
 		},
 	},
-	Action:          handleConferencesActionsEndConference,
+	Action:          handleConferencesActionsEnd,
 	HideHelpCommand: true,
 }
 
-var conferencesActionsGatherDtmfAudio = cli.Command{
-	Name:    "gather-dtmf-audio",
+var conferencesActionsGatherUsingAudio = cli.Command{
+	Name:    "gather-using-audio",
 	Usage:   "Play an audio file to a specific conference participant and gather DTMF input.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -174,7 +174,7 @@ var conferencesActionsGatherDtmfAudio = cli.Command{
 			BodyPath: "valid_digits",
 		},
 	},
-	Action:          handleConferencesActionsGatherDtmfAudio,
+	Action:          handleConferencesActionsGatherUsingAudio,
 	HideHelpCommand: true,
 }
 
@@ -739,7 +739,7 @@ func handleConferencesActionsUpdate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(os.Stdout, "conferences:actions update", obj, format, transform)
 }
 
-func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command) error {
+func handleConferencesActionsEnd(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -750,7 +750,7 @@ func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ConferenceActionEndConferenceParams{}
+	params := telnyx.ConferenceActionEndParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -765,7 +765,7 @@ func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Conferences.Actions.EndConference(
+	_, err = client.Conferences.Actions.End(
 		ctx,
 		cmd.Value("id").(string),
 		params,
@@ -778,10 +778,10 @@ func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions end-conference", obj, format, transform)
+	return ShowJSON(os.Stdout, "conferences:actions end", obj, format, transform)
 }
 
-func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Command) error {
+func handleConferencesActionsGatherUsingAudio(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -792,7 +792,7 @@ func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ConferenceActionGatherDtmfAudioParams{}
+	params := telnyx.ConferenceActionGatherUsingAudioParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -807,7 +807,7 @@ func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Comma
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Conferences.Actions.GatherDtmfAudio(
+	_, err = client.Conferences.Actions.GatherUsingAudio(
 		ctx,
 		cmd.Value("id").(string),
 		params,
@@ -820,7 +820,7 @@ func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Comma
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions gather-dtmf-audio", obj, format, transform)
+	return ShowJSON(os.Stdout, "conferences:actions gather-using-audio", obj, format, transform)
 }
 
 func handleConferencesActionsHold(ctx context.Context, cmd *cli.Command) error {

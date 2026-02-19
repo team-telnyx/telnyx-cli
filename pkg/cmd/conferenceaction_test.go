@@ -23,21 +23,21 @@ func TestConferencesActionsUpdate(t *testing.T) {
 	)
 }
 
-func TestConferencesActionsEndConference(t *testing.T) {
+func TestConferencesActionsEnd(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
-		"conferences:actions", "end-conference",
+		"conferences:actions", "end",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 	)
 }
 
-func TestConferencesActionsGatherDtmfAudio(t *testing.T) {
+func TestConferencesActionsGatherUsingAudio(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
-		"conferences:actions", "gather-dtmf-audio",
+		"conferences:actions", "gather-using-audio",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--audio-url", "http://example.com/gather_prompt.wav",
