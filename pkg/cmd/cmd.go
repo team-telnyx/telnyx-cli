@@ -811,6 +811,8 @@ func init() {
 					&conferencesRetrieve,
 					&conferencesList,
 					&conferencesListParticipants,
+					&conferencesRetrieveParticipant,
+					&conferencesUpdateParticipant,
 				},
 			},
 			{
@@ -819,6 +821,8 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&conferencesActionsUpdate,
+					&conferencesActionsEndConference,
+					&conferencesActionsGatherDtmfAudio,
 					&conferencesActionsHold,
 					&conferencesActionsJoin,
 					&conferencesActionsLeave,
@@ -828,6 +832,7 @@ func init() {
 					&conferencesActionsRecordResume,
 					&conferencesActionsRecordStart,
 					&conferencesActionsRecordStop,
+					&conferencesActionsSendDtmf,
 					&conferencesActionsSpeak,
 					&conferencesActionsStop,
 					&conferencesActionsUnhold,
