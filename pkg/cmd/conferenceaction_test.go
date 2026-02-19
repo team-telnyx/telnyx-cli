@@ -23,6 +23,41 @@ func TestConferencesActionsUpdate(t *testing.T) {
 	)
 }
 
+func TestConferencesActionsEndConference(t *testing.T) {
+	t.Skip("Prism tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"conferences:actions", "end-conference",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+	)
+}
+
+func TestConferencesActionsGatherDtmfAudio(t *testing.T) {
+	t.Skip("Prism tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"conferences:actions", "gather-dtmf-audio",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
+		"--audio-url", "http://example.com/gather_prompt.wav",
+		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+		"--gather-id", "gather_id",
+		"--initial-timeout-millis", "10000",
+		"--inter-digit-timeout-millis", "3000",
+		"--invalid-audio-url", "invalid_audio_url",
+		"--invalid-media-name", "invalid_media_name",
+		"--maximum-digits", "4",
+		"--maximum-tries", "3",
+		"--media-name", "media_name",
+		"--minimum-digits", "1",
+		"--stop-playback-on-dtmf=true",
+		"--terminating-digit", "#",
+		"--timeout-millis", "30000",
+		"--valid-digits", "0123456789",
+	)
+}
+
 func TestConferencesActionsHold(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
@@ -147,6 +182,19 @@ func TestConferencesActionsRecordStop(t *testing.T) {
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 		"--recording-id", "6e00ab49-9487-4364-8ad6-23965965afb2",
 		"--region", "US",
+	)
+}
+
+func TestConferencesActionsSendDtmf(t *testing.T) {
+	t.Skip("Prism tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"conferences:actions", "send-dtmf",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--digits", "1234#",
+		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
+		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+		"--duration-millis", "250",
 	)
 }
 

@@ -104,3 +104,26 @@ func TestConferencesListParticipants(t *testing.T) {
 		"--region", "Australia",
 	)
 }
+
+func TestConferencesRetrieveParticipant(t *testing.T) {
+	t.Skip("Prism tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"conferences", "retrieve-participant",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--participant-id", "participant_id",
+	)
+}
+
+func TestConferencesUpdateParticipant(t *testing.T) {
+	t.Skip("Prism tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"conferences", "update-participant",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--participant-id", "participant_id",
+		"--beep-enabled", "never",
+		"--end-conference-on-exit=true",
+		"--soft-end-conference-on-exit=false",
+	)
+}
