@@ -9,7 +9,7 @@ import (
 )
 
 func TestPrivateWirelessGatewaysCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"private-wireless-gateways", "create",
@@ -20,7 +20,7 @@ func TestPrivateWirelessGatewaysCreate(t *testing.T) {
 }
 
 func TestPrivateWirelessGatewaysRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"private-wireless-gateways", "retrieve",
@@ -29,7 +29,7 @@ func TestPrivateWirelessGatewaysRetrieve(t *testing.T) {
 }
 
 func TestPrivateWirelessGatewaysList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"private-wireless-gateways", "list",
@@ -44,7 +44,7 @@ func TestPrivateWirelessGatewaysList(t *testing.T) {
 }
 
 func TestPrivateWirelessGatewaysDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"private-wireless-gateways", "delete",

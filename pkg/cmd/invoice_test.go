@@ -9,7 +9,7 @@ import (
 )
 
 func TestInvoicesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"invoices", "retrieve",
@@ -19,7 +19,7 @@ func TestInvoicesRetrieve(t *testing.T) {
 }
 
 func TestInvoicesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"invoices", "list",

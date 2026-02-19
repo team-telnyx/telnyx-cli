@@ -10,7 +10,7 @@ import (
 )
 
 func TestExternalConnectionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "create",
@@ -47,7 +47,7 @@ func TestExternalConnectionsCreate(t *testing.T) {
 }
 
 func TestExternalConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "retrieve",
@@ -56,7 +56,7 @@ func TestExternalConnectionsRetrieve(t *testing.T) {
 }
 
 func TestExternalConnectionsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "update",
@@ -92,7 +92,7 @@ func TestExternalConnectionsUpdate(t *testing.T) {
 }
 
 func TestExternalConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "list",
@@ -119,7 +119,7 @@ func TestExternalConnectionsList(t *testing.T) {
 }
 
 func TestExternalConnectionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "delete",
@@ -128,7 +128,7 @@ func TestExternalConnectionsDelete(t *testing.T) {
 }
 
 func TestExternalConnectionsUpdateLocation(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "update-location",

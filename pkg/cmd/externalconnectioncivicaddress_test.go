@@ -10,7 +10,7 @@ import (
 )
 
 func TestExternalConnectionsCivicAddressesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:civic-addresses", "retrieve",
@@ -20,7 +20,7 @@ func TestExternalConnectionsCivicAddressesRetrieve(t *testing.T) {
 }
 
 func TestExternalConnectionsCivicAddressesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:civic-addresses", "list",

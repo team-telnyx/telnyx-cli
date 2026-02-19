@@ -10,7 +10,7 @@ import (
 )
 
 func TestAIFineTuningJobsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:fine-tuning:jobs", "create",
@@ -35,7 +35,7 @@ func TestAIFineTuningJobsCreate(t *testing.T) {
 }
 
 func TestAIFineTuningJobsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:fine-tuning:jobs", "retrieve",
@@ -44,7 +44,7 @@ func TestAIFineTuningJobsRetrieve(t *testing.T) {
 }
 
 func TestAIFineTuningJobsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:fine-tuning:jobs", "list",
@@ -52,7 +52,7 @@ func TestAIFineTuningJobsList(t *testing.T) {
 }
 
 func TestAIFineTuningJobsCancel(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:fine-tuning:jobs", "cancel",

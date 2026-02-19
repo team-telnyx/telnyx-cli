@@ -10,7 +10,7 @@ import (
 )
 
 func TestUserAddressesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"user-addresses", "create",
@@ -32,7 +32,7 @@ func TestUserAddressesCreate(t *testing.T) {
 }
 
 func TestUserAddressesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"user-addresses", "retrieve",
@@ -41,7 +41,7 @@ func TestUserAddressesRetrieve(t *testing.T) {
 }
 
 func TestUserAddressesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"user-addresses", "list",

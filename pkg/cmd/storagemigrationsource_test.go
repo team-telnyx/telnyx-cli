@@ -10,7 +10,7 @@ import (
 )
 
 func TestStorageMigrationSourcesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migration-sources", "create",
@@ -36,7 +36,7 @@ func TestStorageMigrationSourcesCreate(t *testing.T) {
 }
 
 func TestStorageMigrationSourcesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migration-sources", "retrieve",
@@ -45,7 +45,7 @@ func TestStorageMigrationSourcesRetrieve(t *testing.T) {
 }
 
 func TestStorageMigrationSourcesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migration-sources", "list",
@@ -53,7 +53,7 @@ func TestStorageMigrationSourcesList(t *testing.T) {
 }
 
 func TestStorageMigrationSourcesDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migration-sources", "delete",

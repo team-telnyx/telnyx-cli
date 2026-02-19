@@ -10,7 +10,7 @@ import (
 )
 
 func TestExternalConnectionsReleasesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:releases", "retrieve",
@@ -20,7 +20,7 @@ func TestExternalConnectionsReleasesRetrieve(t *testing.T) {
 }
 
 func TestExternalConnectionsReleasesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:releases", "list",

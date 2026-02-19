@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIMissionsKnowledgeBasesCreateKnowledgeBase(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:knowledge-bases", "create-knowledge-base",
@@ -18,7 +18,7 @@ func TestAIMissionsKnowledgeBasesCreateKnowledgeBase(t *testing.T) {
 }
 
 func TestAIMissionsKnowledgeBasesDeleteKnowledgeBase(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:knowledge-bases", "delete-knowledge-base",
@@ -28,7 +28,7 @@ func TestAIMissionsKnowledgeBasesDeleteKnowledgeBase(t *testing.T) {
 }
 
 func TestAIMissionsKnowledgeBasesGetKnowledgeBase(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:knowledge-bases", "get-knowledge-base",
@@ -38,7 +38,7 @@ func TestAIMissionsKnowledgeBasesGetKnowledgeBase(t *testing.T) {
 }
 
 func TestAIMissionsKnowledgeBasesListKnowledgeBases(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:knowledge-bases", "list-knowledge-bases",
@@ -47,7 +47,7 @@ func TestAIMissionsKnowledgeBasesListKnowledgeBases(t *testing.T) {
 }
 
 func TestAIMissionsKnowledgeBasesUpdateKnowledgeBase(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:knowledge-bases", "update-knowledge-base",

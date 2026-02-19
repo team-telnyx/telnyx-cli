@@ -10,7 +10,7 @@ import (
 )
 
 func TestPhoneNumberBlocksJobsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-number-blocks:jobs", "retrieve",
@@ -19,7 +19,7 @@ func TestPhoneNumberBlocksJobsRetrieve(t *testing.T) {
 }
 
 func TestPhoneNumberBlocksJobsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-number-blocks:jobs", "list",
@@ -45,7 +45,7 @@ func TestPhoneNumberBlocksJobsList(t *testing.T) {
 }
 
 func TestPhoneNumberBlocksJobsDeletePhoneNumberBlock(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-number-blocks:jobs", "delete-phone-number-block",

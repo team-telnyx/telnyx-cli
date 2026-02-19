@@ -10,7 +10,7 @@ import (
 )
 
 func TestShortCodesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"short-codes", "retrieve",
@@ -19,7 +19,7 @@ func TestShortCodesRetrieve(t *testing.T) {
 }
 
 func TestShortCodesUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"short-codes", "update",
@@ -30,7 +30,7 @@ func TestShortCodesUpdate(t *testing.T) {
 }
 
 func TestShortCodesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"short-codes", "list",

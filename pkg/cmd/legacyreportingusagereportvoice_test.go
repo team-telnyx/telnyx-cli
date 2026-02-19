@@ -9,7 +9,7 @@ import (
 )
 
 func TestLegacyReportingUsageReportsVoiceCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:voice", "create",
@@ -26,7 +26,7 @@ func TestLegacyReportingUsageReportsVoiceCreate(t *testing.T) {
 }
 
 func TestLegacyReportingUsageReportsVoiceRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:voice", "retrieve",
@@ -35,7 +35,7 @@ func TestLegacyReportingUsageReportsVoiceRetrieve(t *testing.T) {
 }
 
 func TestLegacyReportingUsageReportsVoiceList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:voice", "list",
@@ -45,7 +45,7 @@ func TestLegacyReportingUsageReportsVoiceList(t *testing.T) {
 }
 
 func TestLegacyReportingUsageReportsVoiceDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:voice", "delete",

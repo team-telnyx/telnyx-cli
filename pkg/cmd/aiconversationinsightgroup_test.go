@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIConversationsInsightGroupsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "retrieve",
@@ -18,7 +18,7 @@ func TestAIConversationsInsightGroupsRetrieve(t *testing.T) {
 }
 
 func TestAIConversationsInsightGroupsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "update",
@@ -30,7 +30,7 @@ func TestAIConversationsInsightGroupsUpdate(t *testing.T) {
 }
 
 func TestAIConversationsInsightGroupsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "delete",
@@ -39,7 +39,7 @@ func TestAIConversationsInsightGroupsDelete(t *testing.T) {
 }
 
 func TestAIConversationsInsightGroupsInsightGroups(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "insight-groups",
@@ -50,7 +50,7 @@ func TestAIConversationsInsightGroupsInsightGroups(t *testing.T) {
 }
 
 func TestAIConversationsInsightGroupsRetrieveInsightGroups(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "retrieve-insight-groups",

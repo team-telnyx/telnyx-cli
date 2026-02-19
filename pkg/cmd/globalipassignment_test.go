@@ -9,7 +9,7 @@ import (
 )
 
 func TestGlobalIPAssignmentsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-assignments", "create",
@@ -17,7 +17,7 @@ func TestGlobalIPAssignmentsCreate(t *testing.T) {
 }
 
 func TestGlobalIPAssignmentsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-assignments", "retrieve",
@@ -26,7 +26,7 @@ func TestGlobalIPAssignmentsRetrieve(t *testing.T) {
 }
 
 func TestGlobalIPAssignmentsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-assignments", "update",
@@ -36,7 +36,7 @@ func TestGlobalIPAssignmentsUpdate(t *testing.T) {
 }
 
 func TestGlobalIPAssignmentsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-assignments", "list",
@@ -46,7 +46,7 @@ func TestGlobalIPAssignmentsList(t *testing.T) {
 }
 
 func TestGlobalIPAssignmentsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-assignments", "delete",

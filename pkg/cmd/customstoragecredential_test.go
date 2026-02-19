@@ -9,7 +9,7 @@ import (
 )
 
 func TestCustomStorageCredentialsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"custom-storage-credentials", "create",
@@ -20,7 +20,7 @@ func TestCustomStorageCredentialsCreate(t *testing.T) {
 }
 
 func TestCustomStorageCredentialsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"custom-storage-credentials", "retrieve",
@@ -29,7 +29,7 @@ func TestCustomStorageCredentialsRetrieve(t *testing.T) {
 }
 
 func TestCustomStorageCredentialsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"custom-storage-credentials", "update",
@@ -40,7 +40,7 @@ func TestCustomStorageCredentialsUpdate(t *testing.T) {
 }
 
 func TestCustomStorageCredentialsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"custom-storage-credentials", "delete",

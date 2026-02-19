@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIMissionsToolsCreateTool(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:tools", "create-tool",
@@ -18,7 +18,7 @@ func TestAIMissionsToolsCreateTool(t *testing.T) {
 }
 
 func TestAIMissionsToolsDeleteTool(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:tools", "delete-tool",
@@ -28,7 +28,7 @@ func TestAIMissionsToolsDeleteTool(t *testing.T) {
 }
 
 func TestAIMissionsToolsGetTool(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:tools", "get-tool",
@@ -38,7 +38,7 @@ func TestAIMissionsToolsGetTool(t *testing.T) {
 }
 
 func TestAIMissionsToolsListTools(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:tools", "list-tools",
@@ -47,7 +47,7 @@ func TestAIMissionsToolsListTools(t *testing.T) {
 }
 
 func TestAIMissionsToolsUpdateTool(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:tools", "update-tool",

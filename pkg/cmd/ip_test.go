@@ -10,7 +10,7 @@ import (
 )
 
 func TestIPsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "create",
@@ -21,7 +21,7 @@ func TestIPsCreate(t *testing.T) {
 }
 
 func TestIPsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "retrieve",
@@ -30,7 +30,7 @@ func TestIPsRetrieve(t *testing.T) {
 }
 
 func TestIPsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "update",
@@ -42,7 +42,7 @@ func TestIPsUpdate(t *testing.T) {
 }
 
 func TestIPsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "list",
@@ -67,7 +67,7 @@ func TestIPsList(t *testing.T) {
 }
 
 func TestIPsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "delete",

@@ -10,7 +10,7 @@ import (
 )
 
 func TestMessagesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "retrieve",
@@ -19,7 +19,7 @@ func TestMessagesRetrieve(t *testing.T) {
 }
 
 func TestMessagesCancelScheduled(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "cancel-scheduled",
@@ -28,7 +28,7 @@ func TestMessagesCancelScheduled(t *testing.T) {
 }
 
 func TestMessagesSchedule(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "schedule",
@@ -48,7 +48,7 @@ func TestMessagesSchedule(t *testing.T) {
 }
 
 func TestMessagesSend(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send",
@@ -69,7 +69,7 @@ func TestMessagesSend(t *testing.T) {
 }
 
 func TestMessagesSendGroupMms(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-group-mms",
@@ -86,7 +86,7 @@ func TestMessagesSendGroupMms(t *testing.T) {
 }
 
 func TestMessagesSendLongCode(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-long-code",
@@ -105,7 +105,7 @@ func TestMessagesSendLongCode(t *testing.T) {
 }
 
 func TestMessagesSendNumberPool(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-number-pool",
@@ -124,7 +124,7 @@ func TestMessagesSendNumberPool(t *testing.T) {
 }
 
 func TestMessagesSendShortCode(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-short-code",
@@ -143,7 +143,7 @@ func TestMessagesSendShortCode(t *testing.T) {
 }
 
 func TestMessagesSendWhatsapp(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-whatsapp",

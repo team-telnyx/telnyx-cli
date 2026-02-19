@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIIntegrationsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:integrations", "retrieve",
@@ -18,7 +18,7 @@ func TestAIIntegrationsRetrieve(t *testing.T) {
 }
 
 func TestAIIntegrationsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:integrations", "list",

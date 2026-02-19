@@ -10,7 +10,7 @@ import (
 )
 
 func TestRoomsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "create",
@@ -24,7 +24,7 @@ func TestRoomsCreate(t *testing.T) {
 }
 
 func TestRoomsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "retrieve",
@@ -34,7 +34,7 @@ func TestRoomsRetrieve(t *testing.T) {
 }
 
 func TestRoomsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "update",
@@ -49,7 +49,7 @@ func TestRoomsUpdate(t *testing.T) {
 }
 
 func TestRoomsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "list",
@@ -76,7 +76,7 @@ func TestRoomsList(t *testing.T) {
 }
 
 func TestRoomsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "delete",

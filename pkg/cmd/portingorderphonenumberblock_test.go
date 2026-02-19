@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortingOrdersPhoneNumberBlocksCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:phone-number-blocks", "create",
@@ -35,7 +35,7 @@ func TestPortingOrdersPhoneNumberBlocksCreate(t *testing.T) {
 }
 
 func TestPortingOrdersPhoneNumberBlocksList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:phone-number-blocks", "list",
@@ -67,7 +67,7 @@ func TestPortingOrdersPhoneNumberBlocksList(t *testing.T) {
 }
 
 func TestPortingOrdersPhoneNumberBlocksDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:phone-number-blocks", "delete",

@@ -10,7 +10,7 @@ import (
 )
 
 func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "create",
@@ -97,7 +97,7 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 }
 
 func TestMessagingTollfreeVerificationRequestsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "retrieve",
@@ -106,7 +106,7 @@ func TestMessagingTollfreeVerificationRequestsRetrieve(t *testing.T) {
 }
 
 func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "update",
@@ -195,7 +195,7 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 }
 
 func TestMessagingTollfreeVerificationRequestsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "list",
@@ -209,7 +209,7 @@ func TestMessagingTollfreeVerificationRequestsList(t *testing.T) {
 }
 
 func TestMessagingTollfreeVerificationRequestsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "delete",

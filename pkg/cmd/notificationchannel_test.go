@@ -10,7 +10,7 @@ import (
 )
 
 func TestNotificationChannelsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "create",
@@ -21,7 +21,7 @@ func TestNotificationChannelsCreate(t *testing.T) {
 }
 
 func TestNotificationChannelsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "retrieve",
@@ -30,7 +30,7 @@ func TestNotificationChannelsRetrieve(t *testing.T) {
 }
 
 func TestNotificationChannelsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "update",
@@ -42,7 +42,7 @@ func TestNotificationChannelsUpdate(t *testing.T) {
 }
 
 func TestNotificationChannelsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "list",
@@ -70,7 +70,7 @@ func TestNotificationChannelsList(t *testing.T) {
 }
 
 func TestNotificationChannelsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "delete",

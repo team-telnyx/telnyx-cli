@@ -10,7 +10,7 @@ import (
 )
 
 func TestFqdnConnectionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "create",
@@ -113,7 +113,7 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 }
 
 func TestFqdnConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "retrieve",
@@ -122,7 +122,7 @@ func TestFqdnConnectionsRetrieve(t *testing.T) {
 }
 
 func TestFqdnConnectionsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "update",
@@ -225,7 +225,7 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 }
 
 func TestFqdnConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "list",
@@ -252,7 +252,7 @@ func TestFqdnConnectionsList(t *testing.T) {
 }
 
 func TestFqdnConnectionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "delete",

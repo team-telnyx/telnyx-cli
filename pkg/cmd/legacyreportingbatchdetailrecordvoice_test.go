@@ -10,7 +10,7 @@ import (
 )
 
 func TestLegacyReportingBatchDetailRecordsVoiceCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:voice", "create",
@@ -71,7 +71,7 @@ func TestLegacyReportingBatchDetailRecordsVoiceCreate(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsVoiceRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:voice", "retrieve",
@@ -80,7 +80,7 @@ func TestLegacyReportingBatchDetailRecordsVoiceRetrieve(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsVoiceList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:voice", "list",
@@ -88,7 +88,7 @@ func TestLegacyReportingBatchDetailRecordsVoiceList(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsVoiceDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:voice", "delete",
@@ -97,7 +97,7 @@ func TestLegacyReportingBatchDetailRecordsVoiceDelete(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsVoiceRetrieveFields(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:voice", "retrieve-fields",

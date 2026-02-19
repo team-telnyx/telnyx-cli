@@ -9,7 +9,7 @@ import (
 )
 
 func TestOrganizationsUsersActionsRemove(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"organizations:users:actions", "remove",

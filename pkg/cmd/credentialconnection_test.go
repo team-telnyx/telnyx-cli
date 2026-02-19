@@ -10,7 +10,7 @@ import (
 )
 
 func TestCredentialConnectionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "create",
@@ -104,7 +104,7 @@ func TestCredentialConnectionsCreate(t *testing.T) {
 }
 
 func TestCredentialConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "retrieve",
@@ -113,7 +113,7 @@ func TestCredentialConnectionsRetrieve(t *testing.T) {
 }
 
 func TestCredentialConnectionsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "update",
@@ -209,7 +209,7 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 }
 
 func TestCredentialConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "list",
@@ -236,7 +236,7 @@ func TestCredentialConnectionsList(t *testing.T) {
 }
 
 func TestCredentialConnectionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "delete",

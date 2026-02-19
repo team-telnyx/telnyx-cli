@@ -10,7 +10,7 @@ import (
 )
 
 func TestAccessIPRangesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-ranges", "create",
@@ -20,7 +20,7 @@ func TestAccessIPRangesCreate(t *testing.T) {
 }
 
 func TestAccessIPRangesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-ranges", "list",
@@ -44,7 +44,7 @@ func TestAccessIPRangesList(t *testing.T) {
 }
 
 func TestAccessIPRangesDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-ranges", "delete",

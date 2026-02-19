@@ -10,7 +10,7 @@ import (
 )
 
 func TestNumberBlockOrdersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-block-orders", "create",
@@ -23,7 +23,7 @@ func TestNumberBlockOrdersCreate(t *testing.T) {
 }
 
 func TestNumberBlockOrdersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-block-orders", "retrieve",
@@ -32,7 +32,7 @@ func TestNumberBlockOrdersRetrieve(t *testing.T) {
 }
 
 func TestNumberBlockOrdersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-block-orders", "list",

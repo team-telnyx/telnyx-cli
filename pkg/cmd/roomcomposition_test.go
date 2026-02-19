@@ -10,7 +10,7 @@ import (
 )
 
 func TestRoomCompositionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-compositions", "create",
@@ -25,7 +25,7 @@ func TestRoomCompositionsCreate(t *testing.T) {
 }
 
 func TestRoomCompositionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-compositions", "retrieve",
@@ -34,7 +34,7 @@ func TestRoomCompositionsRetrieve(t *testing.T) {
 }
 
 func TestRoomCompositionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-compositions", "list",
@@ -59,7 +59,7 @@ func TestRoomCompositionsList(t *testing.T) {
 }
 
 func TestRoomCompositionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-compositions", "delete",

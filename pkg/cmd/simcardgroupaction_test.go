@@ -9,7 +9,7 @@ import (
 )
 
 func TestSimCardGroupsActionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "retrieve",
@@ -18,7 +18,7 @@ func TestSimCardGroupsActionsRetrieve(t *testing.T) {
 }
 
 func TestSimCardGroupsActionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "list",
@@ -31,7 +31,7 @@ func TestSimCardGroupsActionsList(t *testing.T) {
 }
 
 func TestSimCardGroupsActionsRemovePrivateWirelessGateway(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "remove-private-wireless-gateway",
@@ -40,7 +40,7 @@ func TestSimCardGroupsActionsRemovePrivateWirelessGateway(t *testing.T) {
 }
 
 func TestSimCardGroupsActionsRemoveWirelessBlocklist(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "remove-wireless-blocklist",
@@ -49,7 +49,7 @@ func TestSimCardGroupsActionsRemoveWirelessBlocklist(t *testing.T) {
 }
 
 func TestSimCardGroupsActionsSetPrivateWirelessGateway(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "set-private-wireless-gateway",
@@ -59,7 +59,7 @@ func TestSimCardGroupsActionsSetPrivateWirelessGateway(t *testing.T) {
 }
 
 func TestSimCardGroupsActionsSetWirelessBlocklist(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "set-wireless-blocklist",

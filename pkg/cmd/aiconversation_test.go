@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIConversationsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "create",
@@ -19,7 +19,7 @@ func TestAIConversationsCreate(t *testing.T) {
 }
 
 func TestAIConversationsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "retrieve",
@@ -28,7 +28,7 @@ func TestAIConversationsRetrieve(t *testing.T) {
 }
 
 func TestAIConversationsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "update",
@@ -38,7 +38,7 @@ func TestAIConversationsUpdate(t *testing.T) {
 }
 
 func TestAIConversationsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "list",
@@ -58,7 +58,7 @@ func TestAIConversationsList(t *testing.T) {
 }
 
 func TestAIConversationsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "delete",
@@ -67,7 +67,7 @@ func TestAIConversationsDelete(t *testing.T) {
 }
 
 func TestAIConversationsAddMessage(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "add-message",
@@ -84,7 +84,7 @@ func TestAIConversationsAddMessage(t *testing.T) {
 }
 
 func TestAIConversationsRetrieveConversationsInsights(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "retrieve-conversations-insights",

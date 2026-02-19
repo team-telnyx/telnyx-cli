@@ -9,7 +9,7 @@ import (
 )
 
 func TestTexmlAccountsConferencesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "retrieve",
@@ -19,7 +19,7 @@ func TestTexmlAccountsConferencesRetrieve(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "update",
@@ -32,7 +32,7 @@ func TestTexmlAccountsConferencesUpdate(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesRetrieveConferences(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "retrieve-conferences",
@@ -48,7 +48,7 @@ func TestTexmlAccountsConferencesRetrieveConferences(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesRetrieveRecordings(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "retrieve-recordings",
@@ -58,7 +58,7 @@ func TestTexmlAccountsConferencesRetrieveRecordings(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesRetrieveRecordingsJson(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "retrieve-recordings-json",

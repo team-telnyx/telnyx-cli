@@ -10,7 +10,7 @@ import (
 )
 
 func TestAIAssistantsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "create",
@@ -92,7 +92,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 }
 
 func TestAIAssistantsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "retrieve",
@@ -105,7 +105,7 @@ func TestAIAssistantsRetrieve(t *testing.T) {
 }
 
 func TestAIAssistantsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "update",
@@ -191,7 +191,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 }
 
 func TestAIAssistantsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "list",
@@ -199,7 +199,7 @@ func TestAIAssistantsList(t *testing.T) {
 }
 
 func TestAIAssistantsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "delete",
@@ -208,7 +208,7 @@ func TestAIAssistantsDelete(t *testing.T) {
 }
 
 func TestAIAssistantsChat(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "chat",
@@ -220,7 +220,7 @@ func TestAIAssistantsChat(t *testing.T) {
 }
 
 func TestAIAssistantsClone(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "clone",
@@ -229,7 +229,7 @@ func TestAIAssistantsClone(t *testing.T) {
 }
 
 func TestAIAssistantsGetTexml(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "get-texml",
@@ -238,7 +238,7 @@ func TestAIAssistantsGetTexml(t *testing.T) {
 }
 
 func TestAIAssistantsImports(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "imports",
@@ -249,7 +249,7 @@ func TestAIAssistantsImports(t *testing.T) {
 }
 
 func TestAIAssistantsSendSMS(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "send-sms",

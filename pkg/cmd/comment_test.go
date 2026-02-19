@@ -10,7 +10,7 @@ import (
 )
 
 func TestCommentsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"comments", "create",
@@ -21,7 +21,7 @@ func TestCommentsCreate(t *testing.T) {
 }
 
 func TestCommentsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"comments", "retrieve",
@@ -30,7 +30,7 @@ func TestCommentsRetrieve(t *testing.T) {
 }
 
 func TestCommentsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"comments", "list",
@@ -50,7 +50,7 @@ func TestCommentsList(t *testing.T) {
 }
 
 func TestCommentsMarkAsRead(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"comments", "mark-as-read",

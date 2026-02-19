@@ -9,7 +9,7 @@ import (
 )
 
 func TestBillingGroupsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"billing-groups", "create",
@@ -18,7 +18,7 @@ func TestBillingGroupsCreate(t *testing.T) {
 }
 
 func TestBillingGroupsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"billing-groups", "retrieve",
@@ -27,7 +27,7 @@ func TestBillingGroupsRetrieve(t *testing.T) {
 }
 
 func TestBillingGroupsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"billing-groups", "update",
@@ -37,7 +37,7 @@ func TestBillingGroupsUpdate(t *testing.T) {
 }
 
 func TestBillingGroupsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"billing-groups", "list",
@@ -47,7 +47,7 @@ func TestBillingGroupsList(t *testing.T) {
 }
 
 func TestBillingGroupsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"billing-groups", "delete",

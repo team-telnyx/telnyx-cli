@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIMissionsRunsTelnyxAgentsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:telnyx-agents", "list",
@@ -19,7 +19,7 @@ func TestAIMissionsRunsTelnyxAgentsList(t *testing.T) {
 }
 
 func TestAIMissionsRunsTelnyxAgentsLink(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:telnyx-agents", "link",
@@ -30,7 +30,7 @@ func TestAIMissionsRunsTelnyxAgentsLink(t *testing.T) {
 }
 
 func TestAIMissionsRunsTelnyxAgentsUnlink(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:telnyx-agents", "unlink",

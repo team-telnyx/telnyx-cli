@@ -10,7 +10,7 @@ import (
 )
 
 func TestAIMissionsRunsPlanCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "create",
@@ -37,7 +37,7 @@ func TestAIMissionsRunsPlanCreate(t *testing.T) {
 }
 
 func TestAIMissionsRunsPlanRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "retrieve",
@@ -47,7 +47,7 @@ func TestAIMissionsRunsPlanRetrieve(t *testing.T) {
 }
 
 func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "add-steps-to-plan",
@@ -74,7 +74,7 @@ func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
 }
 
 func TestAIMissionsRunsPlanGetStepDetails(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "get-step-details",
@@ -85,7 +85,7 @@ func TestAIMissionsRunsPlanGetStepDetails(t *testing.T) {
 }
 
 func TestAIMissionsRunsPlanUpdateStep(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "update-step",

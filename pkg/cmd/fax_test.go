@@ -10,7 +10,7 @@ import (
 )
 
 func TestFaxesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"faxes", "create",
@@ -33,7 +33,7 @@ func TestFaxesCreate(t *testing.T) {
 }
 
 func TestFaxesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"faxes", "retrieve",
@@ -42,7 +42,7 @@ func TestFaxesRetrieve(t *testing.T) {
 }
 
 func TestFaxesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"faxes", "list",
@@ -68,7 +68,7 @@ func TestFaxesList(t *testing.T) {
 }
 
 func TestFaxesDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"faxes", "delete",
