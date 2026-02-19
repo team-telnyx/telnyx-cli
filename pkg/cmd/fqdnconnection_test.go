@@ -229,7 +229,7 @@ func TestFqdnConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "list",
-		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
+		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: outbound_voice_profile_id}",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
@@ -244,7 +244,7 @@ func TestFqdnConnectionsList(t *testing.T) {
 		"fqdn-connections", "list",
 		"--filter.connection-name", "{contains: contains}",
 		"--filter.fqdn", "fqdn",
-		"--filter.outbound-voice-profile-id", "1293384261075731499",
+		"--filter.outbound-voice-profile-id", "outbound_voice_profile_id",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
