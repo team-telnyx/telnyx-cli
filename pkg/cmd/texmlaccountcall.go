@@ -301,7 +301,7 @@ var texmlAccountsCallsCalls = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "TimeLimit",
 		},
 		&requestflag.Flag[int64]{
-			Name:     "timeout",
+			Name:     "timeout-seconds",
 			Usage:    "The number of seconds to wait for the called party to answer the call before the call is canceled. The minimum value is 5 and the maximum value is 120. Default is 30 seconds.",
 			Default:  30,
 			BodyPath: "Timeout",
