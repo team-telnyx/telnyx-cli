@@ -30,7 +30,7 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 		"--noise-suppression", "both",
 		"--noise-suppression-details", "{attenuation_limit: 80, engine: deep_filter_net}",
 		"--onnet-t38-passthrough-enabled=true",
-		"--outbound", "{ani_override: '+1234567890', ani_override_type: always, call_parking_enabled: true, channel_limit: 10, encrypted_media: SRTP, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: credential-authentication, ip_authentication_token: aBcD1234, localization: string, outbound_voice_profile_id: outbound_voice_profile_id, t38_reinvite_source: customer, tech_prefix: '0123', timeout_1xx_secs: 10, timeout_2xx_secs: 10}",
+		"--outbound", "{ani_override: '+1234567890', ani_override_type: always, call_parking_enabled: true, channel_limit: 10, encrypted_media: SRTP, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: credential-authentication, ip_authentication_token: aBcD1234, localization: string, outbound_voice_profile_id: '1293384261075731499', t38_reinvite_source: customer, tech_prefix: '0123', timeout_1xx_secs: 10, timeout_2xx_secs: 10}",
 		"--rtcp-settings", "{capture_enabled: true, port: rtcp-mux, report_frequency_secs: 10}",
 		"--tag", "tag1",
 		"--tag", "tag2",
@@ -94,7 +94,7 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 		"--outbound.ip-authentication-method", "credential-authentication",
 		"--outbound.ip-authentication-token", "aBcD1234",
 		"--outbound.localization", "string",
-		"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--outbound.outbound-voice-profile-id", "1293384261075731499",
 		"--outbound.t38-reinvite-source", "customer",
 		"--outbound.tech-prefix", "0123",
 		"--outbound.timeout-1xx-secs", "10",
@@ -117,7 +117,7 @@ func TestFqdnConnectionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "retrieve",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }
 
@@ -126,7 +126,7 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "update",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--active=true",
 		"--anchorsite-override", "Latency",
 		"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
@@ -142,7 +142,7 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 		"--noise-suppression", "both",
 		"--noise-suppression-details", "{attenuation_limit: 80, engine: deep_filter_net}",
 		"--onnet-t38-passthrough-enabled=true",
-		"--outbound", "{ani_override: ani_override, ani_override_type: normal, call_parking_enabled: true, channel_limit: 0, encrypted_media: SRTP, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: credential-authentication, ip_authentication_token: ip_authentication_token, localization: US, outbound_voice_profile_id: outbound_voice_profile_id, t38_reinvite_source: telnyx, tech_prefix: tech_prefix, timeout_1xx_secs: 1, timeout_2xx_secs: 1}",
+		"--outbound", "{ani_override: ani_override, ani_override_type: normal, call_parking_enabled: true, channel_limit: 0, encrypted_media: SRTP, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: credential-authentication, ip_authentication_token: ip_authentication_token, localization: US, outbound_voice_profile_id: '1293384261075731499', t38_reinvite_source: telnyx, tech_prefix: tech_prefix, timeout_1xx_secs: 1, timeout_2xx_secs: 1}",
 		"--rtcp-settings", "{capture_enabled: true, port: rtcp-mux, report_frequency_secs: 10}",
 		"--tag", "tag1",
 		"--tag", "tag2",
@@ -160,7 +160,7 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "update",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--active=true",
 		"--anchorsite-override", "Latency",
 		"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
@@ -206,7 +206,7 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 		"--outbound.ip-authentication-method", "credential-authentication",
 		"--outbound.ip-authentication-token", "ip_authentication_token",
 		"--outbound.localization", "US",
-		"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--outbound.outbound-voice-profile-id", "1293384261075731499",
 		"--outbound.t38-reinvite-source", "telnyx",
 		"--outbound.tech-prefix", "tech_prefix",
 		"--outbound.timeout-1xx-secs", "1",
@@ -229,7 +229,7 @@ func TestFqdnConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "list",
-		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: outbound_voice_profile_id}",
+		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
@@ -244,7 +244,7 @@ func TestFqdnConnectionsList(t *testing.T) {
 		"fqdn-connections", "list",
 		"--filter.connection-name", "{contains: contains}",
 		"--filter.fqdn", "fqdn",
-		"--filter.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--filter.outbound-voice-profile-id", "1293384261075731499",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
@@ -256,6 +256,6 @@ func TestFqdnConnectionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "delete",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }

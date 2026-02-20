@@ -14,7 +14,7 @@ func TestExternalConnectionsUploadsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "create",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--number-id", "3920457616934164700",
 		"--number-id", "3920457616934164701",
 		"--number-id", "3920457616934164702",
@@ -31,7 +31,7 @@ func TestExternalConnectionsUploadsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "retrieve",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--ticket-id", "7b6a6449-b055-45a6-81f6-f6f0dffa4cc6",
 	)
 }
@@ -41,7 +41,7 @@ func TestExternalConnectionsUploadsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "list",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+1970', eq: '+19705555098'}, status: {eq: [pending_upload, pending]}}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -54,7 +54,7 @@ func TestExternalConnectionsUploadsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "list",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--filter.civic-address-id", "{eq: '19990261512338516954'}",
 		"--filter.location-id", "{eq: '19995665508264022121'}",
 		"--filter.phone-number", "{contains: '+1970', eq: '+19705555098'}",
@@ -69,7 +69,7 @@ func TestExternalConnectionsUploadsPendingCount(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "pending-count",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }
 
@@ -78,7 +78,7 @@ func TestExternalConnectionsUploadsRefreshStatus(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "refresh-status",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }
 
@@ -87,7 +87,7 @@ func TestExternalConnectionsUploadsRetry(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:uploads", "retry",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--ticket-id", "7b6a6449-b055-45a6-81f6-f6f0dffa4cc6",
 	)
 }
