@@ -160,6 +160,11 @@ var texmlAccountsConferencesParticipantsParticipants = requestflag.WithInnerFlag
 			BodyPath: "AmdStatusCallbackMethod",
 		},
 		&requestflag.Flag[string]{
+			Name:     "application-sid",
+			Usage:    "The SID of the TeXML application that will handle the new participant's call. Required unless joining an existing conference by its ConferenceSid.",
+			BodyPath: "ApplicationSid",
+		},
+		&requestflag.Flag[string]{
 			Name:     "beep",
 			Usage:    "Whether to play a notification beep to the conference when the participant enters and exits.",
 			BodyPath: "Beep",
