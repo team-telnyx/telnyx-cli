@@ -24,6 +24,7 @@ func TestPhoneNumbersUpdate(t *testing.T) {
 		t,
 		"phone-numbers", "update",
 		"--phone-number-id", "1293384261075731499",
+		"--address-id", "dc8f39ac-953d-4520-b93b-786ae87db0da",
 		"--billing-group-id", "dc8e4d67-33a0-4cbb-af74-7b58f05bd494",
 		"--connection-id", "dc8e4d67-33a0-4cbb-af74-7b58f05bd494",
 		"--customer-reference", "customer-reference",

@@ -14,7 +14,7 @@ func TestExternalConnectionsCivicAddressesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:civic-addresses", "retrieve",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--address-id", "318fb664-d341-44d2-8405-e6bfb9ced6d9",
 	)
 }
@@ -24,7 +24,7 @@ func TestExternalConnectionsCivicAddressesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:civic-addresses", "list",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--filter", "{country: [US, CA, MX, BR]}",
 	)
 
@@ -35,7 +35,7 @@ func TestExternalConnectionsCivicAddressesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:civic-addresses", "list",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--filter.country", "[US, CA, MX, BR]",
 	)
 }

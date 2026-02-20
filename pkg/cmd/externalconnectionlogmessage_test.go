@@ -14,7 +14,7 @@ func TestExternalConnectionsLogMessagesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:log-messages", "retrieve",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }
 
@@ -47,6 +47,6 @@ func TestExternalConnectionsLogMessagesDismiss(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:log-messages", "dismiss",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }

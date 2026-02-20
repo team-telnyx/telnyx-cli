@@ -43,6 +43,11 @@ var numberReservationsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "An ISO 8901 datetime string denoting when the individual number reservation was created.",
 			InnerField: "created_at",
 		},
+		&requestflag.InnerFlag[string]{
+			Name:       "phone-number.errors",
+			Usage:      "Errors the reservation could happen upon",
+			InnerField: "errors",
+		},
 		&requestflag.InnerFlag[any]{
 			Name:       "phone-number.expired-at",
 			Usage:      "An ISO 8901 datetime string for when the individual number reservation is going to expire",

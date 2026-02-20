@@ -14,7 +14,7 @@ func TestExternalConnectionsPhoneNumbersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:phone-numbers", "retrieve",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--phone-number-id", "1234567889",
 	)
 }
@@ -24,7 +24,7 @@ func TestExternalConnectionsPhoneNumbersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:phone-numbers", "update",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--phone-number-id", "1234567889",
 		"--location-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
@@ -35,7 +35,7 @@ func TestExternalConnectionsPhoneNumbersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:phone-numbers", "list",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+1970', eq: '+19705555098'}}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -48,7 +48,7 @@ func TestExternalConnectionsPhoneNumbersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:phone-numbers", "list",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--filter.civic-address-id", "{eq: '19990261512338516954'}",
 		"--filter.location-id", "{eq: '19995665508264022121'}",
 		"--filter.phone-number", "{contains: '+1970', eq: '+19705555098'}",

@@ -15,7 +15,7 @@ func TestExternalConnectionsCreate(t *testing.T) {
 		t,
 		"external-connections", "create",
 		"--external-sip-connection", "zoom",
-		"--outbound", "{channel_limit: 10, outbound_voice_profile_id: outbound_voice_profile_id}",
+		"--outbound", "{channel_limit: 10, outbound_voice_profile_id: '1911630617284445511'}",
 		"--active=false",
 		"--inbound", "{outbound_voice_profile_id: 12345678-1234-1234-1234-123456789012, channel_limit: 10}",
 		"--tag", "tag1",
@@ -34,7 +34,7 @@ func TestExternalConnectionsCreate(t *testing.T) {
 		"external-connections", "create",
 		"--external-sip-connection", "zoom",
 		"--outbound.channel-limit", "10",
-		"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--outbound.outbound-voice-profile-id", "1911630617284445511",
 		"--active=false",
 		"--inbound.outbound-voice-profile-id", "12345678-1234-1234-1234-123456789012",
 		"--inbound.channel-limit", "10",
@@ -51,7 +51,7 @@ func TestExternalConnectionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "retrieve",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }
 
@@ -60,8 +60,8 @@ func TestExternalConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "update",
-		"--id", "id",
-		"--outbound", "{outbound_voice_profile_id: outbound_voice_profile_id, channel_limit: 10}",
+		"--id", "1293384261075731499",
+		"--outbound", "{outbound_voice_profile_id: '1911630617284445511', channel_limit: 10}",
 		"--active=false",
 		"--inbound", "{channel_limit: 10}",
 		"--tag", "tag1",
@@ -78,8 +78,8 @@ func TestExternalConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "update",
-		"--id", "id",
-		"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--id", "1293384261075731499",
+		"--outbound.outbound-voice-profile-id", "1911630617284445511",
 		"--outbound.channel-limit", "10",
 		"--active=false",
 		"--inbound.channel-limit", "10",
@@ -123,7 +123,7 @@ func TestExternalConnectionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "delete",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }
 

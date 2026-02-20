@@ -26,7 +26,7 @@ func TestFqdnsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdns", "retrieve",
-		"--id", "id",
+		"--id", "1517907029795014409",
 	)
 }
 
@@ -35,7 +35,7 @@ func TestFqdnsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdns", "update",
-		"--id", "id",
+		"--id", "1517907029795014409",
 		"--connection-id", "1516447646313612565",
 		"--dns-record-type", "a",
 		"--fqdn", "example.com",
@@ -74,6 +74,6 @@ func TestFqdnsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdns", "delete",
-		"--id", "id",
+		"--id", "1517907029795014409",
 	)
 }
