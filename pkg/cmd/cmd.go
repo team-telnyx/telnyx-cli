@@ -1292,6 +1292,7 @@ func init() {
 				Commands: []*cli.Command{
 					&messagesRetrieve,
 					&messagesCancelScheduled,
+					&messagesRetrieveGroupMessages,
 					&messagesSchedule,
 					&messagesSend,
 					&messagesSendGroupMms,
@@ -1299,6 +1300,7 @@ func init() {
 					&messagesSendNumberPool,
 					&messagesSendShortCode,
 					&messagesSendWhatsapp,
+					&messagesSendWithAlphanumericSender,
 				},
 			},
 			{
@@ -1357,6 +1359,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&messagingHostedNumbersRetrieve,
+					&messagingHostedNumbersUpdate,
+					&messagingHostedNumbersList,
 					&messagingHostedNumbersDelete,
 				},
 			},
@@ -1387,8 +1392,10 @@ func init() {
 					&messagingProfilesUpdate,
 					&messagingProfilesList,
 					&messagingProfilesDelete,
+					&messagingProfilesListAlphanumericSenderIDs,
 					&messagingProfilesListPhoneNumbers,
 					&messagingProfilesListShortCodes,
+					&messagingProfilesRetrieveMetrics,
 				},
 			},
 			{
@@ -1401,6 +1408,14 @@ func init() {
 					&messagingProfilesAutorespConfigsUpdate,
 					&messagingProfilesAutorespConfigsList,
 					&messagingProfilesAutorespConfigsDelete,
+				},
+			},
+			{
+				Name:     "messaging-profiles:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&messagingProfilesActionsRegenerateSecret,
 				},
 			},
 			{
@@ -2888,6 +2903,25 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&organizationsUsersActionsRemove,
+				},
+			},
+			{
+				Name:     "alphanumeric-sender-ids",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&alphanumericSenderIDsCreate,
+					&alphanumericSenderIDsRetrieve,
+					&alphanumericSenderIDsList,
+					&alphanumericSenderIDsDelete,
+				},
+			},
+			{
+				Name:     "messaging-profile-metrics",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&messagingProfileMetricsList,
 				},
 			},
 			{

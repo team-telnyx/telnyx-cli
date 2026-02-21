@@ -17,6 +17,7 @@ func TestMessagingNumbersBulkUpdatesCreate(t *testing.T) {
 		"--number", "+18880000000",
 		"--number", "+18880000001",
 		"--number", "+18880000002",
+		"--assign-only=true",
 	)
 }
 

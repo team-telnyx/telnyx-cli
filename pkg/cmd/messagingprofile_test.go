@@ -16,14 +16,17 @@ func TestMessagingProfilesCreate(t *testing.T) {
 		"messaging-profiles", "create",
 		"--name", "My name",
 		"--whitelisted-destination", "US",
+		"--ai-assistant-id", "ai_assistant_id",
 		"--alpha-sender", "sqF",
 		"--daily-spend-limit", "269125115713",
 		"--daily-spend-limit-enabled=true",
 		"--enabled=true",
+		"--health-webhook-url", "health_webhook_url",
 		"--mms-fall-back-to-sms=true",
 		"--mms-transcoding=true",
 		"--mobile-only=true",
 		"--number-pool-settings", "{long_code_weight: 1, skip_unhealthy: true, toll_free_weight: 10, geomatch: false, sticky_sender: false}",
+		"--resource-group-id", "resource_group_id",
 		"--smart-encoding=true",
 		"--url-shortener-settings", "{domain: example.ex, prefix: '', replace_blacklist_only: true, send_webhooks: false}",
 		"--webhook-api-version", "2",
@@ -40,10 +43,12 @@ func TestMessagingProfilesCreate(t *testing.T) {
 		"messaging-profiles", "create",
 		"--name", "My name",
 		"--whitelisted-destination", "US",
+		"--ai-assistant-id", "ai_assistant_id",
 		"--alpha-sender", "sqF",
 		"--daily-spend-limit", "269125115713",
 		"--daily-spend-limit-enabled=true",
 		"--enabled=true",
+		"--health-webhook-url", "health_webhook_url",
 		"--mms-fall-back-to-sms=true",
 		"--mms-transcoding=true",
 		"--mobile-only=true",
@@ -52,6 +57,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 		"--number-pool-settings.toll-free-weight", "10",
 		"--number-pool-settings.geomatch=false",
 		"--number-pool-settings.sticky-sender=false",
+		"--resource-group-id", "resource_group_id",
 		"--smart-encoding=true",
 		"--url-shortener-settings.domain", "example.ex",
 		"--url-shortener-settings.prefix", "",
@@ -136,6 +142,8 @@ func TestMessagingProfilesList(t *testing.T) {
 		t,
 		"messaging-profiles", "list",
 		"--filter", "{name: name}",
+		"--filter-name-contains", "filter[name][contains]",
+		"--filter-name-eq", "filter[name][eq]",
 		"--page-number", "0",
 		"--page-size", "0",
 	)
@@ -148,6 +156,8 @@ func TestMessagingProfilesList(t *testing.T) {
 		t,
 		"messaging-profiles", "list",
 		"--filter.name", "name",
+		"--filter-name-contains", "filter[name][contains]",
+		"--filter-name-eq", "filter[name][eq]",
 		"--page-number", "0",
 		"--page-size", "0",
 	)
@@ -159,6 +169,17 @@ func TestMessagingProfilesDelete(t *testing.T) {
 		t,
 		"messaging-profiles", "delete",
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+	)
+}
+
+func TestMessagingProfilesListAlphanumericSenderIDs(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"messaging-profiles", "list-alphanumeric-sender-ids",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--page-number", "0",
+		"--page-size", "0",
 	)
 }
 
@@ -181,5 +202,15 @@ func TestMessagingProfilesListShortCodes(t *testing.T) {
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--page-number", "0",
 		"--page-size", "0",
+	)
+}
+
+func TestMessagingProfilesRetrieveMetrics(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"messaging-profiles", "retrieve-metrics",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--time-frame", "1h",
 	)
 }
