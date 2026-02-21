@@ -27,6 +27,15 @@ func TestMessagesCancelScheduled(t *testing.T) {
 	)
 }
 
+func TestMessagesRetrieveGroupMessages(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"messages", "retrieve-group-messages",
+		"--message-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+	)
+}
+
 func TestMessagesSchedule(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
@@ -175,6 +184,21 @@ func TestMessagesSendWhatsapp(t *testing.T) {
 		"--whatsapp-message.type", "audio",
 		"--whatsapp-message.video", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
 		"--type", "WHATSAPP",
+		"--webhook-url", "webhook_url",
+	)
+}
+
+func TestMessagesSendWithAlphanumericSender(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"messages", "send-with-alphanumeric-sender",
+		"--from", "MyCompany",
+		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--text", "text",
+		"--to", "+E.164",
+		"--use-profile-webhooks=true",
+		"--webhook-failover-url", "webhook_failover_url",
 		"--webhook-url", "webhook_url",
 	)
 }

@@ -15,52 +15,50 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var messagingHostedNumbersRetrieve = cli.Command{
-	Name:    "retrieve",
-	Usage:   "Retrieve a specific messaging hosted number by its ID or phone number.",
+var alphanumericSenderIDsCreate = cli.Command{
+	Name:    "create",
+	Usage:   "Create a new alphanumeric sender ID associated with a messaging profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
+			Name:     "alphanumeric-sender-id",
+			Usage:    "The alphanumeric sender ID string.",
 			Required: true,
-		},
-	},
-	Action:          handleMessagingHostedNumbersRetrieve,
-	HideHelpCommand: true,
-}
-
-var messagingHostedNumbersUpdate = cli.Command{
-	Name:    "update",
-	Usage:   "Update the messaging settings for a hosted number.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
-		},
-		&requestflag.Flag[string]{
-			Name:     "messaging-product",
-			Usage:    "Configure the messaging product for this number:\n\n* Omit this field or set its value to `null` to keep the current value.\n* Set this field to a quoted product ID to set this phone number to that product",
-			BodyPath: "messaging_product",
+			BodyPath: "alphanumeric_sender_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "messaging-profile-id",
-			Usage:    "Configure the messaging profile this phone number is assigned to:\n\n* Omit this field or set its value to `null` to keep the current value.\n* Set this field to `\"\"` to unassign the number from its messaging profile\n* Set this field to a quoted UUID of a messaging profile to assign this number to that messaging profile",
+			Usage:    "The messaging profile to associate the sender ID with.",
+			Required: true,
 			BodyPath: "messaging_profile_id",
 		},
-		&requestflag.Flag[[]string]{
-			Name:     "tag",
-			Usage:    "Tags to set on this phone number.",
-			BodyPath: "tags",
+		&requestflag.Flag[string]{
+			Name:     "us-long-code-fallback",
+			Usage:    "A US long code number to use as fallback when sending to US destinations.",
+			BodyPath: "us_long_code_fallback",
 		},
 	},
-	Action:          handleMessagingHostedNumbersUpdate,
+	Action:          handleAlphanumericSenderIDsCreate,
 	HideHelpCommand: true,
 }
 
-var messagingHostedNumbersList = cli.Command{
+var alphanumericSenderIDsRetrieve = cli.Command{
+	Name:    "retrieve",
+	Usage:   "Retrieve a specific alphanumeric sender ID.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+	},
+	Action:          handleAlphanumericSenderIDsRetrieve,
+	HideHelpCommand: true,
+}
+
+var alphanumericSenderIDsList = cli.Command{
 	Name:    "list",
-	Usage:   "List all hosted numbers associated with the authenticated user.",
+	Usage:   "List all alphanumeric sender IDs for the authenticated user.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -68,39 +66,26 @@ var messagingHostedNumbersList = cli.Command{
 			Usage:     "Filter by messaging profile ID.",
 			QueryPath: "filter[messaging_profile_id]",
 		},
-		&requestflag.Flag[string]{
-			Name:      "filter-phone-number",
-			Usage:     "Filter by exact phone number.",
-			QueryPath: "filter[phone_number]",
-		},
-		&requestflag.Flag[string]{
-			Name:      "filter-phone-number-contains",
-			Usage:     "Filter by phone number substring.",
-			QueryPath: "filter[phone_number][contains]",
-		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
+			Usage:     "Page number.",
 			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
+			Usage:     "Page size.",
 			Default:   20,
 			QueryPath: "page[size]",
 		},
-		&requestflag.Flag[string]{
-			Name:      "sort-phone-number",
-			Usage:     "Sort by phone number.",
-			QueryPath: "sort[phone_number]",
-		},
 	},
-	Action:          handleMessagingHostedNumbersList,
+	Action:          handleAlphanumericSenderIDsList,
 	HideHelpCommand: true,
 }
 
-var messagingHostedNumbersDelete = cli.Command{
+var alphanumericSenderIDsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a messaging hosted number",
+	Usage:   "Delete an alphanumeric sender ID and disassociate it from its messaging profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -108,11 +93,45 @@ var messagingHostedNumbersDelete = cli.Command{
 			Required: true,
 		},
 	},
-	Action:          handleMessagingHostedNumbersDelete,
+	Action:          handleAlphanumericSenderIDsDelete,
 	HideHelpCommand: true,
 }
 
-func handleMessagingHostedNumbersRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handleAlphanumericSenderIDsCreate(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.AlphanumericSenderIDNewParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.AlphanumericSenderIDs.New(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "alphanumeric-sender-ids create", obj, format, transform)
+}
+
+func handleAlphanumericSenderIDsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -136,7 +155,7 @@ func handleMessagingHostedNumbersRetrieve(ctx context.Context, cmd *cli.Command)
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.MessagingHostedNumbers.Get(ctx, cmd.Value("id").(string), options...)
+	_, err = client.AlphanumericSenderIDs.Get(ctx, cmd.Value("id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -144,52 +163,10 @@ func handleMessagingHostedNumbersRetrieve(ctx context.Context, cmd *cli.Command)
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-hosted-numbers retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, "alphanumeric-sender-ids retrieve", obj, format, transform)
 }
 
-func handleMessagingHostedNumbersUpdate(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
-		cmd.Set("id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.MessagingHostedNumberUpdateParams{}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.MessagingHostedNumbers.Update(
-		ctx,
-		cmd.Value("id").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-hosted-numbers update", obj, format, transform)
-}
-
-func handleMessagingHostedNumbersList(ctx context.Context, cmd *cli.Command) error {
+func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -197,7 +174,7 @@ func handleMessagingHostedNumbersList(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingHostedNumberListParams{}
+	params := telnyx.AlphanumericSenderIDListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -215,19 +192,19 @@ func handleMessagingHostedNumbersList(ctx context.Context, cmd *cli.Command) err
 	if format == "raw" {
 		var res []byte
 		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.MessagingHostedNumbers.List(ctx, params, options...)
+		_, err = client.AlphanumericSenderIDs.List(ctx, params, options...)
 		if err != nil {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-hosted-numbers list", obj, format, transform)
+		return ShowJSON(os.Stdout, "alphanumeric-sender-ids list", obj, format, transform)
 	} else {
-		iter := client.MessagingHostedNumbers.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "messaging-hosted-numbers list", iter, format, transform)
+		iter := client.AlphanumericSenderIDs.ListAutoPaging(ctx, params, options...)
+		return ShowJSONIterator(os.Stdout, "alphanumeric-sender-ids list", iter, format, transform)
 	}
 }
 
-func handleMessagingHostedNumbersDelete(ctx context.Context, cmd *cli.Command) error {
+func handleAlphanumericSenderIDsDelete(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -251,7 +228,7 @@ func handleMessagingHostedNumbersDelete(ctx context.Context, cmd *cli.Command) e
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.MessagingHostedNumbers.Delete(ctx, cmd.Value("id").(string), options...)
+	_, err = client.AlphanumericSenderIDs.Delete(ctx, cmd.Value("id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -259,5 +236,5 @@ func handleMessagingHostedNumbersDelete(ctx context.Context, cmd *cli.Command) e
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-hosted-numbers delete", obj, format, transform)
+	return ShowJSON(os.Stdout, "alphanumeric-sender-ids delete", obj, format, transform)
 }
