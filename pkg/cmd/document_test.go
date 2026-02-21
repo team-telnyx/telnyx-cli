@@ -10,7 +10,7 @@ import (
 )
 
 func TestDocumentsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "retrieve",
@@ -19,7 +19,7 @@ func TestDocumentsRetrieve(t *testing.T) {
 }
 
 func TestDocumentsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "update",
@@ -30,7 +30,7 @@ func TestDocumentsUpdate(t *testing.T) {
 }
 
 func TestDocumentsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "list",
@@ -57,7 +57,7 @@ func TestDocumentsList(t *testing.T) {
 }
 
 func TestDocumentsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "delete",
@@ -66,7 +66,7 @@ func TestDocumentsDelete(t *testing.T) {
 }
 
 func TestDocumentsGenerateDownloadLink(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "generate-download-link",
@@ -75,7 +75,7 @@ func TestDocumentsGenerateDownloadLink(t *testing.T) {
 }
 
 func TestDocumentsUpload(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "upload",
@@ -97,7 +97,7 @@ func TestDocumentsUpload(t *testing.T) {
 }
 
 func TestDocumentsUploadJson(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "upload-json",

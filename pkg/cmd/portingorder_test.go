@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortingOrdersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "create",
@@ -23,7 +23,7 @@ func TestPortingOrdersCreate(t *testing.T) {
 }
 
 func TestPortingOrdersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve",
@@ -33,7 +33,7 @@ func TestPortingOrdersRetrieve(t *testing.T) {
 }
 
 func TestPortingOrdersUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "update",
@@ -86,7 +86,7 @@ func TestPortingOrdersUpdate(t *testing.T) {
 }
 
 func TestPortingOrdersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "list",
@@ -119,7 +119,7 @@ func TestPortingOrdersList(t *testing.T) {
 }
 
 func TestPortingOrdersDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "delete",
@@ -128,7 +128,7 @@ func TestPortingOrdersDelete(t *testing.T) {
 }
 
 func TestPortingOrdersRetrieveAllowedFocWindows(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve-allowed-foc-windows",
@@ -137,7 +137,7 @@ func TestPortingOrdersRetrieveAllowedFocWindows(t *testing.T) {
 }
 
 func TestPortingOrdersRetrieveExceptionTypes(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve-exception-types",
@@ -145,7 +145,7 @@ func TestPortingOrdersRetrieveExceptionTypes(t *testing.T) {
 }
 
 func TestPortingOrdersRetrieveRequirements(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve-requirements",
@@ -156,7 +156,7 @@ func TestPortingOrdersRetrieveRequirements(t *testing.T) {
 }
 
 func TestPortingOrdersRetrieveSubRequest(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve-sub-request",

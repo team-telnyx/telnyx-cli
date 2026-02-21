@@ -10,7 +10,7 @@ import (
 )
 
 func TestPublicInternetGatewaysCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"public-internet-gateways", "create",
@@ -21,7 +21,7 @@ func TestPublicInternetGatewaysCreate(t *testing.T) {
 }
 
 func TestPublicInternetGatewaysRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"public-internet-gateways", "retrieve",
@@ -30,7 +30,7 @@ func TestPublicInternetGatewaysRetrieve(t *testing.T) {
 }
 
 func TestPublicInternetGatewaysList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"public-internet-gateways", "list",
@@ -53,7 +53,7 @@ func TestPublicInternetGatewaysList(t *testing.T) {
 }
 
 func TestPublicInternetGatewaysDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"public-internet-gateways", "delete",

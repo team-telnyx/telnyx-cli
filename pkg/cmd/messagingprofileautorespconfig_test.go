@@ -10,7 +10,7 @@ import (
 )
 
 func TestMessagingProfilesAutorespConfigsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "create",
@@ -24,7 +24,7 @@ func TestMessagingProfilesAutorespConfigsCreate(t *testing.T) {
 }
 
 func TestMessagingProfilesAutorespConfigsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "retrieve",
@@ -34,7 +34,7 @@ func TestMessagingProfilesAutorespConfigsRetrieve(t *testing.T) {
 }
 
 func TestMessagingProfilesAutorespConfigsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "update",
@@ -49,7 +49,7 @@ func TestMessagingProfilesAutorespConfigsUpdate(t *testing.T) {
 }
 
 func TestMessagingProfilesAutorespConfigsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "list",
@@ -76,7 +76,7 @@ func TestMessagingProfilesAutorespConfigsList(t *testing.T) {
 }
 
 func TestMessagingProfilesAutorespConfigsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "delete",

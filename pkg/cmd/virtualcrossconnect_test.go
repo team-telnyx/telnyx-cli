@@ -10,7 +10,7 @@ import (
 )
 
 func TestVirtualCrossConnectsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "create",
@@ -33,7 +33,7 @@ func TestVirtualCrossConnectsCreate(t *testing.T) {
 }
 
 func TestVirtualCrossConnectsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "retrieve",
@@ -42,7 +42,7 @@ func TestVirtualCrossConnectsRetrieve(t *testing.T) {
 }
 
 func TestVirtualCrossConnectsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "update",
@@ -57,7 +57,7 @@ func TestVirtualCrossConnectsUpdate(t *testing.T) {
 }
 
 func TestVirtualCrossConnectsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "list",
@@ -80,7 +80,7 @@ func TestVirtualCrossConnectsList(t *testing.T) {
 }
 
 func TestVirtualCrossConnectsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "delete",

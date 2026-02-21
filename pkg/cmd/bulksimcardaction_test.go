@@ -9,7 +9,7 @@ import (
 )
 
 func TestBulkSimCardActionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bulk-sim-card-actions", "retrieve",
@@ -18,7 +18,7 @@ func TestBulkSimCardActionsRetrieve(t *testing.T) {
 }
 
 func TestBulkSimCardActionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bulk-sim-card-actions", "list",

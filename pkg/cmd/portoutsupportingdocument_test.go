@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortoutsSupportingDocumentsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:supporting-documents", "create",
@@ -32,7 +32,7 @@ func TestPortoutsSupportingDocumentsCreate(t *testing.T) {
 }
 
 func TestPortoutsSupportingDocumentsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:supporting-documents", "list",

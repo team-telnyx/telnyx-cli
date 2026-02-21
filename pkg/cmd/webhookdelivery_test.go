@@ -10,7 +10,7 @@ import (
 )
 
 func TestWebhookDeliveriesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"webhook-deliveries", "retrieve",
@@ -19,7 +19,7 @@ func TestWebhookDeliveriesRetrieve(t *testing.T) {
 }
 
 func TestWebhookDeliveriesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"webhook-deliveries", "list",

@@ -33,6 +33,11 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "whitelisted_destinations",
 		},
 		&requestflag.Flag[any]{
+			Name:     "ai-assistant-id",
+			Usage:    "The AI assistant ID to associate with this messaging profile.",
+			BodyPath: "ai_assistant_id",
+		},
+		&requestflag.Flag[any]{
 			Name:     "alpha-sender",
 			Usage:    "The alphanumeric sender ID to use when sending to destinations that require an alphanumeric sender ID.",
 			BodyPath: "alpha_sender",
@@ -52,6 +57,11 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Specifies whether the messaging profile is enabled or not.",
 			Default:  true,
 			BodyPath: "enabled",
+		},
+		&requestflag.Flag[any]{
+			Name:     "health-webhook-url",
+			Usage:    "A URL to receive health check webhooks for numbers in this profile.",
+			BodyPath: "health_webhook_url",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "mms-fall-back-to-sms",
@@ -75,6 +85,11 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "number-pool-settings",
 			Usage:    "Number Pool allows you to send messages from a pool of numbers of different types, assigning\nweights to each type. The pool consists of all the long code and toll free numbers\nassigned to the messaging profile.\n\nTo disable this feature, set the object field to `null`.\n",
 			BodyPath: "number_pool_settings",
+		},
+		&requestflag.Flag[any]{
+			Name:     "resource-group-id",
+			Usage:    "The resource group ID to associate with this messaging profile.",
+			BodyPath: "resource_group_id",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "smart-encoding",
@@ -332,6 +347,16 @@ var messagingProfilesList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[name]",
 			QueryPath: "filter",
 		},
+		&requestflag.Flag[string]{
+			Name:      "filter-name-contains",
+			Usage:     "Filter profiles by name containing the given string.",
+			QueryPath: "filter[name][contains]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-name-eq",
+			Usage:     "Filter profiles by exact name match.",
+			QueryPath: "filter[name][eq]",
+		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
 			QueryPath: "page[number]",
@@ -364,6 +389,30 @@ var messagingProfilesDelete = cli.Command{
 		},
 	},
 	Action:          handleMessagingProfilesDelete,
+	HideHelpCommand: true,
+}
+
+var messagingProfilesListAlphanumericSenderIDs = cli.Command{
+	Name:    "list-alphanumeric-sender-ids",
+	Usage:   "List all alphanumeric sender IDs associated with a specific messaging profile.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			Default:   1,
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			Default:   20,
+			QueryPath: "page[size]",
+		},
+	},
+	Action:          handleMessagingProfilesListAlphanumericSenderIDs,
 	HideHelpCommand: true,
 }
 
@@ -408,6 +457,26 @@ var messagingProfilesListShortCodes = cli.Command{
 		},
 	},
 	Action:          handleMessagingProfilesListShortCodes,
+	HideHelpCommand: true,
+}
+
+var messagingProfilesRetrieveMetrics = cli.Command{
+	Name:    "retrieve-metrics",
+	Usage:   "Get detailed metrics for a specific messaging profile, broken down by time\ninterval.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:      "time-frame",
+			Usage:     "The time frame for metrics.",
+			Default:   "24h",
+			QueryPath: "time_frame",
+		},
+	},
+	Action:          handleMessagingProfilesRetrieveMetrics,
 	HideHelpCommand: true,
 }
 
@@ -595,6 +664,57 @@ func handleMessagingProfilesDelete(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(os.Stdout, "messaging-profiles delete", obj, format, transform)
 }
 
+func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.MessagingProfileListAlphanumericSenderIDsParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.MessagingProfiles.ListAlphanumericSenderIDs(
+			ctx,
+			cmd.Value("id").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(os.Stdout, "messaging-profiles list-alphanumeric-sender-ids", obj, format, transform)
+	} else {
+		iter := client.MessagingProfiles.ListAlphanumericSenderIDsAutoPaging(
+			ctx,
+			cmd.Value("id").(string),
+			params,
+			options...,
+		)
+		return ShowJSONIterator(os.Stdout, "messaging-profiles list-alphanumeric-sender-ids", iter, format, transform)
+	}
+}
+
 func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -695,4 +815,46 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 		)
 		return ShowJSONIterator(os.Stdout, "messaging-profiles list-short-codes", iter, format, transform)
 	}
+}
+
+func handleMessagingProfilesRetrieveMetrics(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.MessagingProfileGetMetricsParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.MessagingProfiles.GetMetrics(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "messaging-profiles retrieve-metrics", obj, format, transform)
 }

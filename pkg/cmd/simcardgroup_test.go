@@ -10,7 +10,7 @@ import (
 )
 
 func TestSimCardGroupsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups", "create",
@@ -32,7 +32,7 @@ func TestSimCardGroupsCreate(t *testing.T) {
 }
 
 func TestSimCardGroupsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups", "retrieve",
@@ -42,7 +42,7 @@ func TestSimCardGroupsRetrieve(t *testing.T) {
 }
 
 func TestSimCardGroupsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups", "update",
@@ -66,7 +66,7 @@ func TestSimCardGroupsUpdate(t *testing.T) {
 }
 
 func TestSimCardGroupsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups", "list",
@@ -79,7 +79,7 @@ func TestSimCardGroupsList(t *testing.T) {
 }
 
 func TestSimCardGroupsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups", "delete",

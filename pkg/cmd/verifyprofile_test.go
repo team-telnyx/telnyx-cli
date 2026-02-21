@@ -10,7 +10,7 @@ import (
 )
 
 func TestVerifyProfilesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "create",
@@ -51,7 +51,7 @@ func TestVerifyProfilesCreate(t *testing.T) {
 }
 
 func TestVerifyProfilesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "retrieve",
@@ -60,7 +60,7 @@ func TestVerifyProfilesRetrieve(t *testing.T) {
 }
 
 func TestVerifyProfilesUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "update",
@@ -103,7 +103,7 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 }
 
 func TestVerifyProfilesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "list",
@@ -126,7 +126,7 @@ func TestVerifyProfilesList(t *testing.T) {
 }
 
 func TestVerifyProfilesDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "delete",
@@ -135,7 +135,7 @@ func TestVerifyProfilesDelete(t *testing.T) {
 }
 
 func TestVerifyProfilesCreateTemplate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "create-template",
@@ -144,7 +144,7 @@ func TestVerifyProfilesCreateTemplate(t *testing.T) {
 }
 
 func TestVerifyProfilesRetrieveTemplates(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "retrieve-templates",
@@ -152,7 +152,7 @@ func TestVerifyProfilesRetrieveTemplates(t *testing.T) {
 }
 
 func TestVerifyProfilesUpdateTemplate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "update-template",

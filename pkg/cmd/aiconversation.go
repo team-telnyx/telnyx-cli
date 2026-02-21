@@ -22,7 +22,7 @@ var aiConversationsCreate = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
-			Usage:    "Metadata associated with the conversation.",
+			Usage:    "Metadata associated with the conversation. Set `ai_disabled` to `true` to create the conversation with AI message responses disabled.",
 			BodyPath: "metadata",
 		},
 		&requestflag.Flag[string]{
@@ -59,7 +59,7 @@ var aiConversationsUpdate = cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
-			Usage:    "Metadata associated with the conversation.",
+			Usage:    "Metadata associated with the conversation. Set `ai_disabled` to `true` to stop AI from responding to messages (e.g., when a human agent takes over). Set to `false` to re-enable AI responses.",
 			BodyPath: "metadata",
 		},
 	},

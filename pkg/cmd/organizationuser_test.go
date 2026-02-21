@@ -9,7 +9,7 @@ import (
 )
 
 func TestOrganizationsUsersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"organizations:users", "retrieve",
@@ -19,7 +19,7 @@ func TestOrganizationsUsersRetrieve(t *testing.T) {
 }
 
 func TestOrganizationsUsersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"organizations:users", "list",
@@ -32,7 +32,7 @@ func TestOrganizationsUsersList(t *testing.T) {
 }
 
 func TestOrganizationsUsersGetGroupsReport(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"organizations:users", "get-groups-report",

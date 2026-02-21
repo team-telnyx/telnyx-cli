@@ -9,7 +9,7 @@ import (
 )
 
 func TestMessaging10dlcPhoneNumberAssignmentByProfileAssign(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-assignment-by-profile", "assign",
@@ -20,7 +20,7 @@ func TestMessaging10dlcPhoneNumberAssignmentByProfileAssign(t *testing.T) {
 }
 
 func TestMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-assignment-by-profile", "list-phone-number-status",
@@ -31,7 +31,7 @@ func TestMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(t *te
 }
 
 func TestMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-assignment-by-profile", "retrieve-phone-number-status",
@@ -42,7 +42,7 @@ func TestMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus(t
 }
 
 func TestMessaging10dlcPhoneNumberAssignmentByProfileRetrieveStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-assignment-by-profile", "retrieve-status",

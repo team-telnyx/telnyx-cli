@@ -150,6 +150,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Configuration for noise suppression. Only applicable when noise_suppression is 'deepfilternet'.",
 			InnerField: "noise_suppression_config",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "telephony-settings.recording-settings",
+			Usage:      "Configuration for call recording format and channel settings.",
+			InnerField: "recording_settings",
+		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "telephony-settings.supports-unauthenticated-web-calls",
 			Usage:      "When enabled, allows users to interact with your AI assistant directly from your website without requiring authentication. This is required for FE widgets that work with assistants that have telephony enabled.",
@@ -207,6 +212,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "voice-settings.background-audio",
 			Usage:      "Optional background audio to play on the call. Use a predefined media bed, or supply a looped MP3 URL. If a media URL is chosen in the portal, customers can preview it before saving.",
 			InnerField: "background_audio",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "voice-settings.language-boost",
+			Usage:      "Enhances recognition for specific languages and dialects during MiniMax TTS synthesis. Default is null (no boost). Set to 'auto' for automatic language detection. Only applicable when using MiniMax voices.",
+			InnerField: "language_boost",
 		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "voice-settings.similarity-boost",
@@ -470,6 +480,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Configuration for noise suppression. Only applicable when noise_suppression is 'deepfilternet'.",
 			InnerField: "noise_suppression_config",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "telephony-settings.recording-settings",
+			Usage:      "Configuration for call recording format and channel settings.",
+			InnerField: "recording_settings",
+		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "telephony-settings.supports-unauthenticated-web-calls",
 			Usage:      "When enabled, allows users to interact with your AI assistant directly from your website without requiring authentication. This is required for FE widgets that work with assistants that have telephony enabled.",
@@ -527,6 +542,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "voice-settings.background-audio",
 			Usage:      "Optional background audio to play on the call. Use a predefined media bed, or supply a looped MP3 URL. If a media URL is chosen in the portal, customers can preview it before saving.",
 			InnerField: "background_audio",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "voice-settings.language-boost",
+			Usage:      "Enhances recognition for specific languages and dialects during MiniMax TTS synthesis. Default is null (no boost). Set to 'auto' for automatic language detection. Only applicable when using MiniMax voices.",
+			InnerField: "language_boost",
 		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "voice-settings.similarity-boost",

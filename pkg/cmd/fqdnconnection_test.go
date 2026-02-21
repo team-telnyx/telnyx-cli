@@ -10,7 +10,7 @@ import (
 )
 
 func TestFqdnConnectionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "create",
@@ -23,14 +23,14 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 		"--dtmf-type", "RFC 2833",
 		"--encode-contact-header-enabled=true",
 		"--encrypted-media", "SRTP",
-		"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_primary_fqdn_id: default_primary_fqdn_id, default_routing_method: sequential, default_secondary_fqdn_id: default_secondary_fqdn_id, default_tertiary_fqdn_id: default_tertiary_fqdn_id, dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, sip_compact_headers_enabled: true, sip_region: US, sip_subdomain: string, sip_subdomain_receive_settings: only_my_connections, timeout_1xx_secs: 10, timeout_2xx_secs: 10}",
+		"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_primary_fqdn_id: '1293384261075731497', default_routing_method: sequential, default_secondary_fqdn_id: '1293384261075731498', default_tertiary_fqdn_id: '1293384261075731499', dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, sip_compact_headers_enabled: true, sip_region: US, sip_subdomain: string, sip_subdomain_receive_settings: only_my_connections, timeout_1xx_secs: 10, timeout_2xx_secs: 10}",
 		"--ios-push-credential-id", "ec0c8e5d-439e-4620-a0c1-9d9c8d02a836",
 		"--jitter-buffer", "{enable_jitter_buffer: true, jitterbuffer_msec_max: 200, jitterbuffer_msec_min: 60}",
 		"--microsoft-teams-sbc=true",
 		"--noise-suppression", "both",
 		"--noise-suppression-details", "{attenuation_limit: 80, engine: deep_filter_net}",
 		"--onnet-t38-passthrough-enabled=true",
-		"--outbound", "{ani_override: '+1234567890', ani_override_type: always, call_parking_enabled: true, channel_limit: 10, encrypted_media: SRTP, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: credential-authentication, ip_authentication_token: aBcD1234, localization: string, outbound_voice_profile_id: outbound_voice_profile_id, t38_reinvite_source: customer, tech_prefix: '0123', timeout_1xx_secs: 10, timeout_2xx_secs: 10}",
+		"--outbound", "{ani_override: '+1234567890', ani_override_type: always, call_parking_enabled: true, channel_limit: 10, encrypted_media: SRTP, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: credential-authentication, ip_authentication_token: aBcD1234, localization: string, outbound_voice_profile_id: '1293384261075731499', t38_reinvite_source: customer, tech_prefix: '0123', timeout_1xx_secs: 10, timeout_2xx_secs: 10}",
 		"--rtcp-settings", "{capture_enabled: true, port: rtcp-mux, report_frequency_secs: 10}",
 		"--tag", "tag1",
 		"--tag", "tag2",
@@ -60,10 +60,10 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 		"--inbound.ani-number-format", "+E.164",
 		"--inbound.channel-limit", "10",
 		"--inbound.codecs", "[G722]",
-		"--inbound.default-primary-fqdn-id", "default_primary_fqdn_id",
+		"--inbound.default-primary-fqdn-id", "1293384261075731497",
 		"--inbound.default-routing-method", "sequential",
-		"--inbound.default-secondary-fqdn-id", "default_secondary_fqdn_id",
-		"--inbound.default-tertiary-fqdn-id", "default_tertiary_fqdn_id",
+		"--inbound.default-secondary-fqdn-id", "1293384261075731498",
+		"--inbound.default-tertiary-fqdn-id", "1293384261075731499",
 		"--inbound.dnis-number-format", "+e164",
 		"--inbound.generate-ringback-tone=true",
 		"--inbound.isup-headers-enabled=true",
@@ -94,7 +94,7 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 		"--outbound.ip-authentication-method", "credential-authentication",
 		"--outbound.ip-authentication-token", "aBcD1234",
 		"--outbound.localization", "string",
-		"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--outbound.outbound-voice-profile-id", "1293384261075731499",
 		"--outbound.t38-reinvite-source", "customer",
 		"--outbound.tech-prefix", "0123",
 		"--outbound.timeout-1xx-secs", "10",
@@ -113,20 +113,20 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 }
 
 func TestFqdnConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "retrieve",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }
 
 func TestFqdnConnectionsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "update",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--active=true",
 		"--anchorsite-override", "Latency",
 		"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
@@ -136,13 +136,13 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 		"--dtmf-type", "RFC 2833",
 		"--encode-contact-header-enabled=true",
 		"--encrypted-media", "SRTP",
-		"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_primary_fqdn_id: default_primary_fqdn_id, default_routing_method: sequential, default_secondary_fqdn_id: default_secondary_fqdn_id, default_tertiary_fqdn_id: default_tertiary_fqdn_id, dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, sip_compact_headers_enabled: true, sip_region: US, sip_subdomain: string, sip_subdomain_receive_settings: only_my_connections, timeout_1xx_secs: 10, timeout_2xx_secs: 10}",
+		"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_primary_fqdn_id: '1293384261075731497', default_routing_method: sequential, default_secondary_fqdn_id: '1293384261075731498', default_tertiary_fqdn_id: '1293384261075731499', dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, sip_compact_headers_enabled: true, sip_region: US, sip_subdomain: string, sip_subdomain_receive_settings: only_my_connections, timeout_1xx_secs: 10, timeout_2xx_secs: 10}",
 		"--ios-push-credential-id", "ec0c8e5d-439e-4620-a0c1-9d9c8d02a836",
 		"--jitter-buffer", "{enable_jitter_buffer: true, jitterbuffer_msec_max: 200, jitterbuffer_msec_min: 60}",
 		"--noise-suppression", "both",
 		"--noise-suppression-details", "{attenuation_limit: 80, engine: deep_filter_net}",
 		"--onnet-t38-passthrough-enabled=true",
-		"--outbound", "{ani_override: ani_override, ani_override_type: normal, call_parking_enabled: true, channel_limit: 0, encrypted_media: SRTP, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: credential-authentication, ip_authentication_token: ip_authentication_token, localization: US, outbound_voice_profile_id: outbound_voice_profile_id, t38_reinvite_source: telnyx, tech_prefix: tech_prefix, timeout_1xx_secs: 1, timeout_2xx_secs: 1}",
+		"--outbound", "{ani_override: ani_override, ani_override_type: normal, call_parking_enabled: true, channel_limit: 0, encrypted_media: SRTP, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: credential-authentication, ip_authentication_token: ip_authentication_token, localization: US, outbound_voice_profile_id: '1293384261075731499', t38_reinvite_source: telnyx, tech_prefix: tech_prefix, timeout_1xx_secs: 1, timeout_2xx_secs: 1}",
 		"--rtcp-settings", "{capture_enabled: true, port: rtcp-mux, report_frequency_secs: 10}",
 		"--tag", "tag1",
 		"--tag", "tag2",
@@ -160,7 +160,7 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "update",
-		"--id", "id",
+		"--id", "1293384261075731499",
 		"--active=true",
 		"--anchorsite-override", "Latency",
 		"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
@@ -173,10 +173,10 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 		"--inbound.ani-number-format", "+E.164",
 		"--inbound.channel-limit", "10",
 		"--inbound.codecs", "[G722]",
-		"--inbound.default-primary-fqdn-id", "default_primary_fqdn_id",
+		"--inbound.default-primary-fqdn-id", "1293384261075731497",
 		"--inbound.default-routing-method", "sequential",
-		"--inbound.default-secondary-fqdn-id", "default_secondary_fqdn_id",
-		"--inbound.default-tertiary-fqdn-id", "default_tertiary_fqdn_id",
+		"--inbound.default-secondary-fqdn-id", "1293384261075731498",
+		"--inbound.default-tertiary-fqdn-id", "1293384261075731499",
 		"--inbound.dnis-number-format", "+e164",
 		"--inbound.generate-ringback-tone=true",
 		"--inbound.isup-headers-enabled=true",
@@ -206,7 +206,7 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 		"--outbound.ip-authentication-method", "credential-authentication",
 		"--outbound.ip-authentication-token", "ip_authentication_token",
 		"--outbound.localization", "US",
-		"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--outbound.outbound-voice-profile-id", "1293384261075731499",
 		"--outbound.t38-reinvite-source", "telnyx",
 		"--outbound.tech-prefix", "tech_prefix",
 		"--outbound.timeout-1xx-secs", "1",
@@ -225,11 +225,11 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 }
 
 func TestFqdnConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "list",
-		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: outbound_voice_profile_id}",
+		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
@@ -244,7 +244,7 @@ func TestFqdnConnectionsList(t *testing.T) {
 		"fqdn-connections", "list",
 		"--filter.connection-name", "{contains: contains}",
 		"--filter.fqdn", "fqdn",
-		"--filter.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--filter.outbound-voice-profile-id", "1293384261075731499",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
@@ -252,10 +252,10 @@ func TestFqdnConnectionsList(t *testing.T) {
 }
 
 func TestFqdnConnectionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "delete",
-		"--id", "id",
+		"--id", "1293384261075731499",
 	)
 }

@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortingEventsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:events", "retrieve",
@@ -19,7 +19,7 @@ func TestPortingEventsRetrieve(t *testing.T) {
 }
 
 func TestPortingEventsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:events", "list",
@@ -44,7 +44,7 @@ func TestPortingEventsList(t *testing.T) {
 }
 
 func TestPortingEventsRepublish(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:events", "republish",

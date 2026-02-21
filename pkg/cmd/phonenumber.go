@@ -39,6 +39,11 @@ var phoneNumbersUpdate = cli.Command{
 			Required: true,
 		},
 		&requestflag.Flag[string]{
+			Name:     "address-id",
+			Usage:    "Identifies the address associated with the phone number.",
+			BodyPath: "address_id",
+		},
+		&requestflag.Flag[string]{
 			Name:     "billing-group-id",
 			Usage:    "Identifies the billing group associated with the phone number.",
 			BodyPath: "billing_group_id",

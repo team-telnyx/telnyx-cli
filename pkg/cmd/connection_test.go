@@ -10,7 +10,7 @@ import (
 )
 
 func TestConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "retrieve",
@@ -19,11 +19,11 @@ func TestConnectionsRetrieve(t *testing.T) {
 }
 
 func TestConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "list",
-		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: outbound_voice_profile_id}",
+		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
@@ -38,7 +38,7 @@ func TestConnectionsList(t *testing.T) {
 		"connections", "list",
 		"--filter.connection-name", "{contains: contains}",
 		"--filter.fqdn", "fqdn",
-		"--filter.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--filter.outbound-voice-profile-id", "1293384261075731499",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
@@ -46,7 +46,7 @@ func TestConnectionsList(t *testing.T) {
 }
 
 func TestConnectionsListActiveCalls(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "list-active-calls",

@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIConversationsInsightsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "create",
@@ -21,7 +21,7 @@ func TestAIConversationsInsightsCreate(t *testing.T) {
 }
 
 func TestAIConversationsInsightsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "retrieve",
@@ -30,7 +30,7 @@ func TestAIConversationsInsightsRetrieve(t *testing.T) {
 }
 
 func TestAIConversationsInsightsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "update",
@@ -43,7 +43,7 @@ func TestAIConversationsInsightsUpdate(t *testing.T) {
 }
 
 func TestAIConversationsInsightsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "list",
@@ -53,7 +53,7 @@ func TestAIConversationsInsightsList(t *testing.T) {
 }
 
 func TestAIConversationsInsightsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "delete",

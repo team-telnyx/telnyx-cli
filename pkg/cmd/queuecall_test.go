@@ -9,7 +9,7 @@ import (
 )
 
 func TestQueuesCallsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"queues:calls", "retrieve",
@@ -19,7 +19,7 @@ func TestQueuesCallsRetrieve(t *testing.T) {
 }
 
 func TestQueuesCallsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"queues:calls", "update",
@@ -30,7 +30,7 @@ func TestQueuesCallsUpdate(t *testing.T) {
 }
 
 func TestQueuesCallsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"queues:calls", "list",
@@ -41,7 +41,7 @@ func TestQueuesCallsList(t *testing.T) {
 }
 
 func TestQueuesCallsRemove(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"queues:calls", "remove",

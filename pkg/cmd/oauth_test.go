@@ -9,7 +9,7 @@ import (
 )
 
 func TestOAuthRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "retrieve",
@@ -18,7 +18,7 @@ func TestOAuthRetrieve(t *testing.T) {
 }
 
 func TestOAuthGrants(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "grants",
@@ -28,7 +28,7 @@ func TestOAuthGrants(t *testing.T) {
 }
 
 func TestOAuthIntrospect(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "introspect",
@@ -37,7 +37,7 @@ func TestOAuthIntrospect(t *testing.T) {
 }
 
 func TestOAuthRegister(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "register",
@@ -54,7 +54,7 @@ func TestOAuthRegister(t *testing.T) {
 }
 
 func TestOAuthRetrieveAuthorize(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "retrieve-authorize",
@@ -69,7 +69,7 @@ func TestOAuthRetrieveAuthorize(t *testing.T) {
 }
 
 func TestOAuthRetrieveJwks(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "retrieve-jwks",
@@ -77,7 +77,7 @@ func TestOAuthRetrieveJwks(t *testing.T) {
 }
 
 func TestOAuthToken(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "token",

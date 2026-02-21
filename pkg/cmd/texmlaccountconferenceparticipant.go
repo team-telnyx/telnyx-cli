@@ -160,6 +160,11 @@ var texmlAccountsConferencesParticipantsParticipants = requestflag.WithInnerFlag
 			BodyPath: "AmdStatusCallbackMethod",
 		},
 		&requestflag.Flag[string]{
+			Name:     "application-sid",
+			Usage:    "The SID of the TeXML application that will handle the new participant's call. Required unless joining an existing conference by its ConferenceSid.",
+			BodyPath: "ApplicationSid",
+		},
+		&requestflag.Flag[string]{
 			Name:     "beep",
 			Usage:    "Whether to play a notification beep to the conference when the participant enters and exits.",
 			BodyPath: "Beep",
@@ -257,6 +262,11 @@ var texmlAccountsConferencesParticipantsParticipants = requestflag.WithInnerFlag
 			Name:     "from",
 			Usage:    "The phone number of the party that initiated the call. Phone numbers are formatted with a `+` and country code.",
 			BodyPath: "From",
+		},
+		&requestflag.Flag[string]{
+			Name:     "label",
+			Usage:    "A unique label for the participant that will be added to the conference. The label can be used to reference the participant for updates via the TeXML REST API.",
+			BodyPath: "Label",
 		},
 		&requestflag.Flag[string]{
 			Name:     "machine-detection",

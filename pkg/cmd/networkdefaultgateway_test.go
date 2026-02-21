@@ -9,7 +9,7 @@ import (
 )
 
 func TestNetworksDefaultGatewayCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks:default-gateway", "create",
@@ -19,7 +19,7 @@ func TestNetworksDefaultGatewayCreate(t *testing.T) {
 }
 
 func TestNetworksDefaultGatewayRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks:default-gateway", "retrieve",
@@ -28,7 +28,7 @@ func TestNetworksDefaultGatewayRetrieve(t *testing.T) {
 }
 
 func TestNetworksDefaultGatewayDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks:default-gateway", "delete",

@@ -10,7 +10,7 @@ import (
 )
 
 func TestLegacyReportingBatchDetailRecordsMessagingCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "create",
@@ -67,7 +67,7 @@ func TestLegacyReportingBatchDetailRecordsMessagingCreate(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsMessagingRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "retrieve",
@@ -76,7 +76,7 @@ func TestLegacyReportingBatchDetailRecordsMessagingRetrieve(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsMessagingList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "list",
@@ -84,7 +84,7 @@ func TestLegacyReportingBatchDetailRecordsMessagingList(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsMessagingDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "delete",

@@ -294,6 +294,18 @@ var texmlAccountsCallsCalls = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "TeXML to be used as instructions for the call. If provided, the call will execute these instructions instead of fetching from the Url.",
 			BodyPath: "Texml",
 		},
+		&requestflag.Flag[int64]{
+			Name:     "time-limit",
+			Usage:    "The maximum duration of the call in seconds. The minimum value is 30 and the maximum value is 14400 (4 hours). Default is 14400 seconds.",
+			Default:  14400,
+			BodyPath: "TimeLimit",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "timeout-seconds",
+			Usage:    "The number of seconds to wait for the called party to answer the call before the call is canceled. The minimum value is 5 and the maximum value is 120. Default is 30 seconds.",
+			Default:  30,
+			BodyPath: "Timeout",
+		},
 		&requestflag.Flag[string]{
 			Name:     "trim",
 			Usage:    "Whether to trim any leading and trailing silence from the recording. Defaults to `trim-silence`.",

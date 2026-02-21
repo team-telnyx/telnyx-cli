@@ -10,7 +10,7 @@ import (
 )
 
 func TestDynamicEmergencyAddressesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-addresses", "create",
@@ -29,7 +29,7 @@ func TestDynamicEmergencyAddressesCreate(t *testing.T) {
 }
 
 func TestDynamicEmergencyAddressesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-addresses", "retrieve",
@@ -38,7 +38,7 @@ func TestDynamicEmergencyAddressesRetrieve(t *testing.T) {
 }
 
 func TestDynamicEmergencyAddressesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-addresses", "list",
@@ -62,7 +62,7 @@ func TestDynamicEmergencyAddressesList(t *testing.T) {
 }
 
 func TestDynamicEmergencyAddressesDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-addresses", "delete",

@@ -9,7 +9,7 @@ import (
 )
 
 func TestOAuthClientsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "create",
@@ -26,7 +26,7 @@ func TestOAuthClientsCreate(t *testing.T) {
 }
 
 func TestOAuthClientsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "retrieve",
@@ -35,7 +35,7 @@ func TestOAuthClientsRetrieve(t *testing.T) {
 }
 
 func TestOAuthClientsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "update",
@@ -52,7 +52,7 @@ func TestOAuthClientsUpdate(t *testing.T) {
 }
 
 func TestOAuthClientsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "list",
@@ -68,7 +68,7 @@ func TestOAuthClientsList(t *testing.T) {
 }
 
 func TestOAuthClientsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "delete",

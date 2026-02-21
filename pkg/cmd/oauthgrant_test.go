@@ -9,7 +9,7 @@ import (
 )
 
 func TestOAuthGrantsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-grants", "retrieve",
@@ -18,7 +18,7 @@ func TestOAuthGrantsRetrieve(t *testing.T) {
 }
 
 func TestOAuthGrantsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-grants", "list",
@@ -28,7 +28,7 @@ func TestOAuthGrantsList(t *testing.T) {
 }
 
 func TestOAuthGrantsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-grants", "delete",

@@ -10,7 +10,7 @@ import (
 )
 
 func TestRoomRecordingsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "retrieve",
@@ -19,7 +19,7 @@ func TestRoomRecordingsRetrieve(t *testing.T) {
 }
 
 func TestRoomRecordingsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "list",
@@ -49,7 +49,7 @@ func TestRoomRecordingsList(t *testing.T) {
 }
 
 func TestRoomRecordingsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "delete",
@@ -58,7 +58,7 @@ func TestRoomRecordingsDelete(t *testing.T) {
 }
 
 func TestRoomRecordingsDeleteBulk(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "delete-bulk",

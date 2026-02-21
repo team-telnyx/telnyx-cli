@@ -10,7 +10,7 @@ import (
 )
 
 func TestMobilePushCredentialsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-push-credentials", "create",
@@ -19,7 +19,7 @@ func TestMobilePushCredentialsCreate(t *testing.T) {
 }
 
 func TestMobilePushCredentialsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-push-credentials", "retrieve",
@@ -28,7 +28,7 @@ func TestMobilePushCredentialsRetrieve(t *testing.T) {
 }
 
 func TestMobilePushCredentialsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-push-credentials", "list",
@@ -52,7 +52,7 @@ func TestMobilePushCredentialsList(t *testing.T) {
 }
 
 func TestMobilePushCredentialsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-push-credentials", "delete",

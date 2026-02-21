@@ -10,7 +10,7 @@ import (
 )
 
 func TestBundlePricingUserBundlesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "create",
@@ -34,7 +34,7 @@ func TestBundlePricingUserBundlesCreate(t *testing.T) {
 }
 
 func TestBundlePricingUserBundlesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "retrieve",
@@ -44,7 +44,7 @@ func TestBundlePricingUserBundlesRetrieve(t *testing.T) {
 }
 
 func TestBundlePricingUserBundlesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "list",
@@ -70,7 +70,7 @@ func TestBundlePricingUserBundlesList(t *testing.T) {
 }
 
 func TestBundlePricingUserBundlesDeactivate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "deactivate",
@@ -80,7 +80,7 @@ func TestBundlePricingUserBundlesDeactivate(t *testing.T) {
 }
 
 func TestBundlePricingUserBundlesListResources(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "list-resources",
@@ -90,7 +90,7 @@ func TestBundlePricingUserBundlesListResources(t *testing.T) {
 }
 
 func TestBundlePricingUserBundlesListUnused(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "list-unused",

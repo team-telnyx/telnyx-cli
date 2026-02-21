@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortoutsReportsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:reports", "create",
@@ -31,7 +31,7 @@ func TestPortoutsReportsCreate(t *testing.T) {
 }
 
 func TestPortoutsReportsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:reports", "retrieve",
@@ -40,7 +40,7 @@ func TestPortoutsReportsRetrieve(t *testing.T) {
 }
 
 func TestPortoutsReportsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:reports", "list",

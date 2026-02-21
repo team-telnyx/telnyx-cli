@@ -9,7 +9,7 @@ import (
 )
 
 func TestMessagingRcsAgentsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging:rcs:agents", "retrieve",
@@ -18,7 +18,7 @@ func TestMessagingRcsAgentsRetrieve(t *testing.T) {
 }
 
 func TestMessagingRcsAgentsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging:rcs:agents", "update",
@@ -30,7 +30,7 @@ func TestMessagingRcsAgentsUpdate(t *testing.T) {
 }
 
 func TestMessagingRcsAgentsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging:rcs:agents", "list",

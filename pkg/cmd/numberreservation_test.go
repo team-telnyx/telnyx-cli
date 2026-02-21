@@ -10,7 +10,7 @@ import (
 )
 
 func TestNumberReservationsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-reservations", "create",
@@ -31,7 +31,7 @@ func TestNumberReservationsCreate(t *testing.T) {
 }
 
 func TestNumberReservationsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-reservations", "retrieve",
@@ -40,7 +40,7 @@ func TestNumberReservationsRetrieve(t *testing.T) {
 }
 
 func TestNumberReservationsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-reservations", "list",

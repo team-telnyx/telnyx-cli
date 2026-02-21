@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortingOrdersAdditionalDocumentsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:additional-documents", "create",
@@ -35,7 +35,7 @@ func TestPortingOrdersAdditionalDocumentsCreate(t *testing.T) {
 }
 
 func TestPortingOrdersAdditionalDocumentsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:additional-documents", "list",
@@ -62,7 +62,7 @@ func TestPortingOrdersAdditionalDocumentsList(t *testing.T) {
 }
 
 func TestPortingOrdersAdditionalDocumentsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:additional-documents", "delete",

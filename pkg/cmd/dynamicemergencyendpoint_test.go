@@ -10,7 +10,7 @@ import (
 )
 
 func TestDynamicEmergencyEndpointsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-endpoints", "create",
@@ -21,7 +21,7 @@ func TestDynamicEmergencyEndpointsCreate(t *testing.T) {
 }
 
 func TestDynamicEmergencyEndpointsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-endpoints", "retrieve",
@@ -30,7 +30,7 @@ func TestDynamicEmergencyEndpointsRetrieve(t *testing.T) {
 }
 
 func TestDynamicEmergencyEndpointsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-endpoints", "list",
@@ -54,7 +54,7 @@ func TestDynamicEmergencyEndpointsList(t *testing.T) {
 }
 
 func TestDynamicEmergencyEndpointsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-endpoints", "delete",

@@ -9,7 +9,7 @@ import (
 )
 
 func TestAdvancedOrdersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"advanced-orders", "create",
@@ -25,7 +25,7 @@ func TestAdvancedOrdersCreate(t *testing.T) {
 }
 
 func TestAdvancedOrdersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"advanced-orders", "retrieve",
@@ -34,7 +34,7 @@ func TestAdvancedOrdersRetrieve(t *testing.T) {
 }
 
 func TestAdvancedOrdersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"advanced-orders", "list",
@@ -42,7 +42,7 @@ func TestAdvancedOrdersList(t *testing.T) {
 }
 
 func TestAdvancedOrdersUpdateRequirementGroup(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"advanced-orders", "update-requirement-group",

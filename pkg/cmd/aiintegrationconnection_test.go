@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIIntegrationsConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:integrations:connections", "retrieve",
@@ -18,7 +18,7 @@ func TestAIIntegrationsConnectionsRetrieve(t *testing.T) {
 }
 
 func TestAIIntegrationsConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:integrations:connections", "list",
@@ -26,7 +26,7 @@ func TestAIIntegrationsConnectionsList(t *testing.T) {
 }
 
 func TestAIIntegrationsConnectionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:integrations:connections", "delete",

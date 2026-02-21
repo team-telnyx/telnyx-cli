@@ -9,20 +9,20 @@ import (
 )
 
 func TestAIMcpServersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "create",
 		"--name", "name",
 		"--type", "type",
 		"--url", "url",
-		"--allowed-tool", "string",
+		"--allowed-tool", "[string]",
 		"--api-key-ref", "api_key_ref",
 	)
 }
 
 func TestAIMcpServersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "retrieve",
@@ -31,13 +31,13 @@ func TestAIMcpServersRetrieve(t *testing.T) {
 }
 
 func TestAIMcpServersUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "update",
 		"--mcp-server-id", "mcp_server_id",
 		"--id", "id",
-		"--allowed-tool", "string",
+		"--allowed-tool", "[string]",
 		"--api-key-ref", "api_key_ref",
 		"--created-at", "2019-12-27T18:11:19.117Z",
 		"--name", "name",
@@ -47,7 +47,7 @@ func TestAIMcpServersUpdate(t *testing.T) {
 }
 
 func TestAIMcpServersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "list",
@@ -59,7 +59,7 @@ func TestAIMcpServersList(t *testing.T) {
 }
 
 func TestAIMcpServersDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "delete",

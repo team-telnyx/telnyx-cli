@@ -9,7 +9,7 @@ import (
 )
 
 func TestVerificationsByPhoneNumberActionsVerify(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications:by-phone-number:actions", "verify",

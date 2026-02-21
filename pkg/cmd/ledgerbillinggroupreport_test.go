@@ -9,7 +9,7 @@ import (
 )
 
 func TestLedgerBillingGroupReportsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ledger-billing-group-reports", "create",
@@ -19,7 +19,7 @@ func TestLedgerBillingGroupReportsCreate(t *testing.T) {
 }
 
 func TestLedgerBillingGroupReportsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ledger-billing-group-reports", "retrieve",

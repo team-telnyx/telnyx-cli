@@ -9,7 +9,7 @@ import (
 )
 
 func TestPortoutsCommentsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:comments", "create",
@@ -19,7 +19,7 @@ func TestPortoutsCommentsCreate(t *testing.T) {
 }
 
 func TestPortoutsCommentsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:comments", "list",

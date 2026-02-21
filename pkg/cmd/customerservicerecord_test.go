@@ -10,7 +10,7 @@ import (
 )
 
 func TestCustomerServiceRecordsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "create",
@@ -42,7 +42,7 @@ func TestCustomerServiceRecordsCreate(t *testing.T) {
 }
 
 func TestCustomerServiceRecordsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "retrieve",
@@ -51,7 +51,7 @@ func TestCustomerServiceRecordsRetrieve(t *testing.T) {
 }
 
 func TestCustomerServiceRecordsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "list",
@@ -78,7 +78,7 @@ func TestCustomerServiceRecordsList(t *testing.T) {
 }
 
 func TestCustomerServiceRecordsVerifyPhoneNumberCoverage(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "verify-phone-number-coverage",

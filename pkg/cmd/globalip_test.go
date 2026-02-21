@@ -9,7 +9,7 @@ import (
 )
 
 func TestGlobalIPsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ips", "create",
@@ -20,7 +20,7 @@ func TestGlobalIPsCreate(t *testing.T) {
 }
 
 func TestGlobalIPsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ips", "retrieve",
@@ -29,7 +29,7 @@ func TestGlobalIPsRetrieve(t *testing.T) {
 }
 
 func TestGlobalIPsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ips", "list",
@@ -39,7 +39,7 @@ func TestGlobalIPsList(t *testing.T) {
 }
 
 func TestGlobalIPsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ips", "delete",

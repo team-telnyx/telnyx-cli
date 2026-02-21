@@ -9,7 +9,7 @@ import (
 )
 
 func TestMessaging10dlcGetEnum(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc", "get-enum",

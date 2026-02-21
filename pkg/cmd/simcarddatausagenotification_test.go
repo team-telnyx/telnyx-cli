@@ -10,7 +10,7 @@ import (
 )
 
 func TestSimCardDataUsageNotificationsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-data-usage-notifications", "create",
@@ -32,7 +32,7 @@ func TestSimCardDataUsageNotificationsCreate(t *testing.T) {
 }
 
 func TestSimCardDataUsageNotificationsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-data-usage-notifications", "retrieve",
@@ -41,7 +41,7 @@ func TestSimCardDataUsageNotificationsRetrieve(t *testing.T) {
 }
 
 func TestSimCardDataUsageNotificationsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-data-usage-notifications", "update",
@@ -65,7 +65,7 @@ func TestSimCardDataUsageNotificationsUpdate(t *testing.T) {
 }
 
 func TestSimCardDataUsageNotificationsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-data-usage-notifications", "list",
@@ -76,7 +76,7 @@ func TestSimCardDataUsageNotificationsList(t *testing.T) {
 }
 
 func TestSimCardDataUsageNotificationsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-data-usage-notifications", "delete",

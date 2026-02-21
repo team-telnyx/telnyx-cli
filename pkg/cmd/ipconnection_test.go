@@ -10,7 +10,7 @@ import (
 )
 
 func TestIPConnectionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "create",
@@ -29,7 +29,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 		"--noise-suppression", "both",
 		"--noise-suppression-details", "{attenuation_limit: 80, engine: deep_filter_net}",
 		"--onnet-t38-passthrough-enabled=false",
-		"--outbound", "{ani_override: string, ani_override_type: always, call_parking_enabled: true, channel_limit: 10, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: token, ip_authentication_token: string, localization: string, outbound_voice_profile_id: outbound_voice_profile_id, t38_reinvite_source: customer, tech_prefix: string}",
+		"--outbound", "{ani_override: string, ani_override_type: always, call_parking_enabled: true, channel_limit: 10, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: token, ip_authentication_token: string, localization: string, outbound_voice_profile_id: '1293384261075731499', t38_reinvite_source: customer, tech_prefix: string}",
 		"--rtcp-settings", "{capture_enabled: true, port: rtcp-mux, report_frequency_secs: 10}",
 		"--tag", "tag1",
 		"--tag", "tag2",
@@ -88,7 +88,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 		"--outbound.ip-authentication-method", "token",
 		"--outbound.ip-authentication-token", "string",
 		"--outbound.localization", "string",
-		"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--outbound.outbound-voice-profile-id", "1293384261075731499",
 		"--outbound.t38-reinvite-source", "customer",
 		"--outbound.tech-prefix", "string",
 		"--rtcp-settings.capture-enabled=true",
@@ -105,7 +105,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 }
 
 func TestIPConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "retrieve",
@@ -114,7 +114,7 @@ func TestIPConnectionsRetrieve(t *testing.T) {
 }
 
 func TestIPConnectionsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "update",
@@ -134,7 +134,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 		"--noise-suppression", "both",
 		"--noise-suppression-details", "{attenuation_limit: 80, engine: deep_filter_net}",
 		"--onnet-t38-passthrough-enabled=false",
-		"--outbound", "{ani_override: string, ani_override_type: always, call_parking_enabled: true, channel_limit: 10, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: token, ip_authentication_token: string, localization: string, outbound_voice_profile_id: outbound_voice_profile_id, t38_reinvite_source: customer, tech_prefix: string}",
+		"--outbound", "{ani_override: string, ani_override_type: always, call_parking_enabled: true, channel_limit: 10, generate_ringback_tone: true, instant_ringback_enabled: true, ip_authentication_method: token, ip_authentication_token: string, localization: string, outbound_voice_profile_id: '1293384261075731499', t38_reinvite_source: customer, tech_prefix: string}",
 		"--rtcp-settings", "{capture_enabled: true, port: rtcp-mux, report_frequency_secs: 10}",
 		"--tag", "tag1",
 		"--tag", "tag2",
@@ -197,7 +197,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 		"--outbound.ip-authentication-method", "token",
 		"--outbound.ip-authentication-token", "string",
 		"--outbound.localization", "string",
-		"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--outbound.outbound-voice-profile-id", "1293384261075731499",
 		"--outbound.t38-reinvite-source", "customer",
 		"--outbound.tech-prefix", "string",
 		"--rtcp-settings.capture-enabled=true",
@@ -214,11 +214,11 @@ func TestIPConnectionsUpdate(t *testing.T) {
 }
 
 func TestIPConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "list",
-		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: outbound_voice_profile_id}",
+		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
@@ -233,7 +233,7 @@ func TestIPConnectionsList(t *testing.T) {
 		"ip-connections", "list",
 		"--filter.connection-name", "{contains: contains}",
 		"--filter.fqdn", "fqdn",
-		"--filter.outbound-voice-profile-id", "outbound_voice_profile_id",
+		"--filter.outbound-voice-profile-id", "1293384261075731499",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "connection_name",
@@ -241,7 +241,7 @@ func TestIPConnectionsList(t *testing.T) {
 }
 
 func TestIPConnectionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "delete",

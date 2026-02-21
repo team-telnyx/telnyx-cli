@@ -9,7 +9,7 @@ import (
 )
 
 func TestPortingOrdersActionsActivate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:actions", "activate",
@@ -18,7 +18,7 @@ func TestPortingOrdersActionsActivate(t *testing.T) {
 }
 
 func TestPortingOrdersActionsCancel(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:actions", "cancel",
@@ -27,7 +27,7 @@ func TestPortingOrdersActionsCancel(t *testing.T) {
 }
 
 func TestPortingOrdersActionsConfirm(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:actions", "confirm",
@@ -36,7 +36,7 @@ func TestPortingOrdersActionsConfirm(t *testing.T) {
 }
 
 func TestPortingOrdersActionsShare(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:actions", "share",

@@ -43,6 +43,20 @@ var messagesCancelScheduled = cli.Command{
 	HideHelpCommand: true,
 }
 
+var messagesRetrieveGroupMessages = cli.Command{
+	Name:    "retrieve-group-messages",
+	Usage:   "Retrieve all messages in a group MMS conversation by the group message ID.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "message-id",
+			Required: true,
+		},
+	},
+	Action:          handleMessagesRetrieveGroupMessages,
+	HideHelpCommand: true,
+}
+
 var messagesSchedule = cli.Command{
 	Name:    "schedule",
 	Usage:   "Schedule a message with a Phone Number, Alphanumeric Sender ID, Short Code or\nNumber Pool.",
@@ -132,6 +146,12 @@ var messagesSend = cli.Command{
 			Usage:    "Automatically detect if an SMS message is unusually long and exceeds a recommended limit of message parts.",
 			Default:  false,
 			BodyPath: "auto_detect",
+		},
+		&requestflag.Flag[string]{
+			Name:     "encoding",
+			Usage:    "Encoding to use for the message. `auto` (default) uses smart encoding to automatically select the most efficient encoding. `gsm7` forces GSM-7 encoding (returns 400 if message contains characters that cannot be encoded). `ucs2` forces UCS-2 encoding and disables smart encoding. When set, this overrides the messaging profile's `smart_encoding` setting.",
+			Default:  "auto",
+			BodyPath: "encoding",
 		},
 		&requestflag.Flag[string]{
 			Name:     "from",
@@ -265,6 +285,12 @@ var messagesSendLongCode = cli.Command{
 			Default:  false,
 			BodyPath: "auto_detect",
 		},
+		&requestflag.Flag[string]{
+			Name:     "encoding",
+			Usage:    "Encoding to use for the message. `auto` (default) uses smart encoding to automatically select the most efficient encoding. `gsm7` forces GSM-7 encoding (returns 400 if message contains characters that cannot be encoded). `ucs2` forces UCS-2 encoding and disables smart encoding. When set, this overrides the messaging profile's `smart_encoding` setting.",
+			Default:  "auto",
+			BodyPath: "encoding",
+		},
 		&requestflag.Flag[[]string]{
 			Name:     "media-url",
 			Usage:    "A list of media URLs. The total media size must be less than 1 MB.\n\n**Required for MMS**",
@@ -329,6 +355,12 @@ var messagesSendNumberPool = cli.Command{
 			Default:  false,
 			BodyPath: "auto_detect",
 		},
+		&requestflag.Flag[string]{
+			Name:     "encoding",
+			Usage:    "Encoding to use for the message. `auto` (default) uses smart encoding to automatically select the most efficient encoding. `gsm7` forces GSM-7 encoding (returns 400 if message contains characters that cannot be encoded). `ucs2` forces UCS-2 encoding and disables smart encoding. When set, this overrides the messaging profile's `smart_encoding` setting.",
+			Default:  "auto",
+			BodyPath: "encoding",
+		},
 		&requestflag.Flag[[]string]{
 			Name:     "media-url",
 			Usage:    "A list of media URLs. The total media size must be less than 1 MB.\n\n**Required for MMS**",
@@ -392,6 +424,12 @@ var messagesSendShortCode = cli.Command{
 			Usage:    "Automatically detect if an SMS message is unusually long and exceeds a recommended limit of message parts.",
 			Default:  false,
 			BodyPath: "auto_detect",
+		},
+		&requestflag.Flag[string]{
+			Name:     "encoding",
+			Usage:    "Encoding to use for the message. `auto` (default) uses smart encoding to automatically select the most efficient encoding. `gsm7` forces GSM-7 encoding (returns 400 if message contains characters that cannot be encoded). `ucs2` forces UCS-2 encoding and disables smart encoding. When set, this overrides the messaging profile's `smart_encoding` setting.",
+			Default:  "auto",
+			BodyPath: "encoding",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "media-url",
@@ -519,6 +557,55 @@ var messagesSendWhatsapp = requestflag.WithInnerFlags(cli.Command{
 	},
 })
 
+var messagesSendWithAlphanumericSender = cli.Command{
+	Name:    "send-with-alphanumeric-sender",
+	Usage:   "Send an SMS message using an alphanumeric sender ID. This is SMS only.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "from",
+			Usage:    "A valid alphanumeric sender ID on the user's account.",
+			Required: true,
+			BodyPath: "from",
+		},
+		&requestflag.Flag[string]{
+			Name:     "messaging-profile-id",
+			Usage:    "The messaging profile ID to use.",
+			Required: true,
+			BodyPath: "messaging_profile_id",
+		},
+		&requestflag.Flag[string]{
+			Name:     "text",
+			Usage:    "The message body.",
+			Required: true,
+			BodyPath: "text",
+		},
+		&requestflag.Flag[string]{
+			Name:     "to",
+			Usage:    "Receiving address (+E.164 formatted phone number).",
+			Required: true,
+			BodyPath: "to",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "use-profile-webhooks",
+			Usage:    "If true, use the messaging profile's webhook settings.",
+			BodyPath: "use_profile_webhooks",
+		},
+		&requestflag.Flag[any]{
+			Name:     "webhook-failover-url",
+			Usage:    "Failover callback URL for delivery status updates.",
+			BodyPath: "webhook_failover_url",
+		},
+		&requestflag.Flag[any]{
+			Name:     "webhook-url",
+			Usage:    "Callback URL for delivery status updates.",
+			BodyPath: "webhook_url",
+		},
+	},
+	Action:          handleMessagesSendWithAlphanumericSender,
+	HideHelpCommand: true,
+}
+
 func handleMessagesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -587,6 +674,41 @@ func handleMessagesCancelScheduled(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "messages cancel-scheduled", obj, format, transform)
+}
+
+func handleMessagesRetrieveGroupMessages(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("message-id") && len(unusedArgs) > 0 {
+		cmd.Set("message-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Messages.GetGroupMessages(ctx, cmd.Value("message-id").(string), options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "messages retrieve-group-messages", obj, format, transform)
 }
 
 func handleMessagesSchedule(ctx context.Context, cmd *cli.Command) error {
@@ -825,4 +947,38 @@ func handleMessagesSendWhatsapp(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "messages send-whatsapp", obj, format, transform)
+}
+
+func handleMessagesSendWithAlphanumericSender(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.MessageSendWithAlphanumericSenderParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Messages.SendWithAlphanumericSender(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "messages send-with-alphanumeric-sender", obj, format, transform)
 }

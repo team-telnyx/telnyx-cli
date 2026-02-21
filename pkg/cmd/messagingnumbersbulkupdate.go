@@ -32,6 +32,12 @@ var messagingNumbersBulkUpdatesCreate = cli.Command{
 			Required: true,
 			BodyPath: "numbers",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "assign-only",
+			Usage:    "If true, only assign numbers to the profile without changing other settings.",
+			Default:  false,
+			BodyPath: "assign_only",
+		},
 	},
 	Action:          handleMessagingNumbersBulkUpdatesCreate,
 	HideHelpCommand: true,

@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIClustersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:clusters", "retrieve",
@@ -20,7 +20,7 @@ func TestAIClustersRetrieve(t *testing.T) {
 }
 
 func TestAIClustersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:clusters", "list",
@@ -30,7 +30,7 @@ func TestAIClustersList(t *testing.T) {
 }
 
 func TestAIClustersDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:clusters", "delete",
@@ -39,7 +39,7 @@ func TestAIClustersDelete(t *testing.T) {
 }
 
 func TestAIClustersCompute(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:clusters", "compute",

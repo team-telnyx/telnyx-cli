@@ -10,7 +10,7 @@ import (
 )
 
 func TestBundlePricingBillingBundlesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:billing-bundles", "retrieve",
@@ -20,7 +20,7 @@ func TestBundlePricingBillingBundlesRetrieve(t *testing.T) {
 }
 
 func TestBundlePricingBillingBundlesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:billing-bundles", "list",

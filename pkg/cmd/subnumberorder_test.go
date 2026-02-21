@@ -10,7 +10,7 @@ import (
 )
 
 func TestSubNumberOrdersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders", "retrieve",
@@ -31,7 +31,7 @@ func TestSubNumberOrdersRetrieve(t *testing.T) {
 }
 
 func TestSubNumberOrdersUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders", "update",
@@ -53,7 +53,7 @@ func TestSubNumberOrdersUpdate(t *testing.T) {
 }
 
 func TestSubNumberOrdersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders", "list",
@@ -76,7 +76,7 @@ func TestSubNumberOrdersList(t *testing.T) {
 }
 
 func TestSubNumberOrdersCancel(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders", "cancel",
@@ -85,7 +85,7 @@ func TestSubNumberOrdersCancel(t *testing.T) {
 }
 
 func TestSubNumberOrdersUpdateRequirementGroup(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders", "update-requirement-group",

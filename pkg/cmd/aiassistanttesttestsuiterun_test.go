@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIAssistantsTestsTestSuitesRunsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests:test-suites:runs", "list",
@@ -22,7 +22,7 @@ func TestAIAssistantsTestsTestSuitesRunsList(t *testing.T) {
 }
 
 func TestAIAssistantsTestsTestSuitesRunsTrigger(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests:test-suites:runs", "trigger",

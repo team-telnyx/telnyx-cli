@@ -10,7 +10,7 @@ import (
 )
 
 func TestWireguardInterfacesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireguard-interfaces", "create",
@@ -22,7 +22,7 @@ func TestWireguardInterfacesCreate(t *testing.T) {
 }
 
 func TestWireguardInterfacesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireguard-interfaces", "retrieve",
@@ -31,7 +31,7 @@ func TestWireguardInterfacesRetrieve(t *testing.T) {
 }
 
 func TestWireguardInterfacesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireguard-interfaces", "list",
@@ -54,7 +54,7 @@ func TestWireguardInterfacesList(t *testing.T) {
 }
 
 func TestWireguardInterfacesDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireguard-interfaces", "delete",

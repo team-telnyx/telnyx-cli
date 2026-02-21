@@ -10,7 +10,7 @@ import (
 )
 
 func TestRoomsSessionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions", "retrieve",
@@ -20,7 +20,7 @@ func TestRoomsSessionsRetrieve(t *testing.T) {
 }
 
 func TestRoomsSessionsList0(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions", "list-0",
@@ -49,7 +49,7 @@ func TestRoomsSessionsList0(t *testing.T) {
 }
 
 func TestRoomsSessionsList1(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions", "list-1",
@@ -79,7 +79,7 @@ func TestRoomsSessionsList1(t *testing.T) {
 }
 
 func TestRoomsSessionsRetrieveParticipants(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions", "retrieve-participants",

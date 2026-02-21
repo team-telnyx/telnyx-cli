@@ -10,7 +10,7 @@ import (
 )
 
 func TestAIAssistantsTestsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "create",
@@ -47,7 +47,7 @@ func TestAIAssistantsTestsCreate(t *testing.T) {
 }
 
 func TestAIAssistantsTestsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "retrieve",
@@ -56,7 +56,7 @@ func TestAIAssistantsTestsRetrieve(t *testing.T) {
 }
 
 func TestAIAssistantsTestsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "update",
@@ -92,7 +92,7 @@ func TestAIAssistantsTestsUpdate(t *testing.T) {
 }
 
 func TestAIAssistantsTestsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "list",
@@ -105,7 +105,7 @@ func TestAIAssistantsTestsList(t *testing.T) {
 }
 
 func TestAIAssistantsTestsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "delete",

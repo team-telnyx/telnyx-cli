@@ -9,7 +9,7 @@ import (
 )
 
 func TestInboundChannelsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inbound-channels", "update",
@@ -18,7 +18,7 @@ func TestInboundChannelsUpdate(t *testing.T) {
 }
 
 func TestInboundChannelsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inbound-channels", "list",

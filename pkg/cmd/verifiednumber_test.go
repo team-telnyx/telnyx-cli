@@ -9,7 +9,7 @@ import (
 )
 
 func TestVerifiedNumbersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verified-numbers", "create",
@@ -20,7 +20,7 @@ func TestVerifiedNumbersCreate(t *testing.T) {
 }
 
 func TestVerifiedNumbersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verified-numbers", "retrieve",
@@ -29,7 +29,7 @@ func TestVerifiedNumbersRetrieve(t *testing.T) {
 }
 
 func TestVerifiedNumbersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verified-numbers", "list",
@@ -39,7 +39,7 @@ func TestVerifiedNumbersList(t *testing.T) {
 }
 
 func TestVerifiedNumbersDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verified-numbers", "delete",

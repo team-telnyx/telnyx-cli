@@ -246,12 +246,12 @@ var credentialConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 	"noise-suppression-details": {
 		&requestflag.InnerFlag[int64]{
 			Name:       "noise-suppression-details.attenuation-limit",
-			Usage:      "The attenuation limit value for the selected engine. Default values vary by engine: 0 for 'denoiser', 80 for 'deep_filter_net', 'deep_filter_net_large', and all Krisp engines ('krisp_viva_tel', 'krisp_viva_tel_lite', 'krisp_viva_promodel', 'krisp_viva_ss').",
+			Usage:      "The attenuation limit value for the selected engine. Default values vary by engine: 0 for 'denoiser', 80 for 'deep_filter_net', 'deep_filter_net_large', and all Krisp engines ('krisp_viva_tel', 'krisp_viva_tel_lite', 'krisp_viva_promodel', 'krisp_viva_ss'), 100 for 'quail_voice_focus'.",
 			InnerField: "attenuation_limit",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "noise-suppression-details.engine",
-			Usage:      "The noise suppression engine to use. 'denoiser' is the default engine. 'deep_filter_net' and 'deep_filter_net_large' are alternative engines with different performance characteristics. Krisp engines ('krisp_viva_tel', 'krisp_viva_tel_lite', 'krisp_viva_promodel', 'krisp_viva_ss') provide advanced noise suppression capabilities.",
+			Usage:      "The noise suppression engine to use. 'denoiser' is the default engine. 'deep_filter_net' and 'deep_filter_net_large' are alternative engines with different performance characteristics. Krisp engines ('krisp_viva_tel', 'krisp_viva_tel_lite', 'krisp_viva_promodel', 'krisp_viva_ss') provide advanced noise suppression capabilities. 'quail_voice_focus' provides Quail-based voice focus noise suppression.",
 			InnerField: "engine",
 		},
 	},
@@ -567,12 +567,12 @@ var credentialConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	"noise-suppression-details": {
 		&requestflag.InnerFlag[int64]{
 			Name:       "noise-suppression-details.attenuation-limit",
-			Usage:      "The attenuation limit value for the selected engine. Default values vary by engine: 0 for 'denoiser', 80 for 'deep_filter_net', 'deep_filter_net_large', and all Krisp engines ('krisp_viva_tel', 'krisp_viva_tel_lite', 'krisp_viva_promodel', 'krisp_viva_ss').",
+			Usage:      "The attenuation limit value for the selected engine. Default values vary by engine: 0 for 'denoiser', 80 for 'deep_filter_net', 'deep_filter_net_large', and all Krisp engines ('krisp_viva_tel', 'krisp_viva_tel_lite', 'krisp_viva_promodel', 'krisp_viva_ss'), 100 for 'quail_voice_focus'.",
 			InnerField: "attenuation_limit",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "noise-suppression-details.engine",
-			Usage:      "The noise suppression engine to use. 'denoiser' is the default engine. 'deep_filter_net' and 'deep_filter_net_large' are alternative engines with different performance characteristics. Krisp engines ('krisp_viva_tel', 'krisp_viva_tel_lite', 'krisp_viva_promodel', 'krisp_viva_ss') provide advanced noise suppression capabilities.",
+			Usage:      "The noise suppression engine to use. 'denoiser' is the default engine. 'deep_filter_net' and 'deep_filter_net_large' are alternative engines with different performance characteristics. Krisp engines ('krisp_viva_tel', 'krisp_viva_tel_lite', 'krisp_viva_promodel', 'krisp_viva_ss') provide advanced noise suppression capabilities. 'quail_voice_focus' provides Quail-based voice focus noise suppression.",
 			InnerField: "engine",
 		},
 	},

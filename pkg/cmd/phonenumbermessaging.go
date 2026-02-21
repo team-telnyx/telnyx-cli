@@ -48,6 +48,11 @@ var phoneNumbersMessagingUpdate = cli.Command{
 			Usage:    "Configure the messaging profile this phone number is assigned to:\n\n* Omit this field or set its value to `null` to keep the current value.\n* Set this field to `\"\"` to unassign the number from its messaging profile\n* Set this field to a quoted UUID of a messaging profile to assign this number to that messaging profile",
 			BodyPath: "messaging_profile_id",
 		},
+		&requestflag.Flag[[]string]{
+			Name:     "tag",
+			Usage:    "Tags to set on this phone number.",
+			BodyPath: "tags",
+		},
 	},
 	Action:          handlePhoneNumbersMessagingUpdate,
 	HideHelpCommand: true,
@@ -58,6 +63,26 @@ var phoneNumbersMessagingList = cli.Command{
 	Usage:   "List phone numbers with messaging settings",
 	Suggest: true,
 	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "filter-messaging-profile-id",
+			Usage:     "Filter by messaging profile ID.",
+			QueryPath: "filter[messaging_profile_id]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-phone-number",
+			Usage:     "Filter by exact phone number (supports comma-separated list).",
+			QueryPath: "filter[phone_number]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-phone-number-contains",
+			Usage:     "Filter by phone number substring.",
+			QueryPath: "filter[phone_number][contains]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-type",
+			Usage:     "Filter by phone number type.",
+			QueryPath: "filter[type]",
+		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
 			QueryPath: "page[number]",
@@ -65,6 +90,11 @@ var phoneNumbersMessagingList = cli.Command{
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
 			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "sort-phone-number",
+			Usage:     "Sort by phone number.",
+			QueryPath: "sort[phone_number]",
 		},
 	},
 	Action:          handlePhoneNumbersMessagingList,

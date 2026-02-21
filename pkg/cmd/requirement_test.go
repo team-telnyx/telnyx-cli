@@ -10,7 +10,7 @@ import (
 )
 
 func TestRequirementsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirements", "retrieve",
@@ -19,7 +19,7 @@ func TestRequirementsRetrieve(t *testing.T) {
 }
 
 func TestRequirementsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirements", "list",

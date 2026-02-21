@@ -9,7 +9,7 @@ import (
 )
 
 func TestSiprecConnectorsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"siprec-connectors", "create",
@@ -21,7 +21,7 @@ func TestSiprecConnectorsCreate(t *testing.T) {
 }
 
 func TestSiprecConnectorsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"siprec-connectors", "retrieve",
@@ -30,7 +30,7 @@ func TestSiprecConnectorsRetrieve(t *testing.T) {
 }
 
 func TestSiprecConnectorsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"siprec-connectors", "update",
@@ -43,7 +43,7 @@ func TestSiprecConnectorsUpdate(t *testing.T) {
 }
 
 func TestSiprecConnectorsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"siprec-connectors", "delete",

@@ -9,7 +9,7 @@ import (
 )
 
 func TestWirelessDetailRecordsReportsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless:detail-records-reports", "create",
@@ -19,7 +19,7 @@ func TestWirelessDetailRecordsReportsCreate(t *testing.T) {
 }
 
 func TestWirelessDetailRecordsReportsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless:detail-records-reports", "retrieve",
@@ -28,7 +28,7 @@ func TestWirelessDetailRecordsReportsRetrieve(t *testing.T) {
 }
 
 func TestWirelessDetailRecordsReportsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless:detail-records-reports", "list",
@@ -38,7 +38,7 @@ func TestWirelessDetailRecordsReportsList(t *testing.T) {
 }
 
 func TestWirelessDetailRecordsReportsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless:detail-records-reports", "delete",

@@ -9,7 +9,7 @@ import (
 )
 
 func TestListRetrieveAll(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"list", "retrieve-all",
@@ -17,7 +17,7 @@ func TestListRetrieveAll(t *testing.T) {
 }
 
 func TestListRetrieveByZone(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"list", "retrieve-by-zone",

@@ -9,7 +9,7 @@ import (
 )
 
 func TestWirelessBlocklistsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "create",
@@ -21,7 +21,7 @@ func TestWirelessBlocklistsCreate(t *testing.T) {
 }
 
 func TestWirelessBlocklistsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "retrieve",
@@ -30,7 +30,7 @@ func TestWirelessBlocklistsRetrieve(t *testing.T) {
 }
 
 func TestWirelessBlocklistsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "update",
@@ -42,7 +42,7 @@ func TestWirelessBlocklistsUpdate(t *testing.T) {
 }
 
 func TestWirelessBlocklistsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "list",
@@ -55,7 +55,7 @@ func TestWirelessBlocklistsList(t *testing.T) {
 }
 
 func TestWirelessBlocklistsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "delete",

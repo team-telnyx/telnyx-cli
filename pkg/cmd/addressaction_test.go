@@ -9,7 +9,7 @@ import (
 )
 
 func TestAddressesActionsAcceptSuggestions(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"addresses:actions", "accept-suggestions",
@@ -19,7 +19,7 @@ func TestAddressesActionsAcceptSuggestions(t *testing.T) {
 }
 
 func TestAddressesActionsValidate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"addresses:actions", "validate",

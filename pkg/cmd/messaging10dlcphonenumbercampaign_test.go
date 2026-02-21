@@ -10,7 +10,7 @@ import (
 )
 
 func TestMessaging10dlcPhoneNumberCampaignsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-campaigns", "create",
@@ -20,7 +20,7 @@ func TestMessaging10dlcPhoneNumberCampaignsCreate(t *testing.T) {
 }
 
 func TestMessaging10dlcPhoneNumberCampaignsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-campaigns", "retrieve",
@@ -29,7 +29,7 @@ func TestMessaging10dlcPhoneNumberCampaignsRetrieve(t *testing.T) {
 }
 
 func TestMessaging10dlcPhoneNumberCampaignsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-campaigns", "update",
@@ -40,7 +40,7 @@ func TestMessaging10dlcPhoneNumberCampaignsUpdate(t *testing.T) {
 }
 
 func TestMessaging10dlcPhoneNumberCampaignsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-campaigns", "list",
@@ -68,7 +68,7 @@ func TestMessaging10dlcPhoneNumberCampaignsList(t *testing.T) {
 }
 
 func TestMessaging10dlcPhoneNumberCampaignsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-campaigns", "delete",

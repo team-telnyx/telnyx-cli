@@ -9,7 +9,7 @@ import (
 )
 
 func TestOperatorConnectActionsRefresh(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"operator-connect:actions", "refresh",

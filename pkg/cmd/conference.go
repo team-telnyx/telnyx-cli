@@ -254,6 +254,57 @@ var conferencesListParticipants = requestflag.WithInnerFlags(cli.Command{
 	},
 })
 
+var conferencesRetrieveParticipant = cli.Command{
+	Name:    "retrieve-participant",
+	Usage:   "Retrieve details of a specific conference participant by their ID or label.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:     "participant-id",
+			Required: true,
+		},
+	},
+	Action:          handleConferencesRetrieveParticipant,
+	HideHelpCommand: true,
+}
+
+var conferencesUpdateParticipant = cli.Command{
+	Name:    "update-participant",
+	Usage:   "Update properties of a conference participant.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:     "participant-id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:     "beep-enabled",
+			Usage:    "Whether entry/exit beeps are enabled for this participant.",
+			BodyPath: "beep_enabled",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "end-conference-on-exit",
+			Usage:    "Whether the conference should end when this participant exits.",
+			BodyPath: "end_conference_on_exit",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "soft-end-conference-on-exit",
+			Usage:    "Whether the conference should soft-end when this participant exits. A soft end will stop new participants from joining but allow existing participants to remain.",
+			BodyPath: "soft_end_conference_on_exit",
+		},
+	},
+	Action:          handleConferencesUpdateParticipant,
+	HideHelpCommand: true,
+}
+
 func handleConferencesCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -417,4 +468,92 @@ func handleConferencesListParticipants(ctx context.Context, cmd *cli.Command) er
 		)
 		return ShowJSONIterator(os.Stdout, "conferences list-participants", iter, format, transform)
 	}
+}
+
+func handleConferencesRetrieveParticipant(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("participant-id") && len(unusedArgs) > 0 {
+		cmd.Set("participant-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.ConferenceGetParticipantParams{
+		ID: cmd.Value("id").(string),
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Conferences.GetParticipant(
+		ctx,
+		cmd.Value("participant-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "conferences retrieve-participant", obj, format, transform)
+}
+
+func handleConferencesUpdateParticipant(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("participant-id") && len(unusedArgs) > 0 {
+		cmd.Set("participant-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.ConferenceUpdateParticipantParams{
+		ID: cmd.Value("id").(string),
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Conferences.UpdateParticipant(
+		ctx,
+		cmd.Value("participant-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "conferences update-participant", obj, format, transform)
 }

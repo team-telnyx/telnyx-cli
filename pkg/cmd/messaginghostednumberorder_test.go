@@ -10,7 +10,7 @@ import (
 )
 
 func TestMessagingHostedNumberOrdersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "create",
@@ -21,7 +21,7 @@ func TestMessagingHostedNumberOrdersCreate(t *testing.T) {
 }
 
 func TestMessagingHostedNumberOrdersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "retrieve",
@@ -30,7 +30,7 @@ func TestMessagingHostedNumberOrdersRetrieve(t *testing.T) {
 }
 
 func TestMessagingHostedNumberOrdersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "list",
@@ -40,7 +40,7 @@ func TestMessagingHostedNumberOrdersList(t *testing.T) {
 }
 
 func TestMessagingHostedNumberOrdersDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "delete",
@@ -49,7 +49,7 @@ func TestMessagingHostedNumberOrdersDelete(t *testing.T) {
 }
 
 func TestMessagingHostedNumberOrdersCheckEligibility(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "check-eligibility",
@@ -58,7 +58,7 @@ func TestMessagingHostedNumberOrdersCheckEligibility(t *testing.T) {
 }
 
 func TestMessagingHostedNumberOrdersCreateVerificationCodes(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "create-verification-codes",
@@ -69,7 +69,7 @@ func TestMessagingHostedNumberOrdersCreateVerificationCodes(t *testing.T) {
 }
 
 func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "validate-codes",

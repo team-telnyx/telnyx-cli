@@ -10,7 +10,7 @@ import (
 )
 
 func TestSimCardsActionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "retrieve",
@@ -19,7 +19,7 @@ func TestSimCardsActionsRetrieve(t *testing.T) {
 }
 
 func TestSimCardsActionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "list",
@@ -45,7 +45,7 @@ func TestSimCardsActionsList(t *testing.T) {
 }
 
 func TestSimCardsActionsBulkSetPublicIPs(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "bulk-set-public-ips",
@@ -54,7 +54,7 @@ func TestSimCardsActionsBulkSetPublicIPs(t *testing.T) {
 }
 
 func TestSimCardsActionsDisable(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "disable",
@@ -63,7 +63,7 @@ func TestSimCardsActionsDisable(t *testing.T) {
 }
 
 func TestSimCardsActionsEnable(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "enable",
@@ -72,7 +72,7 @@ func TestSimCardsActionsEnable(t *testing.T) {
 }
 
 func TestSimCardsActionsRemovePublicIP(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "remove-public-ip",
@@ -81,7 +81,7 @@ func TestSimCardsActionsRemovePublicIP(t *testing.T) {
 }
 
 func TestSimCardsActionsSetPublicIP(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "set-public-ip",
@@ -91,7 +91,7 @@ func TestSimCardsActionsSetPublicIP(t *testing.T) {
 }
 
 func TestSimCardsActionsSetStandby(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "set-standby",
@@ -100,7 +100,7 @@ func TestSimCardsActionsSetStandby(t *testing.T) {
 }
 
 func TestSimCardsActionsValidateRegistrationCodes(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "validate-registration-codes",

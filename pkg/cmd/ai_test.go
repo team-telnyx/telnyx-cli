@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIRetrieveModels(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai", "retrieve-models",
@@ -17,7 +17,7 @@ func TestAIRetrieveModels(t *testing.T) {
 }
 
 func TestAISummarize(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai", "summarize",

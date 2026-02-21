@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortingOrdersActionRequirementsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:action-requirements", "list",
@@ -40,7 +40,7 @@ func TestPortingOrdersActionRequirementsList(t *testing.T) {
 }
 
 func TestPortingOrdersActionRequirementsInitiate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:action-requirements", "initiate",
