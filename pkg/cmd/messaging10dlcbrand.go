@@ -207,7 +207,7 @@ var messaging10dlcBrandUpdate = cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "alt-business-id",
 			Usage:    "Alternate business identifier such as DUNS, LEI, or GIIN",
-			BodyPath: "altBusiness_id",
+			BodyPath: "altBusinessId",
 		},
 		&requestflag.Flag[string]{
 			Name:     "alt-business-id-type",

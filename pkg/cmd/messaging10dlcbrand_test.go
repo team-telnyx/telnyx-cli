@@ -60,7 +60,7 @@ func TestMessaging10dlcBrandUpdate(t *testing.T) {
 		"--email", "email",
 		"--entity-type", "PRIVATE_PROFIT",
 		"--vertical", "TECHNOLOGY",
-		"--alt-business-id", "altBusiness_id",
+		"--alt-business-id", "altBusinessId",
 		"--alt-business-id-type", "NONE",
 		"--business-contact-email", "name@example.com",
 		"--city", "New York",
