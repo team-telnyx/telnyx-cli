@@ -1428,6 +1428,7 @@ func init() {
 					&messagingTollfreeVerificationRequestsUpdate,
 					&messagingTollfreeVerificationRequestsList,
 					&messagingTollfreeVerificationRequestsDelete,
+					&messagingTollfreeVerificationRequestsRetrieveStatusHistory,
 				},
 			},
 			{
