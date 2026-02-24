@@ -10,7 +10,7 @@ import (
 )
 
 func TestWireguardPeersCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireguard-peers", "create",
@@ -20,7 +20,7 @@ func TestWireguardPeersCreate(t *testing.T) {
 }
 
 func TestWireguardPeersRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireguard-peers", "retrieve",
@@ -29,7 +29,7 @@ func TestWireguardPeersRetrieve(t *testing.T) {
 }
 
 func TestWireguardPeersUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireguard-peers", "update",
@@ -39,7 +39,7 @@ func TestWireguardPeersUpdate(t *testing.T) {
 }
 
 func TestWireguardPeersList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireguard-peers", "list",
@@ -62,7 +62,7 @@ func TestWireguardPeersList(t *testing.T) {
 }
 
 func TestWireguardPeersDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireguard-peers", "delete",

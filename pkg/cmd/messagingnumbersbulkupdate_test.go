@@ -9,7 +9,7 @@ import (
 )
 
 func TestMessagingNumbersBulkUpdatesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-numbers-bulk-updates", "create",
@@ -17,11 +17,12 @@ func TestMessagingNumbersBulkUpdatesCreate(t *testing.T) {
 		"--number", "+18880000000",
 		"--number", "+18880000001",
 		"--number", "+18880000002",
+		"--assign-only=true",
 	)
 }
 
 func TestMessagingNumbersBulkUpdatesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-numbers-bulk-updates", "retrieve",

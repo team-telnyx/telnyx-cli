@@ -10,7 +10,7 @@ import (
 )
 
 func TestMobileVoiceConnectionsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "create",
@@ -46,7 +46,7 @@ func TestMobileVoiceConnectionsCreate(t *testing.T) {
 }
 
 func TestMobileVoiceConnectionsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "retrieve",
@@ -55,7 +55,7 @@ func TestMobileVoiceConnectionsRetrieve(t *testing.T) {
 }
 
 func TestMobileVoiceConnectionsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "update",
@@ -93,7 +93,7 @@ func TestMobileVoiceConnectionsUpdate(t *testing.T) {
 }
 
 func TestMobileVoiceConnectionsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "list",
@@ -105,7 +105,7 @@ func TestMobileVoiceConnectionsList(t *testing.T) {
 }
 
 func TestMobileVoiceConnectionsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "delete",

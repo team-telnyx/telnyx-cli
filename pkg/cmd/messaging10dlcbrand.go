@@ -207,7 +207,7 @@ var messaging10dlcBrandUpdate = cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "alt-business-id",
 			Usage:    "Alternate business identifier such as DUNS, LEI, or GIIN",
-			BodyPath: "altBusiness_id",
+			BodyPath: "altBusinessId",
 		},
 		&requestflag.Flag[string]{
 			Name:     "alt-business-id-type",
@@ -386,6 +386,25 @@ var messaging10dlcBrandGetFeedback = cli.Command{
 		},
 	},
 	Action:          handleMessaging10dlcBrandGetFeedback,
+	HideHelpCommand: true,
+}
+
+var messaging10dlcBrandGetSMSOtpByReference = cli.Command{
+	Name:    "get-sms-otp-by-reference",
+	Usage:   "Query the status of an SMS OTP (One-Time Password) for Sole Proprietor brand\nverification.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "reference-id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:      "brand-id",
+			Usage:     "Filter by Brand ID for easier lookup in portal applications",
+			QueryPath: "brandId",
+		},
+	},
+	Action:          handleMessaging10dlcBrandGetSMSOtpByReference,
 	HideHelpCommand: true,
 }
 
@@ -684,6 +703,48 @@ func handleMessaging10dlcBrandGetFeedback(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "messaging-10dlc:brand get-feedback", obj, format, transform)
+}
+
+func handleMessaging10dlcBrandGetSMSOtpByReference(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("reference-id") && len(unusedArgs) > 0 {
+		cmd.Set("reference-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.Messaging10dlcBrandGetSMSOtpByReferenceParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Messaging10dlc.Brand.GetSMSOtpByReference(
+		ctx,
+		cmd.Value("reference-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "messaging-10dlc:brand get-sms-otp-by-reference", obj, format, transform)
 }
 
 func handleMessaging10dlcBrandResend2faEmail(ctx context.Context, cmd *cli.Command) error {

@@ -9,7 +9,7 @@ import (
 )
 
 func TestMessagingRcsInviteTestNumber(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging:rcs", "invite-test-number",
@@ -19,7 +19,7 @@ func TestMessagingRcsInviteTestNumber(t *testing.T) {
 }
 
 func TestMessagingRcsListBulkCapabilities(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging:rcs", "list-bulk-capabilities",
@@ -29,7 +29,7 @@ func TestMessagingRcsListBulkCapabilities(t *testing.T) {
 }
 
 func TestMessagingRcsRetrieveCapabilities(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging:rcs", "retrieve-capabilities",

@@ -9,7 +9,7 @@ import (
 )
 
 func TestLegacyReportingUsageReportsRetrieveSpeechToText(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports", "retrieve-speech-to-text",

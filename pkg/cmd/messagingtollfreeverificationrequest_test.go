@@ -10,7 +10,7 @@ import (
 )
 
 func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "create",
@@ -25,7 +25,6 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 		"--business-state", "Texas",
 		"--business-zip", "78701",
 		"--corporate-website", "http://example.com",
-		"--isv-reseller", "isvReseller",
 		"--message-volume", "100,000",
 		"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
 		"--opt-in-workflow-image-url", "{url: https://telnyx.com/sign-up}",
@@ -44,6 +43,7 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 		"--doing-business-as", "Acme Services",
 		"--entity-type", "SOLE_PROPRIETOR",
 		"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
+		"--isv-reseller", "isvReseller",
 		"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
 		"--opt-in-keywords", "START, YES, SUBSCRIBE",
 		"--privacy-policy-url", "https://example.com/privacy",
@@ -69,7 +69,6 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 		"--business-state", "Texas",
 		"--business-zip", "78701",
 		"--corporate-website", "http://example.com",
-		"--isv-reseller", "isvReseller",
 		"--message-volume", "100,000",
 		"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
 		"--opt-in-workflow-image-url.url", "https://telnyx.com/sign-up",
@@ -88,6 +87,7 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 		"--doing-business-as", "Acme Services",
 		"--entity-type", "SOLE_PROPRIETOR",
 		"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
+		"--isv-reseller", "isvReseller",
 		"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
 		"--opt-in-keywords", "START, YES, SUBSCRIBE",
 		"--privacy-policy-url", "https://example.com/privacy",
@@ -97,7 +97,7 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 }
 
 func TestMessagingTollfreeVerificationRequestsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "retrieve",
@@ -106,7 +106,7 @@ func TestMessagingTollfreeVerificationRequestsRetrieve(t *testing.T) {
 }
 
 func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "update",
@@ -122,7 +122,6 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 		"--business-state", "Texas",
 		"--business-zip", "78701",
 		"--corporate-website", "http://example.com",
-		"--isv-reseller", "isvReseller",
 		"--message-volume", "100,000",
 		"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
 		"--opt-in-workflow-image-url", "{url: https://telnyx.com/sign-up}",
@@ -141,6 +140,7 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 		"--doing-business-as", "Acme Services",
 		"--entity-type", "SOLE_PROPRIETOR",
 		"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
+		"--isv-reseller", "isvReseller",
 		"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
 		"--opt-in-keywords", "START, YES, SUBSCRIBE",
 		"--privacy-policy-url", "https://example.com/privacy",
@@ -167,7 +167,6 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 		"--business-state", "Texas",
 		"--business-zip", "78701",
 		"--corporate-website", "http://example.com",
-		"--isv-reseller", "isvReseller",
 		"--message-volume", "100,000",
 		"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
 		"--opt-in-workflow-image-url.url", "https://telnyx.com/sign-up",
@@ -186,6 +185,7 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 		"--doing-business-as", "Acme Services",
 		"--entity-type", "SOLE_PROPRIETOR",
 		"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
+		"--isv-reseller", "isvReseller",
 		"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
 		"--opt-in-keywords", "START, YES, SUBSCRIBE",
 		"--privacy-policy-url", "https://example.com/privacy",
@@ -195,12 +195,13 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 }
 
 func TestMessagingTollfreeVerificationRequestsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "list",
 		"--page", "1",
 		"--page-size", "1",
+		"--business-name", "business_name",
 		"--date-end", "2019-12-27T18:11:19.117Z",
 		"--date-start", "2019-12-27T18:11:19.117Z",
 		"--phone-number", "phone_number",
@@ -209,10 +210,21 @@ func TestMessagingTollfreeVerificationRequestsList(t *testing.T) {
 }
 
 func TestMessagingTollfreeVerificationRequestsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "delete",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+	)
+}
+
+func TestMessagingTollfreeVerificationRequestsRetrieveStatusHistory(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"messaging-tollfree:verification:requests", "retrieve-status-history",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--page-number", "1",
+		"--page-size", "1",
 	)
 }

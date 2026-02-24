@@ -9,7 +9,7 @@ import (
 )
 
 func TestTexmlAccountsRetrieveRecordingsJson(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts", "retrieve-recordings-json",
@@ -21,7 +21,7 @@ func TestTexmlAccountsRetrieveRecordingsJson(t *testing.T) {
 }
 
 func TestTexmlAccountsRetrieveTranscriptionsJson(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts", "retrieve-transcriptions-json",

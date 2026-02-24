@@ -9,7 +9,7 @@ import (
 )
 
 func TestLegacyReportingBatchDetailRecordsSpeechToTextCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:speech-to-text", "create",
@@ -19,7 +19,7 @@ func TestLegacyReportingBatchDetailRecordsSpeechToTextCreate(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsSpeechToTextRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:speech-to-text", "retrieve",
@@ -28,7 +28,7 @@ func TestLegacyReportingBatchDetailRecordsSpeechToTextRetrieve(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsSpeechToTextList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:speech-to-text", "list",
@@ -36,7 +36,7 @@ func TestLegacyReportingBatchDetailRecordsSpeechToTextList(t *testing.T) {
 }
 
 func TestLegacyReportingBatchDetailRecordsSpeechToTextDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:speech-to-text", "delete",

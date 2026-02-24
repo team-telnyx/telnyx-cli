@@ -9,7 +9,7 @@ import (
 )
 
 func TestSubNumberOrdersReportCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders-report", "create",
@@ -23,7 +23,7 @@ func TestSubNumberOrdersReportCreate(t *testing.T) {
 }
 
 func TestSubNumberOrdersReportRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders-report", "retrieve",

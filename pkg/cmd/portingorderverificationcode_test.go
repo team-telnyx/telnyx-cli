@@ -10,7 +10,7 @@ import (
 )
 
 func TestPortingOrdersVerificationCodesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:verification-codes", "list",
@@ -37,7 +37,7 @@ func TestPortingOrdersVerificationCodesList(t *testing.T) {
 }
 
 func TestPortingOrdersVerificationCodesSend(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:verification-codes", "send",
@@ -49,7 +49,7 @@ func TestPortingOrdersVerificationCodesSend(t *testing.T) {
 }
 
 func TestPortingOrdersVerificationCodesVerify(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:verification-codes", "verify",

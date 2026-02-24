@@ -9,7 +9,7 @@ import (
 )
 
 func TestPhoneNumbersActionsChangeBundleStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:actions", "change-bundle-status",
@@ -19,7 +19,7 @@ func TestPhoneNumbersActionsChangeBundleStatus(t *testing.T) {
 }
 
 func TestPhoneNumbersActionsEnableEmergency(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:actions", "enable-emergency",
@@ -30,7 +30,7 @@ func TestPhoneNumbersActionsEnableEmergency(t *testing.T) {
 }
 
 func TestPhoneNumbersActionsVerifyOwnership(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:actions", "verify-ownership",

@@ -10,7 +10,7 @@ import (
 )
 
 func TestIntegrationSecretsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"integration-secrets", "create",
@@ -23,7 +23,7 @@ func TestIntegrationSecretsCreate(t *testing.T) {
 }
 
 func TestIntegrationSecretsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"integration-secrets", "list",
@@ -46,7 +46,7 @@ func TestIntegrationSecretsList(t *testing.T) {
 }
 
 func TestIntegrationSecretsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"integration-secrets", "delete",

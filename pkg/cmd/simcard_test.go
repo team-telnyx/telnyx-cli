@@ -10,7 +10,7 @@ import (
 )
 
 func TestSimCardsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "retrieve",
@@ -21,14 +21,12 @@ func TestSimCardsRetrieve(t *testing.T) {
 }
 
 func TestSimCardsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "update",
 		"--sim-card-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-		"--authorized-imei", "106516771852751",
-		"--authorized-imei", "534051870479563",
-		"--authorized-imei", "508821468377961",
+		"--authorized-imei", "['106516771852751', '534051870479563', '508821468377961']",
 		"--data-limit", "{amount: '2048.1', unit: MB}",
 		"--sim-card-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--status", "{}",
@@ -45,9 +43,7 @@ func TestSimCardsUpdate(t *testing.T) {
 		t,
 		"sim-cards", "update",
 		"--sim-card-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-		"--authorized-imei", "106516771852751",
-		"--authorized-imei", "534051870479563",
-		"--authorized-imei", "508821468377961",
+		"--authorized-imei", "['106516771852751', '534051870479563', '508821468377961']",
 		"--data-limit.amount", "2048.1",
 		"--data-limit.unit", "MB",
 		"--sim-card-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
@@ -58,7 +54,7 @@ func TestSimCardsUpdate(t *testing.T) {
 }
 
 func TestSimCardsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "list",
@@ -90,7 +86,7 @@ func TestSimCardsList(t *testing.T) {
 }
 
 func TestSimCardsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "delete",
@@ -100,7 +96,7 @@ func TestSimCardsDelete(t *testing.T) {
 }
 
 func TestSimCardsGetActivationCode(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "get-activation-code",
@@ -109,7 +105,7 @@ func TestSimCardsGetActivationCode(t *testing.T) {
 }
 
 func TestSimCardsGetDeviceDetails(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "get-device-details",
@@ -118,7 +114,7 @@ func TestSimCardsGetDeviceDetails(t *testing.T) {
 }
 
 func TestSimCardsGetPublicIP(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "get-public-ip",
@@ -127,7 +123,7 @@ func TestSimCardsGetPublicIP(t *testing.T) {
 }
 
 func TestSimCardsListWirelessConnectivityLogs(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "list-wireless-connectivity-logs",

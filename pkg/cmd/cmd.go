@@ -501,6 +501,112 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:missions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMissionsCreate,
+					&aiMissionsRetrieve,
+					&aiMissionsList,
+					&aiMissionsCloneMission,
+					&aiMissionsDeleteMission,
+					&aiMissionsListEvents,
+					&aiMissionsUpdateMission,
+				},
+			},
+			{
+				Name:     "ai:missions:runs",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMissionsRunsCreate,
+					&aiMissionsRunsRetrieve,
+					&aiMissionsRunsUpdate,
+					&aiMissionsRunsList,
+					&aiMissionsRunsCancelRun,
+					&aiMissionsRunsListRuns,
+					&aiMissionsRunsPauseRun,
+					&aiMissionsRunsResumeRun,
+				},
+			},
+			{
+				Name:     "ai:missions:runs:events",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMissionsRunsEventsList,
+					&aiMissionsRunsEventsGetEventDetails,
+					&aiMissionsRunsEventsLog,
+				},
+			},
+			{
+				Name:     "ai:missions:runs:plan",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMissionsRunsPlanCreate,
+					&aiMissionsRunsPlanRetrieve,
+					&aiMissionsRunsPlanAddStepsToPlan,
+					&aiMissionsRunsPlanGetStepDetails,
+					&aiMissionsRunsPlanUpdateStep,
+				},
+			},
+			{
+				Name:     "ai:missions:runs:telnyx-agents",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMissionsRunsTelnyxAgentsList,
+					&aiMissionsRunsTelnyxAgentsLink,
+					&aiMissionsRunsTelnyxAgentsUnlink,
+				},
+			},
+			{
+				Name:     "ai:missions:knowledge-bases",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMissionsKnowledgeBasesCreateKnowledgeBase,
+					&aiMissionsKnowledgeBasesDeleteKnowledgeBase,
+					&aiMissionsKnowledgeBasesGetKnowledgeBase,
+					&aiMissionsKnowledgeBasesListKnowledgeBases,
+					&aiMissionsKnowledgeBasesUpdateKnowledgeBase,
+				},
+			},
+			{
+				Name:     "ai:missions:mcp-servers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMissionsMcpServersCreateMcpServer,
+					&aiMissionsMcpServersDeleteMcpServer,
+					&aiMissionsMcpServersGetMcpServer,
+					&aiMissionsMcpServersListMcpServers,
+					&aiMissionsMcpServersUpdateMcpServer,
+				},
+			},
+			{
+				Name:     "ai:missions:tools",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMissionsToolsCreateTool,
+					&aiMissionsToolsDeleteTool,
+					&aiMissionsToolsGetTool,
+					&aiMissionsToolsListTools,
+					&aiMissionsToolsUpdateTool,
+				},
+			},
+			{
+				Name:     "ai:openai:embeddings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiOpenAIEmbeddingsCreateEmbeddings,
+					&aiOpenAIEmbeddingsListEmbeddingModels,
+				},
+			},
+			{
 				Name:     "audit-events",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -705,6 +811,8 @@ func init() {
 					&conferencesRetrieve,
 					&conferencesList,
 					&conferencesListParticipants,
+					&conferencesRetrieveParticipant,
+					&conferencesUpdateParticipant,
 				},
 			},
 			{
@@ -713,6 +821,8 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&conferencesActionsUpdate,
+					&conferencesActionsEndConference,
+					&conferencesActionsGatherDtmfAudio,
 					&conferencesActionsHold,
 					&conferencesActionsJoin,
 					&conferencesActionsLeave,
@@ -722,6 +832,7 @@ func init() {
 					&conferencesActionsRecordResume,
 					&conferencesActionsRecordStart,
 					&conferencesActionsRecordStop,
+					&conferencesActionsSendDtmf,
 					&conferencesActionsSpeak,
 					&conferencesActionsStop,
 					&conferencesActionsUnhold,
@@ -1181,6 +1292,7 @@ func init() {
 				Commands: []*cli.Command{
 					&messagesRetrieve,
 					&messagesCancelScheduled,
+					&messagesRetrieveGroupMessages,
 					&messagesSchedule,
 					&messagesSend,
 					&messagesSendGroupMms,
@@ -1188,6 +1300,7 @@ func init() {
 					&messagesSendNumberPool,
 					&messagesSendShortCode,
 					&messagesSendWhatsapp,
+					&messagesSendWithAlphanumericSender,
 				},
 			},
 			{
@@ -1246,6 +1359,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&messagingHostedNumbersRetrieve,
+					&messagingHostedNumbersUpdate,
+					&messagingHostedNumbersList,
 					&messagingHostedNumbersDelete,
 				},
 			},
@@ -1276,8 +1392,10 @@ func init() {
 					&messagingProfilesUpdate,
 					&messagingProfilesList,
 					&messagingProfilesDelete,
+					&messagingProfilesListAlphanumericSenderIDs,
 					&messagingProfilesListPhoneNumbers,
 					&messagingProfilesListShortCodes,
+					&messagingProfilesRetrieveMetrics,
 				},
 			},
 			{
@@ -1293,6 +1411,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "messaging-profiles:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&messagingProfilesActionsRegenerateSecret,
+				},
+			},
+			{
 				Name:     "messaging-tollfree:verification:requests",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -1302,6 +1428,7 @@ func init() {
 					&messagingTollfreeVerificationRequestsUpdate,
 					&messagingTollfreeVerificationRequestsList,
 					&messagingTollfreeVerificationRequestsDelete,
+					&messagingTollfreeVerificationRequestsRetrieveStatusHistory,
 				},
 			},
 			{
@@ -2652,6 +2779,7 @@ func init() {
 					&messaging10dlcBrandList,
 					&messaging10dlcBrandDelete,
 					&messaging10dlcBrandGetFeedback,
+					&messaging10dlcBrandGetSMSOtpByReference,
 					&messaging10dlcBrandResend2faEmail,
 					&messaging10dlcBrandRetrieveSMSOtpStatus,
 					&messaging10dlcBrandRevet,
@@ -2776,6 +2904,25 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&organizationsUsersActionsRemove,
+				},
+			},
+			{
+				Name:     "alphanumeric-sender-ids",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&alphanumericSenderIDsCreate,
+					&alphanumericSenderIDsRetrieve,
+					&alphanumericSenderIDsList,
+					&alphanumericSenderIDsDelete,
+				},
+			},
+			{
+				Name:     "messaging-profile-metrics",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&messagingProfileMetricsList,
 				},
 			},
 			{

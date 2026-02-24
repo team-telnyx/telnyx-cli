@@ -9,7 +9,7 @@ import (
 )
 
 func TestStorageMigrationsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migrations", "create",
@@ -21,7 +21,7 @@ func TestStorageMigrationsCreate(t *testing.T) {
 }
 
 func TestStorageMigrationsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migrations", "retrieve",
@@ -30,7 +30,7 @@ func TestStorageMigrationsRetrieve(t *testing.T) {
 }
 
 func TestStorageMigrationsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migrations", "list",

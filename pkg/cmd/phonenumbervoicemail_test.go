@@ -9,7 +9,7 @@ import (
 )
 
 func TestPhoneNumbersVoicemailCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voicemail", "create",
@@ -20,7 +20,7 @@ func TestPhoneNumbersVoicemailCreate(t *testing.T) {
 }
 
 func TestPhoneNumbersVoicemailRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voicemail", "retrieve",
@@ -29,7 +29,7 @@ func TestPhoneNumbersVoicemailRetrieve(t *testing.T) {
 }
 
 func TestPhoneNumbersVoicemailUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voicemail", "update",

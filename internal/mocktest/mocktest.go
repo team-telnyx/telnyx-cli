@@ -14,7 +14,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -79,13 +78,45 @@ func TestRunMockTestWithFlags(t *testing.T, flags ...string) {
 
 	t.Logf("Testing command: telnyx %s", strings.Join(args[4:], " "))
 
-	cmd := exec.Command("go", args...)
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		assert.Fail(t, "Test failed", "Error: %v\nOutput: %s", err, output)
-	}
+	cliCmd := exec.Command("go", args...)
 
-	t.Logf("Test passed successfully with output:\n%s\n", output)
+	// Pipe the CLI tool's output into `head` so it doesn't hang when simulating
+	// paginated or streamed endpoints. 100 lines of output should be enough to
+	// test that the API endpoint worked, or report back a meaningful amount of
+	// data if something went wrong.
+	headCmd := exec.Command("head", "-n", "100")
+	pipe, err := cliCmd.StdoutPipe()
+	require.NoError(t, err, "Failed to create pipe for CLI command")
+	headCmd.Stdin = pipe
+
+	// Capture `head` output and CLI command stderr outputs:
+	var output strings.Builder
+	headCmd.Stdout = &output
+	headCmd.Stderr = &output
+	cliCmd.Stderr = &output
+
+	// First start `head`, so it's ready for data to come in:
+	err = headCmd.Start()
+	require.NoError(t, err, "Failed to start `head` command")
+
+	// Next start the CLI command so it can pipe data to `head` without
+	// buffering any data in advance:
+	err = cliCmd.Start()
+	require.NoError(t, err, "Failed to start CLI command")
+
+	// Ensure that the stdout pipe is closed as soon as `head` exits, to let the
+	// CLI tool know that no more output is needed and it can stop streaming
+	// test data for streaming/paginated endpoints. This needs to happen before
+	// calling `cliCmd.Wait()`, otherwise there will be a deadlock.
+	err = headCmd.Wait()
+	pipe.Close()
+	require.NoError(t, err, "`head` command finished with an error")
+
+	// Finally, wait for the CLI tool to finish up:
+	err = cliCmd.Wait()
+	require.NoError(t, err, "CLI command failed\n%s", output.String())
+
+	t.Logf("Test passed successfully\nOutput:\n%s", output.String())
 }
 
 func TestFile(t *testing.T, contents string) string {

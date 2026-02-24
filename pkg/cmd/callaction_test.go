@@ -10,19 +10,19 @@ import (
 )
 
 func TestCallsActionsAddAIAssistantMessages(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "add-ai-assistant-messages",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
-		"--message", "{content: Get the user's favorite color, role: system, metadata: {}}",
+		"--message", "{content: Get the user's favorite color, role: system, metadata: {foo: bar}}",
 	)
 }
 
 func TestCallsActionsAnswer(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "answer",
@@ -105,7 +105,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 }
 
 func TestCallsActionsBridge(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "bridge",
@@ -132,7 +132,7 @@ func TestCallsActionsBridge(t *testing.T) {
 }
 
 func TestCallsActionsEnqueue(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "enqueue",
@@ -147,7 +147,7 @@ func TestCallsActionsEnqueue(t *testing.T) {
 }
 
 func TestCallsActionsGather(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "gather",
@@ -166,7 +166,7 @@ func TestCallsActionsGather(t *testing.T) {
 }
 
 func TestCallsActionsGatherUsingAI(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "gather-using-ai",
@@ -175,6 +175,7 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 		"--assistant", "{instructions: You are a friendly voice assistant., model: Qwen/Qwen3-235B-A22B, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		"--gather-ended-speech", "Thank you for providing the information.",
 		"--greeting", "Hello, can you tell me your age and where you live?",
 		"--interruption-settings", "{enable: true}",
 		"--language", "en",
@@ -203,6 +204,7 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 		"--assistant.tools", "[{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		"--gather-ended-speech", "Thank you for providing the information.",
 		"--greeting", "Hello, can you tell me your age and where you live?",
 		"--interruption-settings.enable=true",
 		"--language", "en",
@@ -220,7 +222,7 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 }
 
 func TestCallsActionsGatherUsingAudio(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "gather-using-audio",
@@ -242,7 +244,7 @@ func TestCallsActionsGatherUsingAudio(t *testing.T) {
 }
 
 func TestCallsActionsGatherUsingSpeak(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "gather-using-speak",
@@ -267,7 +269,7 @@ func TestCallsActionsGatherUsingSpeak(t *testing.T) {
 }
 
 func TestCallsActionsHangup(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "hangup",
@@ -278,7 +280,7 @@ func TestCallsActionsHangup(t *testing.T) {
 }
 
 func TestCallsActionsLeaveQueue(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "leave-queue",
@@ -289,7 +291,7 @@ func TestCallsActionsLeaveQueue(t *testing.T) {
 }
 
 func TestCallsActionsPauseRecording(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "pause-recording",
@@ -301,7 +303,7 @@ func TestCallsActionsPauseRecording(t *testing.T) {
 }
 
 func TestCallsActionsRefer(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "refer",
@@ -339,7 +341,7 @@ func TestCallsActionsRefer(t *testing.T) {
 }
 
 func TestCallsActionsReject(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "reject",
@@ -351,7 +353,7 @@ func TestCallsActionsReject(t *testing.T) {
 }
 
 func TestCallsActionsResumeRecording(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "resume-recording",
@@ -363,7 +365,7 @@ func TestCallsActionsResumeRecording(t *testing.T) {
 }
 
 func TestCallsActionsSendDtmf(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "send-dtmf",
@@ -376,7 +378,7 @@ func TestCallsActionsSendDtmf(t *testing.T) {
 }
 
 func TestCallsActionsSendSipInfo(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "send-sip-info",
@@ -389,7 +391,7 @@ func TestCallsActionsSendSipInfo(t *testing.T) {
 }
 
 func TestCallsActionsSpeak(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "speak",
@@ -399,15 +401,17 @@ func TestCallsActionsSpeak(t *testing.T) {
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 		"--language", "arb",
+		"--loop", "string",
 		"--payload-type", "text",
 		"--service-level", "basic",
 		"--stop", "current",
+		"--target-legs", "both",
 		"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
 	)
 }
 
 func TestCallsActionsStartAIAssistant(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-ai-assistant",
@@ -444,7 +448,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 }
 
 func TestCallsActionsStartForking(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-forking",
@@ -458,7 +462,7 @@ func TestCallsActionsStartForking(t *testing.T) {
 }
 
 func TestCallsActionsStartNoiseSuppression(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-noise-suppression",
@@ -487,7 +491,7 @@ func TestCallsActionsStartNoiseSuppression(t *testing.T) {
 }
 
 func TestCallsActionsStartPlayback(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-playback",
@@ -507,7 +511,7 @@ func TestCallsActionsStartPlayback(t *testing.T) {
 }
 
 func TestCallsActionsStartRecording(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-recording",
@@ -523,7 +527,7 @@ func TestCallsActionsStartRecording(t *testing.T) {
 		"--timeout-secs", "0",
 		"--transcription=true",
 		"--transcription-engine", "B",
-		"--transcription-language", "en-US",
+		"--transcription-language", "en",
 		"--transcription-max-speaker-count", "4",
 		"--transcription-min-speaker-count", "4",
 		"--transcription-profanity-filter=true",
@@ -533,7 +537,7 @@ func TestCallsActionsStartRecording(t *testing.T) {
 }
 
 func TestCallsActionsStartSiprec(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-siprec",
@@ -549,15 +553,18 @@ func TestCallsActionsStartSiprec(t *testing.T) {
 }
 
 func TestCallsActionsStartStreaming(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-streaming",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		"--custom-parameter", "{name: param1, value: value1}",
+		"--custom-parameter", "{name: param2, value: value2}",
 		"--dialogflow-config", "{analyze_sentiment: false, partial_automated_agent_reply: false}",
 		"--enable-dialogflow=false",
+		"--stream-auth-token", "your-auth-token",
 		"--stream-bidirectional-codec", "G722",
 		"--stream-bidirectional-mode", "rtp",
 		"--stream-bidirectional-sampling-rate", "16000",
@@ -577,9 +584,14 @@ func TestCallsActionsStartStreaming(t *testing.T) {
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		"--custom-parameter.name", "param1",
+		"--custom-parameter.value", "value1",
+		"--custom-parameter.name", "param2",
+		"--custom-parameter.value", "value2",
 		"--dialogflow-config.analyze-sentiment=false",
 		"--dialogflow-config.partial-automated-agent-reply=false",
 		"--enable-dialogflow=false",
+		"--stream-auth-token", "your-auth-token",
 		"--stream-bidirectional-codec", "G722",
 		"--stream-bidirectional-mode", "rtp",
 		"--stream-bidirectional-sampling-rate", "16000",
@@ -591,7 +603,7 @@ func TestCallsActionsStartStreaming(t *testing.T) {
 }
 
 func TestCallsActionsStartTranscription(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-transcription",
@@ -605,7 +617,7 @@ func TestCallsActionsStartTranscription(t *testing.T) {
 }
 
 func TestCallsActionsStopAIAssistant(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-ai-assistant",
@@ -616,7 +628,7 @@ func TestCallsActionsStopAIAssistant(t *testing.T) {
 }
 
 func TestCallsActionsStopForking(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-forking",
@@ -628,7 +640,7 @@ func TestCallsActionsStopForking(t *testing.T) {
 }
 
 func TestCallsActionsStopGather(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-gather",
@@ -639,7 +651,7 @@ func TestCallsActionsStopGather(t *testing.T) {
 }
 
 func TestCallsActionsStopNoiseSuppression(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-noise-suppression",
@@ -650,7 +662,7 @@ func TestCallsActionsStopNoiseSuppression(t *testing.T) {
 }
 
 func TestCallsActionsStopPlayback(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-playback",
@@ -663,7 +675,7 @@ func TestCallsActionsStopPlayback(t *testing.T) {
 }
 
 func TestCallsActionsStopRecording(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-recording",
@@ -675,7 +687,7 @@ func TestCallsActionsStopRecording(t *testing.T) {
 }
 
 func TestCallsActionsStopSiprec(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-siprec",
@@ -686,7 +698,7 @@ func TestCallsActionsStopSiprec(t *testing.T) {
 }
 
 func TestCallsActionsStopStreaming(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-streaming",
@@ -698,7 +710,7 @@ func TestCallsActionsStopStreaming(t *testing.T) {
 }
 
 func TestCallsActionsStopTranscription(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-transcription",
@@ -709,7 +721,7 @@ func TestCallsActionsStopTranscription(t *testing.T) {
 }
 
 func TestCallsActionsSwitchSupervisorRole(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "switch-supervisor-role",
@@ -719,7 +731,7 @@ func TestCallsActionsSwitchSupervisorRole(t *testing.T) {
 }
 
 func TestCallsActionsTransfer(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "transfer",
@@ -739,6 +751,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 		"--media-name", "my_media_uploaded_to_media_storage_api",
 		"--mute-dtmf", "opposite",
 		"--park-after-unbridge", "self",
+		"--preferred-codecs", "G722,PCMU,PCMA,G729,OPUS,VP8,H264",
 		"--record", "record-from-answer",
 		"--record-channels", "single",
 		"--record-custom-file-name", "my_recording_file_name",
@@ -756,8 +769,11 @@ func TestCallsActionsTransfer(t *testing.T) {
 		"--target-leg-client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--time-limit-secs", "60",
 		"--timeout-secs", "60",
+		"--webhook-retries-policies", "{call.answered: {retries_ms: [1000, 2000, 5000]}}",
 		"--webhook-url", "https://www.example.com/server-b/",
 		"--webhook-url-method", "POST",
+		"--webhook-urls", "{call.answered: https://www.example.com/webhooks/answered, call.hangup: https://www.example.com/webhooks/hangup}",
+		"--webhook-urls-method", "POST",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -794,6 +810,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 		"--media-name", "my_media_uploaded_to_media_storage_api",
 		"--mute-dtmf", "opposite",
 		"--park-after-unbridge", "self",
+		"--preferred-codecs", "G722,PCMU,PCMA,G729,OPUS,VP8,H264",
 		"--record", "record-from-answer",
 		"--record-channels", "single",
 		"--record-custom-file-name", "my_recording_file_name",
@@ -815,13 +832,16 @@ func TestCallsActionsTransfer(t *testing.T) {
 		"--target-leg-client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--time-limit-secs", "60",
 		"--timeout-secs", "60",
+		"--webhook-retries-policies", "{call.answered: {retries_ms: [1000, 2000, 5000]}}",
 		"--webhook-url", "https://www.example.com/server-b/",
 		"--webhook-url-method", "POST",
+		"--webhook-urls", "{call.answered: https://www.example.com/webhooks/answered, call.hangup: https://www.example.com/webhooks/hangup}",
+		"--webhook-urls-method", "POST",
 	)
 }
 
 func TestCallsActionsUpdateClientState(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "update-client-state",

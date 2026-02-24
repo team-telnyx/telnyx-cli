@@ -10,7 +10,7 @@ import (
 )
 
 func TestManagedAccountsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "create",
@@ -23,7 +23,7 @@ func TestManagedAccountsCreate(t *testing.T) {
 }
 
 func TestManagedAccountsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "retrieve",
@@ -32,7 +32,7 @@ func TestManagedAccountsRetrieve(t *testing.T) {
 }
 
 func TestManagedAccountsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "update",
@@ -42,7 +42,7 @@ func TestManagedAccountsUpdate(t *testing.T) {
 }
 
 func TestManagedAccountsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "list",
@@ -70,7 +70,7 @@ func TestManagedAccountsList(t *testing.T) {
 }
 
 func TestManagedAccountsGetAllocatableGlobalOutboundChannels(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "get-allocatable-global-outbound-channels",
@@ -78,7 +78,7 @@ func TestManagedAccountsGetAllocatableGlobalOutboundChannels(t *testing.T) {
 }
 
 func TestManagedAccountsUpdateGlobalChannelLimit(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "update-global-channel-limit",

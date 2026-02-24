@@ -10,7 +10,7 @@ import (
 )
 
 func TestRequirementGroupsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "create",
@@ -38,7 +38,7 @@ func TestRequirementGroupsCreate(t *testing.T) {
 }
 
 func TestRequirementGroupsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "retrieve",
@@ -47,7 +47,7 @@ func TestRequirementGroupsRetrieve(t *testing.T) {
 }
 
 func TestRequirementGroupsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "update",
@@ -71,7 +71,7 @@ func TestRequirementGroupsUpdate(t *testing.T) {
 }
 
 func TestRequirementGroupsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "list",
@@ -94,7 +94,7 @@ func TestRequirementGroupsList(t *testing.T) {
 }
 
 func TestRequirementGroupsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "delete",
@@ -103,7 +103,7 @@ func TestRequirementGroupsDelete(t *testing.T) {
 }
 
 func TestRequirementGroupsSubmitForApproval(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "submit-for-approval",

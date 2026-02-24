@@ -56,6 +56,128 @@ var conferencesActionsUpdate = cli.Command{
 	HideHelpCommand: true,
 }
 
+var conferencesActionsEndConference = cli.Command{
+	Name:    "end-conference",
+	Usage:   "End a conference and terminate all active participants.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:     "command-id",
+			Usage:    "Use this field to avoid duplicate commands. Telnyx will ignore any command with the same `command_id` for the same conference.",
+			BodyPath: "command_id",
+		},
+	},
+	Action:          handleConferencesActionsEndConference,
+	HideHelpCommand: true,
+}
+
+var conferencesActionsGatherDtmfAudio = cli.Command{
+	Name:    "gather-dtmf-audio",
+	Usage:   "Play an audio file to a specific conference participant and gather DTMF input.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:     "call-control-id",
+			Usage:    "Unique identifier and token for controlling the call leg that will receive the gather prompt.",
+			Required: true,
+			BodyPath: "call_control_id",
+		},
+		&requestflag.Flag[string]{
+			Name:     "audio-url",
+			Usage:    "The URL of the audio file to play as the gather prompt. Must be WAV or MP3 format.",
+			BodyPath: "audio_url",
+		},
+		&requestflag.Flag[string]{
+			Name:     "client-state",
+			Usage:    "Use this field to add state to every subsequent webhook. Must be a valid Base-64 encoded string.",
+			BodyPath: "client_state",
+		},
+		&requestflag.Flag[string]{
+			Name:     "gather-id",
+			Usage:    "Identifier for this gather command. Will be included in the gather ended webhook. Maximum 100 characters.",
+			BodyPath: "gather_id",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "initial-timeout-millis",
+			Usage:    "Duration in milliseconds to wait for the first digit before timing out.",
+			BodyPath: "initial_timeout_millis",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "inter-digit-timeout-millis",
+			Usage:    "Duration in milliseconds to wait between digits.",
+			Default:  5000,
+			BodyPath: "inter_digit_timeout_millis",
+		},
+		&requestflag.Flag[string]{
+			Name:     "invalid-audio-url",
+			Usage:    "URL of audio file to play when invalid input is received.",
+			BodyPath: "invalid_audio_url",
+		},
+		&requestflag.Flag[string]{
+			Name:     "invalid-media-name",
+			Usage:    "Name of media file to play when invalid input is received.",
+			BodyPath: "invalid_media_name",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "maximum-digits",
+			Usage:    "Maximum number of digits to gather.",
+			Default:  128,
+			BodyPath: "maximum_digits",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "maximum-tries",
+			Usage:    "Maximum number of times to play the prompt if no input is received.",
+			Default:  3,
+			BodyPath: "maximum_tries",
+		},
+		&requestflag.Flag[string]{
+			Name:     "media-name",
+			Usage:    "The name of the media file uploaded to the Media Storage API to play as the gather prompt.",
+			BodyPath: "media_name",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "minimum-digits",
+			Usage:    "Minimum number of digits to gather.",
+			Default:  1,
+			BodyPath: "minimum_digits",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "stop-playback-on-dtmf",
+			Usage:    "Whether to stop the audio playback when a DTMF digit is received.",
+			Default:  true,
+			BodyPath: "stop_playback_on_dtmf",
+		},
+		&requestflag.Flag[string]{
+			Name:     "terminating-digit",
+			Usage:    "Digit that terminates gathering.",
+			Default:  "#",
+			BodyPath: "terminating_digit",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "timeout-millis",
+			Usage:    "Duration in milliseconds to wait for input before timing out.",
+			Default:  60000,
+			BodyPath: "timeout_millis",
+		},
+		&requestflag.Flag[string]{
+			Name:     "valid-digits",
+			Usage:    "Digits that are valid for gathering. All other digits will be ignored.",
+			Default:  "0123456789#*",
+			BodyPath: "valid_digits",
+		},
+	},
+	Action:          handleConferencesActionsGatherDtmfAudio,
+	HideHelpCommand: true,
+}
+
 var conferencesActionsHold = cli.Command{
 	Name:    "hold",
 	Usage:   "Hold a list of participants in a conference call",
@@ -409,6 +531,42 @@ var conferencesActionsRecordStop = cli.Command{
 	HideHelpCommand: true,
 }
 
+var conferencesActionsSendDtmf = cli.Command{
+	Name:    "send-dtmf",
+	Usage:   "Send DTMF tones to one or more conference participants.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:     "digits",
+			Usage:    "DTMF digits to send. Valid characters: 0-9, A-D, *, #, w (0.5s pause), W (1s pause).",
+			Required: true,
+			BodyPath: "digits",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "call-control-id",
+			Usage:    "Array of participant call control IDs to send DTMF to. When empty, DTMF will be sent to all participants.",
+			BodyPath: "call_control_ids",
+		},
+		&requestflag.Flag[string]{
+			Name:     "client-state",
+			Usage:    "Use this field to add state to every subsequent webhook. Must be a valid Base-64 encoded string.",
+			BodyPath: "client_state",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "duration-millis",
+			Usage:    "Duration of each DTMF digit in milliseconds.",
+			Default:  250,
+			BodyPath: "duration_millis",
+		},
+	},
+	Action:          handleConferencesActionsSendDtmf,
+	HideHelpCommand: true,
+}
+
 var conferencesActionsSpeak = cli.Command{
 	Name:    "speak",
 	Usage:   "Convert text to speech and play it to all or some participants.",
@@ -426,7 +584,7 @@ var conferencesActionsSpeak = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n\nFor service_level basic, you may define the gender of the speaker (male or female).",
+			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`.  Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n- **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Minimax:** Use `Minimax.<ModelId>.<VoiceId>` (e.g., `Minimax.speech-02-hd.Wise_Woman`). Supported models: `speech-02-turbo`, `speech-02-hd`, `speech-2.6-turbo`, `speech-2.8-turbo`. Optional parameters: `speed` (float, default 1.0), `vol` (float, default 1.0), `pitch` (integer, default 0). \n- **Resemble:** Use `Resemble.<ModelId>.<VoiceId>` (e.g., `Resemble.Pro.my_voice`). Supported models: `Pro` (multilingual) and `Turbo` (English only).",
 			Required: true,
 			BodyPath: "voice",
 		},
@@ -579,6 +737,90 @@ func handleConferencesActionsUpdate(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "conferences:actions update", obj, format, transform)
+}
+
+func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.ConferenceActionEndConferenceParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Conferences.Actions.EndConference(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "conferences:actions end-conference", obj, format, transform)
+}
+
+func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.ConferenceActionGatherDtmfAudioParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Conferences.Actions.GatherDtmfAudio(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "conferences:actions gather-dtmf-audio", obj, format, transform)
 }
 
 func handleConferencesActionsHold(ctx context.Context, cmd *cli.Command) error {
@@ -957,6 +1199,48 @@ func handleConferencesActionsRecordStop(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "conferences:actions record-stop", obj, format, transform)
+}
+
+func handleConferencesActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.ConferenceActionSendDtmfParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Conferences.Actions.SendDtmf(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "conferences:actions send-dtmf", obj, format, transform)
 }
 
 func handleConferencesActionsSpeak(ctx context.Context, cmd *cli.Command) error {

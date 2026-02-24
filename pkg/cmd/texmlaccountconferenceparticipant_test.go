@@ -10,7 +10,7 @@ import (
 )
 
 func TestTexmlAccountsConferencesParticipantsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "retrieve",
@@ -21,7 +21,7 @@ func TestTexmlAccountsConferencesParticipantsRetrieve(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesParticipantsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "update",
@@ -43,7 +43,7 @@ func TestTexmlAccountsConferencesParticipantsUpdate(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesParticipantsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "delete",
@@ -54,7 +54,7 @@ func TestTexmlAccountsConferencesParticipantsDelete(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "participants",
@@ -62,6 +62,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 		"--conference-sid", "conference_sid",
 		"--amd-status-callback", "https://www.example.com/amd_result",
 		"--amd-status-callback-method", "GET",
+		"--application-sid", "1846572522338780702",
 		"--beep", "onExit",
 		"--caller-id", "Info",
 		"--call-sid-to-coach", "v3:9X2vxPDFY2RHSJ1EdMS0RHRksMTg7ldNxdjWbVr9zBjbGjGsSe-aiQ",
@@ -81,6 +82,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 		"--early-media=true",
 		"--end-conference-on-exit=true",
 		"--from", "+12065550200",
+		"--label", "customer",
 		"--machine-detection", "Enable",
 		"--machine-detection-silence-timeout", "2000",
 		"--machine-detection-speech-end-threshold", "2000",
@@ -119,6 +121,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 		"--conference-sid", "conference_sid",
 		"--amd-status-callback", "https://www.example.com/amd_result",
 		"--amd-status-callback-method", "GET",
+		"--application-sid", "1846572522338780702",
 		"--beep", "onExit",
 		"--caller-id", "Info",
 		"--call-sid-to-coach", "v3:9X2vxPDFY2RHSJ1EdMS0RHRksMTg7ldNxdjWbVr9zBjbGjGsSe-aiQ",
@@ -139,6 +142,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 		"--early-media=true",
 		"--end-conference-on-exit=true",
 		"--from", "+12065550200",
+		"--label", "customer",
 		"--machine-detection", "Enable",
 		"--machine-detection-silence-timeout", "2000",
 		"--machine-detection-speech-end-threshold", "2000",
@@ -168,7 +172,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 }
 
 func TestTexmlAccountsConferencesParticipantsRetrieveParticipants(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "retrieve-participants",

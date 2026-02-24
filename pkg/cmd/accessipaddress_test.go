@@ -10,7 +10,7 @@ import (
 )
 
 func TestAccessIPAddressCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-address", "create",
@@ -20,7 +20,7 @@ func TestAccessIPAddressCreate(t *testing.T) {
 }
 
 func TestAccessIPAddressRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-address", "retrieve",
@@ -29,7 +29,7 @@ func TestAccessIPAddressRetrieve(t *testing.T) {
 }
 
 func TestAccessIPAddressList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-address", "list",
@@ -54,7 +54,7 @@ func TestAccessIPAddressList(t *testing.T) {
 }
 
 func TestAccessIPAddressDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-address", "delete",

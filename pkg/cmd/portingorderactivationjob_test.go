@@ -9,7 +9,7 @@ import (
 )
 
 func TestPortingOrdersActivationJobsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:activation-jobs", "retrieve",
@@ -19,7 +19,7 @@ func TestPortingOrdersActivationJobsRetrieve(t *testing.T) {
 }
 
 func TestPortingOrdersActivationJobsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:activation-jobs", "update",
@@ -30,7 +30,7 @@ func TestPortingOrdersActivationJobsUpdate(t *testing.T) {
 }
 
 func TestPortingOrdersActivationJobsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:activation-jobs", "list",

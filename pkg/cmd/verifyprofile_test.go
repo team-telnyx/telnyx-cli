@@ -10,15 +10,16 @@ import (
 )
 
 func TestVerifyProfilesCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "create",
 		"--name", "Test Profile",
 		"--call", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
-		"--flashcall", "{default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
+		"--flashcall", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
 		"--language", "en-US",
-		"--sms", "{whitelisted_destinations: [US, CA], alpha_sender: sqF, app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d}",
+		"--rcs", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, sms_fallback: true, whitelisted_destinations: [US, CA]}",
+		"--sms", "{alpha_sender: sqF, app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 		"--webhook-failover-url", "http://example.com/webhook/failover",
 		"--webhook-url", "http://example.com/webhook",
 	)
@@ -36,22 +37,29 @@ func TestVerifyProfilesCreate(t *testing.T) {
 		"--call.default-verification-timeout-secs", "300",
 		"--call.messaging-template-id", "0abb5b4f-459f-445a-bfcd-488998b7572d",
 		"--call.whitelisted-destinations", "[US, CA]",
+		"--flashcall.app-name", "Example Secure App",
 		"--flashcall.default-verification-timeout-secs", "300",
 		"--flashcall.whitelisted-destinations", "[US, CA]",
 		"--language", "en-US",
-		"--sms.whitelisted-destinations", "[US, CA]",
+		"--rcs.app-name", "Example Secure App",
+		"--rcs.code-length", "6",
+		"--rcs.default-verification-timeout-secs", "300",
+		"--rcs.messaging-template-id", "0abb5b4f-459f-445a-bfcd-488998b7572d",
+		"--rcs.sms-fallback=true",
+		"--rcs.whitelisted-destinations", "[US, CA]",
 		"--sms.alpha-sender", "sqF",
 		"--sms.app-name", "Example Secure App",
 		"--sms.code-length", "6",
 		"--sms.default-verification-timeout-secs", "300",
 		"--sms.messaging-template-id", "0abb5b4f-459f-445a-bfcd-488998b7572d",
+		"--sms.whitelisted-destinations", "[US, CA]",
 		"--webhook-failover-url", "http://example.com/webhook/failover",
 		"--webhook-url", "http://example.com/webhook",
 	)
 }
 
 func TestVerifyProfilesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "retrieve",
@@ -60,15 +68,16 @@ func TestVerifyProfilesRetrieve(t *testing.T) {
 }
 
 func TestVerifyProfilesUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "update",
 		"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--call", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
-		"--flashcall", "{default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
+		"--flashcall", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
 		"--language", "en-US",
 		"--name", "Test Profile",
+		"--rcs", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, sms_fallback: true, whitelisted_destinations: [US, CA]}",
 		"--sms", "{alpha_sender: sqF, app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 		"--webhook-failover-url", "http://example.com/webhook/failover",
 		"--webhook-url", "http://example.com/webhook",
@@ -87,10 +96,17 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 		"--call.default-verification-timeout-secs", "300",
 		"--call.messaging-template-id", "0abb5b4f-459f-445a-bfcd-488998b7572d",
 		"--call.whitelisted-destinations", "[US, CA]",
+		"--flashcall.app-name", "Example Secure App",
 		"--flashcall.default-verification-timeout-secs", "300",
 		"--flashcall.whitelisted-destinations", "[US, CA]",
 		"--language", "en-US",
 		"--name", "Test Profile",
+		"--rcs.app-name", "Example Secure App",
+		"--rcs.code-length", "6",
+		"--rcs.default-verification-timeout-secs", "300",
+		"--rcs.messaging-template-id", "0abb5b4f-459f-445a-bfcd-488998b7572d",
+		"--rcs.sms-fallback=true",
+		"--rcs.whitelisted-destinations", "[US, CA]",
 		"--sms.alpha-sender", "sqF",
 		"--sms.app-name", "Example Secure App",
 		"--sms.code-length", "6",
@@ -103,7 +119,7 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 }
 
 func TestVerifyProfilesList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "list",
@@ -126,7 +142,7 @@ func TestVerifyProfilesList(t *testing.T) {
 }
 
 func TestVerifyProfilesDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "delete",
@@ -135,7 +151,7 @@ func TestVerifyProfilesDelete(t *testing.T) {
 }
 
 func TestVerifyProfilesCreateTemplate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "create-template",
@@ -144,7 +160,7 @@ func TestVerifyProfilesCreateTemplate(t *testing.T) {
 }
 
 func TestVerifyProfilesRetrieveTemplates(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "retrieve-templates",
@@ -152,7 +168,7 @@ func TestVerifyProfilesRetrieveTemplates(t *testing.T) {
 }
 
 func TestVerifyProfilesUpdateTemplate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "update-template",

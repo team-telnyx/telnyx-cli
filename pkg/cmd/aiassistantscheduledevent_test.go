@@ -9,7 +9,7 @@ import (
 )
 
 func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:scheduled-events", "create",
@@ -19,12 +19,13 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 		"--telnyx-conversation-channel", "phone_call",
 		"--telnyx-end-user-target", "telnyx_end_user_target",
 		"--conversation-metadata", "{foo: string}",
+		"--dynamic-variables", "{foo: string}",
 		"--text", "text",
 	)
 }
 
 func TestAIAssistantsScheduledEventsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:scheduled-events", "retrieve",
@@ -34,7 +35,7 @@ func TestAIAssistantsScheduledEventsRetrieve(t *testing.T) {
 }
 
 func TestAIAssistantsScheduledEventsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:scheduled-events", "list",
@@ -48,7 +49,7 @@ func TestAIAssistantsScheduledEventsList(t *testing.T) {
 }
 
 func TestAIAssistantsScheduledEventsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:scheduled-events", "delete",

@@ -87,12 +87,6 @@ var messagingTollfreeVerificationRequestsCreate = requestflag.WithInnerFlags(cli
 			BodyPath: "corporateWebsite",
 		},
 		&requestflag.Flag[string]{
-			Name:     "isv-reseller",
-			Usage:    "ISV name",
-			Required: true,
-			BodyPath: "isvReseller",
-		},
-		&requestflag.Flag[string]{
 			Name:     "message-volume",
 			Usage:    "Message Volume Enums",
 			Required: true,
@@ -179,6 +173,11 @@ var messagingTollfreeVerificationRequestsCreate = requestflag.WithInnerFlags(cli
 			Name:     "help-message-response",
 			Usage:    "The message returned when users text 'HELP'",
 			BodyPath: "helpMessageResponse",
+		},
+		&requestflag.Flag[any]{
+			Name:     "isv-reseller",
+			Usage:    "ISV name",
+			BodyPath: "isvReseller",
 		},
 		&requestflag.Flag[any]{
 			Name:     "opt-in-confirmation-response",
@@ -313,12 +312,6 @@ var messagingTollfreeVerificationRequestsUpdate = requestflag.WithInnerFlags(cli
 			BodyPath: "corporateWebsite",
 		},
 		&requestflag.Flag[string]{
-			Name:     "isv-reseller",
-			Usage:    "ISV name",
-			Required: true,
-			BodyPath: "isvReseller",
-		},
-		&requestflag.Flag[string]{
 			Name:     "message-volume",
 			Usage:    "Message Volume Enums",
 			Required: true,
@@ -407,6 +400,11 @@ var messagingTollfreeVerificationRequestsUpdate = requestflag.WithInnerFlags(cli
 			BodyPath: "helpMessageResponse",
 		},
 		&requestflag.Flag[any]{
+			Name:     "isv-reseller",
+			Usage:    "ISV name",
+			BodyPath: "isvReseller",
+		},
+		&requestflag.Flag[any]{
 			Name:     "opt-in-confirmation-response",
 			Usage:    "Message sent to users confirming their opt-in to receive messages",
 			BodyPath: "optInConfirmationResponse",
@@ -465,6 +463,11 @@ var messagingTollfreeVerificationRequestsList = cli.Command{
 			Required:  true,
 			QueryPath: "page_size",
 		},
+		&requestflag.Flag[string]{
+			Name:      "business-name",
+			Usage:     "Filter verification requests by business name",
+			QueryPath: "business_name",
+		},
 		&requestflag.Flag[any]{
 			Name:      "date-end",
 			QueryPath: "date_end",
@@ -498,6 +501,31 @@ var messagingTollfreeVerificationRequestsDelete = cli.Command{
 		},
 	},
 	Action:          handleMessagingTollfreeVerificationRequestsDelete,
+	HideHelpCommand: true,
+}
+
+var messagingTollfreeVerificationRequestsRetrieveStatusHistory = cli.Command{
+	Name:    "retrieve-status-history",
+	Usage:   "Get the history of status changes for a verification request.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			Required:  true,
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			Usage:     "Request this many records per page. This value is automatically clamped if the provided value is too large.",
+			Required:  true,
+			QueryPath: "page[size]",
+		},
+	},
+	Action:          handleMessagingTollfreeVerificationRequestsRetrieveStatusHistory,
 	HideHelpCommand: true,
 }
 
@@ -673,4 +701,46 @@ func handleMessagingTollfreeVerificationRequestsDelete(ctx context.Context, cmd 
 	}
 
 	return client.MessagingTollfree.Verification.Requests.Delete(ctx, cmd.Value("id").(string), options...)
+}
+
+func handleMessagingTollfreeVerificationRequestsRetrieveStatusHistory(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.MessagingTollfreeVerificationRequestGetStatusHistoryParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.MessagingTollfree.Verification.Requests.GetStatusHistory(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "messaging-tollfree:verification:requests retrieve-status-history", obj, format, transform)
 }

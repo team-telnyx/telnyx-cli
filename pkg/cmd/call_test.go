@@ -10,7 +10,7 @@ import (
 )
 
 func TestCallsDial(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls", "dial",
@@ -51,6 +51,7 @@ func TestCallsDial(t *testing.T) {
 		"--sip-region", "Canada",
 		"--sip-transport-protocol", "TLS",
 		"--sound-modifications", "{octaves: 0.1, pitch: 0.8, semitone: -2, track: both}",
+		"--stream-auth-token", "your-auth-token",
 		"--stream-bidirectional-codec", "G722",
 		"--stream-bidirectional-mode", "rtp",
 		"--stream-bidirectional-sampling-rate", "16000",
@@ -142,6 +143,7 @@ func TestCallsDial(t *testing.T) {
 		"--sound-modifications.pitch", "0.8",
 		"--sound-modifications.semitone", "-2",
 		"--sound-modifications.track", "both",
+		"--stream-auth-token", "your-auth-token",
 		"--stream-bidirectional-codec", "G722",
 		"--stream-bidirectional-mode", "rtp",
 		"--stream-bidirectional-sampling-rate", "16000",
@@ -166,7 +168,7 @@ func TestCallsDial(t *testing.T) {
 }
 
 func TestCallsRetrieveStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls", "retrieve-status",

@@ -10,7 +10,7 @@ import (
 )
 
 func TestTexmlApplicationsCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "create",
@@ -63,7 +63,7 @@ func TestTexmlApplicationsCreate(t *testing.T) {
 }
 
 func TestTexmlApplicationsRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "retrieve",
@@ -72,7 +72,7 @@ func TestTexmlApplicationsRetrieve(t *testing.T) {
 }
 
 func TestTexmlApplicationsUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "update",
@@ -127,7 +127,7 @@ func TestTexmlApplicationsUpdate(t *testing.T) {
 }
 
 func TestTexmlApplicationsList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "list",
@@ -153,7 +153,7 @@ func TestTexmlApplicationsList(t *testing.T) {
 }
 
 func TestTexmlApplicationsDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "delete",

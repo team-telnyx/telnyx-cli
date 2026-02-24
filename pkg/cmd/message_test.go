@@ -10,7 +10,7 @@ import (
 )
 
 func TestMessagesRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "retrieve",
@@ -19,7 +19,7 @@ func TestMessagesRetrieve(t *testing.T) {
 }
 
 func TestMessagesCancelScheduled(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "cancel-scheduled",
@@ -27,8 +27,17 @@ func TestMessagesCancelScheduled(t *testing.T) {
 	)
 }
 
+func TestMessagesRetrieveGroupMessages(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"messages", "retrieve-group-messages",
+		"--message-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+	)
+}
+
 func TestMessagesSchedule(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "schedule",
@@ -48,12 +57,13 @@ func TestMessagesSchedule(t *testing.T) {
 }
 
 func TestMessagesSend(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send",
 		"--to", "+18445550001",
 		"--auto-detect=true",
+		"--encoding", "auto",
 		"--from", "+18445550001",
 		"--media-url", "http://example.com",
 		"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
@@ -68,7 +78,7 @@ func TestMessagesSend(t *testing.T) {
 }
 
 func TestMessagesSendGroupMms(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-group-mms",
@@ -85,13 +95,14 @@ func TestMessagesSendGroupMms(t *testing.T) {
 }
 
 func TestMessagesSendLongCode(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-long-code",
 		"--from", "+18445550001",
 		"--to", "+13125550002",
 		"--auto-detect=true",
+		"--encoding", "auto",
 		"--media-url", "http://example.com",
 		"--subject", "From Telnyx!",
 		"--text", "Hello, World!",
@@ -103,13 +114,14 @@ func TestMessagesSendLongCode(t *testing.T) {
 }
 
 func TestMessagesSendNumberPool(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-number-pool",
 		"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
 		"--to", "+13125550002",
 		"--auto-detect=true",
+		"--encoding", "auto",
 		"--media-url", "http://example.com",
 		"--subject", "From Telnyx!",
 		"--text", "Hello, World!",
@@ -121,13 +133,14 @@ func TestMessagesSendNumberPool(t *testing.T) {
 }
 
 func TestMessagesSendShortCode(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-short-code",
 		"--from", "+18445550001",
 		"--to", "+18445550001",
 		"--auto-detect=true",
+		"--encoding", "auto",
 		"--media-url", "http://example.com",
 		"--subject", "From Telnyx!",
 		"--text", "Hello, World!",
@@ -139,7 +152,7 @@ func TestMessagesSendShortCode(t *testing.T) {
 }
 
 func TestMessagesSendWhatsapp(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-whatsapp",
@@ -171,6 +184,21 @@ func TestMessagesSendWhatsapp(t *testing.T) {
 		"--whatsapp-message.type", "audio",
 		"--whatsapp-message.video", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
 		"--type", "WHATSAPP",
+		"--webhook-url", "webhook_url",
+	)
+}
+
+func TestMessagesSendWithAlphanumericSender(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"messages", "send-with-alphanumeric-sender",
+		"--from", "MyCompany",
+		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--text", "text",
+		"--to", "+E.164",
+		"--use-profile-webhooks=true",
+		"--webhook-failover-url", "webhook_failover_url",
 		"--webhook-url", "webhook_url",
 	)
 }

@@ -9,7 +9,7 @@ import (
 )
 
 func TestMessaging10dlcBrandCreate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "create",
@@ -41,7 +41,7 @@ func TestMessaging10dlcBrandCreate(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandRetrieve(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "retrieve",
@@ -50,7 +50,7 @@ func TestMessaging10dlcBrandRetrieve(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandUpdate(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "update",
@@ -60,7 +60,7 @@ func TestMessaging10dlcBrandUpdate(t *testing.T) {
 		"--email", "email",
 		"--entity-type", "PRIVATE_PROFIT",
 		"--vertical", "TECHNOLOGY",
-		"--alt-business-id", "altBusiness_id",
+		"--alt-business-id", "altBusinessId",
 		"--alt-business-id-type", "NONE",
 		"--business-contact-email", "name@example.com",
 		"--city", "New York",
@@ -84,7 +84,7 @@ func TestMessaging10dlcBrandUpdate(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "list",
@@ -101,7 +101,7 @@ func TestMessaging10dlcBrandList(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "delete",
@@ -110,7 +110,7 @@ func TestMessaging10dlcBrandDelete(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandGetFeedback(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "get-feedback",
@@ -118,8 +118,18 @@ func TestMessaging10dlcBrandGetFeedback(t *testing.T) {
 	)
 }
 
+func TestMessaging10dlcBrandGetSMSOtpByReference(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"messaging-10dlc:brand", "get-sms-otp-by-reference",
+		"--reference-id", "OTP4B2001",
+		"--brand-id", "B123ABC",
+	)
+}
+
 func TestMessaging10dlcBrandResend2faEmail(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "resend-2fa-email",
@@ -128,7 +138,7 @@ func TestMessaging10dlcBrandResend2faEmail(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandRetrieveSMSOtpStatus(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "retrieve-sms-otp-status",
@@ -137,7 +147,7 @@ func TestMessaging10dlcBrandRetrieveSMSOtpStatus(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandRevet(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "revet",
@@ -146,7 +156,7 @@ func TestMessaging10dlcBrandRevet(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandTriggerSMSOtp(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "trigger-sms-otp",
@@ -157,7 +167,7 @@ func TestMessaging10dlcBrandTriggerSMSOtp(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandVerifySMSOtp(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "verify-sms-otp",

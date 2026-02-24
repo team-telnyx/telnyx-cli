@@ -10,7 +10,7 @@ import (
 )
 
 func TestStorageBucketsUsageGetAPIUsage(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:buckets:usage", "get-api-usage",
@@ -32,7 +32,7 @@ func TestStorageBucketsUsageGetAPIUsage(t *testing.T) {
 }
 
 func TestStorageBucketsUsageGetBucketUsage(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:buckets:usage", "get-bucket-usage",

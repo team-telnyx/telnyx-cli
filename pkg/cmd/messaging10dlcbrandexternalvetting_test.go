@@ -9,7 +9,7 @@ import (
 )
 
 func TestMessaging10dlcBrandExternalVettingList(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand:external-vetting", "list",
@@ -18,7 +18,7 @@ func TestMessaging10dlcBrandExternalVettingList(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandExternalVettingImports(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand:external-vetting", "imports",
@@ -30,7 +30,7 @@ func TestMessaging10dlcBrandExternalVettingImports(t *testing.T) {
 }
 
 func TestMessaging10dlcBrandExternalVettingOrder(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand:external-vetting", "order",
