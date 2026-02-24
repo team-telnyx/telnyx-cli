@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 (2026-02-24)
+
+Full Changelog: [v0.2.0...v0.2.1](https://github.com/team-telnyx/telnyx-cli/compare/v0.2.0...v0.2.1)
+
+### Bug Fixes
+
+* pin formatting for headers to always use repeat/dot formats ([540d172](https://github.com/team-telnyx/telnyx-cli/commit/540d172963da808ed4770f833454c64add9b1e68))
+
 ## 0.2.0 (2026-02-24)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.1.0...v0.2.0)
