@@ -184,6 +184,11 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Name:     "transcription-config",
 			BodyPath: "transcription_config",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook-retries-policies",
+			Usage:    "A map of event types to retry policies. Each retry policy contains an array of `retries_ms` specifying the delays between retry attempts in milliseconds. Maximum 5 retries, total delay cannot exceed 60 seconds.",
+			BodyPath: "webhook_retries_policies",
+		},
 		&requestflag.Flag[string]{
 			Name:     "webhook-url",
 			Usage:    "Use this field to override the URL for which Telnyx will send subsequent webhooks to for this call.",
@@ -194,6 +199,17 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "HTTP request type used for `webhook_url`.",
 			Default:  "POST",
 			BodyPath: "webhook_url_method",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook-urls",
+			Usage:    "A map of event types to webhook URLs. When an event of the specified type occurs, the webhook URL associated with that event type will be called instead of `webhook_url`. Events not mapped here will use the default `webhook_url`.",
+			BodyPath: "webhook_urls",
+		},
+		&requestflag.Flag[string]{
+			Name:     "webhook-urls-method",
+			Usage:    "HTTP request method to invoke `webhook_urls`.",
+			Default:  "POST",
+			BodyPath: "webhook_urls_method",
 		},
 	},
 	Action:          handleCallsActionsAnswer,
@@ -297,6 +313,11 @@ var callsActionsBridge = cli.Command{
 			Name:     "command-id",
 			Usage:    "Use this field to avoid duplicate commands. Telnyx will ignore any command with the same `command_id` for the same `call_control_id`.",
 			BodyPath: "command_id",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "hold-after-unbridge",
+			Usage:    "Specifies behavior after the bridge ends. If set to `true`, the current leg will be put on hold after unbridge instead of being hung up.",
+			BodyPath: "hold_after_unbridge",
 		},
 		&requestflag.Flag[string]{
 			Name:     "mute-dtmf",
@@ -843,7 +864,7 @@ var callsActionsGatherUsingSpeak = cli.Command{
 	HideHelpCommand: true,
 }
 
-var callsActionsHangup = cli.Command{
+var callsActionsHangup = requestflag.WithInnerFlags(cli.Command{
 	Name:    "hangup",
 	Usage:   "Hang up the call.",
 	Suggest: true,
@@ -862,10 +883,28 @@ var callsActionsHangup = cli.Command{
 			Usage:    "Use this field to avoid duplicate commands. Telnyx will ignore any command with the same `command_id` for the same `call_control_id`.",
 			BodyPath: "command_id",
 		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "custom-header",
+			Usage:    "Custom headers to be added to the SIP BYE message.",
+			BodyPath: "custom_headers",
+		},
 	},
 	Action:          handleCallsActionsHangup,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"custom-header": {
+		&requestflag.InnerFlag[string]{
+			Name:       "custom-header.name",
+			Usage:      "The name of the header to add.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "custom-header.value",
+			Usage:      "The value of the header.",
+			InnerField: "value",
+		},
+	},
+})
 
 var callsActionsLeaveQueue = cli.Command{
 	Name:    "leave-queue",
