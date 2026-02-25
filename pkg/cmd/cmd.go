@@ -1636,6 +1636,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "payment",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&paymentCreateStoredPaymentTransaction,
+				},
+			},
+			{
 				Name:     "payment:auto-recharge-prefs",
 				Category: "API RESOURCE",
 				Suggest:  true,
