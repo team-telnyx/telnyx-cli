@@ -315,6 +315,12 @@ var callsActionsBridge = cli.Command{
 			Default:  false,
 			BodyPath: "play_ringtone",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "prevent-double-bridge",
+			Usage:    "When set to `true`, it prevents bridging if the target call is already bridged to another call. Disabled by default.",
+			Default:  false,
+			BodyPath: "prevent_double_bridge",
+		},
 		&requestflag.Flag[string]{
 			Name:     "queue",
 			Usage:    "The name of the queue you want to bridge with, can't be used together with call_control_id parameter or video_room_id parameter. Bridging with a queue means bridging with the first call in the queue. The call will always be removed from the queue regardless of whether bridging succeeds. Returns an error when the queue is empty.",

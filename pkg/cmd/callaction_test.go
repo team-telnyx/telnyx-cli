@@ -116,6 +116,7 @@ func TestCallsActionsBridge(t *testing.T) {
 		"--mute-dtmf", "opposite",
 		"--park-after-unbridge", "self",
 		"--play-ringtone=true",
+		"--prevent-double-bridge=true",
 		"--queue", "support",
 		"--record", "record-from-answer",
 		"--record-channels", "single",
