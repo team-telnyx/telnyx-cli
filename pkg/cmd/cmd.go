@@ -1982,7 +1982,11 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&queuesCreate,
 					&queuesRetrieve,
+					&queuesUpdate,
+					&queuesList,
+					&queuesDelete,
 				},
 			},
 			{
