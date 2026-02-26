@@ -468,12 +468,6 @@ var conferencesActionsRecordStart = cli.Command{
 			BodyPath: "format",
 		},
 		&requestflag.Flag[string]{
-			Name:     "channels",
-			Usage:    "When `dual`, final audio file will be stereo recorded with the conference creator on the first channel, and the rest on the second channel.",
-			Default:  "single",
-			BodyPath: "channels",
-		},
-		&requestflag.Flag[string]{
 			Name:     "command-id",
 			Usage:    "Use this field to avoid duplicate commands. Telnyx will ignore any command with the same `command_id` for the same `conference_id`.",
 			BodyPath: "command_id",
