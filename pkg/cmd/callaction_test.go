@@ -52,8 +52,11 @@ func TestCallsActionsAnswer(t *testing.T) {
 		"--stream-url", "wss://www.example.com/websocket",
 		"--transcription=true",
 		"--transcription-config", "{client_state: aGF2ZSBhIG5pY2UgZGF5ID1d, command_id: 891510ac-f3e4-11e8-af5b-de00688a4901, transcription_engine: Google, transcription_engine_config: {enable_speaker_diarization: true, hints: [string], interim_results: true, language: en, max_speaker_count: 4, min_speaker_count: 4, model: latest_long, profanity_filter: true, speech_context: [{boost: 1, phrases: [string]}], transcription_engine: Google, use_enhanced: true}, transcription_tracks: both}",
+		"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 		"--webhook-url", "https://www.example.com/server-b/",
 		"--webhook-url-method", "POST",
+		"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+		"--webhook-urls-method", "POST",
 	)
 
 	// Check that inner flags have been set up correctly
@@ -99,8 +102,11 @@ func TestCallsActionsAnswer(t *testing.T) {
 		"--transcription-config.transcription-engine", "Google",
 		"--transcription-config.transcription-engine-config", "{enable_speaker_diarization: true, hints: [string], interim_results: true, language: en, max_speaker_count: 4, min_speaker_count: 4, model: latest_long, profanity_filter: true, speech_context: [{boost: 1, phrases: [string]}], transcription_engine: Google, use_enhanced: true}",
 		"--transcription-config.transcription-tracks", "both",
+		"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 		"--webhook-url", "https://www.example.com/server-b/",
 		"--webhook-url-method", "POST",
+		"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+		"--webhook-urls-method", "POST",
 	)
 }
 
@@ -113,9 +119,11 @@ func TestCallsActionsBridge(t *testing.T) {
 		"--call-control-id-to-bridge-with", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		"--hold-after-unbridge=true",
 		"--mute-dtmf", "opposite",
 		"--park-after-unbridge", "self",
 		"--play-ringtone=true",
+		"--prevent-double-bridge=true",
 		"--queue", "support",
 		"--record", "record-from-answer",
 		"--record-channels", "single",
@@ -276,6 +284,24 @@ func TestCallsActionsHangup(t *testing.T) {
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		"--custom-header", "{name: head_1, value: val_1}",
+		"--custom-header", "{name: head_2, value: val_2}",
+	)
+
+	// Check that inner flags have been set up correctly
+	requestflag.CheckInnerFlags(callsActionsHangup)
+
+	// Alternative argument passing style using inner flags
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"calls:actions", "hangup",
+		"--call-control-id", "call_control_id",
+		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		"--custom-header.name", "head_1",
+		"--custom-header.value", "val_1",
+		"--custom-header.name", "head_2",
+		"--custom-header.value", "val_2",
 	)
 }
 

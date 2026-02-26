@@ -11,7 +11,7 @@ require (
 	github.com/itchyny/json2yaml v0.1.4
 	github.com/muesli/reflow v0.3.0
 	github.com/stretchr/testify v1.10.0
-	github.com/team-telnyx/telnyx-go/v4 v4.30.0
+	github.com/team-telnyx/telnyx-go/v4 v4.34.0
 	github.com/tidwall/gjson v1.18.0
 	github.com/tidwall/pretty v1.2.1
 	github.com/urfave/cli-docs/v3 v3.0.0-alpha6

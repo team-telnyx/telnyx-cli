@@ -1636,6 +1636,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "payment",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&paymentCreateStoredPaymentTransaction,
+				},
+			},
+			{
 				Name:     "payment:auto-recharge-prefs",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -1982,7 +1990,11 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&queuesCreate,
 					&queuesRetrieve,
+					&queuesUpdate,
+					&queuesList,
+					&queuesDelete,
 				},
 			},
 			{
@@ -2521,6 +2533,7 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&textToSpeechListVoices,
+					&textToSpeechStream,
 				},
 			},
 			{
