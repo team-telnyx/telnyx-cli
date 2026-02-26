@@ -2533,6 +2533,7 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&textToSpeechListVoices,
+					&textToSpeechStream,
 				},
 			},
 			{

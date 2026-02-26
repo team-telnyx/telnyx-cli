@@ -164,6 +164,7 @@ func TestConferencesActionsRecordStart(t *testing.T) {
 		"conferences:actions", "record-start",
 		"--id", "id",
 		"--format", "wav",
+		"--channels", "dual",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 		"--custom-file-name", "my_recording_file_name",
 		"--play-beep=true",
