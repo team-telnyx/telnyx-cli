@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.3.0 (2026-02-26)
+
+Full Changelog: [v0.2.1...v0.3.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.2.1...v0.3.0)
+
+### Features
+
+* Add missing TTS voice settings schemas and update voice descriptions ([f3f285e](https://github.com/team-telnyx/telnyx-cli/commit/f3f285eaca192811a6af90702d9c042b767e49dd))
+* Add text-to-speech WebSocket streaming OpenAPI spec ([8eda057](https://github.com/team-telnyx/telnyx-cli/commit/8eda05748827bfdf4265f6dd038cd475079238aa))
+* **api:** manual updates ([8cdcc53](https://github.com/team-telnyx/telnyx-cli/commit/8cdcc5311cbba81d6cc0404170414d4dd4985089))
+* **api:** manual updates ([792e45d](https://github.com/team-telnyx/telnyx-cli/commit/792e45dc48a15106fec9eca81a135ce8bd0fd59d))
+* PORTAL-5923: Add stored_payment_transactions endpoint to OpenAPI docs ([a0244ae](https://github.com/team-telnyx/telnyx-cli/commit/a0244ae16a737ed136ed4bccaf7e182b4c840703))
+* TELAPPS Add prevent_double_bridge to bridge command ([e9cd493](https://github.com/team-telnyx/telnyx-cli/commit/e9cd493c1bcb67fe4f7856179bb6a192c3d8a66a))
+* TELAPPS-ENGDESK-48951 add channels to conf record start ([9977d90](https://github.com/team-telnyx/telnyx-cli/commit/9977d901462b8c127ba0bb1bc348acb6e4e67315))
+
+
+### Bug Fixes
+
+* more gracefully handle empty stdin input ([b31dd84](https://github.com/team-telnyx/telnyx-cli/commit/b31dd84d5d98cf50a60c68c49e0861428a14abc8))
+
+
+### Chores
+
+* bring back other changes ([3b85ea7](https://github.com/team-telnyx/telnyx-cli/commit/3b85ea7a8084f03f3d8cc71b035087d2bc6343dd))
+* **cli:** bump go sdk version ([8d04de4](https://github.com/team-telnyx/telnyx-cli/commit/8d04de4df7c7be888ab3d4a9bb03f4d41738594c))
+* zip READMEs as part of build artifact ([bfea13f](https://github.com/team-telnyx/telnyx-cli/commit/bfea13fc0b3e5f3ff8a51b8f18b0240c3a845f13))
+
+
+### Documentation
+
+* **call-control:** Add missing params to hangup, bridge, answer ([0ad8643](https://github.com/team-telnyx/telnyx-cli/commit/0ad8643b35eece56c8bcfa8279300485976c20de))
+* **call-control:** Add queue CRUD endpoints ([598e40f](https://github.com/team-telnyx/telnyx-cli/commit/598e40fcab223d1c366ffbd82b8a483561c8e950))
+
 ## 0.2.1 (2026-02-24)
 
 Full Changelog: [v0.2.0...v0.2.1](https://github.com/team-telnyx/telnyx-cli/compare/v0.2.0...v0.2.1)
