@@ -17,17 +17,17 @@ import (
 
 var textToSpeechListVoices = cli.Command{
 	Name:    "list-voices",
-	Usage:   "Returns a list of voices that can be used with the text to speech commands.",
+	Usage:   "Retrieve a list of available voices from one or all TTS providers. When\n`provider` is specified, returns voices for that provider only. Otherwise,\nreturns voices from all providers.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:      "elevenlabs-api-key-ref",
-			Usage:     "Reference to your ElevenLabs API key stored in the Telnyx Portal",
-			QueryPath: "elevenlabs_api_key_ref",
+			Name:      "api-key",
+			Usage:     "API key for providers that require one to list voices (e.g. ElevenLabs).",
+			QueryPath: "api_key",
 		},
 		&requestflag.Flag[string]{
 			Name:      "provider",
-			Usage:     "Filter voices by provider",
+			Usage:     "Filter voices by provider. If omitted, voices from all providers are returned.",
 			QueryPath: "provider",
 		},
 	},
