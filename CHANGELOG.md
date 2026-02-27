@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (2026-02-27)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* Add TTS file-based endpoint spec ([f8add93](https://github.com/team-telnyx/telnyx-cli/commit/f8add93c7a8c7af1c58b3ff2b3ebc7065704cb1a))
+
 ## 0.3.0 (2026-02-26)
 
 Full Changelog: [v0.2.1...v0.3.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.2.1...v0.3.0)
