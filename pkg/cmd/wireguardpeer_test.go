@@ -15,7 +15,6 @@ func TestWireguardPeersCreate(t *testing.T) {
 		t,
 		"wireguard-peers", "create",
 		"--wireguard-interface-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-		"--public-key", "qF4EqlZq+5JL2IKYY8ij49daYyfKVhevJrcDxdqC8GU=",
 	)
 }
 
