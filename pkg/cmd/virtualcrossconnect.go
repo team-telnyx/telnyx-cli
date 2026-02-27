@@ -20,12 +20,6 @@ var virtualCrossConnectsCreate = cli.Command{
 	Usage:   "Create a new Virtual Cross Connect.<br /><br />For AWS and GCE, you have the\noption of creating the primary connection first and the secondary connection\nlater. You also have the option of disabling the primary and/or secondary\nconnections at any time and later re-enabling them. With Azure, you do not have\nthis option. Azure requires both the primary and secondary connections to be\ncreated at the same time and they can not be independantly disabled.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "region-code",
-			Usage:    "The region the interface should be deployed to.",
-			Required: true,
-			BodyPath: "region_code",
-		},
 		&requestflag.Flag[float64]{
 			Name:     "bandwidth-mbps",
 			Usage:    "The desired throughput in Megabits per Second (Mbps) for your Virtual Cross Connect.<br /><br />The available bandwidths can be found using the /virtual_cross_connect_regions endpoint.",

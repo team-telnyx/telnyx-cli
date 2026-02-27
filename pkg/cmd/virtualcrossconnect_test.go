@@ -14,7 +14,6 @@ func TestVirtualCrossConnectsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "create",
-		"--region-code", "ashburn-va",
 		"--bandwidth-mbps", "50",
 		"--bgp-asn", "1234",
 		"--cloud-provider", "aws",
