@@ -13,7 +13,7 @@ func TestTextToSpeechListVoices(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"text-to-speech", "list-voices",
-		"--elevenlabs-api-key-ref", "elevenlabs_api_key_ref",
+		"--api-key", "api_key",
 		"--provider", "aws",
 	)
 }
