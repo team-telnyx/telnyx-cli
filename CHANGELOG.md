@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.5.0 (2026-02-28)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** manual updates ([58fe50e](https://github.com/team-telnyx/telnyx-cli/commit/58fe50eb2c39102a968412326de82cceaca557b2))
+* **api:** manual updates ([7842380](https://github.com/team-telnyx/telnyx-cli/commit/78423802757d9956522ad5aa32c25abaa3f2f931))
+* **api:** manual updates ([b51de06](https://github.com/team-telnyx/telnyx-cli/commit/b51de06bac644ed850418240a65e68b8199138fc))
+
+
+### Chores
+
+* **ci:** shorten artifact link ([abec876](https://github.com/team-telnyx/telnyx-cli/commit/abec8765c8b48bf661b5b0601bfb11c2a733034b))
+
 ## 0.4.0 (2026-02-27)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.3.0...v0.4.0)
