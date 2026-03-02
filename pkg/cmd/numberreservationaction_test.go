@@ -13,6 +13,7 @@ func TestNumberReservationsActionsExtend(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-reservations:actions", "extend",
+		"--api-key", "string",
 		"--number-reservation-id", "number_reservation_id",
 	)
 }

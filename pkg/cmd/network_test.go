@@ -14,6 +14,7 @@ func TestNetworksCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "create",
+		"--api-key", "string",
 		"--name", "test network",
 	)
 }
@@ -23,6 +24,7 @@ func TestNetworksRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -32,6 +34,7 @@ func TestNetworksUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "update",
+		"--api-key", "string",
 		"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--name", "test network",
 	)
@@ -42,6 +45,7 @@ func TestNetworksList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "list",
+		"--api-key", "string",
 		"--filter", "{name: test network}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -65,6 +69,7 @@ func TestNetworksDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -74,6 +79,7 @@ func TestNetworksListInterfaces(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks", "list-interfaces",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--filter", "{name: test interface, type: wireguard_interface}",
 		"--page-number", "0",

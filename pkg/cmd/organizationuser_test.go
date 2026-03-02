@@ -13,6 +13,7 @@ func TestOrganizationsUsersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"organizations:users", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 		"--include-groups=true",
 	)
@@ -23,6 +24,7 @@ func TestOrganizationsUsersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"organizations:users", "list",
+		"--api-key", "string",
 		"--filter-email", "filter[email]",
 		"--filter-user-status", "enabled",
 		"--include-groups=true",
@@ -36,6 +38,7 @@ func TestOrganizationsUsersGetGroupsReport(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"organizations:users", "get-groups-report",
+		"--api-key", "string",
 		"--accept", "application/json",
 	)
 }

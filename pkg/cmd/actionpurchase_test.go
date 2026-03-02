@@ -13,6 +13,7 @@ func TestActionsPurchaseCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"actions:purchase", "create",
+		"--api-key", "string",
 		"--amount", "10",
 		"--product", "whitelabel",
 		"--sim-card-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",

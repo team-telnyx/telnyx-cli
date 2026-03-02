@@ -13,6 +13,7 @@ func TestConferencesActionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--supervisor-role", "whisper",
@@ -28,6 +29,7 @@ func TestConferencesActionsEndConference(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "end-conference",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 	)
@@ -38,6 +40,7 @@ func TestConferencesActionsGatherDtmfAudio(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "gather-dtmf-audio",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--audio-url", "http://example.com/gather_prompt.wav",
@@ -63,6 +66,7 @@ func TestConferencesActionsHold(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "hold",
+		"--api-key", "string",
 		"--id", "id",
 		"--audio-url", "http://example.com/message.wav",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
@@ -76,6 +80,7 @@ func TestConferencesActionsJoin(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "join",
+		"--api-key", "string",
 		"--id", "id",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--beep-enabled", "always",
@@ -100,6 +105,7 @@ func TestConferencesActionsLeave(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "leave",
+		"--api-key", "string",
 		"--id", "id",
 		"--call-control-id", "c46e06d7-b78f-4b13-96b6-c576af9640ff",
 		"--beep-enabled", "never",
@@ -113,6 +119,7 @@ func TestConferencesActionsMute(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "mute",
+		"--api-key", "string",
 		"--id", "id",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--region", "US",
@@ -124,6 +131,7 @@ func TestConferencesActionsPlay(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "play",
+		"--api-key", "string",
 		"--id", "id",
 		"--audio-url", "http://www.example.com/sounds/greeting.wav",
 		"--call-control-id", "string",
@@ -138,6 +146,7 @@ func TestConferencesActionsRecordPause(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "record-pause",
+		"--api-key", "string",
 		"--id", "id",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 		"--recording-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -150,6 +159,7 @@ func TestConferencesActionsRecordResume(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "record-resume",
+		"--api-key", "string",
 		"--id", "id",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 		"--recording-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -162,6 +172,7 @@ func TestConferencesActionsRecordStart(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "record-start",
+		"--api-key", "string",
 		"--id", "id",
 		"--format", "wav",
 		"--channels", "dual",
@@ -178,6 +189,7 @@ func TestConferencesActionsRecordStop(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "record-stop",
+		"--api-key", "string",
 		"--id", "id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -191,6 +203,7 @@ func TestConferencesActionsSendDtmf(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "send-dtmf",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--digits", "1234#",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
@@ -204,6 +217,7 @@ func TestConferencesActionsSpeak(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "speak",
+		"--api-key", "string",
 		"--id", "id",
 		"--payload", "Say this to participants",
 		"--voice", "female",
@@ -221,6 +235,7 @@ func TestConferencesActionsStop(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "stop",
+		"--api-key", "string",
 		"--id", "id",
 		"--call-control-id", "string",
 		"--region", "US",
@@ -232,6 +247,7 @@ func TestConferencesActionsUnhold(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "unhold",
+		"--api-key", "string",
 		"--id", "id",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--region", "US",
@@ -243,6 +259,7 @@ func TestConferencesActionsUnmute(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences:actions", "unmute",
+		"--api-key", "string",
 		"--id", "id",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--region", "US",

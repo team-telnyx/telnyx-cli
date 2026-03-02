@@ -14,6 +14,7 @@ func TestUserAddressesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"user-addresses", "create",
+		"--api-key", "string",
 		"--business-name", "Toy-O'Kon",
 		"--country-code", "US",
 		"--first-name", "Alfred",
@@ -36,6 +37,7 @@ func TestUserAddressesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"user-addresses", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -45,6 +47,7 @@ func TestUserAddressesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"user-addresses", "list",
+		"--api-key", "string",
 		"--filter", "{customer_reference: {contains: contains, eq: eq}, street_address: {contains: contains}}",
 		"--page-number", "0",
 		"--page-size", "0",

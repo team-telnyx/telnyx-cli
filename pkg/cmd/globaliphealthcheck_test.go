@@ -13,6 +13,7 @@ func TestGlobalIPHealthChecksCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-health-checks", "create",
+		"--api-key", "string",
 		"--global-ip-id", "a836125b-20b6-452e-9c03-2653f09c7ed7",
 		"--health-check-params", "{path: bar, port: bar}",
 		"--health-check-type", "http_status_2xx",
@@ -24,6 +25,7 @@ func TestGlobalIPHealthChecksRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-health-checks", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -33,6 +35,7 @@ func TestGlobalIPHealthChecksList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-health-checks", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)
@@ -43,6 +46,7 @@ func TestGlobalIPHealthChecksDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-health-checks", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }

@@ -13,6 +13,7 @@ func TestNotificationProfilesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-profiles", "create",
+		"--api-key", "string",
 		"--name", "name",
 	)
 }
@@ -22,6 +23,7 @@ func TestNotificationProfilesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-profiles", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -31,6 +33,7 @@ func TestNotificationProfilesUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-profiles", "update",
+		"--api-key", "string",
 		"--notification-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--name", "name",
 	)
@@ -41,6 +44,7 @@ func TestNotificationProfilesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-profiles", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)
@@ -51,6 +55,7 @@ func TestNotificationProfilesDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-profiles", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

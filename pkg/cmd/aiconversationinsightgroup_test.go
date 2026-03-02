@@ -13,6 +13,7 @@ func TestAIConversationsInsightGroupsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "retrieve",
+		"--api-key", "string",
 		"--group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -22,6 +23,7 @@ func TestAIConversationsInsightGroupsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "update",
+		"--api-key", "string",
 		"--group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--description", "description",
 		"--name", "name",
@@ -34,6 +36,7 @@ func TestAIConversationsInsightGroupsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "delete",
+		"--api-key", "string",
 		"--group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -43,6 +46,7 @@ func TestAIConversationsInsightGroupsInsightGroups(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "insight-groups",
+		"--api-key", "string",
 		"--name", "name",
 		"--description", "description",
 		"--webhook", "webhook",
@@ -54,6 +58,7 @@ func TestAIConversationsInsightGroupsRetrieveInsightGroups(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insight-groups", "retrieve-insight-groups",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)

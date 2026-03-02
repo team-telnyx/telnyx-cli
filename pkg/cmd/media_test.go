@@ -14,6 +14,7 @@ func TestMediaRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "retrieve",
+		"--api-key", "string",
 		"--media-name", "media_name",
 	)
 }
@@ -23,6 +24,7 @@ func TestMediaUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "update",
+		"--api-key", "string",
 		"--media-name", "media_name",
 		"--media-url", "http://www.example.com/audio.mp3",
 		"--ttl-secs", "86400",
@@ -34,6 +36,7 @@ func TestMediaList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "list",
+		"--api-key", "string",
 		"--filter", "{content_type: [application_xml]}",
 	)
 
@@ -53,6 +56,7 @@ func TestMediaDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "delete",
+		"--api-key", "string",
 		"--media-name", "media_name",
 	)
 }
@@ -62,6 +66,7 @@ func TestMediaUpload(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "upload",
+		"--api-key", "string",
 		"--media-url", "http://www.example.com/audio.mp3",
 		"--media-name", "my-file",
 		"--ttl-secs", "86400",

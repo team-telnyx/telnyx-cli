@@ -14,6 +14,7 @@ func TestDynamicEmergencyAddressesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-addresses", "create",
+		"--api-key", "string",
 		"--administrative-area", "TX",
 		"--country-code", "US",
 		"--house-number", "600",
@@ -33,6 +34,7 @@ func TestDynamicEmergencyAddressesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-addresses", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -42,6 +44,7 @@ func TestDynamicEmergencyAddressesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-addresses", "list",
+		"--api-key", "string",
 		"--filter", "{country_code: country_code, status: pending}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -66,6 +69,7 @@ func TestDynamicEmergencyAddressesDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-addresses", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

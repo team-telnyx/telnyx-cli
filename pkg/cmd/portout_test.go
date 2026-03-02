@@ -14,6 +14,7 @@ func TestPortoutsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -23,6 +24,7 @@ func TestPortoutsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "list",
+		"--api-key", "string",
 		"--filter", "{carrier_name: carrier_name, country_code: US, country_code_in: [CA, US], foc_date: '2024-09-04T00:00:00.000Z', inserted_at: {gte: '2024-09-04T00:00:00.000Z', lte: '2024-09-04T00:00:00.000Z'}, phone_number: '+13035551212', pon: pon, ported_out_at: {gte: '2024-09-04T00:00:00.000Z', lte: '2024-09-04T00:00:00.000Z'}, spid: spid, status: pending, status_in: [pending], support_key: PO_abc123}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -57,6 +59,7 @@ func TestPortoutsListRejectionCodes(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "list-rejection-codes",
+		"--api-key", "string",
 		"--portout-id", "329d6658-8f93-405d-862f-648776e8afd7",
 		"--filter", "{code: 1002}",
 	)
@@ -78,6 +81,7 @@ func TestPortoutsUpdateStatus(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "update-status",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--status", "authorized",
 		"--reason", "I do not recognize this transaction",

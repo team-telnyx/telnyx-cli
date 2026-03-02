@@ -13,5 +13,6 @@ func TestGlobalIPAllowedPortsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-allowed-ports", "list",
+		"--api-key", "string",
 	)
 }

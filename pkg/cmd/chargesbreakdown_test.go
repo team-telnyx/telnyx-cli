@@ -13,8 +13,9 @@ func TestChargesBreakdownRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"charges-breakdown", "retrieve",
-		"--start-date", "2025-05-01",
-		"--end-date", "2025-06-01",
+		"--api-key", "string",
+		"--start-date", "'2025-05-01'",
+		"--end-date", "'2025-06-01'",
 		"--format", "json",
 	)
 }

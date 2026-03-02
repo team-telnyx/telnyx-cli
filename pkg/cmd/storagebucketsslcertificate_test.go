@@ -13,9 +13,10 @@ func TestStorageBucketsSslCertificateCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:buckets:ssl-certificate", "create",
+		"--api-key", "string",
 		"--bucket-name", "",
-		"--certificate", "",
-		"--private-key", "",
+		"--certificate", "...",
+		"--private-key", "...",
 	)
 }
 
@@ -24,6 +25,7 @@ func TestStorageBucketsSslCertificateRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:buckets:ssl-certificate", "retrieve",
+		"--api-key", "string",
 		"--bucket-name", "",
 	)
 }
@@ -33,6 +35,7 @@ func TestStorageBucketsSslCertificateDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:buckets:ssl-certificate", "delete",
+		"--api-key", "string",
 		"--bucket-name", "",
 	)
 }

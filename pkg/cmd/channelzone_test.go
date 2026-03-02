@@ -13,6 +13,7 @@ func TestChannelZonesUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"channel-zones", "update",
+		"--api-key", "string",
 		"--channel-zone-id", "channel_zone_id",
 		"--channels", "0",
 	)
@@ -23,6 +24,7 @@ func TestChannelZonesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"channel-zones", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)

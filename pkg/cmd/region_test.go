@@ -13,5 +13,6 @@ func TestRegionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"regions", "list",
+		"--api-key", "string",
 	)
 }

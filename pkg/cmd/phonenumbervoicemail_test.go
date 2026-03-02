@@ -13,6 +13,7 @@ func TestPhoneNumbersVoicemailCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voicemail", "create",
+		"--api-key", "string",
 		"--phone-number-id", "123455678900",
 		"--enabled=true",
 		"--pin", "1234",
@@ -24,6 +25,7 @@ func TestPhoneNumbersVoicemailRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voicemail", "retrieve",
+		"--api-key", "string",
 		"--phone-number-id", "123455678900",
 	)
 }
@@ -33,6 +35,7 @@ func TestPhoneNumbersVoicemailUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voicemail", "update",
+		"--api-key", "string",
 		"--phone-number-id", "123455678900",
 		"--enabled=true",
 		"--pin", "1234",

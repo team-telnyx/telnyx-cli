@@ -13,6 +13,7 @@ func TestActionsRegisterCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"actions:register", "create",
+		"--api-key", "string",
 		"--registration-code", "0000000001",
 		"--registration-code", "0000000002",
 		"--registration-code", "0000000003",

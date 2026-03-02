@@ -14,6 +14,7 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "create",
+		"--api-key", "string",
 		"--connection-name", "string",
 		"--active=true",
 		"--anchorsite-override", "Latency",
@@ -117,6 +118,7 @@ func TestFqdnConnectionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "retrieve",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 	)
 }
@@ -126,6 +128,7 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--active=true",
 		"--anchorsite-override", "Latency",
@@ -229,6 +232,7 @@ func TestFqdnConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "list",
+		"--api-key", "string",
 		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -256,6 +260,7 @@ func TestFqdnConnectionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "delete",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 	)
 }

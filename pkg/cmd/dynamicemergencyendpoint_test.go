@@ -14,6 +14,7 @@ func TestDynamicEmergencyEndpointsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-endpoints", "create",
+		"--api-key", "string",
 		"--callback-number", "+13125550000",
 		"--caller-name", "Jane Doe Desk Phone",
 		"--dynamic-emergency-address-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
@@ -25,6 +26,7 @@ func TestDynamicEmergencyEndpointsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-endpoints", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -34,6 +36,7 @@ func TestDynamicEmergencyEndpointsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-endpoints", "list",
+		"--api-key", "string",
 		"--filter", "{country_code: country_code, status: pending}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -58,6 +61,7 @@ func TestDynamicEmergencyEndpointsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-endpoints", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

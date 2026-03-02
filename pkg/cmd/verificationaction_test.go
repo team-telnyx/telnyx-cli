@@ -13,6 +13,7 @@ func TestVerificationsActionsVerify(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications:actions", "verify",
+		"--api-key", "string",
 		"--verification-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--code", "17686",
 		"--status", "accepted",

@@ -13,6 +13,7 @@ func TestPaymentAutoRechargePrefsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"payment:auto-recharge-prefs", "update",
+		"--api-key", "string",
 		"--enabled=true",
 		"--invoice-enabled=true",
 		"--preference", "credit_paypal",
@@ -26,5 +27,6 @@ func TestPaymentAutoRechargePrefsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"payment:auto-recharge-prefs", "list",
+		"--api-key", "string",
 	)
 }

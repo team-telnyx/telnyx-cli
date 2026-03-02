@@ -14,6 +14,7 @@ func TestExternalConnectionsReleasesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:releases", "retrieve",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--release-id", "7b6a6449-b055-45a6-81f6-f6f0dffa4cc6",
 	)
@@ -24,6 +25,7 @@ func TestExternalConnectionsReleasesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:releases", "list",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+123', eq: '+1234567890'}, status: {eq: [pending, in_progress]}}",
 		"--page-number", "0",

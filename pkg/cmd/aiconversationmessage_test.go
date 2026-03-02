@@ -13,6 +13,7 @@ func TestAIConversationsMessagesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:messages", "list",
+		"--api-key", "string",
 		"--conversation-id", "conversation_id",
 	)
 }

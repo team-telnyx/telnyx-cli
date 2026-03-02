@@ -13,6 +13,7 @@ func TestAIMissionsRunsEventsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:events", "list",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--agent-id", "agent_id",
@@ -28,6 +29,7 @@ func TestAIMissionsRunsEventsGetEventDetails(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:events", "get-event-details",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--event-id", "event_id",
@@ -39,6 +41,7 @@ func TestAIMissionsRunsEventsLog(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:events", "log",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--summary", "summary",

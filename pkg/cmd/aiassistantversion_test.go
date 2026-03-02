@@ -14,6 +14,7 @@ func TestAIAssistantsVersionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:versions", "retrieve",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--version-id", "version_id",
 		"--include-mcp-servers=true",
@@ -25,6 +26,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:versions", "update",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--version-id", "version_id",
 		"--description", "description",
@@ -111,6 +113,7 @@ func TestAIAssistantsVersionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:versions", "list",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 	)
 }
@@ -120,6 +123,7 @@ func TestAIAssistantsVersionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:versions", "delete",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--version-id", "version_id",
 	)
@@ -130,6 +134,7 @@ func TestAIAssistantsVersionsPromote(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:versions", "promote",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--version-id", "version_id",
 	)

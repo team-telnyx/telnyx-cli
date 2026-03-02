@@ -14,6 +14,7 @@ func TestNotificationSettingsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "create",
+		"--api-key", "string",
 		"--notification-channel-id", "12455643-3cf1-4683-ad23-1cd32f7d5e0a",
 		"--notification-event-condition-id", "70c7c5cb-dce2-4124-accb-870d39dbe852",
 		"--notification-profile-id", "12455643-3cf1-4683-ad23-1cd32f7d5e0a",
@@ -40,6 +41,7 @@ func TestNotificationSettingsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -49,6 +51,7 @@ func TestNotificationSettingsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "list",
+		"--api-key", "string",
 		"--filter", "{associated_record_type: {eq: phone_number}, channel_type_id: {eq: webhook}, notification_channel: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, notification_event_condition_id: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, notification_profile_id: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, status: {eq: enable-received}}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -77,6 +80,7 @@ func TestNotificationSettingsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

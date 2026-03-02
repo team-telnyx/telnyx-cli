@@ -14,6 +14,7 @@ func TestMobileNetworkOperatorsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-network-operators", "list",
+		"--api-key", "string",
 		"--filter", "{country_code: US, mcc: '310', mnc: '410', name: {contains: T&T, ends_with: T, starts_with: AT}, network_preferences_enabled: true, tadig: USACG}",
 		"--page-number", "0",
 		"--page-size", "0",

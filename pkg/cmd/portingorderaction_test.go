@@ -13,6 +13,7 @@ func TestPortingOrdersActionsActivate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:actions", "activate",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -22,6 +23,7 @@ func TestPortingOrdersActionsCancel(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:actions", "cancel",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -31,6 +33,7 @@ func TestPortingOrdersActionsConfirm(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:actions", "confirm",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -40,6 +43,7 @@ func TestPortingOrdersActionsShare(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:actions", "share",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--expires-in-seconds", "3600",
 		"--permissions", "porting_order.document.read",

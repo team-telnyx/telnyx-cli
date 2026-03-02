@@ -13,6 +13,7 @@ func TestAIMcpServersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "create",
+		"--api-key", "string",
 		"--name", "name",
 		"--type", "type",
 		"--url", "url",
@@ -26,6 +27,7 @@ func TestAIMcpServersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "retrieve",
+		"--api-key", "string",
 		"--mcp-server-id", "mcp_server_id",
 	)
 }
@@ -35,11 +37,12 @@ func TestAIMcpServersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "update",
+		"--api-key", "string",
 		"--mcp-server-id", "mcp_server_id",
 		"--id", "id",
 		"--allowed-tool", "[string]",
 		"--api-key-ref", "api_key_ref",
-		"--created-at", "2019-12-27T18:11:19.117Z",
+		"--created-at", "'2019-12-27T18:11:19.117Z'",
 		"--name", "name",
 		"--type", "type",
 		"--url", "url",
@@ -51,6 +54,7 @@ func TestAIMcpServersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "list",
+		"--api-key", "string",
 		"--page-number", "1",
 		"--page-size", "1",
 		"--type", "type",
@@ -63,6 +67,7 @@ func TestAIMcpServersDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:mcp-servers", "delete",
+		"--api-key", "string",
 		"--mcp-server-id", "mcp_server_id",
 	)
 }

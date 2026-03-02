@@ -13,6 +13,7 @@ func TestNetworksDefaultGatewayCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks:default-gateway", "create",
+		"--api-key", "string",
 		"--network-identifier", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--wireguard-peer-id", "e66c496d-4a85-423b-8b2a-8e63fac20320",
 	)
@@ -23,6 +24,7 @@ func TestNetworksDefaultGatewayRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks:default-gateway", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -32,6 +34,7 @@ func TestNetworksDefaultGatewayDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"networks:default-gateway", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }

@@ -14,6 +14,7 @@ func TestDocumentLinksList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"document-links", "list",
+		"--api-key", "string",
 		"--filter", "{linked_record_type: porting_order, linked_resource_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
 		"--page-number", "0",
 		"--page-size", "0",

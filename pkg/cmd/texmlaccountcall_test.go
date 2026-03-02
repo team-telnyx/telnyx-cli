@@ -14,6 +14,7 @@ func TestTexmlAccountsCallsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "retrieve",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--call-sid", "call_sid",
 	)
@@ -24,6 +25,7 @@ func TestTexmlAccountsCallsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "update",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--call-sid", "call_sid",
 		"--fallback-method", "GET",
@@ -42,6 +44,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "calls",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--application-sid", "example-app-sid",
 		"--from", "+13120001234",
@@ -142,6 +145,7 @@ func TestTexmlAccountsCallsRetrieveCalls(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "retrieve-calls",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--end-time", "EndTime",
 		"--end-time-gt", "EndTime_gt",
@@ -163,6 +167,7 @@ func TestTexmlAccountsCallsSiprecJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "siprec-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--call-sid", "call_sid",
 		"--connector-name", "my_connector",
@@ -182,6 +187,7 @@ func TestTexmlAccountsCallsStreamsJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "streams-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--call-sid", "call_sid",
 		"--bidirectional-codec", "G722",

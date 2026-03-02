@@ -13,6 +13,7 @@ func TestAIConversationsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "create",
+		"--api-key", "string",
 		"--metadata", "{foo: string}",
 		"--name", "name",
 	)
@@ -23,6 +24,7 @@ func TestAIConversationsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "retrieve",
+		"--api-key", "string",
 		"--conversation-id", "conversation_id",
 	)
 }
@@ -32,6 +34,7 @@ func TestAIConversationsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "update",
+		"--api-key", "string",
 		"--conversation-id", "conversation_id",
 		"--metadata", "{foo: string}",
 	)
@@ -42,6 +45,7 @@ func TestAIConversationsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "list",
+		"--api-key", "string",
 		"--id", "id",
 		"--created-at", "created_at",
 		"--last-message-at", "last_message_at",
@@ -62,6 +66,7 @@ func TestAIConversationsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "delete",
+		"--api-key", "string",
 		"--conversation-id", "conversation_id",
 	)
 }
@@ -71,12 +76,13 @@ func TestAIConversationsAddMessage(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "add-message",
+		"--api-key", "string",
 		"--conversation-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--role", "role",
 		"--content", "content",
 		"--metadata", "{foo: string}",
 		"--name", "name",
-		"--sent-at", "2019-12-27T18:11:19.117Z",
+		"--sent-at", "'2019-12-27T18:11:19.117Z'",
 		"--tool-call-id", "tool_call_id",
 		"--tool-call", "{foo: bar}",
 		"--tool-choice", "string",
@@ -88,6 +94,7 @@ func TestAIConversationsRetrieveConversationsInsights(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations", "retrieve-conversations-insights",
+		"--api-key", "string",
 		"--conversation-id", "conversation_id",
 	)
 }

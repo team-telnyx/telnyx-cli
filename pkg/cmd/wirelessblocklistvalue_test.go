@@ -13,6 +13,7 @@ func TestWirelessBlocklistValuesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklist-values", "list",
+		"--api-key", "string",
 		"--type", "country",
 	)
 }

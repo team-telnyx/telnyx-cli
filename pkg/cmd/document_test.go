@@ -14,6 +14,7 @@ func TestDocumentsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -23,6 +24,7 @@ func TestDocumentsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "update",
+		"--api-key", "string",
 		"--document-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--customer-reference", "MY REF 001",
 		"--filename", "test-document.pdf",
@@ -34,6 +36,7 @@ func TestDocumentsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "list",
+		"--api-key", "string",
 		"--filter", "{created_at: {gt: '2021-01-01T00:00:00Z', lt: '2021-04-09T22:25:27.521Z'}, customer_reference: {eq: MY REF 001, in: [REF001, REF002]}, filename: {contains: invoice}}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -61,6 +64,7 @@ func TestDocumentsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -70,6 +74,7 @@ func TestDocumentsGenerateDownloadLink(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "generate-download-link",
+		"--api-key", "string",
 		"--id", "550e8400-e29b-41d4-a716-446655440000",
 	)
 }
@@ -79,6 +84,7 @@ func TestDocumentsUpload(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "upload",
+		"--api-key", "string",
 		"--document", "{customer_reference: MY REF 001, file: ZXhhbXBsZSBvZiBlbmNvZGVkIGNvbnRlbnQ=, filename: test-document.pdf, url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf}",
 	)
 
@@ -101,6 +107,7 @@ func TestDocumentsUploadJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "upload-json",
+		"--api-key", "string",
 		"--document", "{customer_reference: MY REF 001, file: ZXhhbXBsZSBvZiBlbmNvZGVkIGNvbnRlbnQ=, filename: test-document.pdf, url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf}",
 	)
 

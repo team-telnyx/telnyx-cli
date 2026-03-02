@@ -13,6 +13,7 @@ func TestSimCardGroupsActionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -22,6 +23,7 @@ func TestSimCardGroupsActionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "list",
+		"--api-key", "string",
 		"--filter-sim-card-group-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 		"--filter-status", "in-progress",
 		"--filter-type", "set_private_wireless_gateway",
@@ -35,6 +37,7 @@ func TestSimCardGroupsActionsRemovePrivateWirelessGateway(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "remove-private-wireless-gateway",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -44,6 +47,7 @@ func TestSimCardGroupsActionsRemoveWirelessBlocklist(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "remove-wireless-blocklist",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -53,6 +57,7 @@ func TestSimCardGroupsActionsSetPrivateWirelessGateway(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "set-private-wireless-gateway",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--private-wireless-gateway-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
@@ -63,6 +68,7 @@ func TestSimCardGroupsActionsSetWirelessBlocklist(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups:actions", "set-wireless-blocklist",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--wireless-blocklist-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)

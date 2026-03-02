@@ -14,6 +14,7 @@ func TestCommentsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"comments", "create",
+		"--api-key", "string",
 		"--body", "Hi there, ....",
 		"--comment-record-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
 		"--comment-record-type", "sub_number_order",
@@ -25,6 +26,7 @@ func TestCommentsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"comments", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -34,6 +36,7 @@ func TestCommentsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"comments", "list",
+		"--api-key", "string",
 		"--filter", "{comment_record_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576, comment_record_type: sub_number_order}",
 	)
 
@@ -54,6 +57,7 @@ func TestCommentsMarkAsRead(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"comments", "mark-as-read",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }

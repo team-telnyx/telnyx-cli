@@ -13,6 +13,7 @@ func TestTexmlAccountsRecordingsJsonDeleteRecordingSidJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:recordings:json", "delete-recording-sid-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--recording-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
@@ -23,6 +24,7 @@ func TestTexmlAccountsRecordingsJsonRetrieveRecordingSidJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:recordings:json", "retrieve-recording-sid-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--recording-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)

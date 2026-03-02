@@ -14,6 +14,7 @@ func TestVirtualCrossConnectsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "create",
+		"--api-key", "string",
 		"--region-code", "ashburn-va",
 		"--bandwidth-mbps", "50",
 		"--bgp-asn", "1234",
@@ -37,6 +38,7 @@ func TestVirtualCrossConnectsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -46,6 +48,7 @@ func TestVirtualCrossConnectsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "update",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--primary-cloud-ip", "169.254.0.2",
 		"--primary-enabled=true",
@@ -61,6 +64,7 @@ func TestVirtualCrossConnectsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "list",
+		"--api-key", "string",
 		"--filter", "{network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -84,6 +88,7 @@ func TestVirtualCrossConnectsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }

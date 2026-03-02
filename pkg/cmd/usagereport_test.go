@@ -13,6 +13,7 @@ func TestUsageReportsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"usage-reports", "list",
+		"--api-key", "string",
 		"--dimension", "string",
 		"--metric", "string",
 		"--product", "product",
@@ -34,6 +35,7 @@ func TestUsageReportsGetOptions(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"usage-reports", "get-options",
+		"--api-key", "string",
 		"--product", "product",
 		"--authorization-bearer", "authorization_bearer",
 	)

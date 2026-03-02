@@ -14,6 +14,7 @@ func TestRequirementsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirements", "retrieve",
+		"--api-key", "string",
 		"--id", "a9dad8d5-fdbd-49d7-aa23-39bb08a5ebaa",
 	)
 }
@@ -23,6 +24,7 @@ func TestRequirementsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirements", "list",
+		"--api-key", "string",
 		"--filter", "{action: porting, country_code: US, phone_number_type: local}",
 		"--page-number", "0",
 		"--page-size", "0",

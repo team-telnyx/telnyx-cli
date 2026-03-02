@@ -13,6 +13,7 @@ func TestPhoneNumbersMessagingRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:messaging", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -22,6 +23,7 @@ func TestPhoneNumbersMessagingUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:messaging", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--messaging-product", "P2P",
 		"--messaging-profile-id", "dd50eba1-a0c0-4563-9925-b25e842a7cb6",
@@ -34,6 +36,7 @@ func TestPhoneNumbersMessagingList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:messaging", "list",
+		"--api-key", "string",
 		"--filter-messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter-phone-number", "filter[phone_number]",
 		"--filter-phone-number-contains", "filter[phone_number][contains]",

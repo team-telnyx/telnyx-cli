@@ -13,6 +13,7 @@ func TestOrganizationsUsersActionsRemove(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"organizations:users:actions", "remove",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }

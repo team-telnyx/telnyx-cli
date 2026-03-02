@@ -13,6 +13,7 @@ func TestStorageMigrationsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migrations", "create",
+		"--api-key", "string",
 		"--source-id", "source_id",
 		"--target-bucket-name", "target_bucket_name",
 		"--target-region", "target_region",
@@ -25,6 +26,7 @@ func TestStorageMigrationsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migrations", "retrieve",
+		"--api-key", "string",
 		"--id", "",
 	)
 }
@@ -34,5 +36,6 @@ func TestStorageMigrationsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migrations", "list",
+		"--api-key", "string",
 	)
 }

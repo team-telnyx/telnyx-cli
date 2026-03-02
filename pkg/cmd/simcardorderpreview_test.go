@@ -13,6 +13,7 @@ func TestSimCardOrderPreviewPreview(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-order-preview", "preview",
+		"--api-key", "string",
 		"--address-id", "1293384261075731499",
 		"--quantity", "21",
 	)

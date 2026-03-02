@@ -13,6 +13,7 @@ func TestPortoutsCommentsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:comments", "create",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--body", "body",
 	)
@@ -23,6 +24,7 @@ func TestPortoutsCommentsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:comments", "list",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

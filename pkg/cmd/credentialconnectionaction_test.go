@@ -13,6 +13,7 @@ func TestCredentialConnectionsActionsCheckRegistrationStatus(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections:actions", "check-registration-status",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }

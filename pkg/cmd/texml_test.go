@@ -13,6 +13,7 @@ func TestTexmlSecrets(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml", "secrets",
+		"--api-key", "string",
 		"--name", "My Secret Name",
 		"--value", "My Secret Value",
 	)

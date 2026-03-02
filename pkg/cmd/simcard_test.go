@@ -14,6 +14,7 @@ func TestSimCardsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--include-pin-puk-codes=true",
 		"--include-sim-card-group=true",
@@ -25,6 +26,7 @@ func TestSimCardsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "update",
+		"--api-key", "string",
 		"--sim-card-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--authorized-imei", "['106516771852751', '534051870479563', '508821468377961']",
 		"--data-limit", "{amount: '2048.1', unit: MB}",
@@ -58,6 +60,7 @@ func TestSimCardsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "list",
+		"--api-key", "string",
 		"--filter", "{iccid: '89310410106543789301', msisdn: '+13109976224', status: [enabled], tags: [personal, customers, active-customers]}",
 		"--filter-sim-card-group-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 		"--include-sim-card-group=true",
@@ -90,6 +93,7 @@ func TestSimCardsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--report-lost=true",
 	)
@@ -100,6 +104,7 @@ func TestSimCardsGetActivationCode(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "get-activation-code",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -109,6 +114,7 @@ func TestSimCardsGetDeviceDetails(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "get-device-details",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -118,6 +124,7 @@ func TestSimCardsGetPublicIP(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "get-public-ip",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -127,6 +134,7 @@ func TestSimCardsListWirelessConnectivityLogs(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "list-wireless-connectivity-logs",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--page-number", "1",
 		"--page-size", "1",

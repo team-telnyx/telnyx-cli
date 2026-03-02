@@ -14,6 +14,7 @@ func TestPublicInternetGatewaysCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"public-internet-gateways", "create",
+		"--api-key", "string",
 		"--name", "test interface",
 		"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--region-code", "ashburn-va",
@@ -25,6 +26,7 @@ func TestPublicInternetGatewaysRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"public-internet-gateways", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -34,6 +36,7 @@ func TestPublicInternetGatewaysList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"public-internet-gateways", "list",
+		"--api-key", "string",
 		"--filter", "{network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -57,6 +60,7 @@ func TestPublicInternetGatewaysDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"public-internet-gateways", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }

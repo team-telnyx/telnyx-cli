@@ -14,6 +14,7 @@ func TestPhoneNumbersJobsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -23,6 +24,7 @@ func TestPhoneNumbersJobsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "list",
+		"--api-key", "string",
 		"--filter", "{type: update_emergency_settings}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -48,6 +50,7 @@ func TestPhoneNumbersJobsDeleteBatch(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "delete-batch",
+		"--api-key", "string",
 		"--phone-number", "+19705555098",
 		"--phone-number", "+19715555098",
 		"--phone-number", "32873127836",
@@ -59,6 +62,7 @@ func TestPhoneNumbersJobsUpdateBatch(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "update-batch",
+		"--api-key", "string",
 		"--phone-number", "1583466971586889004",
 		"--phone-number", "+13127367254",
 		"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', customer_reference: customer_reference, emergency_address_id: '9102160989215728032', has_bundle: has_bundle, phone_number: phone_number, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel}",
@@ -115,6 +119,7 @@ func TestPhoneNumbersJobsUpdateEmergencySettingsBatch(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "update-emergency-settings-batch",
+		"--api-key", "string",
 		"--emergency-enabled=true",
 		"--phone-number", "+19705555098",
 		"--phone-number", "+19715555098",

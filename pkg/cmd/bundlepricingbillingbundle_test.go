@@ -14,6 +14,7 @@ func TestBundlePricingBillingBundlesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:billing-bundles", "retrieve",
+		"--api-key", "string",
 		"--bundle-id", "8661948c-a386-4385-837f-af00f40f111a",
 		"--authorization-bearer", "authorization_bearer",
 	)
@@ -24,6 +25,7 @@ func TestBundlePricingBillingBundlesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:billing-bundles", "list",
+		"--api-key", "string",
 		"--filter", "{country_iso: [US], resource: ['+15617819942']}",
 		"--page-number", "0",
 		"--page-size", "0",

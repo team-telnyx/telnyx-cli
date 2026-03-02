@@ -13,6 +13,7 @@ func TestWirelessDetailRecordsReportsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless:detail-records-reports", "create",
+		"--api-key", "string",
 		"--end-time", "2018-02-02T22:25:27.521Z",
 		"--start-time", "2018-02-02T22:25:27.521Z",
 	)
@@ -23,6 +24,7 @@ func TestWirelessDetailRecordsReportsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless:detail-records-reports", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -32,6 +34,7 @@ func TestWirelessDetailRecordsReportsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless:detail-records-reports", "list",
+		"--api-key", "string",
 		"--page-number", "1",
 		"--page-size", "1",
 	)
@@ -42,6 +45,7 @@ func TestWirelessDetailRecordsReportsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless:detail-records-reports", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }

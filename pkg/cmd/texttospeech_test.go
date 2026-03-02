@@ -13,6 +13,7 @@ func TestTextToSpeechListVoices(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"text-to-speech", "list-voices",
+		"--api-key", "string",
 		"--api-key", "api_key",
 		"--provider", "aws",
 	)
@@ -23,6 +24,7 @@ func TestTextToSpeechStream(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"text-to-speech", "stream",
+		"--api-key", "string",
 		"--audio-format", "pcm",
 		"--disable-cache=true",
 		"--model-id", "model_id",

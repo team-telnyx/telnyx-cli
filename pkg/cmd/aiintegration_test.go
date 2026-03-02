@@ -13,6 +13,7 @@ func TestAIIntegrationsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:integrations", "retrieve",
+		"--api-key", "string",
 		"--integration-id", "integration_id",
 	)
 }
@@ -22,5 +23,6 @@ func TestAIIntegrationsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:integrations", "list",
+		"--api-key", "string",
 	)
 }

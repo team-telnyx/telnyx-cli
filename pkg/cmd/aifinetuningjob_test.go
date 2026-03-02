@@ -14,6 +14,7 @@ func TestAIFineTuningJobsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:fine-tuning:jobs", "create",
+		"--api-key", "string",
 		"--model", "model",
 		"--training-file", "training_file",
 		"--hyperparameters", "{n_epochs: 1}",
@@ -39,6 +40,7 @@ func TestAIFineTuningJobsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:fine-tuning:jobs", "retrieve",
+		"--api-key", "string",
 		"--job-id", "job_id",
 	)
 }
@@ -48,6 +50,7 @@ func TestAIFineTuningJobsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:fine-tuning:jobs", "list",
+		"--api-key", "string",
 	)
 }
 
@@ -56,6 +59,7 @@ func TestAIFineTuningJobsCancel(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:fine-tuning:jobs", "cancel",
+		"--api-key", "string",
 		"--job-id", "job_id",
 	)
 }

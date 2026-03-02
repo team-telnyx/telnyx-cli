@@ -14,6 +14,7 @@ func TestAuthenticationProvidersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "create",
+		"--api-key", "string",
 		"--name", "Okta",
 		"--settings", "{idp_cert_fingerprint: 13:38:C7:BB:C9:FF:4A:70:38:3A:E3:D9:5C:CD:DB:2E:50:1E:80:A7, idp_entity_id: https://myorg.myidp.com/saml/metadata, idp_sso_target_url: https://myorg.myidp.com/trust/saml2/http-post/sso, idp_cert_fingerprint_algorithm: sha256}",
 		"--short-name", "myorg",
@@ -44,6 +45,7 @@ func TestAuthenticationProvidersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -53,6 +55,7 @@ func TestAuthenticationProvidersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--active=true",
 		"--name", "Okta",
@@ -85,6 +88,7 @@ func TestAuthenticationProvidersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "name",
@@ -96,6 +100,7 @@ func TestAuthenticationProvidersDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "delete",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }

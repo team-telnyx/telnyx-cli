@@ -14,6 +14,7 @@ func TestManagedAccountsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "create",
+		"--api-key", "string",
 		"--business-name", "Larry's Cat Food Inc",
 		"--email", "larry_cat_food@customer.org",
 		"--managed-account-allow-custom-pricing=false",
@@ -27,6 +28,7 @@ func TestManagedAccountsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -36,6 +38,7 @@ func TestManagedAccountsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--managed-account-allow-custom-pricing=true",
 	)
@@ -46,6 +49,7 @@ func TestManagedAccountsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "list",
+		"--api-key", "string",
 		"--filter", "{email: {contains: john, eq: eq}, organization_name: {contains: contains, eq: Example Company LLC}}",
 		"--include-cancelled-accounts=true",
 		"--page-number", "0",
@@ -74,6 +78,7 @@ func TestManagedAccountsGetAllocatableGlobalOutboundChannels(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "get-allocatable-global-outbound-channels",
+		"--api-key", "string",
 	)
 }
 
@@ -82,6 +87,7 @@ func TestManagedAccountsUpdateGlobalChannelLimit(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "update-global-channel-limit",
+		"--api-key", "string",
 		"--id", "id",
 		"--channel-limit", "30",
 	)

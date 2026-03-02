@@ -14,6 +14,7 @@ func TestAIMissionsRunsPlanCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "create",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--step", "{description: description, sequence: 0, step_id: step_id, metadata: {foo: bar}, parent_step_id: parent_step_id}",
@@ -41,6 +42,7 @@ func TestAIMissionsRunsPlanRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "retrieve",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
@@ -51,6 +53,7 @@ func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "add-steps-to-plan",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--step", "{description: description, sequence: 0, step_id: step_id, metadata: {foo: bar}, parent_step_id: parent_step_id}",
@@ -78,6 +81,7 @@ func TestAIMissionsRunsPlanGetStepDetails(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "get-step-details",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--step-id", "step_id",
@@ -89,6 +93,7 @@ func TestAIMissionsRunsPlanUpdateStep(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "update-step",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--step-id", "step_id",

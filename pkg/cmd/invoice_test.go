@@ -13,6 +13,7 @@ func TestInvoicesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"invoices", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--action", "json",
 	)
@@ -23,6 +24,7 @@ func TestInvoicesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"invoices", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 		"--sort", "period_start",
