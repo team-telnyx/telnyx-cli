@@ -14,6 +14,7 @@ func TestPortoutsSupportingDocumentsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:supporting-documents", "create",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--document", "{document_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, type: loa}",
 	)
@@ -36,6 +37,7 @@ func TestPortoutsSupportingDocumentsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:supporting-documents", "list",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

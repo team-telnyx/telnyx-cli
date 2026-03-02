@@ -13,6 +13,7 @@ func TestMessagingRcsAgentsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging:rcs:agents", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -22,6 +23,7 @@ func TestMessagingRcsAgentsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging:rcs:agents", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--profile-id", "4001932a-b8a3-42fc-9389-021be6388909",
 		"--webhook-failover-url", "http://example.com",
@@ -34,6 +36,7 @@ func TestMessagingRcsAgentsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging:rcs:agents", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)

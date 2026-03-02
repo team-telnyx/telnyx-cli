@@ -13,5 +13,6 @@ func TestAIAssistantsTestsTestSuitesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests:test-suites", "list",
+		"--api-key", "string",
 	)
 }

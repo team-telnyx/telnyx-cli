@@ -13,5 +13,6 @@ func TestOperatorConnectActionsRefresh(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"operator-connect:actions", "refresh",
+		"--api-key", "string",
 	)
 }

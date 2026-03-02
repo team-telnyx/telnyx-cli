@@ -14,6 +14,7 @@ func TestExternalConnectionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "create",
+		"--api-key", "string",
 		"--external-sip-connection", "zoom",
 		"--outbound", "{channel_limit: 10, outbound_voice_profile_id: '1911630617284445511'}",
 		"--active=false",
@@ -51,6 +52,7 @@ func TestExternalConnectionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "retrieve",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 	)
 }
@@ -60,6 +62,7 @@ func TestExternalConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--outbound", "{outbound_voice_profile_id: '1911630617284445511', channel_limit: 10}",
 		"--active=false",
@@ -96,6 +99,7 @@ func TestExternalConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "list",
+		"--api-key", "string",
 		"--filter", "{id: '1930241863466354012', connection_name: {contains: My Connection}, created_at: '2022-12-31', external_sip_connection: zoom, phone_number: {contains: '+15555555555'}}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -123,6 +127,7 @@ func TestExternalConnectionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "delete",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 	)
 }
@@ -132,6 +137,7 @@ func TestExternalConnectionsUpdateLocation(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "update-location",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--location-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--static-emergency-address-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",

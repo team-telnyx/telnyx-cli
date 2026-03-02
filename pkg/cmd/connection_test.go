@@ -14,6 +14,7 @@ func TestConnectionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -23,6 +24,7 @@ func TestConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "list",
+		"--api-key", "string",
 		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -50,6 +52,7 @@ func TestConnectionsListActiveCalls(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "list-active-calls",
+		"--api-key", "string",
 		"--connection-id", "1293384261075731461",
 		"--page-number", "0",
 		"--page-size", "0",

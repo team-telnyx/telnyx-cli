@@ -13,8 +13,9 @@ func TestAIAudioTranscribe(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:audio", "transcribe",
+		"--api-key", "string",
 		"--model", "distil-whisper/distil-large-v2",
-		"--file", "",
+		"--file", "...",
 		"--file-url", "https://example.com/file.mp3",
 		"--language", "en-US",
 		"--model-config", "{smart_format: bar, punctuate: bar}",

@@ -13,6 +13,7 @@ func TestMessaging10dlcPhoneNumberAssignmentByProfileAssign(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-assignment-by-profile", "assign",
+		"--api-key", "string",
 		"--messaging-profile-id", "4001767e-ce0f-4cae-9d5f-0d5e636e7809",
 		"--campaign-id", "4b300178-131c-d902-d54e-72d90ba1620j",
 		"--tcr-campaign-id", "CWZTFH1",
@@ -24,6 +25,7 @@ func TestMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(t *te
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-assignment-by-profile", "list-phone-number-status",
+		"--api-key", "string",
 		"--task-id", "taskId",
 		"--page", "0",
 		"--records-per-page", "0",
@@ -35,6 +37,7 @@ func TestMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus(t
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-assignment-by-profile", "retrieve-phone-number-status",
+		"--api-key", "string",
 		"--task-id", "taskId",
 		"--page", "0",
 		"--records-per-page", "0",
@@ -46,6 +49,7 @@ func TestMessaging10dlcPhoneNumberAssignmentByProfileRetrieveStatus(t *testing.T
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-assignment-by-profile", "retrieve-status",
+		"--api-key", "string",
 		"--task-id", "taskId",
 	)
 }

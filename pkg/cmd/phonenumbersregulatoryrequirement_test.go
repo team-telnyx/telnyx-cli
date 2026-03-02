@@ -14,6 +14,7 @@ func TestPhoneNumbersRegulatoryRequirementsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers-regulatory-requirements", "retrieve",
+		"--api-key", "string",
 		"--filter", "{phone_number: '+41215470622,+41215470633'}",
 	)
 

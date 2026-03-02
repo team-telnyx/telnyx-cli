@@ -13,6 +13,7 @@ func TestLedgerBillingGroupReportsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ledger-billing-group-reports", "create",
+		"--api-key", "string",
 		"--month", "10",
 		"--year", "2019",
 	)
@@ -23,6 +24,7 @@ func TestLedgerBillingGroupReportsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ledger-billing-group-reports", "retrieve",
+		"--api-key", "string",
 		"--id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 	)
 }

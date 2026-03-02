@@ -14,6 +14,7 @@ func TestStorageMigrationSourcesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migration-sources", "create",
+		"--api-key", "string",
 		"--bucket-name", "bucket_name",
 		"--provider", "aws",
 		"--provider-auth", "{access_key: access_key, secret_access_key: secret_access_key}",
@@ -40,6 +41,7 @@ func TestStorageMigrationSourcesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migration-sources", "retrieve",
+		"--api-key", "string",
 		"--id", "",
 	)
 }
@@ -49,6 +51,7 @@ func TestStorageMigrationSourcesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migration-sources", "list",
+		"--api-key", "string",
 	)
 }
 
@@ -57,6 +60,7 @@ func TestStorageMigrationSourcesDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migration-sources", "delete",
+		"--api-key", "string",
 		"--id", "",
 	)
 }

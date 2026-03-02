@@ -13,6 +13,7 @@ func TestMessaging10dlcPartnerCampaignsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:partner-campaigns", "retrieve",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 	)
 }
@@ -22,6 +23,7 @@ func TestMessaging10dlcPartnerCampaignsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:partner-campaigns", "update",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 		"--webhook-failover-url", "https://webhook.com/9010a453-4df8-4be6-a551-1070892888d6",
 		"--webhook-url", "https://webhook.com/67ea78a8-9f32-4d04-b62d-f9502e8e5f93",
@@ -33,6 +35,7 @@ func TestMessaging10dlcPartnerCampaignsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:partner-campaigns", "list",
+		"--api-key", "string",
 		"--page", "0",
 		"--records-per-page", "0",
 		"--sort", "assignedPhoneNumbersCount",
@@ -44,6 +47,7 @@ func TestMessaging10dlcPartnerCampaignsListSharedByMe(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:partner-campaigns", "list-shared-by-me",
+		"--api-key", "string",
 		"--page", "0",
 		"--records-per-page", "0",
 	)
@@ -54,6 +58,7 @@ func TestMessaging10dlcPartnerCampaignsRetrieveSharingStatus(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:partner-campaigns", "retrieve-sharing-status",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 	)
 }

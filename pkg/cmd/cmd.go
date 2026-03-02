@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/team-telnyx/telnyx-cli/internal/autocomplete"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	docs "github.com/urfave/cli-docs/v3"
 	"github.com/urfave/cli/v3"
 )
@@ -65,6 +66,22 @@ func init() {
 			&cli.StringFlag{
 				Name:  "transform-error",
 				Usage: "The GJSON transformation for errors.",
+			},
+			&requestflag.Flag[string]{
+				Name:    "api-key",
+				Sources: cli.EnvVars("TELNYX_API_KEY"),
+			},
+			&requestflag.Flag[string]{
+				Name:    "public-key",
+				Sources: cli.EnvVars("TELNYX_PUBLIC_KEY"),
+			},
+			&requestflag.Flag[string]{
+				Name:    "client-id",
+				Sources: cli.EnvVars("TELNYX_CLIENT_ID"),
+			},
+			&requestflag.Flag[string]{
+				Name:    "client-secret",
+				Sources: cli.EnvVars("TELNYX_CLIENT_SECRET"),
 			},
 		},
 		Commands: []*cli.Command{

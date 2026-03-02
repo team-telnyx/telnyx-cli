@@ -14,6 +14,7 @@ func TestRoomCompositionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-compositions", "create",
+		"--api-key", "string",
 		"--format", "mp4",
 		"--resolution", "800x600",
 		"--session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777b0",
@@ -29,6 +30,7 @@ func TestRoomCompositionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-compositions", "retrieve",
+		"--api-key", "string",
 		"--room-composition-id", "5219b3af-87c6-4c08-9b58-5a533d893e21",
 	)
 }
@@ -38,6 +40,7 @@ func TestRoomCompositionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-compositions", "list",
+		"--api-key", "string",
 		"--filter", "{date_created_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, session_id: 92e7d459-bcc5-4386-9f5f-6dd14a82588d, status: completed}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -63,6 +66,7 @@ func TestRoomCompositionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-compositions", "delete",
+		"--api-key", "string",
 		"--room-composition-id", "5219b3af-87c6-4c08-9b58-5a533d893e21",
 	)
 }

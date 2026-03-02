@@ -13,6 +13,7 @@ func TestTexmlAccountsCallsSiprecSiprecSidJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls:siprec", "siprec-sid-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--call-sid", "call_sid",
 		"--siprec-sid", "siprec_sid",

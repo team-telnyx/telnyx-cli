@@ -14,6 +14,7 @@ func TestNumberOrderPhoneNumbersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-order-phone-numbers", "retrieve",
+		"--api-key", "string",
 		"--number-order-phone-number-id", "number_order_phone_number_id",
 	)
 }
@@ -23,6 +24,7 @@ func TestNumberOrderPhoneNumbersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-order-phone-numbers", "list",
+		"--api-key", "string",
 		"--filter", "{country_code: US}",
 	)
 
@@ -42,6 +44,7 @@ func TestNumberOrderPhoneNumbersUpdateRequirementGroup(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-order-phone-numbers", "update-requirement-group",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--requirement-group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
@@ -52,6 +55,7 @@ func TestNumberOrderPhoneNumbersUpdateRequirements(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-order-phone-numbers", "update-requirements",
+		"--api-key", "string",
 		"--number-order-phone-number-id", "number_order_phone_number_id",
 		"--regulatory-requirement", "{field_value: 45f45a04-b4be-4592-95b1-9306b9db2b21, requirement_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576}",
 	)

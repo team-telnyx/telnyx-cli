@@ -13,6 +13,7 @@ func TestMessagingProfileMetricsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profile-metrics", "list",
+		"--api-key", "string",
 		"--time-frame", "1h",
 	)
 }

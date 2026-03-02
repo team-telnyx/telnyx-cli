@@ -13,5 +13,6 @@ func TestBalanceRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"balance", "retrieve",
+		"--api-key", "string",
 	)
 }

@@ -14,6 +14,7 @@ func TestAvailablePhoneNumberBlocksList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"available-phone-number-blocks", "list",
+		"--api-key", "string",
 		"--filter", "{country_code: country_code, locality: locality, national_destination_code: national_destination_code, phone_number_type: local}",
 	)
 

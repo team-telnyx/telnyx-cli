@@ -14,6 +14,7 @@ func TestRequirementGroupsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "create",
+		"--api-key", "string",
 		"--action", "ordering",
 		"--country-code", "US",
 		"--phone-number-type", "local",
@@ -42,6 +43,7 @@ func TestRequirementGroupsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -51,6 +53,7 @@ func TestRequirementGroupsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--customer-reference", "0002",
 		"--regulatory-requirement", "{field_value: new requirement value, requirement_id: 53970723-fbff-4f46-a975-f62be6c1a585}",
@@ -75,6 +78,7 @@ func TestRequirementGroupsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "list",
+		"--api-key", "string",
 		"--filter", "{action: ordering, country_code: country_code, customer_reference: customer_reference, phone_number_type: local, status: approved}",
 	)
 
@@ -98,6 +102,7 @@ func TestRequirementGroupsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "delete",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -107,6 +112,7 @@ func TestRequirementGroupsSubmitForApproval(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-groups", "submit-for-approval",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }

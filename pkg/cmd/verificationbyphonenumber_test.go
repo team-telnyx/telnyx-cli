@@ -13,6 +13,7 @@ func TestVerificationsByPhoneNumberList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications:by-phone-number", "list",
+		"--api-key", "string",
 		"--phone-number", "+13035551234",
 	)
 }

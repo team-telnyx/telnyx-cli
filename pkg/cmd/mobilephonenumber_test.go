@@ -14,6 +14,7 @@ func TestMobilePhoneNumbersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-phone-numbers", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -23,6 +24,7 @@ func TestMobilePhoneNumbersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-phone-numbers", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--call-forwarding", "{call_forwarding_enabled: true, forwarding_type: always, forwards_to: forwards_to}",
 		"--call-recording", "{inbound_call_recording_channels: single, inbound_call_recording_enabled: true, inbound_call_recording_format: wav}",
@@ -69,6 +71,7 @@ func TestMobilePhoneNumbersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-phone-numbers", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)

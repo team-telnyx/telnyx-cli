@@ -13,6 +13,7 @@ func TestPortingOrdersActivationJobsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:activation-jobs", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--activation-job-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
@@ -23,9 +24,10 @@ func TestPortingOrdersActivationJobsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:activation-jobs", "update",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--activation-job-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--activate-at", "2019-01-01T00:00:00Z",
+		"--activate-at", "'2019-01-01T00:00:00Z'",
 	)
 }
 
@@ -34,6 +36,7 @@ func TestPortingOrdersActivationJobsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:activation-jobs", "list",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--page-number", "0",
 		"--page-size", "0",

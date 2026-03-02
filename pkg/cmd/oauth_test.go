@@ -13,6 +13,7 @@ func TestOAuthRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "retrieve",
+		"--api-key", "string",
 		"--consent-token", "consent_token",
 	)
 }
@@ -22,6 +23,7 @@ func TestOAuthGrants(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "grants",
+		"--api-key", "string",
 		"--allowed=true",
 		"--consent-token", "consent_token",
 	)
@@ -32,6 +34,9 @@ func TestOAuthIntrospect(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "introspect",
+		"--api-key", "string",
+		"--client-id", "string",
+		"--client-secret", "string",
 		"--token", "token",
 	)
 }
@@ -41,6 +46,7 @@ func TestOAuthRegister(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "register",
+		"--api-key", "string",
 		"--client-name", "My OAuth Application",
 		"--grant-type", "authorization_code",
 		"--logo-uri", "https://example.com",
@@ -58,6 +64,7 @@ func TestOAuthRetrieveAuthorize(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "retrieve-authorize",
+		"--api-key", "string",
 		"--client-id", "client_id",
 		"--redirect-uri", "https://example.com",
 		"--response-type", "code",
@@ -73,6 +80,7 @@ func TestOAuthRetrieveJwks(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "retrieve-jwks",
+		"--api-key", "string",
 	)
 }
 
@@ -81,6 +89,9 @@ func TestOAuthToken(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth", "token",
+		"--api-key", "string",
+		"--client-id", "string",
+		"--client-secret", "string",
 		"--grant-type", "client_credentials",
 		"--client-id", "client_id",
 		"--client-secret", "client_secret",

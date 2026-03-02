@@ -14,6 +14,7 @@ func TestPhoneNumberBlocksJobsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-number-blocks:jobs", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -23,6 +24,7 @@ func TestPhoneNumberBlocksJobsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-number-blocks:jobs", "list",
+		"--api-key", "string",
 		"--filter", "{status: in_progress, type: delete_phone_number_block}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -49,6 +51,7 @@ func TestPhoneNumberBlocksJobsDeletePhoneNumberBlock(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-number-blocks:jobs", "delete-phone-number-block",
+		"--api-key", "string",
 		"--phone-number-block-id", "f3946371-7199-4261-9c3d-81a0d7935146",
 	)
 }

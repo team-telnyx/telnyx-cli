@@ -13,6 +13,7 @@ func TestRoomsSessionsActionsEnd(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions:actions", "end",
+		"--api-key", "string",
 		"--room-session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 	)
 }
@@ -22,6 +23,7 @@ func TestRoomsSessionsActionsKick(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions:actions", "kick",
+		"--api-key", "string",
 		"--room-session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		"--exclude", "7b61621f-62e0-4aad-ab11-9fd19e272e73",
 		"--participants", "all",
@@ -33,6 +35,7 @@ func TestRoomsSessionsActionsMute(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions:actions", "mute",
+		"--api-key", "string",
 		"--room-session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		"--exclude", "7b61621f-62e0-4aad-ab11-9fd19e272e73",
 		"--participants", "all",
@@ -44,6 +47,7 @@ func TestRoomsSessionsActionsUnmute(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions:actions", "unmute",
+		"--api-key", "string",
 		"--room-session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		"--exclude", "7b61621f-62e0-4aad-ab11-9fd19e272e73",
 		"--participants", "all",

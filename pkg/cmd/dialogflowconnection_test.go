@@ -13,6 +13,7 @@ func TestDialogflowConnectionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dialogflow-connections", "create",
+		"--api-key", "string",
 		"--connection-id", "connection_id",
 		"--service-account", "{type: bar, project_id: bar, private_key_id: bar, private_key: bar, client_email: bar, client_id: bar, auth_uri: bar, token_uri: bar, auth_provider_x509_cert_url: bar, client_x509_cert_url: bar}",
 		"--conversation-profile-id", "a-VMHLWzTmKjiJw5S6O0-w",
@@ -27,6 +28,7 @@ func TestDialogflowConnectionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dialogflow-connections", "retrieve",
+		"--api-key", "string",
 		"--connection-id", "connection_id",
 	)
 }
@@ -36,6 +38,7 @@ func TestDialogflowConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dialogflow-connections", "update",
+		"--api-key", "string",
 		"--connection-id", "connection_id",
 		"--service-account", "{type: bar, project_id: bar, private_key_id: bar, private_key: bar, client_email: bar, client_id: bar, auth_uri: bar, token_uri: bar, auth_provider_x509_cert_url: bar, client_x509_cert_url: bar}",
 		"--conversation-profile-id", "a-VMHLWzTmKjiJw5S6O0-w",
@@ -50,6 +53,7 @@ func TestDialogflowConnectionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dialogflow-connections", "delete",
+		"--api-key", "string",
 		"--connection-id", "connection_id",
 	)
 }

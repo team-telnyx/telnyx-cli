@@ -14,6 +14,7 @@ func TestRoomsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "create",
+		"--api-key", "string",
 		"--enable-recording=true",
 		"--max-participants", "10",
 		"--unique-name", "My room",
@@ -28,6 +29,7 @@ func TestRoomsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "retrieve",
+		"--api-key", "string",
 		"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		"--include-sessions=true",
 	)
@@ -38,6 +40,7 @@ func TestRoomsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "update",
+		"--api-key", "string",
 		"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		"--enable-recording=true",
 		"--max-participants", "10",
@@ -53,6 +56,7 @@ func TestRoomsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "list",
+		"--api-key", "string",
 		"--filter", "{date_created_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_updated_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, unique_name: my_video_room}",
 		"--include-sessions=true",
 		"--page-number", "0",
@@ -80,6 +84,7 @@ func TestRoomsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "delete",
+		"--api-key", "string",
 		"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 	)
 }

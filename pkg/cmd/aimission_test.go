@@ -13,6 +13,7 @@ func TestAIMissionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "create",
+		"--api-key", "string",
 		"--name", "name",
 		"--description", "description",
 		"--execution-mode", "external",
@@ -27,6 +28,7 @@ func TestAIMissionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "retrieve",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -36,6 +38,7 @@ func TestAIMissionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "list",
+		"--api-key", "string",
 		"--page-number", "1",
 		"--page-size", "1",
 	)
@@ -46,6 +49,7 @@ func TestAIMissionsCloneMission(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "clone-mission",
+		"--api-key", "string",
 		"--mission-id", "mission_id",
 	)
 }
@@ -55,6 +59,7 @@ func TestAIMissionsDeleteMission(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "delete-mission",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -64,6 +69,7 @@ func TestAIMissionsListEvents(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "list-events",
+		"--api-key", "string",
 		"--page-number", "1",
 		"--page-size", "1",
 		"--type", "type",
@@ -75,6 +81,7 @@ func TestAIMissionsUpdateMission(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions", "update-mission",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--description", "description",
 		"--execution-mode", "external",

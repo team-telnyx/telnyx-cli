@@ -13,6 +13,7 @@ func TestVerificationsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications", "retrieve",
+		"--api-key", "string",
 		"--verification-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 	)
 }
@@ -22,6 +23,7 @@ func TestVerificationsTriggerCall(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications", "trigger-call",
+		"--api-key", "string",
 		"--phone-number", "+13035551234",
 		"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--custom-code", "43612",
@@ -35,6 +37,7 @@ func TestVerificationsTriggerFlashcall(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications", "trigger-flashcall",
+		"--api-key", "string",
 		"--phone-number", "+13035551234",
 		"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--timeout-secs", "300",
@@ -46,6 +49,7 @@ func TestVerificationsTriggerSMS(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verifications", "trigger-sms",
+		"--api-key", "string",
 		"--phone-number", "+13035551234",
 		"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--custom-code", "43612",

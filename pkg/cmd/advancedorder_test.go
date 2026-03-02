@@ -13,6 +13,7 @@ func TestAdvancedOrdersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"advanced-orders", "create",
+		"--api-key", "string",
 		"--area-code", "xxx",
 		"--comments", "comments",
 		"--country-code", "xx",
@@ -29,6 +30,7 @@ func TestAdvancedOrdersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"advanced-orders", "retrieve",
+		"--api-key", "string",
 		"--order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -38,6 +40,7 @@ func TestAdvancedOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"advanced-orders", "list",
+		"--api-key", "string",
 	)
 }
 
@@ -46,6 +49,7 @@ func TestAdvancedOrdersUpdateRequirementGroup(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"advanced-orders", "update-requirement-group",
+		"--api-key", "string",
 		"--advanced-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--area-code", "xxx",
 		"--comments", "comments",

@@ -13,6 +13,7 @@ func TestCountryCoverageRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"country-coverage", "retrieve",
+		"--api-key", "string",
 	)
 }
 
@@ -21,6 +22,7 @@ func TestCountryCoverageRetrieveCountry(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"country-coverage", "retrieve-country",
+		"--api-key", "string",
 		"--country-code", "US",
 	)
 }

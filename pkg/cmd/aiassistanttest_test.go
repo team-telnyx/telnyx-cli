@@ -14,6 +14,7 @@ func TestAIAssistantsTestsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "create",
+		"--api-key", "string",
 		"--destination", "+15551234567",
 		"--instructions", "Act as a frustrated customer who received a damaged product. Ask for a refund and escalate if not satisfied with the initial response.",
 		"--name", "Customer Support Bot Test",
@@ -51,6 +52,7 @@ func TestAIAssistantsTestsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "retrieve",
+		"--api-key", "string",
 		"--test-id", "test_id",
 	)
 }
@@ -60,6 +62,7 @@ func TestAIAssistantsTestsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "update",
+		"--api-key", "string",
 		"--test-id", "test_id",
 		"--description", "description",
 		"--destination", "x",
@@ -96,6 +99,7 @@ func TestAIAssistantsTestsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "list",
+		"--api-key", "string",
 		"--destination", "destination",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -109,6 +113,7 @@ func TestAIAssistantsTestsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests", "delete",
+		"--api-key", "string",
 		"--test-id", "test_id",
 	)
 }

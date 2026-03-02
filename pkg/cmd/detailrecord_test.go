@@ -14,6 +14,7 @@ func TestDetailRecordsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"detail-records", "list",
+		"--api-key", "string",
 		"--filter", "{record_type: ai-voice-assistant, date_range: yesterday}",
 		"--page-number", "0",
 		"--page-size", "0",

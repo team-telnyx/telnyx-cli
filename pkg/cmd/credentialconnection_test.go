@@ -14,6 +14,7 @@ func TestCredentialConnectionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "create",
+		"--api-key", "string",
 		"--connection-name", "my name",
 		"--password", "my123secure456password789",
 		"--user-name", "myusername123",
@@ -108,6 +109,7 @@ func TestCredentialConnectionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -117,6 +119,7 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--active=true",
 		"--anchorsite-override", "Latency",
@@ -213,6 +216,7 @@ func TestCredentialConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "list",
+		"--api-key", "string",
 		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -240,6 +244,7 @@ func TestCredentialConnectionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"credential-connections", "delete",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }

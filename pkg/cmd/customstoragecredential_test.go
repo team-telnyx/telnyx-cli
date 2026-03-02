@@ -13,6 +13,7 @@ func TestCustomStorageCredentialsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"custom-storage-credentials", "create",
+		"--api-key", "string",
 		"--connection-id", "connection_id",
 		"--backend", "gcs",
 		"--configuration", "{backend: gcs, bucket: example-bucket, credentials: OPAQUE_CREDENTIALS_TOKEN}",
@@ -24,6 +25,7 @@ func TestCustomStorageCredentialsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"custom-storage-credentials", "retrieve",
+		"--api-key", "string",
 		"--connection-id", "connection_id",
 	)
 }
@@ -33,6 +35,7 @@ func TestCustomStorageCredentialsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"custom-storage-credentials", "update",
+		"--api-key", "string",
 		"--connection-id", "connection_id",
 		"--backend", "gcs",
 		"--configuration", "{backend: gcs, bucket: example-bucket, credentials: OPAQUE_CREDENTIALS_TOKEN}",
@@ -44,6 +47,7 @@ func TestCustomStorageCredentialsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"custom-storage-credentials", "delete",
+		"--api-key", "string",
 		"--connection-id", "connection_id",
 	)
 }

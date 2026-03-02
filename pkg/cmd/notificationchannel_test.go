@@ -14,6 +14,7 @@ func TestNotificationChannelsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "create",
+		"--api-key", "string",
 		"--channel-destination", "+13125550000",
 		"--channel-type-id", "sms",
 		"--notification-profile-id", "12455643-3cf1-4683-ad23-1cd32f7d5e0a",
@@ -25,6 +26,7 @@ func TestNotificationChannelsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -34,6 +36,7 @@ func TestNotificationChannelsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "update",
+		"--api-key", "string",
 		"--notification-channel-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--channel-destination", "+13125550000",
 		"--channel-type-id", "sms",
@@ -46,6 +49,7 @@ func TestNotificationChannelsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "list",
+		"--api-key", "string",
 		"--filter", "{associated_record_type: {eq: phone_number}, channel_type_id: {eq: webhook}, notification_channel: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, notification_event_condition_id: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, notification_profile_id: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, status: {eq: enable-received}}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -74,6 +78,7 @@ func TestNotificationChannelsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-channels", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

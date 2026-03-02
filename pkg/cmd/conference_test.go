@@ -14,6 +14,7 @@ func TestConferencesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "create",
+		"--api-key", "string",
 		"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--name", "Business",
 		"--beep-enabled", "always",
@@ -34,6 +35,7 @@ func TestConferencesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 		"--region", "Australia",
 	)
@@ -44,6 +46,7 @@ func TestConferencesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "list",
+		"--api-key", "string",
 		"--filter", "{application_name: {contains: contains}, application_session_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e, connection_id: connection_id, failed: false, from: '+12025550142', leg_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e, name: name, occurred_at: {eq: '2019-03-29T11:10:00Z', gt: '2019-03-29T11:10:00Z', gte: '2019-03-29T11:10:00Z', lt: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, outbound.outbound_voice_profile_id: '1293384261075731499', product: texml, status: init, to: '+12025550142', type: webhook}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -81,6 +84,7 @@ func TestConferencesListParticipants(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "list-participants",
+		"--api-key", "string",
 		"--conference-id", "conference_id",
 		"--filter", "{muted: true, on_hold: true, whispering: true}",
 		"--page-number", "0",
@@ -110,6 +114,7 @@ func TestConferencesRetrieveParticipant(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "retrieve-participant",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--participant-id", "participant_id",
 	)
@@ -120,6 +125,7 @@ func TestConferencesUpdateParticipant(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "update-participant",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--participant-id", "participant_id",
 		"--beep-enabled", "never",

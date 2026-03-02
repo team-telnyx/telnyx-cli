@@ -14,6 +14,7 @@ func TestIntegrationSecretsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"integration-secrets", "create",
+		"--api-key", "string",
 		"--identifier", "my_secret",
 		"--type", "bearer",
 		"--token", "my_secret_value",
@@ -27,6 +28,7 @@ func TestIntegrationSecretsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"integration-secrets", "list",
+		"--api-key", "string",
 		"--filter", "{type: bearer}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -50,6 +52,7 @@ func TestIntegrationSecretsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"integration-secrets", "delete",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }

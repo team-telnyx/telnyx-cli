@@ -13,6 +13,7 @@ func TestPaymentCreateStoredPaymentTransaction(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"payment", "create-stored-payment-transaction",
+		"--api-key", "string",
 		"--amount", "120.00",
 	)
 }

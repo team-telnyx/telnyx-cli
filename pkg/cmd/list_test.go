@@ -13,6 +13,7 @@ func TestListRetrieveAll(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"list", "retrieve-all",
+		"--api-key", "string",
 	)
 }
 
@@ -21,6 +22,7 @@ func TestListRetrieveByZone(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"list", "retrieve-by-zone",
+		"--api-key", "string",
 		"--channel-zone-id", "channel_zone_id",
 	)
 }

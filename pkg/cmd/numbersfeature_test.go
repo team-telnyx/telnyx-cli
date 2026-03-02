@@ -13,6 +13,7 @@ func TestNumbersFeaturesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"numbers-features", "create",
+		"--api-key", "string",
 		"--phone-number", "string",
 	)
 }

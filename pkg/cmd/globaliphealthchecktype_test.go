@@ -13,5 +13,6 @@ func TestGlobalIPHealthCheckTypesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-health-check-types", "list",
+		"--api-key", "string",
 	)
 }

@@ -13,10 +13,11 @@ func TestReportsCdrUsageReportsFetchSync(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports:cdr-usage-reports", "fetch-sync",
+		"--api-key", "string",
 		"--aggregation-type", "NO_AGGREGATION",
 		"--product-breakdown", "NO_BREAKDOWN",
 		"--connection", "1234567890123",
-		"--end-date", "2020-07-01T00:00:00-06:00",
-		"--start-date", "2020-07-01T00:00:00-06:00",
+		"--end-date", "'2020-07-01T00:00:00-06:00'",
+		"--start-date", "'2020-07-01T00:00:00-06:00'",
 	)
 }

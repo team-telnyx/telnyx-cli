@@ -14,6 +14,7 @@ func TestPortingLoaConfigurationsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "create",
+		"--api-key", "string",
 		"--address", "{city: Austin, country_code: US, state: TX, street_address: 600 Congress Avenue, zip_code: '78701', extended_address: 14th Floor}",
 		"--company-name", "Telnyx",
 		"--contact", "{email: testing@telnyx.com, phone_number: '+12003270001'}",
@@ -47,6 +48,7 @@ func TestPortingLoaConfigurationsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -56,6 +58,7 @@ func TestPortingLoaConfigurationsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "update",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--address", "{city: Austin, country_code: US, state: TX, street_address: 600 Congress Avenue, zip_code: '78701', extended_address: 14th Floor}",
 		"--company-name", "Telnyx",
@@ -91,6 +94,7 @@ func TestPortingLoaConfigurationsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)
@@ -101,6 +105,7 @@ func TestPortingLoaConfigurationsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

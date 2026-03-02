@@ -14,6 +14,7 @@ func TestNumberBlockOrdersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-block-orders", "create",
+		"--api-key", "string",
 		"--range", "10",
 		"--starting-number", "+19705555000",
 		"--connection-id", "346789098765567",
@@ -27,6 +28,7 @@ func TestNumberBlockOrdersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-block-orders", "retrieve",
+		"--api-key", "string",
 		"--number-block-order-id", "number_block_order_id",
 	)
 }
@@ -36,6 +38,7 @@ func TestNumberBlockOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-block-orders", "list",
+		"--api-key", "string",
 		"--filter", "{created_at: {gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}, phone_numbers.starting_number: '+19705555000', status: pending}",
 		"--page-number", "0",
 		"--page-size", "0",

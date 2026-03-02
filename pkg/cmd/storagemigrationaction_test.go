@@ -13,6 +13,7 @@ func TestStorageMigrationsActionsStop(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migrations:actions", "stop",
+		"--api-key", "string",
 		"--id", "",
 	)
 }

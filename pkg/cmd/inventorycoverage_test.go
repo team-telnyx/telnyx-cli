@@ -14,6 +14,7 @@ func TestInventoryCoverageList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inventory-coverage", "list",
+		"--api-key", "string",
 		"--filter", "{administrative_area: administrative_area, count: true, country_code: AT, features: [voice, sms], groupBy: locality, npa: 0, nxx: 0, phone_number_type: local}",
 	)
 

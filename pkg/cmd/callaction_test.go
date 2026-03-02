@@ -14,6 +14,7 @@ func TestCallsActionsAddAIAssistantMessages(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "add-ai-assistant-messages",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -26,6 +27,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "answer",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -115,6 +117,7 @@ func TestCallsActionsBridge(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "bridge",
+		"--api-key", "string",
 		"--call-control-id-to-bridge", "call_control_id",
 		"--call-control-id-to-bridge-with", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -144,6 +147,7 @@ func TestCallsActionsEnqueue(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "enqueue",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--queue-name", "support",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -159,6 +163,7 @@ func TestCallsActionsGather(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "gather",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -178,6 +183,7 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "gather-using-ai",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--parameters", "{properties: bar, required: bar, type: bar}",
 		"--assistant", "{instructions: You are a friendly voice assistant., model: Qwen/Qwen3-235B-A22B, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
@@ -234,6 +240,7 @@ func TestCallsActionsGatherUsingAudio(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "gather-using-audio",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--audio-url", "http://example.com/message.wav",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -256,6 +263,7 @@ func TestCallsActionsGatherUsingSpeak(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "gather-using-speak",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--payload", "say this on call",
 		"--voice", "male",
@@ -281,6 +289,7 @@ func TestCallsActionsHangup(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "hangup",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -310,6 +319,7 @@ func TestCallsActionsLeaveQueue(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "leave-queue",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -321,6 +331,7 @@ func TestCallsActionsPauseRecording(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "pause-recording",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -333,6 +344,7 @@ func TestCallsActionsRefer(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "refer",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--sip-address", "sip:username@sip.non-telnyx-address.com",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -371,6 +383,7 @@ func TestCallsActionsReject(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "reject",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--cause", "USER_BUSY",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -383,6 +396,7 @@ func TestCallsActionsResumeRecording(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "resume-recording",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -395,6 +409,7 @@ func TestCallsActionsSendDtmf(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "send-dtmf",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--digits", "1www2WABCDw9",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -408,6 +423,7 @@ func TestCallsActionsSendSipInfo(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "send-sip-info",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--body", `{"key": "value", "numValue": 100}`,
 		"--content-type", "application/json",
@@ -421,6 +437,7 @@ func TestCallsActionsSpeak(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "speak",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--payload", "Say this on the call",
 		"--voice", "female",
@@ -441,6 +458,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-ai-assistant",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--assistant", "{id: id, instructions: You are a friendly voice assistant., openai_api_key_ref: openai_api_key_ref}",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -478,6 +496,7 @@ func TestCallsActionsStartForking(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-forking",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -492,6 +511,7 @@ func TestCallsActionsStartNoiseSuppression(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-noise-suppression",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -521,6 +541,7 @@ func TestCallsActionsStartPlayback(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-playback",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--audio-type", "wav",
 		"--audio-url", "http://www.example.com/sounds/greeting.wav",
@@ -541,6 +562,7 @@ func TestCallsActionsStartRecording(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-recording",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--channels", "single",
 		"--format", "wav",
@@ -567,6 +589,7 @@ func TestCallsActionsStartSiprec(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-siprec",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--connector-name", "my-siprec-connector",
@@ -583,6 +606,7 @@ func TestCallsActionsStartStreaming(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-streaming",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -633,6 +657,7 @@ func TestCallsActionsStartTranscription(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-transcription",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -647,6 +672,7 @@ func TestCallsActionsStopAIAssistant(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-ai-assistant",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -658,6 +684,7 @@ func TestCallsActionsStopForking(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-forking",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -670,6 +697,7 @@ func TestCallsActionsStopGather(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-gather",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -681,6 +709,7 @@ func TestCallsActionsStopNoiseSuppression(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-noise-suppression",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -692,6 +721,7 @@ func TestCallsActionsStopPlayback(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-playback",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -705,6 +735,7 @@ func TestCallsActionsStopRecording(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-recording",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -717,6 +748,7 @@ func TestCallsActionsStopSiprec(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-siprec",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -728,6 +760,7 @@ func TestCallsActionsStopStreaming(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-streaming",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -740,6 +773,7 @@ func TestCallsActionsStopTranscription(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "stop-transcription",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -751,6 +785,7 @@ func TestCallsActionsSwitchSupervisorRole(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "switch-supervisor-role",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--role", "barge",
 	)
@@ -761,6 +796,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "transfer",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--to", "+18005550100 or sip:username@sip.telnyx.com",
 		"--answering-machine-detection", "detect",
@@ -871,6 +907,7 @@ func TestCallsActionsUpdateClientState(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "update-client-state",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 	)

@@ -13,7 +13,8 @@ func TestChargesSummaryRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"charges-summary", "retrieve",
-		"--end-date", "2025-06-01",
-		"--start-date", "2025-05-01",
+		"--api-key", "string",
+		"--end-date", "'2025-06-01'",
+		"--start-date", "'2025-05-01'",
 	)
 }

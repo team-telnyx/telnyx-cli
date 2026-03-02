@@ -14,6 +14,7 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:canary-deploys", "create",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--version", "{percentage: 1, version_id: version_id}",
 	)
@@ -36,6 +37,7 @@ func TestAIAssistantsCanaryDeploysRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:canary-deploys", "retrieve",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 	)
 }
@@ -45,6 +47,7 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:canary-deploys", "update",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--version", "{percentage: 1, version_id: version_id}",
 	)
@@ -67,6 +70,7 @@ func TestAIAssistantsCanaryDeploysDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:canary-deploys", "delete",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 	)
 }

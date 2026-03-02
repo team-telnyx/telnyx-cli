@@ -13,6 +13,7 @@ func TestInboundChannelsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inbound-channels", "update",
+		"--api-key", "string",
 		"--channels", "7",
 	)
 }
@@ -22,5 +23,6 @@ func TestInboundChannelsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inbound-channels", "list",
+		"--api-key", "string",
 	)
 }

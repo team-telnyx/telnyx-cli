@@ -13,6 +13,7 @@ func TestWellKnownRetrieveAuthorizationServerMetadata(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"well-known", "retrieve-authorization-server-metadata",
+		"--api-key", "string",
 	)
 }
 
@@ -21,5 +22,6 @@ func TestWellKnownRetrieveProtectedResourceMetadata(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"well-known", "retrieve-protected-resource-metadata",
+		"--api-key", "string",
 	)
 }

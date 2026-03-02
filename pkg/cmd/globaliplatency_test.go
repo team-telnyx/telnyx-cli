@@ -14,6 +14,7 @@ func TestGlobalIPLatencyRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-latency", "retrieve",
+		"--api-key", "string",
 		"--filter", "{global_ip_id: string}",
 	)
 

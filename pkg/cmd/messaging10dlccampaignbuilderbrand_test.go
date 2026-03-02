@@ -13,6 +13,7 @@ func TestMessaging10dlcCampaignBuilderBrandQualifyByUsecase(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign-builder:brand", "qualify-by-usecase",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 		"--usecase", "usecase",
 	)

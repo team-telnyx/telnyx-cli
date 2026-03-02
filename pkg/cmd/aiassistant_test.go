@@ -14,6 +14,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "create",
+		"--api-key", "string",
 		"--instructions", "instructions",
 		"--model", "model",
 		"--name", "name",
@@ -96,6 +97,7 @@ func TestAIAssistantsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "retrieve",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--call-control-id", "call_control_id",
 		"--fetch-dynamic-variables-from-webhook=true",
@@ -109,6 +111,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "update",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--description", "description",
 		"--dynamic-variables", "{foo: bar}",
@@ -195,6 +198,7 @@ func TestAIAssistantsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "list",
+		"--api-key", "string",
 	)
 }
 
@@ -203,6 +207,7 @@ func TestAIAssistantsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "delete",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 	)
 }
@@ -212,6 +217,7 @@ func TestAIAssistantsChat(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "chat",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--content", "Tell me a joke about cats",
 		"--conversation-id", "42b20469-1215-4a9a-8964-c36f66b406f4",
@@ -224,6 +230,7 @@ func TestAIAssistantsClone(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "clone",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 	)
 }
@@ -233,6 +240,7 @@ func TestAIAssistantsGetTexml(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "get-texml",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 	)
 }
@@ -242,6 +250,7 @@ func TestAIAssistantsImports(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "imports",
+		"--api-key", "string",
 		"--api-key-ref", "api_key_ref",
 		"--provider", "elevenlabs",
 		"--import-id", "string",
@@ -253,6 +262,7 @@ func TestAIAssistantsSendSMS(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "send-sms",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--from", "from",
 		"--to", "to",

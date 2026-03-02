@@ -14,6 +14,7 @@ func TestCustomerServiceRecordsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "create",
+		"--api-key", "string",
 		"--phone-number", "+13035553000",
 		"--additional-data", "{account_number: '123456789', address_line_1: 123 Main St, authorized_person_name: John Doe, billing_phone_number: '+12065551212', city: New York, customer_code: '123456789', name: Entity Inc., pin: '1234', state: NY, zip_code: '10001'}",
 		"--webhook-url", "https://example.com/webhook",
@@ -46,6 +47,7 @@ func TestCustomerServiceRecordsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "retrieve",
+		"--api-key", "string",
 		"--customer-service-record-id", "customer_service_record_id",
 	)
 }
@@ -55,6 +57,7 @@ func TestCustomerServiceRecordsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "list",
+		"--api-key", "string",
 		"--filter", "{created_at: {gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}, phone_number: {eq: '+12441239999', in: ['+12441239999']}, status: {eq: pending, in: [pending]}}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -82,6 +85,7 @@ func TestCustomerServiceRecordsVerifyPhoneNumberCoverage(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "verify-phone-number-coverage",
+		"--api-key", "string",
 		"--phone-number", "+13035553000",
 	)
 }

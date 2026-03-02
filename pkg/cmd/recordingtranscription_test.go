@@ -13,6 +13,7 @@ func TestRecordingTranscriptionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"recording-transcriptions", "retrieve",
+		"--api-key", "string",
 		"--recording-transcription-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -22,6 +23,7 @@ func TestRecordingTranscriptionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"recording-transcriptions", "list",
+		"--api-key", "string",
 	)
 }
 
@@ -30,6 +32,7 @@ func TestRecordingTranscriptionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"recording-transcriptions", "delete",
+		"--api-key", "string",
 		"--recording-transcription-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }

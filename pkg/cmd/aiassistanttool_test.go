@@ -13,6 +13,7 @@ func TestAIAssistantsToolsTest(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tools", "test",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--tool-id", "tool_id",
 		"--arguments", "{foo: bar}",

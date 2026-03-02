@@ -13,6 +13,7 @@ func TestTexmlAccountsCallsStreamsStreamingSidJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls:streams", "streaming-sid-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--call-sid", "call_sid",
 		"--streaming-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",

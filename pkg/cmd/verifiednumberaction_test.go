@@ -13,6 +13,7 @@ func TestVerifiedNumbersActionsSubmitVerificationCode(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verified-numbers:actions", "submit-verification-code",
+		"--api-key", "string",
 		"--phone-number", "+15551234567",
 		"--verification-code", "123456",
 	)

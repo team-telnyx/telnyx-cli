@@ -13,6 +13,7 @@ func TestTexmlAccountsCallsRecordingsJsonRecordingsJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls:recordings-json", "recordings-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--call-sid", "call_sid",
 		"--play-beep=false",
@@ -30,6 +31,7 @@ func TestTexmlAccountsCallsRecordingsJsonRetrieveRecordingsJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls:recordings-json", "retrieve-recordings-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--call-sid", "call_sid",
 	)

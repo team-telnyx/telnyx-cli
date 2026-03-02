@@ -14,6 +14,7 @@ func TestIPsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "create",
+		"--api-key", "string",
 		"--ip-address", "192.168.0.0",
 		"--connection-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--port", "5060",
@@ -25,6 +26,7 @@ func TestIPsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -34,6 +36,7 @@ func TestIPsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "update",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--ip-address", "192.168.0.0",
 		"--connection-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
@@ -46,6 +49,7 @@ func TestIPsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "list",
+		"--api-key", "string",
 		"--filter", "{connection_id: connection_id, ip_address: 192.168.0.0, port: 5060}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -71,6 +75,7 @@ func TestIPsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ips", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }

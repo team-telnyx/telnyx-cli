@@ -14,6 +14,7 @@ func TestAccessIPAddressCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-address", "create",
+		"--api-key", "string",
 		"--ip-address", "ip_address",
 		"--description", "description",
 	)
@@ -24,6 +25,7 @@ func TestAccessIPAddressRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-address", "retrieve",
+		"--api-key", "string",
 		"--access-ip-address-id", "access_ip_address_id",
 	)
 }
@@ -33,6 +35,7 @@ func TestAccessIPAddressList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-address", "list",
+		"--api-key", "string",
 		"--filter", "{created_at: '2019-12-27T18:11:19.117Z', ip_address: ip_address, ip_source: ip_source}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -58,6 +61,7 @@ func TestAccessIPAddressDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-address", "delete",
+		"--api-key", "string",
 		"--access-ip-address-id", "access_ip_address_id",
 	)
 }
