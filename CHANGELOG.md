@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.5.0 (2026-03-03)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* add support for file downloads from binary response endpoints ([9bf74c0](https://github.com/team-telnyx/telnyx-cli/commit/9bf74c0f81e2ef4896e21c2dd53cde1703822f49))
+* **api:** manual updates ([a04a5fa](https://github.com/team-telnyx/telnyx-cli/commit/a04a5fa9c65a748f94aa3e5583cca365f9fd182e))
+* **api:** manual updates ([58fe50e](https://github.com/team-telnyx/telnyx-cli/commit/58fe50eb2c39102a968412326de82cceaca557b2))
+* **api:** manual updates ([7842380](https://github.com/team-telnyx/telnyx-cli/commit/78423802757d9956522ad5aa32c25abaa3f2f931))
+* **api:** manual updates ([b51de06](https://github.com/team-telnyx/telnyx-cli/commit/b51de06bac644ed850418240a65e68b8199138fc))
+* improved documentation and flags for client options ([4c81556](https://github.com/team-telnyx/telnyx-cli/commit/4c815564351e65c96476b537e6f4e59dfb02e09c))
+* Merge TTS file-based spec into text-to-speech.json ([35f28ce](https://github.com/team-telnyx/telnyx-cli/commit/35f28ce1edbc7f82af9e3d045dabcd6593247198))
+
+
+### Bug Fixes
+
+* avoid printing usage errors twice ([09be78b](https://github.com/team-telnyx/telnyx-cli/commit/09be78b0a27b111da194288eacfa1f69d93a6a5d))
+
+
+### Chores
+
+* **ci:** shorten artifact link ([abec876](https://github.com/team-telnyx/telnyx-cli/commit/abec8765c8b48bf661b5b0601bfb11c2a733034b))
+
 ## 0.4.0 (2026-02-27)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.3.0...v0.4.0)
