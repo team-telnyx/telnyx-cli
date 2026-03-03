@@ -69,6 +69,17 @@ func TestDocumentsDelete(t *testing.T) {
 	)
 }
 
+func TestDocumentsDownload(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"documents", "download",
+		"--api-key", "string",
+		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		"--output", "/dev/null",
+	)
+}
+
 func TestDocumentsGenerateDownloadLink(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(

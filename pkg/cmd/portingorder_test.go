@@ -151,6 +151,18 @@ func TestPortingOrdersRetrieveExceptionTypes(t *testing.T) {
 	)
 }
 
+func TestPortingOrdersRetrieveLoaTemplate(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"porting-orders", "retrieve-loa-template",
+		"--api-key", "string",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--loa-configuration-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--output", "/dev/null",
+	)
+}
+
 func TestPortingOrdersRetrieveRequirements(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(
