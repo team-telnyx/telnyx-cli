@@ -13,6 +13,7 @@ func TestManagedAccountsActionsDisable(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts:actions", "disable",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -22,6 +23,7 @@ func TestManagedAccountsActionsEnable(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts:actions", "enable",
+		"--api-key", "string",
 		"--id", "id",
 		"--reenable-all-connections=true",
 	)

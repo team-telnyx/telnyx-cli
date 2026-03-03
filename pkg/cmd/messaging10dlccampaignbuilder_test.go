@@ -13,6 +13,7 @@ func TestMessaging10dlcCampaignBuilderSubmit(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign-builder", "submit",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 		"--description", "description",
 		"--usecase", "usecase",

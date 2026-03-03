@@ -14,6 +14,7 @@ func TestPhoneNumbersCsvDownloadsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:csv-downloads", "create",
+		"--api-key", "string",
 		"--csv-format", "V2",
 		"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', customer_reference: customer_reference, emergency_address_id: '9102160989215728032', has_bundle: has_bundle, phone_number: phone_number, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel}",
 	)
@@ -44,6 +45,7 @@ func TestPhoneNumbersCsvDownloadsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:csv-downloads", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -53,6 +55,7 @@ func TestPhoneNumbersCsvDownloadsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:csv-downloads", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)

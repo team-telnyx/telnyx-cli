@@ -13,6 +13,7 @@ func TestMessagingNumbersBulkUpdatesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-numbers-bulk-updates", "create",
+		"--api-key", "string",
 		"--messaging-profile-id", "00000000-0000-0000-0000-000000000000",
 		"--number", "+18880000000",
 		"--number", "+18880000001",
@@ -26,6 +27,7 @@ func TestMessagingNumbersBulkUpdatesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-numbers-bulk-updates", "retrieve",
+		"--api-key", "string",
 		"--order-id", "order_id",
 	)
 }

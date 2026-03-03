@@ -13,6 +13,7 @@ func TestSpeechToTextTranscribe(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"speech-to-text", "transcribe",
+		"--api-key", "string",
 		"--input-format", "mp3",
 		"--transcription-engine", "Azure",
 		"--interim-results=true",

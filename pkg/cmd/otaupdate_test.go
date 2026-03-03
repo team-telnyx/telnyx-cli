@@ -14,6 +14,7 @@ func TestOtaUpdatesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ota-updates", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -23,6 +24,7 @@ func TestOtaUpdatesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ota-updates", "list",
+		"--api-key", "string",
 		"--filter", "{sim_card_id: sim_card_id, status: in-progress, type: sim_card_network_preferences}",
 		"--page-number", "0",
 		"--page-size", "0",

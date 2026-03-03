@@ -14,6 +14,7 @@ func TestMessagingHostedNumberOrdersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "create",
+		"--api-key", "string",
 		"--messaging-profile-id", "dc8f39ac-953d-4520-b93b-786ae87db0da",
 		"--phone-number", "+18665550001",
 		"--phone-number", "+18665550002",
@@ -25,6 +26,7 @@ func TestMessagingHostedNumberOrdersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -34,6 +36,7 @@ func TestMessagingHostedNumberOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)
@@ -44,6 +47,7 @@ func TestMessagingHostedNumberOrdersDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "delete",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -53,6 +57,7 @@ func TestMessagingHostedNumberOrdersCheckEligibility(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "check-eligibility",
+		"--api-key", "string",
 		"--phone-number", "string",
 	)
 }
@@ -62,6 +67,7 @@ func TestMessagingHostedNumberOrdersCreateVerificationCodes(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "create-verification-codes",
+		"--api-key", "string",
 		"--id", "id",
 		"--phone-number", "string",
 		"--verification-method", "sms",
@@ -73,6 +79,7 @@ func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "validate-codes",
+		"--api-key", "string",
 		"--id", "id",
 		"--verification-code", "{code: code, phone_number: phone_number}",
 	)

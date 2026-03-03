@@ -14,6 +14,7 @@ func TestPortingOrdersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "create",
+		"--api-key", "string",
 		"--phone-number", "+13035550000",
 		"--phone-number", "+13035550001",
 		"--phone-number", "+13035550002",
@@ -27,6 +28,7 @@ func TestPortingOrdersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--include-phone-numbers=true",
 	)
@@ -37,6 +39,7 @@ func TestPortingOrdersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "update",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--activation-settings", "{foc_datetime_requested: '2021-03-19T10:07:15.527Z'}",
 		"--customer-group-reference", "customer_group_reference",
@@ -90,6 +93,7 @@ func TestPortingOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "list",
+		"--api-key", "string",
 		"--filter", "{activation_settings: {fast_port_eligible: true, foc_datetime_requested: {gt: '2021-03-25T10:00:00.000Z', lt: '2021-03-25T10:00:00.000Z'}}, customer_group_reference: customer_group_reference, customer_reference: customer_reference, end_user: {admin: {auth_person_name: auth_person_name, entity_name: entity_name}}, misc: {type: full}, parent_support_key: parent_support_key, phone_numbers: {carrier_name: carrier_name, country_code: country_code, phone_number: {contains: contains}}}",
 		"--include-phone-numbers=true",
 		"--page-number", "0",
@@ -123,6 +127,7 @@ func TestPortingOrdersDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -132,6 +137,7 @@ func TestPortingOrdersRetrieveAllowedFocWindows(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve-allowed-foc-windows",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -141,6 +147,19 @@ func TestPortingOrdersRetrieveExceptionTypes(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve-exception-types",
+		"--api-key", "string",
+	)
+}
+
+func TestPortingOrdersRetrieveLoaTemplate(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"porting-orders", "retrieve-loa-template",
+		"--api-key", "string",
+		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--loa-configuration-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		"--output", "/dev/null",
 	)
 }
 
@@ -149,6 +168,7 @@ func TestPortingOrdersRetrieveRequirements(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve-requirements",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -160,6 +180,7 @@ func TestPortingOrdersRetrieveSubRequest(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "retrieve-sub-request",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

@@ -13,6 +13,7 @@ func TestMessaging10dlcBrandExternalVettingList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand:external-vetting", "list",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 	)
 }
@@ -22,6 +23,7 @@ func TestMessaging10dlcBrandExternalVettingImports(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand:external-vetting", "imports",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 		"--evp-id", "evpId",
 		"--vetting-id", "vettingId",
@@ -34,6 +36,7 @@ func TestMessaging10dlcBrandExternalVettingOrder(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand:external-vetting", "order",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 		"--evp-id", "evpId",
 		"--vetting-class", "vettingClass",

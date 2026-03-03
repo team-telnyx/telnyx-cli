@@ -13,6 +13,7 @@ func TestPhoneNumbersActionsChangeBundleStatus(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:actions", "change-bundle-status",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--bundle-id", "5194d8fc-87e6-4188-baa9-1c434bbe861b",
 	)
@@ -23,6 +24,7 @@ func TestPhoneNumbersActionsEnableEmergency(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:actions", "enable-emergency",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--emergency-address-id", "53829456729313",
 		"--emergency-enabled=true",
@@ -34,6 +36,7 @@ func TestPhoneNumbersActionsVerifyOwnership(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:actions", "verify-ownership",
+		"--api-key", "string",
 		"--phone-number", "+15551234567",
 	)
 }

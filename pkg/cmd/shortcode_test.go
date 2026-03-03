@@ -14,6 +14,7 @@ func TestShortCodesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"short-codes", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -23,6 +24,7 @@ func TestShortCodesUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"short-codes", "update",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
 		"--tag", "test_customer",
@@ -34,6 +36,7 @@ func TestShortCodesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"short-codes", "list",
+		"--api-key", "string",
 		"--filter", "{messaging_profile_id: messaging_profile_id}",
 		"--page-number", "0",
 		"--page-size", "0",

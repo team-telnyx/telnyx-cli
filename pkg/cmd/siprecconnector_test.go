@@ -13,6 +13,7 @@ func TestSiprecConnectorsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"siprec-connectors", "create",
+		"--api-key", "string",
 		"--host", "siprec.telnyx.com",
 		"--name", "my-siprec-connector",
 		"--port", "5060",
@@ -25,6 +26,7 @@ func TestSiprecConnectorsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"siprec-connectors", "retrieve",
+		"--api-key", "string",
 		"--connector-name", "connector_name",
 	)
 }
@@ -34,6 +36,7 @@ func TestSiprecConnectorsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"siprec-connectors", "update",
+		"--api-key", "string",
 		"--connector-name", "connector_name",
 		"--host", "siprec.telnyx.com",
 		"--name", "my-siprec-connector",
@@ -47,6 +50,7 @@ func TestSiprecConnectorsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"siprec-connectors", "delete",
+		"--api-key", "string",
 		"--connector-name", "connector_name",
 	)
 }

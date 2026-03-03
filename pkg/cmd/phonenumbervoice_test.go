@@ -14,6 +14,7 @@ func TestPhoneNumbersVoiceRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voice", "retrieve",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 	)
 }
@@ -23,6 +24,7 @@ func TestPhoneNumbersVoiceUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voice", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--call-forwarding", "{call_forwarding_enabled: true, forwarding_type: always, forwards_to: '+13035559123'}",
 		"--call-recording", "{inbound_call_recording_channels: single, inbound_call_recording_enabled: true, inbound_call_recording_format: wav}",
@@ -67,6 +69,7 @@ func TestPhoneNumbersVoiceList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voice", "list",
+		"--api-key", "string",
 		"--filter", "{connection_name: {contains: test}, customer_reference: customer_reference, phone_number: phone_number, voice.usage_payment_method: channel}",
 		"--page-number", "0",
 		"--page-size", "0",

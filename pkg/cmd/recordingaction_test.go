@@ -13,6 +13,7 @@ func TestRecordingsActionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"recordings:actions", "delete",
+		"--api-key", "string",
 		"--id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",
 		"--id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c2",
 	)

@@ -14,6 +14,7 @@ func TestBundlePricingUserBundlesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "create",
+		"--api-key", "string",
 		"--idempotency-key", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--item", "{billing_bundle_id: 12ade33a-21c0-473b-b055-b3c836e1c292, quantity: 0}",
 		"--authorization-bearer", "authorization_bearer",
@@ -38,6 +39,7 @@ func TestBundlePricingUserBundlesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "retrieve",
+		"--api-key", "string",
 		"--user-bundle-id", "ca1d2263-d1f1-43ac-ba53-248e7a4bb26a",
 		"--authorization-bearer", "authorization_bearer",
 	)
@@ -48,6 +50,7 @@ func TestBundlePricingUserBundlesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "list",
+		"--api-key", "string",
 		"--filter", "{country_iso: [US], resource: ['+15617819942']}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -74,6 +77,7 @@ func TestBundlePricingUserBundlesDeactivate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "deactivate",
+		"--api-key", "string",
 		"--user-bundle-id", "ca1d2263-d1f1-43ac-ba53-248e7a4bb26a",
 		"--authorization-bearer", "authorization_bearer",
 	)
@@ -84,6 +88,7 @@ func TestBundlePricingUserBundlesListResources(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "list-resources",
+		"--api-key", "string",
 		"--user-bundle-id", "ca1d2263-d1f1-43ac-ba53-248e7a4bb26a",
 		"--authorization-bearer", "authorization_bearer",
 	)
@@ -94,6 +99,7 @@ func TestBundlePricingUserBundlesListUnused(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "list-unused",
+		"--api-key", "string",
 		"--filter", "{country_iso: [US], resource: ['+15617819942']}",
 		"--authorization-bearer", "authorization_bearer",
 	)

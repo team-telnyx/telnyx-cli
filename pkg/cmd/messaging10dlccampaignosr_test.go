@@ -13,6 +13,7 @@ func TestMessaging10dlcCampaignOsrGetAttributes(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign:osr", "get-attributes",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 	)
 }

@@ -14,6 +14,7 @@ func TestTexmlApplicationsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "create",
+		"--api-key", "string",
 		"--friendly-name", "call-router",
 		"--voice-url", "https://example.com",
 		"--active=false",
@@ -67,6 +68,7 @@ func TestTexmlApplicationsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "retrieve",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 	)
 }
@@ -76,6 +78,7 @@ func TestTexmlApplicationsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--friendly-name", "call-router",
 		"--voice-url", "https://example.com",
@@ -131,6 +134,7 @@ func TestTexmlApplicationsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "list",
+		"--api-key", "string",
 		"--filter", "{friendly_name: friendly_name, outbound_voice_profile_id: '1293384261075731499'}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -157,6 +161,7 @@ func TestTexmlApplicationsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml-applications", "delete",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 	)
 }

@@ -14,6 +14,7 @@ func TestPhoneNumbersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers", "retrieve",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 	)
 }
@@ -23,6 +24,7 @@ func TestPhoneNumbersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers", "update",
+		"--api-key", "string",
 		"--phone-number-id", "1293384261075731499",
 		"--address-id", "dc8f39ac-953d-4520-b93b-786ae87db0da",
 		"--billing-group-id", "dc8e4d67-33a0-4cbb-af74-7b58f05bd494",
@@ -39,6 +41,7 @@ func TestPhoneNumbersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers", "list",
+		"--api-key", "string",
 		"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', country_iso_alpha2: US, customer_reference: customer_reference, emergency_address_id: '9102160989215728032', number_type: {eq: local}, phone_number: phone_number, source: ported, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel, without_tags: 'true'}",
 		"--handle-messaging-profile-error", "false",
 		"--page-number", "0",
@@ -78,6 +81,7 @@ func TestPhoneNumbersDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers", "delete",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 	)
 }
@@ -87,6 +91,7 @@ func TestPhoneNumbersSlimList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers", "slim-list",
+		"--api-key", "string",
 		"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', country_iso_alpha2: US, customer_reference: customer_reference, emergency_address_id: '9102160989215728032', number_type: {eq: local}, phone_number: phone_number, source: ported, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel}",
 		"--include-connection=true",
 		"--include-tags=true",

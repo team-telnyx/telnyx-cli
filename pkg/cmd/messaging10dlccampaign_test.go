@@ -13,6 +13,7 @@ func TestMessaging10dlcCampaignRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "retrieve",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 	)
 }
@@ -22,6 +23,7 @@ func TestMessaging10dlcCampaignUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "update",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 		"--auto-renewal=true",
 		"--help-message", "helpMessage",
@@ -42,6 +44,7 @@ func TestMessaging10dlcCampaignList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "list",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 		"--page", "0",
 		"--records-per-page", "0",
@@ -54,6 +57,7 @@ func TestMessaging10dlcCampaignAcceptSharing(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "accept-sharing",
+		"--api-key", "string",
 		"--campaign-id", "C26F1KLZN",
 	)
 }
@@ -63,6 +67,7 @@ func TestMessaging10dlcCampaignDeactivate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "deactivate",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 	)
 }
@@ -72,6 +77,7 @@ func TestMessaging10dlcCampaignGetMnoMetadata(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "get-mno-metadata",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 	)
 }
@@ -81,6 +87,7 @@ func TestMessaging10dlcCampaignGetOperationStatus(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "get-operation-status",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 	)
 }
@@ -90,6 +97,7 @@ func TestMessaging10dlcCampaignGetSharingStatus(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "get-sharing-status",
+		"--api-key", "string",
 		"--campaign-id", "campaignId",
 	)
 }
@@ -99,6 +107,7 @@ func TestMessaging10dlcCampaignSubmitAppeal(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:campaign", "submit-appeal",
+		"--api-key", "string",
 		"--campaign-id", "5eb13888-32b7-4cab-95e6-d834dde21d64",
 		"--appeal-reason", "The website has been updated to include the required privacy policy and terms of service.",
 	)

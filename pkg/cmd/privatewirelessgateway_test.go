@@ -13,6 +13,7 @@ func TestPrivateWirelessGatewaysCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"private-wireless-gateways", "create",
+		"--api-key", "string",
 		"--name", "My private wireless gateway",
 		"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--region-code", "dc2",
@@ -24,6 +25,7 @@ func TestPrivateWirelessGatewaysRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"private-wireless-gateways", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -33,6 +35,7 @@ func TestPrivateWirelessGatewaysList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"private-wireless-gateways", "list",
+		"--api-key", "string",
 		"--filter-created-at", "filter[created_at]",
 		"--filter-ip-range", "filter[ip_range]",
 		"--filter-name", "filter[name]",
@@ -48,6 +51,7 @@ func TestPrivateWirelessGatewaysDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"private-wireless-gateways", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }

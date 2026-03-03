@@ -13,6 +13,7 @@ func TestMessaging10dlcBrandCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "create",
+		"--api-key", "string",
 		"--country", "US",
 		"--display-name", "ABC Mobile",
 		"--email", "email",
@@ -45,6 +46,7 @@ func TestMessaging10dlcBrandRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "retrieve",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 	)
 }
@@ -54,6 +56,7 @@ func TestMessaging10dlcBrandUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "update",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 		"--country", "US",
 		"--display-name", "ABC Mobile",
@@ -88,6 +91,7 @@ func TestMessaging10dlcBrandList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "list",
+		"--api-key", "string",
 		"--brand-id", "826ef77a-348c-445b-81a5-a9b13c68fbfe",
 		"--country", "country",
 		"--display-name", "displayName",
@@ -105,6 +109,7 @@ func TestMessaging10dlcBrandDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "delete",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 	)
 }
@@ -114,6 +119,7 @@ func TestMessaging10dlcBrandGetFeedback(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "get-feedback",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 	)
 }
@@ -123,6 +129,7 @@ func TestMessaging10dlcBrandGetSMSOtpByReference(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "get-sms-otp-by-reference",
+		"--api-key", "string",
 		"--reference-id", "OTP4B2001",
 		"--brand-id", "B123ABC",
 	)
@@ -133,6 +140,7 @@ func TestMessaging10dlcBrandResend2faEmail(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "resend-2fa-email",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 	)
 }
@@ -142,6 +150,7 @@ func TestMessaging10dlcBrandRetrieveSMSOtpStatus(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "retrieve-sms-otp-status",
+		"--api-key", "string",
 		"--brand-id", "4b20019b-043a-78f8-0657-b3be3f4b4002",
 	)
 }
@@ -151,6 +160,7 @@ func TestMessaging10dlcBrandRevet(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "revet",
+		"--api-key", "string",
 		"--brand-id", "brandId",
 	)
 }
@@ -160,6 +170,7 @@ func TestMessaging10dlcBrandTriggerSMSOtp(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "trigger-sms-otp",
+		"--api-key", "string",
 		"--brand-id", "4b20019b-043a-78f8-0657-b3be3f4b4002",
 		"--pin-sms", "Your PIN is @OTP_PIN@",
 		"--success-sms", "Verification successful!",
@@ -171,6 +182,7 @@ func TestMessaging10dlcBrandVerifySMSOtp(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:brand", "verify-sms-otp",
+		"--api-key", "string",
 		"--brand-id", "4b20019b-043a-78f8-0657-b3be3f4b4002",
 		"--otp-pin", "123456",
 	)

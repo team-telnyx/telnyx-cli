@@ -14,6 +14,7 @@ func TestRoomRecordingsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "retrieve",
+		"--api-key", "string",
 		"--room-recording-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 	)
 }
@@ -23,6 +24,7 @@ func TestRoomRecordingsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "list",
+		"--api-key", "string",
 		"--filter", "{date_ended_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_started_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, duration_secs: 20, participant_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, room_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, session_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, status: completed, type: audio}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -53,6 +55,7 @@ func TestRoomRecordingsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "delete",
+		"--api-key", "string",
 		"--room-recording-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 	)
 }
@@ -62,6 +65,7 @@ func TestRoomRecordingsDeleteBulk(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "delete-bulk",
+		"--api-key", "string",
 		"--filter", "{date_ended_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_started_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, duration_secs: 20, participant_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, room_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, session_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, status: completed, type: audio}",
 		"--page-number", "0",
 		"--page-size", "0",

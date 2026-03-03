@@ -13,6 +13,7 @@ func TestMessaging10dlcGetEnum(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc", "get-enum",
+		"--api-key", "string",
 		"--endpoint", "mno",
 	)
 }

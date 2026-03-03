@@ -13,6 +13,7 @@ func TestAIRetrieveModels(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai", "retrieve-models",
+		"--api-key", "string",
 	)
 }
 
@@ -21,6 +22,7 @@ func TestAISummarize(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai", "summarize",
+		"--api-key", "string",
 		"--bucket", "bucket",
 		"--filename", "filename",
 		"--system-prompt", "system_prompt",

@@ -14,6 +14,7 @@ func TestPortingOrdersPhoneNumberExtensionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:phone-number-extensions", "create",
+		"--api-key", "string",
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--activation-range", "{end_at: 10, start_at: 1}",
 		"--extension-range", "{end_at: 10, start_at: 1}",
@@ -41,6 +42,7 @@ func TestPortingOrdersPhoneNumberExtensionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:phone-number-extensions", "list",
+		"--api-key", "string",
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter", "{porting_phone_number_id: 04f8f1b9-310c-4a3c-963e-7dfc54765140}",
 		"--page-number", "0",
@@ -68,6 +70,7 @@ func TestPortingOrdersPhoneNumberExtensionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:phone-number-extensions", "delete",
+		"--api-key", "string",
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)

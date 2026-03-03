@@ -14,6 +14,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "create",
+		"--api-key", "string",
 		"--name", "My name",
 		"--whitelisted-destination", "US",
 		"--ai-assistant-id", "ai_assistant_id",
@@ -74,6 +75,7 @@ func TestMessagingProfilesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "retrieve",
+		"--api-key", "string",
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -83,6 +85,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "update",
+		"--api-key", "string",
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--alpha-sender", "sqF",
 		"--daily-spend-limit", "269125115713",
@@ -141,6 +144,7 @@ func TestMessagingProfilesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "list",
+		"--api-key", "string",
 		"--filter", "{name: name}",
 		"--filter-name-contains", "filter[name][contains]",
 		"--filter-name-eq", "filter[name][eq]",
@@ -168,6 +172,7 @@ func TestMessagingProfilesDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "delete",
+		"--api-key", "string",
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -177,6 +182,7 @@ func TestMessagingProfilesListAlphanumericSenderIDs(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "list-alphanumeric-sender-ids",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -188,6 +194,7 @@ func TestMessagingProfilesListPhoneNumbers(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "list-phone-numbers",
+		"--api-key", "string",
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -199,6 +206,7 @@ func TestMessagingProfilesListShortCodes(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "list-short-codes",
+		"--api-key", "string",
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -210,6 +218,7 @@ func TestMessagingProfilesRetrieveMetrics(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "retrieve-metrics",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--time-frame", "1h",
 	)

@@ -14,6 +14,7 @@ func TestNumberOrdersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-orders", "create",
+		"--api-key", "string",
 		"--billing-group-id", "abc85f64-5717-4562-b3fc-2c9600",
 		"--connection-id", "346789098765567",
 		"--customer-reference", "MY REF 001",
@@ -47,6 +48,7 @@ func TestNumberOrdersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-orders", "retrieve",
+		"--api-key", "string",
 		"--number-order-id", "number_order_id",
 	)
 }
@@ -56,6 +58,7 @@ func TestNumberOrdersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-orders", "update",
+		"--api-key", "string",
 		"--number-order-id", "number_order_id",
 		"--customer-reference", "MY REF 001",
 		"--regulatory-requirement", "{field_value: 45f45a04-b4be-4592-95b1-9306b9db2b21, requirement_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576}",
@@ -80,6 +83,7 @@ func TestNumberOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-orders", "list",
+		"--api-key", "string",
 		"--filter", "{created_at: {gt: gt, lt: lt}, customer_reference: customer_reference, phone_numbers_count: phone_numbers_count, requirements_met: true, status: status}",
 		"--page-number", "0",
 		"--page-size", "0",

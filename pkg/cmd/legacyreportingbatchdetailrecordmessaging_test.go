@@ -14,8 +14,9 @@ func TestLegacyReportingBatchDetailRecordsMessagingCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "create",
-		"--end-time", "2024-02-12T23:59:59Z",
-		"--start-time", "2024-02-01T00:00:00Z",
+		"--api-key", "string",
+		"--end-time", "'2024-02-12T23:59:59Z'",
+		"--start-time", "'2024-02-01T00:00:00Z'",
 		"--connection", "123",
 		"--connection", "456",
 		"--direction", "1",
@@ -40,8 +41,8 @@ func TestLegacyReportingBatchDetailRecordsMessagingCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "create",
-		"--end-time", "2024-02-12T23:59:59Z",
-		"--start-time", "2024-02-01T00:00:00Z",
+		"--end-time", "'2024-02-12T23:59:59Z'",
+		"--start-time", "'2024-02-01T00:00:00Z'",
 		"--connection", "123",
 		"--connection", "456",
 		"--direction", "1",
@@ -71,6 +72,7 @@ func TestLegacyReportingBatchDetailRecordsMessagingRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -80,6 +82,7 @@ func TestLegacyReportingBatchDetailRecordsMessagingList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "list",
+		"--api-key", "string",
 	)
 }
 
@@ -88,6 +91,7 @@ func TestLegacyReportingBatchDetailRecordsMessagingDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

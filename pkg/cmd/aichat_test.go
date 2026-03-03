@@ -14,6 +14,7 @@ func TestAIChatCreateCompletion(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:chat", "create-completion",
+		"--api-key", "string",
 		"--message", "{content: You are a friendly chatbot., role: system}",
 		"--message", "{content: 'Hello, world!', role: user}",
 		"--api-key-ref", "api_key_ref",

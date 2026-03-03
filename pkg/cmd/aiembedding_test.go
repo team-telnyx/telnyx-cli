@@ -13,6 +13,7 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "create",
+		"--api-key", "string",
 		"--bucket-name", "bucket_name",
 		"--document-chunk-overlap-size", "0",
 		"--document-chunk-size", "0",
@@ -26,6 +27,7 @@ func TestAIEmbeddingsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "retrieve",
+		"--api-key", "string",
 		"--task-id", "task_id",
 	)
 }
@@ -35,6 +37,7 @@ func TestAIEmbeddingsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "list",
+		"--api-key", "string",
 		"--status", "string",
 	)
 }
@@ -44,6 +47,7 @@ func TestAIEmbeddingsSimilaritySearch(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "similarity-search",
+		"--api-key", "string",
 		"--bucket-name", "bucket_name",
 		"--query", "query",
 		"--num-of-docs", "0",
@@ -55,6 +59,7 @@ func TestAIEmbeddingsURL(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:embeddings", "url",
+		"--api-key", "string",
 		"--bucket-name", "bucket_name",
 		"--url", "url",
 	)

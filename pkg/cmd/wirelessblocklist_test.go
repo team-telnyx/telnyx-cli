@@ -13,6 +13,7 @@ func TestWirelessBlocklistsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "create",
+		"--api-key", "string",
 		"--name", "My Wireless Blocklist",
 		"--type", "country",
 		"--value", "CA",
@@ -25,6 +26,7 @@ func TestWirelessBlocklistsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "retrieve",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }
@@ -34,6 +36,7 @@ func TestWirelessBlocklistsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "update",
+		"--api-key", "string",
 		"--name", "My Wireless Blocklist",
 		"--type", "country",
 		"--value", "CA",
@@ -46,6 +49,7 @@ func TestWirelessBlocklistsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "list",
+		"--api-key", "string",
 		"--filter-name", "filter[name]",
 		"--filter-type", "filter[type]",
 		"--filter-values", "filter[values]",
@@ -59,6 +63,7 @@ func TestWirelessBlocklistsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless-blocklists", "delete",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 	)
 }

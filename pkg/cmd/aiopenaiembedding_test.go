@@ -13,6 +13,7 @@ func TestAIOpenAIEmbeddingsCreateEmbeddings(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:openai:embeddings", "create-embeddings",
+		"--api-key", "string",
 		"--input", "The quick brown fox jumps over the lazy dog",
 		"--model", "thenlper/gte-large",
 		"--dimensions", "0",
@@ -26,5 +27,6 @@ func TestAIOpenAIEmbeddingsListEmbeddingModels(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:openai:embeddings", "list-embedding-models",
+		"--api-key", "string",
 	)
 }

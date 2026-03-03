@@ -14,6 +14,7 @@ func TestMessagingProfilesAutorespConfigsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "create",
+		"--api-key", "string",
 		"--profile-id", "profile_id",
 		"--country-code", "US",
 		"--keyword", "keyword1",
@@ -28,6 +29,7 @@ func TestMessagingProfilesAutorespConfigsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "retrieve",
+		"--api-key", "string",
 		"--profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--autoresp-cfg-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
@@ -38,6 +40,7 @@ func TestMessagingProfilesAutorespConfigsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "update",
+		"--api-key", "string",
 		"--profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--autoresp-cfg-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--country-code", "US",
@@ -53,6 +56,7 @@ func TestMessagingProfilesAutorespConfigsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "list",
+		"--api-key", "string",
 		"--profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--country-code", "country_code",
 		"--created-at", "{gte: gte, lte: lte}",
@@ -80,6 +84,7 @@ func TestMessagingProfilesAutorespConfigsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "delete",
+		"--api-key", "string",
 		"--profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--autoresp-cfg-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)

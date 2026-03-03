@@ -13,8 +13,9 @@ func TestMessagingHostedNumberOrdersActionsUploadFile(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders:actions", "upload-file",
+		"--api-key", "string",
 		"--id", "id",
-		"--bill", "",
-		"--loa", "",
+		"--bill", "...",
+		"--loa", "...",
 	)
 }

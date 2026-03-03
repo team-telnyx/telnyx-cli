@@ -13,6 +13,7 @@ func TestAddressesActionsAcceptSuggestions(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"addresses:actions", "accept-suggestions",
+		"--api-key", "string",
 		"--address-uuid", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--id", "id",
 	)
@@ -23,6 +24,7 @@ func TestAddressesActionsValidate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"addresses:actions", "validate",
+		"--api-key", "string",
 		"--country-code", "US",
 		"--postal-code", "78701",
 		"--street-address", "600 Congress Avenue",

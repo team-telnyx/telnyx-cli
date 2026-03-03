@@ -13,8 +13,9 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:scheduled-events", "create",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
-		"--scheduled-at-fixed-datetime", "2025-04-15T13:07:28.764Z",
+		"--scheduled-at-fixed-datetime", "'2025-04-15T13:07:28.764Z'",
 		"--telnyx-agent-target", "telnyx_agent_target",
 		"--telnyx-conversation-channel", "phone_call",
 		"--telnyx-end-user-target", "telnyx_end_user_target",
@@ -29,6 +30,7 @@ func TestAIAssistantsScheduledEventsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:scheduled-events", "retrieve",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--event-id", "event_id",
 	)
@@ -39,12 +41,13 @@ func TestAIAssistantsScheduledEventsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:scheduled-events", "list",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--conversation-channel", "phone_call",
-		"--from-date", "2019-12-27T18:11:19.117Z",
+		"--from-date", "'2019-12-27T18:11:19.117Z'",
 		"--page-number", "0",
 		"--page-size", "0",
-		"--to-date", "2019-12-27T18:11:19.117Z",
+		"--to-date", "'2019-12-27T18:11:19.117Z'",
 	)
 }
 
@@ -53,6 +56,7 @@ func TestAIAssistantsScheduledEventsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:scheduled-events", "delete",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--event-id", "event_id",
 	)

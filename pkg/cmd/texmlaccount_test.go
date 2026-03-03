@@ -13,8 +13,9 @@ func TestTexmlAccountsRetrieveRecordingsJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts", "retrieve-recordings-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
-		"--date-created", "2023-05-22T00:00:00Z",
+		"--date-created", "'2023-05-22T00:00:00Z'",
 		"--page", "0",
 		"--page-size", "0",
 	)
@@ -25,6 +26,7 @@ func TestTexmlAccountsRetrieveTranscriptionsJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts", "retrieve-transcriptions-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--page-size", "0",
 		"--page-token", "PageToken",

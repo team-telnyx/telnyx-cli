@@ -3,6 +3,7 @@
 package cmd
 
 import (
+	"bytes"
 	"compress/gzip"
 	"context"
 	"fmt"
@@ -12,20 +13,23 @@ import (
 	"strings"
 
 	"github.com/team-telnyx/telnyx-cli/internal/autocomplete"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	docs "github.com/urfave/cli-docs/v3"
 	"github.com/urfave/cli/v3"
 )
 
 var (
-	Command *cli.Command
+	Command            *cli.Command
+	CommandErrorBuffer bytes.Buffer
 )
 
 func init() {
 	Command = &cli.Command{
-		Name:    "telnyx",
-		Usage:   "CLI for the telnyx API",
-		Suggest: true,
-		Version: Version,
+		Name:      "telnyx",
+		Usage:     "CLI for the telnyx API",
+		Suggest:   true,
+		Version:   Version,
+		ErrWriter: &CommandErrorBuffer,
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
 				Name:  "debug",
@@ -65,6 +69,22 @@ func init() {
 			&cli.StringFlag{
 				Name:  "transform-error",
 				Usage: "The GJSON transformation for errors.",
+			},
+			&requestflag.Flag[string]{
+				Name:    "api-key",
+				Sources: cli.EnvVars("TELNYX_API_KEY"),
+			},
+			&requestflag.Flag[string]{
+				Name:    "public-key",
+				Sources: cli.EnvVars("TELNYX_PUBLIC_KEY"),
+			},
+			&requestflag.Flag[string]{
+				Name:    "client-id",
+				Sources: cli.EnvVars("TELNYX_CLIENT_ID"),
+			},
+			&requestflag.Flag[string]{
+				Name:    "client-secret",
+				Sources: cli.EnvVars("TELNYX_CLIENT_SECRET"),
 			},
 		},
 		Commands: []*cli.Command{
@@ -379,6 +399,7 @@ func init() {
 					&aiClustersList,
 					&aiClustersDelete,
 					&aiClustersCompute,
+					&aiClustersFetchGraph,
 				},
 			},
 			{
@@ -936,6 +957,7 @@ func init() {
 					&documentsUpdate,
 					&documentsList,
 					&documentsDelete,
+					&documentsDownload,
 					&documentsGenerateDownloadLink,
 					&documentsUpload,
 					&documentsUploadJson,
@@ -1282,6 +1304,7 @@ func init() {
 					&mediaUpdate,
 					&mediaList,
 					&mediaDelete,
+					&mediaDownload,
 					&mediaUpload,
 				},
 			},
@@ -1790,6 +1813,8 @@ func init() {
 					&portingLoaConfigurationsUpdate,
 					&portingLoaConfigurationsList,
 					&portingLoaConfigurationsDelete,
+					&portingLoaConfigurationsPreview0,
+					&portingLoaConfigurationsPreview1,
 				},
 			},
 			{
@@ -1804,6 +1829,7 @@ func init() {
 					&portingOrdersDelete,
 					&portingOrdersRetrieveAllowedFocWindows,
 					&portingOrdersRetrieveExceptionTypes,
+					&portingOrdersRetrieveLoaTemplate,
 					&portingOrdersRetrieveRequirements,
 					&portingOrdersRetrieveSubRequest,
 				},
@@ -2532,6 +2558,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&textToSpeechGenerate,
 					&textToSpeechListVoices,
 					&textToSpeechStream,
 				},

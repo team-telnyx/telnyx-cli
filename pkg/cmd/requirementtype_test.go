@@ -14,6 +14,7 @@ func TestRequirementTypesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-types", "retrieve",
+		"--api-key", "string",
 		"--id", "a38c217a-8019-48f8-bff6-0fdd9939075b",
 	)
 }
@@ -23,6 +24,7 @@ func TestRequirementTypesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-types", "list",
+		"--api-key", "string",
 		"--filter", "{name: {contains: utility bill}}",
 		"--sort", "name",
 	)

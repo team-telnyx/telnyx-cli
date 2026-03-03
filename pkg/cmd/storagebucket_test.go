@@ -13,6 +13,7 @@ func TestStorageBucketsCreatePresignedURL(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:buckets", "create-presigned-url",
+		"--api-key", "string",
 		"--bucket-name", "",
 		"--object-name", "",
 		"--ttl", "60",

@@ -13,5 +13,6 @@ func TestStorageListMigrationSourceCoverage(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage", "list-migration-source-coverage",
+		"--api-key", "string",
 	)
 }

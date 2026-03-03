@@ -13,6 +13,7 @@ func TestOAuthClientsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "create",
+		"--api-key", "string",
 		"--allowed-grant-type", "client_credentials",
 		"--allowed-scope", "admin",
 		"--client-type", "public",
@@ -30,6 +31,7 @@ func TestOAuthClientsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -39,6 +41,7 @@ func TestOAuthClientsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "update",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--allowed-grant-type", "client_credentials",
 		"--allowed-scope", "admin",
@@ -56,6 +59,7 @@ func TestOAuthClientsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "list",
+		"--api-key", "string",
 		"--filter-allowed-grant-types-contains", "client_credentials",
 		"--filter-client-id", "filter[client_id]",
 		"--filter-client-type", "confidential",
@@ -72,6 +76,7 @@ func TestOAuthClientsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"oauth-clients", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

@@ -14,6 +14,7 @@ func TestWebhookDeliveriesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"webhook-deliveries", "retrieve",
+		"--api-key", "string",
 		"--id", "C9C0797E-901D-4349-A33C-C2C8F31A92C2",
 	)
 }
@@ -23,6 +24,7 @@ func TestWebhookDeliveriesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"webhook-deliveries", "list",
+		"--api-key", "string",
 		"--filter", "{attempts: {contains: https://fallback.example.com/webhooks}, event_type: 'call_initiated,call.initiated', finished_at: {gte: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, started_at: {gte: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, status: {eq: delivered}, webhook: {contains: call.initiated}}",
 		"--page-number", "0",
 		"--page-size", "0",

@@ -13,8 +13,9 @@ func TestLegacyReportingUsageReportsVoiceCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:voice", "create",
-		"--end-time", "2024-02-01T00:00:00Z",
-		"--start-time", "2024-02-01T00:00:00Z",
+		"--api-key", "string",
+		"--end-time", "'2024-02-01T00:00:00Z'",
+		"--start-time", "'2024-02-01T00:00:00Z'",
 		"--aggregation-type", "0",
 		"--connection", "123",
 		"--connection", "456",
@@ -30,6 +31,7 @@ func TestLegacyReportingUsageReportsVoiceRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:voice", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -39,6 +41,7 @@ func TestLegacyReportingUsageReportsVoiceList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:voice", "list",
+		"--api-key", "string",
 		"--page", "1",
 		"--per-page", "1",
 	)
@@ -49,6 +52,7 @@ func TestLegacyReportingUsageReportsVoiceDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:usage-reports:voice", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

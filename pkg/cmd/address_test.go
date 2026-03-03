@@ -14,6 +14,7 @@ func TestAddressesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"addresses", "create",
+		"--api-key", "string",
 		"--business-name", "Toy-O'Kon",
 		"--country-code", "US",
 		"--first-name", "Alfred",
@@ -37,6 +38,7 @@ func TestAddressesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"addresses", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -46,6 +48,7 @@ func TestAddressesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"addresses", "list",
+		"--api-key", "string",
 		"--filter", "{address_book: {eq: eq}, customer_reference: string, street_address: {contains: contains}, used_as_emergency: used_as_emergency}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -74,6 +77,7 @@ func TestAddressesDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"addresses", "delete",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }

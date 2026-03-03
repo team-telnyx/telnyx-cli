@@ -13,5 +13,6 @@ func TestPortingListUkCarriers(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting", "list-uk-carriers",
+		"--api-key", "string",
 	)
 }

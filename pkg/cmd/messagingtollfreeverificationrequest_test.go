@@ -14,6 +14,7 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "create",
+		"--api-key", "string",
 		"--additional-information", "additionalInformation",
 		"--business-addr1", "600 Congress Avenue",
 		"--business-city", "Austin",
@@ -101,6 +102,7 @@ func TestMessagingTollfreeVerificationRequestsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -110,6 +112,7 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "update",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--additional-information", "additionalInformation",
 		"--business-addr1", "600 Congress Avenue",
@@ -199,11 +202,12 @@ func TestMessagingTollfreeVerificationRequestsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "list",
+		"--api-key", "string",
 		"--page", "1",
 		"--page-size", "1",
 		"--business-name", "business_name",
-		"--date-end", "2019-12-27T18:11:19.117Z",
-		"--date-start", "2019-12-27T18:11:19.117Z",
+		"--date-end", "'2019-12-27T18:11:19.117Z'",
+		"--date-start", "'2019-12-27T18:11:19.117Z'",
 		"--phone-number", "phone_number",
 		"--status", "Verified",
 	)
@@ -214,6 +218,7 @@ func TestMessagingTollfreeVerificationRequestsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -223,6 +228,7 @@ func TestMessagingTollfreeVerificationRequestsRetrieveStatusHistory(t *testing.T
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "retrieve-status-history",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--page-number", "1",
 		"--page-size", "1",

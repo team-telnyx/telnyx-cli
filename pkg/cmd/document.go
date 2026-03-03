@@ -110,6 +110,25 @@ var documentsDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
+var documentsDownload = cli.Command{
+	Name:    "download",
+	Usage:   "Download a document.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:    "output",
+			Aliases: []string{"o"},
+			Usage:   "The file where the response contents will be stored. Use the value '-' to force output to stdout.",
+		},
+	},
+	Action:          handleDocumentsDownload,
+	HideHelpCommand: true,
+}
+
 var documentsGenerateDownloadLink = cli.Command{
 	Name:    "generate-download-link",
 	Usage:   "Generates a temporary pre-signed URL that can be used to download the document\ndirectly from the storage backend without authentication.",
@@ -348,6 +367,39 @@ func handleDocumentsDelete(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "documents delete", obj, format, transform)
+}
+
+func handleDocumentsDownload(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	response, err := client.Documents.Download(ctx, cmd.Value("id").(string), options...)
+	if err != nil {
+		return err
+	}
+	message, err := writeBinaryResponse(response, cmd.String("output"))
+	if message != "" {
+		fmt.Println(message)
+	}
+	return err
 }
 
 func handleDocumentsGenerateDownloadLink(ctx context.Context, cmd *cli.Command) error {

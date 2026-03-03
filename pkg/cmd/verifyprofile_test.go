@@ -14,6 +14,7 @@ func TestVerifyProfilesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "create",
+		"--api-key", "string",
 		"--name", "Test Profile",
 		"--call", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 		"--flashcall", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
@@ -63,6 +64,7 @@ func TestVerifyProfilesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "retrieve",
+		"--api-key", "string",
 		"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 	)
 }
@@ -72,6 +74,7 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "update",
+		"--api-key", "string",
 		"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--call", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 		"--flashcall", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
@@ -123,6 +126,7 @@ func TestVerifyProfilesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "list",
+		"--api-key", "string",
 		"--filter", "{name: name}",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -146,6 +150,7 @@ func TestVerifyProfilesDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "delete",
+		"--api-key", "string",
 		"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 	)
 }
@@ -155,6 +160,7 @@ func TestVerifyProfilesCreateTemplate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "create-template",
+		"--api-key", "string",
 		"--text", "Your {{app_name}} verification code is: {{code}}.",
 	)
 }
@@ -164,6 +170,7 @@ func TestVerifyProfilesRetrieveTemplates(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "retrieve-templates",
+		"--api-key", "string",
 	)
 }
 
@@ -172,6 +179,7 @@ func TestVerifyProfilesUpdateTemplate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "update-template",
+		"--api-key", "string",
 		"--template-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--text", "Your {{app_name}} verification code is: {{code}}.",
 	)

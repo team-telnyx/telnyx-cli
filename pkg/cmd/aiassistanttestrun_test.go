@@ -13,6 +13,7 @@ func TestAIAssistantsTestsRunsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests:runs", "retrieve",
+		"--api-key", "string",
 		"--test-id", "test_id",
 		"--run-id", "run_id",
 	)
@@ -23,6 +24,7 @@ func TestAIAssistantsTestsRunsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests:runs", "list",
+		"--api-key", "string",
 		"--test-id", "test_id",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -35,6 +37,7 @@ func TestAIAssistantsTestsRunsTrigger(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:tests:runs", "trigger",
+		"--api-key", "string",
 		"--test-id", "test_id",
 		"--destination-version-id", "123e4567-e89b-12d3-a456-426614174000",
 	)

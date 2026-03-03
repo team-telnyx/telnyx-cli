@@ -14,6 +14,7 @@ func TestNumberReservationsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-reservations", "create",
+		"--api-key", "string",
 		"--customer-reference", "MY REF 001",
 		"--phone-number", "{phone_number: '+19705555098'}",
 	)
@@ -35,6 +36,7 @@ func TestNumberReservationsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-reservations", "retrieve",
+		"--api-key", "string",
 		"--number-reservation-id", "number_reservation_id",
 	)
 }
@@ -44,6 +46,7 @@ func TestNumberReservationsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-reservations", "list",
+		"--api-key", "string",
 		"--filter", "{created_at: {gt: gt, lt: lt}, customer_reference: customer_reference, phone_numbers.phone_number: phone_numbers.phone_number, status: status}",
 		"--page-number", "0",
 		"--page-size", "0",

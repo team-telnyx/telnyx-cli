@@ -13,6 +13,7 @@ func TestAIConversationsInsightsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "create",
+		"--api-key", "string",
 		"--instructions", "instructions",
 		"--name", "name",
 		"--json-schema", "string",
@@ -25,6 +26,7 @@ func TestAIConversationsInsightsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "retrieve",
+		"--api-key", "string",
 		"--insight-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -34,6 +36,7 @@ func TestAIConversationsInsightsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "update",
+		"--api-key", "string",
 		"--insight-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--instructions", "instructions",
 		"--json-schema", "string",
@@ -47,6 +50,7 @@ func TestAIConversationsInsightsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "list",
+		"--api-key", "string",
 		"--page-number", "0",
 		"--page-size", "0",
 	)
@@ -57,6 +61,7 @@ func TestAIConversationsInsightsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:conversations:insights", "delete",
+		"--api-key", "string",
 		"--insight-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

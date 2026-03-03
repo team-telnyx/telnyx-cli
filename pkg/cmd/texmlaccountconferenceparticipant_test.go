@@ -14,6 +14,7 @@ func TestTexmlAccountsConferencesParticipantsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "retrieve",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 		"--call-sid-or-participant-label", "call_sid_or_participant_label",
@@ -25,6 +26,7 @@ func TestTexmlAccountsConferencesParticipantsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "update",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 		"--call-sid-or-participant-label", "call_sid_or_participant_label",
@@ -47,6 +49,7 @@ func TestTexmlAccountsConferencesParticipantsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "delete",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 		"--call-sid-or-participant-label", "call_sid_or_participant_label",
@@ -58,6 +61,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "participants",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 		"--amd-status-callback", "https://www.example.com/amd_result",
@@ -176,6 +180,7 @@ func TestTexmlAccountsConferencesParticipantsRetrieveParticipants(t *testing.T) 
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "retrieve-participants",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 	)

@@ -14,6 +14,7 @@ func TestMobileVoiceConnectionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "create",
+		"--api-key", "string",
 		"--active=true",
 		"--connection-name", "connection_name",
 		"--inbound", "{channel_limit: 0}",
@@ -50,6 +51,7 @@ func TestMobileVoiceConnectionsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "retrieve",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }
@@ -59,6 +61,7 @@ func TestMobileVoiceConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--active=true",
 		"--connection-name", "connection_name",
@@ -97,6 +100,7 @@ func TestMobileVoiceConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "list",
+		"--api-key", "string",
 		"--filter-connection-name-contains", "filter[connection_name][contains]",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -109,6 +113,7 @@ func TestMobileVoiceConnectionsDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "delete",
+		"--api-key", "string",
 		"--id", "id",
 	)
 }

@@ -13,5 +13,6 @@ func TestGlobalIPProtocolsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-protocols", "list",
+		"--api-key", "string",
 	)
 }

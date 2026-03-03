@@ -14,6 +14,7 @@ func TestInexplicitNumberOrdersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inexplicit-number-orders", "create",
+		"--api-key", "string",
 		"--ordering-group", "{count_requested: count_requested, country_iso: US, phone_number_type: phone_number_type, administrative_area: administrative_area, exclude_held_numbers: true, features: [string], locality: locality, national_destination_code: national_destination_code, phone_number: {contains: contains, ends_with: ends_with, starts_with: starts_with}, quickship: true, strategy: always}",
 		"--billing-group-id", "billing_group_id",
 		"--connection-id", "connection_id",
@@ -51,6 +52,7 @@ func TestInexplicitNumberOrdersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inexplicit-number-orders", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -60,6 +62,7 @@ func TestInexplicitNumberOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inexplicit-number-orders", "list",
+		"--api-key", "string",
 		"--page-number", "1",
 		"--page-size", "1",
 	)

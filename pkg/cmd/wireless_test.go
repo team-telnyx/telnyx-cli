@@ -13,6 +13,7 @@ func TestWirelessRetrieveRegions(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"wireless", "retrieve-regions",
+		"--api-key", "string",
 		"--product", "public_ips",
 	)
 }

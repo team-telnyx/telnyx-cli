@@ -13,6 +13,7 @@ func TestPortabilityChecksRun(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portability-checks", "run",
+		"--api-key", "string",
 		"--phone-number", "+13035550000",
 		"--phone-number", "+13035550001",
 		"--phone-number", "+13035550002",

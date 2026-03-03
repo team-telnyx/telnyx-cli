@@ -13,8 +13,9 @@ func TestLegacyReportingBatchDetailRecordsSpeechToTextCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:speech-to-text", "create",
-		"--end-date", "2020-07-01T00:00:00-06:00",
-		"--start-date", "2020-07-01T00:00:00-06:00",
+		"--api-key", "string",
+		"--end-date", "'2020-07-01T00:00:00-06:00'",
+		"--start-date", "'2020-07-01T00:00:00-06:00'",
 	)
 }
 
@@ -23,6 +24,7 @@ func TestLegacyReportingBatchDetailRecordsSpeechToTextRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:speech-to-text", "retrieve",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }
@@ -32,6 +34,7 @@ func TestLegacyReportingBatchDetailRecordsSpeechToTextList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:speech-to-text", "list",
+		"--api-key", "string",
 	)
 }
 
@@ -40,6 +43,7 @@ func TestLegacyReportingBatchDetailRecordsSpeechToTextDelete(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:speech-to-text", "delete",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 	)
 }

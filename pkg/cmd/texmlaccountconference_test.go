@@ -13,6 +13,7 @@ func TestTexmlAccountsConferencesRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "retrieve",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 	)
@@ -23,6 +24,7 @@ func TestTexmlAccountsConferencesUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "update",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 		"--announce-method", "GET",
@@ -36,6 +38,7 @@ func TestTexmlAccountsConferencesRetrieveConferences(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "retrieve-conferences",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--date-created", "DateCreated",
 		"--date-updated", "DateUpdated",
@@ -52,6 +55,7 @@ func TestTexmlAccountsConferencesRetrieveRecordings(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "retrieve-recordings",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 	)
@@ -62,6 +66,7 @@ func TestTexmlAccountsConferencesRetrieveRecordingsJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences", "retrieve-recordings-json",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 	)

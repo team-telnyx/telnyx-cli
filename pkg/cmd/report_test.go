@@ -13,6 +13,7 @@ func TestReportsListMdrs(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports", "list-mdrs",
+		"--api-key", "string",
 		"--id", "e093fbe0-5bde-11eb-ae93-0242ac130002",
 		"--cld", "+15551237654",
 		"--cli", "+15551237654",
@@ -30,6 +31,7 @@ func TestReportsListWdrs(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"reports", "list-wdrs",
+		"--api-key", "string",
 		"--id", "e093fbe0-5bde-11eb-ae93-0242ac130002",
 		"--end-date", "2021-06-01T00:00:00Z",
 		"--imsi", "123456",
