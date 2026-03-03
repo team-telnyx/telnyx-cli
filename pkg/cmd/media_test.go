@@ -61,6 +61,17 @@ func TestMediaDelete(t *testing.T) {
 	)
 }
 
+func TestMediaDownload(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"media", "download",
+		"--api-key", "string",
+		"--media-name", "media_name",
+		"--output", "/dev/null",
+	)
+}
+
 func TestMediaUpload(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	mocktest.TestRunMockTestWithFlags(

@@ -342,6 +342,30 @@ var portingOrdersRetrieveExceptionTypes = cli.Command{
 	HideHelpCommand: true,
 }
 
+var portingOrdersRetrieveLoaTemplate = cli.Command{
+	Name:    "retrieve-loa-template",
+	Usage:   "Download a porting order loa template",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:      "loa-configuration-id",
+			Usage:     "The identifier of the LOA configuration to use for the template. If not provided, the default LOA configuration will be used.",
+			QueryPath: "loa_configuration_id",
+		},
+		&requestflag.Flag[string]{
+			Name:    "output",
+			Aliases: []string{"o"},
+			Usage:   "The file where the response contents will be stored. Use the value '-' to force output to stdout.",
+		},
+	},
+	Action:          handlePortingOrdersRetrieveLoaTemplate,
+	HideHelpCommand: true,
+}
+
 var portingOrdersRetrieveRequirements = cli.Command{
 	Name:    "retrieve-requirements",
 	Usage:   "Returns a list of all requirements based on country/number type for this porting\norder.",
@@ -624,6 +648,46 @@ func handlePortingOrdersRetrieveExceptionTypes(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "porting-orders retrieve-exception-types", obj, format, transform)
+}
+
+func handlePortingOrdersRetrieveLoaTemplate(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.PortingOrderGetLoaTemplateParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	response, err := client.PortingOrders.GetLoaTemplate(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+	message, err := writeBinaryResponse(response, cmd.String("output"))
+	if message != "" {
+		fmt.Println(message)
+	}
+	return err
 }
 
 func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Command) error {

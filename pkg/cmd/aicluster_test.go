@@ -54,3 +54,15 @@ func TestAIClustersCompute(t *testing.T) {
 		"--prefix", "prefix",
 	)
 }
+
+func TestAIClustersFetchGraph(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	mocktest.TestRunMockTestWithFlags(
+		t,
+		"ai:clusters", "fetch-graph",
+		"--api-key", "string",
+		"--task-id", "task_id",
+		"--cluster-id", "0",
+		"--output", "/dev/null",
+	)
+}

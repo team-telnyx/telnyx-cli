@@ -111,6 +111,29 @@ var aiClustersCompute = cli.Command{
 	HideHelpCommand: true,
 }
 
+var aiClustersFetchGraph = cli.Command{
+	Name:    "fetch-graph",
+	Usage:   "Fetch a cluster visualization",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "task-id",
+			Required: true,
+		},
+		&requestflag.Flag[int64]{
+			Name:      "cluster-id",
+			QueryPath: "cluster_id",
+		},
+		&requestflag.Flag[string]{
+			Name:    "output",
+			Aliases: []string{"o"},
+			Usage:   "The file where the response contents will be stored. Use the value '-' to force output to stdout.",
+		},
+	},
+	Action:          handleAIClustersFetchGraph,
+	HideHelpCommand: true,
+}
+
 func handleAIClustersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -248,4 +271,44 @@ func handleAIClustersCompute(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "ai:clusters compute", obj, format, transform)
+}
+
+func handleAIClustersFetchGraph(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("task-id") && len(unusedArgs) > 0 {
+		cmd.Set("task-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.AIClusterFetchGraphParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	response, err := client.AI.Clusters.FetchGraph(
+		ctx,
+		cmd.Value("task-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+	message, err := writeBinaryResponse(response, cmd.String("output"))
+	if message != "" {
+		fmt.Println(message)
+	}
+	return err
 }

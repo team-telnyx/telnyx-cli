@@ -90,6 +90,25 @@ var mediaDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
+var mediaDownload = cli.Command{
+	Name:    "download",
+	Usage:   "Downloads a stored media file.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "media-name",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:    "output",
+			Aliases: []string{"o"},
+			Usage:   "The file where the response contents will be stored. Use the value '-' to force output to stdout.",
+		},
+	},
+	Action:          handleMediaDownload,
+	HideHelpCommand: true,
+}
+
 var mediaUpload = cli.Command{
 	Name:    "upload",
 	Usage:   "Upload media file to Telnyx so it can be used with other Telnyx services",
@@ -250,6 +269,39 @@ func handleMediaDelete(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	return client.Media.Delete(ctx, cmd.Value("media-name").(string), options...)
+}
+
+func handleMediaDownload(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("media-name") && len(unusedArgs) > 0 {
+		cmd.Set("media-name", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	response, err := client.Media.Download(ctx, cmd.Value("media-name").(string), options...)
+	if err != nil {
+		return err
+	}
+	message, err := writeBinaryResponse(response, cmd.String("output"))
+	if message != "" {
+		fmt.Println(message)
+	}
+	return err
 }
 
 func handleMediaUpload(ctx context.Context, cmd *cli.Command) error {
