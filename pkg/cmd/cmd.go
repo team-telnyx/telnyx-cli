@@ -2966,6 +2966,23 @@ func init() {
 				},
 			},
 			{
+				Name:     "session-analysis",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&sessionAnalysisRetrieve,
+				},
+			},
+			{
+				Name:     "session-analysis:metadata",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&sessionAnalysisMetadataRetrieve,
+					&sessionAnalysisMetadataRetrieveRecordType,
+				},
+			},
+			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",
 				UsageText:       "telnyx @manpages [-o telnyx.1] [--gzip]",
