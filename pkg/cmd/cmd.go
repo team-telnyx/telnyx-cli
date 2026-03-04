@@ -2920,14 +2920,6 @@ func init() {
 				},
 			},
 			{
-				Name:     "speech-to-text",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&speechToTextTranscribe,
-				},
-			},
-			{
 				Name:     "organizations:users",
 				Category: "API RESOURCE",
 				Suggest:  true,
