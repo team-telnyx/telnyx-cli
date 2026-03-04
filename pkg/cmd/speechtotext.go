@@ -14,7 +14,7 @@ import (
 
 var speechToTextTranscribe = cli.Command{
 	Name:    "transcribe",
-	Usage:   "Transcribe audio streams to text over WebSocket.",
+	Usage:   "Open a WebSocket connection to stream audio and receive transcriptions in\nreal-time. Authentication is provided via the standard\n`Authorization: Bearer <API_KEY>` header.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
