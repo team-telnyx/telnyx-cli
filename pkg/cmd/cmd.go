@@ -2560,7 +2560,6 @@ func init() {
 				Commands: []*cli.Command{
 					&textToSpeechGenerate,
 					&textToSpeechListVoices,
-					&textToSpeechStream,
 				},
 			},
 			{
