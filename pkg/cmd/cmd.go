@@ -2560,7 +2560,6 @@ func init() {
 				Commands: []*cli.Command{
 					&textToSpeechGenerate,
 					&textToSpeechListVoices,
-					&textToSpeechStream,
 				},
 			},
 			{
@@ -2963,6 +2962,23 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&messagingProfileMetricsList,
+				},
+			},
+			{
+				Name:     "session-analysis",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&sessionAnalysisRetrieve,
+				},
+			},
+			{
+				Name:     "session-analysis:metadata",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&sessionAnalysisMetadataRetrieve,
+					&sessionAnalysisMetadataRetrieveRecordType,
 				},
 			},
 			{
