@@ -170,6 +170,7 @@ func TestFaxApplicationsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "fax-applications", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{application_name: {contains: fax-app}, outbound_voice_profile_id: '1293384261075731499'}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -185,6 +186,7 @@ func TestFaxApplicationsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "fax-applications", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.application-name", "{contains: fax-app}",
 			"--filter.outbound-voice-profile-id", "1293384261075731499",
 			"--page-number", "0",

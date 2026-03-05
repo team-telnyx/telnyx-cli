@@ -356,6 +356,10 @@ var messaging10dlcBrandList = cli.Command{
 			Usage:     "Filter results by the TCR Brand id",
 			QueryPath: "tcrBrandId",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMessaging10dlcBrandList,
 	HideHelpCommand: true,
@@ -641,7 +645,11 @@ func handleMessaging10dlcBrandList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSON(os.Stdout, "messaging-10dlc:brand list", obj, format, transform)
 	} else {
 		iter := client.Messaging10dlc.Brand.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "messaging-10dlc:brand list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-10dlc:brand list", iter, format, transform, maxItems)
 	}
 }
 

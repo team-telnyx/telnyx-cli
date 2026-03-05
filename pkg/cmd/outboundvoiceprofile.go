@@ -309,6 +309,10 @@ var outboundVoiceProfilesList = requestflag.WithInnerFlags(cli.Command{
 			Default:   "-created_at",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleOutboundVoiceProfilesList,
 	HideHelpCommand: true,
@@ -481,7 +485,11 @@ func handleOutboundVoiceProfilesList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(os.Stdout, "outbound-voice-profiles list", obj, format, transform)
 	} else {
 		iter := client.OutboundVoiceProfiles.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "outbound-voice-profiles list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "outbound-voice-profiles list", iter, format, transform, maxItems)
 	}
 }
 

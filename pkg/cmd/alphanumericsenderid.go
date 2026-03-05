@@ -78,6 +78,10 @@ var alphanumericSenderIDsList = cli.Command{
 			Default:   20,
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleAlphanumericSenderIDsList,
 	HideHelpCommand: true,
@@ -200,7 +204,11 @@ func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(os.Stdout, "alphanumeric-sender-ids list", obj, format, transform)
 	} else {
 		iter := client.AlphanumericSenderIDs.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "alphanumeric-sender-ids list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "alphanumeric-sender-ids list", iter, format, transform, maxItems)
 	}
 }
 

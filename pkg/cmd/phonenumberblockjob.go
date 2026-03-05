@@ -52,6 +52,10 @@ var phoneNumberBlocksJobsList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Specifies the sort order for results. If not given, results are sorted by created_at in descending order.",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handlePhoneNumberBlocksJobsList,
 	HideHelpCommand: true,
@@ -154,7 +158,11 @@ func handlePhoneNumberBlocksJobsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(os.Stdout, "phone-number-blocks:jobs list", obj, format, transform)
 	} else {
 		iter := client.PhoneNumberBlocks.Jobs.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "phone-number-blocks:jobs list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "phone-number-blocks:jobs list", iter, format, transform, maxItems)
 	}
 }
 

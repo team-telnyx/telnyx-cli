@@ -98,6 +98,10 @@ var privateWirelessGatewaysList = cli.Command{
 			Default:   20,
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handlePrivateWirelessGatewaysList,
 	HideHelpCommand: true,
@@ -220,7 +224,11 @@ func handlePrivateWirelessGatewaysList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSON(os.Stdout, "private-wireless-gateways list", obj, format, transform)
 	} else {
 		iter := client.PrivateWirelessGateways.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "private-wireless-gateways list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "private-wireless-gateways list", iter, format, transform, maxItems)
 	}
 }
 

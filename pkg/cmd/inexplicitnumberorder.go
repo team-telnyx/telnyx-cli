@@ -140,6 +140,10 @@ var inexplicitNumberOrdersList = cli.Command{
 			Default:   20,
 			QueryPath: "page_size",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleInexplicitNumberOrdersList,
 	HideHelpCommand: true,
@@ -248,6 +252,10 @@ func handleInexplicitNumberOrdersList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(os.Stdout, "inexplicit-number-orders list", obj, format, transform)
 	} else {
 		iter := client.InexplicitNumberOrders.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "inexplicit-number-orders list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "inexplicit-number-orders list", iter, format, transform, maxItems)
 	}
 }

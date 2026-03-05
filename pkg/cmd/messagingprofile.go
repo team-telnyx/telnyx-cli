@@ -365,6 +365,10 @@ var messagingProfilesList = requestflag.WithInnerFlags(cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMessagingProfilesList,
 	HideHelpCommand: true,
@@ -411,6 +415,10 @@ var messagingProfilesListAlphanumericSenderIDs = cli.Command{
 			Default:   20,
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMessagingProfilesListAlphanumericSenderIDs,
 	HideHelpCommand: true,
@@ -433,6 +441,10 @@ var messagingProfilesListPhoneNumbers = cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMessagingProfilesListPhoneNumbers,
 	HideHelpCommand: true,
@@ -454,6 +466,10 @@ var messagingProfilesListShortCodes = cli.Command{
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
 			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
 	Action:          handleMessagingProfilesListShortCodes,
@@ -625,7 +641,11 @@ func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "messaging-profiles list", obj, format, transform)
 	} else {
 		iter := client.MessagingProfiles.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "messaging-profiles list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-profiles list", iter, format, transform, maxItems)
 	}
 }
 
@@ -711,7 +731,11 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "messaging-profiles list-alphanumeric-sender-ids", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-profiles list-alphanumeric-sender-ids", iter, format, transform, maxItems)
 	}
 }
 
@@ -762,7 +786,11 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "messaging-profiles list-phone-numbers", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-profiles list-phone-numbers", iter, format, transform, maxItems)
 	}
 }
 
@@ -813,7 +841,11 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "messaging-profiles list-short-codes", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-profiles list-short-codes", iter, format, transform, maxItems)
 	}
 }
 

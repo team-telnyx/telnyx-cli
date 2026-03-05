@@ -125,6 +125,7 @@ func TestNumberOrdersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "number-orders", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{created_at: {gt: gt, lt: lt}, customer_reference: customer_reference, phone_numbers_count: phone_numbers_count, requirements_met: true, status: status}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -139,6 +140,7 @@ func TestNumberOrdersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "number-orders", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.created-at", "{gt: gt, lt: lt}",
 			"--filter.customer-reference", "customer_reference",
 			"--filter.phone-numbers-count", "phone_numbers_count",

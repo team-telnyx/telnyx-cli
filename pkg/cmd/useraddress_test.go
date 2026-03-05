@@ -73,6 +73,7 @@ func TestUserAddressesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "user-addresses", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{customer_reference: {contains: contains, eq: eq}, street_address: {contains: contains}}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -88,6 +89,7 @@ func TestUserAddressesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "user-addresses", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.customer-reference", "{contains: contains, eq: eq}",
 			"--filter.street-address", "{contains: contains}",
 			"--page-number", "0",

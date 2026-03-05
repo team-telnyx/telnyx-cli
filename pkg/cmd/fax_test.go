@@ -75,6 +75,7 @@ func TestFaxesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "faxes", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{created_at: {gt: '2020-02-02T22:25:27.521992Z', gte: '2020-02-02T22:25:27.521992Z', lt: '2020-02-02T22:25:27.521992Z', lte: '2020-02-02T22:25:27.521992Z'}, direction: {eq: inbound}, from: {eq: '+13127367276'}, to: {eq: '+13127367276'}}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -89,6 +90,7 @@ func TestFaxesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "faxes", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.created-at", "{gt: '2020-02-02T22:25:27.521992Z', gte: '2020-02-02T22:25:27.521992Z', lt: '2020-02-02T22:25:27.521992Z', lte: '2020-02-02T22:25:27.521992Z'}",
 			"--filter.direction", "{eq: inbound}",
 			"--filter.from", "{eq: '+13127367276'}",

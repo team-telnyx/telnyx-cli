@@ -73,6 +73,10 @@ var portingOrdersAdditionalDocumentsList = requestflag.WithInnerFlags(cli.Comman
 			Usage:     "Consolidated sort parameter (deepObject style). Originally: sort[value]",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handlePortingOrdersAdditionalDocumentsList,
 	HideHelpCommand: true,
@@ -200,7 +204,11 @@ func handlePortingOrdersAdditionalDocumentsList(ctx context.Context, cmd *cli.Co
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "porting-orders:additional-documents list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "porting-orders:additional-documents list", iter, format, transform, maxItems)
 	}
 }
 

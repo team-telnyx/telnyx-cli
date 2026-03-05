@@ -15,6 +15,7 @@ func TestAuditEventsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "audit-events", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{created_after: '2021-01-01T00:00:00Z', created_before: '2021-01-01T00:00:00Z'}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -30,6 +31,7 @@ func TestAuditEventsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "audit-events", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.created-after", "2021-01-01T00:00:00Z",
 			"--filter.created-before", "2021-01-01T00:00:00Z",
 			"--page-number", "0",

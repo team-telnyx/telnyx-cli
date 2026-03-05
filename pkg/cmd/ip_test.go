@@ -78,6 +78,7 @@ func TestIPsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ips", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{connection_id: connection_id, ip_address: 192.168.0.0, port: 5060}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -92,6 +93,7 @@ func TestIPsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ips", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.connection-id", "connection_id",
 			"--filter.ip-address", "192.168.0.0",
 			"--filter.port", "5060",

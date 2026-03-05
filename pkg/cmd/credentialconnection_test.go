@@ -359,6 +359,7 @@ func TestCredentialConnectionsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "credential-connections", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -374,6 +375,7 @@ func TestCredentialConnectionsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "credential-connections", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.connection-name", "{contains: contains}",
 			"--filter.fqdn", "fqdn",
 			"--filter.outbound-voice-profile-id", "1293384261075731499",

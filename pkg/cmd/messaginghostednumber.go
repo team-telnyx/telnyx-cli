@@ -93,6 +93,10 @@ var messagingHostedNumbersList = cli.Command{
 			Usage:     "Sort by phone number.",
 			QueryPath: "sort[phone_number]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMessagingHostedNumbersList,
 	HideHelpCommand: true,
@@ -223,7 +227,11 @@ func handleMessagingHostedNumbersList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(os.Stdout, "messaging-hosted-numbers list", obj, format, transform)
 	} else {
 		iter := client.MessagingHostedNumbers.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "messaging-hosted-numbers list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-hosted-numbers list", iter, format, transform, maxItems)
 	}
 }
 

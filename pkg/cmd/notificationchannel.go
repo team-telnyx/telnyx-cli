@@ -101,6 +101,10 @@ var notificationChannelsList = requestflag.WithInnerFlags(cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleNotificationChannelsList,
 	HideHelpCommand: true,
@@ -292,7 +296,11 @@ func handleNotificationChannelsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSON(os.Stdout, "notification-channels list", obj, format, transform)
 	} else {
 		iter := client.NotificationChannels.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "notification-channels list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "notification-channels list", iter, format, transform, maxItems)
 	}
 }
 

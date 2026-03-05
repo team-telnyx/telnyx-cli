@@ -26,6 +26,7 @@ func TestInvoicesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "invoices", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
 			"--sort", "period_start",

@@ -104,6 +104,7 @@ func TestPhoneNumbersVoiceList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "phone-numbers:voice", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{connection_name: {contains: test}, customer_reference: customer_reference, phone_number: phone_number, voice.usage_payment_method: channel}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -119,6 +120,7 @@ func TestPhoneNumbersVoiceList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "phone-numbers:voice", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.connection-name", "{contains: test}",
 			"--filter.customer-reference", "customer_reference",
 			"--filter.phone-number", "phone_number",

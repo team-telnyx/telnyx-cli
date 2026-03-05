@@ -52,6 +52,7 @@ func TestShortCodesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "short-codes", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{messaging_profile_id: messaging_profile_id}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -66,6 +67,7 @@ func TestShortCodesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "short-codes", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.messaging-profile-id", "messaging_profile_id",
 			"--page-number", "0",
 			"--page-size", "0",

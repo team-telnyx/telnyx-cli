@@ -163,6 +163,7 @@ func TestMessaging10dlcBrandList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-10dlc:brand", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--brand-id", "826ef77a-348c-445b-81a5-a9b13c68fbfe",
 			"--country", "country",
 			"--display-name", "displayName",

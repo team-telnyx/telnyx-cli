@@ -133,6 +133,7 @@ func TestAuthenticationProvidersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "authentication-providers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
 			"--sort", "name",

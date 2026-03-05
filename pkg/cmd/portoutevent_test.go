@@ -26,6 +26,7 @@ func TestPortoutsEventsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "portouts:events", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{created_at: {gte: '2021-01-01T00:00:00Z', lte: '2021-01-01T00:00:00Z'}, event_type: portout.status_changed, portout_id: 34dc46a9-53ed-4e01-9454-26227ea13326}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -40,6 +41,7 @@ func TestPortoutsEventsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "portouts:events", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.created-at", "{gte: '2021-01-01T00:00:00Z', lte: '2021-01-01T00:00:00Z'}",
 			"--filter.event-type", "portout.status_changed",
 			"--filter.portout-id", "34dc46a9-53ed-4e01-9454-26227ea13326",

@@ -14,6 +14,7 @@ func TestNotificationEventsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "notification-events", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
 		)

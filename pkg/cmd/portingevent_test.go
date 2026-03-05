@@ -26,6 +26,7 @@ func TestPortingEventsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting:events", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{created_at: {gte: '2021-01-01T00:00:00Z', lte: '2021-01-01T00:00:00Z'}, porting_order_id: 34dc46a9-53ed-4e01-9454-26227ea13326, type: porting_order.deleted}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -40,6 +41,7 @@ func TestPortingEventsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting:events", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.created-at", "{gte: '2021-01-01T00:00:00Z', lte: '2021-01-01T00:00:00Z'}",
 			"--filter.porting-order-id", "34dc46a9-53ed-4e01-9454-26227ea13326",
 			"--filter.type", "porting_order.deleted",

@@ -26,6 +26,7 @@ func TestOtaUpdatesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ota-updates", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{sim_card_id: sim_card_id, status: in-progress, type: sim_card_network_preferences}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -40,6 +41,7 @@ func TestOtaUpdatesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ota-updates", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.sim-card-id", "sim_card_id",
 			"--filter.status", "in-progress",
 			"--filter.type", "sim_card_network_preferences",

@@ -114,6 +114,10 @@ var texmlAccountsQueuesList = cli.Command{
 			Usage:     "Used to request the next page of results.",
 			QueryPath: "PageToken",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleTexmlAccountsQueuesList,
 	HideHelpCommand: true,
@@ -314,7 +318,11 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "texml:accounts:queues list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "texml:accounts:queues list", iter, format, transform, maxItems)
 	}
 }
 

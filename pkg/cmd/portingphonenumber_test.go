@@ -15,6 +15,7 @@ func TestPortingPhoneNumbersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-phone-numbers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{porting_order_status: in-process}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -29,6 +30,7 @@ func TestPortingPhoneNumbersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-phone-numbers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.porting-order-status", "in-process",
 			"--page-number", "0",
 			"--page-size", "0",

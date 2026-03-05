@@ -15,6 +15,7 @@ func TestPortingOrdersVerificationCodesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders:verification-codes", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter", "{verified: true}",
 			"--page-number", "0",
@@ -31,6 +32,7 @@ func TestPortingOrdersVerificationCodesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders:verification-codes", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter.verified=true",
 			"--page-number", "0",

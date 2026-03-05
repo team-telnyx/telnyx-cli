@@ -153,6 +153,7 @@ func TestMobileVoiceConnectionsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "mobile-voice-connections", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-connection-name-contains", "filter[connection_name][contains]",
 			"--page-number", "0",
 			"--page-size", "0",

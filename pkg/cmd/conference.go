@@ -131,6 +131,10 @@ var conferencesList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Region where the conference data is located",
 			QueryPath: "region",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleConferencesList,
 	HideHelpCommand: true,
@@ -230,6 +234,10 @@ var conferencesListParticipants = requestflag.WithInnerFlags(cli.Command{
 			Name:      "region",
 			Usage:     "Region where the conference data is located",
 			QueryPath: "region",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
 	Action:          handleConferencesListParticipants,
@@ -415,7 +423,11 @@ func handleConferencesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "conferences list", obj, format, transform)
 	} else {
 		iter := client.Conferences.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "conferences list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "conferences list", iter, format, transform, maxItems)
 	}
 }
 
@@ -466,7 +478,11 @@ func handleConferencesListParticipants(ctx context.Context, cmd *cli.Command) er
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "conferences list-participants", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "conferences list-participants", iter, format, transform, maxItems)
 	}
 }
 

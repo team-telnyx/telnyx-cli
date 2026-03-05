@@ -14,6 +14,7 @@ func TestAIMissionsRunsEventsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ai:missions:runs:events", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--agent-id", "agent_id",

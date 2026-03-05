@@ -67,6 +67,7 @@ func TestBillingGroupsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "billing-groups", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
 		)

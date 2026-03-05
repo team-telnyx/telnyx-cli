@@ -68,6 +68,7 @@ func TestWireguardPeersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "wireguard-peers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{wireguard_interface_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -82,6 +83,7 @@ func TestWireguardPeersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "wireguard-peers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.wireguard-interface-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--page-number", "0",
 			"--page-size", "0",

@@ -169,6 +169,7 @@ func TestPortingOrdersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{activation_settings: {fast_port_eligible: true, foc_datetime_requested: {gt: '2021-03-25T10:00:00.000Z', lt: '2021-03-25T10:00:00.000Z'}}, customer_group_reference: customer_group_reference, customer_reference: customer_reference, end_user: {admin: {auth_person_name: auth_person_name, entity_name: entity_name}}, misc: {type: full}, parent_support_key: parent_support_key, phone_numbers: {carrier_name: carrier_name, country_code: country_code, phone_number: {contains: contains}}}",
 			"--include-phone-numbers=true",
 			"--page-number", "0",
@@ -185,6 +186,7 @@ func TestPortingOrdersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.activation-settings", "{fast_port_eligible: true, foc_datetime_requested: {gt: '2021-03-25T10:00:00.000Z', lt: '2021-03-25T10:00:00.000Z'}}",
 			"--filter.customer-group-reference", "customer_group_reference",
 			"--filter.customer-reference", "customer_reference",
@@ -251,6 +253,7 @@ func TestPortingOrdersRetrieveRequirements(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders", "retrieve-requirements",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
 			"--page-size", "0",

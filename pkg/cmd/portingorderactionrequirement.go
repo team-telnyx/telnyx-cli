@@ -42,6 +42,10 @@ var portingOrdersActionRequirementsList = requestflag.WithInnerFlags(cli.Command
 			Usage:     "Consolidated sort parameter (deepObject style). Originally: sort[value]",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handlePortingOrdersActionRequirementsList,
 	HideHelpCommand: true,
@@ -161,7 +165,11 @@ func handlePortingOrdersActionRequirementsList(ctx context.Context, cmd *cli.Com
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "porting-orders:action-requirements list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "porting-orders:action-requirements list", iter, format, transform, maxItems)
 	}
 }
 

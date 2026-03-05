@@ -63,6 +63,7 @@ func TestAIAssistantsScheduledEventsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ai:assistants:scheduled-events", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--assistant-id", "assistant_id",
 			"--conversation-channel", "phone_call",
 			"--from-date", "'2019-12-27T18:11:19.117Z'",

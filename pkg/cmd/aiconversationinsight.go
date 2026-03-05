@@ -104,6 +104,10 @@ var aiConversationsInsightsList = cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleAIConversationsInsightsList,
 	HideHelpCommand: true,
@@ -269,7 +273,11 @@ func handleAIConversationsInsightsList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSON(os.Stdout, "ai:conversations:insights list", obj, format, transform)
 	} else {
 		iter := client.AI.Conversations.Insights.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "ai:conversations:insights list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "ai:conversations:insights list", iter, format, transform, maxItems)
 	}
 }
 

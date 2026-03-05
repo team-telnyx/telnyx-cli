@@ -51,6 +51,7 @@ func TestDynamicEmergencyEndpointsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "dynamic-emergency-endpoints", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{country_code: country_code, status: pending}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -65,6 +66,7 @@ func TestDynamicEmergencyEndpointsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "dynamic-emergency-endpoints", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.country-code", "country_code",
 			"--filter.status", "pending",
 			"--page-number", "0",

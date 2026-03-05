@@ -150,6 +150,7 @@ func TestAIAssistantsTestsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ai:assistants:tests", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--destination", "destination",
 			"--page-number", "0",
 			"--page-size", "0",

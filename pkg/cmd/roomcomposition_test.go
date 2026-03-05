@@ -69,6 +69,7 @@ func TestRoomCompositionsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "room-compositions", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{date_created_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, session_id: 92e7d459-bcc5-4386-9f5f-6dd14a82588d, status: completed}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -83,6 +84,7 @@ func TestRoomCompositionsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "room-compositions", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.date-created-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 			"--filter.session-id", "92e7d459-bcc5-4386-9f5f-6dd14a82588d",
 			"--filter.status", "completed",

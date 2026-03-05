@@ -51,6 +51,7 @@ func TestPortingOrdersPhoneNumberConfigurationsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders:phone-number-configurations", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{porting_order: {status: [in-process]}, porting_phone_number: [5d6f7ede-1961-4717-bfb5-db392c5efc2d], user_bundle_id: [5d6f7ede-1961-4717-bfb5-db392c5efc2d]}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -66,6 +67,7 @@ func TestPortingOrdersPhoneNumberConfigurationsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders:phone-number-configurations", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.porting-order", "{status: [in-process]}",
 			"--filter.porting-phone-number", "[5d6f7ede-1961-4717-bfb5-db392c5efc2d]",
 			"--filter.user-bundle-id", "[5d6f7ede-1961-4717-bfb5-db392c5efc2d]",

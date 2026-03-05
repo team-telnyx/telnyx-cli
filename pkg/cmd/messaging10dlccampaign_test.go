@@ -68,6 +68,7 @@ func TestMessaging10dlcCampaignList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-10dlc:campaign", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--brand-id", "brandId",
 			"--page", "0",
 			"--records-per-page", "0",

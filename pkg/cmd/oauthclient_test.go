@@ -105,6 +105,7 @@ func TestOAuthClientsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "oauth-clients", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-allowed-grant-types-contains", "client_credentials",
 			"--filter-client-id", "filter[client_id]",
 			"--filter-client-type", "confidential",

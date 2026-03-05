@@ -26,6 +26,7 @@ func TestOrganizationsUsersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "organizations:users", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-email", "filter[email]",
 			"--filter-user-status", "enabled",
 			"--include-groups=true",

@@ -26,6 +26,7 @@ func TestRequirementsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "requirements", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{action: porting, country_code: US, phone_number_type: local}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -41,6 +42,7 @@ func TestRequirementsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "requirements", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.action", "porting",
 			"--filter.country-code", "US",
 			"--filter.phone-number-type", "local",

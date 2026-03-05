@@ -50,6 +50,7 @@ func TestQueuesCallsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "queues:calls", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--queue-name", "queue_name",
 			"--page-number", "0",
 			"--page-size", "0",

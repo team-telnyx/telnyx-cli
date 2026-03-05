@@ -47,6 +47,10 @@ var externalConnectionsLogMessagesList = requestflag.WithInnerFlags(cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleExternalConnectionsLogMessagesList,
 	HideHelpCommand: true,
@@ -148,7 +152,11 @@ func handleExternalConnectionsLogMessagesList(ctx context.Context, cmd *cli.Comm
 		return ShowJSON(os.Stdout, "external-connections:log-messages list", obj, format, transform)
 	} else {
 		iter := client.ExternalConnections.LogMessages.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "external-connections:log-messages list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "external-connections:log-messages list", iter, format, transform, maxItems)
 	}
 }
 

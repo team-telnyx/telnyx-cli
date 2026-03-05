@@ -65,6 +65,10 @@ var portingOrdersPhoneNumberConfigurationsList = requestflag.WithInnerFlags(cli.
 			Usage:     "Consolidated sort parameter (deepObject style). Originally: sort[value]",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handlePortingOrdersPhoneNumberConfigurationsList,
 	HideHelpCommand: true,
@@ -162,6 +166,10 @@ func handlePortingOrdersPhoneNumberConfigurationsList(ctx context.Context, cmd *
 		return ShowJSON(os.Stdout, "porting-orders:phone-number-configurations list", obj, format, transform)
 	} else {
 		iter := client.PortingOrders.PhoneNumberConfigurations.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "porting-orders:phone-number-configurations list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "porting-orders:phone-number-configurations list", iter, format, transform, maxItems)
 	}
 }

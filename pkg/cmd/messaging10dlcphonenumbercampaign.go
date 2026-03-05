@@ -103,6 +103,10 @@ var messaging10dlcPhoneNumberCampaignsList = requestflag.WithInnerFlags(cli.Comm
 			Default:   "-createdAt",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMessaging10dlcPhoneNumberCampaignsList,
 	HideHelpCommand: true,
@@ -290,7 +294,11 @@ func handleMessaging10dlcPhoneNumberCampaignsList(ctx context.Context, cmd *cli.
 		return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-campaigns list", obj, format, transform)
 	} else {
 		iter := client.Messaging10dlc.PhoneNumberCampaigns.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "messaging-10dlc:phone-number-campaigns list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-10dlc:phone-number-campaigns list", iter, format, transform, maxItems)
 	}
 }
 

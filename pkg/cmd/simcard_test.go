@@ -88,6 +88,7 @@ func TestSimCardsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "sim-cards", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{iccid: '89310410106543789301', msisdn: '+13109976224', status: [enabled], tags: [personal, customers, active-customers]}",
 			"--filter-sim-card-group-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 			"--include-sim-card-group=true",
@@ -105,6 +106,7 @@ func TestSimCardsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "sim-cards", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.iccid", "89310410106543789301",
 			"--filter.msisdn", "+13109976224",
 			"--filter.status", "[enabled]",
@@ -169,6 +171,7 @@ func TestSimCardsListWirelessConnectivityLogs(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "sim-cards", "list-wireless-connectivity-logs",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--page-number", "1",
 			"--page-size", "1",

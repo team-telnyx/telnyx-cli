@@ -152,6 +152,7 @@ func TestExternalConnectionsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "external-connections", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{id: '1930241863466354012', connection_name: {contains: My Connection}, created_at: '2022-12-31', external_sip_connection: zoom, phone_number: {contains: '+15555555555'}}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -166,6 +167,7 @@ func TestExternalConnectionsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "external-connections", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.id", "1930241863466354012",
 			"--filter.connection-name", "{contains: My Connection}",
 			"--filter.created-at", "2022-12-31",

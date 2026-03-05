@@ -51,6 +51,7 @@ func TestDocumentsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "documents", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{created_at: {gt: '2021-01-01T00:00:00Z', lt: '2021-04-09T22:25:27.521Z'}, customer_reference: {eq: MY REF 001, in: [REF001, REF002]}, filename: {contains: invoice}}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -66,6 +67,7 @@ func TestDocumentsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "documents", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.created-at", "{gt: '2021-01-01T00:00:00Z', lt: '2021-04-09T22:25:27.521Z'}",
 			"--filter.customer-reference", "{eq: MY REF 001, in: [REF001, REF002]}",
 			"--filter.filename", "{contains: invoice}",
