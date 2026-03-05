@@ -26,6 +26,7 @@ func TestPortoutsReportsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:reports", "create",
+		"--api-key", "string",
 		"--params.filters", "{created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], end_user_name: McPortersen, phone_numbers__overlaps: ['+1234567890'], status__in: [pending]}",
 		"--report-type", "export_portouts_csv",
 	)
@@ -59,6 +60,7 @@ func TestPortoutsReportsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts:reports", "list",
+		"--api-key", "string",
 		"--filter.report-type", "export_portouts_csv",
 		"--filter.status", "completed",
 		"--page-number", "0",

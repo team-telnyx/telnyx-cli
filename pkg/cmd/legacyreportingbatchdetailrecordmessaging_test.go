@@ -41,6 +41,7 @@ func TestLegacyReportingBatchDetailRecordsMessagingCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"legacy:reporting:batch-detail-records:messaging", "create",
+		"--api-key", "string",
 		"--end-time", "'2024-02-12T23:59:59Z'",
 		"--start-time", "'2024-02-01T00:00:00Z'",
 		"--connection", "123",

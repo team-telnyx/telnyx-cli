@@ -91,6 +91,7 @@ func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-hosted-number-orders", "validate-codes",
+		"--api-key", "string",
 		"--id", "id",
 		"--verification-code.code", "code",
 		"--verification-code.phone-number", "phone_number",

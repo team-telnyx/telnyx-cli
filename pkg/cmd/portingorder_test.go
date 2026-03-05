@@ -62,6 +62,7 @@ func TestPortingOrdersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "update",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--activation-settings.foc-datetime-requested", "2021-03-19T10:07:15.527Z",
 		"--customer-group-reference", "customer_group_reference",
@@ -108,6 +109,7 @@ func TestPortingOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders", "list",
+		"--api-key", "string",
 		"--filter.activation-settings", "{fast_port_eligible: true, foc_datetime_requested: {gt: '2021-03-25T10:00:00.000Z', lt: '2021-03-25T10:00:00.000Z'}}",
 		"--filter.customer-group-reference", "customer_group_reference",
 		"--filter.customer-reference", "customer_reference",

@@ -29,6 +29,7 @@ func TestPortingOrdersActionRequirementsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:action-requirements", "list",
+		"--api-key", "string",
 		"--porting-order-id", "porting_order_id",
 		"--filter.id", "[182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e]",
 		"--filter.action-type", "au_id_verification",
@@ -58,6 +59,7 @@ func TestPortingOrdersActionRequirementsInitiate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:action-requirements", "initiate",
+		"--api-key", "string",
 		"--porting-order-id", "porting_order_id",
 		"--id", "id",
 		"--params.first-name", "John",

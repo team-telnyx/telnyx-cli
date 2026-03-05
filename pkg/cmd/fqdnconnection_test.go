@@ -49,6 +49,7 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "create",
+		"--api-key", "string",
 		"--connection-name", "string",
 		"--active=true",
 		"--anchorsite-override", "Latency",
@@ -163,6 +164,7 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--active=true",
 		"--anchorsite-override", "Latency",
@@ -246,6 +248,7 @@ func TestFqdnConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fqdn-connections", "list",
+		"--api-key", "string",
 		"--filter.connection-name", "{contains: contains}",
 		"--filter.fqdn", "fqdn",
 		"--filter.outbound-voice-profile-id", "1293384261075731499",

@@ -29,6 +29,7 @@ func TestInexplicitNumberOrdersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"inexplicit-number-orders", "create",
+		"--api-key", "string",
 		"--ordering-group.count-requested", "count_requested",
 		"--ordering-group.country-iso", "US",
 		"--ordering-group.phone-number-type", "phone_number_type",

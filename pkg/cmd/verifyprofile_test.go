@@ -32,6 +32,7 @@ func TestVerifyProfilesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "create",
+		"--api-key", "string",
 		"--name", "Test Profile",
 		"--call.app-name", "Example Secure App",
 		"--call.code-length", "6",
@@ -93,6 +94,7 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "update",
+		"--api-key", "string",
 		"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--call.app-name", "Example Secure App",
 		"--call.code-length", "6",
@@ -139,6 +141,7 @@ func TestVerifyProfilesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"verify-profiles", "list",
+		"--api-key", "string",
 		"--filter.name", "name",
 		"--page-number", "0",
 		"--page-size", "0",

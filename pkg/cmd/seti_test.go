@@ -25,6 +25,7 @@ func TestSetiRetrieveBlackBoxTestResults(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"seti", "retrieve-black-box-test-results",
+		"--api-key", "string",
 		"--filter.product", "product",
 	)
 }

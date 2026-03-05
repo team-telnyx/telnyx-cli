@@ -25,6 +25,7 @@ func TestRegulatoryRequirementsRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"regulatory-requirements", "retrieve",
+		"--api-key", "string",
 		"--filter.action", "ordering",
 		"--filter.country-code", "DE",
 		"--filter.phone-number", "+41215470622",

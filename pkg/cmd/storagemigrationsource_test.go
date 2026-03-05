@@ -28,6 +28,7 @@ func TestStorageMigrationSourcesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:migration-sources", "create",
+		"--api-key", "string",
 		"--bucket-name", "bucket_name",
 		"--provider", "aws",
 		"--provider-auth.access-key", "access_key",

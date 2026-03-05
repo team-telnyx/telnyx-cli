@@ -38,6 +38,7 @@ func TestCallControlApplicationsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"call-control-applications", "create",
+		"--api-key", "string",
 		"--application-name", "call-router",
 		"--webhook-event-url", "https://example.com",
 		"--active=false",
@@ -101,6 +102,7 @@ func TestCallControlApplicationsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"call-control-applications", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--application-name", "call-router",
 		"--webhook-event-url", "https://example.com",
@@ -144,6 +146,7 @@ func TestCallControlApplicationsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"call-control-applications", "list",
+		"--api-key", "string",
 		"--filter.application-name", "{contains: contains}",
 		"--filter.application-session-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter.connection-id", "connection_id",

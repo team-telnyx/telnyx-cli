@@ -37,6 +37,7 @@ func TestPortoutsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "list",
+		"--api-key", "string",
 		"--filter.carrier-name", "carrier_name",
 		"--filter.country-code", "US",
 		"--filter.country-code-in", "[CA, US]",
@@ -71,6 +72,7 @@ func TestPortoutsListRejectionCodes(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"portouts", "list-rejection-codes",
+		"--api-key", "string",
 		"--portout-id", "329d6658-8f93-405d-862f-648776e8afd7",
 		"--filter.code", "1002",
 	)

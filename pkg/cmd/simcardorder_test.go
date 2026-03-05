@@ -48,6 +48,7 @@ func TestSimCardOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-orders", "list",
+		"--api-key", "string",
 		"--filter.address-administrative-area", "TX",
 		"--filter.address-country-code", "US",
 		"--filter.address-extended-address", "14th Floor",

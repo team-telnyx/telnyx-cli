@@ -44,6 +44,7 @@ func TestSimCardsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "update",
+		"--api-key", "string",
 		"--sim-card-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--authorized-imei", "['106516771852751', '534051870479563', '508821468377961']",
 		"--data-limit.amount", "2048.1",
@@ -76,6 +77,7 @@ func TestSimCardsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards", "list",
+		"--api-key", "string",
 		"--filter.iccid", "89310410106543789301",
 		"--filter.msisdn", "+13109976224",
 		"--filter.status", "[enabled]",

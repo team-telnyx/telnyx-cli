@@ -44,6 +44,7 @@ func TestPhoneNumbersVoiceUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voice", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--call-forwarding.call-forwarding-enabled=true",
 		"--call-forwarding.forwarding-type", "always",
@@ -83,6 +84,7 @@ func TestPhoneNumbersVoiceList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:voice", "list",
+		"--api-key", "string",
 		"--filter.connection-name", "{contains: test}",
 		"--filter.customer-reference", "customer_reference",
 		"--filter.phone-number", "phone_number",

@@ -37,6 +37,7 @@ func TestRoomParticipantsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-participants", "list",
+		"--api-key", "string",
 		"--filter.context", "Alice",
 		"--filter.date-joined-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.date-left-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",

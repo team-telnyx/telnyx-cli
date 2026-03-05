@@ -29,6 +29,7 @@ func TestMessagingOptoutsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-optouts", "list",
+		"--api-key", "string",
 		"--created-at.gte", "2019-12-27T18:11:19.117Z",
 		"--created-at.lte", "2019-12-27T18:11:19.117Z",
 		"--filter.from", "from",

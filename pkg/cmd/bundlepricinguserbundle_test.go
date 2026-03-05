@@ -27,6 +27,7 @@ func TestBundlePricingUserBundlesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "create",
+		"--api-key", "string",
 		"--idempotency-key", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--item.billing-bundle-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		"--item.quantity", "0",
@@ -64,6 +65,7 @@ func TestBundlePricingUserBundlesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "list",
+		"--api-key", "string",
 		"--filter.country-iso", "[US]",
 		"--filter.resource", "['+15617819942']",
 		"--page-number", "0",
@@ -111,6 +113,7 @@ func TestBundlePricingUserBundlesListUnused(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"bundle-pricing:user-bundles", "list-unused",
+		"--api-key", "string",
 		"--filter.country-iso", "[US]",
 		"--filter.resource", "['+15617819942']",
 		"--authorization-bearer", "authorization_bearer",

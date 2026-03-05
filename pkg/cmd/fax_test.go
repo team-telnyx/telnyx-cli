@@ -61,6 +61,7 @@ func TestFaxesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"faxes", "list",
+		"--api-key", "string",
 		"--filter.created-at", "{gt: '2020-02-02T22:25:27.521992Z', gte: '2020-02-02T22:25:27.521992Z', lt: '2020-02-02T22:25:27.521992Z', lte: '2020-02-02T22:25:27.521992Z'}",
 		"--filter.direction", "{eq: inbound}",
 		"--filter.from", "{eq: '+13127367276'}",

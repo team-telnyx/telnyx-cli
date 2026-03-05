@@ -26,6 +26,7 @@ func TestStorageBucketsUsageGetAPIUsage(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"storage:buckets:usage", "get-api-usage",
+		"--api-key", "string",
 		"--bucket-name", "",
 		"--filter.end-time", "2019-12-27T18:11:19.117Z",
 		"--filter.start-time", "2019-12-27T18:11:19.117Z",

@@ -34,6 +34,7 @@ func TestFaxApplicationsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fax-applications", "create",
+		"--api-key", "string",
 		"--application-name", "fax-router",
 		"--webhook-event-url", "https://example.com",
 		"--active=false",
@@ -87,6 +88,7 @@ func TestFaxApplicationsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fax-applications", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--application-name", "fax-router",
 		"--webhook-event-url", "https://example.com",
@@ -124,6 +126,7 @@ func TestFaxApplicationsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"fax-applications", "list",
+		"--api-key", "string",
 		"--filter.application-name", "{contains: fax-app}",
 		"--filter.outbound-voice-profile-id", "1293384261075731499",
 		"--page-number", "0",

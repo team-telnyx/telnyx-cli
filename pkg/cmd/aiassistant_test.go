@@ -41,6 +41,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "create",
+		"--api-key", "string",
 		"--instructions", "instructions",
 		"--model", "model",
 		"--name", "name",
@@ -140,6 +141,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants", "update",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--description", "description",
 		"--dynamic-variables", "{foo: bar}",

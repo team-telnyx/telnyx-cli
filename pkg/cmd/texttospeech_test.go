@@ -39,6 +39,7 @@ func TestTextToSpeechGenerate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"text-to-speech", "generate",
+		"--api-key", "string",
 		"--aws.language-code", "language_code",
 		"--aws.lexicon-names", "[string]",
 		"--aws.output-format", "output_format",

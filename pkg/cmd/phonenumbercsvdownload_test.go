@@ -26,6 +26,7 @@ func TestPhoneNumbersCsvDownloadsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:csv-downloads", "create",
+		"--api-key", "string",
 		"--csv-format", "V2",
 		"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",
 		"--filter.connection-id", "1521916448077776306",

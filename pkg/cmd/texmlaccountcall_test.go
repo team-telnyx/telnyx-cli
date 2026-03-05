@@ -95,6 +95,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:calls", "calls",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--application-sid", "example-app-sid",
 		"--from", "+13120001234",

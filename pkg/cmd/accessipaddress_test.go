@@ -48,6 +48,7 @@ func TestAccessIPAddressList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"access-ip-address", "list",
+		"--api-key", "string",
 		"--filter.created-at", "2019-12-27T18:11:19.117Z",
 		"--filter.ip-address", "ip_address",
 		"--filter.ip-source", "ip_source",

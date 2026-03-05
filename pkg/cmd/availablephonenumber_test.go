@@ -25,6 +25,7 @@ func TestAvailablePhoneNumbersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"available-phone-numbers", "list",
+		"--api-key", "string",
 		"--filter.administrative-area", "administrative_area",
 		"--filter.best-effort=true",
 		"--filter.country-code", "country_code",

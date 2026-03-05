@@ -33,6 +33,7 @@ func TestMobileVoiceConnectionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "create",
+		"--api-key", "string",
 		"--active=true",
 		"--connection-name", "connection_name",
 		"--inbound.channel-limit", "0",
@@ -81,6 +82,7 @@ func TestMobileVoiceConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-voice-connections", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--active=true",
 		"--connection-name", "connection_name",

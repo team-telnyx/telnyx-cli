@@ -70,6 +70,7 @@ func TestMessagingProfilesAutorespConfigsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles:autoresp-configs", "list",
+		"--api-key", "string",
 		"--profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--country-code", "country_code",
 		"--created-at.gte", "gte",

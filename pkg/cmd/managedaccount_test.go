@@ -64,6 +64,7 @@ func TestManagedAccountsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"managed-accounts", "list",
+		"--api-key", "string",
 		"--filter.email", "{contains: john, eq: eq}",
 		"--filter.organization-name", "{contains: contains, eq: Example Company LLC}",
 		"--include-cancelled-accounts=true",

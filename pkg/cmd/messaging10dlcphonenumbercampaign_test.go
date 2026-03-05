@@ -61,6 +61,7 @@ func TestMessaging10dlcPhoneNumberCampaignsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-10dlc:phone-number-campaigns", "list",
+		"--api-key", "string",
 		"--filter.tcr-brand-id", "BRANDID",
 		"--filter.tcr-campaign-id", "CAMPID3",
 		"--filter.telnyx-brand-id", "f3575e15-32ce-400e-a4c0-dd78800c20b0",

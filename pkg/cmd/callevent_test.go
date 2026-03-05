@@ -27,6 +27,7 @@ func TestCallEventsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"call-events", "list",
+		"--api-key", "string",
 		"--filter.application-name", "{contains: contains}",
 		"--filter.application-session-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter.connection-id", "connection_id",

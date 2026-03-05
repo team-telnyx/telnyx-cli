@@ -68,6 +68,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "answer",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -210,6 +211,7 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "gather-using-ai",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--parameters", "{properties: bar, required: bar, type: bar}",
 		"--assistant.instructions", "You are a friendly voice assistant.",
@@ -304,6 +306,7 @@ func TestCallsActionsHangup(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "hangup",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -363,6 +366,7 @@ func TestCallsActionsRefer(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "refer",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--sip-address", "sip:username@sip.non-telnyx-address.com",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -477,6 +481,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-ai-assistant",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--assistant.id", "id",
 		"--assistant.instructions", "You are a friendly voice assistant.",
@@ -527,6 +532,7 @@ func TestCallsActionsStartNoiseSuppression(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-noise-suppression",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -631,6 +637,7 @@ func TestCallsActionsStartStreaming(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "start-streaming",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -845,6 +852,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls:actions", "transfer",
+		"--api-key", "string",
 		"--call-control-id", "call_control_id",
 		"--to", "+18005550100 or sip:username@sip.telnyx.com",
 		"--answering-machine-detection", "detect",

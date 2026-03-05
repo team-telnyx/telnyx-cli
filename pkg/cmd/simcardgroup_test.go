@@ -26,6 +26,7 @@ func TestSimCardGroupsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups", "create",
+		"--api-key", "string",
 		"--name", "My Test Group",
 		"--data-limit.amount", "2048.1",
 		"--data-limit.unit", "MB",
@@ -61,6 +62,7 @@ func TestSimCardGroupsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-groups", "update",
+		"--api-key", "string",
 		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--data-limit.amount", "2048.1",
 		"--data-limit.unit", "MB",

@@ -60,6 +60,7 @@ func TestConferencesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "list",
+		"--api-key", "string",
 		"--filter.application-name", "{contains: contains}",
 		"--filter.application-session-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter.connection-id", "connection_id",
@@ -99,6 +100,7 @@ func TestConferencesListParticipants(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"conferences", "list-participants",
+		"--api-key", "string",
 		"--conference-id", "conference_id",
 		"--filter.muted=true",
 		"--filter.on-hold=true",

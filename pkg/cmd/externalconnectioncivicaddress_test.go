@@ -37,6 +37,7 @@ func TestExternalConnectionsCivicAddressesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:civic-addresses", "list",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--filter.country", "[US, CA, MX, BR]",
 	)

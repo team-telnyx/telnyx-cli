@@ -27,6 +27,7 @@ func TestMobileNetworkOperatorsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-network-operators", "list",
+		"--api-key", "string",
 		"--filter.country-code", "US",
 		"--filter.mcc", "310",
 		"--filter.mnc", "410",

@@ -25,6 +25,7 @@ func TestUserTagsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"user-tags", "list",
+		"--api-key", "string",
 		"--filter.starts-with", "my-tag",
 	)
 }

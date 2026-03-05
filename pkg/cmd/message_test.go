@@ -180,6 +180,7 @@ func TestMessagesSendWhatsapp(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messages", "send-whatsapp",
+		"--api-key", "string",
 		"--from", "+13125551234",
 		"--to", "+13125551234",
 		"--whatsapp-message.audio", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",

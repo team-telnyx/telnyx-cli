@@ -47,6 +47,7 @@ func TestCommentsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"comments", "list",
+		"--api-key", "string",
 		"--filter.comment-record-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
 		"--filter.comment-record-type", "sub_number_order",
 	)

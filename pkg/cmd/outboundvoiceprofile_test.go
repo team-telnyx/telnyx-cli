@@ -40,6 +40,7 @@ func TestOutboundVoiceProfilesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"outbound-voice-profiles", "create",
+		"--api-key", "string",
 		"--name", "office",
 		"--billing-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--call-recording.call-recording-caller-phone-numbers", "['+19705555098']",
@@ -106,6 +107,7 @@ func TestOutboundVoiceProfilesUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"outbound-voice-profiles", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--name", "office",
 		"--billing-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
@@ -150,6 +152,7 @@ func TestOutboundVoiceProfilesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"outbound-voice-profiles", "list",
+		"--api-key", "string",
 		"--filter.name", "{contains: office-profile}",
 		"--page-number", "0",
 		"--page-size", "0",

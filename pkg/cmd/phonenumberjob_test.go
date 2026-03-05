@@ -38,6 +38,7 @@ func TestPhoneNumbersJobsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "list",
+		"--api-key", "string",
 		"--filter.type", "update_emergency_settings",
 		"--page-number", "0",
 		"--page-size", "0",
@@ -83,6 +84,7 @@ func TestPhoneNumbersJobsUpdateBatch(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers:jobs", "update-batch",
+		"--api-key", "string",
 		"--phone-number", "1583466971586889004",
 		"--phone-number", "+13127367254",
 		"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",

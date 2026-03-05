@@ -26,6 +26,7 @@ func TestSubNumberOrdersRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders", "retrieve",
+		"--api-key", "string",
 		"--sub-number-order-id", "sub_number_order_id",
 		"--filter.include-phone-numbers=true",
 	)
@@ -48,6 +49,7 @@ func TestSubNumberOrdersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders", "update",
+		"--api-key", "string",
 		"--sub-number-order-id", "sub_number_order_id",
 		"--regulatory-requirement.field-value", "45f45a04-b4be-4592-95b1-9306b9db2b21",
 		"--regulatory-requirement.requirement-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
@@ -70,6 +72,7 @@ func TestSubNumberOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sub-number-orders", "list",
+		"--api-key", "string",
 		"--filter.country-code", "US",
 		"--filter.order-request-id", "12ade33a-21c0-473b-b055-b3c836e1c293",
 		"--filter.phone-number-type", "local",

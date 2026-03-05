@@ -33,6 +33,7 @@ func TestExternalConnectionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "create",
+		"--api-key", "string",
 		"--external-sip-connection", "zoom",
 		"--outbound.channel-limit", "10",
 		"--outbound.outbound-voice-profile-id", "1911630617284445511",
@@ -81,6 +82,7 @@ func TestExternalConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "update",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--outbound.outbound-voice-profile-id", "1911630617284445511",
 		"--outbound.channel-limit", "10",
@@ -112,6 +114,7 @@ func TestExternalConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections", "list",
+		"--api-key", "string",
 		"--filter.id", "1930241863466354012",
 		"--filter.connection-name", "{contains: My Connection}",
 		"--filter.created-at", "2022-12-31",

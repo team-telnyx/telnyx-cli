@@ -29,6 +29,7 @@ func TestAuthenticationProvidersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "create",
+		"--api-key", "string",
 		"--name", "Okta",
 		"--settings.idp-cert-fingerprint", "13:38:C7:BB:C9:FF:4A:70:38:3A:E3:D9:5C:CD:DB:2E:50:1E:80:A7",
 		"--settings.idp-entity-id", "https://myorg.myidp.com/saml/metadata",
@@ -71,6 +72,7 @@ func TestAuthenticationProvidersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"authentication-providers", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--active=true",
 		"--name", "Okta",
