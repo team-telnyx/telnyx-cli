@@ -11,25 +11,27 @@ import (
 
 func TestPortingPhoneNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"porting-phone-numbers", "list",
-		"--api-key", "string",
-		"--filter", "{porting_order_status: in-process}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "porting-phone-numbers", "list",
+			"--api-key", "string",
+			"--filter", "{porting_order_status: in-process}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(portingPhoneNumbersList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(portingPhoneNumbersList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"porting-phone-numbers", "list",
-		"--api-key", "string",
-		"--filter.porting-order-status", "in-process",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "porting-phone-numbers", "list",
+			"--api-key", "string",
+			"--filter.porting-order-status", "in-process",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

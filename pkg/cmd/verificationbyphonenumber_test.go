@@ -10,10 +10,11 @@ import (
 
 func TestVerificationsByPhoneNumberList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"verifications:by-phone-number", "list",
-		"--api-key", "string",
-		"--phone-number", "+13035551234",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "verifications:by-phone-number", "list",
+			"--api-key", "string",
+			"--phone-number", "+13035551234",
+		)
+	})
 }

@@ -10,19 +10,21 @@ import (
 
 func TestAIIntegrationsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ai:integrations", "retrieve",
-		"--api-key", "string",
-		"--integration-id", "integration_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "ai:integrations", "retrieve",
+			"--api-key", "string",
+			"--integration-id", "integration_id",
+		)
+	})
 }
 
 func TestAIIntegrationsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ai:integrations", "list",
-		"--api-key", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "ai:integrations", "list",
+			"--api-key", "string",
+		)
+	})
 }

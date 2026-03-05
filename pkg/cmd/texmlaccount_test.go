@@ -10,25 +10,27 @@ import (
 
 func TestTexmlAccountsRetrieveRecordingsJson(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"texml:accounts", "retrieve-recordings-json",
-		"--api-key", "string",
-		"--account-sid", "account_sid",
-		"--date-created", "'2023-05-22T00:00:00Z'",
-		"--page", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "texml:accounts", "retrieve-recordings-json",
+			"--api-key", "string",
+			"--account-sid", "account_sid",
+			"--date-created", "'2023-05-22T00:00:00Z'",
+			"--page", "0",
+			"--page-size", "0",
+		)
+	})
 }
 
 func TestTexmlAccountsRetrieveTranscriptionsJson(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"texml:accounts", "retrieve-transcriptions-json",
-		"--api-key", "string",
-		"--account-sid", "account_sid",
-		"--page-size", "0",
-		"--page-token", "PageToken",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "texml:accounts", "retrieve-transcriptions-json",
+			"--api-key", "string",
+			"--account-sid", "account_sid",
+			"--page-size", "0",
+			"--page-token", "PageToken",
+		)
+	})
 }

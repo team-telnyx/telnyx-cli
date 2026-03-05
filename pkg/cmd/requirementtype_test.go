@@ -11,33 +11,36 @@ import (
 
 func TestRequirementTypesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"requirement-types", "retrieve",
-		"--api-key", "string",
-		"--id", "a38c217a-8019-48f8-bff6-0fdd9939075b",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "requirement-types", "retrieve",
+			"--api-key", "string",
+			"--id", "a38c217a-8019-48f8-bff6-0fdd9939075b",
+		)
+	})
 }
 
 func TestRequirementTypesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"requirement-types", "list",
-		"--api-key", "string",
-		"--filter", "{name: {contains: utility bill}}",
-		"--sort", "name",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "requirement-types", "list",
+			"--api-key", "string",
+			"--filter", "{name: {contains: utility bill}}",
+			"--sort", "name",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(requirementTypesList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(requirementTypesList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"requirement-types", "list",
-		"--api-key", "string",
-		"--filter.name", "{contains: utility bill}",
-		"--sort", "name",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "requirement-types", "list",
+			"--api-key", "string",
+			"--filter.name", "{contains: utility bill}",
+			"--sort", "name",
+		)
+	})
 }

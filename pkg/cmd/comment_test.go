@@ -11,54 +11,71 @@ import (
 
 func TestCommentsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"comments", "create",
-		"--api-key", "string",
-		"--body", "Hi there, ....",
-		"--comment-record-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
-		"--comment-record-type", "sub_number_order",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "comments", "create",
+			"--api-key", "string",
+			"--body", "Hi there, ....",
+			"--comment-record-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
+			"--comment-record-type", "sub_number_order",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"body: Hi there, ....\n" +
+			"comment_record_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576\n" +
+			"comment_record_type: sub_number_order\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "comments", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestCommentsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"comments", "retrieve",
-		"--api-key", "string",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "comments", "retrieve",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }
 
 func TestCommentsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"comments", "list",
-		"--api-key", "string",
-		"--filter", "{comment_record_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576, comment_record_type: sub_number_order}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "comments", "list",
+			"--api-key", "string",
+			"--filter", "{comment_record_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576, comment_record_type: sub_number_order}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(commentsList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(commentsList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"comments", "list",
-		"--api-key", "string",
-		"--filter.comment-record-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
-		"--filter.comment-record-type", "sub_number_order",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "comments", "list",
+			"--api-key", "string",
+			"--filter.comment-record-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
+			"--filter.comment-record-type", "sub_number_order",
+		)
+	})
 }
 
 func TestCommentsMarkAsRead(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"comments", "mark-as-read",
-		"--api-key", "string",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "comments", "mark-as-read",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }

@@ -11,53 +11,57 @@ import (
 
 func TestPhoneNumbersCsvDownloadsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"phone-numbers:csv-downloads", "create",
-		"--api-key", "string",
-		"--csv-format", "V2",
-		"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', customer_reference: customer_reference, emergency_address_id: '9102160989215728032', has_bundle: has_bundle, phone_number: phone_number, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "phone-numbers:csv-downloads", "create",
+			"--api-key", "string",
+			"--csv-format", "V2",
+			"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', customer_reference: customer_reference, emergency_address_id: '9102160989215728032', has_bundle: has_bundle, phone_number: phone_number, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(phoneNumbersCsvDownloadsCreate)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(phoneNumbersCsvDownloadsCreate)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"phone-numbers:csv-downloads", "create",
-		"--api-key", "string",
-		"--csv-format", "V2",
-		"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",
-		"--filter.connection-id", "1521916448077776306",
-		"--filter.customer-reference", "customer_reference",
-		"--filter.emergency-address-id", "9102160989215728032",
-		"--filter.has-bundle", "has_bundle",
-		"--filter.phone-number", "phone_number",
-		"--filter.status", "active",
-		"--filter.tag", "tag",
-		"--filter.voice-connection-name", "{contains: test, ends_with: test, eq: test, starts_with: test}",
-		"--filter.voice-usage-payment-method", "channel",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "phone-numbers:csv-downloads", "create",
+			"--api-key", "string",
+			"--csv-format", "V2",
+			"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",
+			"--filter.connection-id", "1521916448077776306",
+			"--filter.customer-reference", "customer_reference",
+			"--filter.emergency-address-id", "9102160989215728032",
+			"--filter.has-bundle", "has_bundle",
+			"--filter.phone-number", "phone_number",
+			"--filter.status", "active",
+			"--filter.tag", "tag",
+			"--filter.voice-connection-name", "{contains: test, ends_with: test, eq: test, starts_with: test}",
+			"--filter.voice-usage-payment-method", "channel",
+		)
+	})
 }
 
 func TestPhoneNumbersCsvDownloadsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"phone-numbers:csv-downloads", "retrieve",
-		"--api-key", "string",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "phone-numbers:csv-downloads", "retrieve",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }
 
 func TestPhoneNumbersCsvDownloadsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"phone-numbers:csv-downloads", "list",
-		"--api-key", "string",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "phone-numbers:csv-downloads", "list",
+			"--api-key", "string",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

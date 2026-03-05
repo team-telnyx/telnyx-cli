@@ -11,28 +11,30 @@ import (
 
 func TestDetailRecordsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"detail-records", "list",
-		"--api-key", "string",
-		"--filter", "{record_type: ai-voice-assistant, date_range: yesterday}",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "detail-records", "list",
+			"--api-key", "string",
+			"--filter", "{record_type: ai-voice-assistant, date_range: yesterday}",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "string",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(detailRecordsList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(detailRecordsList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"detail-records", "list",
-		"--api-key", "string",
-		"--filter.record-type", "ai-voice-assistant",
-		"--filter.date-range", "yesterday",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "string",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "detail-records", "list",
+			"--api-key", "string",
+			"--filter.record-type", "ai-voice-assistant",
+			"--filter.date-range", "yesterday",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "string",
+		)
+	})
 }

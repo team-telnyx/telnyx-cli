@@ -10,19 +10,21 @@ import (
 
 func TestListRetrieveAll(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"list", "retrieve-all",
-		"--api-key", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "list", "retrieve-all",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestListRetrieveByZone(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"list", "retrieve-by-zone",
-		"--api-key", "string",
-		"--channel-zone-id", "channel_zone_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "list", "retrieve-by-zone",
+			"--api-key", "string",
+			"--channel-zone-id", "channel_zone_id",
+		)
+	})
 }

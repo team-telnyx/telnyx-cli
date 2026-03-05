@@ -11,138 +11,203 @@ import (
 
 func TestExternalConnectionsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections", "create",
-		"--api-key", "string",
-		"--external-sip-connection", "zoom",
-		"--outbound", "{channel_limit: 10, outbound_voice_profile_id: '1911630617284445511'}",
-		"--active=false",
-		"--inbound", "{outbound_voice_profile_id: 12345678-1234-1234-1234-123456789012, channel_limit: 10}",
-		"--tag", "tag1",
-		"--tag", "tag2",
-		"--webhook-event-failover-url", "https://failover.example.com",
-		"--webhook-event-url", "https://example.com",
-		"--webhook-timeout-secs", "25",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections", "create",
+			"--api-key", "string",
+			"--external-sip-connection", "zoom",
+			"--outbound", "{channel_limit: 10, outbound_voice_profile_id: '1911630617284445511'}",
+			"--active=false",
+			"--inbound", "{outbound_voice_profile_id: 12345678-1234-1234-1234-123456789012, channel_limit: 10}",
+			"--tag", "tag1",
+			"--tag", "tag2",
+			"--webhook-event-failover-url", "https://failover.example.com",
+			"--webhook-event-url", "https://example.com",
+			"--webhook-timeout-secs", "25",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(externalConnectionsCreate)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(externalConnectionsCreate)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections", "create",
-		"--api-key", "string",
-		"--external-sip-connection", "zoom",
-		"--outbound.channel-limit", "10",
-		"--outbound.outbound-voice-profile-id", "1911630617284445511",
-		"--active=false",
-		"--inbound.outbound-voice-profile-id", "12345678-1234-1234-1234-123456789012",
-		"--inbound.channel-limit", "10",
-		"--tag", "tag1",
-		"--tag", "tag2",
-		"--webhook-event-failover-url", "https://failover.example.com",
-		"--webhook-event-url", "https://example.com",
-		"--webhook-timeout-secs", "25",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections", "create",
+			"--api-key", "string",
+			"--external-sip-connection", "zoom",
+			"--outbound.channel-limit", "10",
+			"--outbound.outbound-voice-profile-id", "1911630617284445511",
+			"--active=false",
+			"--inbound.outbound-voice-profile-id", "12345678-1234-1234-1234-123456789012",
+			"--inbound.channel-limit", "10",
+			"--tag", "tag1",
+			"--tag", "tag2",
+			"--webhook-event-failover-url", "https://failover.example.com",
+			"--webhook-event-url", "https://example.com",
+			"--webhook-timeout-secs", "25",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"external_sip_connection: zoom\n" +
+			"outbound:\n" +
+			"  channel_limit: 10\n" +
+			"  outbound_voice_profile_id: '1911630617284445511'\n" +
+			"active: false\n" +
+			"inbound:\n" +
+			"  outbound_voice_profile_id: 12345678-1234-1234-1234-123456789012\n" +
+			"  channel_limit: 10\n" +
+			"tags:\n" +
+			"  - tag1\n" +
+			"  - tag2\n" +
+			"webhook_event_failover_url: https://failover.example.com\n" +
+			"webhook_event_url: https://example.com\n" +
+			"webhook_timeout_secs: 25\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "external-connections", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestExternalConnectionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections", "retrieve",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections", "retrieve",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+		)
+	})
 }
 
 func TestExternalConnectionsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections", "update",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-		"--outbound", "{outbound_voice_profile_id: '1911630617284445511', channel_limit: 10}",
-		"--active=false",
-		"--inbound", "{channel_limit: 10}",
-		"--tag", "tag1",
-		"--tag", "tag2",
-		"--webhook-event-failover-url", "https://failover.example.com",
-		"--webhook-event-url", "https://example.com",
-		"--webhook-timeout-secs", "25",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections", "update",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--outbound", "{outbound_voice_profile_id: '1911630617284445511', channel_limit: 10}",
+			"--active=false",
+			"--inbound", "{channel_limit: 10}",
+			"--tag", "tag1",
+			"--tag", "tag2",
+			"--webhook-event-failover-url", "https://failover.example.com",
+			"--webhook-event-url", "https://example.com",
+			"--webhook-timeout-secs", "25",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(externalConnectionsUpdate)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(externalConnectionsUpdate)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections", "update",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-		"--outbound.outbound-voice-profile-id", "1911630617284445511",
-		"--outbound.channel-limit", "10",
-		"--active=false",
-		"--inbound.channel-limit", "10",
-		"--tag", "tag1",
-		"--tag", "tag2",
-		"--webhook-event-failover-url", "https://failover.example.com",
-		"--webhook-event-url", "https://example.com",
-		"--webhook-timeout-secs", "25",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections", "update",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--outbound.outbound-voice-profile-id", "1911630617284445511",
+			"--outbound.channel-limit", "10",
+			"--active=false",
+			"--inbound.channel-limit", "10",
+			"--tag", "tag1",
+			"--tag", "tag2",
+			"--webhook-event-failover-url", "https://failover.example.com",
+			"--webhook-event-url", "https://example.com",
+			"--webhook-timeout-secs", "25",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"outbound:\n" +
+			"  outbound_voice_profile_id: '1911630617284445511'\n" +
+			"  channel_limit: 10\n" +
+			"active: false\n" +
+			"inbound:\n" +
+			"  channel_limit: 10\n" +
+			"tags:\n" +
+			"  - tag1\n" +
+			"  - tag2\n" +
+			"webhook_event_failover_url: https://failover.example.com\n" +
+			"webhook_event_url: https://example.com\n" +
+			"webhook_timeout_secs: 25\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "external-connections", "update",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+		)
+	})
 }
 
 func TestExternalConnectionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections", "list",
-		"--api-key", "string",
-		"--filter", "{id: '1930241863466354012', connection_name: {contains: My Connection}, created_at: '2022-12-31', external_sip_connection: zoom, phone_number: {contains: '+15555555555'}}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections", "list",
+			"--api-key", "string",
+			"--filter", "{id: '1930241863466354012', connection_name: {contains: My Connection}, created_at: '2022-12-31', external_sip_connection: zoom, phone_number: {contains: '+15555555555'}}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(externalConnectionsList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(externalConnectionsList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections", "list",
-		"--api-key", "string",
-		"--filter.id", "1930241863466354012",
-		"--filter.connection-name", "{contains: My Connection}",
-		"--filter.created-at", "2022-12-31",
-		"--filter.external-sip-connection", "zoom",
-		"--filter.phone-number", "{contains: '+15555555555'}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections", "list",
+			"--api-key", "string",
+			"--filter.id", "1930241863466354012",
+			"--filter.connection-name", "{contains: My Connection}",
+			"--filter.created-at", "2022-12-31",
+			"--filter.external-sip-connection", "zoom",
+			"--filter.phone-number", "{contains: '+15555555555'}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }
 
 func TestExternalConnectionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections", "delete",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections", "delete",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+		)
+	})
 }
 
 func TestExternalConnectionsUpdateLocation(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections", "update-location",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--location-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--static-emergency-address-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections", "update-location",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--location-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--static-emergency-address-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("static_emergency_address_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "external-connections", "update-location",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--location-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }

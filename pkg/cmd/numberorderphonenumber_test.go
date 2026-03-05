@@ -11,66 +11,95 @@ import (
 
 func TestNumberOrderPhoneNumbersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-order-phone-numbers", "retrieve",
-		"--api-key", "string",
-		"--number-order-phone-number-id", "number_order_phone_number_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-order-phone-numbers", "retrieve",
+			"--api-key", "string",
+			"--number-order-phone-number-id", "number_order_phone_number_id",
+		)
+	})
 }
 
 func TestNumberOrderPhoneNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-order-phone-numbers", "list",
-		"--api-key", "string",
-		"--filter", "{country_code: US}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-order-phone-numbers", "list",
+			"--api-key", "string",
+			"--filter", "{country_code: US}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(numberOrderPhoneNumbersList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(numberOrderPhoneNumbersList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-order-phone-numbers", "list",
-		"--api-key", "string",
-		"--filter.country-code", "US",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-order-phone-numbers", "list",
+			"--api-key", "string",
+			"--filter.country-code", "US",
+		)
+	})
 }
 
 func TestNumberOrderPhoneNumbersUpdateRequirementGroup(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-order-phone-numbers", "update-requirement-group",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--requirement-group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-order-phone-numbers", "update-requirement-group",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--requirement-group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("requirement_group_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "number-order-phone-numbers", "update-requirement-group",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestNumberOrderPhoneNumbersUpdateRequirements(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-order-phone-numbers", "update-requirements",
-		"--api-key", "string",
-		"--number-order-phone-number-id", "number_order_phone_number_id",
-		"--regulatory-requirement", "{field_value: 45f45a04-b4be-4592-95b1-9306b9db2b21, requirement_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-order-phone-numbers", "update-requirements",
+			"--api-key", "string",
+			"--number-order-phone-number-id", "number_order_phone_number_id",
+			"--regulatory-requirement", "{field_value: 45f45a04-b4be-4592-95b1-9306b9db2b21, requirement_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(numberOrderPhoneNumbersUpdateRequirements)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(numberOrderPhoneNumbersUpdateRequirements)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-order-phone-numbers", "update-requirements",
-		"--api-key", "string",
-		"--number-order-phone-number-id", "number_order_phone_number_id",
-		"--regulatory-requirement.field-value", "45f45a04-b4be-4592-95b1-9306b9db2b21",
-		"--regulatory-requirement.requirement-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-order-phone-numbers", "update-requirements",
+			"--api-key", "string",
+			"--number-order-phone-number-id", "number_order_phone_number_id",
+			"--regulatory-requirement.field-value", "45f45a04-b4be-4592-95b1-9306b9db2b21",
+			"--regulatory-requirement.requirement-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"regulatory_requirements:\n" +
+			"  - field_value: 45f45a04-b4be-4592-95b1-9306b9db2b21\n" +
+			"    requirement_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "number-order-phone-numbers", "update-requirements",
+			"--api-key", "string",
+			"--number-order-phone-number-id", "number_order_phone_number_id",
+		)
+	})
 }

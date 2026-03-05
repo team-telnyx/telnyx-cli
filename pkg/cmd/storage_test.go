@@ -10,9 +10,10 @@ import (
 
 func TestStorageListMigrationSourceCoverage(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage", "list-migration-source-coverage",
-		"--api-key", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage", "list-migration-source-coverage",
+			"--api-key", "string",
+		)
+	})
 }

@@ -10,9 +10,10 @@ import (
 
 func TestGlobalIPHealthCheckTypesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"global-ip-health-check-types", "list",
-		"--api-key", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "global-ip-health-check-types", "list",
+			"--api-key", "string",
+		)
+	})
 }

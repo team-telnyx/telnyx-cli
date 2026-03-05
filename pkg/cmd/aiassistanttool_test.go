@@ -10,13 +10,29 @@ import (
 
 func TestAIAssistantsToolsTest(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ai:assistants:tools", "test",
-		"--api-key", "string",
-		"--assistant-id", "assistant_id",
-		"--tool-id", "tool_id",
-		"--arguments", "{foo: bar}",
-		"--dynamic-variables", "{foo: bar}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "ai:assistants:tools", "test",
+			"--api-key", "string",
+			"--assistant-id", "assistant_id",
+			"--tool-id", "tool_id",
+			"--arguments", "{foo: bar}",
+			"--dynamic-variables", "{foo: bar}",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"arguments:\n" +
+			"  foo: bar\n" +
+			"dynamic_variables:\n" +
+			"  foo: bar\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "ai:assistants:tools", "test",
+			"--api-key", "string",
+			"--assistant-id", "assistant_id",
+			"--tool-id", "tool_id",
+		)
+	})
 }

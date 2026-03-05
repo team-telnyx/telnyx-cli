@@ -11,57 +11,77 @@ import (
 
 func TestStorageMigrationSourcesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:migration-sources", "create",
-		"--api-key", "string",
-		"--bucket-name", "bucket_name",
-		"--provider", "aws",
-		"--provider-auth", "{access_key: access_key, secret_access_key: secret_access_key}",
-		"--source-region", "source_region",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:migration-sources", "create",
+			"--api-key", "string",
+			"--bucket-name", "bucket_name",
+			"--provider", "aws",
+			"--provider-auth", "{access_key: access_key, secret_access_key: secret_access_key}",
+			"--source-region", "source_region",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(storageMigrationSourcesCreate)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(storageMigrationSourcesCreate)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:migration-sources", "create",
-		"--api-key", "string",
-		"--bucket-name", "bucket_name",
-		"--provider", "aws",
-		"--provider-auth.access-key", "access_key",
-		"--provider-auth.secret-access-key", "secret_access_key",
-		"--source-region", "source_region",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:migration-sources", "create",
+			"--api-key", "string",
+			"--bucket-name", "bucket_name",
+			"--provider", "aws",
+			"--provider-auth.access-key", "access_key",
+			"--provider-auth.secret-access-key", "secret_access_key",
+			"--source-region", "source_region",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"bucket_name: bucket_name\n" +
+			"provider: aws\n" +
+			"provider_auth:\n" +
+			"  access_key: access_key\n" +
+			"  secret_access_key: secret_access_key\n" +
+			"source_region: source_region\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "storage:migration-sources", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestStorageMigrationSourcesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:migration-sources", "retrieve",
-		"--api-key", "string",
-		"--id", "",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:migration-sources", "retrieve",
+			"--api-key", "string",
+			"--id", "",
+		)
+	})
 }
 
 func TestStorageMigrationSourcesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:migration-sources", "list",
-		"--api-key", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:migration-sources", "list",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestStorageMigrationSourcesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:migration-sources", "delete",
-		"--api-key", "string",
-		"--id", "",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:migration-sources", "delete",
+			"--api-key", "string",
+			"--id", "",
+		)
+	})
 }

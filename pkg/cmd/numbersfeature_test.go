@@ -10,10 +10,22 @@ import (
 
 func TestNumbersFeaturesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"numbers-features", "create",
-		"--api-key", "string",
-		"--phone-number", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "numbers-features", "create",
+			"--api-key", "string",
+			"--phone-number", "string",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"phone_numbers:\n" +
+			"  - string\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "numbers-features", "create",
+			"--api-key", "string",
+		)
+	})
 }

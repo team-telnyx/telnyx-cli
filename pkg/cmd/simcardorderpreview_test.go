@@ -10,11 +10,23 @@ import (
 
 func TestSimCardOrderPreviewPreview(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-card-order-preview", "preview",
-		"--api-key", "string",
-		"--address-id", "1293384261075731499",
-		"--quantity", "21",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-card-order-preview", "preview",
+			"--api-key", "string",
+			"--address-id", "1293384261075731499",
+			"--quantity", "21",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"address_id: '1293384261075731499'\n" +
+			"quantity: 21\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "sim-card-order-preview", "preview",
+			"--api-key", "string",
+		)
+	})
 }

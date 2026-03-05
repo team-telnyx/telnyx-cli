@@ -10,10 +10,11 @@ import (
 
 func TestAIConversationsMessagesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ai:conversations:messages", "list",
-		"--api-key", "string",
-		"--conversation-id", "conversation_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "ai:conversations:messages", "list",
+			"--api-key", "string",
+			"--conversation-id", "conversation_id",
+		)
+	})
 }

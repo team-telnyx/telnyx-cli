@@ -10,34 +10,50 @@ import (
 
 func TestMessagingRcsAgentsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging:rcs:agents", "retrieve",
-		"--api-key", "string",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging:rcs:agents", "retrieve",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }
 
 func TestMessagingRcsAgentsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging:rcs:agents", "update",
-		"--api-key", "string",
-		"--id", "id",
-		"--profile-id", "4001932a-b8a3-42fc-9389-021be6388909",
-		"--webhook-failover-url", "http://example.com",
-		"--webhook-url", "http://example.com",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging:rcs:agents", "update",
+			"--api-key", "string",
+			"--id", "id",
+			"--profile-id", "4001932a-b8a3-42fc-9389-021be6388909",
+			"--webhook-failover-url", "http://example.com",
+			"--webhook-url", "http://example.com",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"profile_id: 4001932a-b8a3-42fc-9389-021be6388909\n" +
+			"webhook_failover_url: http://example.com\n" +
+			"webhook_url: http://example.com\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging:rcs:agents", "update",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }
 
 func TestMessagingRcsAgentsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging:rcs:agents", "list",
-		"--api-key", "string",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging:rcs:agents", "list",
+			"--api-key", "string",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

@@ -11,21 +11,23 @@ import (
 
 func TestSetiRetrieveBlackBoxTestResults(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"seti", "retrieve-black-box-test-results",
-		"--api-key", "string",
-		"--filter", "{product: product}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "seti", "retrieve-black-box-test-results",
+			"--api-key", "string",
+			"--filter", "{product: product}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(setiRetrieveBlackBoxTestResults)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(setiRetrieveBlackBoxTestResults)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"seti", "retrieve-black-box-test-results",
-		"--api-key", "string",
-		"--filter.product", "product",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "seti", "retrieve-black-box-test-results",
+			"--api-key", "string",
+			"--filter.product", "product",
+		)
+	})
 }

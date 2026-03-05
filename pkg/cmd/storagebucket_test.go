@@ -10,12 +10,24 @@ import (
 
 func TestStorageBucketsCreatePresignedURL(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:buckets", "create-presigned-url",
-		"--api-key", "string",
-		"--bucket-name", "",
-		"--object-name", "",
-		"--ttl", "60",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:buckets", "create-presigned-url",
+			"--api-key", "string",
+			"--bucket-name", "",
+			"--object-name", "",
+			"--ttl", "60",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("ttl: 60")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "storage:buckets", "create-presigned-url",
+			"--api-key", "string",
+			"--bucket-name", "",
+			"--object-name", "",
+		)
+	})
 }

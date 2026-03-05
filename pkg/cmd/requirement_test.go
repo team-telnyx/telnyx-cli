@@ -11,39 +11,42 @@ import (
 
 func TestRequirementsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"requirements", "retrieve",
-		"--api-key", "string",
-		"--id", "a9dad8d5-fdbd-49d7-aa23-39bb08a5ebaa",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "requirements", "retrieve",
+			"--api-key", "string",
+			"--id", "a9dad8d5-fdbd-49d7-aa23-39bb08a5ebaa",
+		)
+	})
 }
 
 func TestRequirementsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"requirements", "list",
-		"--api-key", "string",
-		"--filter", "{action: porting, country_code: US, phone_number_type: local}",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "country_code",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "requirements", "list",
+			"--api-key", "string",
+			"--filter", "{action: porting, country_code: US, phone_number_type: local}",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "country_code",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(requirementsList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(requirementsList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"requirements", "list",
-		"--api-key", "string",
-		"--filter.action", "porting",
-		"--filter.country-code", "US",
-		"--filter.phone-number-type", "local",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "country_code",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "requirements", "list",
+			"--api-key", "string",
+			"--filter.action", "porting",
+			"--filter.country-code", "US",
+			"--filter.phone-number-type", "local",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "country_code",
+		)
+	})
 }
