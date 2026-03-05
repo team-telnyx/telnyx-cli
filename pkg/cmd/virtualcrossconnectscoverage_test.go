@@ -28,6 +28,7 @@ func TestVirtualCrossConnectsCoverageList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"virtual-cross-connects-coverage", "list",
+		"--api-key", "string",
 		"--filter.cloud-provider", "aws",
 		"--filter.cloud-provider-region", "us-east-1",
 		"--filter.location-code", "silicon_valley-ca",

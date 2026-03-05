@@ -50,6 +50,7 @@ func TestDocumentsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "list",
+		"--api-key", "string",
 		"--filter.created-at", "{gt: '2021-01-01T00:00:00Z', lt: '2021-04-09T22:25:27.521Z'}",
 		"--filter.customer-reference", "{eq: MY REF 001, in: [REF001, REF002]}",
 		"--filter.filename", "{contains: invoice}",
@@ -106,6 +107,7 @@ func TestDocumentsUpload(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "upload",
+		"--api-key", "string",
 		"--document.customer-reference", "MY REF 001",
 		"--document.file", "ZXhhbXBsZSBvZiBlbmNvZGVkIGNvbnRlbnQ=",
 		"--document.filename", "test-document.pdf",
@@ -129,6 +131,7 @@ func TestDocumentsUploadJson(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"documents", "upload-json",
+		"--api-key", "string",
 		"--document.customer-reference", "MY REF 001",
 		"--document.file", "ZXhhbXBsZSBvZiBlbmNvZGVkIGNvbnRlbnQ=",
 		"--document.filename", "test-document.pdf",

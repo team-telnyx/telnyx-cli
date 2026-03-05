@@ -57,6 +57,7 @@ func TestDynamicEmergencyAddressesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"dynamic-emergency-addresses", "list",
+		"--api-key", "string",
 		"--filter.country-code", "country_code",
 		"--filter.status", "pending",
 		"--page-number", "0",

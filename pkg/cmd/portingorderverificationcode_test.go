@@ -29,6 +29,7 @@ func TestPortingOrdersVerificationCodesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:verification-codes", "list",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter.verified=true",
 		"--page-number", "0",
@@ -68,6 +69,7 @@ func TestPortingOrdersVerificationCodesVerify(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:verification-codes", "verify",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--verification-code.code", "12345",
 		"--verification-code.phone-number", "+61424000001",

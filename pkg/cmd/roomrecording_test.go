@@ -37,6 +37,7 @@ func TestRoomRecordingsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "list",
+		"--api-key", "string",
 		"--filter.date-ended-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.date-started-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.duration-secs", "20",
@@ -78,6 +79,7 @@ func TestRoomRecordingsDeleteBulk(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"room-recordings", "delete-bulk",
+		"--api-key", "string",
 		"--filter.date-ended-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.date-started-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.duration-secs", "20",

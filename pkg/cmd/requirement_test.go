@@ -38,6 +38,7 @@ func TestRequirementsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirements", "list",
+		"--api-key", "string",
 		"--filter.action", "porting",
 		"--filter.country-code", "US",
 		"--filter.phone-number-type", "local",

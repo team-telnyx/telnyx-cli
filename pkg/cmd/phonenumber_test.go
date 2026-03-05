@@ -56,6 +56,7 @@ func TestPhoneNumbersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers", "list",
+		"--api-key", "string",
 		"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",
 		"--filter.connection-id", "1521916448077776306",
 		"--filter.country-iso-alpha2", "US",
@@ -107,6 +108,7 @@ func TestPhoneNumbersSlimList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-numbers", "slim-list",
+		"--api-key", "string",
 		"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",
 		"--filter.connection-id", "1521916448077776306",
 		"--filter.country-iso-alpha2", "US",

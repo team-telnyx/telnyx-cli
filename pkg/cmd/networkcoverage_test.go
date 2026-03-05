@@ -28,6 +28,7 @@ func TestNetworkCoverageList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"network-coverage", "list",
+		"--api-key", "string",
 		"--filter.location-code", "silicon_valley-ca",
 		"--filter.location-pop", "SV1",
 		"--filter.location-region", "AMER",

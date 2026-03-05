@@ -39,6 +39,7 @@ func TestRoomsSessionsList0(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions", "list-0",
+		"--api-key", "string",
 		"--filter.active=true",
 		"--filter.date-created-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.date-ended-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
@@ -70,6 +71,7 @@ func TestRoomsSessionsList1(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions", "list-1",
+		"--api-key", "string",
 		"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		"--filter.active=true",
 		"--filter.date-created-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
@@ -100,6 +102,7 @@ func TestRoomsSessionsRetrieveParticipants(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms:sessions", "retrieve-participants",
+		"--api-key", "string",
 		"--room-session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		"--filter.context", "Alice",
 		"--filter.date-joined-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",

@@ -37,6 +37,7 @@ func TestSimCardsActionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-cards:actions", "list",
+		"--api-key", "string",
 		"--filter.action-type", "disable",
 		"--filter.bulk-sim-card-action-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 		"--filter.sim-card-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",

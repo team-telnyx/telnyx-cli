@@ -29,6 +29,7 @@ func TestPortingLoaConfigurationsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "create",
+		"--api-key", "string",
 		"--address.city", "Austin",
 		"--address.country-code", "US",
 		"--address.state", "TX",
@@ -74,6 +75,7 @@ func TestPortingLoaConfigurationsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "update",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--address.city", "Austin",
 		"--address.country-code", "US",
@@ -131,6 +133,7 @@ func TestPortingLoaConfigurationsPreview0(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:loa-configurations", "preview-0",
+		"--api-key", "string",
 		"--address.city", "Austin",
 		"--address.country-code", "US",
 		"--address.state", "TX",

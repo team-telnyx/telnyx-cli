@@ -28,6 +28,7 @@ func TestAIFineTuningJobsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:fine-tuning:jobs", "create",
+		"--api-key", "string",
 		"--model", "model",
 		"--training-file", "training_file",
 		"--hyperparameters.n-epochs", "1",

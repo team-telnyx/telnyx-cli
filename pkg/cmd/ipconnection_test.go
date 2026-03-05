@@ -48,6 +48,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "create",
+		"--api-key", "string",
 		"--active=true",
 		"--anchorsite-override", "Latency",
 		"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
@@ -155,6 +156,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--active=true",
 		"--anchorsite-override", "Latency",
@@ -235,6 +237,7 @@ func TestIPConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ip-connections", "list",
+		"--api-key", "string",
 		"--filter.connection-name", "{contains: contains}",
 		"--filter.fqdn", "fqdn",
 		"--filter.outbound-voice-profile-id", "1293384261075731499",

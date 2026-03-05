@@ -25,6 +25,7 @@ func TestGlobalIPAssignmentsUsageRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-assignments-usage", "retrieve",
+		"--api-key", "string",
 		"--filter.global-ip-assignment-id", "string",
 		"--filter.global-ip-id", "string",
 	)

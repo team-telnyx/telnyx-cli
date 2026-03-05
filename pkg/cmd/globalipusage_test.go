@@ -25,6 +25,7 @@ func TestGlobalIPUsageRetrieve(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"global-ip-usage", "retrieve",
+		"--api-key", "string",
 		"--filter.global-ip-id", "string",
 	)
 }

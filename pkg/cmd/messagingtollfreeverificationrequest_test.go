@@ -59,6 +59,7 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "create",
+		"--api-key", "string",
 		"--additional-information", "additionalInformation",
 		"--business-addr1", "600 Congress Avenue",
 		"--business-city", "Austin",
@@ -158,6 +159,7 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-tollfree:verification:requests", "update",
+		"--api-key", "string",
 		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--additional-information", "additionalInformation",
 		"--business-addr1", "600 Congress Avenue",

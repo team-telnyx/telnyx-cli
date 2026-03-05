@@ -37,6 +37,7 @@ func TestRecordingsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"recordings", "list",
+		"--api-key", "string",
 		"--filter.call-leg-id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",
 		"--filter.call-session-id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",
 		"--filter.conference-id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",

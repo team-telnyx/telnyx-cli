@@ -55,6 +55,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:assistants:versions", "update",
+		"--api-key", "string",
 		"--assistant-id", "assistant_id",
 		"--version-id", "version_id",
 		"--description", "description",

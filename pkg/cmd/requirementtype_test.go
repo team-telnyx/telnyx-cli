@@ -36,6 +36,7 @@ func TestRequirementTypesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"requirement-types", "list",
+		"--api-key", "string",
 		"--filter.name", "{contains: utility bill}",
 		"--sort", "name",
 	)

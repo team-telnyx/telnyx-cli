@@ -47,6 +47,7 @@ func TestMediaList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"media", "list",
+		"--api-key", "string",
 		"--filter.content-type", "[application_xml]",
 	)
 }

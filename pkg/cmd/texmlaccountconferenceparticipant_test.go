@@ -121,6 +121,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"texml:accounts:conferences:participants", "participants",
+		"--api-key", "string",
 		"--account-sid", "account_sid",
 		"--conference-sid", "conference_sid",
 		"--amd-status-callback", "https://www.example.com/amd_result",

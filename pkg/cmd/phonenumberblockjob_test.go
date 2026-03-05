@@ -38,6 +38,7 @@ func TestPhoneNumberBlocksJobsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"phone-number-blocks:jobs", "list",
+		"--api-key", "string",
 		"--filter.status", "in_progress",
 		"--filter.type", "delete_phone_number_block",
 		"--page-number", "0",

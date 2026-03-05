@@ -26,6 +26,7 @@ func TestPortingReportsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:reports", "create",
+		"--api-key", "string",
 		"--params.filters", "{created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], status__in: [draft]}",
 		"--report-type", "export_porting_orders_csv",
 	)
@@ -59,6 +60,7 @@ func TestPortingReportsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting:reports", "list",
+		"--api-key", "string",
 		"--filter.report-type", "export_porting_orders_csv",
 		"--filter.status", "completed",
 		"--page-number", "0",

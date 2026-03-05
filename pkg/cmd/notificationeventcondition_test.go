@@ -27,6 +27,7 @@ func TestNotificationEventConditionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-event-conditions", "list",
+		"--api-key", "string",
 		"--filter.associated-record-type", "{eq: phone_number}",
 		"--filter.channel-type-id", "{eq: webhook}",
 		"--filter.notification-channel", "{eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}",

@@ -46,6 +46,7 @@ func TestMobilePhoneNumbersUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-phone-numbers", "update",
+		"--api-key", "string",
 		"--id", "id",
 		"--call-forwarding.call-forwarding-enabled=true",
 		"--call-forwarding.forwarding-type", "always",

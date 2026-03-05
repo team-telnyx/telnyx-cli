@@ -41,6 +41,7 @@ func TestIntegrationSecretsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"integration-secrets", "list",
+		"--api-key", "string",
 		"--filter.type", "bearer",
 		"--page-number", "0",
 		"--page-size", "0",

@@ -42,6 +42,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "create",
+		"--api-key", "string",
 		"--name", "My name",
 		"--whitelisted-destination", "US",
 		"--ai-assistant-id", "ai_assistant_id",
@@ -112,6 +113,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "update",
+		"--api-key", "string",
 		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--alpha-sender", "sqF",
 		"--daily-spend-limit", "269125115713",
@@ -159,6 +161,7 @@ func TestMessagingProfilesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"messaging-profiles", "list",
+		"--api-key", "string",
 		"--filter.name", "name",
 		"--filter-name-contains", "filter[name][contains]",
 		"--filter-name-eq", "filter[name][eq]",

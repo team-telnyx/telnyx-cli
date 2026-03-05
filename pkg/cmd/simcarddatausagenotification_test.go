@@ -26,6 +26,7 @@ func TestSimCardDataUsageNotificationsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-data-usage-notifications", "create",
+		"--api-key", "string",
 		"--sim-card-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--threshold.amount", "2048.1",
 		"--threshold.unit", "MB",
@@ -60,6 +61,7 @@ func TestSimCardDataUsageNotificationsUpdate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"sim-card-data-usage-notifications", "update",
+		"--api-key", "string",
 		"--sim-card-data-usage-notification-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		"--sim-card-id", "b34c1683-cd85-4493-b9a5-315eb4bc5e19",
 		"--threshold.amount", "2048.0",

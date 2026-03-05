@@ -27,6 +27,7 @@ func TestCustomerServiceRecordsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "create",
+		"--api-key", "string",
 		"--phone-number", "+13035553000",
 		"--additional-data.account-number", "123456789",
 		"--additional-data.address-line-1", "123 Main St",
@@ -71,6 +72,7 @@ func TestCustomerServiceRecordsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"customer-service-records", "list",
+		"--api-key", "string",
 		"--filter.created-at", "{gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}",
 		"--filter.phone-number", "{eq: '+12441239999', in: ['+12441239999']}",
 		"--filter.status", "{eq: pending, in: [pending]}",

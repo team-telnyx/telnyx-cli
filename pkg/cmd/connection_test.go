@@ -38,6 +38,7 @@ func TestConnectionsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"connections", "list",
+		"--api-key", "string",
 		"--filter.connection-name", "{contains: contains}",
 		"--filter.fqdn", "fqdn",
 		"--filter.outbound-voice-profile-id", "1293384261075731499",

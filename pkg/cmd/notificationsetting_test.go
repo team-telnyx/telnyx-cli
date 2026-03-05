@@ -28,6 +28,7 @@ func TestNotificationSettingsCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "create",
+		"--api-key", "string",
 		"--notification-channel-id", "12455643-3cf1-4683-ad23-1cd32f7d5e0a",
 		"--notification-event-condition-id", "70c7c5cb-dce2-4124-accb-870d39dbe852",
 		"--notification-profile-id", "12455643-3cf1-4683-ad23-1cd32f7d5e0a",
@@ -64,6 +65,7 @@ func TestNotificationSettingsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"notification-settings", "list",
+		"--api-key", "string",
 		"--filter.associated-record-type", "{eq: phone_number}",
 		"--filter.channel-type-id", "{eq: webhook}",
 		"--filter.notification-channel", "{eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}",

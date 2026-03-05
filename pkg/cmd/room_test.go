@@ -70,6 +70,7 @@ func TestRoomsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"rooms", "list",
+		"--api-key", "string",
 		"--filter.date-created-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.date-updated-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 		"--filter.unique-name", "my_video_room",

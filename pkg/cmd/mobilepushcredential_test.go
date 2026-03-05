@@ -47,6 +47,7 @@ func TestMobilePushCredentialsList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"mobile-push-credentials", "list",
+		"--api-key", "string",
 		"--filter.alias", "LucyCredential",
 		"--filter.type", "ios",
 		"--page-number", "0",

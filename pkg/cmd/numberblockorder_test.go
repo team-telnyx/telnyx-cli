@@ -51,6 +51,7 @@ func TestNumberBlockOrdersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"number-block-orders", "list",
+		"--api-key", "string",
 		"--filter.created-at", "{gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}",
 		"--filter.phone-numbers-starting-number", "+19705555000",
 		"--filter.status", "pending",

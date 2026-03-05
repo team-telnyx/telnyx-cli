@@ -39,6 +39,7 @@ func TestExternalConnectionsReleasesList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"external-connections:releases", "list",
+		"--api-key", "string",
 		"--id", "1293384261075731499",
 		"--filter.civic-address-id", "{eq: '19990261512338516954'}",
 		"--filter.location-id", "{eq: '19995665508264022121'}",

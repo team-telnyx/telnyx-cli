@@ -27,6 +27,7 @@ func TestPortingOrdersAssociatedPhoneNumbersCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:associated-phone-numbers", "create",
+		"--api-key", "string",
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--action", "keep",
 		"--phone-number-range.end-at", "+441234567899",
@@ -54,6 +55,7 @@ func TestPortingOrdersAssociatedPhoneNumbersList(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"porting-orders:associated-phone-numbers", "list",
+		"--api-key", "string",
 		"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--filter.action", "keep",
 		"--filter.phone-number", "+441234567890",

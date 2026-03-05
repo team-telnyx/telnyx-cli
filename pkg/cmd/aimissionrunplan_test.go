@@ -27,6 +27,7 @@ func TestAIMissionsRunsPlanCreate(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "create",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--step.description", "description",
@@ -66,6 +67,7 @@ func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"ai:missions:runs:plan", "add-steps-to-plan",
+		"--api-key", "string",
 		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		"--step.description", "description",

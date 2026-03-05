@@ -78,6 +78,7 @@ func TestCallsDial(t *testing.T) {
 	mocktest.TestRunMockTestWithFlags(
 		t,
 		"calls", "dial",
+		"--api-key", "string",
 		"--connection-id", "7267xxxxxxxxxxxxxx",
 		"--from", "+18005550101",
 		"--to", "+18005550100 or sip:username@sip.telnyx.com",
