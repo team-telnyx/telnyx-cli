@@ -96,6 +96,7 @@ func TestInexplicitNumberOrdersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "inexplicit-number-orders", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "1",
 			"--page-size", "1",
 		)

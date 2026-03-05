@@ -155,6 +155,10 @@ var mobilePhoneNumbersList = cli.Command{
 			Usage:     "The size of the page",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMobilePhoneNumbersList,
 	HideHelpCommand: true,
@@ -271,6 +275,10 @@ func handleMobilePhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "mobile-phone-numbers list", obj, format, transform)
 	} else {
 		iter := client.MobilePhoneNumbers.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "mobile-phone-numbers list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "mobile-phone-numbers list", iter, format, transform, maxItems)
 	}
 }

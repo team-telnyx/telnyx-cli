@@ -52,6 +52,7 @@ func TestGlobalIPsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "global-ips", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
 		)

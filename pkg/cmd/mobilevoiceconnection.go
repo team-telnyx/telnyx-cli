@@ -187,6 +187,10 @@ var mobileVoiceConnectionsList = cli.Command{
 			Usage:     "Sort by field (e.g., created_at, connection_name, active). Prefix with - for descending order.",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMobileVoiceConnectionsList,
 	HideHelpCommand: true,
@@ -351,7 +355,11 @@ func handleMobileVoiceConnectionsList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(os.Stdout, "mobile-voice-connections list", obj, format, transform)
 	} else {
 		iter := client.MobileVoiceConnections.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "mobile-voice-connections list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "mobile-voice-connections list", iter, format, transform, maxItems)
 	}
 }
 

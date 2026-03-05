@@ -55,6 +55,7 @@ func TestNumberBlockOrdersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "number-block-orders", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{created_at: {gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}, phone_numbers.starting_number: '+19705555000', status: pending}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -69,6 +70,7 @@ func TestNumberBlockOrdersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "number-block-orders", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.created-at", "{gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}",
 			"--filter.phone-numbers-starting-number", "+19705555000",
 			"--filter.status", "pending",

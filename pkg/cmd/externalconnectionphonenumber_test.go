@@ -51,6 +51,7 @@ func TestExternalConnectionsPhoneNumbersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "external-connections:phone-numbers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "1293384261075731499",
 			"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+1970', eq: '+19705555098'}}",
 			"--page-number", "0",
@@ -66,6 +67,7 @@ func TestExternalConnectionsPhoneNumbersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "external-connections:phone-numbers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "1293384261075731499",
 			"--filter.civic-address-id", "{eq: '19990261512338516954'}",
 			"--filter.location-id", "{eq: '19995665508264022121'}",

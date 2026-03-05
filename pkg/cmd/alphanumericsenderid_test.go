@@ -50,6 +50,7 @@ func TestAlphanumericSenderIDsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "alphanumeric-sender-ids", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
 			"--page-size", "0",

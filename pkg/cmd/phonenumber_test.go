@@ -62,6 +62,7 @@ func TestPhoneNumbersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "phone-numbers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', country_iso_alpha2: US, customer_reference: customer_reference, emergency_address_id: '9102160989215728032', number_type: {eq: local}, phone_number: phone_number, source: ported, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel, without_tags: 'true'}",
 			"--handle-messaging-profile-error", "false",
 			"--page-number", "0",
@@ -78,6 +79,7 @@ func TestPhoneNumbersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "phone-numbers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",
 			"--filter.connection-id", "1521916448077776306",
 			"--filter.country-iso-alpha2", "US",
@@ -116,6 +118,7 @@ func TestPhoneNumbersSlimList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "phone-numbers", "slim-list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', country_iso_alpha2: US, customer_reference: customer_reference, emergency_address_id: '9102160989215728032', number_type: {eq: local}, phone_number: phone_number, source: ported, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel}",
 			"--include-connection=true",
 			"--include-tags=true",
@@ -133,6 +136,7 @@ func TestPhoneNumbersSlimList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "phone-numbers", "slim-list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",
 			"--filter.connection-id", "1521916448077776306",
 			"--filter.country-iso-alpha2", "US",

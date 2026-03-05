@@ -64,6 +64,7 @@ func TestLegacyReportingUsageReportsVoiceList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "legacy:reporting:usage-reports:voice", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page", "1",
 			"--per-page", "1",
 		)

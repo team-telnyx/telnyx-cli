@@ -666,6 +666,10 @@ var credentialConnectionsList = requestflag.WithInnerFlags(cli.Command{
 			Default:   "created_at",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleCredentialConnectionsList,
 	HideHelpCommand: true,
@@ -848,7 +852,11 @@ func handleCredentialConnectionsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(os.Stdout, "credential-connections list", obj, format, transform)
 	} else {
 		iter := client.CredentialConnections.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "credential-connections list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "credential-connections list", iter, format, transform, maxItems)
 	}
 }
 

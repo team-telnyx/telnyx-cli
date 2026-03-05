@@ -88,6 +88,7 @@ func TestAIConversationsInsightGroupsRetrieveInsightGroups(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ai:conversations:insight-groups", "retrieve-insight-groups",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
 		)

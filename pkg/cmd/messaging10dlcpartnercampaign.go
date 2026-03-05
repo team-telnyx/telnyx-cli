@@ -76,6 +76,10 @@ var messaging10dlcPartnerCampaignsList = cli.Command{
 			Default:   "-createdAt",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMessaging10dlcPartnerCampaignsList,
 	HideHelpCommand: true,
@@ -97,6 +101,10 @@ var messaging10dlcPartnerCampaignsListSharedByMe = cli.Command{
 			Usage:     "The amount of records per page, limited to between 1 and 500 inclusive. The default value is `10`.",
 			Default:   10,
 			QueryPath: "recordsPerPage",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
 	Action:          handleMessaging10dlcPartnerCampaignsListSharedByMe,
@@ -229,7 +237,11 @@ func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Comm
 		return ShowJSON(os.Stdout, "messaging-10dlc:partner-campaigns list", obj, format, transform)
 	} else {
 		iter := client.Messaging10dlc.PartnerCampaigns.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "messaging-10dlc:partner-campaigns list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-10dlc:partner-campaigns list", iter, format, transform, maxItems)
 	}
 }
 
@@ -267,7 +279,11 @@ func handleMessaging10dlcPartnerCampaignsListSharedByMe(ctx context.Context, cmd
 		return ShowJSON(os.Stdout, "messaging-10dlc:partner-campaigns list-shared-by-me", obj, format, transform)
 	} else {
 		iter := client.Messaging10dlc.PartnerCampaigns.ListSharedByMeAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "messaging-10dlc:partner-campaigns list-shared-by-me", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-10dlc:partner-campaigns list-shared-by-me", iter, format, transform, maxItems)
 	}
 }
 

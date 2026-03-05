@@ -14,6 +14,7 @@ func TestUsageReportsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "usage-reports", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--dimension", "string",
 			"--metric", "string",
 			"--product", "product",

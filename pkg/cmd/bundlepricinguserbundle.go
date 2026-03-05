@@ -95,6 +95,10 @@ var bundlePricingUserBundlesList = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Authenticates the request with your Telnyx API V2 KEY",
 			HeaderPath: "authorization_bearer",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleBundlePricingUserBundlesList,
 	HideHelpCommand: true,
@@ -296,7 +300,11 @@ func handleBundlePricingUserBundlesList(ctx context.Context, cmd *cli.Command) e
 		return ShowJSON(os.Stdout, "bundle-pricing:user-bundles list", obj, format, transform)
 	} else {
 		iter := client.BundlePricing.UserBundles.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "bundle-pricing:user-bundles list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "bundle-pricing:user-bundles list", iter, format, transform, maxItems)
 	}
 }
 

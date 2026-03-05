@@ -88,6 +88,7 @@ func TestAIMissionsRunsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ai:missions:runs", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "1",
 			"--page-size", "1",
@@ -114,6 +115,7 @@ func TestAIMissionsRunsListRuns(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ai:missions:runs", "list-runs",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "1",
 			"--page-size", "1",
 			"--status", "status",

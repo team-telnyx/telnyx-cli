@@ -47,6 +47,10 @@ var simCardsActionsList = requestflag.WithInnerFlags(cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleSimCardsActionsList,
 	HideHelpCommand: true,
@@ -248,7 +252,11 @@ func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "sim-cards:actions list", obj, format, transform)
 	} else {
 		iter := client.SimCards.Actions.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "sim-cards:actions list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "sim-cards:actions list", iter, format, transform, maxItems)
 	}
 }
 

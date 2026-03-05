@@ -36,6 +36,7 @@ func TestPortingOrdersCommentsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders:comments", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
 			"--page-size", "0",

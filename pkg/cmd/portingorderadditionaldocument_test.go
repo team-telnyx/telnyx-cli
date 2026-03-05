@@ -59,6 +59,7 @@ func TestPortingOrdersAdditionalDocumentsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders:additional-documents", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter", "{document_type: [loa]}",
 			"--page-number", "0",
@@ -75,6 +76,7 @@ func TestPortingOrdersAdditionalDocumentsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders:additional-documents", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter.document-type", "[loa]",
 			"--page-number", "0",

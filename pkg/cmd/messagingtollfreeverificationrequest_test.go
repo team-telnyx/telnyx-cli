@@ -313,6 +313,7 @@ func TestMessagingTollfreeVerificationRequestsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-tollfree:verification:requests", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page", "1",
 			"--page-size", "1",
 			"--business-name", "business_name",

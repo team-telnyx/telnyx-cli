@@ -207,6 +207,7 @@ func TestTexmlApplicationsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "texml-applications", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{friendly_name: friendly_name, outbound_voice_profile_id: '1293384261075731499'}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -222,6 +223,7 @@ func TestTexmlApplicationsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "texml-applications", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.friendly-name", "friendly_name",
 			"--filter.outbound-voice-profile-id", "1293384261075731499",
 			"--page-number", "0",

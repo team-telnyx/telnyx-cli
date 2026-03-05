@@ -25,6 +25,7 @@ func TestBulkSimCardActionsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "bulk-sim-card-actions", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-action-type", "bulk_set_public_ips",
 			"--page-number", "1",
 			"--page-size", "1",

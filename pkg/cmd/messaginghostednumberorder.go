@@ -62,6 +62,10 @@ var messagingHostedNumberOrdersList = cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleMessagingHostedNumberOrdersList,
 	HideHelpCommand: true,
@@ -254,7 +258,11 @@ func handleMessagingHostedNumberOrdersList(ctx context.Context, cmd *cli.Command
 		return ShowJSON(os.Stdout, "messaging-hosted-number-orders list", obj, format, transform)
 	} else {
 		iter := client.MessagingHostedNumberOrders.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "messaging-hosted-number-orders list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "messaging-hosted-number-orders list", iter, format, transform, maxItems)
 	}
 }
 

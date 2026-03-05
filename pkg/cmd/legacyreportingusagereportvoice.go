@@ -93,6 +93,10 @@ var legacyReportingUsageReportsVoiceList = cli.Command{
 			Default:   20,
 			QueryPath: "per_page",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleLegacyReportingUsageReportsVoiceList,
 	HideHelpCommand: true,
@@ -215,7 +219,11 @@ func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Co
 		return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:voice list", obj, format, transform)
 	} else {
 		iter := client.Legacy.Reporting.UsageReports.Voice.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "legacy:reporting:usage-reports:voice list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "legacy:reporting:usage-reports:voice list", iter, format, transform, maxItems)
 	}
 }
 

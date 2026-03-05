@@ -704,6 +704,10 @@ var ipConnectionsList = requestflag.WithInnerFlags(cli.Command{
 			Default:   "created_at",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleIPConnectionsList,
 	HideHelpCommand: true,
@@ -886,7 +890,11 @@ func handleIPConnectionsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "ip-connections list", obj, format, transform)
 	} else {
 		iter := client.IPConnections.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "ip-connections list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "ip-connections list", iter, format, transform, maxItems)
 	}
 }
 

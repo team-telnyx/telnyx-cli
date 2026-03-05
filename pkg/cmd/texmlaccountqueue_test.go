@@ -75,6 +75,7 @@ func TestTexmlAccountsQueuesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "texml:accounts:queues", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--account-sid", "account_sid",
 			"--date-created", "DateCreated",
 			"--date-updated", "DateUpdated",

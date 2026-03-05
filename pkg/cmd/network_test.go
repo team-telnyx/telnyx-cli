@@ -68,6 +68,7 @@ func TestNetworksList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "networks", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{name: test network}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -82,6 +83,7 @@ func TestNetworksList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "networks", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.name", "test network",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -106,6 +108,7 @@ func TestNetworksListInterfaces(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "networks", "list-interfaces",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--filter", "{name: test interface, type: wireguard_interface}",
 			"--page-number", "0",
@@ -121,6 +124,7 @@ func TestNetworksListInterfaces(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "networks", "list-interfaces",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--filter.name", "test interface",
 			"--filter.type", "wireguard_interface",

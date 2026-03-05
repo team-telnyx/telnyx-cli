@@ -38,6 +38,7 @@ func TestAccessIPRangesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "access-ip-ranges", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{cidr_block: string, created_at: '2019-12-27T18:11:19.117Z'}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -52,6 +53,7 @@ func TestAccessIPRangesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "access-ip-ranges", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.cidr-block", "string",
 			"--filter.created-at", "2019-12-27T18:11:19.117Z",
 			"--page-number", "0",

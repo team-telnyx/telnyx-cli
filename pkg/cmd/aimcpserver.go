@@ -127,6 +127,10 @@ var aiMcpServersList = cli.Command{
 			Name:      "url",
 			QueryPath: "url",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleAIMcpServersList,
 	HideHelpCommand: true,
@@ -291,7 +295,11 @@ func handleAIMcpServersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "ai:mcp-servers list", obj, format, transform)
 	} else {
 		iter := client.AI.McpServers.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "ai:mcp-servers list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "ai:mcp-servers list", iter, format, transform, maxItems)
 	}
 }
 

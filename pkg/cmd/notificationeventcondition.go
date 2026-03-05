@@ -33,6 +33,10 @@ var notificationEventConditionsList = requestflag.WithInnerFlags(cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleNotificationEventConditionsList,
 	HideHelpCommand: true,
@@ -99,6 +103,10 @@ func handleNotificationEventConditionsList(ctx context.Context, cmd *cli.Command
 		return ShowJSON(os.Stdout, "notification-event-conditions list", obj, format, transform)
 	} else {
 		iter := client.NotificationEventConditions.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "notification-event-conditions list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "notification-event-conditions list", iter, format, transform, maxItems)
 	}
 }

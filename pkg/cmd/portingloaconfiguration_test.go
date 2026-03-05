@@ -149,6 +149,7 @@ func TestPortingLoaConfigurationsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting:loa-configurations", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
 		)

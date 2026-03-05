@@ -82,6 +82,7 @@ func TestFqdnsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "fqdns", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{connection_id: connection_id, dns_record_type: a, fqdn: example.com, port: 5060}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -96,6 +97,7 @@ func TestFqdnsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "fqdns", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.connection-id", "connection_id",
 			"--filter.dns-record-type", "a",
 			"--filter.fqdn", "example.com",

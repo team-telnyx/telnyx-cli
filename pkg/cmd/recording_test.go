@@ -26,6 +26,7 @@ func TestRecordingsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "recordings", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{call_leg_id: 428c31b6-7af4-4bcb-b7f5-5013ef9657c1, call_session_id: 428c31b6-7af4-4bcb-b7f5-5013ef9657c1, conference_id: 428c31b6-7af4-4bcb-b7f5-5013ef9657c1, connection_id: '175237942907135762', created_at: {gte: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, from: '1234567890', sip_call_id: 428c31b6-7af4-4bcb-b7f5-5013ef9657c1, to: '1234567890'}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -40,6 +41,7 @@ func TestRecordingsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "recordings", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.call-leg-id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",
 			"--filter.call-session-id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",
 			"--filter.conference-id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",

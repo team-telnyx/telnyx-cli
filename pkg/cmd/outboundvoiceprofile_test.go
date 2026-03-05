@@ -215,6 +215,7 @@ func TestOutboundVoiceProfilesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "outbound-voice-profiles", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{name: {contains: office-profile}}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -230,6 +231,7 @@ func TestOutboundVoiceProfilesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "outbound-voice-profiles", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.name", "{contains: office-profile}",
 			"--page-number", "0",
 			"--page-size", "0",

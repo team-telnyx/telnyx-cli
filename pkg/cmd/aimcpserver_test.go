@@ -91,6 +91,7 @@ func TestAIMcpServersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ai:mcp-servers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "1",
 			"--page-size", "1",
 			"--type", "type",

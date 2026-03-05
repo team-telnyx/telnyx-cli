@@ -81,6 +81,7 @@ func TestWirelessBlocklistsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "wireless-blocklists", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-name", "filter[name]",
 			"--filter-type", "filter[type]",
 			"--filter-values", "filter[values]",

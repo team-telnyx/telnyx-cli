@@ -107,6 +107,7 @@ func TestSimCardDataUsageNotificationsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "sim-card-data-usage-notifications", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-sim-card-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 			"--page-number", "1",
 			"--page-size", "1",

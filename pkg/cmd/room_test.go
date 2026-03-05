@@ -91,6 +91,7 @@ func TestRoomsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "rooms", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{date_created_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_updated_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, unique_name: my_video_room}",
 			"--include-sessions=true",
 			"--page-number", "0",
@@ -106,6 +107,7 @@ func TestRoomsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "rooms", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.date-created-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 			"--filter.date-updated-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 			"--filter.unique-name", "my_video_room",

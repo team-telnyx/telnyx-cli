@@ -84,6 +84,7 @@ func TestCustomerServiceRecordsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "customer-service-records", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{created_at: {gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}, phone_number: {eq: '+12441239999', in: ['+12441239999']}, status: {eq: pending, in: [pending]}}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -99,6 +100,7 @@ func TestCustomerServiceRecordsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "customer-service-records", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.created-at", "{gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}",
 			"--filter.phone-number", "{eq: '+12441239999', in: ['+12441239999']}",
 			"--filter.status", "{eq: pending, in: [pending]}",

@@ -26,6 +26,7 @@ func TestPhoneNumbersJobsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "phone-numbers:jobs", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{type: update_emergency_settings}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -41,6 +42,7 @@ func TestPhoneNumbersJobsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "phone-numbers:jobs", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.type", "update_emergency_settings",
 			"--page-number", "0",
 			"--page-size", "0",

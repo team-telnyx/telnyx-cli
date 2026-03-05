@@ -53,6 +53,7 @@ func TestMessagingHostedNumbersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-hosted-numbers", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter-phone-number", "filter[phone_number]",
 			"--filter-phone-number-contains", "filter[phone_number][contains]",

@@ -15,6 +15,7 @@ func TestMessagingOptoutsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-optouts", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--created-at", "{gte: '2019-12-27T18:11:19.117Z', lte: '2019-12-27T18:11:19.117Z'}",
 			"--filter", "{from: from, messaging_profile_id: messaging_profile_id}",
 			"--page-number", "0",
@@ -31,6 +32,7 @@ func TestMessagingOptoutsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-optouts", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--created-at.gte", "2019-12-27T18:11:19.117Z",
 			"--created-at.lte", "2019-12-27T18:11:19.117Z",
 			"--filter.from", "from",

@@ -57,6 +57,10 @@ var roomsSessionsList0 = requestflag.WithInnerFlags(cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleRoomsSessionsList0,
 	HideHelpCommand: true,
@@ -114,6 +118,10 @@ var roomsSessionsList1 = requestflag.WithInnerFlags(cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleRoomsSessionsList1,
 	HideHelpCommand: true,
@@ -160,6 +168,10 @@ var roomsSessionsRetrieveParticipants = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
 			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
 	Action:          handleRoomsSessionsRetrieveParticipants,
@@ -262,7 +274,11 @@ func handleRoomsSessionsList0(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "rooms:sessions list-0", obj, format, transform)
 	} else {
 		iter := client.Rooms.Sessions.List0AutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "rooms:sessions list-0", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "rooms:sessions list-0", iter, format, transform, maxItems)
 	}
 }
 
@@ -313,7 +329,11 @@ func handleRoomsSessionsList1(ctx context.Context, cmd *cli.Command) error {
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "rooms:sessions list-1", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "rooms:sessions list-1", iter, format, transform, maxItems)
 	}
 }
 
@@ -364,6 +384,10 @@ func handleRoomsSessionsRetrieveParticipants(ctx context.Context, cmd *cli.Comma
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "rooms:sessions retrieve-participants", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "rooms:sessions retrieve-participants", iter, format, transform, maxItems)
 	}
 }

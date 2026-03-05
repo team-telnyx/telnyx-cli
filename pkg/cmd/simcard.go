@@ -136,6 +136,10 @@ var simCardsList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Sorts SIM cards by the given field. Defaults to ascending order unless field is prefixed with a minus sign.",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleSimCardsList,
 	HideHelpCommand: true,
@@ -246,6 +250,10 @@ var simCardsListWirelessConnectivityLogs = cli.Command{
 			Usage:     "The size of the page.",
 			Default:   20,
 			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
 	Action:          handleSimCardsListWirelessConnectivityLogs,
@@ -370,7 +378,11 @@ func handleSimCardsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "sim-cards list", obj, format, transform)
 	} else {
 		iter := client.SimCards.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "sim-cards list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "sim-cards list", iter, format, transform, maxItems)
 	}
 }
 
@@ -568,6 +580,10 @@ func handleSimCardsListWirelessConnectivityLogs(ctx context.Context, cmd *cli.Co
 			params,
 			options...,
 		)
-		return ShowJSONIterator(os.Stdout, "sim-cards list-wireless-connectivity-logs", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "sim-cards list-wireless-connectivity-logs", iter, format, transform, maxItems)
 	}
 }

@@ -26,6 +26,7 @@ func TestAIAssistantsTestsRunsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "ai:assistants:tests:runs", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--test-id", "test_id",
 			"--page-number", "0",
 			"--page-size", "0",

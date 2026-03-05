@@ -108,6 +108,7 @@ func TestVirtualCrossConnectsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "virtual-cross-connects", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -122,6 +123,7 @@ func TestVirtualCrossConnectsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "virtual-cross-connects", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--page-number", "0",
 			"--page-size", "0",

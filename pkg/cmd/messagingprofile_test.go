@@ -225,6 +225,7 @@ func TestMessagingProfilesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-profiles", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{name: name}",
 			"--filter-name-contains", "filter[name][contains]",
 			"--filter-name-eq", "filter[name][eq]",
@@ -241,6 +242,7 @@ func TestMessagingProfilesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-profiles", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.name", "name",
 			"--filter-name-contains", "filter[name][contains]",
 			"--filter-name-eq", "filter[name][eq]",
@@ -267,6 +269,7 @@ func TestMessagingProfilesListAlphanumericSenderIDs(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-profiles", "list-alphanumeric-sender-ids",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -280,6 +283,7 @@ func TestMessagingProfilesListPhoneNumbers(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-profiles", "list-phone-numbers",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -293,6 +297,7 @@ func TestMessagingProfilesListShortCodes(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-profiles", "list-short-codes",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
 			"--page-size", "0",

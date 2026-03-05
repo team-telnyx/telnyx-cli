@@ -25,6 +25,7 @@ func TestOAuthGrantsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "oauth-grants", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "1",
 			"--page-size", "1",
 		)

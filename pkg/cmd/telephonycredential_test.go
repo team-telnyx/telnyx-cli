@@ -82,6 +82,7 @@ func TestTelephonyCredentialsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "telephony-credentials", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{name: name, resource_id: resource_id, sip_username: sip_username, status: status, tag: tag}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -96,6 +97,7 @@ func TestTelephonyCredentialsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "telephony-credentials", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.name", "name",
 			"--filter.resource-id", "resource_id",
 			"--filter.sip-username", "sip_username",

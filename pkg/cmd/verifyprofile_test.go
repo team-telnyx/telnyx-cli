@@ -225,6 +225,7 @@ func TestVerifyProfilesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "verify-profiles", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{name: name}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -239,6 +240,7 @@ func TestVerifyProfilesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "verify-profiles", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.name", "name",
 			"--page-number", "0",
 			"--page-size", "0",

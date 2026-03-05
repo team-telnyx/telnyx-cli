@@ -15,6 +15,7 @@ func TestDetailRecordsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "detail-records", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{record_type: ai-voice-assistant, date_range: yesterday}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -30,6 +31,7 @@ func TestDetailRecordsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "detail-records", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.record-type", "ai-voice-assistant",
 			"--filter.date-range", "yesterday",
 			"--page-number", "0",

@@ -60,6 +60,7 @@ func TestPhoneNumbersCsvDownloadsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "phone-numbers:csv-downloads", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
 		)

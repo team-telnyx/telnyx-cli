@@ -75,6 +75,7 @@ func TestAddressesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "addresses", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{address_book: {eq: eq}, customer_reference: string, street_address: {contains: contains}, used_as_emergency: used_as_emergency}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -90,6 +91,7 @@ func TestAddressesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "addresses", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.address-book", "{eq: eq}",
 			"--filter.customer-reference", "string",
 			"--filter.street-address", "{contains: contains}",

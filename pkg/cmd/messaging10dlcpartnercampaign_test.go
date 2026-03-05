@@ -50,6 +50,7 @@ func TestMessaging10dlcPartnerCampaignsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-10dlc:partner-campaigns", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page", "0",
 			"--records-per-page", "0",
 			"--sort", "assignedPhoneNumbersCount",
@@ -63,6 +64,7 @@ func TestMessaging10dlcPartnerCampaignsListSharedByMe(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "messaging-10dlc:partner-campaigns", "list-shared-by-me",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page", "0",
 			"--records-per-page", "0",
 		)

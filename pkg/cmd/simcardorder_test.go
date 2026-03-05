@@ -49,6 +49,7 @@ func TestSimCardOrdersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "sim-card-orders", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{address.administrative_area: TX, address.country_code: US, address.extended_address: 14th Floor, address.id: '1293384261075731499', address.locality: Austin, address.postal_code: '78701', address.street_address: 600 Congress Avenue, cost.amount: '2.53', cost.currency: USD, created_at: '2018-02-02T22:25:27.521Z', quantity: 21, updated_at: '2018-02-02T22:25:27.521Z'}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -63,6 +64,7 @@ func TestSimCardOrdersList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "sim-card-orders", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.address-administrative-area", "TX",
 			"--filter.address-country-code", "US",
 			"--filter.address-extended-address", "14th Floor",

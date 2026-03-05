@@ -69,6 +69,7 @@ func TestPortingReportsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting:reports", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{report_type: export_porting_orders_csv, status: completed}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -83,6 +84,7 @@ func TestPortingReportsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting:reports", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.report-type", "export_porting_orders_csv",
 			"--filter.status", "completed",
 			"--page-number", "0",

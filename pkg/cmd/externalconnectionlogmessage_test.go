@@ -26,6 +26,7 @@ func TestExternalConnectionsLogMessagesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "external-connections:log-messages", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{external_connection_id: 67ea7693-9cd5-4a68-8c76-abb3aa5bf5d2, telephone_number: {contains: '+123', eq: '+1234567890'}}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -40,6 +41,7 @@ func TestExternalConnectionsLogMessagesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "external-connections:log-messages", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.external-connection-id", "67ea7693-9cd5-4a68-8c76-abb3aa5bf5d2",
 			"--filter.telephone-number", "{contains: '+123', eq: '+1234567890'}",
 			"--page-number", "0",

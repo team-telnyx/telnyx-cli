@@ -50,6 +50,7 @@ func TestPrivateWirelessGatewaysList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "private-wireless-gateways", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-created-at", "filter[created_at]",
 			"--filter-ip-range", "filter[ip_range]",
 			"--filter-name", "filter[name]",

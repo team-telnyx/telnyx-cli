@@ -108,6 +108,7 @@ func TestSimCardGroupsList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "sim-card-groups", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter-name", "My Test Group",
 			"--filter-private-wireless-gateway-id", "7606c6d3-ff7c-49c1-943d-68879e9d584d",
 			"--filter-wireless-blocklist-id", "0f3f490e-c4d3-4cf5-838a-9970f10ee259",

@@ -60,6 +60,7 @@ func TestPortingOrdersPhoneNumberBlocksList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders:phone-number-blocks", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter", "{activation_status: Active, phone_number: ['+12003151212'], portability_status: confirmed, porting_order_id: [f3575e15-32ce-400e-a4c0-dd78800c20b0], status: in-process, support_key: sr_a12345}",
 			"--page-number", "0",
@@ -76,6 +77,7 @@ func TestPortingOrdersPhoneNumberBlocksList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "porting-orders:phone-number-blocks", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter.activation-status", "Active",
 			"--filter.phone-number", "['+12003151212']",

@@ -69,6 +69,7 @@ func TestBundlePricingUserBundlesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "bundle-pricing:user-bundles", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter", "{country_iso: [US], resource: ['+15617819942']}",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -84,6 +85,7 @@ func TestBundlePricingUserBundlesList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "bundle-pricing:user-bundles", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--filter.country-iso", "[US]",
 			"--filter.resource", "['+15617819942']",
 			"--page-number", "0",

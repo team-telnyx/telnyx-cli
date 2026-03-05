@@ -25,6 +25,7 @@ func TestMobilePhoneNumbersMessagingList(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t, "mobile-phone-numbers:messaging", "list",
 			"--api-key", "string",
+			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
 		)
