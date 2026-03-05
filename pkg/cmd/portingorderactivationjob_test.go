@@ -10,35 +10,49 @@ import (
 
 func TestPortingOrdersActivationJobsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"porting-orders:activation-jobs", "retrieve",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--activation-job-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "porting-orders:activation-jobs", "retrieve",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--activation-job-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestPortingOrdersActivationJobsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"porting-orders:activation-jobs", "update",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--activation-job-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--activate-at", "'2019-01-01T00:00:00Z'",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "porting-orders:activation-jobs", "update",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--activation-job-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--activate-at", "'2019-01-01T00:00:00Z'",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("activate_at: '2019-01-01T00:00:00Z'")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "porting-orders:activation-jobs", "update",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--activation-job-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestPortingOrdersActivationJobsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"porting-orders:activation-jobs", "list",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "porting-orders:activation-jobs", "list",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

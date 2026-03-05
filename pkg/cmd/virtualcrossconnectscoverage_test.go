@@ -11,32 +11,34 @@ import (
 
 func TestVirtualCrossConnectsCoverageList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"virtual-cross-connects-coverage", "list",
-		"--api-key", "string",
-		"--filter", "{cloud_provider: aws, cloud_provider_region: us-east-1, location.code: silicon_valley-ca, location.pop: SV1, location.region: AMER, location.site: SJC}",
-		"--filters", "{available_bandwidth: 0}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "virtual-cross-connects-coverage", "list",
+			"--api-key", "string",
+			"--filter", "{cloud_provider: aws, cloud_provider_region: us-east-1, location.code: silicon_valley-ca, location.pop: SV1, location.region: AMER, location.site: SJC}",
+			"--filters", "{available_bandwidth: 0}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(virtualCrossConnectsCoverageList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(virtualCrossConnectsCoverageList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"virtual-cross-connects-coverage", "list",
-		"--api-key", "string",
-		"--filter.cloud-provider", "aws",
-		"--filter.cloud-provider-region", "us-east-1",
-		"--filter.location-code", "silicon_valley-ca",
-		"--filter.location-pop", "SV1",
-		"--filter.location-region", "AMER",
-		"--filter.location-site", "SJC",
-		"--filters.available-bandwidth", "0",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "virtual-cross-connects-coverage", "list",
+			"--api-key", "string",
+			"--filter.cloud-provider", "aws",
+			"--filter.cloud-provider-region", "us-east-1",
+			"--filter.location-code", "silicon_valley-ca",
+			"--filter.location-pop", "SV1",
+			"--filter.location-region", "AMER",
+			"--filter.location-site", "SJC",
+			"--filters.available-bandwidth", "0",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

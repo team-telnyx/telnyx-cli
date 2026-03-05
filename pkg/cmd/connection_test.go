@@ -11,51 +11,55 @@ import (
 
 func TestConnectionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"connections", "retrieve",
-		"--api-key", "string",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "connections", "retrieve",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }
 
 func TestConnectionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"connections", "list",
-		"--api-key", "string",
-		"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "connection_name",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "connections", "list",
+			"--api-key", "string",
+			"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "connection_name",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(connectionsList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(connectionsList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"connections", "list",
-		"--api-key", "string",
-		"--filter.connection-name", "{contains: contains}",
-		"--filter.fqdn", "fqdn",
-		"--filter.outbound-voice-profile-id", "1293384261075731499",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "connection_name",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "connections", "list",
+			"--api-key", "string",
+			"--filter.connection-name", "{contains: contains}",
+			"--filter.fqdn", "fqdn",
+			"--filter.outbound-voice-profile-id", "1293384261075731499",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "connection_name",
+		)
+	})
 }
 
 func TestConnectionsListActiveCalls(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"connections", "list-active-calls",
-		"--api-key", "string",
-		"--connection-id", "1293384261075731461",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "connections", "list-active-calls",
+			"--api-key", "string",
+			"--connection-id", "1293384261075731461",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

@@ -10,9 +10,10 @@ import (
 
 func TestPortingListUkCarriers(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"porting", "list-uk-carriers",
-		"--api-key", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "porting", "list-uk-carriers",
+			"--api-key", "string",
+		)
+	})
 }

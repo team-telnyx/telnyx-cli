@@ -11,21 +11,23 @@ import (
 
 func TestGlobalIPUsageRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"global-ip-usage", "retrieve",
-		"--api-key", "string",
-		"--filter", "{global_ip_id: string}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "global-ip-usage", "retrieve",
+			"--api-key", "string",
+			"--filter", "{global_ip_id: string}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(globalIPUsageRetrieve)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(globalIPUsageRetrieve)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"global-ip-usage", "retrieve",
-		"--api-key", "string",
-		"--filter.global-ip-id", "string",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "global-ip-usage", "retrieve",
+			"--api-key", "string",
+			"--filter.global-ip-id", "string",
+		)
+	})
 }

@@ -10,26 +10,53 @@ import (
 
 func TestAddressesActionsAcceptSuggestions(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"addresses:actions", "accept-suggestions",
-		"--api-key", "string",
-		"--address-uuid", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "addresses:actions", "accept-suggestions",
+			"--api-key", "string",
+			"--address-uuid", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--id", "id",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("id: id")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "addresses:actions", "accept-suggestions",
+			"--api-key", "string",
+			"--address-uuid", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestAddressesActionsValidate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"addresses:actions", "validate",
-		"--api-key", "string",
-		"--country-code", "US",
-		"--postal-code", "78701",
-		"--street-address", "600 Congress Avenue",
-		"--administrative-area", "TX",
-		"--extended-address", "14th Floor",
-		"--locality", "Austin",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "addresses:actions", "validate",
+			"--api-key", "string",
+			"--country-code", "US",
+			"--postal-code", "78701",
+			"--street-address", "600 Congress Avenue",
+			"--administrative-area", "TX",
+			"--extended-address", "14th Floor",
+			"--locality", "Austin",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"country_code: US\n" +
+			"postal_code: '78701'\n" +
+			"street_address: 600 Congress Avenue\n" +
+			"administrative_area: TX\n" +
+			"extended_address: 14th Floor\n" +
+			"locality: Austin\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "addresses:actions", "validate",
+			"--api-key", "string",
+		)
+	})
 }

@@ -11,52 +11,67 @@ import (
 
 func TestExternalConnectionsPhoneNumbersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:phone-numbers", "retrieve",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-		"--phone-number-id", "1234567889",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:phone-numbers", "retrieve",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--phone-number-id", "1234567889",
+		)
+	})
 }
 
 func TestExternalConnectionsPhoneNumbersUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:phone-numbers", "update",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-		"--phone-number-id", "1234567889",
-		"--location-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:phone-numbers", "update",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--phone-number-id", "1234567889",
+			"--location-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("location_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "external-connections:phone-numbers", "update",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--phone-number-id", "1234567889",
+		)
+	})
 }
 
 func TestExternalConnectionsPhoneNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:phone-numbers", "list",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-		"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+1970', eq: '+19705555098'}}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:phone-numbers", "list",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+1970', eq: '+19705555098'}}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(externalConnectionsPhoneNumbersList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(externalConnectionsPhoneNumbersList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:phone-numbers", "list",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-		"--filter.civic-address-id", "{eq: '19990261512338516954'}",
-		"--filter.location-id", "{eq: '19995665508264022121'}",
-		"--filter.phone-number", "{contains: '+1970', eq: '+19705555098'}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:phone-numbers", "list",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--filter.civic-address-id", "{eq: '19990261512338516954'}",
+			"--filter.location-id", "{eq: '19995665508264022121'}",
+			"--filter.phone-number", "{contains: '+1970', eq: '+19705555098'}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

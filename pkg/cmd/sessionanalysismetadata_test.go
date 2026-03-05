@@ -10,19 +10,21 @@ import (
 
 func TestSessionAnalysisMetadataRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"session-analysis:metadata", "retrieve",
-		"--api-key", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "session-analysis:metadata", "retrieve",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestSessionAnalysisMetadataRetrieveRecordType(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"session-analysis:metadata", "retrieve-record-type",
-		"--api-key", "string",
-		"--record-type", "record_type",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "session-analysis:metadata", "retrieve-record-type",
+			"--api-key", "string",
+			"--record-type", "record_type",
+		)
+	})
 }

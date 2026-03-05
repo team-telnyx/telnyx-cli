@@ -10,9 +10,10 @@ import (
 
 func TestGlobalIPAllowedPortsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"global-ip-allowed-ports", "list",
-		"--api-key", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "global-ip-allowed-ports", "list",
+			"--api-key", "string",
+		)
+	})
 }

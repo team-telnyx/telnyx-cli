@@ -11,206 +11,502 @@ import (
 
 func TestMessagesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "retrieve",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "retrieve",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestMessagesCancelScheduled(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "cancel-scheduled",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "cancel-scheduled",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestMessagesRetrieveGroupMessages(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "retrieve-group-messages",
-		"--api-key", "string",
-		"--message-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "retrieve-group-messages",
+			"--api-key", "string",
+			"--message-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestMessagesSchedule(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "schedule",
-		"--api-key", "string",
-		"--to", "+18445550001",
-		"--auto-detect=true",
-		"--from", "+18445550001",
-		"--media-url", "string",
-		"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
-		"--send-at", "'2019-01-23T18:30:00Z'",
-		"--subject", "From Telnyx!",
-		"--text", "Hello, World!",
-		"--type", "SMS",
-		"--use-profile-webhooks=true",
-		"--webhook-failover-url", "https://backup.example.com/hooks",
-		"--webhook-url", "http://example.com/webhooks",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "schedule",
+			"--api-key", "string",
+			"--to", "+18445550001",
+			"--auto-detect=true",
+			"--from", "+18445550001",
+			"--media-url", "string",
+			"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
+			"--send-at", "'2019-01-23T18:30:00Z'",
+			"--subject", "From Telnyx!",
+			"--text", "Hello, World!",
+			"--type", "SMS",
+			"--use-profile-webhooks=true",
+			"--webhook-failover-url", "https://backup.example.com/hooks",
+			"--webhook-url", "http://example.com/webhooks",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"to: '+18445550001'\n" +
+			"auto_detect: true\n" +
+			"from: '+18445550001'\n" +
+			"media_urls:\n" +
+			"  - string\n" +
+			"messaging_profile_id: abc85f64-5717-4562-b3fc-2c9600000000\n" +
+			"send_at: '2019-01-23T18:30:00Z'\n" +
+			"subject: From Telnyx!\n" +
+			"text: Hello, World!\n" +
+			"type: SMS\n" +
+			"use_profile_webhooks: true\n" +
+			"webhook_failover_url: https://backup.example.com/hooks\n" +
+			"webhook_url: http://example.com/webhooks\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messages", "schedule",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagesSend(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "send",
-		"--api-key", "string",
-		"--to", "+18445550001",
-		"--auto-detect=true",
-		"--encoding", "auto",
-		"--from", "+18445550001",
-		"--media-url", "http://example.com",
-		"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
-		"--send-at", "'2019-12-27T18:11:19.117Z'",
-		"--subject", "From Telnyx!",
-		"--text", "Hello, World!",
-		"--type", "MMS",
-		"--use-profile-webhooks=true",
-		"--webhook-failover-url", "https://backup.example.com/hooks",
-		"--webhook-url", "http://example.com/webhooks",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "send",
+			"--api-key", "string",
+			"--to", "+18445550001",
+			"--auto-detect=true",
+			"--encoding", "auto",
+			"--from", "+18445550001",
+			"--media-url", "http://example.com",
+			"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
+			"--send-at", "'2019-12-27T18:11:19.117Z'",
+			"--subject", "From Telnyx!",
+			"--text", "Hello, World!",
+			"--type", "MMS",
+			"--use-profile-webhooks=true",
+			"--webhook-failover-url", "https://backup.example.com/hooks",
+			"--webhook-url", "http://example.com/webhooks",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"to: '+18445550001'\n" +
+			"auto_detect: true\n" +
+			"encoding: auto\n" +
+			"from: '+18445550001'\n" +
+			"media_urls:\n" +
+			"  - http://example.com\n" +
+			"messaging_profile_id: abc85f64-5717-4562-b3fc-2c9600000000\n" +
+			"send_at: '2019-12-27T18:11:19.117Z'\n" +
+			"subject: From Telnyx!\n" +
+			"text: Hello, World!\n" +
+			"type: MMS\n" +
+			"use_profile_webhooks: true\n" +
+			"webhook_failover_url: https://backup.example.com/hooks\n" +
+			"webhook_url: http://example.com/webhooks\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messages", "send",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagesSendGroupMms(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "send-group-mms",
-		"--api-key", "string",
-		"--from", "+13125551234",
-		"--to", "+18655551234",
-		"--to", "+14155551234",
-		"--media-url", "http://example.com",
-		"--subject", "From Telnyx!",
-		"--text", "Hello, World!",
-		"--use-profile-webhooks=true",
-		"--webhook-failover-url", "https://backup.example.com/hooks",
-		"--webhook-url", "http://example.com/webhooks",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "send-group-mms",
+			"--api-key", "string",
+			"--from", "+13125551234",
+			"--to", "+18655551234",
+			"--to", "+14155551234",
+			"--media-url", "http://example.com",
+			"--subject", "From Telnyx!",
+			"--text", "Hello, World!",
+			"--use-profile-webhooks=true",
+			"--webhook-failover-url", "https://backup.example.com/hooks",
+			"--webhook-url", "http://example.com/webhooks",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"from: '+13125551234'\n" +
+			"to:\n" +
+			"  - '+18655551234'\n" +
+			"  - '+14155551234'\n" +
+			"media_urls:\n" +
+			"  - http://example.com\n" +
+			"subject: From Telnyx!\n" +
+			"text: Hello, World!\n" +
+			"use_profile_webhooks: true\n" +
+			"webhook_failover_url: https://backup.example.com/hooks\n" +
+			"webhook_url: http://example.com/webhooks\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messages", "send-group-mms",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagesSendLongCode(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "send-long-code",
-		"--api-key", "string",
-		"--from", "+18445550001",
-		"--to", "+13125550002",
-		"--auto-detect=true",
-		"--encoding", "auto",
-		"--media-url", "http://example.com",
-		"--subject", "From Telnyx!",
-		"--text", "Hello, World!",
-		"--type", "MMS",
-		"--use-profile-webhooks=true",
-		"--webhook-failover-url", "https://backup.example.com/hooks",
-		"--webhook-url", "http://example.com/webhooks",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "send-long-code",
+			"--api-key", "string",
+			"--from", "+18445550001",
+			"--to", "+13125550002",
+			"--auto-detect=true",
+			"--encoding", "auto",
+			"--media-url", "http://example.com",
+			"--subject", "From Telnyx!",
+			"--text", "Hello, World!",
+			"--type", "MMS",
+			"--use-profile-webhooks=true",
+			"--webhook-failover-url", "https://backup.example.com/hooks",
+			"--webhook-url", "http://example.com/webhooks",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"from: '+18445550001'\n" +
+			"to: '+13125550002'\n" +
+			"auto_detect: true\n" +
+			"encoding: auto\n" +
+			"media_urls:\n" +
+			"  - http://example.com\n" +
+			"subject: From Telnyx!\n" +
+			"text: Hello, World!\n" +
+			"type: MMS\n" +
+			"use_profile_webhooks: true\n" +
+			"webhook_failover_url: https://backup.example.com/hooks\n" +
+			"webhook_url: http://example.com/webhooks\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messages", "send-long-code",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagesSendNumberPool(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "send-number-pool",
-		"--api-key", "string",
-		"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
-		"--to", "+13125550002",
-		"--auto-detect=true",
-		"--encoding", "auto",
-		"--media-url", "http://example.com",
-		"--subject", "From Telnyx!",
-		"--text", "Hello, World!",
-		"--type", "MMS",
-		"--use-profile-webhooks=true",
-		"--webhook-failover-url", "https://backup.example.com/hooks",
-		"--webhook-url", "http://example.com/webhooks",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "send-number-pool",
+			"--api-key", "string",
+			"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
+			"--to", "+13125550002",
+			"--auto-detect=true",
+			"--encoding", "auto",
+			"--media-url", "http://example.com",
+			"--subject", "From Telnyx!",
+			"--text", "Hello, World!",
+			"--type", "MMS",
+			"--use-profile-webhooks=true",
+			"--webhook-failover-url", "https://backup.example.com/hooks",
+			"--webhook-url", "http://example.com/webhooks",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"messaging_profile_id: abc85f64-5717-4562-b3fc-2c9600000000\n" +
+			"to: '+13125550002'\n" +
+			"auto_detect: true\n" +
+			"encoding: auto\n" +
+			"media_urls:\n" +
+			"  - http://example.com\n" +
+			"subject: From Telnyx!\n" +
+			"text: Hello, World!\n" +
+			"type: MMS\n" +
+			"use_profile_webhooks: true\n" +
+			"webhook_failover_url: https://backup.example.com/hooks\n" +
+			"webhook_url: http://example.com/webhooks\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messages", "send-number-pool",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagesSendShortCode(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "send-short-code",
-		"--api-key", "string",
-		"--from", "+18445550001",
-		"--to", "+18445550001",
-		"--auto-detect=true",
-		"--encoding", "auto",
-		"--media-url", "http://example.com",
-		"--subject", "From Telnyx!",
-		"--text", "Hello, World!",
-		"--type", "MMS",
-		"--use-profile-webhooks=true",
-		"--webhook-failover-url", "https://backup.example.com/hooks",
-		"--webhook-url", "http://example.com/webhooks",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "send-short-code",
+			"--api-key", "string",
+			"--from", "+18445550001",
+			"--to", "+18445550001",
+			"--auto-detect=true",
+			"--encoding", "auto",
+			"--media-url", "http://example.com",
+			"--subject", "From Telnyx!",
+			"--text", "Hello, World!",
+			"--type", "MMS",
+			"--use-profile-webhooks=true",
+			"--webhook-failover-url", "https://backup.example.com/hooks",
+			"--webhook-url", "http://example.com/webhooks",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"from: '+18445550001'\n" +
+			"to: '+18445550001'\n" +
+			"auto_detect: true\n" +
+			"encoding: auto\n" +
+			"media_urls:\n" +
+			"  - http://example.com\n" +
+			"subject: From Telnyx!\n" +
+			"text: Hello, World!\n" +
+			"type: MMS\n" +
+			"use_profile_webhooks: true\n" +
+			"webhook_failover_url: https://backup.example.com/hooks\n" +
+			"webhook_url: http://example.com/webhooks\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messages", "send-short-code",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagesSendWhatsapp(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "send-whatsapp",
-		"--api-key", "string",
-		"--from", "+13125551234",
-		"--to", "+13125551234",
-		"--whatsapp-message", "{audio: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, biz_opaque_callback_data: biz_opaque_callback_data, contacts: [{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: name, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}], document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, interactive: {action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}, location: {address: address, latitude: latitude, longitude: longitude, name: name}, reaction: {emoji: emoji, message_id: message_id}, sticker: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: audio, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}",
-		"--type", "WHATSAPP",
-		"--webhook-url", "webhook_url",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "send-whatsapp",
+			"--api-key", "string",
+			"--from", "+13125551234",
+			"--to", "+13125551234",
+			"--whatsapp-message", "{audio: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, biz_opaque_callback_data: biz_opaque_callback_data, contacts: [{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: name, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}], document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, interactive: {action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}, location: {address: address, latitude: latitude, longitude: longitude, name: name}, reaction: {emoji: emoji, message_id: message_id}, sticker: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: audio, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}",
+			"--type", "WHATSAPP",
+			"--webhook-url", "webhook_url",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(messagesSendWhatsapp)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(messagesSendWhatsapp)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "send-whatsapp",
-		"--api-key", "string",
-		"--from", "+13125551234",
-		"--to", "+13125551234",
-		"--whatsapp-message.audio", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
-		"--whatsapp-message.biz-opaque-callback-data", "biz_opaque_callback_data",
-		"--whatsapp-message.contacts", "[{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: name, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}]",
-		"--whatsapp-message.document", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
-		"--whatsapp-message.image", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
-		"--whatsapp-message.interactive", "{action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}",
-		"--whatsapp-message.location", "{address: address, latitude: latitude, longitude: longitude, name: name}",
-		"--whatsapp-message.reaction", "{emoji: emoji, message_id: message_id}",
-		"--whatsapp-message.sticker", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
-		"--whatsapp-message.type", "audio",
-		"--whatsapp-message.video", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
-		"--type", "WHATSAPP",
-		"--webhook-url", "webhook_url",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "send-whatsapp",
+			"--api-key", "string",
+			"--from", "+13125551234",
+			"--to", "+13125551234",
+			"--whatsapp-message.audio", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
+			"--whatsapp-message.biz-opaque-callback-data", "biz_opaque_callback_data",
+			"--whatsapp-message.contacts", "[{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: name, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}]",
+			"--whatsapp-message.document", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
+			"--whatsapp-message.image", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
+			"--whatsapp-message.interactive", "{action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}",
+			"--whatsapp-message.location", "{address: address, latitude: latitude, longitude: longitude, name: name}",
+			"--whatsapp-message.reaction", "{emoji: emoji, message_id: message_id}",
+			"--whatsapp-message.sticker", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
+			"--whatsapp-message.type", "audio",
+			"--whatsapp-message.video", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
+			"--type", "WHATSAPP",
+			"--webhook-url", "webhook_url",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"from: '+13125551234'\n" +
+			"to: '+13125551234'\n" +
+			"whatsapp_message:\n" +
+			"  audio:\n" +
+			"    caption: caption\n" +
+			"    filename: filename\n" +
+			"    link: http://example.com/media.jpg\n" +
+			"    voice: true\n" +
+			"  biz_opaque_callback_data: biz_opaque_callback_data\n" +
+			"  contacts:\n" +
+			"    - addresses:\n" +
+			"        - city: city\n" +
+			"          country: country\n" +
+			"          country_code: country_code\n" +
+			"          state: state\n" +
+			"          street: street\n" +
+			"          type: type\n" +
+			"          zip: zip\n" +
+			"      birthday: birthday\n" +
+			"      emails:\n" +
+			"        - email: email\n" +
+			"          type: type\n" +
+			"      name: name\n" +
+			"      org:\n" +
+			"        company: company\n" +
+			"        department: department\n" +
+			"        title: title\n" +
+			"      phones:\n" +
+			"        - phone: phone\n" +
+			"          type: type\n" +
+			"          wa_id: wa_id\n" +
+			"      urls:\n" +
+			"        - type: type\n" +
+			"          url: url\n" +
+			"  document:\n" +
+			"    caption: caption\n" +
+			"    filename: filename\n" +
+			"    link: http://example.com/media.jpg\n" +
+			"    voice: true\n" +
+			"  image:\n" +
+			"    caption: caption\n" +
+			"    filename: filename\n" +
+			"    link: http://example.com/media.jpg\n" +
+			"    voice: true\n" +
+			"  interactive:\n" +
+			"    action:\n" +
+			"      button: button\n" +
+			"      buttons:\n" +
+			"        - reply:\n" +
+			"            id: id\n" +
+			"            title: title\n" +
+			"          type: reply\n" +
+			"      cards:\n" +
+			"        - action:\n" +
+			"            catalog_id: catalog_id\n" +
+			"            product_retailer_id: product_retailer_id\n" +
+			"          body:\n" +
+			"            text: text\n" +
+			"          card_index: 0\n" +
+			"          header:\n" +
+			"            image:\n" +
+			"              caption: caption\n" +
+			"              filename: filename\n" +
+			"              link: http://example.com/media.jpg\n" +
+			"              voice: true\n" +
+			"            type: image\n" +
+			"            video:\n" +
+			"              caption: caption\n" +
+			"              filename: filename\n" +
+			"              link: http://example.com/media.jpg\n" +
+			"              voice: true\n" +
+			"          type: cta_url\n" +
+			"      catalog_id: catalog_id\n" +
+			"      mode: mode\n" +
+			"      name: name\n" +
+			"      parameters:\n" +
+			"        display_text: display_text\n" +
+			"        url: url\n" +
+			"      product_retailer_id: product_retailer_id\n" +
+			"      sections:\n" +
+			"        - product_items:\n" +
+			"            - product_retailer_id: product_retailer_id\n" +
+			"          rows:\n" +
+			"            - id: id\n" +
+			"              description: description\n" +
+			"              title: title\n" +
+			"          title: title\n" +
+			"    body:\n" +
+			"      text: text\n" +
+			"    footer:\n" +
+			"      text: text\n" +
+			"    header:\n" +
+			"      document:\n" +
+			"        caption: caption\n" +
+			"        filename: filename\n" +
+			"        link: http://example.com/media.jpg\n" +
+			"        voice: true\n" +
+			"      image:\n" +
+			"        caption: caption\n" +
+			"        filename: filename\n" +
+			"        link: http://example.com/media.jpg\n" +
+			"        voice: true\n" +
+			"      sub_text: sub_text\n" +
+			"      text: text\n" +
+			"      video:\n" +
+			"        caption: caption\n" +
+			"        filename: filename\n" +
+			"        link: http://example.com/media.jpg\n" +
+			"        voice: true\n" +
+			"    type: cta_url\n" +
+			"  location:\n" +
+			"    address: address\n" +
+			"    latitude: latitude\n" +
+			"    longitude: longitude\n" +
+			"    name: name\n" +
+			"  reaction:\n" +
+			"    emoji: emoji\n" +
+			"    message_id: message_id\n" +
+			"  sticker:\n" +
+			"    caption: caption\n" +
+			"    filename: filename\n" +
+			"    link: http://example.com/media.jpg\n" +
+			"    voice: true\n" +
+			"  type: audio\n" +
+			"  video:\n" +
+			"    caption: caption\n" +
+			"    filename: filename\n" +
+			"    link: http://example.com/media.jpg\n" +
+			"    voice: true\n" +
+			"type: WHATSAPP\n" +
+			"webhook_url: webhook_url\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messages", "send-whatsapp",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagesSendWithAlphanumericSender(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messages", "send-with-alphanumeric-sender",
-		"--api-key", "string",
-		"--from", "MyCompany",
-		"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--text", "text",
-		"--to", "+E.164",
-		"--use-profile-webhooks=true",
-		"--webhook-failover-url", "webhook_failover_url",
-		"--webhook-url", "webhook_url",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messages", "send-with-alphanumeric-sender",
+			"--api-key", "string",
+			"--from", "MyCompany",
+			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--text", "text",
+			"--to", "+E.164",
+			"--use-profile-webhooks=true",
+			"--webhook-failover-url", "webhook_failover_url",
+			"--webhook-url", "webhook_url",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"from: MyCompany\n" +
+			"messaging_profile_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\n" +
+			"text: text\n" +
+			"to: +E.164\n" +
+			"use_profile_webhooks: true\n" +
+			"webhook_failover_url: webhook_failover_url\n" +
+			"webhook_url: webhook_url\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messages", "send-with-alphanumeric-sender",
+			"--api-key", "string",
+		)
+	})
 }

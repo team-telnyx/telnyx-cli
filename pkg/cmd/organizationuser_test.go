@@ -10,35 +10,38 @@ import (
 
 func TestOrganizationsUsersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"organizations:users", "retrieve",
-		"--api-key", "string",
-		"--id", "id",
-		"--include-groups=true",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "organizations:users", "retrieve",
+			"--api-key", "string",
+			"--id", "id",
+			"--include-groups=true",
+		)
+	})
 }
 
 func TestOrganizationsUsersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"organizations:users", "list",
-		"--api-key", "string",
-		"--filter-email", "filter[email]",
-		"--filter-user-status", "enabled",
-		"--include-groups=true",
-		"--page-number", "1",
-		"--page-size", "1",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "organizations:users", "list",
+			"--api-key", "string",
+			"--filter-email", "filter[email]",
+			"--filter-user-status", "enabled",
+			"--include-groups=true",
+			"--page-number", "1",
+			"--page-size", "1",
+		)
+	})
 }
 
 func TestOrganizationsUsersGetGroupsReport(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"organizations:users", "get-groups-report",
-		"--api-key", "string",
-		"--accept", "application/json",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "organizations:users", "get-groups-report",
+			"--api-key", "string",
+			"--accept", "application/json",
+		)
+	})
 }

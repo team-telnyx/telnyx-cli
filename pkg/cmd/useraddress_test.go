@@ -11,61 +11,88 @@ import (
 
 func TestUserAddressesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"user-addresses", "create",
-		"--api-key", "string",
-		"--business-name", "Toy-O'Kon",
-		"--country-code", "US",
-		"--first-name", "Alfred",
-		"--last-name", "Foster",
-		"--locality", "Austin",
-		"--street-address", "600 Congress Avenue",
-		"--administrative-area", "TX",
-		"--borough", "Guadalajara",
-		"--customer-reference", "MY REF 001",
-		"--extended-address", "14th Floor",
-		"--neighborhood", "Ciudad de los deportes",
-		"--phone-number", "+12125559000",
-		"--postal-code", "78701",
-		"--skip-address-verification=true",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "user-addresses", "create",
+			"--api-key", "string",
+			"--business-name", "Toy-O'Kon",
+			"--country-code", "US",
+			"--first-name", "Alfred",
+			"--last-name", "Foster",
+			"--locality", "Austin",
+			"--street-address", "600 Congress Avenue",
+			"--administrative-area", "TX",
+			"--borough", "Guadalajara",
+			"--customer-reference", "MY REF 001",
+			"--extended-address", "14th Floor",
+			"--neighborhood", "Ciudad de los deportes",
+			"--phone-number", "+12125559000",
+			"--postal-code", "78701",
+			"--skip-address-verification=true",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"business_name: Toy-O'Kon\n" +
+			"country_code: US\n" +
+			"first_name: Alfred\n" +
+			"last_name: Foster\n" +
+			"locality: Austin\n" +
+			"street_address: 600 Congress Avenue\n" +
+			"administrative_area: TX\n" +
+			"borough: Guadalajara\n" +
+			"customer_reference: MY REF 001\n" +
+			"extended_address: 14th Floor\n" +
+			"neighborhood: Ciudad de los deportes\n" +
+			"phone_number: '+12125559000'\n" +
+			"postal_code: '78701'\n" +
+			"skip_address_verification: true\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "user-addresses", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestUserAddressesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"user-addresses", "retrieve",
-		"--api-key", "string",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "user-addresses", "retrieve",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }
 
 func TestUserAddressesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"user-addresses", "list",
-		"--api-key", "string",
-		"--filter", "{customer_reference: {contains: contains, eq: eq}, street_address: {contains: contains}}",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "street_address",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "user-addresses", "list",
+			"--api-key", "string",
+			"--filter", "{customer_reference: {contains: contains, eq: eq}, street_address: {contains: contains}}",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "street_address",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(userAddressesList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(userAddressesList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"user-addresses", "list",
-		"--api-key", "string",
-		"--filter.customer-reference", "{contains: contains, eq: eq}",
-		"--filter.street-address", "{contains: contains}",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "street_address",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "user-addresses", "list",
+			"--api-key", "string",
+			"--filter.customer-reference", "{contains: contains, eq: eq}",
+			"--filter.street-address", "{contains: contains}",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "street_address",
+		)
+	})
 }

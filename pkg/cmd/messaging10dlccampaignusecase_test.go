@@ -10,10 +10,11 @@ import (
 
 func TestMessaging10dlcCampaignUsecaseGetCost(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign:usecase", "get-cost",
-		"--api-key", "string",
-		"--usecase", "usecase",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign:usecase", "get-cost",
+			"--api-key", "string",
+			"--usecase", "usecase",
+		)
+	})
 }

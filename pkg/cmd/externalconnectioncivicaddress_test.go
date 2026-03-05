@@ -11,34 +11,37 @@ import (
 
 func TestExternalConnectionsCivicAddressesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:civic-addresses", "retrieve",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-		"--address-id", "318fb664-d341-44d2-8405-e6bfb9ced6d9",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:civic-addresses", "retrieve",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--address-id", "318fb664-d341-44d2-8405-e6bfb9ced6d9",
+		)
+	})
 }
 
 func TestExternalConnectionsCivicAddressesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:civic-addresses", "list",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-		"--filter", "{country: [US, CA, MX, BR]}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:civic-addresses", "list",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--filter", "{country: [US, CA, MX, BR]}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(externalConnectionsCivicAddressesList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(externalConnectionsCivicAddressesList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:civic-addresses", "list",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-		"--filter.country", "[US, CA, MX, BR]",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:civic-addresses", "list",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+			"--filter.country", "[US, CA, MX, BR]",
+		)
+	})
 }

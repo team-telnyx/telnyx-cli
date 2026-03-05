@@ -10,10 +10,11 @@ import (
 
 func TestOrganizationsUsersActionsRemove(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"organizations:users:actions", "remove",
-		"--api-key", "string",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "organizations:users:actions", "remove",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }

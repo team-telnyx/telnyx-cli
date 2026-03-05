@@ -10,105 +10,148 @@ import (
 
 func TestMessaging10dlcCampaignRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign", "retrieve",
-		"--api-key", "string",
-		"--campaign-id", "campaignId",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign", "retrieve",
+			"--api-key", "string",
+			"--campaign-id", "campaignId",
+		)
+	})
 }
 
 func TestMessaging10dlcCampaignUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign", "update",
-		"--api-key", "string",
-		"--campaign-id", "campaignId",
-		"--auto-renewal=true",
-		"--help-message", "helpMessage",
-		"--message-flow", "messageFlow",
-		"--reseller-id", "resellerId",
-		"--sample1", "sample1",
-		"--sample2", "sample2",
-		"--sample3", "sample3",
-		"--sample4", "sample4",
-		"--sample5", "sample5",
-		"--webhook-failover-url", "webhookFailoverURL",
-		"--webhook-url", "webhookURL",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign", "update",
+			"--api-key", "string",
+			"--campaign-id", "campaignId",
+			"--auto-renewal=true",
+			"--help-message", "helpMessage",
+			"--message-flow", "messageFlow",
+			"--reseller-id", "resellerId",
+			"--sample1", "sample1",
+			"--sample2", "sample2",
+			"--sample3", "sample3",
+			"--sample4", "sample4",
+			"--sample5", "sample5",
+			"--webhook-failover-url", "webhookFailoverURL",
+			"--webhook-url", "webhookURL",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"autoRenewal: true\n" +
+			"helpMessage: helpMessage\n" +
+			"messageFlow: messageFlow\n" +
+			"resellerId: resellerId\n" +
+			"sample1: sample1\n" +
+			"sample2: sample2\n" +
+			"sample3: sample3\n" +
+			"sample4: sample4\n" +
+			"sample5: sample5\n" +
+			"webhookFailoverURL: webhookFailoverURL\n" +
+			"webhookURL: webhookURL\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging-10dlc:campaign", "update",
+			"--api-key", "string",
+			"--campaign-id", "campaignId",
+		)
+	})
 }
 
 func TestMessaging10dlcCampaignList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign", "list",
-		"--api-key", "string",
-		"--brand-id", "brandId",
-		"--page", "0",
-		"--records-per-page", "0",
-		"--sort", "assignedPhoneNumbersCount",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign", "list",
+			"--api-key", "string",
+			"--brand-id", "brandId",
+			"--page", "0",
+			"--records-per-page", "0",
+			"--sort", "assignedPhoneNumbersCount",
+		)
+	})
 }
 
 func TestMessaging10dlcCampaignAcceptSharing(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign", "accept-sharing",
-		"--api-key", "string",
-		"--campaign-id", "C26F1KLZN",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign", "accept-sharing",
+			"--api-key", "string",
+			"--campaign-id", "C26F1KLZN",
+		)
+	})
 }
 
 func TestMessaging10dlcCampaignDeactivate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign", "deactivate",
-		"--api-key", "string",
-		"--campaign-id", "campaignId",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign", "deactivate",
+			"--api-key", "string",
+			"--campaign-id", "campaignId",
+		)
+	})
 }
 
 func TestMessaging10dlcCampaignGetMnoMetadata(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign", "get-mno-metadata",
-		"--api-key", "string",
-		"--campaign-id", "campaignId",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign", "get-mno-metadata",
+			"--api-key", "string",
+			"--campaign-id", "campaignId",
+		)
+	})
 }
 
 func TestMessaging10dlcCampaignGetOperationStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign", "get-operation-status",
-		"--api-key", "string",
-		"--campaign-id", "campaignId",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign", "get-operation-status",
+			"--api-key", "string",
+			"--campaign-id", "campaignId",
+		)
+	})
 }
 
 func TestMessaging10dlcCampaignGetSharingStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign", "get-sharing-status",
-		"--api-key", "string",
-		"--campaign-id", "campaignId",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign", "get-sharing-status",
+			"--api-key", "string",
+			"--campaign-id", "campaignId",
+		)
+	})
 }
 
 func TestMessaging10dlcCampaignSubmitAppeal(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc:campaign", "submit-appeal",
-		"--api-key", "string",
-		"--campaign-id", "5eb13888-32b7-4cab-95e6-d834dde21d64",
-		"--appeal-reason", "The website has been updated to include the required privacy policy and terms of service.",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc:campaign", "submit-appeal",
+			"--api-key", "string",
+			"--campaign-id", "5eb13888-32b7-4cab-95e6-d834dde21d64",
+			"--appeal-reason", "The website has been updated to include the required privacy policy and terms of service.",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"appeal_reason: >-\n" +
+			"  The website has been updated to include the required privacy policy and terms\n" +
+			"  of service.\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging-10dlc:campaign", "submit-appeal",
+			"--api-key", "string",
+			"--campaign-id", "5eb13888-32b7-4cab-95e6-d834dde21d64",
+		)
+	})
 }

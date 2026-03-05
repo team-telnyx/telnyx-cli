@@ -10,24 +10,41 @@ import (
 
 func TestMessagingNumbersBulkUpdatesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-numbers-bulk-updates", "create",
-		"--api-key", "string",
-		"--messaging-profile-id", "00000000-0000-0000-0000-000000000000",
-		"--number", "+18880000000",
-		"--number", "+18880000001",
-		"--number", "+18880000002",
-		"--assign-only=true",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-numbers-bulk-updates", "create",
+			"--api-key", "string",
+			"--messaging-profile-id", "00000000-0000-0000-0000-000000000000",
+			"--number", "+18880000000",
+			"--number", "+18880000001",
+			"--number", "+18880000002",
+			"--assign-only=true",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"messaging_profile_id: 00000000-0000-0000-0000-000000000000\n" +
+			"numbers:\n" +
+			"  - '+18880000000'\n" +
+			"  - '+18880000001'\n" +
+			"  - '+18880000002'\n" +
+			"assign_only: true\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging-numbers-bulk-updates", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagingNumbersBulkUpdatesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-numbers-bulk-updates", "retrieve",
-		"--api-key", "string",
-		"--order-id", "order_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-numbers-bulk-updates", "retrieve",
+			"--api-key", "string",
+			"--order-id", "order_id",
+		)
+	})
 }
