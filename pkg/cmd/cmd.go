@@ -375,6 +375,16 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:assistants:tags",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiAssistantsTagsList,
+					&aiAssistantsTagsAdd,
+					&aiAssistantsTagsRemove,
+				},
+			},
+			{
 				Name:     "ai:audio",
 				Category: "API RESOURCE",
 				Suggest:  true,
