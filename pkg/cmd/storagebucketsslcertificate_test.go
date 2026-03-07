@@ -15,14 +15,16 @@ func TestStorageBucketsSslCertificateCreate(t *testing.T) {
 			t, "storage:buckets:ssl-certificate", "create",
 			"--api-key", "string",
 			"--bucket-name", "",
-			"--certificate", "...",
-			"--private-key", "...",
+			"--certificate", "Example data",
+			"--private-key", "Example data",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("{}")
+		pipeData := []byte("" +
+			"certificate: Example data\n" +
+			"private_key: Example data\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData, "storage:buckets:ssl-certificate", "create",
 			"--api-key", "string",

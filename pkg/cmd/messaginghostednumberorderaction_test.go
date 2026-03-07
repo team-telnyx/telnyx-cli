@@ -15,14 +15,16 @@ func TestMessagingHostedNumberOrdersActionsUploadFile(t *testing.T) {
 			t, "messaging-hosted-number-orders:actions", "upload-file",
 			"--api-key", "string",
 			"--id", "id",
-			"--bill", "...",
-			"--loa", "...",
+			"--bill", "Example data",
+			"--loa", "Example data",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("{}")
+		pipeData := []byte("" +
+			"bill: Example data\n" +
+			"loa: Example data\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData, "messaging-hosted-number-orders:actions", "upload-file",
 			"--api-key", "string",

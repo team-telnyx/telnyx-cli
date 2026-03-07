@@ -15,7 +15,7 @@ func TestAIAudioTranscribe(t *testing.T) {
 			t, "ai:audio", "transcribe",
 			"--api-key", "string",
 			"--model", "distil-whisper/distil-large-v2",
-			"--file", "...",
+			"--file", "Example data",
 			"--file-url", "https://example.com/file.mp3",
 			"--language", "en-US",
 			"--model-config", "{smart_format: bar, punctuate: bar}",
@@ -28,6 +28,7 @@ func TestAIAudioTranscribe(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"model: distil-whisper/distil-large-v2\n" +
+			"file: Example data\n" +
 			"file_url: https://example.com/file.mp3\n" +
 			"language: en-US\n" +
 			"model_config:\n" +
