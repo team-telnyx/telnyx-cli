@@ -19,6 +19,7 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"--azure", "{api_key: api_key, deployment_id: deployment_id, effect: effect, gender: gender, language_code: language_code, output_format: output_format, region: region, text_type: text}",
 			"--disable-cache=true",
 			"--elevenlabs", "{api_key: api_key, language_code: language_code, voice_settings: {foo: bar}}",
+			"--inworld", "{}",
 			"--language", "language",
 			"--minimax", "{language_boost: language_boost, pitch: 0, response_format: response_format, speed: 0, vol: 0}",
 			"--output-type", "binary_output",
@@ -58,6 +59,7 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"--elevenlabs.api-key", "api_key",
 			"--elevenlabs.language-code", "language_code",
 			"--elevenlabs.voice-settings", "{foo: bar}",
+			"--inworld", "{}",
 			"--language", "language",
 			"--minimax.language-boost", "language_boost",
 			"--minimax.pitch", "0",
@@ -109,6 +111,7 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"  language_code: language_code\n" +
 			"  voice_settings:\n" +
 			"    foo: bar\n" +
+			"inworld: {}\n" +
 			"language: language\n" +
 			"minimax:\n" +
 			"  language_boost: language_boost\n" +
