@@ -41,6 +41,11 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "ElevenLabs provider-specific parameters.",
 			BodyPath: "elevenlabs",
 		},
+		&requestflag.Flag[any]{
+			Name:     "inworld",
+			Usage:    "Inworld provider-specific parameters.",
+			BodyPath: "inworld",
+		},
 		&requestflag.Flag[string]{
 			Name:     "language",
 			Usage:    "Language code (e.g. `en-US`). Usage varies by provider.",
