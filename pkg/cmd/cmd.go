@@ -2317,6 +2317,8 @@ func init() {
 				Commands: []*cli.Command{
 					&simCardsActionsRetrieve,
 					&simCardsActionsList,
+					&simCardsActionsBulkDisableVoice,
+					&simCardsActionsBulkEnableVoice,
 					&simCardsActionsBulkSetPublicIPs,
 					&simCardsActionsDisable,
 					&simCardsActionsEnable,
