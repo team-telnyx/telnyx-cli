@@ -8,26 +8,17 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestWhatsappMessageTemplatesRetrieve(t *testing.T) {
+func TestWhatsappTemplatesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp-message-templates", "retrieve",
+			t, "whatsapp:templates", "create",
 			"--api-key", "string",
-			"--id", "id",
-		)
-	})
-}
-
-func TestWhatsappMessageTemplatesUpdate(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp-message-templates", "update",
-			"--api-key", "string",
-			"--id", "id",
 			"--category", "MARKETING",
 			"--component", "{foo: bar}",
+			"--language", "language",
+			"--name", "name",
+			"--waba-id", "waba_id",
 		)
 	})
 
@@ -36,22 +27,30 @@ func TestWhatsappMessageTemplatesUpdate(t *testing.T) {
 		pipeData := []byte("" +
 			"category: MARKETING\n" +
 			"components:\n" +
-			"  - foo: bar\n")
+			"  - foo: bar\n" +
+			"language: language\n" +
+			"name: name\n" +
+			"waba_id: waba_id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "whatsapp-message-templates", "update",
+			t, pipeData, "whatsapp:templates", "create",
 			"--api-key", "string",
-			"--id", "id",
 		)
 	})
 }
 
-func TestWhatsappMessageTemplatesDelete(t *testing.T) {
+func TestWhatsappTemplatesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp-message-templates", "delete",
+			t, "whatsapp:templates", "list",
 			"--api-key", "string",
-			"--id", "id",
+			"--max-items", "10",
+			"--filter-category", "MARKETING",
+			"--filter-search", "filter[search]",
+			"--filter-status", "filter[status]",
+			"--filter-waba-id", "filter[waba_id]",
+			"--page-number", "0",
+			"--page-size", "0",
 		)
 	})
 }

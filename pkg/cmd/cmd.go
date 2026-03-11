@@ -3014,12 +3014,12 @@ func init() {
 				},
 			},
 			{
-				Name:     "whatsapp:message-templates",
+				Name:     "whatsapp:templates",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&whatsappMessageTemplatesCreate,
-					&whatsappMessageTemplatesList,
+					&whatsappTemplatesCreate,
+					&whatsappTemplatesList,
 				},
 			},
 			{
