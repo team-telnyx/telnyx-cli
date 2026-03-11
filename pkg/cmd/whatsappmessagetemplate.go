@@ -42,7 +42,7 @@ var whatsappMessageTemplatesUpdate = cli.Command{
 			Name:     "category",
 			BodyPath: "category",
 		},
-		&requestflag.Flag[[]map[string]any]{
+		&requestflag.Flag[[]any]{
 			Name:     "component",
 			BodyPath: "components",
 		},
