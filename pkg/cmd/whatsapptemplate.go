@@ -25,7 +25,7 @@ var whatsappTemplatesCreate = cli.Command{
 			Required: true,
 			BodyPath: "category",
 		},
-		&requestflag.Flag[[]any]{
+		&requestflag.Flag[[]map[string]any]{
 			Name:     "component",
 			Required: true,
 			BodyPath: "components",
