@@ -27,7 +27,7 @@ func TestWhatsappMessageTemplatesUpdate(t *testing.T) {
 			"--api-key", "string",
 			"--id", "id",
 			"--category", "MARKETING",
-			"--component", "{}",
+			"--component", "{foo: bar}",
 		)
 	})
 
@@ -36,7 +36,7 @@ func TestWhatsappMessageTemplatesUpdate(t *testing.T) {
 		pipeData := []byte("" +
 			"category: MARKETING\n" +
 			"components:\n" +
-			"  - {}\n")
+			"  - foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData, "whatsapp-message-templates", "update",
 			"--api-key", "string",
