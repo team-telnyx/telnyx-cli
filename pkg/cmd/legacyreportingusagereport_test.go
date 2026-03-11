@@ -15,7 +15,7 @@ func TestLegacyReportingUsageReportsRetrieveSpeechToText(t *testing.T) {
 			t, "legacy:reporting:usage-reports", "retrieve-speech-to-text",
 			"--api-key", "string",
 			"--end-date", "'2020-07-01T00:00:00-06:00'",
-			"--start-date", "'2020-07-01T00:00:00-06:00'",
+			"--start-date", "'2020-07-02T00:00:00-06:00'",
 		)
 	})
 }
