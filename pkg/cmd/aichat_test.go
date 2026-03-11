@@ -20,6 +20,7 @@ func TestAIChatCreateCompletion(t *testing.T) {
 			"--api-key-ref", "api_key_ref",
 			"--best-of", "0",
 			"--early-stopping=true",
+			"--enable-thinking=true",
 			"--frequency-penalty", "0",
 			"--guided-choice", "string",
 			"--guided-json", "{foo: bar}",
@@ -57,6 +58,7 @@ func TestAIChatCreateCompletion(t *testing.T) {
 			"--api-key-ref", "api_key_ref",
 			"--best-of", "0",
 			"--early-stopping=true",
+			"--enable-thinking=true",
 			"--frequency-penalty", "0",
 			"--guided-choice", "string",
 			"--guided-json", "{foo: bar}",
@@ -90,6 +92,7 @@ func TestAIChatCreateCompletion(t *testing.T) {
 			"api_key_ref: api_key_ref\n" +
 			"best_of: 0\n" +
 			"early_stopping: true\n" +
+			"enable_thinking: true\n" +
 			"frequency_penalty: 0\n" +
 			"guided_choice:\n" +
 			"  - string\n" +
