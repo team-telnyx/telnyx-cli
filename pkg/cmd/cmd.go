@@ -2986,6 +2986,91 @@ func init() {
 				},
 			},
 			{
+				Name:     "whatsapp:business-accounts",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappBusinessAccountsRetrieve,
+					&whatsappBusinessAccountsList,
+					&whatsappBusinessAccountsDelete,
+				},
+			},
+			{
+				Name:     "whatsapp:business-accounts:phone-numbers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappBusinessAccountsPhoneNumbersList,
+					&whatsappBusinessAccountsPhoneNumbersInitializeVerification,
+				},
+			},
+			{
+				Name:     "whatsapp:business-accounts:settings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappBusinessAccountsSettingsRetrieve,
+					&whatsappBusinessAccountsSettingsUpdate,
+				},
+			},
+			{
+				Name:     "whatsapp:message-templates",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappMessageTemplatesCreate,
+					&whatsappMessageTemplatesList,
+				},
+			},
+			{
+				Name:     "whatsapp:phone-numbers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappPhoneNumbersList,
+					&whatsappPhoneNumbersDelete,
+					&whatsappPhoneNumbersResendVerification,
+					&whatsappPhoneNumbersVerify,
+				},
+			},
+			{
+				Name:     "whatsapp:phone-numbers:calling-settings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappPhoneNumbersCallingSettingsRetrieve,
+					&whatsappPhoneNumbersCallingSettingsUpdate,
+				},
+			},
+			{
+				Name:     "whatsapp:phone-numbers:profile",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappPhoneNumbersProfileRetrieve,
+					&whatsappPhoneNumbersProfileUpdate,
+				},
+			},
+			{
+				Name:     "whatsapp:phone-numbers:profile:photo",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappPhoneNumbersProfilePhotoDelete,
+					&whatsappPhoneNumbersProfilePhotoUpload,
+				},
+			},
+			{
+				Name:     "whatsapp-message-templates",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappMessageTemplatesRetrieve,
+					&whatsappMessageTemplatesUpdate,
+					&whatsappMessageTemplatesDelete,
+				},
+			},
+			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",
 				UsageText:       "telnyx @manpages [-o telnyx.1] [--gzip]",
