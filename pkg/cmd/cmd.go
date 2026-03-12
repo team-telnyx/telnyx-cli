@@ -3071,6 +3071,33 @@ func init() {
 				},
 			},
 			{
+				Name:     "voice-clones",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&voiceClonesCreate,
+					&voiceClonesUpdate,
+					&voiceClonesList,
+					&voiceClonesDelete,
+					&voiceClonesCreateFromUpload,
+					&voiceClonesDownloadSample,
+				},
+			},
+			{
+				Name:     "voice-designs",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&voiceDesignsCreate,
+					&voiceDesignsRetrieve,
+					&voiceDesignsList,
+					&voiceDesignsDelete,
+					&voiceDesignsDeleteVersion,
+					&voiceDesignsDownloadSample,
+					&voiceDesignsRename,
+				},
+			},
+			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",
 				UsageText:       "telnyx @manpages [-o telnyx.1] [--gzip]",
