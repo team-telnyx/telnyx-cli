@@ -11,21 +11,24 @@ import (
 
 func TestGlobalIPAssignmentHealthRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"global-ip-assignment-health", "retrieve",
-		"--api-key", "string",
-		"--filter", "{global_ip_assignment_id: string, global_ip_id: string}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "global-ip-assignment-health", "retrieve",
+			"--api-key", "string",
+			"--filter", "{global_ip_assignment_id: string, global_ip_id: string}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(globalIPAssignmentHealthRetrieve)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(globalIPAssignmentHealthRetrieve)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"global-ip-assignment-health", "retrieve",
-		"--filter.global-ip-assignment-id", "string",
-		"--filter.global-ip-id", "string",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "global-ip-assignment-health", "retrieve",
+			"--api-key", "string",
+			"--filter.global-ip-assignment-id", "string",
+			"--filter.global-ip-id", "string",
+		)
+	})
 }

@@ -119,6 +119,10 @@ var simCardDataUsageNotificationsList = cli.Command{
 			Default:   20,
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleSimCardDataUsageNotificationsList,
 	HideHelpCommand: true,
@@ -283,7 +287,11 @@ func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Comma
 		return ShowJSON(os.Stdout, "sim-card-data-usage-notifications list", obj, format, transform)
 	} else {
 		iter := client.SimCardDataUsageNotifications.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "sim-card-data-usage-notifications list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "sim-card-data-usage-notifications list", iter, format, transform, maxItems)
 	}
 }
 

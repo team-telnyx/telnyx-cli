@@ -10,45 +10,67 @@ import (
 
 func TestAIMissionsRunsEventsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ai:missions:runs:events", "list",
-		"--api-key", "string",
-		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--agent-id", "agent_id",
-		"--page-number", "1",
-		"--page-size", "1",
-		"--step-id", "step_id",
-		"--type", "type",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "ai:missions:runs:events", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--agent-id", "agent_id",
+			"--page-number", "1",
+			"--page-size", "1",
+			"--step-id", "step_id",
+			"--type", "type",
+		)
+	})
 }
 
 func TestAIMissionsRunsEventsGetEventDetails(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ai:missions:runs:events", "get-event-details",
-		"--api-key", "string",
-		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--event-id", "event_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "ai:missions:runs:events", "get-event-details",
+			"--api-key", "string",
+			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--event-id", "event_id",
+		)
+	})
 }
 
 func TestAIMissionsRunsEventsLog(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ai:missions:runs:events", "log",
-		"--api-key", "string",
-		"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--summary", "summary",
-		"--type", "status_change",
-		"--agent-id", "agent_id",
-		"--idempotency-key", "idempotency_key",
-		"--payload", "{foo: bar}",
-		"--step-id", "step_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "ai:missions:runs:events", "log",
+			"--api-key", "string",
+			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--summary", "summary",
+			"--type", "status_change",
+			"--agent-id", "agent_id",
+			"--idempotency-key", "idempotency_key",
+			"--payload", "{foo: bar}",
+			"--step-id", "step_id",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"summary: summary\n" +
+			"type: status_change\n" +
+			"agent_id: agent_id\n" +
+			"idempotency_key: idempotency_key\n" +
+			"payload:\n" +
+			"  foo: bar\n" +
+			"step_id: step_id\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "ai:missions:runs:events", "log",
+			"--api-key", "string",
+			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }

@@ -10,11 +10,12 @@ import (
 
 func TestNumberLookupRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-lookup", "retrieve",
-		"--api-key", "string",
-		"--phone-number", "+18665552368",
-		"--type", "carrier",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-lookup", "retrieve",
+			"--api-key", "string",
+			"--phone-number", "+18665552368",
+			"--type", "carrier",
+		)
+	})
 }

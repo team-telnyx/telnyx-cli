@@ -10,10 +10,11 @@ import (
 
 func TestStorageMigrationsActionsStop(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:migrations:actions", "stop",
-		"--api-key", "string",
-		"--id", "",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:migrations:actions", "stop",
+			"--api-key", "string",
+			"--id", "",
+		)
+	})
 }

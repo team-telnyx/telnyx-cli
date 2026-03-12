@@ -47,6 +47,10 @@ var simCardsActionsList = requestflag.WithInnerFlags(cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleSimCardsActionsList,
 	HideHelpCommand: true,
@@ -74,6 +78,36 @@ var simCardsActionsList = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 })
+
+var simCardsActionsBulkDisableVoice = cli.Command{
+	Name:    "bulk-disable-voice",
+	Usage:   "This API triggers an asynchronous operation to disable voice on SIM cards\nbelonging to a specified SIM Card Group.<br/> For each SIM Card a SIM Card\nAction will be generated. The status of the SIM Card Actions can be followed\nthrough the\n[List SIM Card Action](https://developers.telnyx.com/api-reference/sim-card-actions/list-sim-card-actions)\nAPI.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "sim-card-group-id",
+			Required: true,
+			BodyPath: "sim_card_group_id",
+		},
+	},
+	Action:          handleSimCardsActionsBulkDisableVoice,
+	HideHelpCommand: true,
+}
+
+var simCardsActionsBulkEnableVoice = cli.Command{
+	Name:    "bulk-enable-voice",
+	Usage:   "This API triggers an asynchronous operation to enable voice on SIM cards\nbelonging to a specified SIM Card Group.<br/> For each SIM Card a SIM Card\nAction will be generated. The status of the SIM Card Actions can be followed\nthrough the\n[List SIM Card Action](https://developers.telnyx.com/api-reference/sim-card-actions/list-sim-card-actions)\nAPI.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "sim-card-group-id",
+			Required: true,
+			BodyPath: "sim_card_group_id",
+		},
+	},
+	Action:          handleSimCardsActionsBulkEnableVoice,
+	HideHelpCommand: true,
+}
 
 var simCardsActionsBulkSetPublicIPs = cli.Command{
 	Name:    "bulk-set-public-ips",
@@ -248,8 +282,80 @@ func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "sim-cards:actions list", obj, format, transform)
 	} else {
 		iter := client.SimCards.Actions.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "sim-cards:actions list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "sim-cards:actions list", iter, format, transform, maxItems)
 	}
+}
+
+func handleSimCardsActionsBulkDisableVoice(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.SimCardActionBulkDisableVoiceParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.SimCards.Actions.BulkDisableVoice(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "sim-cards:actions bulk-disable-voice", obj, format, transform)
+}
+
+func handleSimCardsActionsBulkEnableVoice(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.SimCardActionBulkEnableVoiceParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.SimCards.Actions.BulkEnableVoice(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "sim-cards:actions bulk-enable-voice", obj, format, transform)
 }
 
 func handleSimCardsActionsBulkSetPublicIPs(ctx context.Context, cmd *cli.Command) error {

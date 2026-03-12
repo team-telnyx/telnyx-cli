@@ -38,6 +38,10 @@ var virtualCrossConnectsCoverageList = requestflag.WithInnerFlags(cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleVirtualCrossConnectsCoverageList,
 	HideHelpCommand: true,
@@ -117,6 +121,10 @@ func handleVirtualCrossConnectsCoverageList(ctx context.Context, cmd *cli.Comman
 		return ShowJSON(os.Stdout, "virtual-cross-connects-coverage list", obj, format, transform)
 	} else {
 		iter := client.VirtualCrossConnectsCoverage.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "virtual-cross-connects-coverage list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "virtual-cross-connects-coverage list", iter, format, transform, maxItems)
 	}
 }

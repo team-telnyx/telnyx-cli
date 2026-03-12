@@ -11,45 +11,52 @@ import (
 
 func TestExternalConnectionsLogMessagesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:log-messages", "retrieve",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:log-messages", "retrieve",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+		)
+	})
 }
 
 func TestExternalConnectionsLogMessagesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:log-messages", "list",
-		"--api-key", "string",
-		"--filter", "{external_connection_id: 67ea7693-9cd5-4a68-8c76-abb3aa5bf5d2, telephone_number: {contains: '+123', eq: '+1234567890'}}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:log-messages", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter", "{external_connection_id: 67ea7693-9cd5-4a68-8c76-abb3aa5bf5d2, telephone_number: {contains: '+123', eq: '+1234567890'}}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(externalConnectionsLogMessagesList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(externalConnectionsLogMessagesList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:log-messages", "list",
-		"--filter.external-connection-id", "67ea7693-9cd5-4a68-8c76-abb3aa5bf5d2",
-		"--filter.telephone-number", "{contains: '+123', eq: '+1234567890'}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:log-messages", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter.external-connection-id", "67ea7693-9cd5-4a68-8c76-abb3aa5bf5d2",
+			"--filter.telephone-number", "{contains: '+123', eq: '+1234567890'}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }
 
 func TestExternalConnectionsLogMessagesDismiss(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"external-connections:log-messages", "dismiss",
-		"--api-key", "string",
-		"--id", "1293384261075731499",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "external-connections:log-messages", "dismiss",
+			"--api-key", "string",
+			"--id", "1293384261075731499",
+		)
+	})
 }

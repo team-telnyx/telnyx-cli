@@ -11,81 +11,124 @@ import (
 
 func TestCustomerServiceRecordsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"customer-service-records", "create",
-		"--api-key", "string",
-		"--phone-number", "+13035553000",
-		"--additional-data", "{account_number: '123456789', address_line_1: 123 Main St, authorized_person_name: John Doe, billing_phone_number: '+12065551212', city: New York, customer_code: '123456789', name: Entity Inc., pin: '1234', state: NY, zip_code: '10001'}",
-		"--webhook-url", "https://example.com/webhook",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "customer-service-records", "create",
+			"--api-key", "string",
+			"--phone-number", "+13035553000",
+			"--additional-data", "{account_number: '123456789', address_line_1: 123 Main St, authorized_person_name: John Doe, billing_phone_number: '+12065551212', city: New York, customer_code: '123456789', name: Entity Inc., pin: '1234', state: NY, zip_code: '10001'}",
+			"--webhook-url", "https://example.com/webhook",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(customerServiceRecordsCreate)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(customerServiceRecordsCreate)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"customer-service-records", "create",
-		"--phone-number", "+13035553000",
-		"--additional-data.account-number", "123456789",
-		"--additional-data.address-line-1", "123 Main St",
-		"--additional-data.authorized-person-name", "John Doe",
-		"--additional-data.billing-phone-number", "+12065551212",
-		"--additional-data.city", "New York",
-		"--additional-data.customer-code", "123456789",
-		"--additional-data.name", "Entity Inc.",
-		"--additional-data.pin", "1234",
-		"--additional-data.state", "NY",
-		"--additional-data.zip-code", "10001",
-		"--webhook-url", "https://example.com/webhook",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "customer-service-records", "create",
+			"--api-key", "string",
+			"--phone-number", "+13035553000",
+			"--additional-data.account-number", "123456789",
+			"--additional-data.address-line-1", "123 Main St",
+			"--additional-data.authorized-person-name", "John Doe",
+			"--additional-data.billing-phone-number", "+12065551212",
+			"--additional-data.city", "New York",
+			"--additional-data.customer-code", "123456789",
+			"--additional-data.name", "Entity Inc.",
+			"--additional-data.pin", "1234",
+			"--additional-data.state", "NY",
+			"--additional-data.zip-code", "10001",
+			"--webhook-url", "https://example.com/webhook",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"phone_number: '+13035553000'\n" +
+			"additional_data:\n" +
+			"  account_number: '123456789'\n" +
+			"  address_line_1: 123 Main St\n" +
+			"  authorized_person_name: John Doe\n" +
+			"  billing_phone_number: '+12065551212'\n" +
+			"  city: New York\n" +
+			"  customer_code: '123456789'\n" +
+			"  name: Entity Inc.\n" +
+			"  pin: '1234'\n" +
+			"  state: NY\n" +
+			"  zip_code: '10001'\n" +
+			"webhook_url: https://example.com/webhook\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "customer-service-records", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestCustomerServiceRecordsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"customer-service-records", "retrieve",
-		"--api-key", "string",
-		"--customer-service-record-id", "customer_service_record_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "customer-service-records", "retrieve",
+			"--api-key", "string",
+			"--customer-service-record-id", "customer_service_record_id",
+		)
+	})
 }
 
 func TestCustomerServiceRecordsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"customer-service-records", "list",
-		"--api-key", "string",
-		"--filter", "{created_at: {gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}, phone_number: {eq: '+12441239999', in: ['+12441239999']}, status: {eq: pending, in: [pending]}}",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "{value: created_at}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "customer-service-records", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter", "{created_at: {gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}, phone_number: {eq: '+12441239999', in: ['+12441239999']}, status: {eq: pending, in: [pending]}}",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "{value: created_at}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(customerServiceRecordsList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(customerServiceRecordsList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"customer-service-records", "list",
-		"--filter.created-at", "{gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}",
-		"--filter.phone-number", "{eq: '+12441239999', in: ['+12441239999']}",
-		"--filter.status", "{eq: pending, in: [pending]}",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort.value", "created_at",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "customer-service-records", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter.created-at", "{gt: '2020-01-01T00:00:00Z', lt: '2020-01-01T00:00:00Z'}",
+			"--filter.phone-number", "{eq: '+12441239999', in: ['+12441239999']}",
+			"--filter.status", "{eq: pending, in: [pending]}",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort.value", "created_at",
+		)
+	})
 }
 
 func TestCustomerServiceRecordsVerifyPhoneNumberCoverage(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"customer-service-records", "verify-phone-number-coverage",
-		"--api-key", "string",
-		"--phone-number", "+13035553000",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "customer-service-records", "verify-phone-number-coverage",
+			"--api-key", "string",
+			"--phone-number", "+13035553000",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"phone_numbers:\n" +
+			"  - '+13035553000'\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "customer-service-records", "verify-phone-number-coverage",
+			"--api-key", "string",
+		)
+	})
 }

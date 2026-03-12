@@ -10,12 +10,25 @@ import (
 
 func TestVerificationsActionsVerify(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"verifications:actions", "verify",
-		"--api-key", "string",
-		"--verification-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
-		"--code", "17686",
-		"--status", "accepted",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "verifications:actions", "verify",
+			"--api-key", "string",
+			"--verification-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
+			"--code", "17686",
+			"--status", "accepted",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"code: '17686'\n" +
+			"status: accepted\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "verifications:actions", "verify",
+			"--api-key", "string",
+			"--verification-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
+		)
+	})
 }

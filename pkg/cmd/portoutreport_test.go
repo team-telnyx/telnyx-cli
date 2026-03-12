@@ -11,57 +11,87 @@ import (
 
 func TestPortoutsReportsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"portouts:reports", "create",
-		"--api-key", "string",
-		"--params", "{filters: {created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], end_user_name: McPortersen, phone_numbers__overlaps: ['+1234567890'], status__in: [pending]}}",
-		"--report-type", "export_portouts_csv",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "portouts:reports", "create",
+			"--api-key", "string",
+			"--params", "{filters: {created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], end_user_name: McPortersen, phone_numbers__overlaps: ['+1234567890'], status__in: [pending]}}",
+			"--report-type", "export_portouts_csv",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(portoutsReportsCreate)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(portoutsReportsCreate)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"portouts:reports", "create",
-		"--params.filters", "{created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], end_user_name: McPortersen, phone_numbers__overlaps: ['+1234567890'], status__in: [pending]}",
-		"--report-type", "export_portouts_csv",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "portouts:reports", "create",
+			"--api-key", "string",
+			"--params.filters", "{created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], end_user_name: McPortersen, phone_numbers__overlaps: ['+1234567890'], status__in: [pending]}",
+			"--report-type", "export_portouts_csv",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"params:\n" +
+			"  filters:\n" +
+			"    created_at__gt: '2019-12-27T18:11:19.117Z'\n" +
+			"    created_at__lt: '2019-12-27T18:11:19.117Z'\n" +
+			"    customer_reference__in:\n" +
+			"      - my-customer-reference\n" +
+			"    end_user_name: McPortersen\n" +
+			"    phone_numbers__overlaps:\n" +
+			"      - '+1234567890'\n" +
+			"    status__in:\n" +
+			"      - pending\n" +
+			"report_type: export_portouts_csv\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "portouts:reports", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestPortoutsReportsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"portouts:reports", "retrieve",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "portouts:reports", "retrieve",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestPortoutsReportsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"portouts:reports", "list",
-		"--api-key", "string",
-		"--filter", "{report_type: export_portouts_csv, status: completed}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "portouts:reports", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter", "{report_type: export_portouts_csv, status: completed}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(portoutsReportsList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(portoutsReportsList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"portouts:reports", "list",
-		"--filter.report-type", "export_portouts_csv",
-		"--filter.status", "completed",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "portouts:reports", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter.report-type", "export_portouts_csv",
+			"--filter.status", "completed",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

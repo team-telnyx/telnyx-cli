@@ -38,6 +38,10 @@ var detailRecordsList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Specifies the sort order for results. <br/>Example: sort=-created_at",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleDetailRecordsList,
 	HideHelpCommand: true,
@@ -90,6 +94,10 @@ func handleDetailRecordsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "detail-records list", obj, format, transform)
 	} else {
 		iter := client.DetailRecords.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "detail-records list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "detail-records list", iter, format, transform, maxItems)
 	}
 }

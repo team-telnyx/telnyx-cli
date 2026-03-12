@@ -11,109 +11,185 @@ import (
 
 func TestSimCardsActionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "retrieve",
-		"--api-key", "string",
-		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "retrieve",
+			"--api-key", "string",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
 }
 
 func TestSimCardsActionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "list",
-		"--api-key", "string",
-		"--filter", "{action_type: disable, bulk_sim_card_action_id: 47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9, sim_card_id: 47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9, status: in-progress}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter", "{action_type: disable, bulk_sim_card_action_id: 47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9, sim_card_id: 47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9, status: in-progress}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(simCardsActionsList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(simCardsActionsList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "list",
-		"--filter.action-type", "disable",
-		"--filter.bulk-sim-card-action-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
-		"--filter.sim-card-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
-		"--filter.status", "in-progress",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter.action-type", "disable",
+			"--filter.bulk-sim-card-action-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
+			"--filter.sim-card-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
+			"--filter.status", "in-progress",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
+}
+
+func TestSimCardsActionsBulkDisableVoice(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "bulk-disable-voice",
+			"--api-key", "string",
+			"--sim-card-group-id", "6b14e151-8493-4fa1-8664-1cc4e6d14158",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("sim_card_group_id: 6b14e151-8493-4fa1-8664-1cc4e6d14158")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "sim-cards:actions", "bulk-disable-voice",
+			"--api-key", "string",
+		)
+	})
+}
+
+func TestSimCardsActionsBulkEnableVoice(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "bulk-enable-voice",
+			"--api-key", "string",
+			"--sim-card-group-id", "6b14e151-8493-4fa1-8664-1cc4e6d14158",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("sim_card_group_id: 6b14e151-8493-4fa1-8664-1cc4e6d14158")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "sim-cards:actions", "bulk-enable-voice",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestSimCardsActionsBulkSetPublicIPs(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "bulk-set-public-ips",
-		"--api-key", "string",
-		"--sim-card-id", "6b14e151-8493-4fa1-8664-1cc4e6d14158",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "bulk-set-public-ips",
+			"--api-key", "string",
+			"--sim-card-id", "6b14e151-8493-4fa1-8664-1cc4e6d14158",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"sim_card_ids:\n" +
+			"  - 6b14e151-8493-4fa1-8664-1cc4e6d14158\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "sim-cards:actions", "bulk-set-public-ips",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestSimCardsActionsDisable(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "disable",
-		"--api-key", "string",
-		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "disable",
+			"--api-key", "string",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
 }
 
 func TestSimCardsActionsEnable(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "enable",
-		"--api-key", "string",
-		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "enable",
+			"--api-key", "string",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
 }
 
 func TestSimCardsActionsRemovePublicIP(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "remove-public-ip",
-		"--api-key", "string",
-		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "remove-public-ip",
+			"--api-key", "string",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
 }
 
 func TestSimCardsActionsSetPublicIP(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "set-public-ip",
-		"--api-key", "string",
-		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-		"--region-code", "dc2",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "set-public-ip",
+			"--api-key", "string",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+			"--region-code", "dc2",
+		)
+	})
 }
 
 func TestSimCardsActionsSetStandby(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "set-standby",
-		"--api-key", "string",
-		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "set-standby",
+			"--api-key", "string",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
 }
 
 func TestSimCardsActionsValidateRegistrationCodes(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-cards:actions", "validate-registration-codes",
-		"--api-key", "string",
-		"--registration-code", "123456780",
-		"--registration-code", "1231231230",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-cards:actions", "validate-registration-codes",
+			"--api-key", "string",
+			"--registration-code", "123456780",
+			"--registration-code", "1231231230",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"registration_codes:\n" +
+			"  - '123456780'\n" +
+			"  - '1231231230'\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "sim-cards:actions", "validate-registration-codes",
+			"--api-key", "string",
+		)
+	})
 }

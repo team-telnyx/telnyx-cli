@@ -10,32 +10,47 @@ import (
 
 func TestStorageBucketsSslCertificateCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:buckets:ssl-certificate", "create",
-		"--api-key", "string",
-		"--bucket-name", "",
-		"--certificate", "...",
-		"--private-key", "...",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:buckets:ssl-certificate", "create",
+			"--api-key", "string",
+			"--bucket-name", "",
+			"--certificate", "Example data",
+			"--private-key", "Example data",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"certificate: Example data\n" +
+			"private_key: Example data\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "storage:buckets:ssl-certificate", "create",
+			"--api-key", "string",
+			"--bucket-name", "",
+		)
+	})
 }
 
 func TestStorageBucketsSslCertificateRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:buckets:ssl-certificate", "retrieve",
-		"--api-key", "string",
-		"--bucket-name", "",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:buckets:ssl-certificate", "retrieve",
+			"--api-key", "string",
+			"--bucket-name", "",
+		)
+	})
 }
 
 func TestStorageBucketsSslCertificateDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:buckets:ssl-certificate", "delete",
-		"--api-key", "string",
-		"--bucket-name", "",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:buckets:ssl-certificate", "delete",
+			"--api-key", "string",
+			"--bucket-name", "",
+		)
+	})
 }

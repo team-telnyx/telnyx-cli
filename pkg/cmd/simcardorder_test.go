@@ -11,56 +11,74 @@ import (
 
 func TestSimCardOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-card-orders", "create",
-		"--api-key", "string",
-		"--address-id", "1293384261075731499",
-		"--quantity", "23",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-card-orders", "create",
+			"--api-key", "string",
+			"--address-id", "1293384261075731499",
+			"--quantity", "23",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"address_id: '1293384261075731499'\n" +
+			"quantity: 23\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "sim-card-orders", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestSimCardOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-card-orders", "retrieve",
-		"--api-key", "string",
-		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-card-orders", "retrieve",
+			"--api-key", "string",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
 }
 
 func TestSimCardOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-card-orders", "list",
-		"--api-key", "string",
-		"--filter", "{address.administrative_area: TX, address.country_code: US, address.extended_address: 14th Floor, address.id: '1293384261075731499', address.locality: Austin, address.postal_code: '78701', address.street_address: 600 Congress Avenue, cost.amount: '2.53', cost.currency: USD, created_at: '2018-02-02T22:25:27.521Z', quantity: 21, updated_at: '2018-02-02T22:25:27.521Z'}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-card-orders", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter", "{address.administrative_area: TX, address.country_code: US, address.extended_address: 14th Floor, address.id: '1293384261075731499', address.locality: Austin, address.postal_code: '78701', address.street_address: 600 Congress Avenue, cost.amount: '2.53', cost.currency: USD, created_at: '2018-02-02T22:25:27.521Z', quantity: 21, updated_at: '2018-02-02T22:25:27.521Z'}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(simCardOrdersList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(simCardOrdersList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"sim-card-orders", "list",
-		"--filter.address-administrative-area", "TX",
-		"--filter.address-country-code", "US",
-		"--filter.address-extended-address", "14th Floor",
-		"--filter.address-id", "1293384261075731499",
-		"--filter.address-locality", "Austin",
-		"--filter.address-postal-code", "78701",
-		"--filter.address-street-address", "600 Congress Avenue",
-		"--filter.cost-amount", "2.53",
-		"--filter.cost-currency", "USD",
-		"--filter.created-at", "2018-02-02T22:25:27.521Z",
-		"--filter.quantity", "21",
-		"--filter.updated-at", "2018-02-02T22:25:27.521Z",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "sim-card-orders", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter.address-administrative-area", "TX",
+			"--filter.address-country-code", "US",
+			"--filter.address-extended-address", "14th Floor",
+			"--filter.address-id", "1293384261075731499",
+			"--filter.address-locality", "Austin",
+			"--filter.address-postal-code", "78701",
+			"--filter.address-street-address", "600 Congress Avenue",
+			"--filter.cost-amount", "2.53",
+			"--filter.cost-currency", "USD",
+			"--filter.created-at", "2018-02-02T22:25:27.521Z",
+			"--filter.quantity", "21",
+			"--filter.updated-at", "2018-02-02T22:25:27.521Z",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

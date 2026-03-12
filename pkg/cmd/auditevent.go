@@ -38,6 +38,10 @@ var auditEventsList = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Set the order of the results by the creation date.",
 			QueryPath: "sort",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleAuditEventsList,
 	HideHelpCommand: true,
@@ -90,6 +94,10 @@ func handleAuditEventsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(os.Stdout, "audit-events list", obj, format, transform)
 	} else {
 		iter := client.AuditEvents.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "audit-events list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "audit-events list", iter, format, transform, maxItems)
 	}
 }

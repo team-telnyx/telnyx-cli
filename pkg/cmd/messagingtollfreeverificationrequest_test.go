@@ -11,226 +11,340 @@ import (
 
 func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-tollfree:verification:requests", "create",
-		"--api-key", "string",
-		"--additional-information", "additionalInformation",
-		"--business-addr1", "600 Congress Avenue",
-		"--business-city", "Austin",
-		"--business-contact-email", "email@example.com",
-		"--business-contact-first-name", "John",
-		"--business-contact-last-name", "Doe",
-		"--business-contact-phone", "+18005550100",
-		"--business-name", "Telnyx LLC",
-		"--business-state", "Texas",
-		"--business-zip", "78701",
-		"--corporate-website", "http://example.com",
-		"--message-volume", "100,000",
-		"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
-		"--opt-in-workflow-image-url", "{url: https://telnyx.com/sign-up}",
-		"--opt-in-workflow-image-url", "{url: https://telnyx.com/company/data-privacy}",
-		"--phone-number", "{phoneNumber: '+18773554398'}",
-		"--phone-number", "{phoneNumber: '+18773554399'}",
-		"--production-message-content", "Your Telnyx OTP is XXXX",
-		"--use-case", "2FA",
-		"--use-case-summary", "This is a use case where Telnyx sends out 2FA codes to portal users to verify their identity in order to sign into the portal",
-		"--age-gated-content=true",
-		"--business-addr2", "14th Floor",
-		"--business-registration-country", "US",
-		"--business-registration-number", "12-3456789",
-		"--business-registration-type", "EIN",
-		"--campaign-verify-authorization-token", "cv_token_abc123xyz",
-		"--doing-business-as", "Acme Services",
-		"--entity-type", "SOLE_PROPRIETOR",
-		"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
-		"--isv-reseller", "isvReseller",
-		"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
-		"--opt-in-keywords", "START, YES, SUBSCRIBE",
-		"--privacy-policy-url", "https://example.com/privacy",
-		"--terms-and-condition-url", "https://example.com/terms",
-		"--webhook-url", "http://example-webhook.com",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-tollfree:verification:requests", "create",
+			"--api-key", "string",
+			"--additional-information", "additionalInformation",
+			"--business-addr1", "600 Congress Avenue",
+			"--business-city", "Austin",
+			"--business-contact-email", "email@example.com",
+			"--business-contact-first-name", "John",
+			"--business-contact-last-name", "Doe",
+			"--business-contact-phone", "+18005550100",
+			"--business-name", "Telnyx LLC",
+			"--business-state", "Texas",
+			"--business-zip", "78701",
+			"--corporate-website", "http://example.com",
+			"--message-volume", "100,000",
+			"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
+			"--opt-in-workflow-image-url", "{url: https://telnyx.com/sign-up}",
+			"--opt-in-workflow-image-url", "{url: https://telnyx.com/company/data-privacy}",
+			"--phone-number", "{phoneNumber: '+18773554398'}",
+			"--phone-number", "{phoneNumber: '+18773554399'}",
+			"--production-message-content", "Your Telnyx OTP is XXXX",
+			"--use-case", "2FA",
+			"--use-case-summary", "This is a use case where Telnyx sends out 2FA codes to portal users to verify their identity in order to sign into the portal",
+			"--age-gated-content=true",
+			"--business-addr2", "14th Floor",
+			"--business-registration-country", "US",
+			"--business-registration-number", "12-3456789",
+			"--business-registration-type", "EIN",
+			"--campaign-verify-authorization-token", "cv_token_abc123xyz",
+			"--doing-business-as", "Acme Services",
+			"--entity-type", "SOLE_PROPRIETOR",
+			"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
+			"--isv-reseller", "isvReseller",
+			"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
+			"--opt-in-keywords", "START, YES, SUBSCRIBE",
+			"--privacy-policy-url", "https://example.com/privacy",
+			"--terms-and-condition-url", "https://example.com/terms",
+			"--webhook-url", "http://example-webhook.com",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(messagingTollfreeVerificationRequestsCreate)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(messagingTollfreeVerificationRequestsCreate)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-tollfree:verification:requests", "create",
-		"--additional-information", "additionalInformation",
-		"--business-addr1", "600 Congress Avenue",
-		"--business-city", "Austin",
-		"--business-contact-email", "email@example.com",
-		"--business-contact-first-name", "John",
-		"--business-contact-last-name", "Doe",
-		"--business-contact-phone", "+18005550100",
-		"--business-name", "Telnyx LLC",
-		"--business-state", "Texas",
-		"--business-zip", "78701",
-		"--corporate-website", "http://example.com",
-		"--message-volume", "100,000",
-		"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
-		"--opt-in-workflow-image-url.url", "https://telnyx.com/sign-up",
-		"--opt-in-workflow-image-url.url", "https://telnyx.com/company/data-privacy",
-		"--phone-number.phone-number", "+18773554398",
-		"--phone-number.phone-number", "+18773554399",
-		"--production-message-content", "Your Telnyx OTP is XXXX",
-		"--use-case", "2FA",
-		"--use-case-summary", "This is a use case where Telnyx sends out 2FA codes to portal users to verify their identity in order to sign into the portal",
-		"--age-gated-content=true",
-		"--business-addr2", "14th Floor",
-		"--business-registration-country", "US",
-		"--business-registration-number", "12-3456789",
-		"--business-registration-type", "EIN",
-		"--campaign-verify-authorization-token", "cv_token_abc123xyz",
-		"--doing-business-as", "Acme Services",
-		"--entity-type", "SOLE_PROPRIETOR",
-		"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
-		"--isv-reseller", "isvReseller",
-		"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
-		"--opt-in-keywords", "START, YES, SUBSCRIBE",
-		"--privacy-policy-url", "https://example.com/privacy",
-		"--terms-and-condition-url", "https://example.com/terms",
-		"--webhook-url", "http://example-webhook.com",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-tollfree:verification:requests", "create",
+			"--api-key", "string",
+			"--additional-information", "additionalInformation",
+			"--business-addr1", "600 Congress Avenue",
+			"--business-city", "Austin",
+			"--business-contact-email", "email@example.com",
+			"--business-contact-first-name", "John",
+			"--business-contact-last-name", "Doe",
+			"--business-contact-phone", "+18005550100",
+			"--business-name", "Telnyx LLC",
+			"--business-state", "Texas",
+			"--business-zip", "78701",
+			"--corporate-website", "http://example.com",
+			"--message-volume", "100,000",
+			"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
+			"--opt-in-workflow-image-url.url", "https://telnyx.com/sign-up",
+			"--opt-in-workflow-image-url.url", "https://telnyx.com/company/data-privacy",
+			"--phone-number.phone-number", "+18773554398",
+			"--phone-number.phone-number", "+18773554399",
+			"--production-message-content", "Your Telnyx OTP is XXXX",
+			"--use-case", "2FA",
+			"--use-case-summary", "This is a use case where Telnyx sends out 2FA codes to portal users to verify their identity in order to sign into the portal",
+			"--age-gated-content=true",
+			"--business-addr2", "14th Floor",
+			"--business-registration-country", "US",
+			"--business-registration-number", "12-3456789",
+			"--business-registration-type", "EIN",
+			"--campaign-verify-authorization-token", "cv_token_abc123xyz",
+			"--doing-business-as", "Acme Services",
+			"--entity-type", "SOLE_PROPRIETOR",
+			"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
+			"--isv-reseller", "isvReseller",
+			"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
+			"--opt-in-keywords", "START, YES, SUBSCRIBE",
+			"--privacy-policy-url", "https://example.com/privacy",
+			"--terms-and-condition-url", "https://example.com/terms",
+			"--webhook-url", "http://example-webhook.com",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"additionalInformation: additionalInformation\n" +
+			"businessAddr1: 600 Congress Avenue\n" +
+			"businessCity: Austin\n" +
+			"businessContactEmail: email@example.com\n" +
+			"businessContactFirstName: John\n" +
+			"businessContactLastName: Doe\n" +
+			"businessContactPhone: '+18005550100'\n" +
+			"businessName: Telnyx LLC\n" +
+			"businessState: Texas\n" +
+			"businessZip: '78701'\n" +
+			"corporateWebsite: http://example.com\n" +
+			"messageVolume: 100,000\n" +
+			"optInWorkflow: >-\n" +
+			"  User signs into the Telnyx portal, enters a number and is prompted to select\n" +
+			"  whether they want to use 2FA verification for security purposes. If they've\n" +
+			"  opted in a confirmation message is sent out to the handset\n" +
+			"optInWorkflowImageURLs:\n" +
+			"  - url: https://telnyx.com/sign-up\n" +
+			"  - url: https://telnyx.com/company/data-privacy\n" +
+			"phoneNumbers:\n" +
+			"  - phoneNumber: '+18773554398'\n" +
+			"  - phoneNumber: '+18773554399'\n" +
+			"productionMessageContent: Your Telnyx OTP is XXXX\n" +
+			"useCase: 2FA\n" +
+			"useCaseSummary: >-\n" +
+			"  This is a use case where Telnyx sends out 2FA codes to portal users to verify\n" +
+			"  their identity in order to sign into the portal\n" +
+			"ageGatedContent: true\n" +
+			"businessAddr2: 14th Floor\n" +
+			"businessRegistrationCountry: US\n" +
+			"businessRegistrationNumber: 12-3456789\n" +
+			"businessRegistrationType: EIN\n" +
+			"campaignVerifyAuthorizationToken: cv_token_abc123xyz\n" +
+			"doingBusinessAs: Acme Services\n" +
+			"entityType: SOLE_PROPRIETOR\n" +
+			"helpMessageResponse: 'Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com'\n" +
+			"isvReseller: isvReseller\n" +
+			"optInConfirmationResponse: You have successfully opted in to receive messages from Acme Corp\n" +
+			"optInKeywords: START, YES, SUBSCRIBE\n" +
+			"privacyPolicyURL: https://example.com/privacy\n" +
+			"termsAndConditionURL: https://example.com/terms\n" +
+			"webhookUrl: http://example-webhook.com\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging-tollfree:verification:requests", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagingTollfreeVerificationRequestsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-tollfree:verification:requests", "retrieve",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-tollfree:verification:requests", "retrieve",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-tollfree:verification:requests", "update",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--additional-information", "additionalInformation",
-		"--business-addr1", "600 Congress Avenue",
-		"--business-city", "Austin",
-		"--business-contact-email", "email@example.com",
-		"--business-contact-first-name", "John",
-		"--business-contact-last-name", "Doe",
-		"--business-contact-phone", "+18005550100",
-		"--business-name", "Telnyx LLC",
-		"--business-state", "Texas",
-		"--business-zip", "78701",
-		"--corporate-website", "http://example.com",
-		"--message-volume", "100,000",
-		"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
-		"--opt-in-workflow-image-url", "{url: https://telnyx.com/sign-up}",
-		"--opt-in-workflow-image-url", "{url: https://telnyx.com/company/data-privacy}",
-		"--phone-number", "{phoneNumber: '+18773554398'}",
-		"--phone-number", "{phoneNumber: '+18773554399'}",
-		"--production-message-content", "Your Telnyx OTP is XXXX",
-		"--use-case", "2FA",
-		"--use-case-summary", "This is a use case where Telnyx sends out 2FA codes to portal users to verify their identity in order to sign into the portal",
-		"--age-gated-content=true",
-		"--business-addr2", "14th Floor",
-		"--business-registration-country", "US",
-		"--business-registration-number", "12-3456789",
-		"--business-registration-type", "EIN",
-		"--campaign-verify-authorization-token", "cv_token_abc123xyz",
-		"--doing-business-as", "Acme Services",
-		"--entity-type", "SOLE_PROPRIETOR",
-		"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
-		"--isv-reseller", "isvReseller",
-		"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
-		"--opt-in-keywords", "START, YES, SUBSCRIBE",
-		"--privacy-policy-url", "https://example.com/privacy",
-		"--terms-and-condition-url", "https://example.com/terms",
-		"--webhook-url", "http://example-webhook.com",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-tollfree:verification:requests", "update",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--additional-information", "additionalInformation",
+			"--business-addr1", "600 Congress Avenue",
+			"--business-city", "Austin",
+			"--business-contact-email", "email@example.com",
+			"--business-contact-first-name", "John",
+			"--business-contact-last-name", "Doe",
+			"--business-contact-phone", "+18005550100",
+			"--business-name", "Telnyx LLC",
+			"--business-state", "Texas",
+			"--business-zip", "78701",
+			"--corporate-website", "http://example.com",
+			"--message-volume", "100,000",
+			"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
+			"--opt-in-workflow-image-url", "{url: https://telnyx.com/sign-up}",
+			"--opt-in-workflow-image-url", "{url: https://telnyx.com/company/data-privacy}",
+			"--phone-number", "{phoneNumber: '+18773554398'}",
+			"--phone-number", "{phoneNumber: '+18773554399'}",
+			"--production-message-content", "Your Telnyx OTP is XXXX",
+			"--use-case", "2FA",
+			"--use-case-summary", "This is a use case where Telnyx sends out 2FA codes to portal users to verify their identity in order to sign into the portal",
+			"--age-gated-content=true",
+			"--business-addr2", "14th Floor",
+			"--business-registration-country", "US",
+			"--business-registration-number", "12-3456789",
+			"--business-registration-type", "EIN",
+			"--campaign-verify-authorization-token", "cv_token_abc123xyz",
+			"--doing-business-as", "Acme Services",
+			"--entity-type", "SOLE_PROPRIETOR",
+			"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
+			"--isv-reseller", "isvReseller",
+			"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
+			"--opt-in-keywords", "START, YES, SUBSCRIBE",
+			"--privacy-policy-url", "https://example.com/privacy",
+			"--terms-and-condition-url", "https://example.com/terms",
+			"--webhook-url", "http://example-webhook.com",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(messagingTollfreeVerificationRequestsUpdate)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(messagingTollfreeVerificationRequestsUpdate)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-tollfree:verification:requests", "update",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--additional-information", "additionalInformation",
-		"--business-addr1", "600 Congress Avenue",
-		"--business-city", "Austin",
-		"--business-contact-email", "email@example.com",
-		"--business-contact-first-name", "John",
-		"--business-contact-last-name", "Doe",
-		"--business-contact-phone", "+18005550100",
-		"--business-name", "Telnyx LLC",
-		"--business-state", "Texas",
-		"--business-zip", "78701",
-		"--corporate-website", "http://example.com",
-		"--message-volume", "100,000",
-		"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
-		"--opt-in-workflow-image-url.url", "https://telnyx.com/sign-up",
-		"--opt-in-workflow-image-url.url", "https://telnyx.com/company/data-privacy",
-		"--phone-number.phone-number", "+18773554398",
-		"--phone-number.phone-number", "+18773554399",
-		"--production-message-content", "Your Telnyx OTP is XXXX",
-		"--use-case", "2FA",
-		"--use-case-summary", "This is a use case where Telnyx sends out 2FA codes to portal users to verify their identity in order to sign into the portal",
-		"--age-gated-content=true",
-		"--business-addr2", "14th Floor",
-		"--business-registration-country", "US",
-		"--business-registration-number", "12-3456789",
-		"--business-registration-type", "EIN",
-		"--campaign-verify-authorization-token", "cv_token_abc123xyz",
-		"--doing-business-as", "Acme Services",
-		"--entity-type", "SOLE_PROPRIETOR",
-		"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
-		"--isv-reseller", "isvReseller",
-		"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
-		"--opt-in-keywords", "START, YES, SUBSCRIBE",
-		"--privacy-policy-url", "https://example.com/privacy",
-		"--terms-and-condition-url", "https://example.com/terms",
-		"--webhook-url", "http://example-webhook.com",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-tollfree:verification:requests", "update",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--additional-information", "additionalInformation",
+			"--business-addr1", "600 Congress Avenue",
+			"--business-city", "Austin",
+			"--business-contact-email", "email@example.com",
+			"--business-contact-first-name", "John",
+			"--business-contact-last-name", "Doe",
+			"--business-contact-phone", "+18005550100",
+			"--business-name", "Telnyx LLC",
+			"--business-state", "Texas",
+			"--business-zip", "78701",
+			"--corporate-website", "http://example.com",
+			"--message-volume", "100,000",
+			"--opt-in-workflow", "User signs into the Telnyx portal, enters a number and is prompted to select whether they want to use 2FA verification for security purposes. If they've opted in a confirmation message is sent out to the handset",
+			"--opt-in-workflow-image-url.url", "https://telnyx.com/sign-up",
+			"--opt-in-workflow-image-url.url", "https://telnyx.com/company/data-privacy",
+			"--phone-number.phone-number", "+18773554398",
+			"--phone-number.phone-number", "+18773554399",
+			"--production-message-content", "Your Telnyx OTP is XXXX",
+			"--use-case", "2FA",
+			"--use-case-summary", "This is a use case where Telnyx sends out 2FA codes to portal users to verify their identity in order to sign into the portal",
+			"--age-gated-content=true",
+			"--business-addr2", "14th Floor",
+			"--business-registration-country", "US",
+			"--business-registration-number", "12-3456789",
+			"--business-registration-type", "EIN",
+			"--campaign-verify-authorization-token", "cv_token_abc123xyz",
+			"--doing-business-as", "Acme Services",
+			"--entity-type", "SOLE_PROPRIETOR",
+			"--help-message-response", "Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com",
+			"--isv-reseller", "isvReseller",
+			"--opt-in-confirmation-response", "You have successfully opted in to receive messages from Acme Corp",
+			"--opt-in-keywords", "START, YES, SUBSCRIBE",
+			"--privacy-policy-url", "https://example.com/privacy",
+			"--terms-and-condition-url", "https://example.com/terms",
+			"--webhook-url", "http://example-webhook.com",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"additionalInformation: additionalInformation\n" +
+			"businessAddr1: 600 Congress Avenue\n" +
+			"businessCity: Austin\n" +
+			"businessContactEmail: email@example.com\n" +
+			"businessContactFirstName: John\n" +
+			"businessContactLastName: Doe\n" +
+			"businessContactPhone: '+18005550100'\n" +
+			"businessName: Telnyx LLC\n" +
+			"businessState: Texas\n" +
+			"businessZip: '78701'\n" +
+			"corporateWebsite: http://example.com\n" +
+			"messageVolume: 100,000\n" +
+			"optInWorkflow: >-\n" +
+			"  User signs into the Telnyx portal, enters a number and is prompted to select\n" +
+			"  whether they want to use 2FA verification for security purposes. If they've\n" +
+			"  opted in a confirmation message is sent out to the handset\n" +
+			"optInWorkflowImageURLs:\n" +
+			"  - url: https://telnyx.com/sign-up\n" +
+			"  - url: https://telnyx.com/company/data-privacy\n" +
+			"phoneNumbers:\n" +
+			"  - phoneNumber: '+18773554398'\n" +
+			"  - phoneNumber: '+18773554399'\n" +
+			"productionMessageContent: Your Telnyx OTP is XXXX\n" +
+			"useCase: 2FA\n" +
+			"useCaseSummary: >-\n" +
+			"  This is a use case where Telnyx sends out 2FA codes to portal users to verify\n" +
+			"  their identity in order to sign into the portal\n" +
+			"ageGatedContent: true\n" +
+			"businessAddr2: 14th Floor\n" +
+			"businessRegistrationCountry: US\n" +
+			"businessRegistrationNumber: 12-3456789\n" +
+			"businessRegistrationType: EIN\n" +
+			"campaignVerifyAuthorizationToken: cv_token_abc123xyz\n" +
+			"doingBusinessAs: Acme Services\n" +
+			"entityType: SOLE_PROPRIETOR\n" +
+			"helpMessageResponse: 'Reply HELP for assistance or STOP to unsubscribe. Contact: support@example.com'\n" +
+			"isvReseller: isvReseller\n" +
+			"optInConfirmationResponse: You have successfully opted in to receive messages from Acme Corp\n" +
+			"optInKeywords: START, YES, SUBSCRIBE\n" +
+			"privacyPolicyURL: https://example.com/privacy\n" +
+			"termsAndConditionURL: https://example.com/terms\n" +
+			"webhookUrl: http://example-webhook.com\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging-tollfree:verification:requests", "update",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestMessagingTollfreeVerificationRequestsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-tollfree:verification:requests", "list",
-		"--api-key", "string",
-		"--page", "1",
-		"--page-size", "1",
-		"--business-name", "business_name",
-		"--date-end", "'2019-12-27T18:11:19.117Z'",
-		"--date-start", "'2019-12-27T18:11:19.117Z'",
-		"--phone-number", "phone_number",
-		"--status", "Verified",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-tollfree:verification:requests", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--page", "1",
+			"--page-size", "1",
+			"--business-name", "business_name",
+			"--date-end", "'2019-12-27T18:11:19.117Z'",
+			"--date-start", "'2019-12-27T18:11:19.117Z'",
+			"--phone-number", "phone_number",
+			"--status", "Verified",
+		)
+	})
 }
 
 func TestMessagingTollfreeVerificationRequestsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-tollfree:verification:requests", "delete",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-tollfree:verification:requests", "delete",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
 }
 
 func TestMessagingTollfreeVerificationRequestsRetrieveStatusHistory(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-tollfree:verification:requests", "retrieve-status-history",
-		"--api-key", "string",
-		"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-		"--page-number", "1",
-		"--page-size", "1",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-tollfree:verification:requests", "retrieve-status-history",
+			"--api-key", "string",
+			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--page-number", "1",
+			"--page-size", "1",
+		)
+	})
 }

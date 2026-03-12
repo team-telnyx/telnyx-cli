@@ -132,6 +132,12 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "The list of comma-separated codecs in a preferred order for the forked media to be received.",
 			BodyPath: "preferred_codecs",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "prevent-double-bridge",
+			Usage:    "Prevents bridging and hangs up the call if the target is already bridged. Disabled by default.",
+			Default:  false,
+			BodyPath: "prevent_double_bridge",
+		},
 		&requestflag.Flag[string]{
 			Name:     "record",
 			Usage:    "Start recording automatically after an event. Disabled by default.",

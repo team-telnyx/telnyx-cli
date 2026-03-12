@@ -109,6 +109,10 @@ var aiConversationsInsightGroupsRetrieveInsightGroups = cli.Command{
 			Name:      "page-size",
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleAIConversationsInsightGroupsRetrieveInsightGroups,
 	HideHelpCommand: true,
@@ -284,6 +288,10 @@ func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context
 		return ShowJSON(os.Stdout, "ai:conversations:insight-groups retrieve-insight-groups", obj, format, transform)
 	} else {
 		iter := client.AI.Conversations.InsightGroups.GetInsightGroupsAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "ai:conversations:insight-groups retrieve-insight-groups", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "ai:conversations:insight-groups retrieve-insight-groups", iter, format, transform, maxItems)
 	}
 }

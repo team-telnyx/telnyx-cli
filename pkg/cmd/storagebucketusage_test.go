@@ -11,33 +11,37 @@ import (
 
 func TestStorageBucketsUsageGetAPIUsage(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:buckets:usage", "get-api-usage",
-		"--api-key", "string",
-		"--bucket-name", "",
-		"--filter", "{end_time: '2019-12-27T18:11:19.117Z', start_time: '2019-12-27T18:11:19.117Z'}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:buckets:usage", "get-api-usage",
+			"--api-key", "string",
+			"--bucket-name", "",
+			"--filter", "{end_time: '2019-12-27T18:11:19.117Z', start_time: '2019-12-27T18:11:19.117Z'}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(storageBucketsUsageGetAPIUsage)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(storageBucketsUsageGetAPIUsage)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:buckets:usage", "get-api-usage",
-		"--bucket-name", "",
-		"--filter.end-time", "2019-12-27T18:11:19.117Z",
-		"--filter.start-time", "2019-12-27T18:11:19.117Z",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:buckets:usage", "get-api-usage",
+			"--api-key", "string",
+			"--bucket-name", "",
+			"--filter.end-time", "2019-12-27T18:11:19.117Z",
+			"--filter.start-time", "2019-12-27T18:11:19.117Z",
+		)
+	})
 }
 
 func TestStorageBucketsUsageGetBucketUsage(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"storage:buckets:usage", "get-bucket-usage",
-		"--api-key", "string",
-		"--bucket-name", "",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "storage:buckets:usage", "get-bucket-usage",
+			"--api-key", "string",
+			"--bucket-name", "",
+		)
+	})
 }

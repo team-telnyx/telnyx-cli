@@ -11,36 +11,42 @@ import (
 
 func TestOtaUpdatesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ota-updates", "retrieve",
-		"--api-key", "string",
-		"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "ota-updates", "retrieve",
+			"--api-key", "string",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
 }
 
 func TestOtaUpdatesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ota-updates", "list",
-		"--api-key", "string",
-		"--filter", "{sim_card_id: sim_card_id, status: in-progress, type: sim_card_network_preferences}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "ota-updates", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter", "{sim_card_id: sim_card_id, status: in-progress, type: sim_card_network_preferences}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(otaUpdatesList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(otaUpdatesList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"ota-updates", "list",
-		"--filter.sim-card-id", "sim_card_id",
-		"--filter.status", "in-progress",
-		"--filter.type", "sim_card_network_preferences",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "ota-updates", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter.sim-card-id", "sim_card_id",
+			"--filter.status", "in-progress",
+			"--filter.type", "sim_card_network_preferences",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

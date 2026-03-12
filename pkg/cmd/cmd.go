@@ -375,6 +375,16 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:assistants:tags",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiAssistantsTagsList,
+					&aiAssistantsTagsAdd,
+					&aiAssistantsTagsRemove,
+				},
+			},
+			{
 				Name:     "ai:audio",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -2307,6 +2317,8 @@ func init() {
 				Commands: []*cli.Command{
 					&simCardsActionsRetrieve,
 					&simCardsActionsList,
+					&simCardsActionsBulkDisableVoice,
+					&simCardsActionsBulkEnableVoice,
 					&simCardsActionsBulkSetPublicIPs,
 					&simCardsActionsDisable,
 					&simCardsActionsEnable,
@@ -2920,14 +2932,6 @@ func init() {
 				},
 			},
 			{
-				Name:     "speech-to-text",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&speechToTextTranscribe,
-				},
-			},
-			{
 				Name:     "organizations:users",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -2979,6 +2983,118 @@ func init() {
 				Commands: []*cli.Command{
 					&sessionAnalysisMetadataRetrieve,
 					&sessionAnalysisMetadataRetrieveRecordType,
+				},
+			},
+			{
+				Name:     "whatsapp:business-accounts",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappBusinessAccountsRetrieve,
+					&whatsappBusinessAccountsList,
+					&whatsappBusinessAccountsDelete,
+				},
+			},
+			{
+				Name:     "whatsapp:business-accounts:phone-numbers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappBusinessAccountsPhoneNumbersList,
+					&whatsappBusinessAccountsPhoneNumbersInitializeVerification,
+				},
+			},
+			{
+				Name:     "whatsapp:business-accounts:settings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappBusinessAccountsSettingsRetrieve,
+					&whatsappBusinessAccountsSettingsUpdate,
+				},
+			},
+			{
+				Name:     "whatsapp:templates",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappTemplatesCreate,
+					&whatsappTemplatesList,
+				},
+			},
+			{
+				Name:     "whatsapp:phone-numbers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappPhoneNumbersList,
+					&whatsappPhoneNumbersDelete,
+					&whatsappPhoneNumbersResendVerification,
+					&whatsappPhoneNumbersVerify,
+				},
+			},
+			{
+				Name:     "whatsapp:phone-numbers:calling-settings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappPhoneNumbersCallingSettingsRetrieve,
+					&whatsappPhoneNumbersCallingSettingsUpdate,
+				},
+			},
+			{
+				Name:     "whatsapp:phone-numbers:profile",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappPhoneNumbersProfileRetrieve,
+					&whatsappPhoneNumbersProfileUpdate,
+				},
+			},
+			{
+				Name:     "whatsapp:phone-numbers:profile:photo",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappPhoneNumbersProfilePhotoDelete,
+					&whatsappPhoneNumbersProfilePhotoUpload,
+				},
+			},
+			{
+				Name:     "whatsapp-message-templates",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappMessageTemplatesRetrieve,
+					&whatsappMessageTemplatesUpdate,
+					&whatsappMessageTemplatesDelete,
+				},
+			},
+			{
+				Name:     "voice-clones",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&voiceClonesCreate,
+					&voiceClonesUpdate,
+					&voiceClonesList,
+					&voiceClonesDelete,
+					&voiceClonesCreateFromUpload,
+					&voiceClonesDownloadSample,
+				},
+			},
+			{
+				Name:     "voice-designs",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&voiceDesignsCreate,
+					&voiceDesignsRetrieve,
+					&voiceDesignsList,
+					&voiceDesignsDelete,
+					&voiceDesignsDeleteVersion,
+					&voiceDesignsDownloadSample,
+					&voiceDesignsRename,
 				},
 			},
 			{

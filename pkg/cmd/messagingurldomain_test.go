@@ -10,11 +10,13 @@ import (
 
 func TestMessagingURLDomainsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-url-domains", "list",
-		"--api-key", "string",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-url-domains", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

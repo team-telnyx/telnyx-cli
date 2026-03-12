@@ -42,6 +42,12 @@ var aiChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 			Default:  false,
 			BodyPath: "early_stopping",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "enable-thinking",
+			Usage:    "Whether to enable the thinking/reasoning phase for models that support it (e.g., QwQ, Qwen3). When set to false, the model will skip the internal reasoning step and respond directly, which can reduce latency. Defaults to true.",
+			Default:  true,
+			BodyPath: "enable_thinking",
+		},
 		&requestflag.Flag[float64]{
 			Name:     "frequency-penalty",
 			Usage:    "Higher values will penalize the model from repeating the same output tokens.",

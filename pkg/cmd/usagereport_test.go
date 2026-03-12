@@ -10,33 +10,36 @@ import (
 
 func TestUsageReportsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"usage-reports", "list",
-		"--api-key", "string",
-		"--dimension", "string",
-		"--metric", "string",
-		"--product", "product",
-		"--date-range", "date_range",
-		"--end-date", "end_date",
-		"--filter", "filter",
-		"--format", "csv",
-		"--managed-accounts=true",
-		"--page-number", "0",
-		"--page-size", "0",
-		"--sort", "string",
-		"--start-date", "start_date",
-		"--authorization-bearer", "authorization_bearer",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "usage-reports", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--dimension", "string",
+			"--metric", "string",
+			"--product", "product",
+			"--date-range", "date_range",
+			"--end-date", "end_date",
+			"--filter", "filter",
+			"--format", "csv",
+			"--managed-accounts=true",
+			"--page-number", "0",
+			"--page-size", "0",
+			"--sort", "string",
+			"--start-date", "start_date",
+			"--authorization-bearer", "authorization_bearer",
+		)
+	})
 }
 
 func TestUsageReportsGetOptions(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"usage-reports", "get-options",
-		"--api-key", "string",
-		"--product", "product",
-		"--authorization-bearer", "authorization_bearer",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "usage-reports", "get-options",
+			"--api-key", "string",
+			"--product", "product",
+			"--authorization-bearer", "authorization_bearer",
+		)
+	})
 }

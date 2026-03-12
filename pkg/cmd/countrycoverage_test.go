@@ -10,19 +10,21 @@ import (
 
 func TestCountryCoverageRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"country-coverage", "retrieve",
-		"--api-key", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "country-coverage", "retrieve",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestCountryCoverageRetrieveCountry(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"country-coverage", "retrieve-country",
-		"--api-key", "string",
-		"--country-code", "US",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "country-coverage", "retrieve-country",
+			"--api-key", "string",
+			"--country-code", "US",
+		)
+	})
 }

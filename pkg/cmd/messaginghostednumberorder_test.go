@@ -11,88 +11,148 @@ import (
 
 func TestMessagingHostedNumberOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-hosted-number-orders", "create",
-		"--api-key", "string",
-		"--messaging-profile-id", "dc8f39ac-953d-4520-b93b-786ae87db0da",
-		"--phone-number", "+18665550001",
-		"--phone-number", "+18665550002",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-hosted-number-orders", "create",
+			"--api-key", "string",
+			"--messaging-profile-id", "dc8f39ac-953d-4520-b93b-786ae87db0da",
+			"--phone-number", "+18665550001",
+			"--phone-number", "+18665550002",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"messaging_profile_id: dc8f39ac-953d-4520-b93b-786ae87db0da\n" +
+			"phone_numbers:\n" +
+			"  - '+18665550001'\n" +
+			"  - '+18665550002'\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging-hosted-number-orders", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagingHostedNumberOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-hosted-number-orders", "retrieve",
-		"--api-key", "string",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-hosted-number-orders", "retrieve",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }
 
 func TestMessagingHostedNumberOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-hosted-number-orders", "list",
-		"--api-key", "string",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-hosted-number-orders", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }
 
 func TestMessagingHostedNumberOrdersDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-hosted-number-orders", "delete",
-		"--api-key", "string",
-		"--id", "id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-hosted-number-orders", "delete",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }
 
 func TestMessagingHostedNumberOrdersCheckEligibility(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-hosted-number-orders", "check-eligibility",
-		"--api-key", "string",
-		"--phone-number", "string",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-hosted-number-orders", "check-eligibility",
+			"--api-key", "string",
+			"--phone-number", "string",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"phone_numbers:\n" +
+			"  - string\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging-hosted-number-orders", "check-eligibility",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestMessagingHostedNumberOrdersCreateVerificationCodes(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-hosted-number-orders", "create-verification-codes",
-		"--api-key", "string",
-		"--id", "id",
-		"--phone-number", "string",
-		"--verification-method", "sms",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-hosted-number-orders", "create-verification-codes",
+			"--api-key", "string",
+			"--id", "id",
+			"--phone-number", "string",
+			"--verification-method", "sms",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"phone_numbers:\n" +
+			"  - string\n" +
+			"verification_method: sms\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging-hosted-number-orders", "create-verification-codes",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }
 
 func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-hosted-number-orders", "validate-codes",
-		"--api-key", "string",
-		"--id", "id",
-		"--verification-code", "{code: code, phone_number: phone_number}",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-hosted-number-orders", "validate-codes",
+			"--api-key", "string",
+			"--id", "id",
+			"--verification-code", "{code: code, phone_number: phone_number}",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(messagingHostedNumberOrdersValidateCodes)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(messagingHostedNumberOrdersValidateCodes)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-hosted-number-orders", "validate-codes",
-		"--id", "id",
-		"--verification-code.code", "code",
-		"--verification-code.phone-number", "phone_number",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-hosted-number-orders", "validate-codes",
+			"--api-key", "string",
+			"--id", "id",
+			"--verification-code.code", "code",
+			"--verification-code.phone-number", "phone_number",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"verification_codes:\n" +
+			"  - code: code\n" +
+			"    phone_number: phone_number\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "messaging-hosted-number-orders", "validate-codes",
+			"--api-key", "string",
+			"--id", "id",
+		)
+	})
 }

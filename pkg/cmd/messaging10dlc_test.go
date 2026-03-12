@@ -10,10 +10,11 @@ import (
 
 func TestMessaging10dlcGetEnum(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"messaging-10dlc", "get-enum",
-		"--api-key", "string",
-		"--endpoint", "mno",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "messaging-10dlc", "get-enum",
+			"--api-key", "string",
+			"--endpoint", "mno",
+		)
+	})
 }

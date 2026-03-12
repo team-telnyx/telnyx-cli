@@ -96,6 +96,10 @@ var phoneNumbersMessagingList = cli.Command{
 			Usage:     "Sort by phone number.",
 			QueryPath: "sort[phone_number]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handlePhoneNumbersMessagingList,
 	HideHelpCommand: true,
@@ -212,6 +216,10 @@ func handlePhoneNumbersMessagingList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(os.Stdout, "phone-numbers:messaging list", obj, format, transform)
 	} else {
 		iter := client.PhoneNumbers.Messaging.ListAutoPaging(ctx, params, options...)
-		return ShowJSONIterator(os.Stdout, "phone-numbers:messaging list", iter, format, transform)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "phone-numbers:messaging list", iter, format, transform, maxItems)
 	}
 }

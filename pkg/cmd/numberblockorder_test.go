@@ -11,50 +11,71 @@ import (
 
 func TestNumberBlockOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-block-orders", "create",
-		"--api-key", "string",
-		"--range", "10",
-		"--starting-number", "+19705555000",
-		"--connection-id", "346789098765567",
-		"--customer-reference", "MY REF 001",
-		"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-block-orders", "create",
+			"--api-key", "string",
+			"--range", "10",
+			"--starting-number", "+19705555000",
+			"--connection-id", "346789098765567",
+			"--customer-reference", "MY REF 001",
+			"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"range: 10\n" +
+			"starting_number: '+19705555000'\n" +
+			"connection_id: '346789098765567'\n" +
+			"customer_reference: MY REF 001\n" +
+			"messaging_profile_id: abc85f64-5717-4562-b3fc-2c9600\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData, "number-block-orders", "create",
+			"--api-key", "string",
+		)
+	})
 }
 
 func TestNumberBlockOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-block-orders", "retrieve",
-		"--api-key", "string",
-		"--number-block-order-id", "number_block_order_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-block-orders", "retrieve",
+			"--api-key", "string",
+			"--number-block-order-id", "number_block_order_id",
+		)
+	})
 }
 
 func TestNumberBlockOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-block-orders", "list",
-		"--api-key", "string",
-		"--filter", "{created_at: {gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}, phone_numbers.starting_number: '+19705555000', status: pending}",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-block-orders", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter", "{created_at: {gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}, phone_numbers.starting_number: '+19705555000', status: pending}",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 
-	// Check that inner flags have been set up correctly
-	requestflag.CheckInnerFlags(numberBlockOrdersList)
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(numberBlockOrdersList)
 
-	// Alternative argument passing style using inner flags
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-block-orders", "list",
-		"--filter.created-at", "{gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}",
-		"--filter.phone-numbers-starting-number", "+19705555000",
-		"--filter.status", "pending",
-		"--page-number", "0",
-		"--page-size", "0",
-	)
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-block-orders", "list",
+			"--api-key", "string",
+			"--max-items", "10",
+			"--filter.created-at", "{gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}",
+			"--filter.phone-numbers-starting-number", "+19705555000",
+			"--filter.status", "pending",
+			"--page-number", "0",
+			"--page-size", "0",
+		)
+	})
 }

@@ -10,10 +10,11 @@ import (
 
 func TestNumberReservationsActionsExtend(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
-	mocktest.TestRunMockTestWithFlags(
-		t,
-		"number-reservations:actions", "extend",
-		"--api-key", "string",
-		"--number-reservation-id", "number_reservation_id",
-	)
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t, "number-reservations:actions", "extend",
+			"--api-key", "string",
+			"--number-reservation-id", "number_reservation_id",
+		)
+	})
 }
