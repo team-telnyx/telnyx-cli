@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.7.0 (2026-03-12)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* add `--max-items` flag for paginated/streaming endpoints ([bd3994b](https://github.com/team-telnyx/telnyx-cli/commit/bd3994be31287298c33cb6a873ce0c70d4a6542c))
+* Add enable_thinking parameter to chat completions API ([021b800](https://github.com/team-telnyx/telnyx-cli/commit/021b80038e113da5fe7b3624df3d642cd43865d9))
+* Add Voice Designs and Voice Clones API specification ([f896bb5](https://github.com/team-telnyx/telnyx-cli/commit/f896bb5749bdb5b9c222f1015430595e3b7a378f))
+* **api:** manual updates ([58fb3be](https://github.com/team-telnyx/telnyx-cli/commit/58fb3beeb7a44cdeeb9cc6544bbe927ed8d406d2))
+* **api:** manual updates ([ea5e255](https://github.com/team-telnyx/telnyx-cli/commit/ea5e25534f5b6e1b5067340253011b01e1748f2b))
+* **api:** manual updates ([786dcca](https://github.com/team-telnyx/telnyx-cli/commit/786dccaa28cc9b1543c48d8274cd63b2a388718a))
+* **api:** manual updates ([0572d09](https://github.com/team-telnyx/telnyx-cli/commit/0572d09fcb828e004ffd81275b040f61c49debc7))
+* **api:** Merge pull request [#27](https://github.com/team-telnyx/telnyx-cli/issues/27) from stainless-sdks/fix/whatsapp-message-templates-conflict ([89030b7](https://github.com/team-telnyx/telnyx-cli/commit/89030b7ca216936df0e176ffbf6ad909e0cede38))
+* Assistant tags ([b0d6cbd](https://github.com/team-telnyx/telnyx-cli/commit/b0d6cbde68a5b86236cf406df8025ecc4676ea54))
+* CW-2881 publish wireless VoLTE docs to prod ([63b959a](https://github.com/team-telnyx/telnyx-cli/commit/63b959a9ce479774d71ab342878fd1ebb9656e7c))
+* **stt:** add WebSocket event schemas for Stainless SDK generation ([a9eeede](https://github.com/team-telnyx/telnyx-cli/commit/a9eeede2238287bd16de3ace3241043430f076d6))
+* support passing required body params through pipes ([882ac2e](https://github.com/team-telnyx/telnyx-cli/commit/882ac2e8e347d31fd44fbe6e64712c8340ab47e9))
+* TELAPPS-ENGDESK-49737 Add prevent_double_bridge param to dial ([5d442cb](https://github.com/team-telnyx/telnyx-cli/commit/5d442cb78662343e9d3532bee48731354f6f61d7))
+
+
+### Bug Fixes
+
+* add missing client parameter flags to test cases ([f9b4d80](https://github.com/team-telnyx/telnyx-cli/commit/f9b4d80accac21463b8fe3e7e7001508d7d4324a))
+* add missing example parameters for test cases ([e99ea97](https://github.com/team-telnyx/telnyx-cli/commit/e99ea971ad64c60500134c12f69d9eaf0934866e))
+* add missing vertical enum values for 10DLC brand creation (ENGDESK-49040) ([84ae9a0](https://github.com/team-telnyx/telnyx-cli/commit/84ae9a0511193999938289c0c90eb8265512748a))
+* fix for encoding arrays with `any` type items ([95fa3bd](https://github.com/team-telnyx/telnyx-cli/commit/95fa3bdfb8e1ec5aed1e467122820f69fbbb3124))
+* fix for test cases with newlines in YAML and better error reporting ([8ca922a](https://github.com/team-telnyx/telnyx-cli/commit/8ca922a94ac0ba0f13c321f6d468b40c49a9fe5b))
+* rename whatsapp.message_templates to whatsapp.templates to avoid conflict ([89030b7](https://github.com/team-telnyx/telnyx-cli/commit/89030b7ca216936df0e176ffbf6ad909e0cede38))
+* update wait_seconds example to 0.5 ([5364833](https://github.com/team-telnyx/telnyx-cli/commit/53648337ba3c65fb1a2f34eb8bd1bd546c6fa1bb))
+
+
+### Reverts
+
+* restore stainless.yml changes removed in 1de6067 ([a0bc2eb](https://github.com/team-telnyx/telnyx-cli/commit/a0bc2ebcc09e2541668c8e3ee7f0d6f26c0bc3d7))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([db57625](https://github.com/team-telnyx/telnyx-cli/commit/db5762538c2dac26c7dabff0145b7812a32a8a1c))
+* **deps:** bump telnyx-go to v4.45.0 ([f1d102a](https://github.com/team-telnyx/telnyx-cli/commit/f1d102a91308a15168aa54b8f873e53afe1f9bb2))
+* update example date in usage-reports ([68b47ec](https://github.com/team-telnyx/telnyx-cli/commit/68b47ec73184456dffc28a04911f98fbea1d6ac7))
+
 ## 0.6.0 (2026-03-04)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.5.0...v0.6.0)
