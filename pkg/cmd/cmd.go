@@ -3098,6 +3098,15 @@ func init() {
 				},
 			},
 			{
+				Name:     "x402:credit-account",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&x402CreditAccountCreateQuote,
+					&x402CreditAccountSettle,
+				},
+			},
+			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",
 				UsageText:       "telnyx @manpages [-o telnyx.1] [--gzip]",
