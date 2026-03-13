@@ -36,7 +36,7 @@ var recordingsList = requestflag.WithInnerFlags(cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
-			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[conference_id], filter[created_at][gte], filter[created_at][lte], filter[call_leg_id], filter[call_session_id], filter[from], filter[to], filter[connection_id], filter[sip_call_id]",
+			Usage:     "Filter recordings by various attributes.",
 			QueryPath: "filter",
 		},
 		&requestflag.Flag[int64]{
@@ -57,6 +57,11 @@ var recordingsList = requestflag.WithInnerFlags(cli.Command{
 }, map[string][]requestflag.HasOuterFlag{
 	"filter": {
 		&requestflag.InnerFlag[string]{
+			Name:       "filter.call-control-id",
+			Usage:      "If present, recordings will be filtered to those with a matching `call_control_id`.",
+			InnerField: "call_control_id",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "filter.call-leg-id",
 			Usage:      "If present, recordings will be filtered to those with a matching call_leg_id.",
 			InnerField: "call_leg_id",
@@ -72,6 +77,11 @@ var recordingsList = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "conference_id",
 		},
 		&requestflag.InnerFlag[string]{
+			Name:       "filter.conference-region",
+			Usage:      "If present, recordings will be filtered to those with a matching `conference_region`.",
+			InnerField: "conference_region",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "filter.connection-id",
 			Usage:      "If present, recordings will be filtered to those with a matching `connection_id` attribute (case-sensitive).",
 			InnerField: "connection_id",
@@ -80,6 +90,10 @@ var recordingsList = requestflag.WithInnerFlags(cli.Command{
 			Name:       "filter.created-at",
 			InnerField: "created_at",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "filter.end-time",
+			InnerField: "end_time",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "filter.from",
 			Usage:      "If present, recordings will be filtered to those with a matching `from` attribute (case-sensitive).",
@@ -87,8 +101,12 @@ var recordingsList = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "filter.sip-call-id",
-			Usage:      "If present, recordings will be filtered to those with a matching `sip_call_id` attribute. Matching is case-sensitive",
+			Usage:      "If present, recordings will be filtered to those with a matching `sip_call_id` attribute. Matching is case-sensitive.",
 			InnerField: "sip_call_id",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "filter.start-time",
+			InnerField: "start_time",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "filter.to",
