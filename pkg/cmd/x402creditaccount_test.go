@@ -36,7 +36,7 @@ func TestX402CreditAccountSettle(t *testing.T) {
 			"--api-key", "string",
 			"--id", "quote_abc123",
 			"--payment-signature", "0xabc123...",
-			"--payment-signature", "PAYMENT-SIGNATURE",
+			"--payment-signature-header", "PAYMENT-SIGNATURE",
 		)
 	})
 
@@ -48,7 +48,7 @@ func TestX402CreditAccountSettle(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData, "x402:credit-account", "settle",
 			"--api-key", "string",
-			"--payment-signature", "PAYMENT-SIGNATURE",
+			"--payment-signature-header", "PAYMENT-SIGNATURE",
 		)
 	})
 }
