@@ -213,6 +213,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Optional background audio to play on the call. Use a predefined media bed, or supply a looped MP3 URL. If a media URL is chosen in the portal, customers can preview it before saving.",
 			InnerField: "background_audio",
 		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "voice-settings.expressive-mode",
+			Usage:      "Enables emotionally expressive speech using SSML emotion tags. When enabled, the assistant uses audio tags like angry, excited, content, and sad to add emotional nuance. Only supported for Telnyx Ultra voices.",
+			InnerField: "expressive_mode",
+		},
 		&requestflag.InnerFlag[any]{
 			Name:       "voice-settings.language-boost",
 			Usage:      "Enhances recognition for specific languages and dialects during MiniMax TTS synthesis. Default is null (no boost). Set to 'auto' for automatic language detection. Only applicable when using MiniMax voices.",
@@ -542,6 +547,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "voice-settings.background-audio",
 			Usage:      "Optional background audio to play on the call. Use a predefined media bed, or supply a looped MP3 URL. If a media URL is chosen in the portal, customers can preview it before saving.",
 			InnerField: "background_audio",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "voice-settings.expressive-mode",
+			Usage:      "Enables emotionally expressive speech using SSML emotion tags. When enabled, the assistant uses audio tags like angry, excited, content, and sad to add emotional nuance. Only supported for Telnyx Ultra voices.",
+			InnerField: "expressive_mode",
 		},
 		&requestflag.InnerFlag[any]{
 			Name:       "voice-settings.language-boost",
