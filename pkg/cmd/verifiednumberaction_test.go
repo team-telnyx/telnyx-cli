@@ -12,8 +12,9 @@ func TestVerifiedNumbersActionsSubmitVerificationCode(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verified-numbers:actions", "submit-verification-code",
+			t,
 			"--api-key", "string",
+			"verified-numbers:actions", "submit-verification-code",
 			"--phone-number", "+15551234567",
 			"--verification-code", "123456",
 		)
@@ -23,8 +24,9 @@ func TestVerifiedNumbersActionsSubmitVerificationCode(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("verification_code: '123456'")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "verified-numbers:actions", "submit-verification-code",
+			t, pipeData,
 			"--api-key", "string",
+			"verified-numbers:actions", "submit-verification-code",
 			"--phone-number", "+15551234567",
 		)
 	})

@@ -12,8 +12,9 @@ func TestMessaging10dlcPartnerCampaignsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:partner-campaigns", "retrieve",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:partner-campaigns", "retrieve",
 			"--campaign-id", "campaignId",
 		)
 	})
@@ -23,8 +24,9 @@ func TestMessaging10dlcPartnerCampaignsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:partner-campaigns", "update",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:partner-campaigns", "update",
 			"--campaign-id", "campaignId",
 			"--webhook-failover-url", "https://webhook.com/9010a453-4df8-4be6-a551-1070892888d6",
 			"--webhook-url", "https://webhook.com/67ea78a8-9f32-4d04-b62d-f9502e8e5f93",
@@ -37,8 +39,9 @@ func TestMessaging10dlcPartnerCampaignsUpdate(t *testing.T) {
 			"webhookFailoverURL: https://webhook.com/9010a453-4df8-4be6-a551-1070892888d6\n" +
 			"webhookURL: https://webhook.com/67ea78a8-9f32-4d04-b62d-f9502e8e5f93\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:partner-campaigns", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:partner-campaigns", "update",
 			"--campaign-id", "campaignId",
 		)
 	})
@@ -48,8 +51,9 @@ func TestMessaging10dlcPartnerCampaignsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:partner-campaigns", "list",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:partner-campaigns", "list",
 			"--max-items", "10",
 			"--page", "0",
 			"--records-per-page", "0",
@@ -62,8 +66,9 @@ func TestMessaging10dlcPartnerCampaignsListSharedByMe(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:partner-campaigns", "list-shared-by-me",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:partner-campaigns", "list-shared-by-me",
 			"--max-items", "10",
 			"--page", "0",
 			"--records-per-page", "0",
@@ -75,8 +80,9 @@ func TestMessaging10dlcPartnerCampaignsRetrieveSharingStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:partner-campaigns", "retrieve-sharing-status",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:partner-campaigns", "retrieve-sharing-status",
 			"--campaign-id", "campaignId",
 		)
 	})

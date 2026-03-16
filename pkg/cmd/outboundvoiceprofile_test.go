@@ -13,8 +13,9 @@ func TestOutboundVoiceProfilesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "outbound-voice-profiles", "create",
+			t,
 			"--api-key", "string",
+			"outbound-voice-profiles", "create",
 			"--name", "office",
 			"--billing-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--call-recording", "{call_recording_caller_phone_numbers: ['+19705555098'], call_recording_channels: dual, call_recording_format: mp3, call_recording_type: by_caller_phone_number}",
@@ -40,8 +41,9 @@ func TestOutboundVoiceProfilesCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "outbound-voice-profiles", "create",
+			t,
 			"--api-key", "string",
+			"outbound-voice-profiles", "create",
 			"--name", "office",
 			"--billing-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--call-recording.call-recording-caller-phone-numbers", "['+19705555098']",
@@ -96,8 +98,9 @@ func TestOutboundVoiceProfilesCreate(t *testing.T) {
 			"  - BR\n" +
 			"  - AU\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "outbound-voice-profiles", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"outbound-voice-profiles", "create",
 		)
 	})
 }
@@ -106,8 +109,9 @@ func TestOutboundVoiceProfilesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "outbound-voice-profiles", "retrieve",
+			t,
 			"--api-key", "string",
+			"outbound-voice-profiles", "retrieve",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -117,8 +121,9 @@ func TestOutboundVoiceProfilesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "outbound-voice-profiles", "update",
+			t,
 			"--api-key", "string",
+			"outbound-voice-profiles", "update",
 			"--id", "1293384261075731499",
 			"--name", "office",
 			"--billing-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
@@ -145,8 +150,9 @@ func TestOutboundVoiceProfilesUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "outbound-voice-profiles", "update",
+			t,
 			"--api-key", "string",
+			"outbound-voice-profiles", "update",
 			"--id", "1293384261075731499",
 			"--name", "office",
 			"--billing-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
@@ -202,8 +208,9 @@ func TestOutboundVoiceProfilesUpdate(t *testing.T) {
 			"  - BR\n" +
 			"  - AU\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "outbound-voice-profiles", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"outbound-voice-profiles", "update",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -213,8 +220,9 @@ func TestOutboundVoiceProfilesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "outbound-voice-profiles", "list",
+			t,
 			"--api-key", "string",
+			"outbound-voice-profiles", "list",
 			"--max-items", "10",
 			"--filter", "{name: {contains: office-profile}}",
 			"--page-number", "0",
@@ -229,8 +237,9 @@ func TestOutboundVoiceProfilesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "outbound-voice-profiles", "list",
+			t,
 			"--api-key", "string",
+			"outbound-voice-profiles", "list",
 			"--max-items", "10",
 			"--filter.name", "{contains: office-profile}",
 			"--page-number", "0",
@@ -244,8 +253,9 @@ func TestOutboundVoiceProfilesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "outbound-voice-profiles", "delete",
+			t,
 			"--api-key", "string",
+			"outbound-voice-profiles", "delete",
 			"--id", "1293384261075731499",
 		)
 	})

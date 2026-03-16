@@ -12,8 +12,9 @@ func TestCustomStorageCredentialsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "custom-storage-credentials", "create",
+			t,
 			"--api-key", "string",
+			"custom-storage-credentials", "create",
 			"--connection-id", "connection_id",
 			"--backend", "gcs",
 			"--configuration", "{backend: gcs, bucket: example-bucket, credentials: OPAQUE_CREDENTIALS_TOKEN}",
@@ -29,8 +30,9 @@ func TestCustomStorageCredentialsCreate(t *testing.T) {
 			"  bucket: example-bucket\n" +
 			"  credentials: OPAQUE_CREDENTIALS_TOKEN\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "custom-storage-credentials", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"custom-storage-credentials", "create",
 			"--connection-id", "connection_id",
 		)
 	})
@@ -40,8 +42,9 @@ func TestCustomStorageCredentialsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "custom-storage-credentials", "retrieve",
+			t,
 			"--api-key", "string",
+			"custom-storage-credentials", "retrieve",
 			"--connection-id", "connection_id",
 		)
 	})
@@ -51,8 +54,9 @@ func TestCustomStorageCredentialsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "custom-storage-credentials", "update",
+			t,
 			"--api-key", "string",
+			"custom-storage-credentials", "update",
 			"--connection-id", "connection_id",
 			"--backend", "gcs",
 			"--configuration", "{backend: gcs, bucket: example-bucket, credentials: OPAQUE_CREDENTIALS_TOKEN}",
@@ -68,8 +72,9 @@ func TestCustomStorageCredentialsUpdate(t *testing.T) {
 			"  bucket: example-bucket\n" +
 			"  credentials: OPAQUE_CREDENTIALS_TOKEN\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "custom-storage-credentials", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"custom-storage-credentials", "update",
 			"--connection-id", "connection_id",
 		)
 	})
@@ -79,8 +84,9 @@ func TestCustomStorageCredentialsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "custom-storage-credentials", "delete",
+			t,
 			"--api-key", "string",
+			"custom-storage-credentials", "delete",
 			"--connection-id", "connection_id",
 		)
 	})

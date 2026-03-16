@@ -12,8 +12,9 @@ func TestNumberReservationsActionsExtend(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-reservations:actions", "extend",
+			t,
 			"--api-key", "string",
+			"number-reservations:actions", "extend",
 			"--number-reservation-id", "number_reservation_id",
 		)
 	})

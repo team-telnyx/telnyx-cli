@@ -12,8 +12,9 @@ func TestMessaging10dlcCampaignBuilderSubmit(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:campaign-builder", "submit",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:campaign-builder", "submit",
 			"--brand-id", "brandId",
 			"--description", "description",
 			"--usecase", "usecase",
@@ -94,8 +95,9 @@ func TestMessaging10dlcCampaignBuilderSubmit(t *testing.T) {
 			"webhookFailoverURL: https://webhook.com/93711262-23e5-4048-a966-c0b2a16d5963\n" +
 			"webhookURL: https://webhook.com/67ea78a8-9f32-4d04-b62d-f9502e8e5f93\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:campaign-builder", "submit",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:campaign-builder", "submit",
 		)
 	})
 }

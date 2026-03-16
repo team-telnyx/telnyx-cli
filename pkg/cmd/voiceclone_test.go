@@ -12,8 +12,9 @@ func TestVoiceClonesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-clones", "create",
+			t,
 			"--api-key", "string",
+			"voice-clones", "create",
 			"--gender", "male",
 			"--language", "en",
 			"--name", "clone-narrator",
@@ -29,8 +30,9 @@ func TestVoiceClonesCreate(t *testing.T) {
 			"name: clone-narrator\n" +
 			"voice_design_id: 550e8400-e29b-41d4-a716-446655440000\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "voice-clones", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"voice-clones", "create",
 		)
 	})
 }
@@ -39,8 +41,9 @@ func TestVoiceClonesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-clones", "update",
+			t,
 			"--api-key", "string",
+			"voice-clones", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--name", "updated-clone",
 			"--gender", "male",
@@ -55,8 +58,9 @@ func TestVoiceClonesUpdate(t *testing.T) {
 			"gender: male\n" +
 			"language: language\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "voice-clones", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"voice-clones", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -66,8 +70,9 @@ func TestVoiceClonesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-clones", "list",
+			t,
 			"--api-key", "string",
+			"voice-clones", "list",
 			"--max-items", "10",
 			"--filter-name", "filter[name]",
 			"--page-number", "1",
@@ -81,8 +86,9 @@ func TestVoiceClonesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-clones", "delete",
+			t,
 			"--api-key", "string",
+			"voice-clones", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -92,8 +98,9 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-clones", "create-from-upload",
+			t,
 			"--api-key", "string",
+			"voice-clones", "create-from-upload",
 			"--audio-file", "Example data",
 			"--language", "lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf",
 			"--name", "name",
@@ -113,8 +120,9 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			"label: label\n" +
 			"ref_text: ref_text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "voice-clones", "create-from-upload",
+			t, pipeData,
 			"--api-key", "string",
+			"voice-clones", "create-from-upload",
 		)
 	})
 }
@@ -123,8 +131,9 @@ func TestVoiceClonesDownloadSample(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-clones", "download-sample",
+			t,
 			"--api-key", "string",
+			"voice-clones", "download-sample",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--output", "/dev/null",
 		)

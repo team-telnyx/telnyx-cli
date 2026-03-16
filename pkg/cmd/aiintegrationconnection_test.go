@@ -12,8 +12,9 @@ func TestAIIntegrationsConnectionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:integrations:connections", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:integrations:connections", "retrieve",
 			"--user-connection-id", "user_connection_id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestAIIntegrationsConnectionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:integrations:connections", "list",
+			t,
 			"--api-key", "string",
+			"ai:integrations:connections", "list",
 		)
 	})
 }
@@ -33,8 +35,9 @@ func TestAIIntegrationsConnectionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:integrations:connections", "delete",
+			t,
 			"--api-key", "string",
+			"ai:integrations:connections", "delete",
 			"--user-connection-id", "user_connection_id",
 		)
 	})

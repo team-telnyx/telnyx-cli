@@ -12,8 +12,9 @@ func TestTexmlAccountsConferencesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences", "retrieve",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences", "retrieve",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 		)
@@ -24,8 +25,9 @@ func TestTexmlAccountsConferencesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences", "update",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences", "update",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 			"--announce-method", "GET",
@@ -41,8 +43,9 @@ func TestTexmlAccountsConferencesUpdate(t *testing.T) {
 			"AnnounceUrl: https://www.example.com/announce.xml\n" +
 			"Status: completed\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:conferences", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:conferences", "update",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 		)
@@ -53,8 +56,9 @@ func TestTexmlAccountsConferencesRetrieveConferences(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences", "retrieve-conferences",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences", "retrieve-conferences",
 			"--account-sid", "account_sid",
 			"--date-created", "DateCreated",
 			"--date-updated", "DateUpdated",
@@ -71,8 +75,9 @@ func TestTexmlAccountsConferencesRetrieveRecordings(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences", "retrieve-recordings",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences", "retrieve-recordings",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 		)
@@ -83,8 +88,9 @@ func TestTexmlAccountsConferencesRetrieveRecordingsJson(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences", "retrieve-recordings-json",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences", "retrieve-recordings-json",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 		)

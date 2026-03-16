@@ -13,8 +13,9 @@ func TestRoomsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms", "create",
+			t,
 			"--api-key", "string",
+			"rooms", "create",
 			"--enable-recording=true",
 			"--max-participants", "10",
 			"--unique-name", "My room",
@@ -34,8 +35,9 @@ func TestRoomsCreate(t *testing.T) {
 			"webhook_event_url: https://example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "rooms", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"rooms", "create",
 		)
 	})
 }
@@ -44,8 +46,9 @@ func TestRoomsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms", "retrieve",
+			t,
 			"--api-key", "string",
+			"rooms", "retrieve",
 			"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 			"--include-sessions=true",
 		)
@@ -56,8 +59,9 @@ func TestRoomsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms", "update",
+			t,
 			"--api-key", "string",
+			"rooms", "update",
 			"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 			"--enable-recording=true",
 			"--max-participants", "10",
@@ -78,8 +82,9 @@ func TestRoomsUpdate(t *testing.T) {
 			"webhook_event_url: https://example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "rooms", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"rooms", "update",
 			"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		)
 	})
@@ -89,8 +94,9 @@ func TestRoomsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms", "list",
+			t,
 			"--api-key", "string",
+			"rooms", "list",
 			"--max-items", "10",
 			"--filter", "{date_created_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_updated_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, unique_name: my_video_room}",
 			"--include-sessions=true",
@@ -105,8 +111,9 @@ func TestRoomsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms", "list",
+			t,
 			"--api-key", "string",
+			"rooms", "list",
 			"--max-items", "10",
 			"--filter.date-created-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 			"--filter.date-updated-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
@@ -122,8 +129,9 @@ func TestRoomsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms", "delete",
+			t,
 			"--api-key", "string",
+			"rooms", "delete",
 			"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 		)
 	})

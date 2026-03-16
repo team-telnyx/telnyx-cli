@@ -13,8 +13,9 @@ func TestDynamicEmergencyAddressesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "dynamic-emergency-addresses", "create",
+			t,
 			"--api-key", "string",
+			"dynamic-emergency-addresses", "create",
 			"--administrative-area", "TX",
 			"--country-code", "US",
 			"--house-number", "600",
@@ -44,8 +45,9 @@ func TestDynamicEmergencyAddressesCreate(t *testing.T) {
 			"street_pre_directional: street_pre_directional\n" +
 			"street_suffix: St\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "dynamic-emergency-addresses", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"dynamic-emergency-addresses", "create",
 		)
 	})
 }
@@ -54,8 +56,9 @@ func TestDynamicEmergencyAddressesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "dynamic-emergency-addresses", "retrieve",
+			t,
 			"--api-key", "string",
+			"dynamic-emergency-addresses", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -65,8 +68,9 @@ func TestDynamicEmergencyAddressesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "dynamic-emergency-addresses", "list",
+			t,
 			"--api-key", "string",
+			"dynamic-emergency-addresses", "list",
 			"--max-items", "10",
 			"--filter", "{country_code: country_code, status: pending}",
 			"--page-number", "0",
@@ -80,8 +84,9 @@ func TestDynamicEmergencyAddressesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "dynamic-emergency-addresses", "list",
+			t,
 			"--api-key", "string",
+			"dynamic-emergency-addresses", "list",
 			"--max-items", "10",
 			"--filter.country-code", "country_code",
 			"--filter.status", "pending",
@@ -95,8 +100,9 @@ func TestDynamicEmergencyAddressesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "dynamic-emergency-addresses", "delete",
+			t,
 			"--api-key", "string",
+			"dynamic-emergency-addresses", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

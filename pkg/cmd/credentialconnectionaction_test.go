@@ -12,8 +12,9 @@ func TestCredentialConnectionsActionsCheckRegistrationStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "credential-connections:actions", "check-registration-status",
+			t,
 			"--api-key", "string",
+			"credential-connections:actions", "check-registration-status",
 			"--id", "id",
 		)
 	})

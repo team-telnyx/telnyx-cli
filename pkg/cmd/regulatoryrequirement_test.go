@@ -13,8 +13,9 @@ func TestRegulatoryRequirementsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "regulatory-requirements", "retrieve",
+			t,
 			"--api-key", "string",
+			"regulatory-requirements", "retrieve",
 			"--filter", "{action: ordering, country_code: DE, phone_number: '+41215470622', phone_number_type: local, requirement_group_id: d4c0b4a6-7bd2-40c5-a3b9-2acd99e212b2}",
 		)
 	})
@@ -25,8 +26,9 @@ func TestRegulatoryRequirementsRetrieve(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "regulatory-requirements", "retrieve",
+			t,
 			"--api-key", "string",
+			"regulatory-requirements", "retrieve",
 			"--filter.action", "ordering",
 			"--filter.country-code", "DE",
 			"--filter.phone-number", "+41215470622",

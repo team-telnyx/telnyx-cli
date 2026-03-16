@@ -12,8 +12,9 @@ func TestChannelZonesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "channel-zones", "update",
+			t,
 			"--api-key", "string",
+			"channel-zones", "update",
 			"--channel-zone-id", "channel_zone_id",
 			"--channels", "0",
 		)
@@ -23,8 +24,9 @@ func TestChannelZonesUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("channels: 0")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "channel-zones", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"channel-zones", "update",
 			"--channel-zone-id", "channel_zone_id",
 		)
 	})
@@ -34,8 +36,9 @@ func TestChannelZonesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "channel-zones", "list",
+			t,
 			"--api-key", "string",
+			"channel-zones", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",

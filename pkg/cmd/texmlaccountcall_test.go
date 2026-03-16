@@ -13,8 +13,9 @@ func TestTexmlAccountsCallsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls", "retrieve",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls", "retrieve",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 		)
@@ -25,8 +26,9 @@ func TestTexmlAccountsCallsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls", "update",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls", "update",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 			"--fallback-method", "GET",
@@ -52,8 +54,9 @@ func TestTexmlAccountsCallsUpdate(t *testing.T) {
 			"Texml: <?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Hello</Say></Response>\n" +
 			"Url: https://www.example.com/intruction-b.xml\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:calls", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:calls", "update",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 		)
@@ -64,8 +67,9 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls", "calls",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls", "calls",
 			"--account-sid", "account_sid",
 			"--application-sid", "example-app-sid",
 			"--from", "+13120001234",
@@ -116,8 +120,9 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls", "calls",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls", "calls",
 			"--account-sid", "account_sid",
 			"--application-sid", "example-app-sid",
 			"--from", "+13120001234",
@@ -209,8 +214,9 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"Url: https://www.example.com/texml.xml\n" +
 			"UrlMethod: GET\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:calls", "calls",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:calls", "calls",
 			"--account-sid", "account_sid",
 		)
 	})
@@ -220,8 +226,9 @@ func TestTexmlAccountsCallsRetrieveCalls(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls", "retrieve-calls",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls", "retrieve-calls",
 			"--account-sid", "account_sid",
 			"--end-time", "EndTime",
 			"--end-time-gt", "EndTime_gt",
@@ -243,8 +250,9 @@ func TestTexmlAccountsCallsSiprecJson(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls", "siprec-json",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls", "siprec-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 			"--connector-name", "my_connector",
@@ -272,8 +280,9 @@ func TestTexmlAccountsCallsSiprecJson(t *testing.T) {
 			"StatusCallbackMethod: GET\n" +
 			"Track: both_tracks\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:calls", "siprec-json",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:calls", "siprec-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 		)
@@ -284,8 +293,9 @@ func TestTexmlAccountsCallsStreamsJson(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls", "streams-json",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls", "streams-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 			"--bidirectional-codec", "G722",
@@ -309,8 +319,9 @@ func TestTexmlAccountsCallsStreamsJson(t *testing.T) {
 			"Track: both_tracks\n" +
 			"Url: wss://www.example.com/websocket\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:calls", "streams-json",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:calls", "streams-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 		)

@@ -12,8 +12,9 @@ func TestLegacyReportingUsageReportsRetrieveSpeechToText(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports", "retrieve-speech-to-text",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports", "retrieve-speech-to-text",
 			"--end-date", "'2020-07-01T00:00:00-06:00'",
 			"--start-date", "'2020-07-02T00:00:00-06:00'",
 		)

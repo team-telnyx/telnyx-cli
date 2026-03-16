@@ -12,8 +12,9 @@ func TestInvoicesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "invoices", "retrieve",
+			t,
 			"--api-key", "string",
+			"invoices", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--action", "json",
 		)
@@ -24,8 +25,9 @@ func TestInvoicesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "invoices", "list",
+			t,
 			"--api-key", "string",
+			"invoices", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",

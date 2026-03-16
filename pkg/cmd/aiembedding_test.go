@@ -12,8 +12,9 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:embeddings", "create",
+			t,
 			"--api-key", "string",
+			"ai:embeddings", "create",
 			"--bucket-name", "bucket_name",
 			"--document-chunk-overlap-size", "0",
 			"--document-chunk-size", "0",
@@ -31,8 +32,9 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 			"embedding_model: thenlper/gte-large\n" +
 			"loader: default\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:embeddings", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:embeddings", "create",
 		)
 	})
 }
@@ -41,8 +43,9 @@ func TestAIEmbeddingsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:embeddings", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:embeddings", "retrieve",
 			"--task-id", "task_id",
 		)
 	})
@@ -52,8 +55,9 @@ func TestAIEmbeddingsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:embeddings", "list",
+			t,
 			"--api-key", "string",
+			"ai:embeddings", "list",
 			"--status", "string",
 		)
 	})
@@ -63,8 +67,9 @@ func TestAIEmbeddingsSimilaritySearch(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:embeddings", "similarity-search",
+			t,
 			"--api-key", "string",
+			"ai:embeddings", "similarity-search",
 			"--bucket-name", "bucket_name",
 			"--query", "query",
 			"--num-of-docs", "0",
@@ -78,8 +83,9 @@ func TestAIEmbeddingsSimilaritySearch(t *testing.T) {
 			"query: query\n" +
 			"num_of_docs: 0\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:embeddings", "similarity-search",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:embeddings", "similarity-search",
 		)
 	})
 }
@@ -88,8 +94,9 @@ func TestAIEmbeddingsURL(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:embeddings", "url",
+			t,
 			"--api-key", "string",
+			"ai:embeddings", "url",
 			"--bucket-name", "bucket_name",
 			"--url", "url",
 		)
@@ -101,8 +108,9 @@ func TestAIEmbeddingsURL(t *testing.T) {
 			"bucket_name: bucket_name\n" +
 			"url: url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:embeddings", "url",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:embeddings", "url",
 		)
 	})
 }

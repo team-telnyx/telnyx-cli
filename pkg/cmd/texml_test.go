@@ -12,8 +12,9 @@ func TestTexmlSecrets(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml", "secrets",
+			t,
 			"--api-key", "string",
+			"texml", "secrets",
 			"--name", "My Secret Name",
 			"--value", "My Secret Value",
 		)
@@ -25,8 +26,9 @@ func TestTexmlSecrets(t *testing.T) {
 			"name: My Secret Name\n" +
 			"value: My Secret Value\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml", "secrets",
+			t, pipeData,
 			"--api-key", "string",
+			"texml", "secrets",
 		)
 	})
 }

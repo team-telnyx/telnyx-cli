@@ -13,8 +13,9 @@ func TestMessagingOptoutsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-optouts", "list",
+			t,
 			"--api-key", "string",
+			"messaging-optouts", "list",
 			"--max-items", "10",
 			"--created-at", "{gte: '2019-12-27T18:11:19.117Z', lte: '2019-12-27T18:11:19.117Z'}",
 			"--filter", "{from: from, messaging_profile_id: messaging_profile_id}",
@@ -30,8 +31,9 @@ func TestMessagingOptoutsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-optouts", "list",
+			t,
 			"--api-key", "string",
+			"messaging-optouts", "list",
 			"--max-items", "10",
 			"--created-at.gte", "2019-12-27T18:11:19.117Z",
 			"--created-at.lte", "2019-12-27T18:11:19.117Z",

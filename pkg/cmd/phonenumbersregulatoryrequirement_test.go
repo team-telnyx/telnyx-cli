@@ -13,8 +13,9 @@ func TestPhoneNumbersRegulatoryRequirementsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers-regulatory-requirements", "retrieve",
+			t,
 			"--api-key", "string",
+			"phone-numbers-regulatory-requirements", "retrieve",
 			"--filter", "{phone_number: '+41215470622,+41215470633'}",
 		)
 	})
@@ -25,8 +26,9 @@ func TestPhoneNumbersRegulatoryRequirementsRetrieve(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers-regulatory-requirements", "retrieve",
+			t,
 			"--api-key", "string",
+			"phone-numbers-regulatory-requirements", "retrieve",
 			"--filter.phone-number", "+41215470622,+41215470633",
 		)
 	})

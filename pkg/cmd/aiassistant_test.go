@@ -13,8 +13,9 @@ func TestAIAssistantsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "create",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "create",
 			"--instructions", "instructions",
 			"--model", "model",
 			"--name", "name",
@@ -41,8 +42,9 @@ func TestAIAssistantsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "create",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "create",
 			"--instructions", "instructions",
 			"--model", "model",
 			"--name", "name",
@@ -207,8 +209,9 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"  theme: light\n" +
 			"  view_history_url: view_history_url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "create",
 		)
 	})
 }
@@ -217,8 +220,9 @@ func TestAIAssistantsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "retrieve",
 			"--assistant-id", "assistant_id",
 			"--call-control-id", "call_control_id",
 			"--fetch-dynamic-variables-from-webhook=true",
@@ -232,8 +236,9 @@ func TestAIAssistantsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "update",
 			"--assistant-id", "assistant_id",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
@@ -262,8 +267,9 @@ func TestAIAssistantsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "update",
 			"--assistant-id", "assistant_id",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
@@ -431,8 +437,9 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"  theme: light\n" +
 			"  view_history_url: view_history_url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "update",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -442,8 +449,9 @@ func TestAIAssistantsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "list",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "list",
 		)
 	})
 }
@@ -452,8 +460,9 @@ func TestAIAssistantsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "delete",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "delete",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -463,8 +472,9 @@ func TestAIAssistantsChat(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "chat",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "chat",
 			"--assistant-id", "assistant_id",
 			"--content", "Tell me a joke about cats",
 			"--conversation-id", "42b20469-1215-4a9a-8964-c36f66b406f4",
@@ -479,8 +489,9 @@ func TestAIAssistantsChat(t *testing.T) {
 			"conversation_id: 42b20469-1215-4a9a-8964-c36f66b406f4\n" +
 			"name: Charlie\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "chat",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "chat",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -490,8 +501,9 @@ func TestAIAssistantsClone(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "clone",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "clone",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -501,8 +513,9 @@ func TestAIAssistantsGetTexml(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "get-texml",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "get-texml",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -512,8 +525,9 @@ func TestAIAssistantsImports(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "imports",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "imports",
 			"--api-key-ref", "api_key_ref",
 			"--provider", "elevenlabs",
 			"--import-id", "string",
@@ -528,8 +542,9 @@ func TestAIAssistantsImports(t *testing.T) {
 			"import_ids:\n" +
 			"  - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "imports",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "imports",
 		)
 	})
 }
@@ -538,8 +553,9 @@ func TestAIAssistantsSendSMS(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "send-sms",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "send-sms",
 			"--assistant-id", "assistant_id",
 			"--from", "from",
 			"--to", "to",
@@ -559,8 +575,9 @@ func TestAIAssistantsSendSMS(t *testing.T) {
 			"should_create_conversation: true\n" +
 			"text: text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "send-sms",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "send-sms",
 			"--assistant-id", "assistant_id",
 		)
 	})

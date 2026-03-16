@@ -13,8 +13,9 @@ func TestRoomsSessionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms:sessions", "retrieve",
+			t,
 			"--api-key", "string",
+			"rooms:sessions", "retrieve",
 			"--room-session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 			"--include-participants=true",
 		)
@@ -25,8 +26,9 @@ func TestRoomsSessionsList0(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms:sessions", "list-0",
+			t,
 			"--api-key", "string",
+			"rooms:sessions", "list-0",
 			"--max-items", "10",
 			"--filter", "{active: true, date_created_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_ended_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_updated_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, room_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0}",
 			"--include-participants=true",
@@ -41,8 +43,9 @@ func TestRoomsSessionsList0(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms:sessions", "list-0",
+			t,
 			"--api-key", "string",
+			"rooms:sessions", "list-0",
 			"--max-items", "10",
 			"--filter.active=true",
 			"--filter.date-created-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
@@ -60,8 +63,9 @@ func TestRoomsSessionsList1(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms:sessions", "list-1",
+			t,
 			"--api-key", "string",
+			"rooms:sessions", "list-1",
 			"--max-items", "10",
 			"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 			"--filter", "{active: true, date_created_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_ended_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_updated_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}}",
@@ -77,8 +81,9 @@ func TestRoomsSessionsList1(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms:sessions", "list-1",
+			t,
 			"--api-key", "string",
+			"rooms:sessions", "list-1",
 			"--max-items", "10",
 			"--room-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 			"--filter.active=true",
@@ -96,8 +101,9 @@ func TestRoomsSessionsRetrieveParticipants(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms:sessions", "retrieve-participants",
+			t,
 			"--api-key", "string",
+			"rooms:sessions", "retrieve-participants",
 			"--max-items", "10",
 			"--room-session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 			"--filter", "{context: Alice, date_joined_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_left_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, date_updated_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}}",
@@ -112,8 +118,9 @@ func TestRoomsSessionsRetrieveParticipants(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "rooms:sessions", "retrieve-participants",
+			t,
 			"--api-key", "string",
+			"rooms:sessions", "retrieve-participants",
 			"--max-items", "10",
 			"--room-session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 			"--filter.context", "Alice",

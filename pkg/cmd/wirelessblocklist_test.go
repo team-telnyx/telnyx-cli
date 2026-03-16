@@ -12,8 +12,9 @@ func TestWirelessBlocklistsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireless-blocklists", "create",
+			t,
 			"--api-key", "string",
+			"wireless-blocklists", "create",
 			"--name", "My Wireless Blocklist",
 			"--type", "country",
 			"--value", "CA",
@@ -30,8 +31,9 @@ func TestWirelessBlocklistsCreate(t *testing.T) {
 			"  - CA\n" +
 			"  - US\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "wireless-blocklists", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"wireless-blocklists", "create",
 		)
 	})
 }
@@ -40,8 +42,9 @@ func TestWirelessBlocklistsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireless-blocklists", "retrieve",
+			t,
 			"--api-key", "string",
+			"wireless-blocklists", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -51,8 +54,9 @@ func TestWirelessBlocklistsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireless-blocklists", "update",
+			t,
 			"--api-key", "string",
+			"wireless-blocklists", "update",
 			"--name", "My Wireless Blocklist",
 			"--type", "country",
 			"--value", "CA",
@@ -69,8 +73,9 @@ func TestWirelessBlocklistsUpdate(t *testing.T) {
 			"  - CA\n" +
 			"  - US\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "wireless-blocklists", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"wireless-blocklists", "update",
 		)
 	})
 }
@@ -79,8 +84,9 @@ func TestWirelessBlocklistsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireless-blocklists", "list",
+			t,
 			"--api-key", "string",
+			"wireless-blocklists", "list",
 			"--max-items", "10",
 			"--filter-name", "filter[name]",
 			"--filter-type", "filter[type]",
@@ -95,8 +101,9 @@ func TestWirelessBlocklistsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireless-blocklists", "delete",
+			t,
 			"--api-key", "string",
+			"wireless-blocklists", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

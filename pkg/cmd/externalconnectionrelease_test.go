@@ -13,8 +13,9 @@ func TestExternalConnectionsReleasesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:releases", "retrieve",
+			t,
 			"--api-key", "string",
+			"external-connections:releases", "retrieve",
 			"--id", "1293384261075731499",
 			"--release-id", "7b6a6449-b055-45a6-81f6-f6f0dffa4cc6",
 		)
@@ -25,8 +26,9 @@ func TestExternalConnectionsReleasesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:releases", "list",
+			t,
 			"--api-key", "string",
+			"external-connections:releases", "list",
 			"--max-items", "10",
 			"--id", "1293384261075731499",
 			"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+123', eq: '+1234567890'}, status: {eq: [pending, in_progress]}}",
@@ -41,8 +43,9 @@ func TestExternalConnectionsReleasesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:releases", "list",
+			t,
 			"--api-key", "string",
+			"external-connections:releases", "list",
 			"--max-items", "10",
 			"--id", "1293384261075731499",
 			"--filter.civic-address-id", "{eq: '19990261512338516954'}",

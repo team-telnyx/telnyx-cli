@@ -12,8 +12,9 @@ func TestBalanceRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "balance", "retrieve",
+			t,
 			"--api-key", "string",
+			"balance", "retrieve",
 		)
 	})
 }

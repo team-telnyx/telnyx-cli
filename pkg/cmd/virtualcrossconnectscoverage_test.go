@@ -13,8 +13,9 @@ func TestVirtualCrossConnectsCoverageList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "virtual-cross-connects-coverage", "list",
+			t,
 			"--api-key", "string",
+			"virtual-cross-connects-coverage", "list",
 			"--max-items", "10",
 			"--filter", "{cloud_provider: aws, cloud_provider_region: us-east-1, location.code: silicon_valley-ca, location.pop: SV1, location.region: AMER, location.site: SJC}",
 			"--filters", "{available_bandwidth: 0}",
@@ -29,8 +30,9 @@ func TestVirtualCrossConnectsCoverageList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "virtual-cross-connects-coverage", "list",
+			t,
 			"--api-key", "string",
+			"virtual-cross-connects-coverage", "list",
 			"--max-items", "10",
 			"--filter.cloud-provider", "aws",
 			"--filter.cloud-provider-region", "us-east-1",

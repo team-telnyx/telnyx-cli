@@ -12,8 +12,9 @@ func TestNumbersFeaturesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "numbers-features", "create",
+			t,
 			"--api-key", "string",
+			"numbers-features", "create",
 			"--phone-number", "string",
 		)
 	})
@@ -24,8 +25,9 @@ func TestNumbersFeaturesCreate(t *testing.T) {
 			"phone_numbers:\n" +
 			"  - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "numbers-features", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"numbers-features", "create",
 		)
 	})
 }

@@ -12,8 +12,9 @@ func TestVoiceDesignsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-designs", "create",
+			t,
 			"--api-key", "string",
+			"voice-designs", "create",
 			"--prompt", "Speak in a warm, friendly tone",
 			"--text", "Hello, welcome to our service.",
 			"--language", "Auto",
@@ -41,8 +42,9 @@ func TestVoiceDesignsCreate(t *testing.T) {
 			"top_p: 0\n" +
 			"voice_design_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "voice-designs", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"voice-designs", "create",
 		)
 	})
 }
@@ -51,8 +53,9 @@ func TestVoiceDesignsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-designs", "retrieve",
+			t,
 			"--api-key", "string",
+			"voice-designs", "retrieve",
 			"--id", "id",
 			"--version", "1",
 		)
@@ -63,8 +66,9 @@ func TestVoiceDesignsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-designs", "list",
+			t,
 			"--api-key", "string",
+			"voice-designs", "list",
 			"--max-items", "10",
 			"--filter-name", "filter[name]",
 			"--page-number", "1",
@@ -78,8 +82,9 @@ func TestVoiceDesignsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-designs", "delete",
+			t,
 			"--api-key", "string",
+			"voice-designs", "delete",
 			"--id", "id",
 		)
 	})
@@ -89,8 +94,9 @@ func TestVoiceDesignsDeleteVersion(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-designs", "delete-version",
+			t,
 			"--api-key", "string",
+			"voice-designs", "delete-version",
 			"--id", "id",
 			"--version", "1",
 		)
@@ -101,8 +107,9 @@ func TestVoiceDesignsDownloadSample(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-designs", "download-sample",
+			t,
 			"--api-key", "string",
+			"voice-designs", "download-sample",
 			"--id", "id",
 			"--version", "1",
 			"--output", "/dev/null",
@@ -114,8 +121,9 @@ func TestVoiceDesignsRename(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "voice-designs", "rename",
+			t,
 			"--api-key", "string",
+			"voice-designs", "rename",
 			"--id", "id",
 			"--name", "updated-narrator",
 		)
@@ -125,8 +133,9 @@ func TestVoiceDesignsRename(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("name: updated-narrator")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "voice-designs", "rename",
+			t, pipeData,
 			"--api-key", "string",
+			"voice-designs", "rename",
 			"--id", "id",
 		)
 	})

@@ -13,8 +13,9 @@ func TestExternalConnectionsCivicAddressesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:civic-addresses", "retrieve",
+			t,
 			"--api-key", "string",
+			"external-connections:civic-addresses", "retrieve",
 			"--id", "1293384261075731499",
 			"--address-id", "318fb664-d341-44d2-8405-e6bfb9ced6d9",
 		)
@@ -25,8 +26,9 @@ func TestExternalConnectionsCivicAddressesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:civic-addresses", "list",
+			t,
 			"--api-key", "string",
+			"external-connections:civic-addresses", "list",
 			"--id", "1293384261075731499",
 			"--filter", "{country: [US, CA, MX, BR]}",
 		)
@@ -38,8 +40,9 @@ func TestExternalConnectionsCivicAddressesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:civic-addresses", "list",
+			t,
 			"--api-key", "string",
+			"external-connections:civic-addresses", "list",
 			"--id", "1293384261075731499",
 			"--filter.country", "[US, CA, MX, BR]",
 		)

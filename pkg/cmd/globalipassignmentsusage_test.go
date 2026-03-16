@@ -13,8 +13,9 @@ func TestGlobalIPAssignmentsUsageRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "global-ip-assignments-usage", "retrieve",
+			t,
 			"--api-key", "string",
+			"global-ip-assignments-usage", "retrieve",
 			"--filter", "{global_ip_assignment_id: string, global_ip_id: string}",
 		)
 	})
@@ -25,8 +26,9 @@ func TestGlobalIPAssignmentsUsageRetrieve(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "global-ip-assignments-usage", "retrieve",
+			t,
 			"--api-key", "string",
+			"global-ip-assignments-usage", "retrieve",
 			"--filter.global-ip-assignment-id", "string",
 			"--filter.global-ip-id", "string",
 		)

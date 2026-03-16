@@ -13,8 +13,9 @@ func TestExternalConnectionsUploadsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:uploads", "create",
+			t,
 			"--api-key", "string",
+			"external-connections:uploads", "create",
 			"--id", "1293384261075731499",
 			"--number-id", "3920457616934164700",
 			"--number-id", "3920457616934164701",
@@ -41,8 +42,9 @@ func TestExternalConnectionsUploadsCreate(t *testing.T) {
 			"location_id: 67ea7693-9cd5-4a68-8c76-abb3aa5bf5d2\n" +
 			"usage: first_party_app_assignment\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "external-connections:uploads", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"external-connections:uploads", "create",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -52,8 +54,9 @@ func TestExternalConnectionsUploadsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:uploads", "retrieve",
+			t,
 			"--api-key", "string",
+			"external-connections:uploads", "retrieve",
 			"--id", "1293384261075731499",
 			"--ticket-id", "7b6a6449-b055-45a6-81f6-f6f0dffa4cc6",
 		)
@@ -64,8 +67,9 @@ func TestExternalConnectionsUploadsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:uploads", "list",
+			t,
 			"--api-key", "string",
+			"external-connections:uploads", "list",
 			"--max-items", "10",
 			"--id", "1293384261075731499",
 			"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+1970', eq: '+19705555098'}, status: {eq: [pending_upload, pending]}}",
@@ -80,8 +84,9 @@ func TestExternalConnectionsUploadsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:uploads", "list",
+			t,
 			"--api-key", "string",
+			"external-connections:uploads", "list",
 			"--max-items", "10",
 			"--id", "1293384261075731499",
 			"--filter.civic-address-id", "{eq: '19990261512338516954'}",
@@ -98,8 +103,9 @@ func TestExternalConnectionsUploadsPendingCount(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:uploads", "pending-count",
+			t,
 			"--api-key", "string",
+			"external-connections:uploads", "pending-count",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -109,8 +115,9 @@ func TestExternalConnectionsUploadsRefreshStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:uploads", "refresh-status",
+			t,
 			"--api-key", "string",
+			"external-connections:uploads", "refresh-status",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -120,8 +127,9 @@ func TestExternalConnectionsUploadsRetry(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:uploads", "retry",
+			t,
 			"--api-key", "string",
+			"external-connections:uploads", "retry",
 			"--id", "1293384261075731499",
 			"--ticket-id", "7b6a6449-b055-45a6-81f6-f6f0dffa4cc6",
 		)

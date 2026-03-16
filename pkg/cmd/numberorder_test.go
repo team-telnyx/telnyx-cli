@@ -13,8 +13,9 @@ func TestNumberOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-orders", "create",
+			t,
 			"--api-key", "string",
+			"number-orders", "create",
 			"--billing-group-id", "abc85f64-5717-4562-b3fc-2c9600",
 			"--connection-id", "346789098765567",
 			"--customer-reference", "MY REF 001",
@@ -30,8 +31,9 @@ func TestNumberOrdersCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-orders", "create",
+			t,
 			"--api-key", "string",
+			"number-orders", "create",
 			"--billing-group-id", "abc85f64-5717-4562-b3fc-2c9600",
 			"--connection-id", "346789098765567",
 			"--customer-reference", "MY REF 001",
@@ -60,8 +62,9 @@ func TestNumberOrdersCreate(t *testing.T) {
 			"    bundle_id: bc8e4d67-33a0-4cbb-af74-7b58f05bd494\n" +
 			"    requirement_group_id: dbbd94ee-9079-488f-80ba-f566b247fd79\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "number-orders", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"number-orders", "create",
 		)
 	})
 }
@@ -70,8 +73,9 @@ func TestNumberOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-orders", "retrieve",
+			t,
 			"--api-key", "string",
+			"number-orders", "retrieve",
 			"--number-order-id", "number_order_id",
 		)
 	})
@@ -81,8 +85,9 @@ func TestNumberOrdersUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-orders", "update",
+			t,
 			"--api-key", "string",
+			"number-orders", "update",
 			"--number-order-id", "number_order_id",
 			"--customer-reference", "MY REF 001",
 			"--regulatory-requirement", "{field_value: 45f45a04-b4be-4592-95b1-9306b9db2b21, requirement_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576}",
@@ -95,8 +100,9 @@ func TestNumberOrdersUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-orders", "update",
+			t,
 			"--api-key", "string",
+			"number-orders", "update",
 			"--number-order-id", "number_order_id",
 			"--customer-reference", "MY REF 001",
 			"--regulatory-requirement.field-value", "45f45a04-b4be-4592-95b1-9306b9db2b21",
@@ -112,8 +118,9 @@ func TestNumberOrdersUpdate(t *testing.T) {
 			"  - field_value: 45f45a04-b4be-4592-95b1-9306b9db2b21\n" +
 			"    requirement_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "number-orders", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"number-orders", "update",
 			"--number-order-id", "number_order_id",
 		)
 	})
@@ -123,8 +130,9 @@ func TestNumberOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-orders", "list",
+			t,
 			"--api-key", "string",
+			"number-orders", "list",
 			"--max-items", "10",
 			"--filter", "{created_at: {gt: gt, lt: lt}, customer_reference: customer_reference, phone_numbers_count: phone_numbers_count, requirements_met: true, status: status}",
 			"--page-number", "0",
@@ -138,8 +146,9 @@ func TestNumberOrdersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-orders", "list",
+			t,
 			"--api-key", "string",
+			"number-orders", "list",
 			"--max-items", "10",
 			"--filter.created-at", "{gt: gt, lt: lt}",
 			"--filter.customer-reference", "customer_reference",

@@ -13,8 +13,9 @@ func TestInventoryCoverageList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "inventory-coverage", "list",
+			t,
 			"--api-key", "string",
+			"inventory-coverage", "list",
 			"--filter", "{administrative_area: administrative_area, count: true, country_code: AT, features: [voice, sms], groupBy: locality, npa: 0, nxx: 0, phone_number_type: local}",
 		)
 	})
@@ -25,8 +26,9 @@ func TestInventoryCoverageList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "inventory-coverage", "list",
+			t,
 			"--api-key", "string",
+			"inventory-coverage", "list",
 			"--filter.administrative-area", "administrative_area",
 			"--filter.count=true",
 			"--filter.country-code", "AT",

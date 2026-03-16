@@ -13,8 +13,9 @@ func TestPortingReportsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting:reports", "create",
+			t,
 			"--api-key", "string",
+			"porting:reports", "create",
 			"--params", "{filters: {created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], status__in: [draft]}}",
 			"--report-type", "export_porting_orders_csv",
 		)
@@ -26,8 +27,9 @@ func TestPortingReportsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting:reports", "create",
+			t,
 			"--api-key", "string",
+			"porting:reports", "create",
 			"--params.filters", "{created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], status__in: [draft]}",
 			"--report-type", "export_porting_orders_csv",
 		)
@@ -46,8 +48,9 @@ func TestPortingReportsCreate(t *testing.T) {
 			"      - draft\n" +
 			"report_type: export_porting_orders_csv\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "porting:reports", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"porting:reports", "create",
 		)
 	})
 }
@@ -56,8 +59,9 @@ func TestPortingReportsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting:reports", "retrieve",
+			t,
 			"--api-key", "string",
+			"porting:reports", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -67,8 +71,9 @@ func TestPortingReportsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting:reports", "list",
+			t,
 			"--api-key", "string",
+			"porting:reports", "list",
 			"--max-items", "10",
 			"--filter", "{report_type: export_porting_orders_csv, status: completed}",
 			"--page-number", "0",
@@ -82,8 +87,9 @@ func TestPortingReportsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting:reports", "list",
+			t,
 			"--api-key", "string",
+			"porting:reports", "list",
 			"--max-items", "10",
 			"--filter.report-type", "export_porting_orders_csv",
 			"--filter.status", "completed",

@@ -13,8 +13,9 @@ func TestPhoneNumbersVoiceRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:voice", "retrieve",
+			t,
 			"--api-key", "string",
+			"phone-numbers:voice", "retrieve",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -24,8 +25,9 @@ func TestPhoneNumbersVoiceUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:voice", "update",
+			t,
 			"--api-key", "string",
+			"phone-numbers:voice", "update",
 			"--id", "1293384261075731499",
 			"--call-forwarding", "{call_forwarding_enabled: true, forwarding_type: always, forwards_to: '+13035559123'}",
 			"--call-recording", "{inbound_call_recording_channels: single, inbound_call_recording_enabled: true, inbound_call_recording_format: wav}",
@@ -45,8 +47,9 @@ func TestPhoneNumbersVoiceUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:voice", "update",
+			t,
 			"--api-key", "string",
+			"phone-numbers:voice", "update",
 			"--id", "1293384261075731499",
 			"--call-forwarding.call-forwarding-enabled=true",
 			"--call-forwarding.forwarding-type", "always",
@@ -91,8 +94,9 @@ func TestPhoneNumbersVoiceUpdate(t *testing.T) {
 			"translated_number: '+13035559999'\n" +
 			"usage_payment_method: pay-per-minute\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "phone-numbers:voice", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"phone-numbers:voice", "update",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -102,8 +106,9 @@ func TestPhoneNumbersVoiceList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:voice", "list",
+			t,
 			"--api-key", "string",
+			"phone-numbers:voice", "list",
 			"--max-items", "10",
 			"--filter", "{connection_name: {contains: test}, customer_reference: customer_reference, phone_number: phone_number, voice.usage_payment_method: channel}",
 			"--page-number", "0",
@@ -118,8 +123,9 @@ func TestPhoneNumbersVoiceList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:voice", "list",
+			t,
 			"--api-key", "string",
+			"phone-numbers:voice", "list",
 			"--max-items", "10",
 			"--filter.connection-name", "{contains: test}",
 			"--filter.customer-reference", "customer_reference",

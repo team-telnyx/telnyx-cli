@@ -12,8 +12,9 @@ func TestActionsPurchaseCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "actions:purchase", "create",
+			t,
 			"--api-key", "string",
+			"actions:purchase", "create",
 			"--amount", "10",
 			"--product", "whitelabel",
 			"--sim-card-group-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
@@ -38,8 +39,9 @@ func TestActionsPurchaseCreate(t *testing.T) {
 			"  - active-customers\n" +
 			"whitelabel_name: Custom SPN\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "actions:purchase", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"actions:purchase", "create",
 		)
 	})
 }

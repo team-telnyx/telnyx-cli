@@ -13,8 +13,9 @@ func TestVirtualCrossConnectsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "virtual-cross-connects", "create",
+			t,
 			"--api-key", "string",
+			"virtual-cross-connects", "create",
 			"--region-code", "ashburn-va",
 			"--bandwidth-mbps", "50",
 			"--bgp-asn", "1234",
@@ -52,8 +53,9 @@ func TestVirtualCrossConnectsCreate(t *testing.T) {
 			"secondary_cloud_ip: 169.254.0.4\n" +
 			"secondary_telnyx_ip: 169.254.0.3\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "virtual-cross-connects", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"virtual-cross-connects", "create",
 		)
 	})
 }
@@ -62,8 +64,9 @@ func TestVirtualCrossConnectsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "virtual-cross-connects", "retrieve",
+			t,
 			"--api-key", "string",
+			"virtual-cross-connects", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -73,8 +76,9 @@ func TestVirtualCrossConnectsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "virtual-cross-connects", "update",
+			t,
 			"--api-key", "string",
+			"virtual-cross-connects", "update",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--primary-cloud-ip", "169.254.0.2",
 			"--primary-enabled=true",
@@ -95,8 +99,9 @@ func TestVirtualCrossConnectsUpdate(t *testing.T) {
 			"secondary_enabled: true\n" +
 			"secondary_routing_announcement: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "virtual-cross-connects", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"virtual-cross-connects", "update",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -106,8 +111,9 @@ func TestVirtualCrossConnectsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "virtual-cross-connects", "list",
+			t,
 			"--api-key", "string",
+			"virtual-cross-connects", "list",
 			"--max-items", "10",
 			"--filter", "{network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
 			"--page-number", "0",
@@ -121,8 +127,9 @@ func TestVirtualCrossConnectsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "virtual-cross-connects", "list",
+			t,
 			"--api-key", "string",
+			"virtual-cross-connects", "list",
 			"--max-items", "10",
 			"--filter.network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--page-number", "0",
@@ -135,8 +142,9 @@ func TestVirtualCrossConnectsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "virtual-cross-connects", "delete",
+			t,
 			"--api-key", "string",
+			"virtual-cross-connects", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

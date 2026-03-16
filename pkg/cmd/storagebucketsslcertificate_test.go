@@ -12,8 +12,9 @@ func TestStorageBucketsSslCertificateCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:buckets:ssl-certificate", "create",
+			t,
 			"--api-key", "string",
+			"storage:buckets:ssl-certificate", "create",
 			"--bucket-name", "",
 			"--certificate", "Example data",
 			"--private-key", "Example data",
@@ -26,8 +27,9 @@ func TestStorageBucketsSslCertificateCreate(t *testing.T) {
 			"certificate: Example data\n" +
 			"private_key: Example data\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "storage:buckets:ssl-certificate", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"storage:buckets:ssl-certificate", "create",
 			"--bucket-name", "",
 		)
 	})
@@ -37,8 +39,9 @@ func TestStorageBucketsSslCertificateRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:buckets:ssl-certificate", "retrieve",
+			t,
 			"--api-key", "string",
+			"storage:buckets:ssl-certificate", "retrieve",
 			"--bucket-name", "",
 		)
 	})
@@ -48,8 +51,9 @@ func TestStorageBucketsSslCertificateDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:buckets:ssl-certificate", "delete",
+			t,
 			"--api-key", "string",
+			"storage:buckets:ssl-certificate", "delete",
 			"--bucket-name", "",
 		)
 	})

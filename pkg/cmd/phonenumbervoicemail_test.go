@@ -12,8 +12,9 @@ func TestPhoneNumbersVoicemailCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:voicemail", "create",
+			t,
 			"--api-key", "string",
+			"phone-numbers:voicemail", "create",
 			"--phone-number-id", "123455678900",
 			"--enabled=true",
 			"--pin", "1234",
@@ -26,8 +27,9 @@ func TestPhoneNumbersVoicemailCreate(t *testing.T) {
 			"enabled: true\n" +
 			"pin: '1234'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "phone-numbers:voicemail", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"phone-numbers:voicemail", "create",
 			"--phone-number-id", "123455678900",
 		)
 	})
@@ -37,8 +39,9 @@ func TestPhoneNumbersVoicemailRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:voicemail", "retrieve",
+			t,
 			"--api-key", "string",
+			"phone-numbers:voicemail", "retrieve",
 			"--phone-number-id", "123455678900",
 		)
 	})
@@ -48,8 +51,9 @@ func TestPhoneNumbersVoicemailUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:voicemail", "update",
+			t,
 			"--api-key", "string",
+			"phone-numbers:voicemail", "update",
 			"--phone-number-id", "123455678900",
 			"--enabled=true",
 			"--pin", "1234",
@@ -62,8 +66,9 @@ func TestPhoneNumbersVoicemailUpdate(t *testing.T) {
 			"enabled: true\n" +
 			"pin: '1234'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "phone-numbers:voicemail", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"phone-numbers:voicemail", "update",
 			"--phone-number-id", "123455678900",
 		)
 	})

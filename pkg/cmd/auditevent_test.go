@@ -13,8 +13,9 @@ func TestAuditEventsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "audit-events", "list",
+			t,
 			"--api-key", "string",
+			"audit-events", "list",
 			"--max-items", "10",
 			"--filter", "{created_after: '2021-01-01T00:00:00Z', created_before: '2021-01-01T00:00:00Z'}",
 			"--page-number", "0",
@@ -29,8 +30,9 @@ func TestAuditEventsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "audit-events", "list",
+			t,
 			"--api-key", "string",
+			"audit-events", "list",
 			"--max-items", "10",
 			"--filter.created-after", "2021-01-01T00:00:00Z",
 			"--filter.created-before", "2021-01-01T00:00:00Z",

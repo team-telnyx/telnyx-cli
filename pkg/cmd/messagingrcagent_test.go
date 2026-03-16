@@ -12,8 +12,9 @@ func TestMessagingRcsAgentsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging:rcs:agents", "retrieve",
+			t,
 			"--api-key", "string",
+			"messaging:rcs:agents", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestMessagingRcsAgentsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging:rcs:agents", "update",
+			t,
 			"--api-key", "string",
+			"messaging:rcs:agents", "update",
 			"--id", "id",
 			"--profile-id", "4001932a-b8a3-42fc-9389-021be6388909",
 			"--webhook-failover-url", "http://example.com",
@@ -39,8 +41,9 @@ func TestMessagingRcsAgentsUpdate(t *testing.T) {
 			"webhook_failover_url: http://example.com\n" +
 			"webhook_url: http://example.com\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging:rcs:agents", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging:rcs:agents", "update",
 			"--id", "id",
 		)
 	})
@@ -50,8 +53,9 @@ func TestMessagingRcsAgentsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging:rcs:agents", "list",
+			t,
 			"--api-key", "string",
+			"messaging:rcs:agents", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",

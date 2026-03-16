@@ -13,8 +13,9 @@ func TestAuthenticationProvidersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "authentication-providers", "create",
+			t,
 			"--api-key", "string",
+			"authentication-providers", "create",
 			"--name", "Okta",
 			"--settings", "{idp_cert_fingerprint: 13:38:C7:BB:C9:FF:4A:70:38:3A:E3:D9:5C:CD:DB:2E:50:1E:80:A7, idp_entity_id: https://myorg.myidp.com/saml/metadata, idp_sso_target_url: https://myorg.myidp.com/trust/saml2/http-post/sso, idp_cert_fingerprint_algorithm: sha256}",
 			"--short-name", "myorg",
@@ -29,8 +30,9 @@ func TestAuthenticationProvidersCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "authentication-providers", "create",
+			t,
 			"--api-key", "string",
+			"authentication-providers", "create",
 			"--name", "Okta",
 			"--settings.idp-cert-fingerprint", "13:38:C7:BB:C9:FF:4A:70:38:3A:E3:D9:5C:CD:DB:2E:50:1E:80:A7",
 			"--settings.idp-entity-id", "https://myorg.myidp.com/saml/metadata",
@@ -55,8 +57,9 @@ func TestAuthenticationProvidersCreate(t *testing.T) {
 			"active: true\n" +
 			"settings_url: https://myorg.myidp.com/saml/metadata\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "authentication-providers", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"authentication-providers", "create",
 		)
 	})
 }
@@ -65,8 +68,9 @@ func TestAuthenticationProvidersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "authentication-providers", "retrieve",
+			t,
 			"--api-key", "string",
+			"authentication-providers", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -76,8 +80,9 @@ func TestAuthenticationProvidersUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "authentication-providers", "update",
+			t,
 			"--api-key", "string",
+			"authentication-providers", "update",
 			"--id", "id",
 			"--active=true",
 			"--name", "Okta",
@@ -93,8 +98,9 @@ func TestAuthenticationProvidersUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "authentication-providers", "update",
+			t,
 			"--api-key", "string",
+			"authentication-providers", "update",
 			"--id", "id",
 			"--active=true",
 			"--name", "Okta",
@@ -120,8 +126,9 @@ func TestAuthenticationProvidersUpdate(t *testing.T) {
 			"settings_url: https://myorg.myidp.com/saml/metadata\n" +
 			"short_name: myorg\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "authentication-providers", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"authentication-providers", "update",
 			"--id", "id",
 		)
 	})
@@ -131,8 +138,9 @@ func TestAuthenticationProvidersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "authentication-providers", "list",
+			t,
 			"--api-key", "string",
+			"authentication-providers", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -145,8 +153,9 @@ func TestAuthenticationProvidersDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "authentication-providers", "delete",
+			t,
 			"--api-key", "string",
+			"authentication-providers", "delete",
 			"--id", "id",
 		)
 	})

@@ -12,8 +12,9 @@ func TestMessaging10dlcBrandExternalVettingList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand:external-vetting", "list",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand:external-vetting", "list",
 			"--brand-id", "brandId",
 		)
 	})
@@ -23,8 +24,9 @@ func TestMessaging10dlcBrandExternalVettingImports(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand:external-vetting", "imports",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand:external-vetting", "imports",
 			"--brand-id", "brandId",
 			"--evp-id", "evpId",
 			"--vetting-id", "vettingId",
@@ -39,8 +41,9 @@ func TestMessaging10dlcBrandExternalVettingImports(t *testing.T) {
 			"vettingId: vettingId\n" +
 			"vettingToken: vettingToken\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:brand:external-vetting", "imports",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:brand:external-vetting", "imports",
 			"--brand-id", "brandId",
 		)
 	})
@@ -50,8 +53,9 @@ func TestMessaging10dlcBrandExternalVettingOrder(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand:external-vetting", "order",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand:external-vetting", "order",
 			"--brand-id", "brandId",
 			"--evp-id", "evpId",
 			"--vetting-class", "vettingClass",
@@ -64,8 +68,9 @@ func TestMessaging10dlcBrandExternalVettingOrder(t *testing.T) {
 			"evpId: evpId\n" +
 			"vettingClass: vettingClass\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:brand:external-vetting", "order",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:brand:external-vetting", "order",
 			"--brand-id", "brandId",
 		)
 	})

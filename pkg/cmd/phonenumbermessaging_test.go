@@ -12,8 +12,9 @@ func TestPhoneNumbersMessagingRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:messaging", "retrieve",
+			t,
 			"--api-key", "string",
+			"phone-numbers:messaging", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestPhoneNumbersMessagingUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:messaging", "update",
+			t,
 			"--api-key", "string",
+			"phone-numbers:messaging", "update",
 			"--id", "id",
 			"--messaging-product", "P2P",
 			"--messaging-profile-id", "dd50eba1-a0c0-4563-9925-b25e842a7cb6",
@@ -40,8 +42,9 @@ func TestPhoneNumbersMessagingUpdate(t *testing.T) {
 			"tags:\n" +
 			"  - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "phone-numbers:messaging", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"phone-numbers:messaging", "update",
 			"--id", "id",
 		)
 	})
@@ -51,8 +54,9 @@ func TestPhoneNumbersMessagingList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers:messaging", "list",
+			t,
 			"--api-key", "string",
+			"phone-numbers:messaging", "list",
 			"--max-items", "10",
 			"--filter-messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter-phone-number", "filter[phone_number]",

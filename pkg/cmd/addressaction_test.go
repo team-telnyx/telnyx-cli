@@ -12,8 +12,9 @@ func TestAddressesActionsAcceptSuggestions(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "addresses:actions", "accept-suggestions",
+			t,
 			"--api-key", "string",
+			"addresses:actions", "accept-suggestions",
 			"--address-uuid", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--id", "id",
 		)
@@ -23,8 +24,9 @@ func TestAddressesActionsAcceptSuggestions(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("id: id")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "addresses:actions", "accept-suggestions",
+			t, pipeData,
 			"--api-key", "string",
+			"addresses:actions", "accept-suggestions",
 			"--address-uuid", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -34,8 +36,9 @@ func TestAddressesActionsValidate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "addresses:actions", "validate",
+			t,
 			"--api-key", "string",
+			"addresses:actions", "validate",
 			"--country-code", "US",
 			"--postal-code", "78701",
 			"--street-address", "600 Congress Avenue",
@@ -55,8 +58,9 @@ func TestAddressesActionsValidate(t *testing.T) {
 			"extended_address: 14th Floor\n" +
 			"locality: Austin\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "addresses:actions", "validate",
+			t, pipeData,
 			"--api-key", "string",
+			"addresses:actions", "validate",
 		)
 	})
 }

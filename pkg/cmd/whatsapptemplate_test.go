@@ -12,8 +12,9 @@ func TestWhatsappTemplatesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:templates", "create",
+			t,
 			"--api-key", "string",
+			"whatsapp:templates", "create",
 			"--category", "MARKETING",
 			"--component", "{foo: bar}",
 			"--language", "language",
@@ -32,8 +33,9 @@ func TestWhatsappTemplatesCreate(t *testing.T) {
 			"name: name\n" +
 			"waba_id: waba_id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "whatsapp:templates", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"whatsapp:templates", "create",
 		)
 	})
 }
@@ -42,8 +44,9 @@ func TestWhatsappTemplatesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:templates", "list",
+			t,
 			"--api-key", "string",
+			"whatsapp:templates", "list",
 			"--max-items", "10",
 			"--filter-category", "MARKETING",
 			"--filter-search", "filter[search]",

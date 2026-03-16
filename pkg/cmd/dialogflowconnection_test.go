@@ -12,8 +12,9 @@ func TestDialogflowConnectionsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "dialogflow-connections", "create",
+			t,
 			"--api-key", "string",
+			"dialogflow-connections", "create",
 			"--connection-id", "connection_id",
 			"--service-account", "{type: bar, project_id: bar, private_key_id: bar, private_key: bar, client_email: bar, client_id: bar, auth_uri: bar, token_uri: bar, auth_provider_x509_cert_url: bar, client_x509_cert_url: bar}",
 			"--conversation-profile-id", "a-VMHLWzTmKjiJw5S6O0-w",
@@ -42,8 +43,9 @@ func TestDialogflowConnectionsCreate(t *testing.T) {
 			"environment: development\n" +
 			"location: global\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "dialogflow-connections", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"dialogflow-connections", "create",
 			"--connection-id", "connection_id",
 		)
 	})
@@ -53,8 +55,9 @@ func TestDialogflowConnectionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "dialogflow-connections", "retrieve",
+			t,
 			"--api-key", "string",
+			"dialogflow-connections", "retrieve",
 			"--connection-id", "connection_id",
 		)
 	})
@@ -64,8 +67,9 @@ func TestDialogflowConnectionsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "dialogflow-connections", "update",
+			t,
 			"--api-key", "string",
+			"dialogflow-connections", "update",
 			"--connection-id", "connection_id",
 			"--service-account", "{type: bar, project_id: bar, private_key_id: bar, private_key: bar, client_email: bar, client_id: bar, auth_uri: bar, token_uri: bar, auth_provider_x509_cert_url: bar, client_x509_cert_url: bar}",
 			"--conversation-profile-id", "a-VMHLWzTmKjiJw5S6O0-w",
@@ -94,8 +98,9 @@ func TestDialogflowConnectionsUpdate(t *testing.T) {
 			"environment: development\n" +
 			"location: global\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "dialogflow-connections", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"dialogflow-connections", "update",
 			"--connection-id", "connection_id",
 		)
 	})
@@ -105,8 +110,9 @@ func TestDialogflowConnectionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "dialogflow-connections", "delete",
+			t,
 			"--api-key", "string",
+			"dialogflow-connections", "delete",
 			"--connection-id", "connection_id",
 		)
 	})

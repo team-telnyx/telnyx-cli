@@ -12,8 +12,9 @@ func TestWirelessRetrieveRegions(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireless", "retrieve-regions",
+			t,
 			"--api-key", "string",
+			"wireless", "retrieve-regions",
 			"--product", "public_ips",
 		)
 	})

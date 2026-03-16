@@ -13,8 +13,9 @@ func TestNumberReservationsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-reservations", "create",
+			t,
 			"--api-key", "string",
+			"number-reservations", "create",
 			"--customer-reference", "MY REF 001",
 			"--phone-number", "{phone_number: '+19705555098'}",
 		)
@@ -26,8 +27,9 @@ func TestNumberReservationsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-reservations", "create",
+			t,
 			"--api-key", "string",
+			"number-reservations", "create",
 			"--customer-reference", "MY REF 001",
 			"--phone-number.phone-number", "+19705555098",
 		)
@@ -40,8 +42,9 @@ func TestNumberReservationsCreate(t *testing.T) {
 			"phone_numbers:\n" +
 			"  - phone_number: '+19705555098'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "number-reservations", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"number-reservations", "create",
 		)
 	})
 }
@@ -50,8 +53,9 @@ func TestNumberReservationsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-reservations", "retrieve",
+			t,
 			"--api-key", "string",
+			"number-reservations", "retrieve",
 			"--number-reservation-id", "number_reservation_id",
 		)
 	})
@@ -61,8 +65,9 @@ func TestNumberReservationsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-reservations", "list",
+			t,
 			"--api-key", "string",
+			"number-reservations", "list",
 			"--max-items", "10",
 			"--filter", "{created_at: {gt: gt, lt: lt}, customer_reference: customer_reference, phone_numbers.phone_number: phone_numbers.phone_number, status: status}",
 			"--page-number", "0",
@@ -76,8 +81,9 @@ func TestNumberReservationsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-reservations", "list",
+			t,
 			"--api-key", "string",
+			"number-reservations", "list",
 			"--max-items", "10",
 			"--filter.created-at", "{gt: gt, lt: lt}",
 			"--filter.customer-reference", "customer_reference",

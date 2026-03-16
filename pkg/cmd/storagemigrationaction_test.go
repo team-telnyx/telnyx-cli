@@ -12,8 +12,9 @@ func TestStorageMigrationsActionsStop(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:migrations:actions", "stop",
+			t,
 			"--api-key", "string",
+			"storage:migrations:actions", "stop",
 			"--id", "",
 		)
 	})

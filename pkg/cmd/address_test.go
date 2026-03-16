@@ -13,8 +13,9 @@ func TestAddressesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "addresses", "create",
+			t,
 			"--api-key", "string",
+			"addresses", "create",
 			"--business-name", "Toy-O'Kon",
 			"--country-code", "US",
 			"--first-name", "Alfred",
@@ -52,8 +53,9 @@ func TestAddressesCreate(t *testing.T) {
 			"postal_code: '78701'\n" +
 			"validate_address: true\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "addresses", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"addresses", "create",
 		)
 	})
 }
@@ -62,8 +64,9 @@ func TestAddressesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "addresses", "retrieve",
+			t,
 			"--api-key", "string",
+			"addresses", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -73,8 +76,9 @@ func TestAddressesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "addresses", "list",
+			t,
 			"--api-key", "string",
+			"addresses", "list",
 			"--max-items", "10",
 			"--filter", "{address_book: {eq: eq}, customer_reference: string, street_address: {contains: contains}, used_as_emergency: used_as_emergency}",
 			"--page-number", "0",
@@ -89,8 +93,9 @@ func TestAddressesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "addresses", "list",
+			t,
 			"--api-key", "string",
+			"addresses", "list",
 			"--max-items", "10",
 			"--filter.address-book", "{eq: eq}",
 			"--filter.customer-reference", "string",
@@ -107,8 +112,9 @@ func TestAddressesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "addresses", "delete",
+			t,
 			"--api-key", "string",
+			"addresses", "delete",
 			"--id", "id",
 		)
 	})

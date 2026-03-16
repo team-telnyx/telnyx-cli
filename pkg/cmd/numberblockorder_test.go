@@ -13,8 +13,9 @@ func TestNumberBlockOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-block-orders", "create",
+			t,
 			"--api-key", "string",
+			"number-block-orders", "create",
 			"--range", "10",
 			"--starting-number", "+19705555000",
 			"--connection-id", "346789098765567",
@@ -32,8 +33,9 @@ func TestNumberBlockOrdersCreate(t *testing.T) {
 			"customer_reference: MY REF 001\n" +
 			"messaging_profile_id: abc85f64-5717-4562-b3fc-2c9600\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "number-block-orders", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"number-block-orders", "create",
 		)
 	})
 }
@@ -42,8 +44,9 @@ func TestNumberBlockOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-block-orders", "retrieve",
+			t,
 			"--api-key", "string",
+			"number-block-orders", "retrieve",
 			"--number-block-order-id", "number_block_order_id",
 		)
 	})
@@ -53,8 +56,9 @@ func TestNumberBlockOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-block-orders", "list",
+			t,
 			"--api-key", "string",
+			"number-block-orders", "list",
 			"--max-items", "10",
 			"--filter", "{created_at: {gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}, phone_numbers.starting_number: '+19705555000', status: pending}",
 			"--page-number", "0",
@@ -68,8 +72,9 @@ func TestNumberBlockOrdersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "number-block-orders", "list",
+			t,
 			"--api-key", "string",
+			"number-block-orders", "list",
 			"--max-items", "10",
 			"--filter.created-at", "{gt: '2018-01-01T00:00:00.000000Z', lt: '2018-01-01T00:00:00.000000Z'}",
 			"--filter.phone-numbers-starting-number", "+19705555000",

@@ -12,8 +12,9 @@ func TestManagedAccountsActionsDisable(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "managed-accounts:actions", "disable",
+			t,
 			"--api-key", "string",
+			"managed-accounts:actions", "disable",
 			"--id", "id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestManagedAccountsActionsEnable(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "managed-accounts:actions", "enable",
+			t,
 			"--api-key", "string",
+			"managed-accounts:actions", "enable",
 			"--id", "id",
 			"--reenable-all-connections=true",
 		)
@@ -34,8 +36,9 @@ func TestManagedAccountsActionsEnable(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("reenable_all_connections: true")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "managed-accounts:actions", "enable",
+			t, pipeData,
 			"--api-key", "string",
+			"managed-accounts:actions", "enable",
 			"--id", "id",
 		)
 	})

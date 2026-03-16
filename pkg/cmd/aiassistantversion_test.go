@@ -13,8 +13,9 @@ func TestAIAssistantsVersionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:versions", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:assistants:versions", "retrieve",
 			"--assistant-id", "assistant_id",
 			"--version-id", "version_id",
 			"--include-mcp-servers=true",
@@ -26,8 +27,9 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:versions", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants:versions", "update",
 			"--assistant-id", "assistant_id",
 			"--version-id", "version_id",
 			"--description", "description",
@@ -56,8 +58,9 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:versions", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants:versions", "update",
 			"--assistant-id", "assistant_id",
 			"--version-id", "version_id",
 			"--description", "description",
@@ -224,8 +227,9 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"  theme: light\n" +
 			"  view_history_url: view_history_url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants:versions", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants:versions", "update",
 			"--assistant-id", "assistant_id",
 			"--version-id", "version_id",
 		)
@@ -236,8 +240,9 @@ func TestAIAssistantsVersionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:versions", "list",
+			t,
 			"--api-key", "string",
+			"ai:assistants:versions", "list",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -247,8 +252,9 @@ func TestAIAssistantsVersionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:versions", "delete",
+			t,
 			"--api-key", "string",
+			"ai:assistants:versions", "delete",
 			"--assistant-id", "assistant_id",
 			"--version-id", "version_id",
 		)
@@ -259,8 +265,9 @@ func TestAIAssistantsVersionsPromote(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:versions", "promote",
+			t,
 			"--api-key", "string",
+			"ai:assistants:versions", "promote",
 			"--assistant-id", "assistant_id",
 			"--version-id", "version_id",
 		)

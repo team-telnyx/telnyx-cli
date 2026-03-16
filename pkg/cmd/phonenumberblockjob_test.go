@@ -13,8 +13,9 @@ func TestPhoneNumberBlocksJobsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-number-blocks:jobs", "retrieve",
+			t,
 			"--api-key", "string",
+			"phone-number-blocks:jobs", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -24,8 +25,9 @@ func TestPhoneNumberBlocksJobsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-number-blocks:jobs", "list",
+			t,
 			"--api-key", "string",
+			"phone-number-blocks:jobs", "list",
 			"--max-items", "10",
 			"--filter", "{status: in_progress, type: delete_phone_number_block}",
 			"--page-number", "0",
@@ -40,8 +42,9 @@ func TestPhoneNumberBlocksJobsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-number-blocks:jobs", "list",
+			t,
 			"--api-key", "string",
+			"phone-number-blocks:jobs", "list",
 			"--max-items", "10",
 			"--filter.status", "in_progress",
 			"--filter.type", "delete_phone_number_block",
@@ -56,8 +59,9 @@ func TestPhoneNumberBlocksJobsDeletePhoneNumberBlock(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-number-blocks:jobs", "delete-phone-number-block",
+			t,
 			"--api-key", "string",
+			"phone-number-blocks:jobs", "delete-phone-number-block",
 			"--phone-number-block-id", "f3946371-7199-4261-9c3d-81a0d7935146",
 		)
 	})
@@ -66,8 +70,9 @@ func TestPhoneNumberBlocksJobsDeletePhoneNumberBlock(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("phone_number_block_id: f3946371-7199-4261-9c3d-81a0d7935146")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "phone-number-blocks:jobs", "delete-phone-number-block",
+			t, pipeData,
 			"--api-key", "string",
+			"phone-number-blocks:jobs", "delete-phone-number-block",
 		)
 	})
 }

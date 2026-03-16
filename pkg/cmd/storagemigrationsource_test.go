@@ -13,8 +13,9 @@ func TestStorageMigrationSourcesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:migration-sources", "create",
+			t,
 			"--api-key", "string",
+			"storage:migration-sources", "create",
 			"--bucket-name", "bucket_name",
 			"--provider", "aws",
 			"--provider-auth", "{access_key: access_key, secret_access_key: secret_access_key}",
@@ -28,8 +29,9 @@ func TestStorageMigrationSourcesCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:migration-sources", "create",
+			t,
 			"--api-key", "string",
+			"storage:migration-sources", "create",
 			"--bucket-name", "bucket_name",
 			"--provider", "aws",
 			"--provider-auth.access-key", "access_key",
@@ -48,8 +50,9 @@ func TestStorageMigrationSourcesCreate(t *testing.T) {
 			"  secret_access_key: secret_access_key\n" +
 			"source_region: source_region\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "storage:migration-sources", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"storage:migration-sources", "create",
 		)
 	})
 }
@@ -58,8 +61,9 @@ func TestStorageMigrationSourcesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:migration-sources", "retrieve",
+			t,
 			"--api-key", "string",
+			"storage:migration-sources", "retrieve",
 			"--id", "",
 		)
 	})
@@ -69,8 +73,9 @@ func TestStorageMigrationSourcesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:migration-sources", "list",
+			t,
 			"--api-key", "string",
+			"storage:migration-sources", "list",
 		)
 	})
 }
@@ -79,8 +84,9 @@ func TestStorageMigrationSourcesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:migration-sources", "delete",
+			t,
 			"--api-key", "string",
+			"storage:migration-sources", "delete",
 			"--id", "",
 		)
 	})

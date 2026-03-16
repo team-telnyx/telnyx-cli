@@ -13,8 +13,9 @@ func TestSimCardDataUsageNotificationsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-data-usage-notifications", "create",
+			t,
 			"--api-key", "string",
+			"sim-card-data-usage-notifications", "create",
 			"--sim-card-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--threshold", "{amount: '2048.1', unit: MB}",
 		)
@@ -26,8 +27,9 @@ func TestSimCardDataUsageNotificationsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-data-usage-notifications", "create",
+			t,
 			"--api-key", "string",
+			"sim-card-data-usage-notifications", "create",
 			"--sim-card-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--threshold.amount", "2048.1",
 			"--threshold.unit", "MB",
@@ -42,8 +44,9 @@ func TestSimCardDataUsageNotificationsCreate(t *testing.T) {
 			"  amount: '2048.1'\n" +
 			"  unit: MB\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "sim-card-data-usage-notifications", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"sim-card-data-usage-notifications", "create",
 		)
 	})
 }
@@ -52,8 +55,9 @@ func TestSimCardDataUsageNotificationsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-data-usage-notifications", "retrieve",
+			t,
 			"--api-key", "string",
+			"sim-card-data-usage-notifications", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -63,8 +67,9 @@ func TestSimCardDataUsageNotificationsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-data-usage-notifications", "update",
+			t,
 			"--api-key", "string",
+			"sim-card-data-usage-notifications", "update",
 			"--sim-card-data-usage-notification-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--sim-card-id", "b34c1683-cd85-4493-b9a5-315eb4bc5e19",
 			"--threshold", "{amount: '2048.0', unit: MB}",
@@ -77,8 +82,9 @@ func TestSimCardDataUsageNotificationsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-data-usage-notifications", "update",
+			t,
 			"--api-key", "string",
+			"sim-card-data-usage-notifications", "update",
 			"--sim-card-data-usage-notification-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--sim-card-id", "b34c1683-cd85-4493-b9a5-315eb4bc5e19",
 			"--threshold.amount", "2048.0",
@@ -94,8 +100,9 @@ func TestSimCardDataUsageNotificationsUpdate(t *testing.T) {
 			"  amount: '2048.0'\n" +
 			"  unit: MB\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "sim-card-data-usage-notifications", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"sim-card-data-usage-notifications", "update",
 			"--sim-card-data-usage-notification-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -105,8 +112,9 @@ func TestSimCardDataUsageNotificationsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-data-usage-notifications", "list",
+			t,
 			"--api-key", "string",
+			"sim-card-data-usage-notifications", "list",
 			"--max-items", "10",
 			"--filter-sim-card-id", "47a1c2b0-cc7b-4ab1-bb98-b33fb0fc61b9",
 			"--page-number", "1",
@@ -119,8 +127,9 @@ func TestSimCardDataUsageNotificationsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-data-usage-notifications", "delete",
+			t,
 			"--api-key", "string",
+			"sim-card-data-usage-notifications", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

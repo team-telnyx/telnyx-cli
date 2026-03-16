@@ -12,8 +12,9 @@ func TestWhatsappBusinessAccountsSettingsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:business-accounts:settings", "retrieve",
+			t,
 			"--api-key", "string",
+			"whatsapp:business-accounts:settings", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestWhatsappBusinessAccountsSettingsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:business-accounts:settings", "update",
+			t,
 			"--api-key", "string",
+			"whatsapp:business-accounts:settings", "update",
 			"--id", "id",
 			"--name", "name",
 			"--timezone", "America/New_York",
@@ -46,8 +48,9 @@ func TestWhatsappBusinessAccountsSettingsUpdate(t *testing.T) {
 			"webhook_failover_url: webhook_failover_url\n" +
 			"webhook_url: webhook_url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "whatsapp:business-accounts:settings", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"whatsapp:business-accounts:settings", "update",
 			"--id", "id",
 		)
 	})

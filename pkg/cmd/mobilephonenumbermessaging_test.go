@@ -12,8 +12,9 @@ func TestMobilePhoneNumbersMessagingRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-phone-numbers:messaging", "retrieve",
+			t,
 			"--api-key", "string",
+			"mobile-phone-numbers:messaging", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestMobilePhoneNumbersMessagingList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-phone-numbers:messaging", "list",
+			t,
 			"--api-key", "string",
+			"mobile-phone-numbers:messaging", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",

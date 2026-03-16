@@ -12,8 +12,9 @@ func TestWellKnownRetrieveAuthorizationServerMetadata(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "well-known", "retrieve-authorization-server-metadata",
+			t,
 			"--api-key", "string",
+			"well-known", "retrieve-authorization-server-metadata",
 		)
 	})
 }
@@ -22,8 +23,9 @@ func TestWellKnownRetrieveProtectedResourceMetadata(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "well-known", "retrieve-protected-resource-metadata",
+			t,
 			"--api-key", "string",
+			"well-known", "retrieve-protected-resource-metadata",
 		)
 	})
 }

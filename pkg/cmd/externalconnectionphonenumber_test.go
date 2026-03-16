@@ -13,8 +13,9 @@ func TestExternalConnectionsPhoneNumbersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:phone-numbers", "retrieve",
+			t,
 			"--api-key", "string",
+			"external-connections:phone-numbers", "retrieve",
 			"--id", "1293384261075731499",
 			"--phone-number-id", "1234567889",
 		)
@@ -25,8 +26,9 @@ func TestExternalConnectionsPhoneNumbersUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:phone-numbers", "update",
+			t,
 			"--api-key", "string",
+			"external-connections:phone-numbers", "update",
 			"--id", "1293384261075731499",
 			"--phone-number-id", "1234567889",
 			"--location-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -37,8 +39,9 @@ func TestExternalConnectionsPhoneNumbersUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("location_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "external-connections:phone-numbers", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"external-connections:phone-numbers", "update",
 			"--id", "1293384261075731499",
 			"--phone-number-id", "1234567889",
 		)
@@ -49,8 +52,9 @@ func TestExternalConnectionsPhoneNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"external-connections:phone-numbers", "list",
 			"--max-items", "10",
 			"--id", "1293384261075731499",
 			"--filter", "{civic_address_id: {eq: '19990261512338516954'}, location_id: {eq: '19995665508264022121'}, phone_number: {contains: '+1970', eq: '+19705555098'}}",
@@ -65,8 +69,9 @@ func TestExternalConnectionsPhoneNumbersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "external-connections:phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"external-connections:phone-numbers", "list",
 			"--max-items", "10",
 			"--id", "1293384261075731499",
 			"--filter.civic-address-id", "{eq: '19990261512338516954'}",

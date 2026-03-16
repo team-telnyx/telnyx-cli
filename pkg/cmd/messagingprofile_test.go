@@ -13,8 +13,9 @@ func TestMessagingProfilesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "create",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "create",
 			"--name", "My name",
 			"--whitelisted-destination", "US",
 			"--ai-assistant-id", "ai_assistant_id",
@@ -42,8 +43,9 @@ func TestMessagingProfilesCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "create",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "create",
 			"--name", "My name",
 			"--whitelisted-destination", "US",
 			"--ai-assistant-id", "ai_assistant_id",
@@ -104,8 +106,9 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"webhook_failover_url: https://backup.example.com/hooks\n" +
 			"webhook_url: https://www.example.com/hooks\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-profiles", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-profiles", "create",
 		)
 	})
 }
@@ -114,8 +117,9 @@ func TestMessagingProfilesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "retrieve",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "retrieve",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -125,8 +129,9 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "update",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "update",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--alpha-sender", "sqF",
 			"--daily-spend-limit", "269125115713",
@@ -153,8 +158,9 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "update",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "update",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--alpha-sender", "sqF",
 			"--daily-spend-limit", "269125115713",
@@ -212,8 +218,9 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"whitelisted_destinations:\n" +
 			"  - US\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-profiles", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-profiles", "update",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -223,8 +230,9 @@ func TestMessagingProfilesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "list",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "list",
 			"--max-items", "10",
 			"--filter", "{name: name}",
 			"--filter-name-contains", "filter[name][contains]",
@@ -240,8 +248,9 @@ func TestMessagingProfilesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "list",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "list",
 			"--max-items", "10",
 			"--filter.name", "name",
 			"--filter-name-contains", "filter[name][contains]",
@@ -256,8 +265,9 @@ func TestMessagingProfilesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "delete",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "delete",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -267,8 +277,9 @@ func TestMessagingProfilesListAlphanumericSenderIDs(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "list-alphanumeric-sender-ids",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "list-alphanumeric-sender-ids",
 			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
@@ -281,8 +292,9 @@ func TestMessagingProfilesListPhoneNumbers(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "list-phone-numbers",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "list-phone-numbers",
 			"--max-items", "10",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
@@ -295,8 +307,9 @@ func TestMessagingProfilesListShortCodes(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "list-short-codes",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "list-short-codes",
 			"--max-items", "10",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
@@ -309,8 +322,9 @@ func TestMessagingProfilesRetrieveMetrics(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profiles", "retrieve-metrics",
+			t,
 			"--api-key", "string",
+			"messaging-profiles", "retrieve-metrics",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--time-frame", "1h",
 		)

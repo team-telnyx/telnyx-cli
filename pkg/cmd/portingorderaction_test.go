@@ -12,8 +12,9 @@ func TestPortingOrdersActionsActivate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:actions", "activate",
+			t,
 			"--api-key", "string",
+			"porting-orders:actions", "activate",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -23,8 +24,9 @@ func TestPortingOrdersActionsCancel(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:actions", "cancel",
+			t,
 			"--api-key", "string",
+			"porting-orders:actions", "cancel",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -34,8 +36,9 @@ func TestPortingOrdersActionsConfirm(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:actions", "confirm",
+			t,
 			"--api-key", "string",
+			"porting-orders:actions", "confirm",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -45,8 +48,9 @@ func TestPortingOrdersActionsShare(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:actions", "share",
+			t,
 			"--api-key", "string",
+			"porting-orders:actions", "share",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--expires-in-seconds", "3600",
 			"--permissions", "porting_order.document.read",
@@ -59,8 +63,9 @@ func TestPortingOrdersActionsShare(t *testing.T) {
 			"expires_in_seconds: 3600\n" +
 			"permissions: porting_order.document.read\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "porting-orders:actions", "share",
+			t, pipeData,
 			"--api-key", "string",
+			"porting-orders:actions", "share",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

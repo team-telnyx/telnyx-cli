@@ -13,8 +13,9 @@ func TestIntegrationSecretsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "integration-secrets", "create",
+			t,
 			"--api-key", "string",
+			"integration-secrets", "create",
 			"--identifier", "my_secret",
 			"--type", "bearer",
 			"--token", "my_secret_value",
@@ -32,8 +33,9 @@ func TestIntegrationSecretsCreate(t *testing.T) {
 			"password: password\n" +
 			"username: username\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "integration-secrets", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"integration-secrets", "create",
 		)
 	})
 }
@@ -42,8 +44,9 @@ func TestIntegrationSecretsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "integration-secrets", "list",
+			t,
 			"--api-key", "string",
+			"integration-secrets", "list",
 			"--max-items", "10",
 			"--filter", "{type: bearer}",
 			"--page-number", "0",
@@ -57,8 +60,9 @@ func TestIntegrationSecretsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "integration-secrets", "list",
+			t,
 			"--api-key", "string",
+			"integration-secrets", "list",
 			"--max-items", "10",
 			"--filter.type", "bearer",
 			"--page-number", "0",
@@ -71,8 +75,9 @@ func TestIntegrationSecretsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "integration-secrets", "delete",
+			t,
 			"--api-key", "string",
+			"integration-secrets", "delete",
 			"--id", "id",
 		)
 	})

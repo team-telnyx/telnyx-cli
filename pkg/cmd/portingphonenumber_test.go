@@ -13,8 +13,9 @@ func TestPortingPhoneNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"porting-phone-numbers", "list",
 			"--max-items", "10",
 			"--filter", "{porting_order_status: in-process}",
 			"--page-number", "0",
@@ -28,8 +29,9 @@ func TestPortingPhoneNumbersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"porting-phone-numbers", "list",
 			"--max-items", "10",
 			"--filter.porting-order-status", "in-process",
 			"--page-number", "0",
