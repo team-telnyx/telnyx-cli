@@ -12,8 +12,9 @@ func TestAlphanumericSenderIDsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "alphanumeric-sender-ids", "create",
+			t,
 			"--api-key", "string",
+			"alphanumeric-sender-ids", "create",
 			"--alphanumeric-sender-id", "MyCompany",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--us-long-code-fallback", "+15551234567",
@@ -27,8 +28,9 @@ func TestAlphanumericSenderIDsCreate(t *testing.T) {
 			"messaging_profile_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\n" +
 			"us_long_code_fallback: '+15551234567'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "alphanumeric-sender-ids", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"alphanumeric-sender-ids", "create",
 		)
 	})
 }
@@ -37,8 +39,9 @@ func TestAlphanumericSenderIDsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "alphanumeric-sender-ids", "retrieve",
+			t,
 			"--api-key", "string",
+			"alphanumeric-sender-ids", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -48,8 +51,9 @@ func TestAlphanumericSenderIDsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "alphanumeric-sender-ids", "list",
+			t,
 			"--api-key", "string",
+			"alphanumeric-sender-ids", "list",
 			"--max-items", "10",
 			"--filter-messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",
@@ -62,8 +66,9 @@ func TestAlphanumericSenderIDsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "alphanumeric-sender-ids", "delete",
+			t,
 			"--api-key", "string",
+			"alphanumeric-sender-ids", "delete",
 			"--id", "id",
 		)
 	})

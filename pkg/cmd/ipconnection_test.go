@@ -13,8 +13,9 @@ func TestIPConnectionsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ip-connections", "create",
+			t,
 			"--api-key", "string",
+			"ip-connections", "create",
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
@@ -48,8 +49,9 @@ func TestIPConnectionsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ip-connections", "create",
+			t,
 			"--api-key", "string",
+			"ip-connections", "create",
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
@@ -172,8 +174,9 @@ func TestIPConnectionsCreate(t *testing.T) {
 			"webhook_event_url: https://example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ip-connections", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ip-connections", "create",
 		)
 	})
 }
@@ -182,8 +185,9 @@ func TestIPConnectionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ip-connections", "retrieve",
+			t,
 			"--api-key", "string",
+			"ip-connections", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -193,8 +197,9 @@ func TestIPConnectionsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ip-connections", "update",
+			t,
 			"--api-key", "string",
+			"ip-connections", "update",
 			"--id", "id",
 			"--active=true",
 			"--anchorsite-override", "Latency",
@@ -229,8 +234,9 @@ func TestIPConnectionsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ip-connections", "update",
+			t,
 			"--api-key", "string",
+			"ip-connections", "update",
 			"--id", "id",
 			"--active=true",
 			"--anchorsite-override", "Latency",
@@ -360,8 +366,9 @@ func TestIPConnectionsUpdate(t *testing.T) {
 			"webhook_event_url: https://example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ip-connections", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ip-connections", "update",
 			"--id", "id",
 		)
 	})
@@ -371,8 +378,9 @@ func TestIPConnectionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ip-connections", "list",
+			t,
 			"--api-key", "string",
+			"ip-connections", "list",
 			"--max-items", "10",
 			"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 			"--page-number", "0",
@@ -387,8 +395,9 @@ func TestIPConnectionsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ip-connections", "list",
+			t,
 			"--api-key", "string",
+			"ip-connections", "list",
 			"--max-items", "10",
 			"--filter.connection-name", "{contains: contains}",
 			"--filter.fqdn", "fqdn",
@@ -404,8 +413,9 @@ func TestIPConnectionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ip-connections", "delete",
+			t,
 			"--api-key", "string",
+			"ip-connections", "delete",
 			"--id", "id",
 		)
 	})

@@ -13,8 +13,9 @@ func TestMobileNetworkOperatorsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-network-operators", "list",
+			t,
 			"--api-key", "string",
+			"mobile-network-operators", "list",
 			"--max-items", "10",
 			"--filter", "{country_code: US, mcc: '310', mnc: '410', name: {contains: T&T, ends_with: T, starts_with: AT}, network_preferences_enabled: true, tadig: USACG}",
 			"--page-number", "0",
@@ -28,8 +29,9 @@ func TestMobileNetworkOperatorsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-network-operators", "list",
+			t,
 			"--api-key", "string",
+			"mobile-network-operators", "list",
 			"--max-items", "10",
 			"--filter.country-code", "US",
 			"--filter.mcc", "310",

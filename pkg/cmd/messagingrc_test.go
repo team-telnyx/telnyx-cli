@@ -12,8 +12,9 @@ func TestMessagingRcsInviteTestNumber(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging:rcs", "invite-test-number",
+			t,
 			"--api-key", "string",
+			"messaging:rcs", "invite-test-number",
 			"--id", "id",
 			"--phone-number", "phone_number",
 		)
@@ -24,8 +25,9 @@ func TestMessagingRcsListBulkCapabilities(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging:rcs", "list-bulk-capabilities",
+			t,
 			"--api-key", "string",
+			"messaging:rcs", "list-bulk-capabilities",
 			"--agent-id", "TestAgent",
 			"--phone-number", "+13125551234",
 		)
@@ -38,8 +40,9 @@ func TestMessagingRcsListBulkCapabilities(t *testing.T) {
 			"phone_numbers:\n" +
 			"  - '+13125551234'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging:rcs", "list-bulk-capabilities",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging:rcs", "list-bulk-capabilities",
 		)
 	})
 }
@@ -48,8 +51,9 @@ func TestMessagingRcsRetrieveCapabilities(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging:rcs", "retrieve-capabilities",
+			t,
 			"--api-key", "string",
+			"messaging:rcs", "retrieve-capabilities",
 			"--agent-id", "agent_id",
 			"--phone-number", "phone_number",
 		)

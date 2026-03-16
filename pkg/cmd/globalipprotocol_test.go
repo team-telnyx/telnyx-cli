@@ -12,8 +12,9 @@ func TestGlobalIPProtocolsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "global-ip-protocols", "list",
+			t,
 			"--api-key", "string",
+			"global-ip-protocols", "list",
 		)
 	})
 }

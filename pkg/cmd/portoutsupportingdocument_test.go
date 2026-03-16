@@ -13,8 +13,9 @@ func TestPortoutsSupportingDocumentsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:supporting-documents", "create",
+			t,
 			"--api-key", "string",
+			"portouts:supporting-documents", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--document", "{document_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, type: loa}",
 		)
@@ -26,8 +27,9 @@ func TestPortoutsSupportingDocumentsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:supporting-documents", "create",
+			t,
 			"--api-key", "string",
+			"portouts:supporting-documents", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--document.document-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777f0",
 			"--document.type", "loa",
@@ -41,8 +43,9 @@ func TestPortoutsSupportingDocumentsCreate(t *testing.T) {
 			"  - document_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0\n" +
 			"    type: loa\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "portouts:supporting-documents", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"portouts:supporting-documents", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -52,8 +55,9 @@ func TestPortoutsSupportingDocumentsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:supporting-documents", "list",
+			t,
 			"--api-key", "string",
+			"portouts:supporting-documents", "list",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

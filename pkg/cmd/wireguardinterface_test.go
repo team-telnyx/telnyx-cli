@@ -13,8 +13,9 @@ func TestWireguardInterfacesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-interfaces", "create",
+			t,
 			"--api-key", "string",
+			"wireguard-interfaces", "create",
 			"--region-code", "ashburn-va",
 			"--enable-sip-trunking=false",
 			"--name", "test interface",
@@ -30,8 +31,9 @@ func TestWireguardInterfacesCreate(t *testing.T) {
 			"name: test interface\n" +
 			"network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "wireguard-interfaces", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"wireguard-interfaces", "create",
 		)
 	})
 }
@@ -40,8 +42,9 @@ func TestWireguardInterfacesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-interfaces", "retrieve",
+			t,
 			"--api-key", "string",
+			"wireguard-interfaces", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -51,8 +54,9 @@ func TestWireguardInterfacesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-interfaces", "list",
+			t,
 			"--api-key", "string",
+			"wireguard-interfaces", "list",
 			"--max-items", "10",
 			"--filter", "{network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
 			"--page-number", "0",
@@ -66,8 +70,9 @@ func TestWireguardInterfacesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-interfaces", "list",
+			t,
 			"--api-key", "string",
+			"wireguard-interfaces", "list",
 			"--max-items", "10",
 			"--filter.network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--page-number", "0",
@@ -80,8 +85,9 @@ func TestWireguardInterfacesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-interfaces", "delete",
+			t,
 			"--api-key", "string",
+			"wireguard-interfaces", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

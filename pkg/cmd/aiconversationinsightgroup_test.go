@@ -12,8 +12,9 @@ func TestAIConversationsInsightGroupsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insight-groups", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insight-groups", "retrieve",
 			"--group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -23,8 +24,9 @@ func TestAIConversationsInsightGroupsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insight-groups", "update",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insight-groups", "update",
 			"--group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--description", "description",
 			"--name", "name",
@@ -39,8 +41,9 @@ func TestAIConversationsInsightGroupsUpdate(t *testing.T) {
 			"name: name\n" +
 			"webhook: webhook\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:conversations:insight-groups", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:conversations:insight-groups", "update",
 			"--group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -50,8 +53,9 @@ func TestAIConversationsInsightGroupsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insight-groups", "delete",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insight-groups", "delete",
 			"--group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -61,8 +65,9 @@ func TestAIConversationsInsightGroupsInsightGroups(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insight-groups", "insight-groups",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insight-groups", "insight-groups",
 			"--name", "name",
 			"--description", "description",
 			"--webhook", "webhook",
@@ -76,8 +81,9 @@ func TestAIConversationsInsightGroupsInsightGroups(t *testing.T) {
 			"description: description\n" +
 			"webhook: webhook\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:conversations:insight-groups", "insight-groups",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:conversations:insight-groups", "insight-groups",
 		)
 	})
 }
@@ -86,8 +92,9 @@ func TestAIConversationsInsightGroupsRetrieveInsightGroups(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insight-groups", "retrieve-insight-groups",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insight-groups", "retrieve-insight-groups",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",

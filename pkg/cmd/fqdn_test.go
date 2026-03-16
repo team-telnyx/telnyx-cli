@@ -13,8 +13,9 @@ func TestFqdnsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdns", "create",
+			t,
 			"--api-key", "string",
+			"fqdns", "create",
 			"--connection-id", "1516447646313612565",
 			"--dns-record-type", "a",
 			"--fqdn", "example.com",
@@ -30,8 +31,9 @@ func TestFqdnsCreate(t *testing.T) {
 			"fqdn: example.com\n" +
 			"port: 8080\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "fqdns", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"fqdns", "create",
 		)
 	})
 }
@@ -40,8 +42,9 @@ func TestFqdnsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdns", "retrieve",
+			t,
 			"--api-key", "string",
+			"fqdns", "retrieve",
 			"--id", "1517907029795014409",
 		)
 	})
@@ -51,8 +54,9 @@ func TestFqdnsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdns", "update",
+			t,
 			"--api-key", "string",
+			"fqdns", "update",
 			"--id", "1517907029795014409",
 			"--connection-id", "1516447646313612565",
 			"--dns-record-type", "a",
@@ -69,8 +73,9 @@ func TestFqdnsUpdate(t *testing.T) {
 			"fqdn: example.com\n" +
 			"port: 8080\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "fqdns", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"fqdns", "update",
 			"--id", "1517907029795014409",
 		)
 	})
@@ -80,8 +85,9 @@ func TestFqdnsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdns", "list",
+			t,
 			"--api-key", "string",
+			"fqdns", "list",
 			"--max-items", "10",
 			"--filter", "{connection_id: connection_id, dns_record_type: a, fqdn: example.com, port: 5060}",
 			"--page-number", "0",
@@ -95,8 +101,9 @@ func TestFqdnsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdns", "list",
+			t,
 			"--api-key", "string",
+			"fqdns", "list",
 			"--max-items", "10",
 			"--filter.connection-id", "connection_id",
 			"--filter.dns-record-type", "a",
@@ -112,8 +119,9 @@ func TestFqdnsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdns", "delete",
+			t,
 			"--api-key", "string",
+			"fqdns", "delete",
 			"--id", "1517907029795014409",
 		)
 	})

@@ -12,8 +12,9 @@ func TestQueuesCallsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "queues:calls", "retrieve",
+			t,
 			"--api-key", "string",
+			"queues:calls", "retrieve",
 			"--queue-name", "queue_name",
 			"--call-control-id", "call_control_id",
 		)
@@ -24,8 +25,9 @@ func TestQueuesCallsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "queues:calls", "update",
+			t,
 			"--api-key", "string",
+			"queues:calls", "update",
 			"--queue-name", "queue_name",
 			"--call-control-id", "call_control_id",
 			"--keep-after-hangup=true",
@@ -36,8 +38,9 @@ func TestQueuesCallsUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("keep_after_hangup: true")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "queues:calls", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"queues:calls", "update",
 			"--queue-name", "queue_name",
 			"--call-control-id", "call_control_id",
 		)
@@ -48,8 +51,9 @@ func TestQueuesCallsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "queues:calls", "list",
+			t,
 			"--api-key", "string",
+			"queues:calls", "list",
 			"--max-items", "10",
 			"--queue-name", "queue_name",
 			"--page-number", "0",
@@ -62,8 +66,9 @@ func TestQueuesCallsRemove(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "queues:calls", "remove",
+			t,
 			"--api-key", "string",
+			"queues:calls", "remove",
 			"--queue-name", "queue_name",
 			"--call-control-id", "call_control_id",
 		)

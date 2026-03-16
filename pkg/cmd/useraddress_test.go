@@ -13,8 +13,9 @@ func TestUserAddressesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "user-addresses", "create",
+			t,
 			"--api-key", "string",
+			"user-addresses", "create",
 			"--business-name", "Toy-O'Kon",
 			"--country-code", "US",
 			"--first-name", "Alfred",
@@ -50,8 +51,9 @@ func TestUserAddressesCreate(t *testing.T) {
 			"postal_code: '78701'\n" +
 			"skip_address_verification: true\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "user-addresses", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"user-addresses", "create",
 		)
 	})
 }
@@ -60,8 +62,9 @@ func TestUserAddressesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "user-addresses", "retrieve",
+			t,
 			"--api-key", "string",
+			"user-addresses", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -71,8 +74,9 @@ func TestUserAddressesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "user-addresses", "list",
+			t,
 			"--api-key", "string",
+			"user-addresses", "list",
 			"--max-items", "10",
 			"--filter", "{customer_reference: {contains: contains, eq: eq}, street_address: {contains: contains}}",
 			"--page-number", "0",
@@ -87,8 +91,9 @@ func TestUserAddressesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "user-addresses", "list",
+			t,
 			"--api-key", "string",
+			"user-addresses", "list",
 			"--max-items", "10",
 			"--filter.customer-reference", "{contains: contains, eq: eq}",
 			"--filter.street-address", "{contains: contains}",

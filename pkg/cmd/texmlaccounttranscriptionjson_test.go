@@ -12,8 +12,9 @@ func TestTexmlAccountsTranscriptionsJsonDeleteRecordingTranscriptionSidJson(t *t
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:transcriptions:json", "delete-recording-transcription-sid-json",
+			t,
 			"--api-key", "string",
+			"texml:accounts:transcriptions:json", "delete-recording-transcription-sid-json",
 			"--account-sid", "account_sid",
 			"--recording-transcription-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
@@ -24,8 +25,9 @@ func TestTexmlAccountsTranscriptionsJsonRetrieveRecordingTranscriptionSidJson(t 
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:transcriptions:json", "retrieve-recording-transcription-sid-json",
+			t,
 			"--api-key", "string",
+			"texml:accounts:transcriptions:json", "retrieve-recording-transcription-sid-json",
 			"--account-sid", "account_sid",
 			"--recording-transcription-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)

@@ -12,8 +12,9 @@ func TestQueuesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "queues", "create",
+			t,
 			"--api-key", "string",
+			"queues", "create",
 			"--queue-name", "tier_1_support",
 			"--max-size", "100",
 		)
@@ -25,8 +26,9 @@ func TestQueuesCreate(t *testing.T) {
 			"queue_name: tier_1_support\n" +
 			"max_size: 100\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "queues", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"queues", "create",
 		)
 	})
 }
@@ -35,8 +37,9 @@ func TestQueuesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "queues", "retrieve",
+			t,
 			"--api-key", "string",
+			"queues", "retrieve",
 			"--queue-name", "queue_name",
 		)
 	})
@@ -46,8 +49,9 @@ func TestQueuesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "queues", "update",
+			t,
 			"--api-key", "string",
+			"queues", "update",
 			"--queue-name", "queue_name",
 			"--max-size", "200",
 		)
@@ -57,8 +61,9 @@ func TestQueuesUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("max_size: 200")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "queues", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"queues", "update",
 			"--queue-name", "queue_name",
 		)
 	})
@@ -68,8 +73,9 @@ func TestQueuesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "queues", "list",
+			t,
 			"--api-key", "string",
+			"queues", "list",
 			"--max-items", "10",
 			"--page-number", "1",
 			"--page-size", "1",
@@ -81,8 +87,9 @@ func TestQueuesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "queues", "delete",
+			t,
 			"--api-key", "string",
+			"queues", "delete",
 			"--queue-name", "queue_name",
 		)
 	})

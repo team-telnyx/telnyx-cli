@@ -12,8 +12,9 @@ func TestWhatsappPhoneNumbersCallingSettingsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:phone-numbers:calling-settings", "retrieve",
+			t,
 			"--api-key", "string",
+			"whatsapp:phone-numbers:calling-settings", "retrieve",
 			"--phone-number", "phone_number",
 		)
 	})
@@ -23,8 +24,9 @@ func TestWhatsappPhoneNumbersCallingSettingsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:phone-numbers:calling-settings", "update",
+			t,
 			"--api-key", "string",
+			"whatsapp:phone-numbers:calling-settings", "update",
 			"--phone-number", "phone_number",
 			"--enabled=true",
 		)
@@ -34,8 +36,9 @@ func TestWhatsappPhoneNumbersCallingSettingsUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("enabled: true")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "whatsapp:phone-numbers:calling-settings", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"whatsapp:phone-numbers:calling-settings", "update",
 			"--phone-number", "phone_number",
 		)
 	})

@@ -12,8 +12,9 @@ func TestActionsRegisterCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "actions:register", "create",
+			t,
 			"--api-key", "string",
+			"actions:register", "create",
 			"--registration-code", "0000000001",
 			"--registration-code", "0000000002",
 			"--registration-code", "0000000003",
@@ -39,8 +40,9 @@ func TestActionsRegisterCreate(t *testing.T) {
 			"  - customers\n" +
 			"  - active-customers\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "actions:register", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"actions:register", "create",
 		)
 	})
 }

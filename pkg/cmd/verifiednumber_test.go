@@ -12,8 +12,9 @@ func TestVerifiedNumbersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verified-numbers", "create",
+			t,
 			"--api-key", "string",
+			"verified-numbers", "create",
 			"--phone-number", "+15551234567",
 			"--verification-method", "sms",
 			"--extension", "ww243w1",
@@ -27,8 +28,9 @@ func TestVerifiedNumbersCreate(t *testing.T) {
 			"verification_method: sms\n" +
 			"extension: ww243w1\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "verified-numbers", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"verified-numbers", "create",
 		)
 	})
 }
@@ -37,8 +39,9 @@ func TestVerifiedNumbersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verified-numbers", "retrieve",
+			t,
 			"--api-key", "string",
+			"verified-numbers", "retrieve",
 			"--phone-number", "+15551234567",
 		)
 	})
@@ -48,8 +51,9 @@ func TestVerifiedNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verified-numbers", "list",
+			t,
 			"--api-key", "string",
+			"verified-numbers", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -61,8 +65,9 @@ func TestVerifiedNumbersDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verified-numbers", "delete",
+			t,
 			"--api-key", "string",
+			"verified-numbers", "delete",
 			"--phone-number", "+15551234567",
 		)
 	})

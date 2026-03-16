@@ -12,8 +12,9 @@ func TestLedgerBillingGroupReportsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ledger-billing-group-reports", "create",
+			t,
 			"--api-key", "string",
+			"ledger-billing-group-reports", "create",
 			"--month", "10",
 			"--year", "2019",
 		)
@@ -25,8 +26,9 @@ func TestLedgerBillingGroupReportsCreate(t *testing.T) {
 			"month: 10\n" +
 			"year: 2019\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ledger-billing-group-reports", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ledger-billing-group-reports", "create",
 		)
 	})
 }
@@ -35,8 +37,9 @@ func TestLedgerBillingGroupReportsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ledger-billing-group-reports", "retrieve",
+			t,
 			"--api-key", "string",
+			"ledger-billing-group-reports", "retrieve",
 			"--id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 		)
 	})

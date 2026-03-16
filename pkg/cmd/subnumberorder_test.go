@@ -13,8 +13,9 @@ func TestSubNumberOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders", "retrieve",
+			t,
 			"--api-key", "string",
+			"sub-number-orders", "retrieve",
 			"--sub-number-order-id", "sub_number_order_id",
 			"--filter", "{include_phone_numbers: true}",
 		)
@@ -26,8 +27,9 @@ func TestSubNumberOrdersRetrieve(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders", "retrieve",
+			t,
 			"--api-key", "string",
+			"sub-number-orders", "retrieve",
 			"--sub-number-order-id", "sub_number_order_id",
 			"--filter.include-phone-numbers=true",
 		)
@@ -38,8 +40,9 @@ func TestSubNumberOrdersUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders", "update",
+			t,
 			"--api-key", "string",
+			"sub-number-orders", "update",
 			"--sub-number-order-id", "sub_number_order_id",
 			"--regulatory-requirement", "{field_value: 45f45a04-b4be-4592-95b1-9306b9db2b21, requirement_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576}",
 		)
@@ -51,8 +54,9 @@ func TestSubNumberOrdersUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders", "update",
+			t,
 			"--api-key", "string",
+			"sub-number-orders", "update",
 			"--sub-number-order-id", "sub_number_order_id",
 			"--regulatory-requirement.field-value", "45f45a04-b4be-4592-95b1-9306b9db2b21",
 			"--regulatory-requirement.requirement-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
@@ -66,8 +70,9 @@ func TestSubNumberOrdersUpdate(t *testing.T) {
 			"  - field_value: 45f45a04-b4be-4592-95b1-9306b9db2b21\n" +
 			"    requirement_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "sub-number-orders", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"sub-number-orders", "update",
 			"--sub-number-order-id", "sub_number_order_id",
 		)
 	})
@@ -77,8 +82,9 @@ func TestSubNumberOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders", "list",
+			t,
 			"--api-key", "string",
+			"sub-number-orders", "list",
 			"--filter", "{country_code: US, order_request_id: 12ade33a-21c0-473b-b055-b3c836e1c293, phone_number_type: local, phone_numbers_count: 1, status: status}",
 		)
 	})
@@ -89,8 +95,9 @@ func TestSubNumberOrdersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders", "list",
+			t,
 			"--api-key", "string",
+			"sub-number-orders", "list",
 			"--filter.country-code", "US",
 			"--filter.order-request-id", "12ade33a-21c0-473b-b055-b3c836e1c293",
 			"--filter.phone-number-type", "local",
@@ -104,8 +111,9 @@ func TestSubNumberOrdersCancel(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders", "cancel",
+			t,
 			"--api-key", "string",
+			"sub-number-orders", "cancel",
 			"--sub-number-order-id", "sub_number_order_id",
 		)
 	})
@@ -115,8 +123,9 @@ func TestSubNumberOrdersUpdateRequirementGroup(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders", "update-requirement-group",
+			t,
 			"--api-key", "string",
+			"sub-number-orders", "update-requirement-group",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--requirement-group-id", "a4b201f9-8646-4e54-a7d2-b2e403eeaf8c",
 		)
@@ -126,8 +135,9 @@ func TestSubNumberOrdersUpdateRequirementGroup(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("requirement_group_id: a4b201f9-8646-4e54-a7d2-b2e403eeaf8c")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "sub-number-orders", "update-requirement-group",
+			t, pipeData,
 			"--api-key", "string",
+			"sub-number-orders", "update-requirement-group",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

@@ -13,8 +13,9 @@ func TestPhoneNumbersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers", "retrieve",
+			t,
 			"--api-key", "string",
+			"phone-numbers", "retrieve",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -24,8 +25,9 @@ func TestPhoneNumbersUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers", "update",
+			t,
 			"--api-key", "string",
+			"phone-numbers", "update",
 			"--phone-number-id", "1293384261075731499",
 			"--address-id", "dc8f39ac-953d-4520-b93b-786ae87db0da",
 			"--billing-group-id", "dc8e4d67-33a0-4cbb-af74-7b58f05bd494",
@@ -49,8 +51,9 @@ func TestPhoneNumbersUpdate(t *testing.T) {
 			"tags:\n" +
 			"  - tag\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "phone-numbers", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"phone-numbers", "update",
 			"--phone-number-id", "1293384261075731499",
 		)
 	})
@@ -60,8 +63,9 @@ func TestPhoneNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"phone-numbers", "list",
 			"--max-items", "10",
 			"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', country_iso_alpha2: US, customer_reference: customer_reference, emergency_address_id: '9102160989215728032', number_type: {eq: local}, phone_number: phone_number, source: ported, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel, without_tags: 'true'}",
 			"--handle-messaging-profile-error", "false",
@@ -77,8 +81,9 @@ func TestPhoneNumbersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"phone-numbers", "list",
 			"--max-items", "10",
 			"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",
 			"--filter.connection-id", "1521916448077776306",
@@ -105,8 +110,9 @@ func TestPhoneNumbersDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers", "delete",
+			t,
 			"--api-key", "string",
+			"phone-numbers", "delete",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -116,8 +122,9 @@ func TestPhoneNumbersSlimList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers", "slim-list",
+			t,
 			"--api-key", "string",
+			"phone-numbers", "slim-list",
 			"--max-items", "10",
 			"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', country_iso_alpha2: US, customer_reference: customer_reference, emergency_address_id: '9102160989215728032', number_type: {eq: local}, phone_number: phone_number, source: ported, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel}",
 			"--include-connection=true",
@@ -134,8 +141,9 @@ func TestPhoneNumbersSlimList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "phone-numbers", "slim-list",
+			t,
 			"--api-key", "string",
+			"phone-numbers", "slim-list",
 			"--max-items", "10",
 			"--filter.billing-group-id", "62e4bf2e-c278-4282-b524-488d9c9c43b2",
 			"--filter.connection-id", "1521916448077776306",

@@ -13,8 +13,9 @@ func TestNetworksCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "networks", "create",
+			t,
 			"--api-key", "string",
+			"networks", "create",
 			"--name", "test network",
 		)
 	})
@@ -23,8 +24,9 @@ func TestNetworksCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("name: test network")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "networks", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"networks", "create",
 		)
 	})
 }
@@ -33,8 +35,9 @@ func TestNetworksRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "networks", "retrieve",
+			t,
 			"--api-key", "string",
+			"networks", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -44,8 +47,9 @@ func TestNetworksUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "networks", "update",
+			t,
 			"--api-key", "string",
+			"networks", "update",
 			"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--name", "test network",
 		)
@@ -55,8 +59,9 @@ func TestNetworksUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("name: test network")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "networks", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"networks", "update",
 			"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -66,8 +71,9 @@ func TestNetworksList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "networks", "list",
+			t,
 			"--api-key", "string",
+			"networks", "list",
 			"--max-items", "10",
 			"--filter", "{name: test network}",
 			"--page-number", "0",
@@ -81,8 +87,9 @@ func TestNetworksList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "networks", "list",
+			t,
 			"--api-key", "string",
+			"networks", "list",
 			"--max-items", "10",
 			"--filter.name", "test network",
 			"--page-number", "0",
@@ -95,8 +102,9 @@ func TestNetworksDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "networks", "delete",
+			t,
 			"--api-key", "string",
+			"networks", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -106,8 +114,9 @@ func TestNetworksListInterfaces(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "networks", "list-interfaces",
+			t,
 			"--api-key", "string",
+			"networks", "list-interfaces",
 			"--max-items", "10",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--filter", "{name: test interface, type: wireguard_interface}",
@@ -122,8 +131,9 @@ func TestNetworksListInterfaces(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "networks", "list-interfaces",
+			t,
 			"--api-key", "string",
+			"networks", "list-interfaces",
 			"--max-items", "10",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--filter.name", "test interface",

@@ -13,8 +13,9 @@ func TestAIFineTuningJobsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:fine-tuning:jobs", "create",
+			t,
 			"--api-key", "string",
+			"ai:fine-tuning:jobs", "create",
 			"--model", "model",
 			"--training-file", "training_file",
 			"--hyperparameters", "{n_epochs: 1}",
@@ -28,8 +29,9 @@ func TestAIFineTuningJobsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:fine-tuning:jobs", "create",
+			t,
 			"--api-key", "string",
+			"ai:fine-tuning:jobs", "create",
 			"--model", "model",
 			"--training-file", "training_file",
 			"--hyperparameters.n-epochs", "1",
@@ -46,8 +48,9 @@ func TestAIFineTuningJobsCreate(t *testing.T) {
 			"  n_epochs: 1\n" +
 			"suffix: suffix\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:fine-tuning:jobs", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:fine-tuning:jobs", "create",
 		)
 	})
 }
@@ -56,8 +59,9 @@ func TestAIFineTuningJobsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:fine-tuning:jobs", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:fine-tuning:jobs", "retrieve",
 			"--job-id", "job_id",
 		)
 	})
@@ -67,8 +71,9 @@ func TestAIFineTuningJobsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:fine-tuning:jobs", "list",
+			t,
 			"--api-key", "string",
+			"ai:fine-tuning:jobs", "list",
 		)
 	})
 }
@@ -77,8 +82,9 @@ func TestAIFineTuningJobsCancel(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:fine-tuning:jobs", "cancel",
+			t,
 			"--api-key", "string",
+			"ai:fine-tuning:jobs", "cancel",
 			"--job-id", "job_id",
 		)
 	})

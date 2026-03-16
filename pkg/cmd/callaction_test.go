@@ -13,8 +13,9 @@ func TestCallsActionsAddAIAssistantMessages(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "add-ai-assistant-messages",
+			t,
 			"--api-key", "string",
+			"calls:actions", "add-ai-assistant-messages",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -33,8 +34,9 @@ func TestCallsActionsAddAIAssistantMessages(t *testing.T) {
 			"    metadata:\n" +
 			"      foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "add-ai-assistant-messages",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "add-ai-assistant-messages",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -44,8 +46,9 @@ func TestCallsActionsAnswer(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "answer",
+			t,
 			"--api-key", "string",
+			"calls:actions", "answer",
 			"--call-control-id", "call_control_id",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -86,8 +89,9 @@ func TestCallsActionsAnswer(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "answer",
+			t,
 			"--api-key", "string",
+			"calls:actions", "answer",
 			"--call-control-id", "call_control_id",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -202,8 +206,9 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"  call.bridge: https://www.example.com/webhooks/bridge\n" +
 			"webhook_urls_method: POST\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "answer",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "answer",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -213,8 +218,9 @@ func TestCallsActionsBridge(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "bridge",
+			t,
 			"--api-key", "string",
+			"calls:actions", "bridge",
 			"--call-control-id-to-bridge", "call_control_id",
 			"--call-control-id-to-bridge-with", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -263,8 +269,9 @@ func TestCallsActionsBridge(t *testing.T) {
 			"video_room_context: Alice\n" +
 			"video_room_id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "bridge",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "bridge",
 			"--call-control-id-to-bridge", "call_control_id",
 		)
 	})
@@ -274,8 +281,9 @@ func TestCallsActionsEnqueue(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "enqueue",
+			t,
 			"--api-key", "string",
+			"calls:actions", "enqueue",
 			"--call-control-id", "call_control_id",
 			"--queue-name", "support",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -296,8 +304,9 @@ func TestCallsActionsEnqueue(t *testing.T) {
 			"max_size: 20\n" +
 			"max_wait_time_secs: 600\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "enqueue",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "enqueue",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -307,8 +316,9 @@ func TestCallsActionsGather(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "gather",
+			t,
 			"--api-key", "string",
+			"calls:actions", "gather",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -337,8 +347,9 @@ func TestCallsActionsGather(t *testing.T) {
 			"timeout_millis: 60000\n" +
 			"valid_digits: '123'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "gather",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "gather",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -348,8 +359,9 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "gather-using-ai",
+			t,
 			"--api-key", "string",
+			"calls:actions", "gather-using-ai",
 			"--call-control-id", "call_control_id",
 			"--parameters", "{properties: bar, required: bar, type: bar}",
 			"--assistant", "{instructions: You are a friendly voice assistant., model: Qwen/Qwen3-235B-A22B, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
@@ -376,8 +388,9 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "gather-using-ai",
+			t,
 			"--api-key", "string",
+			"calls:actions", "gather-using-ai",
 			"--call-control-id", "call_control_id",
 			"--parameters", "{properties: bar, required: bar, type: bar}",
 			"--assistant.instructions", "You are a friendly voice assistant.",
@@ -443,8 +456,9 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 			"  type: elevenlabs\n" +
 			"  api_key_ref: my_elevenlabs_api_key\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "gather-using-ai",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "gather-using-ai",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -454,8 +468,9 @@ func TestCallsActionsGatherUsingAudio(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "gather-using-audio",
+			t,
 			"--api-key", "string",
+			"calls:actions", "gather-using-audio",
 			"--call-control-id", "call_control_id",
 			"--audio-url", "http://example.com/message.wav",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -490,8 +505,9 @@ func TestCallsActionsGatherUsingAudio(t *testing.T) {
 			"timeout_millis: 10000\n" +
 			"valid_digits: '123'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "gather-using-audio",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "gather-using-audio",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -501,8 +517,9 @@ func TestCallsActionsGatherUsingSpeak(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "gather-using-speak",
+			t,
 			"--api-key", "string",
+			"calls:actions", "gather-using-speak",
 			"--call-control-id", "call_control_id",
 			"--payload", "say this on call",
 			"--voice", "male",
@@ -545,8 +562,9 @@ func TestCallsActionsGatherUsingSpeak(t *testing.T) {
 			"  type: elevenlabs\n" +
 			"  api_key_ref: my_elevenlabs_api_key\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "gather-using-speak",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "gather-using-speak",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -556,8 +574,9 @@ func TestCallsActionsHangup(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "hangup",
+			t,
 			"--api-key", "string",
+			"calls:actions", "hangup",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -572,8 +591,9 @@ func TestCallsActionsHangup(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "hangup",
+			t,
 			"--api-key", "string",
+			"calls:actions", "hangup",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -595,8 +615,9 @@ func TestCallsActionsHangup(t *testing.T) {
 			"  - name: head_2\n" +
 			"    value: val_2\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "hangup",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "hangup",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -606,8 +627,9 @@ func TestCallsActionsLeaveQueue(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "leave-queue",
+			t,
 			"--api-key", "string",
+			"calls:actions", "leave-queue",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -620,8 +642,9 @@ func TestCallsActionsLeaveQueue(t *testing.T) {
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "leave-queue",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "leave-queue",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -631,8 +654,9 @@ func TestCallsActionsPauseRecording(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "pause-recording",
+			t,
 			"--api-key", "string",
+			"calls:actions", "pause-recording",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -647,8 +671,9 @@ func TestCallsActionsPauseRecording(t *testing.T) {
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
 			"recording_id: 6e00ab49-9487-4364-8ad6-23965965afb2\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "pause-recording",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "pause-recording",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -658,8 +683,9 @@ func TestCallsActionsRefer(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "refer",
+			t,
 			"--api-key", "string",
+			"calls:actions", "refer",
 			"--call-control-id", "call_control_id",
 			"--sip-address", "sip:username@sip.non-telnyx-address.com",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -678,8 +704,9 @@ func TestCallsActionsRefer(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "refer",
+			t,
 			"--api-key", "string",
+			"calls:actions", "refer",
 			"--call-control-id", "call_control_id",
 			"--sip-address", "sip:username@sip.non-telnyx-address.com",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -712,8 +739,9 @@ func TestCallsActionsRefer(t *testing.T) {
 			"  - name: User-to-User\n" +
 			"    value: value\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "refer",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "refer",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -723,8 +751,9 @@ func TestCallsActionsReject(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "reject",
+			t,
 			"--api-key", "string",
+			"calls:actions", "reject",
 			"--call-control-id", "call_control_id",
 			"--cause", "USER_BUSY",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -739,8 +768,9 @@ func TestCallsActionsReject(t *testing.T) {
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "reject",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "reject",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -750,8 +780,9 @@ func TestCallsActionsResumeRecording(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "resume-recording",
+			t,
 			"--api-key", "string",
+			"calls:actions", "resume-recording",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -766,8 +797,9 @@ func TestCallsActionsResumeRecording(t *testing.T) {
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
 			"recording_id: 6e00ab49-9487-4364-8ad6-23965965afb2\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "resume-recording",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "resume-recording",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -777,8 +809,9 @@ func TestCallsActionsSendDtmf(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "send-dtmf",
+			t,
 			"--api-key", "string",
+			"calls:actions", "send-dtmf",
 			"--call-control-id", "call_control_id",
 			"--digits", "1www2WABCDw9",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -795,8 +828,9 @@ func TestCallsActionsSendDtmf(t *testing.T) {
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
 			"duration_millis: 500\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "send-dtmf",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "send-dtmf",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -806,8 +840,9 @@ func TestCallsActionsSendSipInfo(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "send-sip-info",
+			t,
 			"--api-key", "string",
+			"calls:actions", "send-sip-info",
 			"--call-control-id", "call_control_id",
 			"--body", `{"key": "value", "numValue": 100}`,
 			"--content-type", "application/json",
@@ -824,8 +859,9 @@ func TestCallsActionsSendSipInfo(t *testing.T) {
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "send-sip-info",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "send-sip-info",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -835,8 +871,9 @@ func TestCallsActionsSpeak(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "speak",
+			t,
 			"--api-key", "string",
+			"calls:actions", "speak",
 			"--call-control-id", "call_control_id",
 			"--payload", "Say this on the call",
 			"--voice", "female",
@@ -869,8 +906,9 @@ func TestCallsActionsSpeak(t *testing.T) {
 			"  type: elevenlabs\n" +
 			"  api_key_ref: my_elevenlabs_api_key\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "speak",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "speak",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -880,8 +918,9 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-ai-assistant",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-ai-assistant",
 			"--call-control-id", "call_control_id",
 			"--assistant", "{id: id, instructions: You are a friendly voice assistant., openai_api_key_ref: openai_api_key_ref}",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -900,8 +939,9 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-ai-assistant",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-ai-assistant",
 			"--call-control-id", "call_control_id",
 			"--assistant.id", "id",
 			"--assistant.instructions", "You are a friendly voice assistant.",
@@ -935,8 +975,9 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"  type: elevenlabs\n" +
 			"  api_key_ref: my_elevenlabs_api_key\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "start-ai-assistant",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "start-ai-assistant",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -946,8 +987,9 @@ func TestCallsActionsStartForking(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-forking",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-forking",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -966,8 +1008,9 @@ func TestCallsActionsStartForking(t *testing.T) {
 			"stream_type: decrypted\n" +
 			"tx: udp:192.0.2.1:9001\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "start-forking",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "start-forking",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -977,8 +1020,9 @@ func TestCallsActionsStartNoiseSuppression(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-noise-suppression",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-noise-suppression",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -994,8 +1038,9 @@ func TestCallsActionsStartNoiseSuppression(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-noise-suppression",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-noise-suppression",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1015,8 +1060,9 @@ func TestCallsActionsStartNoiseSuppression(t *testing.T) {
 			"noise_suppression_engine_config:\n" +
 			"  attenuation_limit: 100\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "start-noise-suppression",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "start-noise-suppression",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1026,8 +1072,9 @@ func TestCallsActionsStartPlayback(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-playback",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-playback",
 			"--call-control-id", "call_control_id",
 			"--audio-type", "wav",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
@@ -1058,8 +1105,9 @@ func TestCallsActionsStartPlayback(t *testing.T) {
 			"stop: current\n" +
 			"target_legs: self\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "start-playback",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "start-playback",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1069,8 +1117,9 @@ func TestCallsActionsStartRecording(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-recording",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-recording",
 			"--call-control-id", "call_control_id",
 			"--channels", "single",
 			"--format", "wav",
@@ -1113,8 +1162,9 @@ func TestCallsActionsStartRecording(t *testing.T) {
 			"transcription_speaker_diarization: true\n" +
 			"trim: trim-silence\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "start-recording",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "start-recording",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1124,8 +1174,9 @@ func TestCallsActionsStartSiprec(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-siprec",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-siprec",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--connector-name", "my-siprec-connector",
@@ -1148,8 +1199,9 @@ func TestCallsActionsStartSiprec(t *testing.T) {
 			"sip_transport: tcp\n" +
 			"siprec_track: both_tracks\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "start-siprec",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "start-siprec",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1159,8 +1211,9 @@ func TestCallsActionsStartStreaming(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-streaming",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-streaming",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1185,8 +1238,9 @@ func TestCallsActionsStartStreaming(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-streaming",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-streaming",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1231,8 +1285,9 @@ func TestCallsActionsStartStreaming(t *testing.T) {
 			"stream_track: both_tracks\n" +
 			"stream_url: wss://www.example.com/websocket\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "start-streaming",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "start-streaming",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1242,8 +1297,9 @@ func TestCallsActionsStartTranscription(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "start-transcription",
+			t,
 			"--api-key", "string",
+			"calls:actions", "start-transcription",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1277,8 +1333,9 @@ func TestCallsActionsStartTranscription(t *testing.T) {
 			"  use_enhanced: true\n" +
 			"transcription_tracks: both\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "start-transcription",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "start-transcription",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1288,8 +1345,9 @@ func TestCallsActionsStopAIAssistant(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "stop-ai-assistant",
+			t,
 			"--api-key", "string",
+			"calls:actions", "stop-ai-assistant",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1302,8 +1360,9 @@ func TestCallsActionsStopAIAssistant(t *testing.T) {
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "stop-ai-assistant",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "stop-ai-assistant",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1313,8 +1372,9 @@ func TestCallsActionsStopForking(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "stop-forking",
+			t,
 			"--api-key", "string",
+			"calls:actions", "stop-forking",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1329,8 +1389,9 @@ func TestCallsActionsStopForking(t *testing.T) {
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
 			"stream_type: decrypted\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "stop-forking",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "stop-forking",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1340,8 +1401,9 @@ func TestCallsActionsStopGather(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "stop-gather",
+			t,
 			"--api-key", "string",
+			"calls:actions", "stop-gather",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1354,8 +1416,9 @@ func TestCallsActionsStopGather(t *testing.T) {
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "stop-gather",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "stop-gather",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1365,8 +1428,9 @@ func TestCallsActionsStopNoiseSuppression(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "stop-noise-suppression",
+			t,
 			"--api-key", "string",
+			"calls:actions", "stop-noise-suppression",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1379,8 +1443,9 @@ func TestCallsActionsStopNoiseSuppression(t *testing.T) {
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "stop-noise-suppression",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "stop-noise-suppression",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1390,8 +1455,9 @@ func TestCallsActionsStopPlayback(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "stop-playback",
+			t,
 			"--api-key", "string",
+			"calls:actions", "stop-playback",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1408,8 +1474,9 @@ func TestCallsActionsStopPlayback(t *testing.T) {
 			"overlay: false\n" +
 			"stop: all\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "stop-playback",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "stop-playback",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1419,8 +1486,9 @@ func TestCallsActionsStopRecording(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "stop-recording",
+			t,
 			"--api-key", "string",
+			"calls:actions", "stop-recording",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1435,8 +1503,9 @@ func TestCallsActionsStopRecording(t *testing.T) {
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
 			"recording_id: 6e00ab49-9487-4364-8ad6-23965965afb2\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "stop-recording",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "stop-recording",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1446,8 +1515,9 @@ func TestCallsActionsStopSiprec(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "stop-siprec",
+			t,
 			"--api-key", "string",
+			"calls:actions", "stop-siprec",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1460,8 +1530,9 @@ func TestCallsActionsStopSiprec(t *testing.T) {
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "stop-siprec",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "stop-siprec",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1471,8 +1542,9 @@ func TestCallsActionsStopStreaming(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "stop-streaming",
+			t,
 			"--api-key", "string",
+			"calls:actions", "stop-streaming",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1487,8 +1559,9 @@ func TestCallsActionsStopStreaming(t *testing.T) {
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
 			"stream_id: 1edb94f9-7ef0-4150-b502-e0ebadfd9491\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "stop-streaming",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "stop-streaming",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1498,8 +1571,9 @@ func TestCallsActionsStopTranscription(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "stop-transcription",
+			t,
 			"--api-key", "string",
+			"calls:actions", "stop-transcription",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1512,8 +1586,9 @@ func TestCallsActionsStopTranscription(t *testing.T) {
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "stop-transcription",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "stop-transcription",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1523,8 +1598,9 @@ func TestCallsActionsSwitchSupervisorRole(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "switch-supervisor-role",
+			t,
 			"--api-key", "string",
+			"calls:actions", "switch-supervisor-role",
 			"--call-control-id", "call_control_id",
 			"--role", "barge",
 		)
@@ -1534,8 +1610,9 @@ func TestCallsActionsSwitchSupervisorRole(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("role: barge")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "switch-supervisor-role",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "switch-supervisor-role",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1545,8 +1622,9 @@ func TestCallsActionsTransfer(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "transfer",
+			t,
 			"--api-key", "string",
+			"calls:actions", "transfer",
 			"--call-control-id", "call_control_id",
 			"--to", "+18005550100 or sip:username@sip.telnyx.com",
 			"--answering-machine-detection", "detect",
@@ -1595,8 +1673,9 @@ func TestCallsActionsTransfer(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "transfer",
+			t,
 			"--api-key", "string",
+			"calls:actions", "transfer",
 			"--call-control-id", "call_control_id",
 			"--to", "+18005550100 or sip:username@sip.telnyx.com",
 			"--answering-machine-detection", "detect",
@@ -1722,8 +1801,9 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"  call.hangup: https://www.example.com/webhooks/hangup\n" +
 			"webhook_urls_method: POST\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "transfer",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "transfer",
 			"--call-control-id", "call_control_id",
 		)
 	})
@@ -1733,8 +1813,9 @@ func TestCallsActionsUpdateClientState(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls:actions", "update-client-state",
+			t,
 			"--api-key", "string",
+			"calls:actions", "update-client-state",
 			"--call-control-id", "call_control_id",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 		)
@@ -1744,8 +1825,9 @@ func TestCallsActionsUpdateClientState(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("client_state: aGF2ZSBhIG5pY2UgZGF5ID1d")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls:actions", "update-client-state",
+			t, pipeData,
 			"--api-key", "string",
+			"calls:actions", "update-client-state",
 			"--call-control-id", "call_control_id",
 		)
 	})

@@ -12,8 +12,9 @@ func TestAIMissionsMcpServersCreateMcpServer(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:mcp-servers", "create-mcp-server",
+			t,
 			"--api-key", "string",
+			"ai:missions:mcp-servers", "create-mcp-server",
 			"--mission-id", "mission_id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestAIMissionsMcpServersDeleteMcpServer(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:mcp-servers", "delete-mcp-server",
+			t,
 			"--api-key", "string",
+			"ai:missions:mcp-servers", "delete-mcp-server",
 			"--mission-id", "mission_id",
 			"--mcp-server-id", "mcp_server_id",
 		)
@@ -35,8 +37,9 @@ func TestAIMissionsMcpServersGetMcpServer(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:mcp-servers", "get-mcp-server",
+			t,
 			"--api-key", "string",
+			"ai:missions:mcp-servers", "get-mcp-server",
 			"--mission-id", "mission_id",
 			"--mcp-server-id", "mcp_server_id",
 		)
@@ -47,8 +50,9 @@ func TestAIMissionsMcpServersListMcpServers(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:mcp-servers", "list-mcp-servers",
+			t,
 			"--api-key", "string",
+			"ai:missions:mcp-servers", "list-mcp-servers",
 			"--mission-id", "mission_id",
 		)
 	})
@@ -58,8 +62,9 @@ func TestAIMissionsMcpServersUpdateMcpServer(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:mcp-servers", "update-mcp-server",
+			t,
 			"--api-key", "string",
+			"ai:missions:mcp-servers", "update-mcp-server",
 			"--mission-id", "mission_id",
 			"--mcp-server-id", "mcp_server_id",
 		)

@@ -13,8 +13,9 @@ func TestLegacyReportingBatchDetailRecordsVoiceCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:voice", "create",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:voice", "create",
 			"--end-time", "'2024-02-12T23:59:59Z'",
 			"--start-time", "'2024-02-01T00:00:00Z'",
 			"--call-type", "1",
@@ -43,8 +44,9 @@ func TestLegacyReportingBatchDetailRecordsVoiceCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:voice", "create",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:voice", "create",
 			"--end-time", "'2024-02-12T23:59:59Z'",
 			"--start-time", "'2024-02-01T00:00:00Z'",
 			"--call-type", "1",
@@ -108,8 +110,9 @@ func TestLegacyReportingBatchDetailRecordsVoiceCreate(t *testing.T) {
 			"source: calls\n" +
 			"timezone: UTC\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "legacy:reporting:batch-detail-records:voice", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:voice", "create",
 		)
 	})
 }
@@ -118,8 +121,9 @@ func TestLegacyReportingBatchDetailRecordsVoiceRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:voice", "retrieve",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:voice", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -129,8 +133,9 @@ func TestLegacyReportingBatchDetailRecordsVoiceList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:voice", "list",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:voice", "list",
 		)
 	})
 }
@@ -139,8 +144,9 @@ func TestLegacyReportingBatchDetailRecordsVoiceDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:voice", "delete",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:voice", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -150,8 +156,9 @@ func TestLegacyReportingBatchDetailRecordsVoiceRetrieveFields(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:voice", "retrieve-fields",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:voice", "retrieve-fields",
 		)
 	})
 }

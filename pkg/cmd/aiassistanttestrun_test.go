@@ -12,8 +12,9 @@ func TestAIAssistantsTestsRunsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests:runs", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests:runs", "retrieve",
 			"--test-id", "test_id",
 			"--run-id", "run_id",
 		)
@@ -24,8 +25,9 @@ func TestAIAssistantsTestsRunsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests:runs", "list",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests:runs", "list",
 			"--max-items", "10",
 			"--test-id", "test_id",
 			"--page-number", "0",
@@ -39,8 +41,9 @@ func TestAIAssistantsTestsRunsTrigger(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests:runs", "trigger",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests:runs", "trigger",
 			"--test-id", "test_id",
 			"--destination-version-id", "123e4567-e89b-12d3-a456-426614174000",
 		)
@@ -50,8 +53,9 @@ func TestAIAssistantsTestsRunsTrigger(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("destination_version_id: 123e4567-e89b-12d3-a456-426614174000")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants:tests:runs", "trigger",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants:tests:runs", "trigger",
 			"--test-id", "test_id",
 		)
 	})

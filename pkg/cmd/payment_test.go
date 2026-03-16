@@ -12,8 +12,9 @@ func TestPaymentCreateStoredPaymentTransaction(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "payment", "create-stored-payment-transaction",
+			t,
 			"--api-key", "string",
+			"payment", "create-stored-payment-transaction",
 			"--amount", "120.00",
 		)
 	})
@@ -22,8 +23,9 @@ func TestPaymentCreateStoredPaymentTransaction(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("amount: '120.00'")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "payment", "create-stored-payment-transaction",
+			t, pipeData,
 			"--api-key", "string",
+			"payment", "create-stored-payment-transaction",
 		)
 	})
 }

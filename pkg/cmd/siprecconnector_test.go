@@ -12,8 +12,9 @@ func TestSiprecConnectorsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "siprec-connectors", "create",
+			t,
 			"--api-key", "string",
+			"siprec-connectors", "create",
 			"--host", "siprec.telnyx.com",
 			"--name", "my-siprec-connector",
 			"--port", "5060",
@@ -29,8 +30,9 @@ func TestSiprecConnectorsCreate(t *testing.T) {
 			"port: 5060\n" +
 			"app_subdomain: my-app\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "siprec-connectors", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"siprec-connectors", "create",
 		)
 	})
 }
@@ -39,8 +41,9 @@ func TestSiprecConnectorsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "siprec-connectors", "retrieve",
+			t,
 			"--api-key", "string",
+			"siprec-connectors", "retrieve",
 			"--connector-name", "connector_name",
 		)
 	})
@@ -50,8 +53,9 @@ func TestSiprecConnectorsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "siprec-connectors", "update",
+			t,
 			"--api-key", "string",
+			"siprec-connectors", "update",
 			"--connector-name", "connector_name",
 			"--host", "siprec.telnyx.com",
 			"--name", "my-siprec-connector",
@@ -68,8 +72,9 @@ func TestSiprecConnectorsUpdate(t *testing.T) {
 			"port: 5060\n" +
 			"app_subdomain: my-app\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "siprec-connectors", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"siprec-connectors", "update",
 			"--connector-name", "connector_name",
 		)
 	})
@@ -79,8 +84,9 @@ func TestSiprecConnectorsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "siprec-connectors", "delete",
+			t,
 			"--api-key", "string",
+			"siprec-connectors", "delete",
 			"--connector-name", "connector_name",
 		)
 	})

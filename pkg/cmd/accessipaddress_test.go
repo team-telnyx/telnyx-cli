@@ -13,8 +13,9 @@ func TestAccessIPAddressCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "access-ip-address", "create",
+			t,
 			"--api-key", "string",
+			"access-ip-address", "create",
 			"--ip-address", "ip_address",
 			"--description", "description",
 		)
@@ -26,8 +27,9 @@ func TestAccessIPAddressCreate(t *testing.T) {
 			"ip_address: ip_address\n" +
 			"description: description\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "access-ip-address", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"access-ip-address", "create",
 		)
 	})
 }
@@ -36,8 +38,9 @@ func TestAccessIPAddressRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "access-ip-address", "retrieve",
+			t,
 			"--api-key", "string",
+			"access-ip-address", "retrieve",
 			"--access-ip-address-id", "access_ip_address_id",
 		)
 	})
@@ -47,8 +50,9 @@ func TestAccessIPAddressList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "access-ip-address", "list",
+			t,
 			"--api-key", "string",
+			"access-ip-address", "list",
 			"--max-items", "10",
 			"--filter", "{created_at: '2019-12-27T18:11:19.117Z', ip_address: ip_address, ip_source: ip_source}",
 			"--page-number", "0",
@@ -62,8 +66,9 @@ func TestAccessIPAddressList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "access-ip-address", "list",
+			t,
 			"--api-key", "string",
+			"access-ip-address", "list",
 			"--max-items", "10",
 			"--filter.created-at", "2019-12-27T18:11:19.117Z",
 			"--filter.ip-address", "ip_address",
@@ -78,8 +83,9 @@ func TestAccessIPAddressDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "access-ip-address", "delete",
+			t,
 			"--api-key", "string",
+			"access-ip-address", "delete",
 			"--access-ip-address-id", "access_ip_address_id",
 		)
 	})

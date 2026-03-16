@@ -13,8 +13,9 @@ func TestAIMissionsRunsPlanCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:plan", "create",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "create",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--step", "{description: description, sequence: 0, step_id: step_id, metadata: {foo: bar}, parent_step_id: parent_step_id}",
@@ -27,8 +28,9 @@ func TestAIMissionsRunsPlanCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:plan", "create",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "create",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--step.description", "description",
@@ -50,8 +52,9 @@ func TestAIMissionsRunsPlanCreate(t *testing.T) {
 			"      foo: bar\n" +
 			"    parent_step_id: parent_step_id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:missions:runs:plan", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "create",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
@@ -62,8 +65,9 @@ func TestAIMissionsRunsPlanRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:plan", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "retrieve",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
@@ -74,8 +78,9 @@ func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:plan", "add-steps-to-plan",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "add-steps-to-plan",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--step", "{description: description, sequence: 0, step_id: step_id, metadata: {foo: bar}, parent_step_id: parent_step_id}",
@@ -88,8 +93,9 @@ func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:plan", "add-steps-to-plan",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "add-steps-to-plan",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--step.description", "description",
@@ -111,8 +117,9 @@ func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
 			"      foo: bar\n" +
 			"    parent_step_id: parent_step_id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:missions:runs:plan", "add-steps-to-plan",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "add-steps-to-plan",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
@@ -123,8 +130,9 @@ func TestAIMissionsRunsPlanGetStepDetails(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:plan", "get-step-details",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "get-step-details",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--step-id", "step_id",
@@ -136,8 +144,9 @@ func TestAIMissionsRunsPlanUpdateStep(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:plan", "update-step",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "update-step",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--step-id", "step_id",
@@ -153,8 +162,9 @@ func TestAIMissionsRunsPlanUpdateStep(t *testing.T) {
 			"  foo: bar\n" +
 			"status: pending\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:missions:runs:plan", "update-step",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:missions:runs:plan", "update-step",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--step-id", "step_id",

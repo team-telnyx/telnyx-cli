@@ -12,8 +12,9 @@ func TestTexmlAccountsQueuesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:queues", "create",
+			t,
 			"--api-key", "string",
+			"texml:accounts:queues", "create",
 			"--account-sid", "account_sid",
 			"--friendly-name", "Support Queue",
 			"--max-size", "10",
@@ -26,8 +27,9 @@ func TestTexmlAccountsQueuesCreate(t *testing.T) {
 			"FriendlyName: Support Queue\n" +
 			"MaxSize: 10\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:queues", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:queues", "create",
 			"--account-sid", "account_sid",
 		)
 	})
@@ -37,8 +39,9 @@ func TestTexmlAccountsQueuesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:queues", "retrieve",
+			t,
 			"--api-key", "string",
+			"texml:accounts:queues", "retrieve",
 			"--account-sid", "account_sid",
 			"--queue-sid", "queue_sid",
 		)
@@ -49,8 +52,9 @@ func TestTexmlAccountsQueuesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:queues", "update",
+			t,
 			"--api-key", "string",
+			"texml:accounts:queues", "update",
 			"--account-sid", "account_sid",
 			"--queue-sid", "queue_sid",
 			"--max-size", "10",
@@ -61,8 +65,9 @@ func TestTexmlAccountsQueuesUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("MaxSize: 10")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:queues", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:queues", "update",
 			"--account-sid", "account_sid",
 			"--queue-sid", "queue_sid",
 		)
@@ -73,8 +78,9 @@ func TestTexmlAccountsQueuesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:queues", "list",
+			t,
 			"--api-key", "string",
+			"texml:accounts:queues", "list",
 			"--max-items", "10",
 			"--account-sid", "account_sid",
 			"--date-created", "DateCreated",
@@ -90,8 +96,9 @@ func TestTexmlAccountsQueuesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:queues", "delete",
+			t,
 			"--api-key", "string",
+			"texml:accounts:queues", "delete",
 			"--account-sid", "account_sid",
 			"--queue-sid", "queue_sid",
 		)

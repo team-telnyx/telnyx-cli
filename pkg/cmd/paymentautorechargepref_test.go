@@ -12,8 +12,9 @@ func TestPaymentAutoRechargePrefsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "payment:auto-recharge-prefs", "update",
+			t,
 			"--api-key", "string",
+			"payment:auto-recharge-prefs", "update",
 			"--enabled=true",
 			"--invoice-enabled=true",
 			"--preference", "credit_paypal",
@@ -31,8 +32,9 @@ func TestPaymentAutoRechargePrefsUpdate(t *testing.T) {
 			"recharge_amount: '104.00'\n" +
 			"threshold_amount: '104.00'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "payment:auto-recharge-prefs", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"payment:auto-recharge-prefs", "update",
 		)
 	})
 }
@@ -41,8 +43,9 @@ func TestPaymentAutoRechargePrefsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "payment:auto-recharge-prefs", "list",
+			t,
 			"--api-key", "string",
+			"payment:auto-recharge-prefs", "list",
 		)
 	})
 }

@@ -13,8 +13,9 @@ func TestMessaging10dlcPhoneNumberCampaignsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:phone-number-campaigns", "create",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:phone-number-campaigns", "create",
 			"--campaign-id", "4b300178-131c-d902-d54e-72d90ba1620j",
 			"--phone-number", "+18005550199",
 		)
@@ -26,8 +27,9 @@ func TestMessaging10dlcPhoneNumberCampaignsCreate(t *testing.T) {
 			"campaignId: 4b300178-131c-d902-d54e-72d90ba1620j\n" +
 			"phoneNumber: '+18005550199'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:phone-number-campaigns", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:phone-number-campaigns", "create",
 		)
 	})
 }
@@ -36,8 +38,9 @@ func TestMessaging10dlcPhoneNumberCampaignsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:phone-number-campaigns", "retrieve",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:phone-number-campaigns", "retrieve",
 			"--phone-number", "phoneNumber",
 		)
 	})
@@ -47,8 +50,9 @@ func TestMessaging10dlcPhoneNumberCampaignsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:phone-number-campaigns", "update",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:phone-number-campaigns", "update",
 			"--campaign-phone-number", "phoneNumber",
 			"--campaign-id", "4b300178-131c-d902-d54e-72d90ba1620j",
 			"--phone-number", "+18005550199",
@@ -61,8 +65,9 @@ func TestMessaging10dlcPhoneNumberCampaignsUpdate(t *testing.T) {
 			"campaignId: 4b300178-131c-d902-d54e-72d90ba1620j\n" +
 			"phoneNumber: '+18005550199'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:phone-number-campaigns", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:phone-number-campaigns", "update",
 			"--campaign-phone-number", "phoneNumber",
 		)
 	})
@@ -72,8 +77,9 @@ func TestMessaging10dlcPhoneNumberCampaignsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:phone-number-campaigns", "list",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:phone-number-campaigns", "list",
 			"--max-items", "10",
 			"--filter", "{tcr_brand_id: BRANDID, tcr_campaign_id: CAMPID3, telnyx_brand_id: f3575e15-32ce-400e-a4c0-dd78800c20b0, telnyx_campaign_id: f3575e15-32ce-400e-a4c0-dd78800c20b0}",
 			"--page", "0",
@@ -88,8 +94,9 @@ func TestMessaging10dlcPhoneNumberCampaignsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:phone-number-campaigns", "list",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:phone-number-campaigns", "list",
 			"--max-items", "10",
 			"--filter.tcr-brand-id", "BRANDID",
 			"--filter.tcr-campaign-id", "CAMPID3",
@@ -106,8 +113,9 @@ func TestMessaging10dlcPhoneNumberCampaignsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:phone-number-campaigns", "delete",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:phone-number-campaigns", "delete",
 			"--phone-number", "phoneNumber",
 		)
 	})

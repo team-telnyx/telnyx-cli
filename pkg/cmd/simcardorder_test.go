@@ -13,8 +13,9 @@ func TestSimCardOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-orders", "create",
+			t,
 			"--api-key", "string",
+			"sim-card-orders", "create",
 			"--address-id", "1293384261075731499",
 			"--quantity", "23",
 		)
@@ -26,8 +27,9 @@ func TestSimCardOrdersCreate(t *testing.T) {
 			"address_id: '1293384261075731499'\n" +
 			"quantity: 23\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "sim-card-orders", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"sim-card-orders", "create",
 		)
 	})
 }
@@ -36,8 +38,9 @@ func TestSimCardOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-orders", "retrieve",
+			t,
 			"--api-key", "string",
+			"sim-card-orders", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -47,8 +50,9 @@ func TestSimCardOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-orders", "list",
+			t,
 			"--api-key", "string",
+			"sim-card-orders", "list",
 			"--max-items", "10",
 			"--filter", "{address.administrative_area: TX, address.country_code: US, address.extended_address: 14th Floor, address.id: '1293384261075731499', address.locality: Austin, address.postal_code: '78701', address.street_address: 600 Congress Avenue, cost.amount: '2.53', cost.currency: USD, created_at: '2018-02-02T22:25:27.521Z', quantity: 21, updated_at: '2018-02-02T22:25:27.521Z'}",
 			"--page-number", "0",
@@ -62,8 +66,9 @@ func TestSimCardOrdersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-orders", "list",
+			t,
 			"--api-key", "string",
+			"sim-card-orders", "list",
 			"--max-items", "10",
 			"--filter.address-administrative-area", "TX",
 			"--filter.address-country-code", "US",

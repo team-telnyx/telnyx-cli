@@ -13,8 +13,9 @@ func TestAIAssistantsTestsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests", "create",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests", "create",
 			"--destination", "+15551234567",
 			"--instructions", "Act as a frustrated customer who received a damaged product. Ask for a refund and escalate if not satisfied with the initial response.",
 			"--name", "Customer Support Bot Test",
@@ -33,8 +34,9 @@ func TestAIAssistantsTestsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests", "create",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests", "create",
 			"--destination", "+15551234567",
 			"--instructions", "Act as a frustrated customer who received a damaged product. Ask for a refund and escalate if not satisfied with the initial response.",
 			"--name", "Customer Support Bot Test",
@@ -67,8 +69,9 @@ func TestAIAssistantsTestsCreate(t *testing.T) {
 			"telnyx_conversation_channel: web_chat\n" +
 			"test_suite: test_suite\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants:tests", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants:tests", "create",
 		)
 	})
 }
@@ -77,8 +80,9 @@ func TestAIAssistantsTestsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests", "retrieve",
 			"--test-id", "test_id",
 		)
 	})
@@ -88,8 +92,9 @@ func TestAIAssistantsTestsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests", "update",
 			"--test-id", "test_id",
 			"--description", "description",
 			"--destination", "x",
@@ -108,8 +113,9 @@ func TestAIAssistantsTestsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests", "update",
 			"--test-id", "test_id",
 			"--description", "description",
 			"--destination", "x",
@@ -137,8 +143,9 @@ func TestAIAssistantsTestsUpdate(t *testing.T) {
 			"telnyx_conversation_channel: phone_call\n" +
 			"test_suite: test_suite\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants:tests", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants:tests", "update",
 			"--test-id", "test_id",
 		)
 	})
@@ -148,8 +155,9 @@ func TestAIAssistantsTestsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests", "list",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests", "list",
 			"--max-items", "10",
 			"--destination", "destination",
 			"--page-number", "0",
@@ -164,8 +172,9 @@ func TestAIAssistantsTestsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests", "delete",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests", "delete",
 			"--test-id", "test_id",
 		)
 	})

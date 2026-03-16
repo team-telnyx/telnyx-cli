@@ -12,8 +12,9 @@ func TestAIMissionsRunsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs", "create",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs", "create",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--input", "{foo: bar}",
 			"--metadata", "{foo: bar}",
@@ -28,8 +29,9 @@ func TestAIMissionsRunsCreate(t *testing.T) {
 			"metadata:\n" +
 			"  foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:missions:runs", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:missions:runs", "create",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -39,8 +41,9 @@ func TestAIMissionsRunsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs", "retrieve",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
@@ -51,8 +54,9 @@ func TestAIMissionsRunsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs", "update",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs", "update",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--error", "error",
@@ -74,8 +78,9 @@ func TestAIMissionsRunsUpdate(t *testing.T) {
 			"result_summary: result_summary\n" +
 			"status: pending\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:missions:runs", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:missions:runs", "update",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
@@ -86,8 +91,9 @@ func TestAIMissionsRunsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs", "list",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs", "list",
 			"--max-items", "10",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "1",
@@ -101,8 +107,9 @@ func TestAIMissionsRunsCancelRun(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs", "cancel-run",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs", "cancel-run",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
@@ -113,8 +120,9 @@ func TestAIMissionsRunsListRuns(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs", "list-runs",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs", "list-runs",
 			"--max-items", "10",
 			"--page-number", "1",
 			"--page-size", "1",
@@ -127,8 +135,9 @@ func TestAIMissionsRunsPauseRun(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs", "pause-run",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs", "pause-run",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
@@ -139,8 +148,9 @@ func TestAIMissionsRunsResumeRun(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs", "resume-run",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs", "resume-run",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)

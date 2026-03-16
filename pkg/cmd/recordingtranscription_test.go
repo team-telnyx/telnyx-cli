@@ -13,8 +13,9 @@ func TestRecordingTranscriptionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "recording-transcriptions", "retrieve",
+			t,
 			"--api-key", "string",
+			"recording-transcriptions", "retrieve",
 			"--recording-transcription-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -24,8 +25,9 @@ func TestRecordingTranscriptionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "recording-transcriptions", "list",
+			t,
 			"--api-key", "string",
+			"recording-transcriptions", "list",
 			"--max-items", "10",
 			"--filter", "{created_at: {gte: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, recording_id: 428c31b6-7af4-4bcb-b7f5-5013ef9657c1}",
 			"--page-number", "0",
@@ -39,8 +41,9 @@ func TestRecordingTranscriptionsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "recording-transcriptions", "list",
+			t,
 			"--api-key", "string",
+			"recording-transcriptions", "list",
 			"--max-items", "10",
 			"--filter.created-at", "{gte: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}",
 			"--filter.recording-id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",
@@ -54,8 +57,9 @@ func TestRecordingTranscriptionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "recording-transcriptions", "delete",
+			t,
 			"--api-key", "string",
+			"recording-transcriptions", "delete",
 			"--recording-transcription-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

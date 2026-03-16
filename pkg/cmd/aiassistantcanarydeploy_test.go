@@ -13,8 +13,9 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:canary-deploys", "create",
+			t,
 			"--api-key", "string",
+			"ai:assistants:canary-deploys", "create",
 			"--assistant-id", "assistant_id",
 			"--version", "{percentage: 1, version_id: version_id}",
 		)
@@ -26,8 +27,9 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:canary-deploys", "create",
+			t,
 			"--api-key", "string",
+			"ai:assistants:canary-deploys", "create",
 			"--assistant-id", "assistant_id",
 			"--version.percentage", "1",
 			"--version.version-id", "version_id",
@@ -41,8 +43,9 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 			"  - percentage: 1\n" +
 			"    version_id: version_id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants:canary-deploys", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants:canary-deploys", "create",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -52,8 +55,9 @@ func TestAIAssistantsCanaryDeploysRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:canary-deploys", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:assistants:canary-deploys", "retrieve",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -63,8 +67,9 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:canary-deploys", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants:canary-deploys", "update",
 			"--assistant-id", "assistant_id",
 			"--version", "{percentage: 1, version_id: version_id}",
 		)
@@ -76,8 +81,9 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:canary-deploys", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants:canary-deploys", "update",
 			"--assistant-id", "assistant_id",
 			"--version.percentage", "1",
 			"--version.version-id", "version_id",
@@ -91,8 +97,9 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 			"  - percentage: 1\n" +
 			"    version_id: version_id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants:canary-deploys", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants:canary-deploys", "update",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -102,8 +109,9 @@ func TestAIAssistantsCanaryDeploysDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:canary-deploys", "delete",
+			t,
 			"--api-key", "string",
+			"ai:assistants:canary-deploys", "delete",
 			"--assistant-id", "assistant_id",
 		)
 	})

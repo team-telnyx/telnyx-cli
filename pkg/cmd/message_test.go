@@ -13,8 +13,9 @@ func TestMessagesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "retrieve",
+			t,
 			"--api-key", "string",
+			"messages", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -24,8 +25,9 @@ func TestMessagesCancelScheduled(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "cancel-scheduled",
+			t,
 			"--api-key", "string",
+			"messages", "cancel-scheduled",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -35,8 +37,9 @@ func TestMessagesRetrieveGroupMessages(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "retrieve-group-messages",
+			t,
 			"--api-key", "string",
+			"messages", "retrieve-group-messages",
 			"--message-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -46,8 +49,9 @@ func TestMessagesSchedule(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "schedule",
+			t,
 			"--api-key", "string",
+			"messages", "schedule",
 			"--to", "+18445550001",
 			"--auto-detect=true",
 			"--from", "+18445550001",
@@ -80,8 +84,9 @@ func TestMessagesSchedule(t *testing.T) {
 			"webhook_failover_url: https://backup.example.com/hooks\n" +
 			"webhook_url: http://example.com/webhooks\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messages", "schedule",
+			t, pipeData,
 			"--api-key", "string",
+			"messages", "schedule",
 		)
 	})
 }
@@ -90,8 +95,9 @@ func TestMessagesSend(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "send",
+			t,
 			"--api-key", "string",
+			"messages", "send",
 			"--to", "+18445550001",
 			"--auto-detect=true",
 			"--encoding", "auto",
@@ -126,8 +132,9 @@ func TestMessagesSend(t *testing.T) {
 			"webhook_failover_url: https://backup.example.com/hooks\n" +
 			"webhook_url: http://example.com/webhooks\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messages", "send",
+			t, pipeData,
 			"--api-key", "string",
+			"messages", "send",
 		)
 	})
 }
@@ -136,8 +143,9 @@ func TestMessagesSendGroupMms(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "send-group-mms",
+			t,
 			"--api-key", "string",
+			"messages", "send-group-mms",
 			"--from", "+13125551234",
 			"--to", "+18655551234",
 			"--to", "+14155551234",
@@ -165,8 +173,9 @@ func TestMessagesSendGroupMms(t *testing.T) {
 			"webhook_failover_url: https://backup.example.com/hooks\n" +
 			"webhook_url: http://example.com/webhooks\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messages", "send-group-mms",
+			t, pipeData,
 			"--api-key", "string",
+			"messages", "send-group-mms",
 		)
 	})
 }
@@ -175,8 +184,9 @@ func TestMessagesSendLongCode(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "send-long-code",
+			t,
 			"--api-key", "string",
+			"messages", "send-long-code",
 			"--from", "+18445550001",
 			"--to", "+13125550002",
 			"--auto-detect=true",
@@ -207,8 +217,9 @@ func TestMessagesSendLongCode(t *testing.T) {
 			"webhook_failover_url: https://backup.example.com/hooks\n" +
 			"webhook_url: http://example.com/webhooks\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messages", "send-long-code",
+			t, pipeData,
 			"--api-key", "string",
+			"messages", "send-long-code",
 		)
 	})
 }
@@ -217,8 +228,9 @@ func TestMessagesSendNumberPool(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "send-number-pool",
+			t,
 			"--api-key", "string",
+			"messages", "send-number-pool",
 			"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
 			"--to", "+13125550002",
 			"--auto-detect=true",
@@ -249,8 +261,9 @@ func TestMessagesSendNumberPool(t *testing.T) {
 			"webhook_failover_url: https://backup.example.com/hooks\n" +
 			"webhook_url: http://example.com/webhooks\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messages", "send-number-pool",
+			t, pipeData,
 			"--api-key", "string",
+			"messages", "send-number-pool",
 		)
 	})
 }
@@ -259,8 +272,9 @@ func TestMessagesSendShortCode(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "send-short-code",
+			t,
 			"--api-key", "string",
+			"messages", "send-short-code",
 			"--from", "+18445550001",
 			"--to", "+18445550001",
 			"--auto-detect=true",
@@ -291,8 +305,9 @@ func TestMessagesSendShortCode(t *testing.T) {
 			"webhook_failover_url: https://backup.example.com/hooks\n" +
 			"webhook_url: http://example.com/webhooks\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messages", "send-short-code",
+			t, pipeData,
 			"--api-key", "string",
+			"messages", "send-short-code",
 		)
 	})
 }
@@ -301,8 +316,9 @@ func TestMessagesSendWhatsapp(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "send-whatsapp",
+			t,
 			"--api-key", "string",
+			"messages", "send-whatsapp",
 			"--from", "+13125551234",
 			"--to", "+13125551234",
 			"--whatsapp-message", "{audio: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, biz_opaque_callback_data: biz_opaque_callback_data, contacts: [{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: name, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}], document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, interactive: {action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}, location: {address: address, latitude: latitude, longitude: longitude, name: name}, reaction: {emoji: emoji, message_id: message_id}, sticker: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: audio, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}",
@@ -317,8 +333,9 @@ func TestMessagesSendWhatsapp(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "send-whatsapp",
+			t,
 			"--api-key", "string",
+			"messages", "send-whatsapp",
 			"--from", "+13125551234",
 			"--to", "+13125551234",
 			"--whatsapp-message.audio", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
@@ -472,8 +489,9 @@ func TestMessagesSendWhatsapp(t *testing.T) {
 			"type: WHATSAPP\n" +
 			"webhook_url: webhook_url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messages", "send-whatsapp",
+			t, pipeData,
 			"--api-key", "string",
+			"messages", "send-whatsapp",
 		)
 	})
 }
@@ -482,8 +500,9 @@ func TestMessagesSendWithAlphanumericSender(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messages", "send-with-alphanumeric-sender",
+			t,
 			"--api-key", "string",
+			"messages", "send-with-alphanumeric-sender",
 			"--from", "MyCompany",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--text", "text",
@@ -505,8 +524,9 @@ func TestMessagesSendWithAlphanumericSender(t *testing.T) {
 			"webhook_failover_url: webhook_failover_url\n" +
 			"webhook_url: webhook_url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messages", "send-with-alphanumeric-sender",
+			t, pipeData,
 			"--api-key", "string",
+			"messages", "send-with-alphanumeric-sender",
 		)
 	})
 }

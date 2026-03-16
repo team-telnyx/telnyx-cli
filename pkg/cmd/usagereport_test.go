@@ -12,8 +12,9 @@ func TestUsageReportsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "usage-reports", "list",
+			t,
 			"--api-key", "string",
+			"usage-reports", "list",
 			"--max-items", "10",
 			"--dimension", "string",
 			"--metric", "string",
@@ -36,8 +37,9 @@ func TestUsageReportsGetOptions(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "usage-reports", "get-options",
+			t,
 			"--api-key", "string",
+			"usage-reports", "get-options",
 			"--product", "product",
 			"--authorization-bearer", "authorization_bearer",
 		)

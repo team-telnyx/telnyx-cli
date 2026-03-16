@@ -13,8 +13,9 @@ func TestNetworkCoverageList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "network-coverage", "list",
+			t,
 			"--api-key", "string",
+			"network-coverage", "list",
 			"--max-items", "10",
 			"--filter", "{location.code: silicon_valley-ca, location.pop: SV1, location.region: AMER, location.site: SJC}",
 			"--filters", "{available_services: cloud_vpn}",
@@ -29,8 +30,9 @@ func TestNetworkCoverageList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "network-coverage", "list",
+			t,
 			"--api-key", "string",
+			"network-coverage", "list",
 			"--max-items", "10",
 			"--filter.location-code", "silicon_valley-ca",
 			"--filter.location-pop", "SV1",

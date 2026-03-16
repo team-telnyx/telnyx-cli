@@ -13,8 +13,9 @@ func TestPortoutsReportsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:reports", "create",
+			t,
 			"--api-key", "string",
+			"portouts:reports", "create",
 			"--params", "{filters: {created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], end_user_name: McPortersen, phone_numbers__overlaps: ['+1234567890'], status__in: [pending]}}",
 			"--report-type", "export_portouts_csv",
 		)
@@ -26,8 +27,9 @@ func TestPortoutsReportsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:reports", "create",
+			t,
 			"--api-key", "string",
+			"portouts:reports", "create",
 			"--params.filters", "{created_at__gt: '2019-12-27T18:11:19.117Z', created_at__lt: '2019-12-27T18:11:19.117Z', customer_reference__in: [my-customer-reference], end_user_name: McPortersen, phone_numbers__overlaps: ['+1234567890'], status__in: [pending]}",
 			"--report-type", "export_portouts_csv",
 		)
@@ -49,8 +51,9 @@ func TestPortoutsReportsCreate(t *testing.T) {
 			"      - pending\n" +
 			"report_type: export_portouts_csv\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "portouts:reports", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"portouts:reports", "create",
 		)
 	})
 }
@@ -59,8 +62,9 @@ func TestPortoutsReportsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:reports", "retrieve",
+			t,
 			"--api-key", "string",
+			"portouts:reports", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -70,8 +74,9 @@ func TestPortoutsReportsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:reports", "list",
+			t,
 			"--api-key", "string",
+			"portouts:reports", "list",
 			"--max-items", "10",
 			"--filter", "{report_type: export_portouts_csv, status: completed}",
 			"--page-number", "0",
@@ -85,8 +90,9 @@ func TestPortoutsReportsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:reports", "list",
+			t,
 			"--api-key", "string",
+			"portouts:reports", "list",
 			"--max-items", "10",
 			"--filter.report-type", "export_portouts_csv",
 			"--filter.status", "completed",

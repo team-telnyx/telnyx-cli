@@ -12,8 +12,9 @@ func TestMessaging10dlcBrandCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "create",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "create",
 			"--country", "US",
 			"--display-name", "ABC Mobile",
 			"--email", "email",
@@ -69,8 +70,9 @@ func TestMessaging10dlcBrandCreate(t *testing.T) {
 			"webhookURL: https://webhook.com/67ea78a8-9f32-4d04-b62d-f9502e8e5f93\n" +
 			"website: http://www.abcmobile.com\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:brand", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "create",
 		)
 	})
 }
@@ -79,8 +81,9 @@ func TestMessaging10dlcBrandRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "retrieve",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "retrieve",
 			"--brand-id", "brandId",
 		)
 	})
@@ -90,8 +93,9 @@ func TestMessaging10dlcBrandUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "update",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "update",
 			"--brand-id", "brandId",
 			"--country", "US",
 			"--display-name", "ABC Mobile",
@@ -150,8 +154,9 @@ func TestMessaging10dlcBrandUpdate(t *testing.T) {
 			"webhookURL: https://webhook.com/67ea78a8-9f32-4d04-b62d-f9502e8e5f93\n" +
 			"website: http://www.abcmobile.com\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:brand", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "update",
 			"--brand-id", "brandId",
 		)
 	})
@@ -161,8 +166,9 @@ func TestMessaging10dlcBrandList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "list",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "list",
 			"--max-items", "10",
 			"--brand-id", "826ef77a-348c-445b-81a5-a9b13c68fbfe",
 			"--country", "country",
@@ -181,8 +187,9 @@ func TestMessaging10dlcBrandDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "delete",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "delete",
 			"--brand-id", "brandId",
 		)
 	})
@@ -192,8 +199,9 @@ func TestMessaging10dlcBrandGetFeedback(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "get-feedback",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "get-feedback",
 			"--brand-id", "brandId",
 		)
 	})
@@ -203,8 +211,9 @@ func TestMessaging10dlcBrandGetSMSOtpByReference(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "get-sms-otp-by-reference",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "get-sms-otp-by-reference",
 			"--reference-id", "OTP4B2001",
 			"--brand-id", "B123ABC",
 		)
@@ -215,8 +224,9 @@ func TestMessaging10dlcBrandResend2faEmail(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "resend-2fa-email",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "resend-2fa-email",
 			"--brand-id", "brandId",
 		)
 	})
@@ -226,8 +236,9 @@ func TestMessaging10dlcBrandRetrieveSMSOtpStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "retrieve-sms-otp-status",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "retrieve-sms-otp-status",
 			"--brand-id", "4b20019b-043a-78f8-0657-b3be3f4b4002",
 		)
 	})
@@ -237,8 +248,9 @@ func TestMessaging10dlcBrandRevet(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "revet",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "revet",
 			"--brand-id", "brandId",
 		)
 	})
@@ -248,8 +260,9 @@ func TestMessaging10dlcBrandTriggerSMSOtp(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "trigger-sms-otp",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "trigger-sms-otp",
 			"--brand-id", "4b20019b-043a-78f8-0657-b3be3f4b4002",
 			"--pin-sms", "Your PIN is @OTP_PIN@",
 			"--success-sms", "Verification successful!",
@@ -262,8 +275,9 @@ func TestMessaging10dlcBrandTriggerSMSOtp(t *testing.T) {
 			"pinSms: Your PIN is @OTP_PIN@\n" +
 			"successSms: Verification successful!\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:brand", "trigger-sms-otp",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "trigger-sms-otp",
 			"--brand-id", "4b20019b-043a-78f8-0657-b3be3f4b4002",
 		)
 	})
@@ -273,8 +287,9 @@ func TestMessaging10dlcBrandVerifySMSOtp(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-10dlc:brand", "verify-sms-otp",
+			t,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "verify-sms-otp",
 			"--brand-id", "4b20019b-043a-78f8-0657-b3be3f4b4002",
 			"--otp-pin", "123456",
 		)
@@ -284,8 +299,9 @@ func TestMessaging10dlcBrandVerifySMSOtp(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("otpPin: '123456'")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-10dlc:brand", "verify-sms-otp",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-10dlc:brand", "verify-sms-otp",
 			"--brand-id", "4b20019b-043a-78f8-0657-b3be3f4b4002",
 		)
 	})

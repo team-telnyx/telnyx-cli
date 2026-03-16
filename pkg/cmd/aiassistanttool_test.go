@@ -12,8 +12,9 @@ func TestAIAssistantsToolsTest(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tools", "test",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tools", "test",
 			"--assistant-id", "assistant_id",
 			"--tool-id", "tool_id",
 			"--arguments", "{foo: bar}",
@@ -29,8 +30,9 @@ func TestAIAssistantsToolsTest(t *testing.T) {
 			"dynamic_variables:\n" +
 			"  foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants:tools", "test",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants:tools", "test",
 			"--assistant-id", "assistant_id",
 			"--tool-id", "tool_id",
 		)

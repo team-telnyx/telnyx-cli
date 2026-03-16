@@ -12,8 +12,9 @@ func TestMessagingProfileMetricsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-profile-metrics", "list",
+			t,
 			"--api-key", "string",
+			"messaging-profile-metrics", "list",
 			"--time-frame", "1h",
 		)
 	})

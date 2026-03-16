@@ -13,8 +13,9 @@ func TestLegacyReportingBatchDetailRecordsMessagingCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:messaging", "create",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:messaging", "create",
 			"--end-time", "'2024-02-12T23:59:59Z'",
 			"--start-time", "'2024-02-01T00:00:00Z'",
 			"--connection", "123",
@@ -41,8 +42,9 @@ func TestLegacyReportingBatchDetailRecordsMessagingCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:messaging", "create",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:messaging", "create",
 			"--end-time", "'2024-02-12T23:59:59Z'",
 			"--start-time", "'2024-02-01T00:00:00Z'",
 			"--connection", "123",
@@ -102,8 +104,9 @@ func TestLegacyReportingBatchDetailRecordsMessagingCreate(t *testing.T) {
 			"select_all_managed_accounts: false\n" +
 			"timezone: UTC\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "legacy:reporting:batch-detail-records:messaging", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:messaging", "create",
 		)
 	})
 }
@@ -112,8 +115,9 @@ func TestLegacyReportingBatchDetailRecordsMessagingRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:messaging", "retrieve",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:messaging", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -123,8 +127,9 @@ func TestLegacyReportingBatchDetailRecordsMessagingList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:messaging", "list",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:messaging", "list",
 		)
 	})
 }
@@ -133,8 +138,9 @@ func TestLegacyReportingBatchDetailRecordsMessagingDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:batch-detail-records:messaging", "delete",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:batch-detail-records:messaging", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

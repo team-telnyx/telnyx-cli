@@ -12,8 +12,9 @@ func TestStorageMigrationsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:migrations", "create",
+			t,
 			"--api-key", "string",
+			"storage:migrations", "create",
 			"--source-id", "source_id",
 			"--target-bucket-name", "target_bucket_name",
 			"--target-region", "target_region",
@@ -29,8 +30,9 @@ func TestStorageMigrationsCreate(t *testing.T) {
 			"target_region: target_region\n" +
 			"refresh: true\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "storage:migrations", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"storage:migrations", "create",
 		)
 	})
 }
@@ -39,8 +41,9 @@ func TestStorageMigrationsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:migrations", "retrieve",
+			t,
 			"--api-key", "string",
+			"storage:migrations", "retrieve",
 			"--id", "",
 		)
 	})
@@ -50,8 +53,9 @@ func TestStorageMigrationsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "storage:migrations", "list",
+			t,
 			"--api-key", "string",
+			"storage:migrations", "list",
 		)
 	})
 }

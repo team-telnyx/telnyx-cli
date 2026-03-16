@@ -12,8 +12,9 @@ func TestOAuthRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth", "retrieve",
+			t,
 			"--api-key", "string",
+			"oauth", "retrieve",
 			"--consent-token", "consent_token",
 		)
 	})
@@ -23,8 +24,9 @@ func TestOAuthGrants(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth", "grants",
+			t,
 			"--api-key", "string",
+			"oauth", "grants",
 			"--allowed=true",
 			"--consent-token", "consent_token",
 		)
@@ -36,8 +38,9 @@ func TestOAuthGrants(t *testing.T) {
 			"allowed: true\n" +
 			"consent_token: consent_token\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "oauth", "grants",
+			t, pipeData,
 			"--api-key", "string",
+			"oauth", "grants",
 		)
 	})
 }
@@ -46,10 +49,11 @@ func TestOAuthIntrospect(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth", "introspect",
+			t,
 			"--api-key", "string",
 			"--client-id", "string",
 			"--client-secret", "string",
+			"oauth", "introspect",
 			"--token", "token",
 		)
 	})
@@ -58,10 +62,11 @@ func TestOAuthIntrospect(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("token: token")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "oauth", "introspect",
+			t, pipeData,
 			"--api-key", "string",
 			"--client-id", "string",
 			"--client-secret", "string",
+			"oauth", "introspect",
 		)
 	})
 }
@@ -70,8 +75,9 @@ func TestOAuthRegister(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth", "register",
+			t,
 			"--api-key", "string",
+			"oauth", "register",
 			"--client-name", "My OAuth Application",
 			"--grant-type", "authorization_code",
 			"--logo-uri", "https://example.com",
@@ -100,8 +106,9 @@ func TestOAuthRegister(t *testing.T) {
 			"token_endpoint_auth_method: none\n" +
 			"tos_uri: https://example.com\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "oauth", "register",
+			t, pipeData,
 			"--api-key", "string",
+			"oauth", "register",
 		)
 	})
 }
@@ -110,8 +117,9 @@ func TestOAuthRetrieveAuthorize(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth", "retrieve-authorize",
+			t,
 			"--api-key", "string",
+			"oauth", "retrieve-authorize",
 			"--client-id", "client_id",
 			"--redirect-uri", "https://example.com",
 			"--response-type", "code",
@@ -127,8 +135,9 @@ func TestOAuthRetrieveJwks(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth", "retrieve-jwks",
+			t,
 			"--api-key", "string",
+			"oauth", "retrieve-jwks",
 		)
 	})
 }
@@ -137,10 +146,11 @@ func TestOAuthToken(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth", "token",
+			t,
 			"--api-key", "string",
 			"--client-id", "string",
 			"--client-secret", "string",
+			"oauth", "token",
 			"--grant-type", "client_credentials",
 			"--client-id", "client_id",
 			"--client-secret", "client_secret",
@@ -164,10 +174,11 @@ func TestOAuthToken(t *testing.T) {
 			"refresh_token: refresh_token\n" +
 			"scope: admin\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "oauth", "token",
+			t, pipeData,
 			"--api-key", "string",
 			"--client-id", "string",
 			"--client-secret", "string",
+			"oauth", "token",
 		)
 	})
 }

@@ -12,8 +12,9 @@ func TestVerificationsByPhoneNumberActionsVerify(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verifications:by-phone-number:actions", "verify",
+			t,
 			"--api-key", "string",
+			"verifications:by-phone-number:actions", "verify",
 			"--phone-number", "+13035551234",
 			"--code", "17686",
 			"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
@@ -26,8 +27,9 @@ func TestVerificationsByPhoneNumberActionsVerify(t *testing.T) {
 			"code: '17686'\n" +
 			"verify_profile_id: 12ade33a-21c0-473b-b055-b3c836e1c292\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "verifications:by-phone-number:actions", "verify",
+			t, pipeData,
 			"--api-key", "string",
+			"verifications:by-phone-number:actions", "verify",
 			"--phone-number", "+13035551234",
 		)
 	})

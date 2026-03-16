@@ -13,8 +13,9 @@ func TestFaxesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "faxes", "create",
+			t,
 			"--api-key", "string",
+			"faxes", "create",
 			"--connection-id", "234423",
 			"--from", "+13125790015",
 			"--to", "+13127367276",
@@ -52,8 +53,9 @@ func TestFaxesCreate(t *testing.T) {
 			"t38_enabled: true\n" +
 			"webhook_url: https://www.example.com/server-b/\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "faxes", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"faxes", "create",
 		)
 	})
 }
@@ -62,8 +64,9 @@ func TestFaxesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "faxes", "retrieve",
+			t,
 			"--api-key", "string",
+			"faxes", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -73,8 +76,9 @@ func TestFaxesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "faxes", "list",
+			t,
 			"--api-key", "string",
+			"faxes", "list",
 			"--max-items", "10",
 			"--filter", "{created_at: {gt: '2020-02-02T22:25:27.521992Z', gte: '2020-02-02T22:25:27.521992Z', lt: '2020-02-02T22:25:27.521992Z', lte: '2020-02-02T22:25:27.521992Z'}, direction: {eq: inbound}, from: {eq: '+13127367276'}, to: {eq: '+13127367276'}}",
 			"--page-number", "0",
@@ -88,8 +92,9 @@ func TestFaxesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "faxes", "list",
+			t,
 			"--api-key", "string",
+			"faxes", "list",
 			"--max-items", "10",
 			"--filter.created-at", "{gt: '2020-02-02T22:25:27.521992Z', gte: '2020-02-02T22:25:27.521992Z', lt: '2020-02-02T22:25:27.521992Z', lte: '2020-02-02T22:25:27.521992Z'}",
 			"--filter.direction", "{eq: inbound}",
@@ -105,8 +110,9 @@ func TestFaxesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "faxes", "delete",
+			t,
 			"--api-key", "string",
+			"faxes", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

@@ -12,8 +12,9 @@ func TestOAuthClientsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth-clients", "create",
+			t,
 			"--api-key", "string",
+			"oauth-clients", "create",
 			"--allowed-grant-type", "client_credentials",
 			"--allowed-scope", "admin",
 			"--client-type", "public",
@@ -42,8 +43,9 @@ func TestOAuthClientsCreate(t *testing.T) {
 			"require_pkce: true\n" +
 			"tos_uri: https://example.com\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "oauth-clients", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"oauth-clients", "create",
 		)
 	})
 }
@@ -52,8 +54,9 @@ func TestOAuthClientsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth-clients", "retrieve",
+			t,
 			"--api-key", "string",
+			"oauth-clients", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -63,8 +66,9 @@ func TestOAuthClientsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth-clients", "update",
+			t,
 			"--api-key", "string",
+			"oauth-clients", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--allowed-grant-type", "client_credentials",
 			"--allowed-scope", "admin",
@@ -92,8 +96,9 @@ func TestOAuthClientsUpdate(t *testing.T) {
 			"require_pkce: true\n" +
 			"tos_uri: https://example.com\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "oauth-clients", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"oauth-clients", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -103,8 +108,9 @@ func TestOAuthClientsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth-clients", "list",
+			t,
 			"--api-key", "string",
+			"oauth-clients", "list",
 			"--max-items", "10",
 			"--filter-allowed-grant-types-contains", "client_credentials",
 			"--filter-client-id", "filter[client_id]",
@@ -122,8 +128,9 @@ func TestOAuthClientsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "oauth-clients", "delete",
+			t,
 			"--api-key", "string",
+			"oauth-clients", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

@@ -13,8 +13,9 @@ func TestWireguardPeersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-peers", "create",
+			t,
 			"--api-key", "string",
+			"wireguard-peers", "create",
 			"--wireguard-interface-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -23,8 +24,9 @@ func TestWireguardPeersCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("wireguard_interface_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "wireguard-peers", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"wireguard-peers", "create",
 		)
 	})
 }
@@ -33,8 +35,9 @@ func TestWireguardPeersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-peers", "retrieve",
+			t,
 			"--api-key", "string",
+			"wireguard-peers", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -44,8 +47,9 @@ func TestWireguardPeersUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-peers", "update",
+			t,
 			"--api-key", "string",
+			"wireguard-peers", "update",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--public-key", "qF4EqlZq+5JL2IKYY8ij49daYyfKVhevJrcDxdqC8GU=",
 		)
@@ -55,8 +59,9 @@ func TestWireguardPeersUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("public_key: qF4EqlZq+5JL2IKYY8ij49daYyfKVhevJrcDxdqC8GU=")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "wireguard-peers", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"wireguard-peers", "update",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -66,8 +71,9 @@ func TestWireguardPeersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-peers", "list",
+			t,
 			"--api-key", "string",
+			"wireguard-peers", "list",
 			"--max-items", "10",
 			"--filter", "{wireguard_interface_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
 			"--page-number", "0",
@@ -81,8 +87,9 @@ func TestWireguardPeersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-peers", "list",
+			t,
 			"--api-key", "string",
+			"wireguard-peers", "list",
 			"--max-items", "10",
 			"--filter.wireguard-interface-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--page-number", "0",
@@ -95,8 +102,9 @@ func TestWireguardPeersDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireguard-peers", "delete",
+			t,
 			"--api-key", "string",
+			"wireguard-peers", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

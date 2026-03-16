@@ -12,8 +12,9 @@ func TestMessagingNumbersBulkUpdatesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-numbers-bulk-updates", "create",
+			t,
 			"--api-key", "string",
+			"messaging-numbers-bulk-updates", "create",
 			"--messaging-profile-id", "00000000-0000-0000-0000-000000000000",
 			"--number", "+18880000000",
 			"--number", "+18880000001",
@@ -32,8 +33,9 @@ func TestMessagingNumbersBulkUpdatesCreate(t *testing.T) {
 			"  - '+18880000002'\n" +
 			"assign_only: true\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-numbers-bulk-updates", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-numbers-bulk-updates", "create",
 		)
 	})
 }
@@ -42,8 +44,9 @@ func TestMessagingNumbersBulkUpdatesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-numbers-bulk-updates", "retrieve",
+			t,
 			"--api-key", "string",
+			"messaging-numbers-bulk-updates", "retrieve",
 			"--order-id", "order_id",
 		)
 	})

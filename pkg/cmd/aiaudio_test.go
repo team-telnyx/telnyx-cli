@@ -12,8 +12,9 @@ func TestAIAudioTranscribe(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:audio", "transcribe",
+			t,
 			"--api-key", "string",
+			"ai:audio", "transcribe",
 			"--model", "distil-whisper/distil-large-v2",
 			"--file", "Example data",
 			"--file-url", "https://example.com/file.mp3",
@@ -37,8 +38,9 @@ func TestAIAudioTranscribe(t *testing.T) {
 			"response_format: json\n" +
 			"timestamp_granularities[]: segment\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:audio", "transcribe",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:audio", "transcribe",
 		)
 	})
 }

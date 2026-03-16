@@ -12,8 +12,9 @@ func TestWirelessBlocklistValuesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "wireless-blocklist-values", "list",
+			t,
 			"--api-key", "string",
+			"wireless-blocklist-values", "list",
 			"--type", "country",
 		)
 	})

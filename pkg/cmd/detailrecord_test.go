@@ -13,8 +13,9 @@ func TestDetailRecordsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "detail-records", "list",
+			t,
 			"--api-key", "string",
+			"detail-records", "list",
 			"--max-items", "10",
 			"--filter", "{record_type: ai-voice-assistant, date_range: yesterday}",
 			"--page-number", "0",
@@ -29,8 +30,9 @@ func TestDetailRecordsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "detail-records", "list",
+			t,
 			"--api-key", "string",
+			"detail-records", "list",
 			"--max-items", "10",
 			"--filter.record-type", "ai-voice-assistant",
 			"--filter.date-range", "yesterday",

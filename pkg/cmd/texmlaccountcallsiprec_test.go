@@ -12,8 +12,9 @@ func TestTexmlAccountsCallsSiprecSiprecSidJson(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls:siprec", "siprec-sid-json",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls:siprec", "siprec-sid-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 			"--siprec-sid", "siprec_sid",
@@ -25,8 +26,9 @@ func TestTexmlAccountsCallsSiprecSiprecSidJson(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("Status: stopped")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:calls:siprec", "siprec-sid-json",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:calls:siprec", "siprec-sid-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 			"--siprec-sid", "siprec_sid",

@@ -13,8 +13,9 @@ func TestCommentsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "comments", "create",
+			t,
 			"--api-key", "string",
+			"comments", "create",
 			"--body", "Hi there, ....",
 			"--comment-record-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
 			"--comment-record-type", "sub_number_order",
@@ -28,8 +29,9 @@ func TestCommentsCreate(t *testing.T) {
 			"comment_record_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576\n" +
 			"comment_record_type: sub_number_order\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "comments", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"comments", "create",
 		)
 	})
 }
@@ -38,8 +40,9 @@ func TestCommentsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "comments", "retrieve",
+			t,
 			"--api-key", "string",
+			"comments", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -49,8 +52,9 @@ func TestCommentsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "comments", "list",
+			t,
 			"--api-key", "string",
+			"comments", "list",
 			"--filter", "{comment_record_id: 8ffb3622-7c6b-4ccc-b65f-7a3dc0099576, comment_record_type: sub_number_order}",
 		)
 	})
@@ -61,8 +65,9 @@ func TestCommentsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "comments", "list",
+			t,
 			"--api-key", "string",
+			"comments", "list",
 			"--filter.comment-record-id", "8ffb3622-7c6b-4ccc-b65f-7a3dc0099576",
 			"--filter.comment-record-type", "sub_number_order",
 		)
@@ -73,8 +78,9 @@ func TestCommentsMarkAsRead(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "comments", "mark-as-read",
+			t,
 			"--api-key", "string",
+			"comments", "mark-as-read",
 			"--id", "id",
 		)
 	})

@@ -13,8 +13,9 @@ func TestSetiRetrieveBlackBoxTestResults(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "seti", "retrieve-black-box-test-results",
+			t,
 			"--api-key", "string",
+			"seti", "retrieve-black-box-test-results",
 			"--filter", "{product: product}",
 		)
 	})
@@ -25,8 +26,9 @@ func TestSetiRetrieveBlackBoxTestResults(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "seti", "retrieve-black-box-test-results",
+			t,
 			"--api-key", "string",
+			"seti", "retrieve-black-box-test-results",
 			"--filter.product", "product",
 		)
 	})

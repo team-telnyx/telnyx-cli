@@ -12,8 +12,9 @@ func TestWhatsappBusinessAccountsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:business-accounts", "retrieve",
+			t,
 			"--api-key", "string",
+			"whatsapp:business-accounts", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestWhatsappBusinessAccountsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:business-accounts", "list",
+			t,
 			"--api-key", "string",
+			"whatsapp:business-accounts", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -36,8 +38,9 @@ func TestWhatsappBusinessAccountsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:business-accounts", "delete",
+			t,
 			"--api-key", "string",
+			"whatsapp:business-accounts", "delete",
 			"--id", "id",
 		)
 	})

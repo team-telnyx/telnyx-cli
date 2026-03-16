@@ -12,8 +12,9 @@ func TestOperatorConnectActionsRefresh(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "operator-connect:actions", "refresh",
+			t,
 			"--api-key", "string",
+			"operator-connect:actions", "refresh",
 		)
 	})
 }

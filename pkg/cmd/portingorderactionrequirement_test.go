@@ -13,8 +13,9 @@ func TestPortingOrdersActionRequirementsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:action-requirements", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:action-requirements", "list",
 			"--max-items", "10",
 			"--porting-order-id", "porting_order_id",
 			"--filter", "{id: [182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e], action_type: au_id_verification, requirement_type_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e, status: created}",
@@ -30,8 +31,9 @@ func TestPortingOrdersActionRequirementsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:action-requirements", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:action-requirements", "list",
 			"--max-items", "10",
 			"--porting-order-id", "porting_order_id",
 			"--filter.id", "[182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e]",
@@ -49,8 +51,9 @@ func TestPortingOrdersActionRequirementsInitiate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:action-requirements", "initiate",
+			t,
 			"--api-key", "string",
+			"porting-orders:action-requirements", "initiate",
 			"--porting-order-id", "porting_order_id",
 			"--id", "id",
 			"--params", "{first_name: John, last_name: Doe}",
@@ -63,8 +66,9 @@ func TestPortingOrdersActionRequirementsInitiate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:action-requirements", "initiate",
+			t,
 			"--api-key", "string",
+			"porting-orders:action-requirements", "initiate",
 			"--porting-order-id", "porting_order_id",
 			"--id", "id",
 			"--params.first-name", "John",
@@ -79,8 +83,9 @@ func TestPortingOrdersActionRequirementsInitiate(t *testing.T) {
 			"  first_name: John\n" +
 			"  last_name: Doe\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "porting-orders:action-requirements", "initiate",
+			t, pipeData,
 			"--api-key", "string",
+			"porting-orders:action-requirements", "initiate",
 			"--porting-order-id", "porting_order_id",
 			"--id", "id",
 		)

@@ -13,8 +13,9 @@ func TestNotificationChannelsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-channels", "create",
+			t,
 			"--api-key", "string",
+			"notification-channels", "create",
 			"--channel-destination", "+13125550000",
 			"--channel-type-id", "sms",
 			"--notification-profile-id", "12455643-3cf1-4683-ad23-1cd32f7d5e0a",
@@ -28,8 +29,9 @@ func TestNotificationChannelsCreate(t *testing.T) {
 			"channel_type_id: sms\n" +
 			"notification_profile_id: 12455643-3cf1-4683-ad23-1cd32f7d5e0a\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "notification-channels", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"notification-channels", "create",
 		)
 	})
 }
@@ -38,8 +40,9 @@ func TestNotificationChannelsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-channels", "retrieve",
+			t,
 			"--api-key", "string",
+			"notification-channels", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -49,8 +52,9 @@ func TestNotificationChannelsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-channels", "update",
+			t,
 			"--api-key", "string",
+			"notification-channels", "update",
 			"--notification-channel-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--channel-destination", "+13125550000",
 			"--channel-type-id", "sms",
@@ -65,8 +69,9 @@ func TestNotificationChannelsUpdate(t *testing.T) {
 			"channel_type_id: sms\n" +
 			"notification_profile_id: 12455643-3cf1-4683-ad23-1cd32f7d5e0a\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "notification-channels", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"notification-channels", "update",
 			"--notification-channel-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -76,8 +81,9 @@ func TestNotificationChannelsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-channels", "list",
+			t,
 			"--api-key", "string",
+			"notification-channels", "list",
 			"--max-items", "10",
 			"--filter", "{associated_record_type: {eq: phone_number}, channel_type_id: {eq: webhook}, notification_channel: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, notification_event_condition_id: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, notification_profile_id: {eq: 12455643-3cf1-4683-ad23-1cd32f7d5e0a}, status: {eq: enable-received}}",
 			"--page-number", "0",
@@ -91,8 +97,9 @@ func TestNotificationChannelsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-channels", "list",
+			t,
 			"--api-key", "string",
+			"notification-channels", "list",
 			"--max-items", "10",
 			"--filter.associated-record-type", "{eq: phone_number}",
 			"--filter.channel-type-id", "{eq: webhook}",
@@ -110,8 +117,9 @@ func TestNotificationChannelsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-channels", "delete",
+			t,
 			"--api-key", "string",
+			"notification-channels", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

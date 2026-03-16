@@ -12,8 +12,9 @@ func TestReportsCdrUsageReportsFetchSync(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "reports:cdr-usage-reports", "fetch-sync",
+			t,
 			"--api-key", "string",
+			"reports:cdr-usage-reports", "fetch-sync",
 			"--aggregation-type", "NO_AGGREGATION",
 			"--product-breakdown", "NO_BREAKDOWN",
 			"--connection", "1234567890123",

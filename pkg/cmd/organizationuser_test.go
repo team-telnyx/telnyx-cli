@@ -12,8 +12,9 @@ func TestOrganizationsUsersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "organizations:users", "retrieve",
+			t,
 			"--api-key", "string",
+			"organizations:users", "retrieve",
 			"--id", "id",
 			"--include-groups=true",
 		)
@@ -24,8 +25,9 @@ func TestOrganizationsUsersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "organizations:users", "list",
+			t,
 			"--api-key", "string",
+			"organizations:users", "list",
 			"--max-items", "10",
 			"--filter-email", "filter[email]",
 			"--filter-user-status", "enabled",
@@ -40,8 +42,9 @@ func TestOrganizationsUsersGetGroupsReport(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "organizations:users", "get-groups-report",
+			t,
 			"--api-key", "string",
+			"organizations:users", "get-groups-report",
 			"--accept", "application/json",
 		)
 	})

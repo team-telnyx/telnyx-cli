@@ -13,8 +13,9 @@ func TestTexmlApplicationsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml-applications", "create",
+			t,
 			"--api-key", "string",
+			"texml-applications", "create",
 			"--friendly-name", "call-router",
 			"--voice-url", "https://example.com",
 			"--active=false",
@@ -40,8 +41,9 @@ func TestTexmlApplicationsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml-applications", "create",
+			t,
 			"--api-key", "string",
+			"texml-applications", "create",
 			"--friendly-name", "call-router",
 			"--voice-url", "https://example.com",
 			"--active=false",
@@ -92,8 +94,9 @@ func TestTexmlApplicationsCreate(t *testing.T) {
 			"voice_fallback_url: https://fallback.example.com\n" +
 			"voice_method: get\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml-applications", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"texml-applications", "create",
 		)
 	})
 }
@@ -102,8 +105,9 @@ func TestTexmlApplicationsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml-applications", "retrieve",
+			t,
 			"--api-key", "string",
+			"texml-applications", "retrieve",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -113,8 +117,9 @@ func TestTexmlApplicationsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml-applications", "update",
+			t,
 			"--api-key", "string",
+			"texml-applications", "update",
 			"--id", "1293384261075731499",
 			"--friendly-name", "call-router",
 			"--voice-url", "https://example.com",
@@ -141,8 +146,9 @@ func TestTexmlApplicationsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml-applications", "update",
+			t,
 			"--api-key", "string",
+			"texml-applications", "update",
 			"--id", "1293384261075731499",
 			"--friendly-name", "call-router",
 			"--voice-url", "https://example.com",
@@ -194,8 +200,9 @@ func TestTexmlApplicationsUpdate(t *testing.T) {
 			"voice_fallback_url: https://fallback.example.com\n" +
 			"voice_method: get\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml-applications", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"texml-applications", "update",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -205,8 +212,9 @@ func TestTexmlApplicationsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml-applications", "list",
+			t,
 			"--api-key", "string",
+			"texml-applications", "list",
 			"--max-items", "10",
 			"--filter", "{friendly_name: friendly_name, outbound_voice_profile_id: '1293384261075731499'}",
 			"--page-number", "0",
@@ -221,8 +229,9 @@ func TestTexmlApplicationsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml-applications", "list",
+			t,
 			"--api-key", "string",
+			"texml-applications", "list",
 			"--max-items", "10",
 			"--filter.friendly-name", "friendly_name",
 			"--filter.outbound-voice-profile-id", "1293384261075731499",
@@ -237,8 +246,9 @@ func TestTexmlApplicationsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml-applications", "delete",
+			t,
 			"--api-key", "string",
+			"texml-applications", "delete",
 			"--id", "1293384261075731499",
 		)
 	})

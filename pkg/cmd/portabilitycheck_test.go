@@ -12,8 +12,9 @@ func TestPortabilityChecksRun(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portability-checks", "run",
+			t,
 			"--api-key", "string",
+			"portability-checks", "run",
 			"--phone-number", "+13035550000",
 			"--phone-number", "+13035550001",
 			"--phone-number", "+13035550002",
@@ -28,8 +29,9 @@ func TestPortabilityChecksRun(t *testing.T) {
 			"  - '+13035550001'\n" +
 			"  - '+13035550002'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "portability-checks", "run",
+			t, pipeData,
 			"--api-key", "string",
+			"portability-checks", "run",
 		)
 	})
 }

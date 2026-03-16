@@ -12,8 +12,9 @@ func TestReportsListMdrs(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "reports", "list-mdrs",
+			t,
 			"--api-key", "string",
+			"reports", "list-mdrs",
 			"--id", "e093fbe0-5bde-11eb-ae93-0242ac130002",
 			"--cld", "+15551237654",
 			"--cli", "+15551237654",
@@ -31,8 +32,9 @@ func TestReportsListWdrs(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "reports", "list-wdrs",
+			t,
 			"--api-key", "string",
+			"reports", "list-wdrs",
 			"--max-items", "10",
 			"--id", "e093fbe0-5bde-11eb-ae93-0242ac130002",
 			"--end-date", "2021-06-01T00:00:00Z",

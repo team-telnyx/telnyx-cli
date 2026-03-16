@@ -13,8 +13,9 @@ func TestAIChatCreateCompletion(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:chat", "create-completion",
+			t,
 			"--api-key", "string",
+			"ai:chat", "create-completion",
 			"--message", "{content: You are a friendly chatbot., role: system}",
 			"--message", "{content: 'Hello, world!', role: user}",
 			"--api-key-ref", "api_key_ref",
@@ -49,8 +50,9 @@ func TestAIChatCreateCompletion(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:chat", "create-completion",
+			t,
 			"--api-key", "string",
+			"ai:chat", "create-completion",
 			"--message.content", "You are a friendly chatbot.",
 			"--message.role", "system",
 			"--message.content", "Hello, world!",
@@ -122,8 +124,9 @@ func TestAIChatCreateCompletion(t *testing.T) {
 			"top_p: 0\n" +
 			"use_beam_search: true\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:chat", "create-completion",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:chat", "create-completion",
 		)
 	})
 }

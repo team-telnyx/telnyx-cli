@@ -13,8 +13,9 @@ func TestMobileVoiceConnectionsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-voice-connections", "create",
+			t,
 			"--api-key", "string",
+			"mobile-voice-connections", "create",
 			"--active=true",
 			"--connection-name", "connection_name",
 			"--inbound", "{channel_limit: 0}",
@@ -33,8 +34,9 @@ func TestMobileVoiceConnectionsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-voice-connections", "create",
+			t,
 			"--api-key", "string",
+			"mobile-voice-connections", "create",
 			"--active=true",
 			"--connection-name", "connection_name",
 			"--inbound.channel-limit", "0",
@@ -65,8 +67,9 @@ func TestMobileVoiceConnectionsCreate(t *testing.T) {
 			"webhook_event_url: webhook_event_url\n" +
 			"webhook_timeout_secs: 0\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "mobile-voice-connections", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"mobile-voice-connections", "create",
 		)
 	})
 }
@@ -75,8 +78,9 @@ func TestMobileVoiceConnectionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-voice-connections", "retrieve",
+			t,
 			"--api-key", "string",
+			"mobile-voice-connections", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -86,8 +90,9 @@ func TestMobileVoiceConnectionsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-voice-connections", "update",
+			t,
 			"--api-key", "string",
+			"mobile-voice-connections", "update",
 			"--id", "id",
 			"--active=true",
 			"--connection-name", "connection_name",
@@ -107,8 +112,9 @@ func TestMobileVoiceConnectionsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-voice-connections", "update",
+			t,
 			"--api-key", "string",
+			"mobile-voice-connections", "update",
 			"--id", "id",
 			"--active=true",
 			"--connection-name", "connection_name",
@@ -140,8 +146,9 @@ func TestMobileVoiceConnectionsUpdate(t *testing.T) {
 			"webhook_event_url: webhook_event_url\n" +
 			"webhook_timeout_secs: 0\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "mobile-voice-connections", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"mobile-voice-connections", "update",
 			"--id", "id",
 		)
 	})
@@ -151,8 +158,9 @@ func TestMobileVoiceConnectionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-voice-connections", "list",
+			t,
 			"--api-key", "string",
+			"mobile-voice-connections", "list",
 			"--max-items", "10",
 			"--filter-connection-name-contains", "filter[connection_name][contains]",
 			"--page-number", "0",
@@ -166,8 +174,9 @@ func TestMobileVoiceConnectionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-voice-connections", "delete",
+			t,
 			"--api-key", "string",
+			"mobile-voice-connections", "delete",
 			"--id", "id",
 		)
 	})

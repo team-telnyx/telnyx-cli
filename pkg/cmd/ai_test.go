@@ -12,8 +12,9 @@ func TestAIRetrieveModels(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai", "retrieve-models",
+			t,
 			"--api-key", "string",
+			"ai", "retrieve-models",
 		)
 	})
 }
@@ -22,8 +23,9 @@ func TestAISummarize(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai", "summarize",
+			t,
 			"--api-key", "string",
+			"ai", "summarize",
 			"--bucket", "bucket",
 			"--filename", "filename",
 			"--system-prompt", "system_prompt",
@@ -37,8 +39,9 @@ func TestAISummarize(t *testing.T) {
 			"filename: filename\n" +
 			"system_prompt: system_prompt\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai", "summarize",
+			t, pipeData,
 			"--api-key", "string",
+			"ai", "summarize",
 		)
 	})
 }

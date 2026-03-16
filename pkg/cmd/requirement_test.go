@@ -13,8 +13,9 @@ func TestRequirementsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirements", "retrieve",
+			t,
 			"--api-key", "string",
+			"requirements", "retrieve",
 			"--id", "a9dad8d5-fdbd-49d7-aa23-39bb08a5ebaa",
 		)
 	})
@@ -24,8 +25,9 @@ func TestRequirementsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirements", "list",
+			t,
 			"--api-key", "string",
+			"requirements", "list",
 			"--max-items", "10",
 			"--filter", "{action: porting, country_code: US, phone_number_type: local}",
 			"--page-number", "0",
@@ -40,8 +42,9 @@ func TestRequirementsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirements", "list",
+			t,
 			"--api-key", "string",
+			"requirements", "list",
 			"--max-items", "10",
 			"--filter.action", "porting",
 			"--filter.country-code", "US",

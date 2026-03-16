@@ -12,8 +12,9 @@ func TestAIEmbeddingsBucketsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:embeddings:buckets", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:embeddings:buckets", "retrieve",
 			"--bucket-name", "bucket_name",
 		)
 	})
@@ -23,8 +24,9 @@ func TestAIEmbeddingsBucketsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:embeddings:buckets", "list",
+			t,
 			"--api-key", "string",
+			"ai:embeddings:buckets", "list",
 		)
 	})
 }
@@ -33,8 +35,9 @@ func TestAIEmbeddingsBucketsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:embeddings:buckets", "delete",
+			t,
 			"--api-key", "string",
+			"ai:embeddings:buckets", "delete",
 			"--bucket-name", "bucket_name",
 		)
 	})
