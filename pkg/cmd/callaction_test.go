@@ -623,6 +623,61 @@ func TestCallsActionsHangup(t *testing.T) {
 	})
 }
 
+func TestCallsActionsJoinAIAssistant(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "join-ai-assistant",
+			"--call-control-id", "call_control_id",
+			"--conversation-id", "v3:abc123",
+			"--participant", "{id: v3:abc123def456, role: user, name: John Doe, on_hangup: continue_conversation}",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(callsActionsJoinAIAssistant)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "join-ai-assistant",
+			"--call-control-id", "call_control_id",
+			"--conversation-id", "v3:abc123",
+			"--participant.id", "v3:abc123def456",
+			"--participant.role", "user",
+			"--participant.name", "John Doe",
+			"--participant.on-hangup", "continue_conversation",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"conversation_id: v3:abc123\n" +
+			"participant:\n" +
+			"  id: v3:abc123def456\n" +
+			"  role: user\n" +
+			"  name: John Doe\n" +
+			"  on_hangup: continue_conversation\n" +
+			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
+			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"calls:actions", "join-ai-assistant",
+			"--call-control-id", "call_control_id",
+		)
+	})
+}
+
 func TestCallsActionsLeaveQueue(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
