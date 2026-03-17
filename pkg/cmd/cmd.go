@@ -767,6 +767,7 @@ func init() {
 					&callsActionsGatherUsingAudio,
 					&callsActionsGatherUsingSpeak,
 					&callsActionsHangup,
+					&callsActionsJoinAIAssistant,
 					&callsActionsLeaveQueue,
 					&callsActionsPauseRecording,
 					&callsActionsRefer,
@@ -2572,6 +2573,7 @@ func init() {
 				Commands: []*cli.Command{
 					&textToSpeechGenerate,
 					&textToSpeechListVoices,
+					&textToSpeechStream,
 				},
 			},
 			{
@@ -3104,6 +3106,14 @@ func init() {
 				Commands: []*cli.Command{
 					&x402CreditAccountCreateQuote,
 					&x402CreditAccountSettle,
+				},
+			},
+			{
+				Name:     "speech-to-text",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&speechToTextTranscribe,
 				},
 			},
 			{

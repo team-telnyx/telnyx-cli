@@ -163,3 +163,21 @@ func TestTextToSpeechListVoices(t *testing.T) {
 		)
 	})
 }
+
+func TestTextToSpeechStream(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"text-to-speech", "stream",
+			"--audio-format", "pcm",
+			"--disable-cache=true",
+			"--model-id", "model_id",
+			"--provider", "aws",
+			"--socket-id", "socket_id",
+			"--voice", "voice",
+			"--voice-id", "voice_id",
+		)
+	})
+}
