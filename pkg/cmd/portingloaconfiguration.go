@@ -253,8 +253,8 @@ var portingLoaConfigurationsDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
-var portingLoaConfigurationsPreview0 = requestflag.WithInnerFlags(cli.Command{
-	Name:    "preview-0",
+var portingLoaConfigurationsPreview = requestflag.WithInnerFlags(cli.Command{
+	Name:    "preview",
 	Usage:   "Preview the LOA template that would be generated without need to create LOA\nconfiguration.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -294,7 +294,7 @@ var portingLoaConfigurationsPreview0 = requestflag.WithInnerFlags(cli.Command{
 			Usage:   "The file where the response contents will be stored. Use the value '-' to force output to stdout.",
 		},
 	},
-	Action:          handlePortingLoaConfigurationsPreview0,
+	Action:          handlePortingLoaConfigurationsPreview,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
 	"address": {
@@ -547,7 +547,7 @@ func handlePortingLoaConfigurationsDelete(ctx context.Context, cmd *cli.Command)
 	return client.Porting.LoaConfigurations.Delete(ctx, cmd.Value("id").(string), options...)
 }
 
-func handlePortingLoaConfigurationsPreview0(ctx context.Context, cmd *cli.Command) error {
+func handlePortingLoaConfigurationsPreview(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -555,7 +555,7 @@ func handlePortingLoaConfigurationsPreview0(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingLoaConfigurationPreview0Params{}
+	params := telnyx.PortingLoaConfigurationPreviewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -568,7 +568,7 @@ func handlePortingLoaConfigurationsPreview0(ctx context.Context, cmd *cli.Comman
 		return err
 	}
 
-	response, err := client.Porting.LoaConfigurations.Preview0(ctx, params, options...)
+	response, err := client.Porting.LoaConfigurations.Preview(ctx, params, options...)
 	if err != nil {
 		return err
 	}
