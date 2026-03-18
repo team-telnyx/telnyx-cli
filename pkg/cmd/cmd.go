@@ -1825,6 +1825,7 @@ func init() {
 					&portingLoaConfigurationsList,
 					&portingLoaConfigurationsDelete,
 					&portingLoaConfigurationsPreview,
+					&portingLoaConfigurationsPreview0,
 					&portingLoaConfigurationsPreview1,
 				},
 			},
