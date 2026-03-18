@@ -982,6 +982,9 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--greeting", "Hello, can you tell me your age and where you live?",
 			"--interruption-settings", "{enable: true}",
+			"--message-history", "{content: 'Hello, I would like some help.', role: user, metadata: {foo: bar}}",
+			"--participant", "{id: v3:abc123def456, role: user, name: John Doe, on_hangup: continue_conversation}",
+			"--send-message-history-updates=true",
 			"--transcription", "{model: distil-whisper/distil-large-v2}",
 			"--voice", "Telnyx.KokoroTTS.af",
 			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
@@ -1005,6 +1008,12 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--greeting", "Hello, can you tell me your age and where you live?",
 			"--interruption-settings.enable=true",
+			"--message-history", "{content: 'Hello, I would like some help.', role: user, metadata: {foo: bar}}",
+			"--participant.id", "v3:abc123def456",
+			"--participant.role", "user",
+			"--participant.name", "John Doe",
+			"--participant.on-hangup", "continue_conversation",
+			"--send-message-history-updates=true",
 			"--transcription.model", "distil-whisper/distil-large-v2",
 			"--voice", "Telnyx.KokoroTTS.af",
 			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
@@ -1023,6 +1032,17 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"greeting: Hello, can you tell me your age and where you live?\n" +
 			"interruption_settings:\n" +
 			"  enable: true\n" +
+			"message_history:\n" +
+			"  - content: Hello, I would like some help.\n" +
+			"    role: user\n" +
+			"    metadata:\n" +
+			"      foo: bar\n" +
+			"participants:\n" +
+			"  - id: v3:abc123def456\n" +
+			"    role: user\n" +
+			"    name: John Doe\n" +
+			"    on_hangup: continue_conversation\n" +
+			"send_message_history_updates: true\n" +
 			"transcription:\n" +
 			"  model: distil-whisper/distil-large-v2\n" +
 			"voice: Telnyx.KokoroTTS.af\n" +

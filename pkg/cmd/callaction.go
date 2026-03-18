@@ -1330,6 +1330,24 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Settings for handling user interruptions during assistant speech",
 			BodyPath: "interruption_settings",
 		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "message-history",
+			Usage:    "A list of messages to seed the conversation history before the assistant starts. Follows the same message format as the `ai_assistant_add_messages` command.",
+			Default:  []map[string]any{},
+			BodyPath: "message_history",
+		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "participant",
+			Usage:    "A list of participants to add to the conversation when it starts.",
+			Default:  []map[string]string{},
+			BodyPath: "participants",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "send-message-history-updates",
+			Usage:    "When `true`, a webhook is sent each time the conversation message history is updated.",
+			Default:  false,
+			BodyPath: "send_message_history_updates",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "transcription",
 			Usage:    "The settings associated with speech to text for the voice assistant. This is only relevant if the assistant uses a text-to-text language model. Any assistant using a model with native audio support (e.g. `fixie-ai/ultravox-v0_4`) will ignore this field.",
@@ -1372,6 +1390,28 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Name:       "interruption-settings.enable",
 			Usage:      "When true, allows users to interrupt the assistant while speaking",
 			InnerField: "enable",
+		},
+	},
+	"participant": {
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.id",
+			Usage:      "The call_control_id of the participant to add to the conversation.",
+			InnerField: "id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.role",
+			Usage:      "The role of the participant in the conversation.",
+			InnerField: "role",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.name",
+			Usage:      "Display name for the participant.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.on-hangup",
+			Usage:      "Determines what happens to the conversation when this participant hangs up.",
+			InnerField: "on_hangup",
 		},
 	},
 	"transcription": {
