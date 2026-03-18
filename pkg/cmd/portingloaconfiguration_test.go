@@ -176,13 +176,13 @@ func TestPortingLoaConfigurationsDelete(t *testing.T) {
 	})
 }
 
-func TestPortingLoaConfigurationsPreview0(t *testing.T) {
+func TestPortingLoaConfigurationsPreview(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"porting:loa-configurations", "preview-0",
+			"porting:loa-configurations", "preview",
 			"--address", "{city: Austin, country_code: US, state: TX, street_address: 600 Congress Avenue, zip_code: '78701', extended_address: 14th Floor}",
 			"--company-name", "Telnyx",
 			"--contact", "{email: testing@telnyx.com, phone_number: '+12003270001'}",
@@ -194,13 +194,13 @@ func TestPortingLoaConfigurationsPreview0(t *testing.T) {
 
 	t.Run("inner flags", func(t *testing.T) {
 		// Check that inner flags have been set up correctly
-		requestflag.CheckInnerFlags(portingLoaConfigurationsPreview0)
+		requestflag.CheckInnerFlags(portingLoaConfigurationsPreview)
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"porting:loa-configurations", "preview-0",
+			"porting:loa-configurations", "preview",
 			"--address.city", "Austin",
 			"--address.country-code", "US",
 			"--address.state", "TX",
@@ -236,7 +236,7 @@ func TestPortingLoaConfigurationsPreview0(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"porting:loa-configurations", "preview-0",
+			"porting:loa-configurations", "preview",
 			"--output", "/dev/null",
 		)
 	})
