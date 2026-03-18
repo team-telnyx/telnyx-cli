@@ -1339,7 +1339,7 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "participant",
 			Usage:    "A list of participants to add to the conversation when it starts.",
-			Default:  []map[string]string{},
+			Default:  []map[string]any{},
 			BodyPath: "participants",
 		},
 		&requestflag.Flag[bool]{

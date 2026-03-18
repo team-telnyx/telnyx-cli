@@ -684,7 +684,7 @@ func handlePortingLoaConfigurationsPreview0(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingLoaConfigurationPreview0Params{}
+	params := telnyx.PortingLoaConfigurationPreviewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -697,7 +697,7 @@ func handlePortingLoaConfigurationsPreview0(ctx context.Context, cmd *cli.Comman
 		return err
 	}
 
-	response, err := client.Porting.LoaConfigurations.Preview0(ctx, params, options...)
+	response, err := client.Porting.LoaConfigurations.Preview(ctx, params, options...)
 	if err != nil {
 		return err
 	}
