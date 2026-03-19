@@ -1825,6 +1825,7 @@ func init() {
 					&portingLoaConfigurationsList,
 					&portingLoaConfigurationsDelete,
 					&portingLoaConfigurationsPreview,
+					&portingLoaConfigurationsPreview0,
 					&portingLoaConfigurationsPreview1,
 				},
 			},
@@ -3033,7 +3034,10 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&whatsappMessageTemplatesCreate,
+					&whatsappMessageTemplatesRetrieve,
+					&whatsappMessageTemplatesUpdate,
 					&whatsappMessageTemplatesList,
+					&whatsappMessageTemplatesDelete,
 				},
 			},
 			{
@@ -3072,16 +3076,6 @@ func init() {
 				Commands: []*cli.Command{
 					&whatsappPhoneNumbersProfilePhotoDelete,
 					&whatsappPhoneNumbersProfilePhotoUpload,
-				},
-			},
-			{
-				Name:     "whatsapp-message-templates",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&whatsappMessageTemplatesRetrieve,
-					&whatsappMessageTemplatesUpdate,
-					&whatsappMessageTemplatesDelete,
 				},
 			},
 			{
