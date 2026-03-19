@@ -41,11 +41,6 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "ElevenLabs provider-specific parameters.",
 			BodyPath: "elevenlabs",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:     "inworld",
-			Usage:    "Inworld provider-specific parameters.",
-			BodyPath: "inworld",
-		},
 		&requestflag.Flag[string]{
 			Name:     "language",
 			Usage:    "Language code (e.g. `en-US`). Usage varies by provider.",
@@ -79,7 +74,7 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "telnyx",
-			Usage:    "Telnyx provider-specific parameters.",
+			Usage:    "Telnyx provider-specific parameters. Use `voice_speed` and `temperature` for `Natural` and `NaturalHD` models. For the `Ultra` model, use `voice_speed`, `volume`, and `emotion`.",
 			BodyPath: "telnyx",
 		},
 		&requestflag.Flag[string]{
@@ -94,7 +89,7 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id`. Examples: `telnyx.NaturalHD.Alloy`, `azure.en-US-AvaMultilingualNeural`, `aws.Polly.Generative.Lucia`. When provided, `provider`, `model_id`, and `voice_id` are extracted automatically and take precedence over individual parameters.",
+			Usage:    "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id`. Examples: `telnyx.NaturalHD.Alloy`, `Telnyx.Ultra.<voice_id>`, `azure.en-US-AvaMultilingualNeural`, `aws.Polly.Generative.Lucia`. When provided, `provider`, `model_id`, and `voice_id` are extracted automatically and take precedence over individual parameters.",
 			BodyPath: "voice",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -260,6 +255,11 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 	},
 	"telnyx": {
 		&requestflag.InnerFlag[string]{
+			Name:       "telnyx.emotion",
+			Usage:      "Emotion control for the Ultra model. Adjusts the emotional tone of the synthesized speech.",
+			InnerField: "emotion",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "telnyx.response-format",
 			Usage:      "Audio response format.",
 			InnerField: "response_format",
@@ -271,13 +271,18 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "telnyx.temperature",
-			Usage:      "Sampling temperature.",
+			Usage:      "Sampling temperature. Applies to `Natural` and `NaturalHD` models only.",
 			InnerField: "temperature",
 		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "telnyx.voice-speed",
-			Usage:      "Voice speed multiplier.",
+			Usage:      "Voice speed multiplier. Applies to all models. Range: 0.5 to 2.0.",
 			InnerField: "voice_speed",
+		},
+		&requestflag.InnerFlag[float64]{
+			Name:       "telnyx.volume",
+			Usage:      "Volume level for the Ultra model. Range: 0.0 to 2.0.",
+			InnerField: "volume",
 		},
 	},
 })
@@ -299,53 +304,6 @@ var textToSpeechListVoices = cli.Command{
 		},
 	},
 	Action:          handleTextToSpeechListVoices,
-	HideHelpCommand: true,
-}
-
-var textToSpeechStream = cli.Command{
-	Name:    "stream",
-	Usage:   "Open a WebSocket connection to stream text and receive synthesized audio in real\ntime. Authentication is provided via the standard\n`Authorization: Bearer <API_KEY>` header. Send JSON frames with text to\nsynthesize; receive JSON frames containing base64-encoded audio chunks.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "audio-format",
-			Usage:     "Audio output format override. Supported for Telnyx `Natural`/`NaturalHD` models only. Accepted values: `pcm`, `wav`.",
-			QueryPath: "audio_format",
-		},
-		&requestflag.Flag[bool]{
-			Name:      "disable-cache",
-			Usage:     "When `true`, bypass the audio cache and generate fresh audio.",
-			Default:   false,
-			QueryPath: "disable_cache",
-		},
-		&requestflag.Flag[string]{
-			Name:      "model-id",
-			Usage:     "Model identifier for the chosen provider. Examples: `Natural`, `NaturalHD` (Telnyx); `Polly.Generative` (AWS).",
-			QueryPath: "model_id",
-		},
-		&requestflag.Flag[string]{
-			Name:      "provider",
-			Usage:     "TTS provider. Defaults to `telnyx` if not specified. Ignored when `voice` is provided.",
-			Default:   "telnyx",
-			QueryPath: "provider",
-		},
-		&requestflag.Flag[string]{
-			Name:      "socket-id",
-			Usage:     "Client-provided socket identifier for tracking. If not provided, one is generated server-side.",
-			QueryPath: "socket_id",
-		},
-		&requestflag.Flag[string]{
-			Name:      "voice",
-			Usage:     "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id` (e.g. `telnyx.NaturalHD.Telnyx_Alloy` or `azure.en-US-AvaMultilingualNeural`). When provided, the `provider`, `model_id`, and `voice_id` are extracted automatically. Takes precedence over individual `provider`/`model_id`/`voice_id` parameters.",
-			QueryPath: "voice",
-		},
-		&requestflag.Flag[string]{
-			Name:      "voice-id",
-			Usage:     "Voice identifier for the chosen provider.",
-			QueryPath: "voice_id",
-		},
-	},
-	Action:          handleTextToSpeechStream,
 	HideHelpCommand: true,
 }
 
@@ -415,28 +373,4 @@ func handleTextToSpeechListVoices(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "text-to-speech list-voices", obj, format, transform)
-}
-
-func handleTextToSpeechStream(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.TextToSpeechStreamParams{}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	return client.TextToSpeech.Stream(ctx, params, options...)
 }

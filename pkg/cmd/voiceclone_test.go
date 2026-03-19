@@ -8,35 +8,6 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestVoiceClonesCreate(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"voice-clones", "create",
-			"--gender", "male",
-			"--language", "en",
-			"--name", "clone-narrator",
-			"--voice-design-id", "550e8400-e29b-41d4-a716-446655440000",
-		)
-	})
-
-	t.Run("piping data", func(t *testing.T) {
-		// Test piping YAML data over stdin
-		pipeData := []byte("" +
-			"gender: male\n" +
-			"language: en\n" +
-			"name: clone-narrator\n" +
-			"voice_design_id: 550e8400-e29b-41d4-a716-446655440000\n")
-		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData,
-			"--api-key", "string",
-			"voice-clones", "create",
-		)
-	})
-}
-
 func TestVoiceClonesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
@@ -90,6 +61,35 @@ func TestVoiceClonesDelete(t *testing.T) {
 			"--api-key", "string",
 			"voice-clones", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
+}
+
+func TestVoiceClonesCreateFromDesign(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"voice-clones", "create-from-design",
+			"--gender", "male",
+			"--language", "en",
+			"--name", "clone-narrator",
+			"--voice-design-id", "550e8400-e29b-41d4-a716-446655440000",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"gender: male\n" +
+			"language: en\n" +
+			"name: clone-narrator\n" +
+			"voice_design_id: 550e8400-e29b-41d4-a716-446655440000\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"voice-clones", "create-from-design",
 		)
 	})
 }

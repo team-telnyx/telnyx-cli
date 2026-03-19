@@ -20,14 +20,13 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"--azure", "{api_key: api_key, deployment_id: deployment_id, effect: effect, gender: gender, language_code: language_code, output_format: output_format, region: region, text_type: text}",
 			"--disable-cache=true",
 			"--elevenlabs", "{api_key: api_key, language_code: language_code, voice_settings: {foo: bar}}",
-			"--inworld", "{foo: bar}",
 			"--language", "language",
 			"--minimax", "{language_boost: language_boost, pitch: 0, response_format: response_format, speed: 0, vol: 0}",
 			"--output-type", "binary_output",
 			"--provider", "aws",
 			"--resemble", "{api_key: api_key, format: format, precision: precision, sample_rate: sample_rate}",
 			"--rime", "{response_format: response_format, sampling_rate: 0, voice_speed: 0}",
-			"--telnyx", "{response_format: response_format, sampling_rate: 0, temperature: 0, voice_speed: 0}",
+			"--telnyx", "{emotion: neutral, response_format: response_format, sampling_rate: 0, temperature: 0, voice_speed: 0.5, volume: 0}",
 			"--text", "text",
 			"--text-type", "text",
 			"--voice", "voice",
@@ -61,7 +60,6 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"--elevenlabs.api-key", "api_key",
 			"--elevenlabs.language-code", "language_code",
 			"--elevenlabs.voice-settings", "{foo: bar}",
-			"--inworld", "{foo: bar}",
 			"--language", "language",
 			"--minimax.language-boost", "language_boost",
 			"--minimax.pitch", "0",
@@ -77,10 +75,12 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"--rime.response-format", "response_format",
 			"--rime.sampling-rate", "0",
 			"--rime.voice-speed", "0",
+			"--telnyx.emotion", "neutral",
 			"--telnyx.response-format", "response_format",
 			"--telnyx.sampling-rate", "0",
 			"--telnyx.temperature", "0",
-			"--telnyx.voice-speed", "0",
+			"--telnyx.voice-speed", "0.5",
+			"--telnyx.volume", "0",
 			"--text", "text",
 			"--text-type", "text",
 			"--voice", "voice",
@@ -113,8 +113,6 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"  language_code: language_code\n" +
 			"  voice_settings:\n" +
 			"    foo: bar\n" +
-			"inworld:\n" +
-			"  foo: bar\n" +
 			"language: language\n" +
 			"minimax:\n" +
 			"  language_boost: language_boost\n" +
@@ -134,10 +132,12 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"  sampling_rate: 0\n" +
 			"  voice_speed: 0\n" +
 			"telnyx:\n" +
+			"  emotion: neutral\n" +
 			"  response_format: response_format\n" +
 			"  sampling_rate: 0\n" +
 			"  temperature: 0\n" +
-			"  voice_speed: 0\n" +
+			"  voice_speed: 0.5\n" +
+			"  volume: 0\n" +
 			"text: text\n" +
 			"text_type: text\n" +
 			"voice: voice\n" +
@@ -160,24 +160,6 @@ func TestTextToSpeechListVoices(t *testing.T) {
 			"text-to-speech", "list-voices",
 			"--api-key", "api_key",
 			"--provider", "aws",
-		)
-	})
-}
-
-func TestTextToSpeechStream(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"text-to-speech", "stream",
-			"--audio-format", "pcm",
-			"--disable-cache=true",
-			"--model-id", "model_id",
-			"--provider", "aws",
-			"--socket-id", "socket_id",
-			"--voice", "voice",
-			"--voice-id", "voice_id",
 		)
 	})
 }
