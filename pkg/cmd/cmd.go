@@ -3085,10 +3085,10 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&voiceClonesCreate,
 					&voiceClonesUpdate,
 					&voiceClonesList,
 					&voiceClonesDelete,
-					&voiceClonesCreateFromDesign,
 					&voiceClonesCreateFromUpload,
 					&voiceClonesDownloadSample,
 				},
