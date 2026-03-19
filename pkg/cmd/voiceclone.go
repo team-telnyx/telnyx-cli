@@ -15,6 +15,40 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+var voiceClonesCreate = cli.Command{
+	Name:    "create",
+	Usage:   "Creates a new voice clone by capturing the voice identity of an existing voice\ndesign. The clone can then be used for text-to-speech synthesis.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "gender",
+			Usage:    "Gender of the voice clone.",
+			Required: true,
+			BodyPath: "gender",
+		},
+		&requestflag.Flag[string]{
+			Name:     "language",
+			Usage:    "ISO 639-1 language code for the clone (e.g. `en`, `fr`, `de`).",
+			Required: true,
+			BodyPath: "language",
+		},
+		&requestflag.Flag[string]{
+			Name:     "name",
+			Usage:    "Name for the voice clone.",
+			Required: true,
+			BodyPath: "name",
+		},
+		&requestflag.Flag[string]{
+			Name:     "voice-design-id",
+			Usage:    "UUID of the source voice design to clone.",
+			Required: true,
+			BodyPath: "voice_design_id",
+		},
+	},
+	Action:          handleVoiceClonesCreate,
+	HideHelpCommand: true,
+}
+
 var voiceClonesUpdate = cli.Command{
 	Name:    "update",
 	Usage:   "Updates the name, language, or gender of a voice clone.",
@@ -96,40 +130,6 @@ var voiceClonesDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
-var voiceClonesCreateFromDesign = cli.Command{
-	Name:    "create-from-design",
-	Usage:   "Creates a new voice clone by capturing the voice identity of an existing voice\ndesign. The clone can then be used for text-to-speech synthesis.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "gender",
-			Usage:    "Gender of the voice clone.",
-			Required: true,
-			BodyPath: "gender",
-		},
-		&requestflag.Flag[string]{
-			Name:     "language",
-			Usage:    "ISO 639-1 language code for the clone (e.g. `en`, `fr`, `de`).",
-			Required: true,
-			BodyPath: "language",
-		},
-		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "Name for the voice clone.",
-			Required: true,
-			BodyPath: "name",
-		},
-		&requestflag.Flag[string]{
-			Name:     "voice-design-id",
-			Usage:    "UUID of the source voice design to clone.",
-			Required: true,
-			BodyPath: "voice_design_id",
-		},
-	},
-	Action:          handleVoiceClonesCreateFromDesign,
-	HideHelpCommand: true,
-}
-
 var voiceClonesCreateFromUpload = cli.Command{
 	Name:    "create-from-upload",
 	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. For best results, provide 5–10 seconds of\nclear speech. Maximum file size: 2MB.",
@@ -190,6 +190,40 @@ var voiceClonesDownloadSample = cli.Command{
 	},
 	Action:          handleVoiceClonesDownloadSample,
 	HideHelpCommand: true,
+}
+
+func handleVoiceClonesCreate(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.VoiceCloneNewParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.VoiceClones.New(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "voice-clones create", obj, format, transform)
 }
 
 func handleVoiceClonesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -299,40 +333,6 @@ func handleVoiceClonesDelete(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	return client.VoiceClones.Delete(ctx, cmd.Value("id").(string), options...)
-}
-
-func handleVoiceClonesCreateFromDesign(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.VoiceCloneNewParams{}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.VoiceClones.New(ctx, params, options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-clones create-from-design", obj, format, transform)
 }
 
 func handleVoiceClonesCreateFromUpload(ctx context.Context, cmd *cli.Command) error {
