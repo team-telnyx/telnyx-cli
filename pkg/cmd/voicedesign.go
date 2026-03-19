@@ -97,6 +97,26 @@ var voiceDesignsRetrieve = cli.Command{
 	HideHelpCommand: true,
 }
 
+var voiceDesignsUpdate = cli.Command{
+	Name:    "update",
+	Usage:   "Updates the name of a voice design. All versions retain their other properties.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:     "name",
+			Usage:    "New name for the voice design.",
+			Required: true,
+			BodyPath: "name",
+		},
+	},
+	Action:          handleVoiceDesignsUpdate,
+	HideHelpCommand: true,
+}
+
 var voiceDesignsList = cli.Command{
 	Name:    "list",
 	Usage:   "Returns a paginated list of voice designs belonging to the authenticated\naccount.",
@@ -190,26 +210,6 @@ var voiceDesignsDownloadSample = cli.Command{
 	HideHelpCommand: true,
 }
 
-var voiceDesignsRename = cli.Command{
-	Name:    "rename",
-	Usage:   "Updates the name of a voice design. All versions retain their other properties.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
-		},
-		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "New name for the voice design.",
-			Required: true,
-			BodyPath: "name",
-		},
-	},
-	Action:          handleVoiceDesignsRename,
-	HideHelpCommand: true,
-}
-
 func handleVoiceDesignsCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -284,6 +284,48 @@ func handleVoiceDesignsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "voice-designs retrieve", obj, format, transform)
+}
+
+func handleVoiceDesignsUpdate(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.VoiceDesignUpdateParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.VoiceDesigns.Update(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "voice-designs update", obj, format, transform)
 }
 
 func handleVoiceDesignsList(ctx context.Context, cmd *cli.Command) error {
@@ -425,46 +467,4 @@ func handleVoiceDesignsDownloadSample(ctx context.Context, cmd *cli.Command) err
 		fmt.Println(message)
 	}
 	return err
-}
-
-func handleVoiceDesignsRename(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
-		cmd.Set("id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.VoiceDesignRenameParams{}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.VoiceDesigns.Rename(
-		ctx,
-		cmd.Value("id").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-designs rename", obj, format, transform)
 }

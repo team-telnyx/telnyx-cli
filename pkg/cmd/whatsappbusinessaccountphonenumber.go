@@ -41,8 +41,8 @@ var whatsappBusinessAccountsPhoneNumbersList = cli.Command{
 	HideHelpCommand: true,
 }
 
-var whatsappBusinessAccountsPhoneNumbersInitializeVerification = cli.Command{
-	Name:    "initialize-verification",
+var whatsappBusinessAccountsPhoneNumbersCreateVerification = cli.Command{
+	Name:    "create-verification",
 	Usage:   "Initialize Whatsapp phone number verification",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -71,7 +71,7 @@ var whatsappBusinessAccountsPhoneNumbersInitializeVerification = cli.Command{
 			BodyPath: "verification_method",
 		},
 	},
-	Action:          handleWhatsappBusinessAccountsPhoneNumbersInitializeVerification,
+	Action:          handleWhatsappBusinessAccountsPhoneNumbersCreateVerification,
 	HideHelpCommand: true,
 }
 
@@ -130,7 +130,7 @@ func handleWhatsappBusinessAccountsPhoneNumbersList(ctx context.Context, cmd *cl
 	}
 }
 
-func handleWhatsappBusinessAccountsPhoneNumbersInitializeVerification(ctx context.Context, cmd *cli.Command) error {
+func handleWhatsappBusinessAccountsPhoneNumbersCreateVerification(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -141,7 +141,7 @@ func handleWhatsappBusinessAccountsPhoneNumbersInitializeVerification(ctx contex
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WhatsappBusinessAccountPhoneNumberInitializeVerificationParams{}
+	params := telnyx.WhatsappBusinessAccountPhoneNumberNewVerificationParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -154,7 +154,7 @@ func handleWhatsappBusinessAccountsPhoneNumbersInitializeVerification(ctx contex
 		return err
 	}
 
-	return client.Whatsapp.BusinessAccounts.PhoneNumbers.InitializeVerification(
+	return client.Whatsapp.BusinessAccounts.PhoneNumbers.NewVerification(
 		ctx,
 		cmd.Value("id").(string),
 		params,

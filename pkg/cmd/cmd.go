@@ -379,9 +379,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&aiAssistantsTagsCreate,
 					&aiAssistantsTagsList,
-					&aiAssistantsTagsAdd,
-					&aiAssistantsTagsRemove,
+					&aiAssistantsTagsDelete,
 				},
 			},
 			{
@@ -1825,7 +1825,6 @@ func init() {
 					&portingLoaConfigurationsList,
 					&portingLoaConfigurationsDelete,
 					&portingLoaConfigurationsPreview,
-					&portingLoaConfigurationsPreview0,
 					&portingLoaConfigurationsPreview1,
 				},
 			},
@@ -2988,6 +2987,19 @@ func init() {
 				},
 			},
 			{
+				Name:     "traffic-policy-profiles",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&trafficPolicyProfilesCreate,
+					&trafficPolicyProfilesRetrieve,
+					&trafficPolicyProfilesUpdate,
+					&trafficPolicyProfilesList,
+					&trafficPolicyProfilesDelete,
+					&trafficPolicyProfilesListServices,
+				},
+			},
+			{
 				Name:     "whatsapp:business-accounts",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3003,7 +3015,7 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&whatsappBusinessAccountsPhoneNumbersList,
-					&whatsappBusinessAccountsPhoneNumbersInitializeVerification,
+					&whatsappBusinessAccountsPhoneNumbersCreateVerification,
 				},
 			},
 			{
@@ -3016,12 +3028,12 @@ func init() {
 				},
 			},
 			{
-				Name:     "whatsapp:templates",
+				Name:     "whatsapp:message-templates",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&whatsappTemplatesCreate,
-					&whatsappTemplatesList,
+					&whatsappMessageTemplatesCreate,
+					&whatsappMessageTemplatesList,
 				},
 			},
 			{
@@ -3077,8 +3089,8 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&x402CreditAccountCreateQuote,
-					&x402CreditAccountSettle,
+					&x402CreditAccountCreatePaymentQuote,
+					&x402CreditAccountSettlePayment,
 				},
 			},
 			{
@@ -3101,11 +3113,11 @@ func init() {
 				Commands: []*cli.Command{
 					&voiceDesignsCreate,
 					&voiceDesignsRetrieve,
+					&voiceDesignsUpdate,
 					&voiceDesignsList,
 					&voiceDesignsDelete,
 					&voiceDesignsDeleteVersion,
 					&voiceDesignsDownloadSample,
-					&voiceDesignsRename,
 				},
 			},
 			{

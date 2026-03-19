@@ -8,24 +8,13 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestAIAssistantsTagsList(t *testing.T) {
+func TestAIAssistantsTagsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"ai:assistants:tags", "list",
-		)
-	})
-}
-
-func TestAIAssistantsTagsAdd(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"ai:assistants:tags", "add",
+			"ai:assistants:tags", "create",
 			"--assistant-id", "assistant_id",
 			"--tag", "tag",
 		)
@@ -37,19 +26,30 @@ func TestAIAssistantsTagsAdd(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"ai:assistants:tags", "add",
+			"ai:assistants:tags", "create",
 			"--assistant-id", "assistant_id",
 		)
 	})
 }
 
-func TestAIAssistantsTagsRemove(t *testing.T) {
+func TestAIAssistantsTagsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"ai:assistants:tags", "remove",
+			"ai:assistants:tags", "list",
+		)
+	})
+}
+
+func TestAIAssistantsTagsDelete(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai:assistants:tags", "delete",
 			"--assistant-id", "assistant_id",
 			"--tag", "tag",
 		)
