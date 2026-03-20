@@ -23,13 +23,13 @@ func TestWhatsappBusinessAccountsPhoneNumbersList(t *testing.T) {
 	})
 }
 
-func TestWhatsappBusinessAccountsPhoneNumbersInitializeVerification(t *testing.T) {
+func TestWhatsappBusinessAccountsPhoneNumbersCreateVerification(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"whatsapp:business-accounts:phone-numbers", "initialize-verification",
+			"whatsapp:business-accounts:phone-numbers", "create-verification",
 			"--id", "id",
 			"--display-name", "display_name",
 			"--phone-number", "phone_number",
@@ -48,7 +48,7 @@ func TestWhatsappBusinessAccountsPhoneNumbersInitializeVerification(t *testing.T
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"whatsapp:business-accounts:phone-numbers", "initialize-verification",
+			"whatsapp:business-accounts:phone-numbers", "create-verification",
 			"--id", "id",
 		)
 	})
