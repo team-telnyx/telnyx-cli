@@ -30,6 +30,7 @@ var commentsCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "comment-record-type",
+			Usage:    `Allowed values: "sub_number_order", "requirement_group".`,
 			BodyPath: "comment_record_type",
 		},
 	},

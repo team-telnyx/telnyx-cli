@@ -22,11 +22,13 @@ var reportsCdrUsageReportsFetchSync = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "aggregation-type",
+			Usage:     `Allowed values: "NO_AGGREGATION", "CONNECTION", "TAG", "BILLING_GROUP".`,
 			Required:  true,
 			QueryPath: "aggregation_type",
 		},
 		&requestflag.Flag[string]{
 			Name:      "product-breakdown",
+			Usage:     `Allowed values: "NO_BREAKDOWN", "DID_VS_TOLL_FREE", "COUNTRY", "DID_VS_TOLL_FREE_PER_COUNTRY".`,
 			Required:  true,
 			QueryPath: "product_breakdown",
 		},

@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.10.0 (2026-03-20)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* add default description for enum CLI flags without an explicit description ([3984c4e](https://github.com/team-telnyx/telnyx-cli/commit/3984c4e4c8046eb4d7d9ec5c778342d9e3672495))
+* Add Minimax provider support to Voice Designs and Voice Clones API spec ([541089f](https://github.com/team-telnyx/telnyx-cli/commit/541089f8f551a6848a0884f742918b8f19b9c540))
+* **api:** manual updates ([ce17e31](https://github.com/team-telnyx/telnyx-cli/commit/ce17e31cf722f807f8e9448e351b4347281ea6e3))
+* **api:** manual updates ([96cf66a](https://github.com/team-telnyx/telnyx-cli/commit/96cf66af4a01a5ee2a11da36f033a46fa0bfd5a2))
+* **api:** manual updates ([cbe7a45](https://github.com/team-telnyx/telnyx-cli/commit/cbe7a458eef881414a47693bb3ec9f96ad989c28))
+* **api:** manual updates ([333d745](https://github.com/team-telnyx/telnyx-cli/commit/333d745c5e9db537609369073a3aa0a2d9ab84a4))
+* **wireless:** add traffic policy profiles endpoints to OpenAPI spec ([72a9cc3](https://github.com/team-telnyx/telnyx-cli/commit/72a9cc3a8ea4e66ca445ee870f1b9fd4881f9606))
+
+
+### Documentation
+
+* WhatsApp template components schema ([b92f5ed](https://github.com/team-telnyx/telnyx-cli/commit/b92f5ed6f05917352af8bc80eff59980a3aec528))
+
 ## 0.9.0 (2026-03-20)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.8.0...v0.9.0)

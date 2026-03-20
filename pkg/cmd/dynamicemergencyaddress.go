@@ -27,6 +27,7 @@ var dynamicEmergencyAddressesCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "country-code",
+			Usage:    `Allowed values: "US", "CA", "PR".`,
 			Required: true,
 			BodyPath: "country_code",
 		},

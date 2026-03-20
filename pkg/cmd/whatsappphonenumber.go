@@ -62,6 +62,7 @@ var whatsappPhoneNumbersResendVerification = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "verification-method",
+			Usage:    `Allowed values: "sms", "voice".`,
 			Default:  "sms",
 			BodyPath: "verification_method",
 		},

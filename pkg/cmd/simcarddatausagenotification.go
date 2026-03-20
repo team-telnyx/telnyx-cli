@@ -43,6 +43,7 @@ var simCardDataUsageNotificationsCreate = requestflag.WithInnerFlags(cli.Command
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "threshold.unit",
+			Usage:      `Allowed values: "MB", "GB".`,
 			InnerField: "unit",
 		},
 	},
@@ -92,6 +93,7 @@ var simCardDataUsageNotificationsUpdate = requestflag.WithInnerFlags(cli.Command
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "threshold.unit",
+			Usage:      `Allowed values: "MB", "GB".`,
 			InnerField: "unit",
 		},
 	},

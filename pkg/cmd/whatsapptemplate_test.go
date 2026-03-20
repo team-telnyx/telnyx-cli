@@ -16,7 +16,7 @@ func TestWhatsappTemplatesCreate(t *testing.T) {
 			"--api-key", "string",
 			"whatsapp:templates", "create",
 			"--category", "MARKETING",
-			"--component", "{foo: bar}",
+			"--component", "{format: TEXT, type: HEADER, example: {header_handle: [string], header_text: [string]}, text: text}",
 			"--language", "language",
 			"--name", "name",
 			"--waba-id", "waba_id",
@@ -28,7 +28,14 @@ func TestWhatsappTemplatesCreate(t *testing.T) {
 		pipeData := []byte("" +
 			"category: MARKETING\n" +
 			"components:\n" +
-			"  - foo: bar\n" +
+			"  - format: TEXT\n" +
+			"    type: HEADER\n" +
+			"    example:\n" +
+			"      header_handle:\n" +
+			"        - string\n" +
+			"      header_text:\n" +
+			"        - string\n" +
+			"    text: text\n" +
 			"language: language\n" +
 			"name: name\n" +
 			"waba_id: waba_id\n")
