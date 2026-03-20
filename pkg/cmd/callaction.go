@@ -1490,13 +1490,13 @@ var callsActionsStartNoiseSuppression = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "noise-suppression-engine",
-			Usage:    "The engine to use for noise suppression.\nFor backward compatibility, engines A, B, and C are also supported, but are deprecated:\n A - Denoiser\n B - DeepFilterNet\n C - Krisp",
+			Usage:    "The engine to use for noise suppression.\nFor backward compatibility, engines A, B, C, and D are also supported, but are deprecated:\n A - Denoiser\n B - DeepFilterNet\n C - Krisp\n D - AiCoustics",
 			Default:  "Denoiser",
 			BodyPath: "noise_suppression_engine",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "noise-suppression-engine-config",
-			Usage:    "Configuration parameters for noise suppression engines.",
+			Usage:    "Configuration parameters for noise suppression engines. Different engines support different parameters.",
 			BodyPath: "noise_suppression_engine_config",
 		},
 	},
@@ -1508,6 +1508,41 @@ var callsActionsStartNoiseSuppression = requestflag.WithInnerFlags(cli.Command{
 			Name:       "noise-suppression-engine-config.attenuation-limit",
 			Usage:      "The attenuation limit for noise suppression (0-100). Only applicable for DeepFilterNet.",
 			InnerField: "attenuation_limit",
+		},
+		&requestflag.InnerFlag[float64]{
+			Name:       "noise-suppression-engine-config.enhancement-level",
+			Usage:      "Enhancement intensity (0.0-1.0). Only applicable for AiCoustics.",
+			InnerField: "enhancement_level",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "noise-suppression-engine-config.family",
+			Usage:      "AiCoustics model family. 'sparrow' optimized for human-to-human calls, 'quail' optimized for Voice AI/STT. Only applicable for AiCoustics.",
+			InnerField: "family",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "noise-suppression-engine-config.mode",
+			Usage:      "Processing mode. Only applicable for DeepFilterNet.",
+			InnerField: "mode",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "noise-suppression-engine-config.model",
+			Usage:      "The Krisp model to use. Only applicable for Krisp.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "noise-suppression-engine-config.size",
+			Usage:      "AiCoustics model size. 's' and 'l' work with both families. 'xs' and 'xxs' are sparrow-only. 'vf_l' and 'vf_1_1_l' are quail-only. Only applicable for AiCoustics.",
+			InnerField: "size",
+		},
+		&requestflag.InnerFlag[float64]{
+			Name:       "noise-suppression-engine-config.suppression-level",
+			Usage:      "Suppression level (0.0-100.0). Only applicable for Krisp.",
+			InnerField: "suppression_level",
+		},
+		&requestflag.InnerFlag[float64]{
+			Name:       "noise-suppression-engine-config.voice-gain",
+			Usage:      "Voice gain multiplier (0.1-4.0). Only applicable for AiCoustics.",
+			InnerField: "voice_gain",
 		},
 	},
 })

@@ -1103,7 +1103,7 @@ func TestCallsActionsStartNoiseSuppression(t *testing.T) {
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--direction", "both",
 			"--noise-suppression-engine", "DeepFilterNet",
-			"--noise-suppression-engine-config", "{attenuation_limit: 100}",
+			"--noise-suppression-engine-config", "{attenuation_limit: 100, enhancement_level: 0.5, family: sparrow, mode: standard, model: krisp-viva-tel-v2.kef, size: l, suppression_level: 50, voice_gain: 1}",
 		)
 	})
 
@@ -1122,6 +1122,13 @@ func TestCallsActionsStartNoiseSuppression(t *testing.T) {
 			"--direction", "both",
 			"--noise-suppression-engine", "DeepFilterNet",
 			"--noise-suppression-engine-config.attenuation-limit", "100",
+			"--noise-suppression-engine-config.enhancement-level", "0.5",
+			"--noise-suppression-engine-config.family", "sparrow",
+			"--noise-suppression-engine-config.mode", "standard",
+			"--noise-suppression-engine-config.model", "krisp-viva-tel-v2.kef",
+			"--noise-suppression-engine-config.size", "l",
+			"--noise-suppression-engine-config.suppression-level", "50",
+			"--noise-suppression-engine-config.voice-gain", "1",
 		)
 	})
 
@@ -1133,7 +1140,14 @@ func TestCallsActionsStartNoiseSuppression(t *testing.T) {
 			"direction: both\n" +
 			"noise_suppression_engine: DeepFilterNet\n" +
 			"noise_suppression_engine_config:\n" +
-			"  attenuation_limit: 100\n")
+			"  attenuation_limit: 100\n" +
+			"  enhancement_level: 0.5\n" +
+			"  family: sparrow\n" +
+			"  mode: standard\n" +
+			"  model: krisp-viva-tel-v2.kef\n" +
+			"  size: l\n" +
+			"  suppression_level: 50\n" +
+			"  voice_gain: 1\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

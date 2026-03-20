@@ -44,6 +44,7 @@ var whatsappMessageTemplatesUpdate = cli.Command{
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "component",
+			Usage:    "Updated template components. Same structure as the create request.",
 			BodyPath: "components",
 		},
 	},
