@@ -22,6 +22,7 @@ var requirementGroupsCreate = requestflag.WithInnerFlags(cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "action",
+			Usage:    `Allowed values: "ordering", "porting".`,
 			Required: true,
 			BodyPath: "action",
 		},
@@ -33,6 +34,7 @@ var requirementGroupsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "phone-number-type",
+			Usage:    `Allowed values: "local", "toll_free", "mobile", "national", "shared_cost".`,
 			Required: true,
 			BodyPath: "phone_number_type",
 		},

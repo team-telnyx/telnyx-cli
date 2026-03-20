@@ -22,6 +22,7 @@ var reportsMdrUsageReportsCreate = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "aggregation-type",
+			Usage:    `Allowed values: "NO_AGGREGATION", "PROFILE", "TAGS".`,
 			Required: true,
 			BodyPath: "aggregation_type",
 		},
@@ -101,6 +102,7 @@ var reportsMdrUsageReportsFetchSync = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "aggregation-type",
+			Usage:     `Allowed values: "NO_AGGREGATION", "PROFILE", "TAGS".`,
 			Required:  true,
 			QueryPath: "aggregation_type",
 		},

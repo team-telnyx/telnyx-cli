@@ -194,6 +194,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "inbound.dnis-number-format",
+			Usage:      `Allowed values: "+e164", "e164", "national", "sip_username".`,
 			InnerField: "dnis_number_format",
 		},
 		&requestflag.InnerFlag[bool]{
@@ -314,6 +315,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "outbound.ip-authentication-method",
+			Usage:      `Allowed values: "credential-authentication", "ip-authentication".`,
 			InnerField: "ip_authentication_method",
 		},
 		&requestflag.InnerFlag[string]{
@@ -559,6 +561,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "inbound.dnis-number-format",
+			Usage:      `Allowed values: "+e164", "e164", "national", "sip_username".`,
 			InnerField: "dnis_number_format",
 		},
 		&requestflag.InnerFlag[bool]{
@@ -679,6 +682,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "outbound.ip-authentication-method",
+			Usage:      `Allowed values: "credential-authentication", "ip-authentication".`,
 			InnerField: "ip_authentication_method",
 		},
 		&requestflag.InnerFlag[string]{

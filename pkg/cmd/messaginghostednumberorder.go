@@ -117,6 +117,7 @@ var messagingHostedNumberOrdersCreateVerificationCodes = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "verification-method",
+			Usage:    `Allowed values: "sms", "call".`,
 			Required: true,
 			BodyPath: "verification_method",
 		},

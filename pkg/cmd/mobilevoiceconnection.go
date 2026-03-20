@@ -44,6 +44,7 @@ var mobileVoiceConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "webhook-api-version",
+			Usage:    `Allowed values: "1", "2".`,
 			Default:  "2",
 			BodyPath: "webhook_api_version",
 		},
@@ -126,6 +127,7 @@ var mobileVoiceConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "webhook-api-version",
+			Usage:    `Allowed values: "1", "2".`,
 			BodyPath: "webhook_api_version",
 		},
 		&requestflag.Flag[any]{

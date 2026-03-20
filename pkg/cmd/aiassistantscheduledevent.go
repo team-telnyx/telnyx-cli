@@ -38,6 +38,7 @@ var aiAssistantsScheduledEventsCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "telnyx-conversation-channel",
+			Usage:    `Allowed values: "phone_call", "sms_chat".`,
 			Required: true,
 			BodyPath: "telnyx_conversation_channel",
 		},
@@ -96,6 +97,7 @@ var aiAssistantsScheduledEventsList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "conversation-channel",
+			Usage:     `Allowed values: "phone_call", "sms_chat".`,
 			QueryPath: "conversation_channel",
 		},
 		&requestflag.Flag[any]{

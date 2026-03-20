@@ -548,6 +548,7 @@ var messagesSendWhatsapp = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "whatsapp-message.type",
+			Usage:      `Allowed values: "audio", "document", "image", "sticker", "video", "interactive", "location", "template", "reaction", "contacts".`,
 			InnerField: "type",
 		},
 		&requestflag.InnerFlag[map[string]any]{

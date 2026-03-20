@@ -40,6 +40,7 @@ var whatsappMessageTemplatesUpdate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "category",
+			Usage:    `Allowed values: "MARKETING", "UTILITY", "AUTHENTICATION".`,
 			BodyPath: "category",
 		},
 		&requestflag.Flag[[]map[string]any]{

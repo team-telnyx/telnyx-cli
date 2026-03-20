@@ -170,6 +170,7 @@ var ipConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "inbound.dnis-number-format",
+			Usage:      `Allowed values: "+e164", "e164", "national", "sip_username".`,
 			InnerField: "dnis_number_format",
 		},
 		&requestflag.InnerFlag[bool]{
@@ -285,6 +286,7 @@ var ipConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "outbound.ip-authentication-method",
+			Usage:      `Allowed values: "tech-prefixp-charge-info", "token".`,
 			InnerField: "ip_authentication_method",
 		},
 		&requestflag.InnerFlag[string]{
@@ -519,6 +521,7 @@ var ipConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "inbound.dnis-number-format",
+			Usage:      `Allowed values: "+e164", "e164", "national", "sip_username".`,
 			InnerField: "dnis_number_format",
 		},
 		&requestflag.InnerFlag[bool]{
@@ -634,6 +637,7 @@ var ipConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "outbound.ip-authentication-method",
+			Usage:      `Allowed values: "tech-prefixp-charge-info", "token".`,
 			InnerField: "ip_authentication_method",
 		},
 		&requestflag.InnerFlag[string]{

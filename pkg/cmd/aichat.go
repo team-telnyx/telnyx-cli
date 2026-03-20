@@ -127,6 +127,7 @@ var aiChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "tool-choice",
+			Usage:    `Allowed values: "none", "auto", "required".`,
 			BodyPath: "tool_choice",
 		},
 		&requestflag.Flag[[]map[string]any]{
@@ -161,12 +162,14 @@ var aiChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "message.role",
+			Usage:      `Allowed values: "system", "user", "assistant", "tool".`,
 			InnerField: "role",
 		},
 	},
 	"response-format": {
 		&requestflag.InnerFlag[string]{
 			Name:       "response-format.type",
+			Usage:      `Allowed values: "text", "json_object".`,
 			InnerField: "type",
 		},
 	},
