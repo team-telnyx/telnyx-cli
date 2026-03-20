@@ -3108,19 +3108,6 @@ func init() {
 				},
 			},
 			{
-				Name:     "traffic-policy-profiles",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&trafficPolicyProfilesCreate,
-					&trafficPolicyProfilesRetrieve,
-					&trafficPolicyProfilesUpdate,
-					&trafficPolicyProfilesList,
-					&trafficPolicyProfilesDelete,
-					&trafficPolicyProfilesListServices,
-				},
-			},
-			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",
 				UsageText:       "telnyx @manpages [-o telnyx.1] [--gzip]",
