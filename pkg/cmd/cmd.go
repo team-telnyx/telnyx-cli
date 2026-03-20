@@ -379,9 +379,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&aiAssistantsTagsCreate,
 					&aiAssistantsTagsList,
-					&aiAssistantsTagsDelete,
+					&aiAssistantsTagsAdd,
+					&aiAssistantsTagsRemove,
 				},
 			},
 			{
@@ -1825,7 +1825,6 @@ func init() {
 					&portingLoaConfigurationsList,
 					&portingLoaConfigurationsDelete,
 					&portingLoaConfigurationsPreview,
-					&portingLoaConfigurationsPreview0,
 					&portingLoaConfigurationsPreview1,
 				},
 			},
@@ -2988,19 +2987,6 @@ func init() {
 				},
 			},
 			{
-				Name:     "traffic-policy-profiles",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&trafficPolicyProfilesCreate,
-					&trafficPolicyProfilesRetrieve,
-					&trafficPolicyProfilesUpdate,
-					&trafficPolicyProfilesList,
-					&trafficPolicyProfilesDelete,
-					&trafficPolicyProfilesListServices,
-				},
-			},
-			{
 				Name:     "whatsapp:business-accounts",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3016,7 +3002,7 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&whatsappBusinessAccountsPhoneNumbersList,
-					&whatsappBusinessAccountsPhoneNumbersCreateVerification,
+					&whatsappBusinessAccountsPhoneNumbersInitializeVerification,
 				},
 			},
 			{
@@ -3029,15 +3015,12 @@ func init() {
 				},
 			},
 			{
-				Name:     "whatsapp:message-templates",
+				Name:     "whatsapp:templates",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&whatsappMessageTemplatesCreate,
-					&whatsappMessageTemplatesRetrieve,
-					&whatsappMessageTemplatesUpdate,
-					&whatsappMessageTemplatesList,
-					&whatsappMessageTemplatesDelete,
+					&whatsappTemplatesCreate,
+					&whatsappTemplatesList,
 				},
 			},
 			{
@@ -3079,12 +3062,22 @@ func init() {
 				},
 			},
 			{
+				Name:     "whatsapp-message-templates",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappMessageTemplatesRetrieve,
+					&whatsappMessageTemplatesUpdate,
+					&whatsappMessageTemplatesDelete,
+				},
+			},
+			{
 				Name:     "x402:credit-account",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&x402CreditAccountCreatePaymentQuote,
-					&x402CreditAccountSettlePayment,
+					&x402CreditAccountCreateQuote,
+					&x402CreditAccountSettle,
 				},
 			},
 			{
@@ -3107,11 +3100,24 @@ func init() {
 				Commands: []*cli.Command{
 					&voiceDesignsCreate,
 					&voiceDesignsRetrieve,
-					&voiceDesignsUpdate,
 					&voiceDesignsList,
 					&voiceDesignsDelete,
 					&voiceDesignsDeleteVersion,
 					&voiceDesignsDownloadSample,
+					&voiceDesignsRename,
+				},
+			},
+			{
+				Name:     "traffic-policy-profiles",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&trafficPolicyProfilesCreate,
+					&trafficPolicyProfilesRetrieve,
+					&trafficPolicyProfilesUpdate,
+					&trafficPolicyProfilesList,
+					&trafficPolicyProfilesDelete,
+					&trafficPolicyProfilesListServices,
 				},
 			},
 			{

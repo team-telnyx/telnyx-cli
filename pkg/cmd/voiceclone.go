@@ -44,6 +44,12 @@ var voiceClonesCreate = cli.Command{
 			Required: true,
 			BodyPath: "voice_design_id",
 		},
+		&requestflag.Flag[string]{
+			Name:     "provider",
+			Usage:    "Voice synthesis provider. Case-insensitive. Defaults to `telnyx`.",
+			Default:  "telnyx",
+			BodyPath: "provider",
+		},
 	},
 	Action:          handleVoiceClonesCreate,
 	HideHelpCommand: true,
@@ -88,6 +94,11 @@ var voiceClonesList = cli.Command{
 			Name:      "filter-name",
 			Usage:     "Case-insensitive substring filter on the name field.",
 			QueryPath: "filter[name]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-provider",
+			Usage:     "Filter by voice synthesis provider. Case-insensitive.",
+			QueryPath: "filter[provider]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -137,7 +148,7 @@ var voiceClonesCreateFromUpload = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "audio-file",
-			Usage:    "Audio file to clone the voice from. Supported formats: WAV, MP3, FLAC, OGG, M4A. For best quality, provide 5–10 seconds of clear, uninterrupted speech. Maximum size: 2MB.",
+			Usage:    "Audio file to clone the voice from. Supported formats: WAV, MP3, FLAC, OGG, M4A. For best quality, provide 5–10 seconds of clear, uninterrupted speech. Maximum size: 5MB for Telnyx, 20MB for Minimax.",
 			Required: true,
 			BodyPath: "audio_file",
 		},
@@ -162,6 +173,12 @@ var voiceClonesCreateFromUpload = cli.Command{
 			Name:     "label",
 			Usage:    "Optional custom label describing the voice style. If omitted, falls back to the source design's prompt text.",
 			BodyPath: "label",
+		},
+		&requestflag.Flag[string]{
+			Name:     "provider",
+			Usage:    "Voice synthesis provider. Case-insensitive. Defaults to `telnyx`.",
+			Default:  "telnyx",
+			BodyPath: "provider",
 		},
 		&requestflag.Flag[string]{
 			Name:     "ref-text",

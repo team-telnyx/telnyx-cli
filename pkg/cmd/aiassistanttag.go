@@ -15,8 +15,17 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var aiAssistantsTagsCreate = cli.Command{
-	Name:    "create",
+var aiAssistantsTagsList = cli.Command{
+	Name:            "list",
+	Usage:           "Get All Tags",
+	Suggest:         true,
+	Flags:           []cli.Flag{},
+	Action:          handleAIAssistantsTagsList,
+	HideHelpCommand: true,
+}
+
+var aiAssistantsTagsAdd = cli.Command{
+	Name:    "add",
 	Usage:   "Add Assistant Tag",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -30,21 +39,12 @@ var aiAssistantsTagsCreate = cli.Command{
 			BodyPath: "tag",
 		},
 	},
-	Action:          handleAIAssistantsTagsCreate,
+	Action:          handleAIAssistantsTagsAdd,
 	HideHelpCommand: true,
 }
 
-var aiAssistantsTagsList = cli.Command{
-	Name:            "list",
-	Usage:           "Get All Tags",
-	Suggest:         true,
-	Flags:           []cli.Flag{},
-	Action:          handleAIAssistantsTagsList,
-	HideHelpCommand: true,
-}
-
-var aiAssistantsTagsDelete = cli.Command{
-	Name:    "delete",
+var aiAssistantsTagsRemove = cli.Command{
+	Name:    "remove",
 	Usage:   "Remove Assistant Tag",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -57,50 +57,8 @@ var aiAssistantsTagsDelete = cli.Command{
 			Required: true,
 		},
 	},
-	Action:          handleAIAssistantsTagsDelete,
+	Action:          handleAIAssistantsTagsRemove,
 	HideHelpCommand: true,
-}
-
-func handleAIAssistantsTagsCreate(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("assistant-id") && len(unusedArgs) > 0 {
-		cmd.Set("assistant-id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.AIAssistantTagNewParams{}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.Assistants.Tags.New(
-		ctx,
-		cmd.Value("assistant-id").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tags create", obj, format, transform)
 }
 
 func handleAIAssistantsTagsList(ctx context.Context, cmd *cli.Command) error {
@@ -135,7 +93,49 @@ func handleAIAssistantsTagsList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(os.Stdout, "ai:assistants:tags list", obj, format, transform)
 }
 
-func handleAIAssistantsTagsDelete(ctx context.Context, cmd *cli.Command) error {
+func handleAIAssistantsTagsAdd(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("assistant-id") && len(unusedArgs) > 0 {
+		cmd.Set("assistant-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.AIAssistantTagAddParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.AI.Assistants.Tags.Add(
+		ctx,
+		cmd.Value("assistant-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "ai:assistants:tags add", obj, format, transform)
+}
+
+func handleAIAssistantsTagsRemove(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("tag") && len(unusedArgs) > 0 {
@@ -146,7 +146,7 @@ func handleAIAssistantsTagsDelete(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantTagDeleteParams{
+	params := telnyx.AIAssistantTagRemoveParams{
 		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
@@ -163,7 +163,7 @@ func handleAIAssistantsTagsDelete(ctx context.Context, cmd *cli.Command) error {
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.Assistants.Tags.Delete(
+	_, err = client.AI.Assistants.Tags.Remove(
 		ctx,
 		cmd.Value("tag").(string),
 		params,
@@ -176,5 +176,5 @@ func handleAIAssistantsTagsDelete(ctx context.Context, cmd *cli.Command) error {
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tags delete", obj, format, transform)
+	return ShowJSON(os.Stdout, "ai:assistants:tags remove", obj, format, transform)
 }
