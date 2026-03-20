@@ -1825,7 +1825,6 @@ func init() {
 					&portingLoaConfigurationsList,
 					&portingLoaConfigurationsDelete,
 					&portingLoaConfigurationsPreview,
-					&portingLoaConfigurationsPreview0,
 					&portingLoaConfigurationsPreview1,
 				},
 			},
@@ -2574,7 +2573,6 @@ func init() {
 				Commands: []*cli.Command{
 					&textToSpeechGenerate,
 					&textToSpeechListVoices,
-					&textToSpeechStream,
 				},
 			},
 			{
@@ -3074,6 +3072,15 @@ func init() {
 				},
 			},
 			{
+				Name:     "x402:credit-account",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&x402CreditAccountCreateQuote,
+					&x402CreditAccountSettle,
+				},
+			},
+			{
 				Name:     "voice-clones",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3098,23 +3105,6 @@ func init() {
 					&voiceDesignsDeleteVersion,
 					&voiceDesignsDownloadSample,
 					&voiceDesignsRename,
-				},
-			},
-			{
-				Name:     "x402:credit-account",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&x402CreditAccountCreateQuote,
-					&x402CreditAccountSettle,
-				},
-			},
-			{
-				Name:     "speech-to-text",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&speechToTextTranscribe,
 				},
 			},
 			{

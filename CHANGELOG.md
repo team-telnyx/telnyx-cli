@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.9.0 (2026-03-20)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* TELAPPS-5668: Add call.cost webhook event documentation ([da5c801](https://github.com/team-telnyx/telnyx-cli/commit/da5c8013374f59bb7d7f0b324baf40f5f43cc4bc))
+
+
+### Documentation
+
+* **tts:** Add Telnyx.Ultra model documentation ([0b07c86](https://github.com/team-telnyx/telnyx-cli/commit/0b07c8641d8cc4a3abbcb80e31cd16e3f1e5caeb))
+
 ## 0.8.0 (2026-03-18)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.7.0...v0.8.0)
