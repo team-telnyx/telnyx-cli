@@ -12,8 +12,9 @@ func TestSubNumberOrdersReportCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders-report", "create",
+			t,
 			"--api-key", "string",
+			"sub-number-orders-report", "create",
 			"--country-code", "US",
 			"--created-at-gt", "'2023-04-05T10:22:08.230549Z'",
 			"--created-at-lt", "'2025-06-05T10:22:08.230549Z'",
@@ -33,8 +34,9 @@ func TestSubNumberOrdersReportCreate(t *testing.T) {
 			"order_request_id: 12ade33a-21c0-473b-b055-b3c836e1c293\n" +
 			"status: success\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "sub-number-orders-report", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"sub-number-orders-report", "create",
 		)
 	})
 }
@@ -43,8 +45,9 @@ func TestSubNumberOrdersReportRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sub-number-orders-report", "retrieve",
+			t,
 			"--api-key", "string",
+			"sub-number-orders-report", "retrieve",
 			"--report-id", "12ade33a-21c0-473b-b055-b3c836e1c293",
 		)
 	})

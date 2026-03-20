@@ -12,8 +12,9 @@ func TestAIConversationsInsightsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insights", "create",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insights", "create",
 			"--instructions", "instructions",
 			"--name", "name",
 			"--json-schema", "string",
@@ -29,8 +30,9 @@ func TestAIConversationsInsightsCreate(t *testing.T) {
 			"json_schema: string\n" +
 			"webhook: webhook\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:conversations:insights", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:conversations:insights", "create",
 		)
 	})
 }
@@ -39,8 +41,9 @@ func TestAIConversationsInsightsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insights", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insights", "retrieve",
 			"--insight-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -50,8 +53,9 @@ func TestAIConversationsInsightsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insights", "update",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insights", "update",
 			"--insight-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--instructions", "instructions",
 			"--json-schema", "string",
@@ -68,8 +72,9 @@ func TestAIConversationsInsightsUpdate(t *testing.T) {
 			"name: name\n" +
 			"webhook: webhook\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:conversations:insights", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:conversations:insights", "update",
 			"--insight-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -79,8 +84,9 @@ func TestAIConversationsInsightsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insights", "list",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insights", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -92,8 +98,9 @@ func TestAIConversationsInsightsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations:insights", "delete",
+			t,
 			"--api-key", "string",
+			"ai:conversations:insights", "delete",
 			"--insight-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

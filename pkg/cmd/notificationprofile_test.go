@@ -12,8 +12,9 @@ func TestNotificationProfilesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-profiles", "create",
+			t,
 			"--api-key", "string",
+			"notification-profiles", "create",
 			"--name", "name",
 		)
 	})
@@ -22,8 +23,9 @@ func TestNotificationProfilesCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("name: name")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "notification-profiles", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"notification-profiles", "create",
 		)
 	})
 }
@@ -32,8 +34,9 @@ func TestNotificationProfilesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-profiles", "retrieve",
+			t,
 			"--api-key", "string",
+			"notification-profiles", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -43,8 +46,9 @@ func TestNotificationProfilesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-profiles", "update",
+			t,
 			"--api-key", "string",
+			"notification-profiles", "update",
 			"--notification-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--name", "name",
 		)
@@ -54,8 +58,9 @@ func TestNotificationProfilesUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("name: name")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "notification-profiles", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"notification-profiles", "update",
 			"--notification-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -65,8 +70,9 @@ func TestNotificationProfilesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-profiles", "list",
+			t,
 			"--api-key", "string",
+			"notification-profiles", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -78,8 +84,9 @@ func TestNotificationProfilesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "notification-profiles", "delete",
+			t,
 			"--api-key", "string",
+			"notification-profiles", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

@@ -13,8 +13,9 @@ func TestAIAssistantsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "create",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "create",
 			"--instructions", "instructions",
 			"--model", "model",
 			"--name", "name",
@@ -30,7 +31,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_timeout_secs: 30, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, timeout_ms: 500}}",
 			"--transcription", "{language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, eot_threshold: 0, eot_timeout_ms: 0, numerals: true, smart_format: true}}",
-			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence}, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
+			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
 		)
 	})
@@ -41,8 +42,9 @@ func TestAIAssistantsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "create",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "create",
 			"--instructions", "instructions",
 			"--model", "model",
 			"--name", "name",
@@ -73,6 +75,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--voice-settings.voice", "voice",
 			"--voice-settings.api-key-ref", "api_key_ref",
 			"--voice-settings.background-audio", "{type: predefined_media, value: silence}",
+			"--voice-settings.expressive-mode=true",
 			"--voice-settings.language-boost", "auto",
 			"--voice-settings.similarity-boost", "0",
 			"--voice-settings.speed", "0",
@@ -183,6 +186,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"  background_audio:\n" +
 			"    type: predefined_media\n" +
 			"    value: silence\n" +
+			"  expressive_mode: true\n" +
 			"  language_boost: auto\n" +
 			"  similarity_boost: 0\n" +
 			"  speed: 0\n" +
@@ -205,8 +209,9 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"  theme: light\n" +
 			"  view_history_url: view_history_url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "create",
 		)
 	})
 }
@@ -215,8 +220,9 @@ func TestAIAssistantsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "retrieve",
 			"--assistant-id", "assistant_id",
 			"--call-control-id", "call_control_id",
 			"--fetch-dynamic-variables-from-webhook=true",
@@ -230,8 +236,9 @@ func TestAIAssistantsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "update",
 			"--assistant-id", "assistant_id",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
@@ -249,7 +256,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_timeout_secs: 30, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, timeout_ms: 500}}",
 			"--transcription", "{language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, eot_threshold: 0, eot_timeout_ms: 0, numerals: true, smart_format: true}}",
-			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence}, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
+			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
 		)
 	})
@@ -260,8 +267,9 @@ func TestAIAssistantsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "update",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "update",
 			"--assistant-id", "assistant_id",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
@@ -294,6 +302,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--voice-settings.voice", "voice",
 			"--voice-settings.api-key-ref", "api_key_ref",
 			"--voice-settings.background-audio", "{type: predefined_media, value: silence}",
+			"--voice-settings.expressive-mode=true",
 			"--voice-settings.language-boost", "auto",
 			"--voice-settings.similarity-boost", "0",
 			"--voice-settings.speed", "0",
@@ -405,6 +414,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"  background_audio:\n" +
 			"    type: predefined_media\n" +
 			"    value: silence\n" +
+			"  expressive_mode: true\n" +
 			"  language_boost: auto\n" +
 			"  similarity_boost: 0\n" +
 			"  speed: 0\n" +
@@ -427,8 +437,9 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"  theme: light\n" +
 			"  view_history_url: view_history_url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "update",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -438,8 +449,9 @@ func TestAIAssistantsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "list",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "list",
 		)
 	})
 }
@@ -448,8 +460,9 @@ func TestAIAssistantsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "delete",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "delete",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -459,8 +472,9 @@ func TestAIAssistantsChat(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "chat",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "chat",
 			"--assistant-id", "assistant_id",
 			"--content", "Tell me a joke about cats",
 			"--conversation-id", "42b20469-1215-4a9a-8964-c36f66b406f4",
@@ -475,8 +489,9 @@ func TestAIAssistantsChat(t *testing.T) {
 			"conversation_id: 42b20469-1215-4a9a-8964-c36f66b406f4\n" +
 			"name: Charlie\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "chat",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "chat",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -486,8 +501,9 @@ func TestAIAssistantsClone(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "clone",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "clone",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -497,8 +513,9 @@ func TestAIAssistantsGetTexml(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "get-texml",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "get-texml",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -508,8 +525,9 @@ func TestAIAssistantsImports(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "imports",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "imports",
 			"--api-key-ref", "api_key_ref",
 			"--provider", "elevenlabs",
 			"--import-id", "string",
@@ -524,8 +542,9 @@ func TestAIAssistantsImports(t *testing.T) {
 			"import_ids:\n" +
 			"  - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "imports",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "imports",
 		)
 	})
 }
@@ -534,8 +553,9 @@ func TestAIAssistantsSendSMS(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants", "send-sms",
+			t,
 			"--api-key", "string",
+			"ai:assistants", "send-sms",
 			"--assistant-id", "assistant_id",
 			"--from", "from",
 			"--to", "to",
@@ -555,8 +575,9 @@ func TestAIAssistantsSendSMS(t *testing.T) {
 			"should_create_conversation: true\n" +
 			"text: text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants", "send-sms",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants", "send-sms",
 			"--assistant-id", "assistant_id",
 		)
 	})

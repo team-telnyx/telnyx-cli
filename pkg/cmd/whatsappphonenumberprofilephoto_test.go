@@ -12,8 +12,9 @@ func TestWhatsappPhoneNumbersProfilePhotoDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:phone-numbers:profile:photo", "delete",
+			t,
 			"--api-key", "string",
+			"whatsapp:phone-numbers:profile:photo", "delete",
 			"--phone-number", "phone_number",
 		)
 	})
@@ -23,8 +24,9 @@ func TestWhatsappPhoneNumbersProfilePhotoUpload(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:phone-numbers:profile:photo", "upload",
+			t,
 			"--api-key", "string",
+			"whatsapp:phone-numbers:profile:photo", "upload",
 			"--phone-number", "phone_number",
 			"--file", "Example data",
 		)
@@ -34,8 +36,9 @@ func TestWhatsappPhoneNumbersProfilePhotoUpload(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("file: Example data")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "whatsapp:phone-numbers:profile:photo", "upload",
+			t, pipeData,
 			"--api-key", "string",
+			"whatsapp:phone-numbers:profile:photo", "upload",
 			"--phone-number", "phone_number",
 		)
 	})

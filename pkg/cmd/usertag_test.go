@@ -13,8 +13,9 @@ func TestUserTagsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "user-tags", "list",
+			t,
 			"--api-key", "string",
+			"user-tags", "list",
 			"--filter", "{starts_with: my-tag}",
 		)
 	})
@@ -25,8 +26,9 @@ func TestUserTagsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "user-tags", "list",
+			t,
 			"--api-key", "string",
+			"user-tags", "list",
 			"--filter.starts-with", "my-tag",
 		)
 	})

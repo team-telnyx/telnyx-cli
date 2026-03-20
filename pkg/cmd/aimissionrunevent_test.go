@@ -12,8 +12,9 @@ func TestAIMissionsRunsEventsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:events", "list",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:events", "list",
 			"--max-items", "10",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -30,8 +31,9 @@ func TestAIMissionsRunsEventsGetEventDetails(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:events", "get-event-details",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:events", "get-event-details",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--event-id", "event_id",
@@ -43,8 +45,9 @@ func TestAIMissionsRunsEventsLog(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:runs:events", "log",
+			t,
 			"--api-key", "string",
+			"ai:missions:runs:events", "log",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--summary", "summary",
@@ -67,8 +70,9 @@ func TestAIMissionsRunsEventsLog(t *testing.T) {
 			"  foo: bar\n" +
 			"step_id: step_id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:missions:runs:events", "log",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:missions:runs:events", "log",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)

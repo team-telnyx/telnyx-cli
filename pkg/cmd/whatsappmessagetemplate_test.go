@@ -12,8 +12,9 @@ func TestWhatsappMessageTemplatesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp-message-templates", "retrieve",
+			t,
 			"--api-key", "string",
+			"whatsapp-message-templates", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestWhatsappMessageTemplatesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp-message-templates", "update",
+			t,
 			"--api-key", "string",
+			"whatsapp-message-templates", "update",
 			"--id", "id",
 			"--category", "MARKETING",
 			"--component", "{foo: bar}",
@@ -38,8 +40,9 @@ func TestWhatsappMessageTemplatesUpdate(t *testing.T) {
 			"components:\n" +
 			"  - foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "whatsapp-message-templates", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"whatsapp-message-templates", "update",
 			"--id", "id",
 		)
 	})
@@ -49,8 +52,9 @@ func TestWhatsappMessageTemplatesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp-message-templates", "delete",
+			t,
 			"--api-key", "string",
+			"whatsapp-message-templates", "delete",
 			"--id", "id",
 		)
 	})

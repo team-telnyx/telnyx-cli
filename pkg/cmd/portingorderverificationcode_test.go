@@ -13,8 +13,9 @@ func TestPortingOrdersVerificationCodesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:verification-codes", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:verification-codes", "list",
 			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter", "{verified: true}",
@@ -30,8 +31,9 @@ func TestPortingOrdersVerificationCodesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:verification-codes", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:verification-codes", "list",
 			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter.verified=true",
@@ -46,8 +48,9 @@ func TestPortingOrdersVerificationCodesSend(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:verification-codes", "send",
+			t,
 			"--api-key", "string",
+			"porting-orders:verification-codes", "send",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--phone-number", "+61424000001",
 			"--phone-number", "+61424000002",
@@ -63,8 +66,9 @@ func TestPortingOrdersVerificationCodesSend(t *testing.T) {
 			"  - '+61424000002'\n" +
 			"verification_method: sms\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "porting-orders:verification-codes", "send",
+			t, pipeData,
 			"--api-key", "string",
+			"porting-orders:verification-codes", "send",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -74,8 +78,9 @@ func TestPortingOrdersVerificationCodesVerify(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:verification-codes", "verify",
+			t,
 			"--api-key", "string",
+			"porting-orders:verification-codes", "verify",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--verification-code", "{code: '12345', phone_number: '+61424000001'}",
 			"--verification-code", "{code: '54321', phone_number: '+61424000002'}",
@@ -88,8 +93,9 @@ func TestPortingOrdersVerificationCodesVerify(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:verification-codes", "verify",
+			t,
 			"--api-key", "string",
+			"porting-orders:verification-codes", "verify",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--verification-code.code", "12345",
 			"--verification-code.phone-number", "+61424000001",
@@ -107,8 +113,9 @@ func TestPortingOrdersVerificationCodesVerify(t *testing.T) {
 			"  - code: '54321'\n" +
 			"    phone_number: '+61424000002'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "porting-orders:verification-codes", "verify",
+			t, pipeData,
 			"--api-key", "string",
+			"porting-orders:verification-codes", "verify",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

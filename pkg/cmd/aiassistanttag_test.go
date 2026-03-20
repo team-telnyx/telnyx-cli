@@ -12,8 +12,9 @@ func TestAIAssistantsTagsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tags", "list",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tags", "list",
 		)
 	})
 }
@@ -22,8 +23,9 @@ func TestAIAssistantsTagsAdd(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tags", "add",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tags", "add",
 			"--assistant-id", "assistant_id",
 			"--tag", "tag",
 		)
@@ -33,8 +35,9 @@ func TestAIAssistantsTagsAdd(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("tag: tag")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants:tags", "add",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants:tags", "add",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -44,8 +47,9 @@ func TestAIAssistantsTagsRemove(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tags", "remove",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tags", "remove",
 			"--assistant-id", "assistant_id",
 			"--tag", "tag",
 		)

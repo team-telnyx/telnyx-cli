@@ -906,6 +906,64 @@ var callsActionsHangup = requestflag.WithInnerFlags(cli.Command{
 	},
 })
 
+var callsActionsJoinAIAssistant = requestflag.WithInnerFlags(cli.Command{
+	Name:    "join-ai-assistant",
+	Usage:   "Add a participant to an existing AI assistant conversation. Use this command to\nbring an additional call leg into a running AI conversation.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "call-control-id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
+			Name:     "conversation-id",
+			Usage:    "The ID of the AI assistant conversation to join.",
+			Required: true,
+			BodyPath: "conversation_id",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "participant",
+			Required: true,
+			BodyPath: "participant",
+		},
+		&requestflag.Flag[string]{
+			Name:     "client-state",
+			Usage:    "Use this field to add state to every subsequent webhook. It must be a valid Base-64 encoded string.",
+			BodyPath: "client_state",
+		},
+		&requestflag.Flag[string]{
+			Name:     "command-id",
+			Usage:    "Use this field to avoid duplicate commands. Telnyx will ignore any command with the same `command_id` for the same `call_control_id`.",
+			BodyPath: "command_id",
+		},
+	},
+	Action:          handleCallsActionsJoinAIAssistant,
+	HideHelpCommand: true,
+}, map[string][]requestflag.HasOuterFlag{
+	"participant": {
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.id",
+			Usage:      "The call_control_id of the participant to add to the conversation.",
+			InnerField: "id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.role",
+			Usage:      "The role of the participant in the conversation.",
+			InnerField: "role",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.name",
+			Usage:      "Display name for the participant.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.on-hangup",
+			Usage:      "Determines what happens to the conversation when this participant hangs up.",
+			InnerField: "on_hangup",
+		},
+	},
+})
+
 var callsActionsLeaveQueue = cli.Command{
 	Name:    "leave-queue",
 	Usage:   "Removes the call from a queue.",
@@ -1272,6 +1330,24 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Settings for handling user interruptions during assistant speech",
 			BodyPath: "interruption_settings",
 		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "message-history",
+			Usage:    "A list of messages to seed the conversation history before the assistant starts. Follows the same message format as the `ai_assistant_add_messages` command.",
+			Default:  []map[string]any{},
+			BodyPath: "message_history",
+		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "participant",
+			Usage:    "A list of participants to add to the conversation when it starts.",
+			Default:  []map[string]any{},
+			BodyPath: "participants",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "send-message-history-updates",
+			Usage:    "When `true`, a webhook is sent each time the conversation message history is updated.",
+			Default:  false,
+			BodyPath: "send_message_history_updates",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "transcription",
 			Usage:    "The settings associated with speech to text for the voice assistant. This is only relevant if the assistant uses a text-to-text language model. Any assistant using a model with native audio support (e.g. `fixie-ai/ultravox-v0_4`) will ignore this field.",
@@ -1314,6 +1390,28 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Name:       "interruption-settings.enable",
 			Usage:      "When true, allows users to interrupt the assistant while speaking",
 			InnerField: "enable",
+		},
+	},
+	"participant": {
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.id",
+			Usage:      "The call_control_id of the participant to add to the conversation.",
+			InnerField: "id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.role",
+			Usage:      "The role of the participant in the conversation.",
+			InnerField: "role",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.name",
+			Usage:      "Display name for the participant.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.on-hangup",
+			Usage:      "Determines what happens to the conversation when this participant hangs up.",
+			InnerField: "on_hangup",
 		},
 	},
 	"transcription": {
@@ -2773,6 +2871,48 @@ func handleCallsActionsHangup(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "calls:actions hangup", obj, format, transform)
+}
+
+func handleCallsActionsJoinAIAssistant(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("call-control-id") && len(unusedArgs) > 0 {
+		cmd.Set("call-control-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.CallActionJoinAIAssistantParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Calls.Actions.JoinAIAssistant(
+		ctx,
+		cmd.Value("call-control-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "calls:actions join-ai-assistant", obj, format, transform)
 }
 
 func handleCallsActionsLeaveQueue(ctx context.Context, cmd *cli.Command) error {

@@ -12,8 +12,9 @@ func TestWhatsappPhoneNumbersProfileRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:phone-numbers:profile", "retrieve",
+			t,
 			"--api-key", "string",
+			"whatsapp:phone-numbers:profile", "retrieve",
 			"--phone-number", "phone_number",
 		)
 	})
@@ -23,8 +24,9 @@ func TestWhatsappPhoneNumbersProfileUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "whatsapp:phone-numbers:profile", "update",
+			t,
 			"--api-key", "string",
+			"whatsapp:phone-numbers:profile", "update",
 			"--phone-number", "phone_number",
 			"--about", "about",
 			"--address", "address",
@@ -47,8 +49,9 @@ func TestWhatsappPhoneNumbersProfileUpdate(t *testing.T) {
 			"email: email\n" +
 			"website: website\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "whatsapp:phone-numbers:profile", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"whatsapp:phone-numbers:profile", "update",
 			"--phone-number", "phone_number",
 		)
 	})

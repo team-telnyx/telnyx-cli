@@ -29,14 +29,44 @@ var recordingTranscriptionsRetrieve = cli.Command{
 	HideHelpCommand: true,
 }
 
-var recordingTranscriptionsList = cli.Command{
-	Name:            "list",
-	Usage:           "Returns a list of your recording transcriptions.",
-	Suggest:         true,
-	Flags:           []cli.Flag{},
+var recordingTranscriptionsList = requestflag.WithInnerFlags(cli.Command{
+	Name:    "list",
+	Usage:   "Returns a list of your recording transcriptions.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[map[string]any]{
+			Name:      "filter",
+			Usage:     "Filter recording transcriptions by various attributes.",
+			QueryPath: "filter",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
+	},
 	Action:          handleRecordingTranscriptionsList,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"filter": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "filter.created-at",
+			InnerField: "created_at",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "filter.recording-id",
+			Usage:      "If present, transcriptions will be filtered to those associated with the given recording.",
+			InnerField: "recording_id",
+		},
+	},
+})
 
 var recordingTranscriptionsDelete = cli.Command{
 	Name:    "delete",
@@ -95,6 +125,8 @@ func handleRecordingTranscriptionsList(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
+	params := telnyx.RecordingTranscriptionListParams{}
+
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -106,17 +138,25 @@ func handleRecordingTranscriptionsList(ctx context.Context, cmd *cli.Command) er
 		return err
 	}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.RecordingTranscriptions.List(ctx, options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "recording-transcriptions list", obj, format, transform)
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.RecordingTranscriptions.List(ctx, params, options...)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(os.Stdout, "recording-transcriptions list", obj, format, transform)
+	} else {
+		iter := client.RecordingTranscriptions.ListAutoPaging(ctx, params, options...)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(os.Stdout, "recording-transcriptions list", iter, format, transform, maxItems)
+	}
 }
 
 func handleRecordingTranscriptionsDelete(ctx context.Context, cmd *cli.Command) error {

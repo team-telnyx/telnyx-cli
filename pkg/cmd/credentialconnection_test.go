@@ -13,8 +13,9 @@ func TestCredentialConnectionsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "credential-connections", "create",
+			t,
 			"--api-key", "string",
+			"credential-connections", "create",
 			"--connection-name", "my name",
 			"--password", "my123secure456password789",
 			"--user-name", "myusername123",
@@ -50,8 +51,9 @@ func TestCredentialConnectionsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "credential-connections", "create",
+			t,
 			"--api-key", "string",
+			"credential-connections", "create",
 			"--connection-name", "my name",
 			"--password", "my123secure456password789",
 			"--user-name", "myusername123",
@@ -168,8 +170,9 @@ func TestCredentialConnectionsCreate(t *testing.T) {
 			"webhook_event_url: https://example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "credential-connections", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"credential-connections", "create",
 		)
 	})
 }
@@ -178,8 +181,9 @@ func TestCredentialConnectionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "credential-connections", "retrieve",
+			t,
 			"--api-key", "string",
+			"credential-connections", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -189,8 +193,9 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "credential-connections", "update",
+			t,
 			"--api-key", "string",
+			"credential-connections", "update",
 			"--id", "id",
 			"--active=true",
 			"--anchorsite-override", "Latency",
@@ -227,8 +232,9 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "credential-connections", "update",
+			t,
 			"--api-key", "string",
+			"credential-connections", "update",
 			"--id", "id",
 			"--active=true",
 			"--anchorsite-override", "Latency",
@@ -346,8 +352,9 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 			"webhook_event_url: https://example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "credential-connections", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"credential-connections", "update",
 			"--id", "id",
 		)
 	})
@@ -357,8 +364,9 @@ func TestCredentialConnectionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "credential-connections", "list",
+			t,
 			"--api-key", "string",
+			"credential-connections", "list",
 			"--max-items", "10",
 			"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 			"--page-number", "0",
@@ -373,8 +381,9 @@ func TestCredentialConnectionsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "credential-connections", "list",
+			t,
 			"--api-key", "string",
+			"credential-connections", "list",
 			"--max-items", "10",
 			"--filter.connection-name", "{contains: contains}",
 			"--filter.fqdn", "fqdn",
@@ -390,8 +399,9 @@ func TestCredentialConnectionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "credential-connections", "delete",
+			t,
 			"--api-key", "string",
+			"credential-connections", "delete",
 			"--id", "id",
 		)
 	})

@@ -12,8 +12,9 @@ func TestLegacyReportingUsageReportsVoiceCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:voice", "create",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:voice", "create",
 			"--end-time", "'2024-02-01T00:00:00Z'",
 			"--start-time", "'2024-02-01T00:00:00Z'",
 			"--aggregation-type", "0",
@@ -41,8 +42,9 @@ func TestLegacyReportingUsageReportsVoiceCreate(t *testing.T) {
 			"product_breakdown: 0\n" +
 			"select_all_managed_accounts: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "legacy:reporting:usage-reports:voice", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:voice", "create",
 		)
 	})
 }
@@ -51,8 +53,9 @@ func TestLegacyReportingUsageReportsVoiceRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:voice", "retrieve",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:voice", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -62,8 +65,9 @@ func TestLegacyReportingUsageReportsVoiceList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:voice", "list",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:voice", "list",
 			"--max-items", "10",
 			"--page", "1",
 			"--per-page", "1",
@@ -75,8 +79,9 @@ func TestLegacyReportingUsageReportsVoiceDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:voice", "delete",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:voice", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

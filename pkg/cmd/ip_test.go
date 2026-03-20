@@ -13,8 +13,9 @@ func TestIPsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ips", "create",
+			t,
 			"--api-key", "string",
+			"ips", "create",
 			"--ip-address", "192.168.0.0",
 			"--connection-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--port", "5060",
@@ -28,8 +29,9 @@ func TestIPsCreate(t *testing.T) {
 			"connection_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58\n" +
 			"port: 5060\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ips", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ips", "create",
 		)
 	})
 }
@@ -38,8 +40,9 @@ func TestIPsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ips", "retrieve",
+			t,
 			"--api-key", "string",
+			"ips", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -49,8 +52,9 @@ func TestIPsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ips", "update",
+			t,
 			"--api-key", "string",
+			"ips", "update",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--ip-address", "192.168.0.0",
 			"--connection-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
@@ -65,8 +69,9 @@ func TestIPsUpdate(t *testing.T) {
 			"connection_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58\n" +
 			"port: 5060\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ips", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ips", "update",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -76,8 +81,9 @@ func TestIPsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ips", "list",
+			t,
 			"--api-key", "string",
+			"ips", "list",
 			"--max-items", "10",
 			"--filter", "{connection_id: connection_id, ip_address: 192.168.0.0, port: 5060}",
 			"--page-number", "0",
@@ -91,8 +97,9 @@ func TestIPsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ips", "list",
+			t,
 			"--api-key", "string",
+			"ips", "list",
 			"--max-items", "10",
 			"--filter.connection-id", "connection_id",
 			"--filter.ip-address", "192.168.0.0",
@@ -107,8 +114,9 @@ func TestIPsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ips", "delete",
+			t,
 			"--api-key", "string",
+			"ips", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

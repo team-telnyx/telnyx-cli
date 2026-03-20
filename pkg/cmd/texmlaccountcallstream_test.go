@@ -12,8 +12,9 @@ func TestTexmlAccountsCallsStreamsStreamingSidJson(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls:streams", "streaming-sid-json",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls:streams", "streaming-sid-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 			"--streaming-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
@@ -25,8 +26,9 @@ func TestTexmlAccountsCallsStreamsStreamingSidJson(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("Status: stopped")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:calls:streams", "streaming-sid-json",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:calls:streams", "streaming-sid-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 			"--streaming-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",

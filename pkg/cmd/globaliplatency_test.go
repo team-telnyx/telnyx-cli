@@ -13,8 +13,9 @@ func TestGlobalIPLatencyRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "global-ip-latency", "retrieve",
+			t,
 			"--api-key", "string",
+			"global-ip-latency", "retrieve",
 			"--filter", "{global_ip_id: string}",
 		)
 	})
@@ -25,8 +26,9 @@ func TestGlobalIPLatencyRetrieve(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "global-ip-latency", "retrieve",
+			t,
 			"--api-key", "string",
+			"global-ip-latency", "retrieve",
 			"--filter.global-ip-id", "string",
 		)
 	})

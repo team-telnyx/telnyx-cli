@@ -12,8 +12,9 @@ func TestAIMissionsToolsCreateTool(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:tools", "create-tool",
+			t,
 			"--api-key", "string",
+			"ai:missions:tools", "create-tool",
 			"--mission-id", "mission_id",
 		)
 	})
@@ -23,8 +24,9 @@ func TestAIMissionsToolsDeleteTool(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:tools", "delete-tool",
+			t,
 			"--api-key", "string",
+			"ai:missions:tools", "delete-tool",
 			"--mission-id", "mission_id",
 			"--tool-id", "tool_id",
 		)
@@ -35,8 +37,9 @@ func TestAIMissionsToolsGetTool(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:tools", "get-tool",
+			t,
 			"--api-key", "string",
+			"ai:missions:tools", "get-tool",
 			"--mission-id", "mission_id",
 			"--tool-id", "tool_id",
 		)
@@ -47,8 +50,9 @@ func TestAIMissionsToolsListTools(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:tools", "list-tools",
+			t,
 			"--api-key", "string",
+			"ai:missions:tools", "list-tools",
 			"--mission-id", "mission_id",
 		)
 	})
@@ -58,8 +62,9 @@ func TestAIMissionsToolsUpdateTool(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:missions:tools", "update-tool",
+			t,
 			"--api-key", "string",
+			"ai:missions:tools", "update-tool",
 			"--mission-id", "mission_id",
 			"--tool-id", "tool_id",
 		)

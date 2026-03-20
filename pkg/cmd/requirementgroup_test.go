@@ -13,8 +13,9 @@ func TestRequirementGroupsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirement-groups", "create",
+			t,
 			"--api-key", "string",
+			"requirement-groups", "create",
 			"--action", "ordering",
 			"--country-code", "US",
 			"--phone-number-type", "local",
@@ -29,8 +30,9 @@ func TestRequirementGroupsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirement-groups", "create",
+			t,
 			"--api-key", "string",
+			"requirement-groups", "create",
 			"--action", "ordering",
 			"--country-code", "US",
 			"--phone-number-type", "local",
@@ -51,8 +53,9 @@ func TestRequirementGroupsCreate(t *testing.T) {
 			"  - field_value: field_value\n" +
 			"    requirement_id: requirement_id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "requirement-groups", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"requirement-groups", "create",
 		)
 	})
 }
@@ -61,8 +64,9 @@ func TestRequirementGroupsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirement-groups", "retrieve",
+			t,
 			"--api-key", "string",
+			"requirement-groups", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -72,8 +76,9 @@ func TestRequirementGroupsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirement-groups", "update",
+			t,
 			"--api-key", "string",
+			"requirement-groups", "update",
 			"--id", "id",
 			"--customer-reference", "0002",
 			"--regulatory-requirement", "{field_value: new requirement value, requirement_id: 53970723-fbff-4f46-a975-f62be6c1a585}",
@@ -86,8 +91,9 @@ func TestRequirementGroupsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirement-groups", "update",
+			t,
 			"--api-key", "string",
+			"requirement-groups", "update",
 			"--id", "id",
 			"--customer-reference", "0002",
 			"--regulatory-requirement.field-value", "new requirement value",
@@ -103,8 +109,9 @@ func TestRequirementGroupsUpdate(t *testing.T) {
 			"  - field_value: new requirement value\n" +
 			"    requirement_id: 53970723-fbff-4f46-a975-f62be6c1a585\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "requirement-groups", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"requirement-groups", "update",
 			"--id", "id",
 		)
 	})
@@ -114,8 +121,9 @@ func TestRequirementGroupsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirement-groups", "list",
+			t,
 			"--api-key", "string",
+			"requirement-groups", "list",
 			"--filter", "{action: ordering, country_code: country_code, customer_reference: customer_reference, phone_number_type: local, status: approved}",
 		)
 	})
@@ -126,8 +134,9 @@ func TestRequirementGroupsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirement-groups", "list",
+			t,
 			"--api-key", "string",
+			"requirement-groups", "list",
 			"--filter.action", "ordering",
 			"--filter.country-code", "country_code",
 			"--filter.customer-reference", "customer_reference",
@@ -141,8 +150,9 @@ func TestRequirementGroupsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirement-groups", "delete",
+			t,
 			"--api-key", "string",
+			"requirement-groups", "delete",
 			"--id", "id",
 		)
 	})
@@ -152,8 +162,9 @@ func TestRequirementGroupsSubmitForApproval(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "requirement-groups", "submit-for-approval",
+			t,
 			"--api-key", "string",
+			"requirement-groups", "submit-for-approval",
 			"--id", "id",
 		)
 	})

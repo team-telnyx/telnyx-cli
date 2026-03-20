@@ -13,8 +13,9 @@ func TestAccessIPRangesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "access-ip-ranges", "create",
+			t,
 			"--api-key", "string",
+			"access-ip-ranges", "create",
 			"--cidr-block", "cidr_block",
 			"--description", "description",
 		)
@@ -26,8 +27,9 @@ func TestAccessIPRangesCreate(t *testing.T) {
 			"cidr_block: cidr_block\n" +
 			"description: description\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "access-ip-ranges", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"access-ip-ranges", "create",
 		)
 	})
 }
@@ -36,8 +38,9 @@ func TestAccessIPRangesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "access-ip-ranges", "list",
+			t,
 			"--api-key", "string",
+			"access-ip-ranges", "list",
 			"--max-items", "10",
 			"--filter", "{cidr_block: string, created_at: '2019-12-27T18:11:19.117Z'}",
 			"--page-number", "0",
@@ -51,8 +54,9 @@ func TestAccessIPRangesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "access-ip-ranges", "list",
+			t,
 			"--api-key", "string",
+			"access-ip-ranges", "list",
 			"--max-items", "10",
 			"--filter.cidr-block", "string",
 			"--filter.created-at", "2019-12-27T18:11:19.117Z",
@@ -66,8 +70,9 @@ func TestAccessIPRangesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "access-ip-ranges", "delete",
+			t,
 			"--api-key", "string",
+			"access-ip-ranges", "delete",
 			"--access-ip-range-id", "access_ip_range_id",
 		)
 	})

@@ -13,8 +13,9 @@ func TestManagedAccountsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "managed-accounts", "create",
+			t,
 			"--api-key", "string",
+			"managed-accounts", "create",
 			"--business-name", "Larry's Cat Food Inc",
 			"--email", "larry_cat_food@customer.org",
 			"--managed-account-allow-custom-pricing=false",
@@ -32,8 +33,9 @@ func TestManagedAccountsCreate(t *testing.T) {
 			"password: 3jVjLq!tMuWKyWx4NN*CvhnB\n" +
 			"rollup_billing: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "managed-accounts", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"managed-accounts", "create",
 		)
 	})
 }
@@ -42,8 +44,9 @@ func TestManagedAccountsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "managed-accounts", "retrieve",
+			t,
 			"--api-key", "string",
+			"managed-accounts", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -53,8 +56,9 @@ func TestManagedAccountsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "managed-accounts", "update",
+			t,
 			"--api-key", "string",
+			"managed-accounts", "update",
 			"--id", "id",
 			"--managed-account-allow-custom-pricing=true",
 		)
@@ -64,8 +68,9 @@ func TestManagedAccountsUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("managed_account_allow_custom_pricing: true")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "managed-accounts", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"managed-accounts", "update",
 			"--id", "id",
 		)
 	})
@@ -75,8 +80,9 @@ func TestManagedAccountsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "managed-accounts", "list",
+			t,
 			"--api-key", "string",
+			"managed-accounts", "list",
 			"--max-items", "10",
 			"--filter", "{email: {contains: john, eq: eq}, organization_name: {contains: contains, eq: Example Company LLC}}",
 			"--include-cancelled-accounts=true",
@@ -92,8 +98,9 @@ func TestManagedAccountsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "managed-accounts", "list",
+			t,
 			"--api-key", "string",
+			"managed-accounts", "list",
 			"--max-items", "10",
 			"--filter.email", "{contains: john, eq: eq}",
 			"--filter.organization-name", "{contains: contains, eq: Example Company LLC}",
@@ -109,8 +116,9 @@ func TestManagedAccountsGetAllocatableGlobalOutboundChannels(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "managed-accounts", "get-allocatable-global-outbound-channels",
+			t,
 			"--api-key", "string",
+			"managed-accounts", "get-allocatable-global-outbound-channels",
 		)
 	})
 }
@@ -119,8 +127,9 @@ func TestManagedAccountsUpdateGlobalChannelLimit(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "managed-accounts", "update-global-channel-limit",
+			t,
 			"--api-key", "string",
+			"managed-accounts", "update-global-channel-limit",
 			"--id", "id",
 			"--channel-limit", "30",
 		)
@@ -130,8 +139,9 @@ func TestManagedAccountsUpdateGlobalChannelLimit(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("channel_limit: 30")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "managed-accounts", "update-global-channel-limit",
+			t, pipeData,
 			"--api-key", "string",
+			"managed-accounts", "update-global-channel-limit",
 			"--id", "id",
 		)
 	})

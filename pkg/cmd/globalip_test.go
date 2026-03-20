@@ -12,8 +12,9 @@ func TestGlobalIPsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "global-ips", "create",
+			t,
 			"--api-key", "string",
+			"global-ips", "create",
 			"--description", "test interface",
 			"--name", "test interface",
 			"--ports", "{tcp: bar, udp: bar}",
@@ -29,8 +30,9 @@ func TestGlobalIPsCreate(t *testing.T) {
 			"  tcp: bar\n" +
 			"  udp: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "global-ips", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"global-ips", "create",
 		)
 	})
 }
@@ -39,8 +41,9 @@ func TestGlobalIPsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "global-ips", "retrieve",
+			t,
 			"--api-key", "string",
+			"global-ips", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -50,8 +53,9 @@ func TestGlobalIPsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "global-ips", "list",
+			t,
 			"--api-key", "string",
+			"global-ips", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -63,8 +67,9 @@ func TestGlobalIPsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "global-ips", "delete",
+			t,
 			"--api-key", "string",
+			"global-ips", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

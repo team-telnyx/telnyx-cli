@@ -13,8 +13,9 @@ func TestTexmlAccountsConferencesParticipantsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences:participants", "retrieve",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences:participants", "retrieve",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 			"--call-sid-or-participant-label", "call_sid_or_participant_label",
@@ -26,8 +27,9 @@ func TestTexmlAccountsConferencesParticipantsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences:participants", "update",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences:participants", "update",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 			"--call-sid-or-participant-label", "call_sid_or_participant_label",
@@ -60,8 +62,9 @@ func TestTexmlAccountsConferencesParticipantsUpdate(t *testing.T) {
 			"Muted: true\n" +
 			"WaitUrl: https://www.example.com/wait_music.mp3\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:conferences:participants", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:conferences:participants", "update",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 			"--call-sid-or-participant-label", "call_sid_or_participant_label",
@@ -73,8 +76,9 @@ func TestTexmlAccountsConferencesParticipantsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences:participants", "delete",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences:participants", "delete",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 			"--call-sid-or-participant-label", "call_sid_or_participant_label",
@@ -86,8 +90,9 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences:participants", "participants",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences:participants", "participants",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 			"--amd-status-callback", "https://www.example.com/amd_result",
@@ -147,8 +152,9 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences:participants", "participants",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences:participants", "participants",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 			"--amd-status-callback", "https://www.example.com/amd_result",
@@ -257,8 +263,9 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 			"Trim: trim-silence\n" +
 			"WaitUrl: https://www.example.com/wait_music.mp3\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:conferences:participants", "participants",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:conferences:participants", "participants",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 		)
@@ -269,8 +276,9 @@ func TestTexmlAccountsConferencesParticipantsRetrieveParticipants(t *testing.T) 
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:conferences:participants", "retrieve-participants",
+			t,
 			"--api-key", "string",
+			"texml:accounts:conferences:participants", "retrieve-participants",
 			"--account-sid", "account_sid",
 			"--conference-sid", "conference_sid",
 		)

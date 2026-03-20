@@ -12,8 +12,9 @@ func TestSimCardOrderPreviewPreview(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-order-preview", "preview",
+			t,
 			"--api-key", "string",
+			"sim-card-order-preview", "preview",
 			"--address-id", "1293384261075731499",
 			"--quantity", "21",
 		)
@@ -25,8 +26,9 @@ func TestSimCardOrderPreviewPreview(t *testing.T) {
 			"address_id: '1293384261075731499'\n" +
 			"quantity: 21\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "sim-card-order-preview", "preview",
+			t, pipeData,
 			"--api-key", "string",
+			"sim-card-order-preview", "preview",
 		)
 	})
 }

@@ -13,8 +13,9 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdn-connections", "create",
+			t,
 			"--api-key", "string",
+			"fqdn-connections", "create",
 			"--connection-name", "string",
 			"--active=true",
 			"--anchorsite-override", "Latency",
@@ -49,8 +50,9 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdn-connections", "create",
+			t,
 			"--api-key", "string",
+			"fqdn-connections", "create",
 			"--connection-name", "string",
 			"--active=true",
 			"--anchorsite-override", "Latency",
@@ -187,8 +189,9 @@ func TestFqdnConnectionsCreate(t *testing.T) {
 			"webhook_event_url: https://example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "fqdn-connections", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"fqdn-connections", "create",
 		)
 	})
 }
@@ -197,8 +200,9 @@ func TestFqdnConnectionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdn-connections", "retrieve",
+			t,
 			"--api-key", "string",
+			"fqdn-connections", "retrieve",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -208,8 +212,9 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdn-connections", "update",
+			t,
 			"--api-key", "string",
+			"fqdn-connections", "update",
 			"--id", "1293384261075731499",
 			"--active=true",
 			"--anchorsite-override", "Latency",
@@ -244,8 +249,9 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdn-connections", "update",
+			t,
 			"--api-key", "string",
+			"fqdn-connections", "update",
 			"--id", "1293384261075731499",
 			"--active=true",
 			"--anchorsite-override", "Latency",
@@ -381,8 +387,9 @@ func TestFqdnConnectionsUpdate(t *testing.T) {
 			"webhook_event_url: https://example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "fqdn-connections", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"fqdn-connections", "update",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -392,8 +399,9 @@ func TestFqdnConnectionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdn-connections", "list",
+			t,
 			"--api-key", "string",
+			"fqdn-connections", "list",
 			"--max-items", "10",
 			"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 			"--page-number", "0",
@@ -408,8 +416,9 @@ func TestFqdnConnectionsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdn-connections", "list",
+			t,
 			"--api-key", "string",
+			"fqdn-connections", "list",
 			"--max-items", "10",
 			"--filter.connection-name", "{contains: contains}",
 			"--filter.fqdn", "fqdn",
@@ -425,8 +434,9 @@ func TestFqdnConnectionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fqdn-connections", "delete",
+			t,
 			"--api-key", "string",
+			"fqdn-connections", "delete",
 			"--id", "1293384261075731499",
 		)
 	})

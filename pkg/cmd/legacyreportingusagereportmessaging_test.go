@@ -12,8 +12,9 @@ func TestLegacyReportingUsageReportsMessagingCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:messaging", "create",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:messaging", "create",
 			"--aggregation-type", "0",
 			"--end-time", "'2020-01-02T00:00:00Z'",
 			"--managed-account", "f47ac10b-58cc-4372-a567-0e02b2c3d479",
@@ -39,8 +40,9 @@ func TestLegacyReportingUsageReportsMessagingCreate(t *testing.T) {
 			"select_all_managed_accounts: true\n" +
 			"start_time: '2020-01-01T00:00:00Z'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "legacy:reporting:usage-reports:messaging", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:messaging", "create",
 		)
 	})
 }
@@ -49,8 +51,9 @@ func TestLegacyReportingUsageReportsMessagingRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:messaging", "retrieve",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:messaging", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -60,8 +63,9 @@ func TestLegacyReportingUsageReportsMessagingList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:messaging", "list",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:messaging", "list",
 			"--max-items", "10",
 			"--page", "1",
 			"--per-page", "1",
@@ -73,8 +77,9 @@ func TestLegacyReportingUsageReportsMessagingDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:messaging", "delete",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:messaging", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

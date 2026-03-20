@@ -13,8 +13,9 @@ func TestMessagingHostedNumberOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-hosted-number-orders", "create",
+			t,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "create",
 			"--messaging-profile-id", "dc8f39ac-953d-4520-b93b-786ae87db0da",
 			"--phone-number", "+18665550001",
 			"--phone-number", "+18665550002",
@@ -29,8 +30,9 @@ func TestMessagingHostedNumberOrdersCreate(t *testing.T) {
 			"  - '+18665550001'\n" +
 			"  - '+18665550002'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-hosted-number-orders", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "create",
 		)
 	})
 }
@@ -39,8 +41,9 @@ func TestMessagingHostedNumberOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-hosted-number-orders", "retrieve",
+			t,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -50,8 +53,9 @@ func TestMessagingHostedNumberOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-hosted-number-orders", "list",
+			t,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",
@@ -63,8 +67,9 @@ func TestMessagingHostedNumberOrdersDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-hosted-number-orders", "delete",
+			t,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "delete",
 			"--id", "id",
 		)
 	})
@@ -74,8 +79,9 @@ func TestMessagingHostedNumberOrdersCheckEligibility(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-hosted-number-orders", "check-eligibility",
+			t,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "check-eligibility",
 			"--phone-number", "string",
 		)
 	})
@@ -86,8 +92,9 @@ func TestMessagingHostedNumberOrdersCheckEligibility(t *testing.T) {
 			"phone_numbers:\n" +
 			"  - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-hosted-number-orders", "check-eligibility",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "check-eligibility",
 		)
 	})
 }
@@ -96,8 +103,9 @@ func TestMessagingHostedNumberOrdersCreateVerificationCodes(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-hosted-number-orders", "create-verification-codes",
+			t,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "create-verification-codes",
 			"--id", "id",
 			"--phone-number", "string",
 			"--verification-method", "sms",
@@ -111,8 +119,9 @@ func TestMessagingHostedNumberOrdersCreateVerificationCodes(t *testing.T) {
 			"  - string\n" +
 			"verification_method: sms\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-hosted-number-orders", "create-verification-codes",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "create-verification-codes",
 			"--id", "id",
 		)
 	})
@@ -122,8 +131,9 @@ func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-hosted-number-orders", "validate-codes",
+			t,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "validate-codes",
 			"--id", "id",
 			"--verification-code", "{code: code, phone_number: phone_number}",
 		)
@@ -135,8 +145,9 @@ func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-hosted-number-orders", "validate-codes",
+			t,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "validate-codes",
 			"--id", "id",
 			"--verification-code.code", "code",
 			"--verification-code.phone-number", "phone_number",
@@ -150,8 +161,9 @@ func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
 			"  - code: code\n" +
 			"    phone_number: phone_number\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-hosted-number-orders", "validate-codes",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-hosted-number-orders", "validate-codes",
 			"--id", "id",
 		)
 	})

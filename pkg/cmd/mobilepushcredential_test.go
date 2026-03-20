@@ -13,8 +13,9 @@ func TestMobilePushCredentialsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-push-credentials", "create",
+			t,
 			"--api-key", "string",
+			"mobile-push-credentials", "create",
 			"--create-mobile-push-credential-request", "{alias: LucyIosCredential, certificate: '-----BEGIN CERTIFICATE----- MIIGVDCCBTKCAQEAsNlRJVZn9ZvXcECQm65czs... -----END CERTIFICATE-----', private_key: '-----BEGIN RSA PRIVATE KEY----- MIIEpQIBAAKCAQEAsNlRJVZn9ZvXcECQm65czs... -----END RSA PRIVATE KEY-----', type: ios}",
 		)
 	})
@@ -31,8 +32,9 @@ func TestMobilePushCredentialsCreate(t *testing.T) {
 			"  -----END RSA PRIVATE KEY-----\n" +
 			"type: ios\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "mobile-push-credentials", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"mobile-push-credentials", "create",
 		)
 	})
 }
@@ -41,8 +43,9 @@ func TestMobilePushCredentialsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-push-credentials", "retrieve",
+			t,
 			"--api-key", "string",
+			"mobile-push-credentials", "retrieve",
 			"--push-credential-id", "0ccc7b76-4df3-4bca-a05a-3da1ecc389f0",
 		)
 	})
@@ -52,8 +55,9 @@ func TestMobilePushCredentialsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-push-credentials", "list",
+			t,
 			"--api-key", "string",
+			"mobile-push-credentials", "list",
 			"--max-items", "10",
 			"--filter", "{alias: LucyCredential, type: ios}",
 			"--page-number", "0",
@@ -67,8 +71,9 @@ func TestMobilePushCredentialsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-push-credentials", "list",
+			t,
 			"--api-key", "string",
+			"mobile-push-credentials", "list",
 			"--max-items", "10",
 			"--filter.alias", "LucyCredential",
 			"--filter.type", "ios",
@@ -82,8 +87,9 @@ func TestMobilePushCredentialsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-push-credentials", "delete",
+			t,
 			"--api-key", "string",
+			"mobile-push-credentials", "delete",
 			"--push-credential-id", "0ccc7b76-4df3-4bca-a05a-3da1ecc389f0",
 		)
 	})

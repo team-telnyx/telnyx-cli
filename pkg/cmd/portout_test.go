@@ -13,8 +13,9 @@ func TestPortoutsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts", "retrieve",
+			t,
 			"--api-key", "string",
+			"portouts", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -24,8 +25,9 @@ func TestPortoutsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts", "list",
+			t,
 			"--api-key", "string",
+			"portouts", "list",
 			"--max-items", "10",
 			"--filter", "{carrier_name: carrier_name, country_code: US, country_code_in: [CA, US], foc_date: '2024-09-04T00:00:00.000Z', inserted_at: {gte: '2024-09-04T00:00:00.000Z', lte: '2024-09-04T00:00:00.000Z'}, phone_number: '+13035551212', pon: pon, ported_out_at: {gte: '2024-09-04T00:00:00.000Z', lte: '2024-09-04T00:00:00.000Z'}, spid: spid, status: pending, status_in: [pending], support_key: PO_abc123}",
 			"--page-number", "0",
@@ -39,8 +41,9 @@ func TestPortoutsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts", "list",
+			t,
 			"--api-key", "string",
+			"portouts", "list",
 			"--max-items", "10",
 			"--filter.carrier-name", "carrier_name",
 			"--filter.country-code", "US",
@@ -64,8 +67,9 @@ func TestPortoutsListRejectionCodes(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts", "list-rejection-codes",
+			t,
 			"--api-key", "string",
+			"portouts", "list-rejection-codes",
 			"--portout-id", "329d6658-8f93-405d-862f-648776e8afd7",
 			"--filter", "{code: 1002}",
 		)
@@ -77,8 +81,9 @@ func TestPortoutsListRejectionCodes(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts", "list-rejection-codes",
+			t,
 			"--api-key", "string",
+			"portouts", "list-rejection-codes",
 			"--portout-id", "329d6658-8f93-405d-862f-648776e8afd7",
 			"--filter.code", "1002",
 		)
@@ -89,8 +94,9 @@ func TestPortoutsUpdateStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts", "update-status",
+			t,
 			"--api-key", "string",
+			"portouts", "update-status",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--status", "authorized",
 			"--reason", "I do not recognize this transaction",
@@ -104,8 +110,9 @@ func TestPortoutsUpdateStatus(t *testing.T) {
 			"reason: I do not recognize this transaction\n" +
 			"host_messaging: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "portouts", "update-status",
+			t, pipeData,
 			"--api-key", "string",
+			"portouts", "update-status",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--status", "authorized",
 		)

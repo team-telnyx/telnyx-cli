@@ -12,8 +12,9 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:scheduled-events", "create",
+			t,
 			"--api-key", "string",
+			"ai:assistants:scheduled-events", "create",
 			"--assistant-id", "assistant_id",
 			"--scheduled-at-fixed-datetime", "'2025-04-15T13:07:28.764Z'",
 			"--telnyx-agent-target", "telnyx_agent_target",
@@ -38,8 +39,9 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 			"  foo: string\n" +
 			"text: text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:assistants:scheduled-events", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:assistants:scheduled-events", "create",
 			"--assistant-id", "assistant_id",
 		)
 	})
@@ -49,8 +51,9 @@ func TestAIAssistantsScheduledEventsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:scheduled-events", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:assistants:scheduled-events", "retrieve",
 			"--assistant-id", "assistant_id",
 			"--event-id", "event_id",
 		)
@@ -61,8 +64,9 @@ func TestAIAssistantsScheduledEventsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:scheduled-events", "list",
+			t,
 			"--api-key", "string",
+			"ai:assistants:scheduled-events", "list",
 			"--max-items", "10",
 			"--assistant-id", "assistant_id",
 			"--conversation-channel", "phone_call",
@@ -78,8 +82,9 @@ func TestAIAssistantsScheduledEventsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:scheduled-events", "delete",
+			t,
 			"--api-key", "string",
+			"ai:assistants:scheduled-events", "delete",
 			"--assistant-id", "assistant_id",
 			"--event-id", "event_id",
 		)

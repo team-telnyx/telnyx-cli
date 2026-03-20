@@ -13,8 +13,9 @@ func TestCallsDial(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls", "dial",
+			t,
 			"--api-key", "string",
+			"calls", "dial",
 			"--connection-id", "7267xxxxxxxxxxxxxx",
 			"--from", "+18005550101",
 			"--to", "+18005550100 or sip:username@sip.telnyx.com",
@@ -79,8 +80,9 @@ func TestCallsDial(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls", "dial",
+			t,
 			"--api-key", "string",
+			"calls", "dial",
 			"--connection-id", "7267xxxxxxxxxxxxxx",
 			"--from", "+18005550101",
 			"--to", "+18005550100 or sip:username@sip.telnyx.com",
@@ -288,8 +290,9 @@ func TestCallsDial(t *testing.T) {
 			"webhook_url: https://www.example.com/server-b/\n" +
 			"webhook_url_method: POST\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "calls", "dial",
+			t, pipeData,
 			"--api-key", "string",
+			"calls", "dial",
 		)
 	})
 }
@@ -298,8 +301,9 @@ func TestCallsRetrieveStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "calls", "retrieve-status",
+			t,
 			"--api-key", "string",
+			"calls", "retrieve-status",
 			"--call-control-id", "call_control_id",
 		)
 	})

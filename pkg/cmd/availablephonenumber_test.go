@@ -13,8 +13,9 @@ func TestAvailablePhoneNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "available-phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"available-phone-numbers", "list",
 			"--filter", "{administrative_area: administrative_area, best_effort: true, country_code: country_code, exclude_held_numbers: true, features: [sms], limit: 0, locality: locality, national_destination_code: national_destination_code, phone_number: {contains: contains, ends_with: ends_with, starts_with: starts_with}, phone_number_type: local, quickship: true, rate_center: rate_center, reservable: true}",
 		)
 	})
@@ -25,8 +26,9 @@ func TestAvailablePhoneNumbersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "available-phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"available-phone-numbers", "list",
 			"--filter.administrative-area", "administrative_area",
 			"--filter.best-effort=true",
 			"--filter.country-code", "country_code",

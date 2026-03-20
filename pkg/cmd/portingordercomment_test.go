@@ -12,8 +12,9 @@ func TestPortingOrdersCommentsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:comments", "create",
+			t,
 			"--api-key", "string",
+			"porting-orders:comments", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--body", "Please, let me know when the port completes",
 		)
@@ -23,8 +24,9 @@ func TestPortingOrdersCommentsCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("body: Please, let me know when the port completes")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "porting-orders:comments", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"porting-orders:comments", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -34,8 +36,9 @@ func TestPortingOrdersCommentsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:comments", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:comments", "list",
 			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "0",

@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.8.0 (2026-03-18)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* add ai_assistant_join call control command OpenAPI spec ([58b7b54](https://github.com/team-telnyx/telnyx-cli/commit/58b7b548e6211dc4d3706672236238ec34f1764f))
+* add message_history, send_message_history_updates, participants to AIAssistantStartRequest ([abed3f5](https://github.com/team-telnyx/telnyx-cli/commit/abed3f5a2d8a395b7de4813b3a2ca36296254206))
+* add public x402 payment endpoints to external specs ([ac28064](https://github.com/team-telnyx/telnyx-cli/commit/ac2806411a686b191ab02d7b583cfd346e24cf3b))
+* AI-2131: Add expressive_mode boolean to VoiceSettings ([4e4708d](https://github.com/team-telnyx/telnyx-cli/commit/4e4708d9bb0da6f724df514e10cd8b14865c1254))
+* **api:** manual updates ([7618cf5](https://github.com/team-telnyx/telnyx-cli/commit/7618cf5fcd3a15bc95759f332abe50034677701e))
+* **api:** manual updates ([2deb7c4](https://github.com/team-telnyx/telnyx-cli/commit/2deb7c4960b9d370a01ac56289ac4bfea583cabe))
+* port-4690: fix LOA configuration preview path (singular → plural) ([2ee8e0f](https://github.com/team-telnyx/telnyx-cli/commit/2ee8e0fcdfb2b123d8b5102804d69014ed550eb5))
+
+
+### Bug Fixes
+
+* avoid reading from stdin unless request body is form encoded or json ([fdf002a](https://github.com/team-telnyx/telnyx-cli/commit/fdf002a1884a8128f4252b69e33ddc5ac3647a8f))
+* better support passing client args in any position ([6ab5f27](https://github.com/team-telnyx/telnyx-cli/commit/6ab5f277f2b681cdebeac00a174b72e2bee00c29))
+* **call-recordings:** align OpenAPI spec with implementation ([f12b073](https://github.com/team-telnyx/telnyx-cli/commit/f12b0732903f59f48b559d4009722f91420de294))
+* **cli:** remove need to manually pin version of Go SDK ([4c94b4e](https://github.com/team-telnyx/telnyx-cli/commit/4c94b4eb34023101ad046ac13c54815b43d24e7f))
+* **codegen:** correct type mismatches and method names ([e8abe2d](https://github.com/team-telnyx/telnyx-cli/commit/e8abe2d31d321cb1235f038bb0f67d5eac3ffeaf))
+* improve linking behavior when developing on a branch not in the Go SDK ([e01f881](https://github.com/team-telnyx/telnyx-cli/commit/e01f881d5664c8c5b4ddeb15f8f8af6e64fbec4c))
+* improved workflow for developing on branches ([20ed1bc](https://github.com/team-telnyx/telnyx-cli/commit/20ed1bcb504fe7b022b29176cebf6769faf1716c))
+* no longer require an API key when building on production repos ([2d78dd2](https://github.com/team-telnyx/telnyx-cli/commit/2d78dd27d017f8d7276960dd85b13dad95e03856))
+* only set client options when the corresponding CLI flag or env var is explicitly set ([12701b6](https://github.com/team-telnyx/telnyx-cli/commit/12701b68896497ff10cee0dc9b458dc46f0d1a01))
+
+
+### Chores
+
+* **deps:** bump telnyx-go to v4.46.0 ([96e7bd3](https://github.com/team-telnyx/telnyx-cli/commit/96e7bd398a9661bf144b15e5e4951bb306e8650a))
+* **internal:** codegen related update ([b7f6323](https://github.com/team-telnyx/telnyx-cli/commit/b7f6323114f0116b18b061079fbd4d695c31c77f))
+* **internal:** codegen related update ([58d0f2b](https://github.com/team-telnyx/telnyx-cli/commit/58d0f2b282831466d622d69f943dd7fd71d7c6ef))
+* **internal:** tweak CI branches ([ea3aad5](https://github.com/team-telnyx/telnyx-cli/commit/ea3aad5b69f4f89e6567fca687736bdc40b921cb))
+
 ## 0.7.0 (2026-03-12)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.6.0...v0.7.0)

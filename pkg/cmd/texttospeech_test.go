@@ -13,8 +13,9 @@ func TestTextToSpeechGenerate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "text-to-speech", "generate",
+			t,
 			"--api-key", "string",
+			"text-to-speech", "generate",
 			"--aws", "{language_code: language_code, lexicon_names: [string], output_format: output_format, sample_rate: sample_rate, text_type: text}",
 			"--azure", "{api_key: api_key, deployment_id: deployment_id, effect: effect, gender: gender, language_code: language_code, output_format: output_format, region: region, text_type: text}",
 			"--disable-cache=true",
@@ -40,8 +41,9 @@ func TestTextToSpeechGenerate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "text-to-speech", "generate",
+			t,
 			"--api-key", "string",
+			"text-to-speech", "generate",
 			"--aws.language-code", "language_code",
 			"--aws.lexicon-names", "[string]",
 			"--aws.output-format", "output_format",
@@ -142,8 +144,9 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"voice_settings:\n" +
 			"  foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "text-to-speech", "generate",
+			t, pipeData,
 			"--api-key", "string",
+			"text-to-speech", "generate",
 		)
 	})
 }
@@ -152,10 +155,29 @@ func TestTextToSpeechListVoices(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "text-to-speech", "list-voices",
+			t,
 			"--api-key", "string",
+			"text-to-speech", "list-voices",
 			"--api-key", "api_key",
 			"--provider", "aws",
+		)
+	})
+}
+
+func TestTextToSpeechStream(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"text-to-speech", "stream",
+			"--audio-format", "pcm",
+			"--disable-cache=true",
+			"--model-id", "model_id",
+			"--provider", "aws",
+			"--socket-id", "socket_id",
+			"--voice", "voice",
+			"--voice-id", "voice_id",
 		)
 	})
 }

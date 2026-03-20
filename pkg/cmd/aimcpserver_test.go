@@ -12,8 +12,9 @@ func TestAIMcpServersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:mcp-servers", "create",
+			t,
 			"--api-key", "string",
+			"ai:mcp-servers", "create",
 			"--name", "name",
 			"--type", "type",
 			"--url", "url",
@@ -32,8 +33,9 @@ func TestAIMcpServersCreate(t *testing.T) {
 			"  - string\n" +
 			"api_key_ref: api_key_ref\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:mcp-servers", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:mcp-servers", "create",
 		)
 	})
 }
@@ -42,8 +44,9 @@ func TestAIMcpServersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:mcp-servers", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:mcp-servers", "retrieve",
 			"--mcp-server-id", "mcp_server_id",
 		)
 	})
@@ -53,8 +56,9 @@ func TestAIMcpServersUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:mcp-servers", "update",
+			t,
 			"--api-key", "string",
+			"ai:mcp-servers", "update",
 			"--mcp-server-id", "mcp_server_id",
 			"--id", "id",
 			"--allowed-tool", "[string]",
@@ -78,8 +82,9 @@ func TestAIMcpServersUpdate(t *testing.T) {
 			"type: type\n" +
 			"url: url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:mcp-servers", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:mcp-servers", "update",
 			"--mcp-server-id", "mcp_server_id",
 		)
 	})
@@ -89,8 +94,9 @@ func TestAIMcpServersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:mcp-servers", "list",
+			t,
 			"--api-key", "string",
+			"ai:mcp-servers", "list",
 			"--max-items", "10",
 			"--page-number", "1",
 			"--page-size", "1",
@@ -104,8 +110,9 @@ func TestAIMcpServersDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:mcp-servers", "delete",
+			t,
 			"--api-key", "string",
+			"ai:mcp-servers", "delete",
 			"--mcp-server-id", "mcp_server_id",
 		)
 	})

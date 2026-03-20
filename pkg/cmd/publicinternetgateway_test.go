@@ -13,8 +13,9 @@ func TestPublicInternetGatewaysCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "public-internet-gateways", "create",
+			t,
 			"--api-key", "string",
+			"public-internet-gateways", "create",
 			"--name", "test interface",
 			"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--region-code", "ashburn-va",
@@ -28,8 +29,9 @@ func TestPublicInternetGatewaysCreate(t *testing.T) {
 			"network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58\n" +
 			"region_code: ashburn-va\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "public-internet-gateways", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"public-internet-gateways", "create",
 		)
 	})
 }
@@ -38,8 +40,9 @@ func TestPublicInternetGatewaysRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "public-internet-gateways", "retrieve",
+			t,
 			"--api-key", "string",
+			"public-internet-gateways", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -49,8 +52,9 @@ func TestPublicInternetGatewaysList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "public-internet-gateways", "list",
+			t,
 			"--api-key", "string",
+			"public-internet-gateways", "list",
 			"--max-items", "10",
 			"--filter", "{network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58}",
 			"--page-number", "0",
@@ -64,8 +68,9 @@ func TestPublicInternetGatewaysList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "public-internet-gateways", "list",
+			t,
 			"--api-key", "string",
+			"public-internet-gateways", "list",
 			"--max-items", "10",
 			"--filter.network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--page-number", "0",
@@ -78,8 +83,9 @@ func TestPublicInternetGatewaysDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "public-internet-gateways", "delete",
+			t,
 			"--api-key", "string",
+			"public-internet-gateways", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

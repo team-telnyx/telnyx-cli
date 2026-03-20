@@ -13,8 +13,9 @@ func TestConferencesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "conferences", "create",
+			t,
 			"--api-key", "string",
+			"conferences", "create",
 			"--call-control-id", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 			"--name", "Business",
 			"--beep-enabled", "always",
@@ -46,8 +47,9 @@ func TestConferencesCreate(t *testing.T) {
 			"region: US\n" +
 			"start_conference_on_create: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "conferences", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"conferences", "create",
 		)
 	})
 }
@@ -56,8 +58,9 @@ func TestConferencesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "conferences", "retrieve",
+			t,
 			"--api-key", "string",
+			"conferences", "retrieve",
 			"--id", "id",
 			"--region", "Australia",
 		)
@@ -68,8 +71,9 @@ func TestConferencesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "conferences", "list",
+			t,
 			"--api-key", "string",
+			"conferences", "list",
 			"--max-items", "10",
 			"--filter", "{application_name: {contains: contains}, application_session_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e, connection_id: connection_id, failed: false, from: '+12025550142', leg_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e, name: name, occurred_at: {eq: '2019-03-29T11:10:00Z', gt: '2019-03-29T11:10:00Z', gte: '2019-03-29T11:10:00Z', lt: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, outbound.outbound_voice_profile_id: '1293384261075731499', product: texml, status: init, to: '+12025550142', type: webhook}",
 			"--page-number", "0",
@@ -84,8 +88,9 @@ func TestConferencesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "conferences", "list",
+			t,
 			"--api-key", "string",
+			"conferences", "list",
 			"--max-items", "10",
 			"--filter.application-name", "{contains: contains}",
 			"--filter.application-session-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -111,8 +116,9 @@ func TestConferencesListParticipants(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "conferences", "list-participants",
+			t,
 			"--api-key", "string",
+			"conferences", "list-participants",
 			"--max-items", "10",
 			"--conference-id", "conference_id",
 			"--filter", "{muted: true, on_hold: true, whispering: true}",
@@ -128,8 +134,9 @@ func TestConferencesListParticipants(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "conferences", "list-participants",
+			t,
 			"--api-key", "string",
+			"conferences", "list-participants",
 			"--max-items", "10",
 			"--conference-id", "conference_id",
 			"--filter.muted=true",
@@ -146,8 +153,9 @@ func TestConferencesRetrieveParticipant(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "conferences", "retrieve-participant",
+			t,
 			"--api-key", "string",
+			"conferences", "retrieve-participant",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--participant-id", "participant_id",
 		)
@@ -158,8 +166,9 @@ func TestConferencesUpdateParticipant(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "conferences", "update-participant",
+			t,
 			"--api-key", "string",
+			"conferences", "update-participant",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--participant-id", "participant_id",
 			"--beep-enabled", "never",
@@ -175,8 +184,9 @@ func TestConferencesUpdateParticipant(t *testing.T) {
 			"end_conference_on_exit: true\n" +
 			"soft_end_conference_on_exit: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "conferences", "update-participant",
+			t, pipeData,
 			"--api-key", "string",
+			"conferences", "update-participant",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--participant-id", "participant_id",
 		)

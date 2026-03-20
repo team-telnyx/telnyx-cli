@@ -12,8 +12,9 @@ func TestVerificationsActionsVerify(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verifications:actions", "verify",
+			t,
 			"--api-key", "string",
+			"verifications:actions", "verify",
 			"--verification-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 			"--code", "17686",
 			"--status", "accepted",
@@ -26,8 +27,9 @@ func TestVerificationsActionsVerify(t *testing.T) {
 			"code: '17686'\n" +
 			"status: accepted\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "verifications:actions", "verify",
+			t, pipeData,
 			"--api-key", "string",
+			"verifications:actions", "verify",
 			"--verification-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		)
 	})

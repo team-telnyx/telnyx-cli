@@ -13,8 +13,9 @@ func TestPortingOrdersPhoneNumberConfigurationsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:phone-number-configurations", "create",
+			t,
 			"--api-key", "string",
+			"porting-orders:phone-number-configurations", "create",
 			"--phone-number-configuration", "{porting_phone_number_id: 927f4687-318c-44bc-9f2f-22a5898143a4, user_bundle_id: ff901545-3e27-462a-ba9d-2b34654cab82}",
 		)
 	})
@@ -25,8 +26,9 @@ func TestPortingOrdersPhoneNumberConfigurationsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:phone-number-configurations", "create",
+			t,
 			"--api-key", "string",
+			"porting-orders:phone-number-configurations", "create",
 			"--phone-number-configuration.porting-phone-number-id", "927f4687-318c-44bc-9f2f-22a5898143a4",
 			"--phone-number-configuration.user-bundle-id", "ff901545-3e27-462a-ba9d-2b34654cab82",
 		)
@@ -39,8 +41,9 @@ func TestPortingOrdersPhoneNumberConfigurationsCreate(t *testing.T) {
 			"  - porting_phone_number_id: 927f4687-318c-44bc-9f2f-22a5898143a4\n" +
 			"    user_bundle_id: ff901545-3e27-462a-ba9d-2b34654cab82\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "porting-orders:phone-number-configurations", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"porting-orders:phone-number-configurations", "create",
 		)
 	})
 }
@@ -49,8 +52,9 @@ func TestPortingOrdersPhoneNumberConfigurationsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:phone-number-configurations", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:phone-number-configurations", "list",
 			"--max-items", "10",
 			"--filter", "{porting_order: {status: [in-process]}, porting_phone_number: [5d6f7ede-1961-4717-bfb5-db392c5efc2d], user_bundle_id: [5d6f7ede-1961-4717-bfb5-db392c5efc2d]}",
 			"--page-number", "0",
@@ -65,8 +69,9 @@ func TestPortingOrdersPhoneNumberConfigurationsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:phone-number-configurations", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:phone-number-configurations", "list",
 			"--max-items", "10",
 			"--filter.porting-order", "{status: [in-process]}",
 			"--filter.porting-phone-number", "[5d6f7ede-1961-4717-bfb5-db392c5efc2d]",

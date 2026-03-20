@@ -12,8 +12,9 @@ func TestAIAssistantsTestsTestSuitesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:assistants:tests:test-suites", "list",
+			t,
 			"--api-key", "string",
+			"ai:assistants:tests:test-suites", "list",
 		)
 	})
 }

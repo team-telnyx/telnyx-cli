@@ -13,8 +13,9 @@ func TestRoomCompositionsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "room-compositions", "create",
+			t,
 			"--api-key", "string",
+			"room-compositions", "create",
 			"--format", "mp4",
 			"--resolution", "800x600",
 			"--session-id", "0ccc7b54-4df3-4bca-a65a-3da1ecc777b0",
@@ -46,8 +47,9 @@ func TestRoomCompositionsCreate(t *testing.T) {
 			"webhook_event_url: https://example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "room-compositions", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"room-compositions", "create",
 		)
 	})
 }
@@ -56,8 +58,9 @@ func TestRoomCompositionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "room-compositions", "retrieve",
+			t,
 			"--api-key", "string",
+			"room-compositions", "retrieve",
 			"--room-composition-id", "5219b3af-87c6-4c08-9b58-5a533d893e21",
 		)
 	})
@@ -67,8 +70,9 @@ func TestRoomCompositionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "room-compositions", "list",
+			t,
 			"--api-key", "string",
+			"room-compositions", "list",
 			"--max-items", "10",
 			"--filter", "{date_created_at: {eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}, session_id: 92e7d459-bcc5-4386-9f5f-6dd14a82588d, status: completed}",
 			"--page-number", "0",
@@ -82,8 +86,9 @@ func TestRoomCompositionsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "room-compositions", "list",
+			t,
 			"--api-key", "string",
+			"room-compositions", "list",
 			"--max-items", "10",
 			"--filter.date-created-at", "{eq: '2021-04-25', gte: '2021-04-25', lte: '2021-04-25'}",
 			"--filter.session-id", "92e7d459-bcc5-4386-9f5f-6dd14a82588d",
@@ -98,8 +103,9 @@ func TestRoomCompositionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "room-compositions", "delete",
+			t,
 			"--api-key", "string",
+			"room-compositions", "delete",
 			"--room-composition-id", "5219b3af-87c6-4c08-9b58-5a533d893e21",
 		)
 	})

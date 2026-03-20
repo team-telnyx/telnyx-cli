@@ -12,8 +12,9 @@ func TestChargesSummaryRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "charges-summary", "retrieve",
+			t,
 			"--api-key", "string",
+			"charges-summary", "retrieve",
 			"--end-date", "'2025-06-01'",
 			"--start-date", "'2025-05-01'",
 		)

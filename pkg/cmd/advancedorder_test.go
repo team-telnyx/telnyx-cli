@@ -12,8 +12,9 @@ func TestAdvancedOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "advanced-orders", "create",
+			t,
 			"--api-key", "string",
+			"advanced-orders", "create",
 			"--area-code", "xxx",
 			"--comments", "comments",
 			"--country-code", "xx",
@@ -38,8 +39,9 @@ func TestAdvancedOrdersCreate(t *testing.T) {
 			"quantity: 1\n" +
 			"requirement_group_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "advanced-orders", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"advanced-orders", "create",
 		)
 	})
 }
@@ -48,8 +50,9 @@ func TestAdvancedOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "advanced-orders", "retrieve",
+			t,
 			"--api-key", "string",
+			"advanced-orders", "retrieve",
 			"--order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -59,8 +62,9 @@ func TestAdvancedOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "advanced-orders", "list",
+			t,
 			"--api-key", "string",
+			"advanced-orders", "list",
 		)
 	})
 }
@@ -69,8 +73,9 @@ func TestAdvancedOrdersUpdateRequirementGroup(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "advanced-orders", "update-requirement-group",
+			t,
 			"--api-key", "string",
+			"advanced-orders", "update-requirement-group",
 			"--advanced-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--area-code", "xxx",
 			"--comments", "comments",
@@ -96,8 +101,9 @@ func TestAdvancedOrdersUpdateRequirementGroup(t *testing.T) {
 			"quantity: 1\n" +
 			"requirement_group_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "advanced-orders", "update-requirement-group",
+			t, pipeData,
 			"--api-key", "string",
+			"advanced-orders", "update-requirement-group",
 			"--advanced-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

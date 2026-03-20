@@ -13,8 +13,9 @@ func TestPortoutsEventsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:events", "retrieve",
+			t,
 			"--api-key", "string",
+			"portouts:events", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -24,8 +25,9 @@ func TestPortoutsEventsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:events", "list",
+			t,
 			"--api-key", "string",
+			"portouts:events", "list",
 			"--max-items", "10",
 			"--filter", "{created_at: {gte: '2021-01-01T00:00:00Z', lte: '2021-01-01T00:00:00Z'}, event_type: portout.status_changed, portout_id: 34dc46a9-53ed-4e01-9454-26227ea13326}",
 			"--page-number", "0",
@@ -39,8 +41,9 @@ func TestPortoutsEventsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:events", "list",
+			t,
 			"--api-key", "string",
+			"portouts:events", "list",
 			"--max-items", "10",
 			"--filter.created-at", "{gte: '2021-01-01T00:00:00Z', lte: '2021-01-01T00:00:00Z'}",
 			"--filter.event-type", "portout.status_changed",
@@ -55,8 +58,9 @@ func TestPortoutsEventsRepublish(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "portouts:events", "republish",
+			t,
 			"--api-key", "string",
+			"portouts:events", "republish",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

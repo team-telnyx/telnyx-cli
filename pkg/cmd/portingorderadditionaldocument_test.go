@@ -13,8 +13,9 @@ func TestPortingOrdersAdditionalDocumentsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:additional-documents", "create",
+			t,
 			"--api-key", "string",
+			"porting-orders:additional-documents", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--additional-document", "{document_id: 22771a52-c43a-4539-80db-9dd9ec36e237, document_type: loa}",
 			"--additional-document", "{document_id: d91474e6-4ebc-4ec1-b379-c596eeb405d6, document_type: invoice}",
@@ -27,8 +28,9 @@ func TestPortingOrdersAdditionalDocumentsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:additional-documents", "create",
+			t,
 			"--api-key", "string",
+			"porting-orders:additional-documents", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--additional-document.document-id", "22771a52-c43a-4539-80db-9dd9ec36e237",
 			"--additional-document.document-type", "loa",
@@ -46,8 +48,9 @@ func TestPortingOrdersAdditionalDocumentsCreate(t *testing.T) {
 			"  - document_id: d91474e6-4ebc-4ec1-b379-c596eeb405d6\n" +
 			"    document_type: invoice\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "porting-orders:additional-documents", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"porting-orders:additional-documents", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -57,8 +60,9 @@ func TestPortingOrdersAdditionalDocumentsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:additional-documents", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:additional-documents", "list",
 			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter", "{document_type: [loa]}",
@@ -74,8 +78,9 @@ func TestPortingOrdersAdditionalDocumentsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:additional-documents", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:additional-documents", "list",
 			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter.document-type", "[loa]",
@@ -90,8 +95,9 @@ func TestPortingOrdersAdditionalDocumentsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:additional-documents", "delete",
+			t,
 			"--api-key", "string",
+			"porting-orders:additional-documents", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--additional-document-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)

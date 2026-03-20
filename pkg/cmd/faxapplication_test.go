@@ -13,8 +13,9 @@ func TestFaxApplicationsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fax-applications", "create",
+			t,
 			"--api-key", "string",
+			"fax-applications", "create",
 			"--application-name", "fax-router",
 			"--webhook-event-url", "https://example.com",
 			"--active=false",
@@ -34,8 +35,9 @@ func TestFaxApplicationsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "fax-applications", "create",
+			t,
 			"--api-key", "string",
+			"fax-applications", "create",
 			"--application-name", "fax-router",
 			"--webhook-event-url", "https://example.com",
 			"--active=false",
@@ -72,8 +74,9 @@ func TestFaxApplicationsCreate(t *testing.T) {
 			"webhook_event_failover_url: https://failover.example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "fax-applications", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"fax-applications", "create",
 		)
 	})
 }
@@ -82,8 +85,9 @@ func TestFaxApplicationsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fax-applications", "retrieve",
+			t,
 			"--api-key", "string",
+			"fax-applications", "retrieve",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -93,8 +97,9 @@ func TestFaxApplicationsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fax-applications", "update",
+			t,
 			"--api-key", "string",
+			"fax-applications", "update",
 			"--id", "1293384261075731499",
 			"--application-name", "fax-router",
 			"--webhook-event-url", "https://example.com",
@@ -116,8 +121,9 @@ func TestFaxApplicationsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "fax-applications", "update",
+			t,
 			"--api-key", "string",
+			"fax-applications", "update",
 			"--id", "1293384261075731499",
 			"--application-name", "fax-router",
 			"--webhook-event-url", "https://example.com",
@@ -157,8 +163,9 @@ func TestFaxApplicationsUpdate(t *testing.T) {
 			"webhook_event_failover_url: https://failover.example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "fax-applications", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"fax-applications", "update",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -168,8 +175,9 @@ func TestFaxApplicationsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fax-applications", "list",
+			t,
 			"--api-key", "string",
+			"fax-applications", "list",
 			"--max-items", "10",
 			"--filter", "{application_name: {contains: fax-app}, outbound_voice_profile_id: '1293384261075731499'}",
 			"--page-number", "0",
@@ -184,8 +192,9 @@ func TestFaxApplicationsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "fax-applications", "list",
+			t,
 			"--api-key", "string",
+			"fax-applications", "list",
 			"--max-items", "10",
 			"--filter.application-name", "{contains: fax-app}",
 			"--filter.outbound-voice-profile-id", "1293384261075731499",
@@ -200,8 +209,9 @@ func TestFaxApplicationsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "fax-applications", "delete",
+			t,
 			"--api-key", "string",
+			"fax-applications", "delete",
 			"--id", "1293384261075731499",
 		)
 	})

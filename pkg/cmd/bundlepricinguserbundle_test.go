@@ -13,8 +13,9 @@ func TestBundlePricingUserBundlesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "bundle-pricing:user-bundles", "create",
+			t,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "create",
 			"--idempotency-key", "12ade33a-21c0-473b-b055-b3c836e1c292",
 			"--item", "{billing_bundle_id: 12ade33a-21c0-473b-b055-b3c836e1c292, quantity: 0}",
 			"--authorization-bearer", "authorization_bearer",
@@ -27,8 +28,9 @@ func TestBundlePricingUserBundlesCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "bundle-pricing:user-bundles", "create",
+			t,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "create",
 			"--idempotency-key", "12ade33a-21c0-473b-b055-b3c836e1c292",
 			"--item.billing-bundle-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 			"--item.quantity", "0",
@@ -44,8 +46,9 @@ func TestBundlePricingUserBundlesCreate(t *testing.T) {
 			"  - billing_bundle_id: 12ade33a-21c0-473b-b055-b3c836e1c292\n" +
 			"    quantity: 0\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "bundle-pricing:user-bundles", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "create",
 			"--authorization-bearer", "authorization_bearer",
 		)
 	})
@@ -55,8 +58,9 @@ func TestBundlePricingUserBundlesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "bundle-pricing:user-bundles", "retrieve",
+			t,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "retrieve",
 			"--user-bundle-id", "ca1d2263-d1f1-43ac-ba53-248e7a4bb26a",
 			"--authorization-bearer", "authorization_bearer",
 		)
@@ -67,8 +71,9 @@ func TestBundlePricingUserBundlesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "bundle-pricing:user-bundles", "list",
+			t,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "list",
 			"--max-items", "10",
 			"--filter", "{country_iso: [US], resource: ['+15617819942']}",
 			"--page-number", "0",
@@ -83,8 +88,9 @@ func TestBundlePricingUserBundlesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "bundle-pricing:user-bundles", "list",
+			t,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "list",
 			"--max-items", "10",
 			"--filter.country-iso", "[US]",
 			"--filter.resource", "['+15617819942']",
@@ -99,8 +105,9 @@ func TestBundlePricingUserBundlesDeactivate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "bundle-pricing:user-bundles", "deactivate",
+			t,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "deactivate",
 			"--user-bundle-id", "ca1d2263-d1f1-43ac-ba53-248e7a4bb26a",
 			"--authorization-bearer", "authorization_bearer",
 		)
@@ -111,8 +118,9 @@ func TestBundlePricingUserBundlesListResources(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "bundle-pricing:user-bundles", "list-resources",
+			t,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "list-resources",
 			"--user-bundle-id", "ca1d2263-d1f1-43ac-ba53-248e7a4bb26a",
 			"--authorization-bearer", "authorization_bearer",
 		)
@@ -123,8 +131,9 @@ func TestBundlePricingUserBundlesListUnused(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "bundle-pricing:user-bundles", "list-unused",
+			t,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "list-unused",
 			"--filter", "{country_iso: [US], resource: ['+15617819942']}",
 			"--authorization-bearer", "authorization_bearer",
 		)
@@ -136,8 +145,9 @@ func TestBundlePricingUserBundlesListUnused(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "bundle-pricing:user-bundles", "list-unused",
+			t,
 			"--api-key", "string",
+			"bundle-pricing:user-bundles", "list-unused",
 			"--filter.country-iso", "[US]",
 			"--filter.resource", "['+15617819942']",
 			"--authorization-bearer", "authorization_bearer",

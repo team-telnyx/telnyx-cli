@@ -12,8 +12,9 @@ func TestAIConversationsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations", "create",
+			t,
 			"--api-key", "string",
+			"ai:conversations", "create",
 			"--metadata", "{foo: string}",
 			"--name", "name",
 		)
@@ -26,8 +27,9 @@ func TestAIConversationsCreate(t *testing.T) {
 			"  foo: string\n" +
 			"name: name\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:conversations", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:conversations", "create",
 		)
 	})
 }
@@ -36,8 +38,9 @@ func TestAIConversationsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations", "retrieve",
+			t,
 			"--api-key", "string",
+			"ai:conversations", "retrieve",
 			"--conversation-id", "conversation_id",
 		)
 	})
@@ -47,8 +50,9 @@ func TestAIConversationsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations", "update",
+			t,
 			"--api-key", "string",
+			"ai:conversations", "update",
 			"--conversation-id", "conversation_id",
 			"--metadata", "{foo: string}",
 		)
@@ -60,8 +64,9 @@ func TestAIConversationsUpdate(t *testing.T) {
 			"metadata:\n" +
 			"  foo: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:conversations", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:conversations", "update",
 			"--conversation-id", "conversation_id",
 		)
 	})
@@ -71,8 +76,9 @@ func TestAIConversationsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations", "list",
+			t,
 			"--api-key", "string",
+			"ai:conversations", "list",
 			"--id", "id",
 			"--created-at", "created_at",
 			"--last-message-at", "last_message_at",
@@ -93,8 +99,9 @@ func TestAIConversationsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations", "delete",
+			t,
 			"--api-key", "string",
+			"ai:conversations", "delete",
 			"--conversation-id", "conversation_id",
 		)
 	})
@@ -104,8 +111,9 @@ func TestAIConversationsAddMessage(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations", "add-message",
+			t,
 			"--api-key", "string",
+			"ai:conversations", "add-message",
 			"--conversation-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--role", "role",
 			"--content", "content",
@@ -132,8 +140,9 @@ func TestAIConversationsAddMessage(t *testing.T) {
 			"  - foo: bar\n" +
 			"tool_choice: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "ai:conversations", "add-message",
+			t, pipeData,
 			"--api-key", "string",
+			"ai:conversations", "add-message",
 			"--conversation-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -143,8 +152,9 @@ func TestAIConversationsRetrieveConversationsInsights(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ai:conversations", "retrieve-conversations-insights",
+			t,
 			"--api-key", "string",
+			"ai:conversations", "retrieve-conversations-insights",
 			"--conversation-id", "conversation_id",
 		)
 	})

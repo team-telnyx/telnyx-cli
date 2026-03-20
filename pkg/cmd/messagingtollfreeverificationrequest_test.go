@@ -13,8 +13,9 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-tollfree:verification:requests", "create",
+			t,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "create",
 			"--additional-information", "additionalInformation",
 			"--business-addr1", "600 Congress Avenue",
 			"--business-city", "Austin",
@@ -59,8 +60,9 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-tollfree:verification:requests", "create",
+			t,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "create",
 			"--additional-information", "additionalInformation",
 			"--business-addr1", "600 Congress Avenue",
 			"--business-city", "Austin",
@@ -145,8 +147,9 @@ func TestMessagingTollfreeVerificationRequestsCreate(t *testing.T) {
 			"termsAndConditionURL: https://example.com/terms\n" +
 			"webhookUrl: http://example-webhook.com\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-tollfree:verification:requests", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "create",
 		)
 	})
 }
@@ -155,8 +158,9 @@ func TestMessagingTollfreeVerificationRequestsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-tollfree:verification:requests", "retrieve",
+			t,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -166,8 +170,9 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-tollfree:verification:requests", "update",
+			t,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--additional-information", "additionalInformation",
 			"--business-addr1", "600 Congress Avenue",
@@ -213,8 +218,9 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-tollfree:verification:requests", "update",
+			t,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--additional-information", "additionalInformation",
 			"--business-addr1", "600 Congress Avenue",
@@ -300,8 +306,9 @@ func TestMessagingTollfreeVerificationRequestsUpdate(t *testing.T) {
 			"termsAndConditionURL: https://example.com/terms\n" +
 			"webhookUrl: http://example-webhook.com\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-tollfree:verification:requests", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -311,8 +318,9 @@ func TestMessagingTollfreeVerificationRequestsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-tollfree:verification:requests", "list",
+			t,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "list",
 			"--max-items", "10",
 			"--page", "1",
 			"--page-size", "1",
@@ -329,8 +337,9 @@ func TestMessagingTollfreeVerificationRequestsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-tollfree:verification:requests", "delete",
+			t,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "delete",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -340,8 +349,9 @@ func TestMessagingTollfreeVerificationRequestsRetrieveStatusHistory(t *testing.T
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-tollfree:verification:requests", "retrieve-status-history",
+			t,
 			"--api-key", "string",
+			"messaging-tollfree:verification:requests", "retrieve-status-history",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "1",
 			"--page-size", "1",

@@ -13,8 +13,9 @@ func TestCallControlApplicationsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "call-control-applications", "create",
+			t,
 			"--api-key", "string",
+			"call-control-applications", "create",
 			"--application-name", "call-router",
 			"--webhook-event-url", "https://example.com",
 			"--active=false",
@@ -38,8 +39,9 @@ func TestCallControlApplicationsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "call-control-applications", "create",
+			t,
 			"--api-key", "string",
+			"call-control-applications", "create",
 			"--application-name", "call-router",
 			"--webhook-event-url", "https://example.com",
 			"--active=false",
@@ -85,8 +87,9 @@ func TestCallControlApplicationsCreate(t *testing.T) {
 			"webhook_event_failover_url: https://failover.example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "call-control-applications", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"call-control-applications", "create",
 		)
 	})
 }
@@ -95,8 +98,9 @@ func TestCallControlApplicationsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "call-control-applications", "retrieve",
+			t,
 			"--api-key", "string",
+			"call-control-applications", "retrieve",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -106,8 +110,9 @@ func TestCallControlApplicationsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "call-control-applications", "update",
+			t,
 			"--api-key", "string",
+			"call-control-applications", "update",
 			"--id", "1293384261075731499",
 			"--application-name", "call-router",
 			"--webhook-event-url", "https://example.com",
@@ -134,8 +139,9 @@ func TestCallControlApplicationsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "call-control-applications", "update",
+			t,
 			"--api-key", "string",
+			"call-control-applications", "update",
 			"--id", "1293384261075731499",
 			"--application-name", "call-router",
 			"--webhook-event-url", "https://example.com",
@@ -187,8 +193,9 @@ func TestCallControlApplicationsUpdate(t *testing.T) {
 			"webhook_event_failover_url: https://failover.example.com\n" +
 			"webhook_timeout_secs: 25\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "call-control-applications", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"call-control-applications", "update",
 			"--id", "1293384261075731499",
 		)
 	})
@@ -198,8 +205,9 @@ func TestCallControlApplicationsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "call-control-applications", "list",
+			t,
 			"--api-key", "string",
+			"call-control-applications", "list",
 			"--max-items", "10",
 			"--filter", "{application_name: {contains: contains}, application_session_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e, connection_id: connection_id, failed: false, from: '+12025550142', leg_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e, name: name, occurred_at: {eq: '2019-03-29T11:10:00Z', gt: '2019-03-29T11:10:00Z', gte: '2019-03-29T11:10:00Z', lt: '2019-03-29T11:10:00Z', lte: '2019-03-29T11:10:00Z'}, outbound.outbound_voice_profile_id: '1293384261075731499', product: texml, status: init, to: '+12025550142', type: webhook}",
 			"--page-number", "0",
@@ -214,8 +222,9 @@ func TestCallControlApplicationsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "call-control-applications", "list",
+			t,
 			"--api-key", "string",
+			"call-control-applications", "list",
 			"--max-items", "10",
 			"--filter.application-name", "{contains: contains}",
 			"--filter.application-session-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -241,8 +250,9 @@ func TestCallControlApplicationsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "call-control-applications", "delete",
+			t,
 			"--api-key", "string",
+			"call-control-applications", "delete",
 			"--id", "1293384261075731499",
 		)
 	})

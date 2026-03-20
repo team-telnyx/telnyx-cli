@@ -13,8 +13,9 @@ func TestMobilePhoneNumbersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-phone-numbers", "retrieve",
+			t,
 			"--api-key", "string",
+			"mobile-phone-numbers", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -24,8 +25,9 @@ func TestMobilePhoneNumbersUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-phone-numbers", "update",
+			t,
 			"--api-key", "string",
+			"mobile-phone-numbers", "update",
 			"--id", "id",
 			"--call-forwarding", "{call_forwarding_enabled: true, forwarding_type: always, forwards_to: forwards_to}",
 			"--call-recording", "{inbound_call_recording_channels: single, inbound_call_recording_enabled: true, inbound_call_recording_format: wav}",
@@ -47,8 +49,9 @@ func TestMobilePhoneNumbersUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-phone-numbers", "update",
+			t,
 			"--api-key", "string",
+			"mobile-phone-numbers", "update",
 			"--id", "id",
 			"--call-forwarding.call-forwarding-enabled=true",
 			"--call-forwarding.forwarding-type", "always",
@@ -95,8 +98,9 @@ func TestMobilePhoneNumbersUpdate(t *testing.T) {
 			"tags:\n" +
 			"  - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "mobile-phone-numbers", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"mobile-phone-numbers", "update",
 			"--id", "id",
 		)
 	})
@@ -106,8 +110,9 @@ func TestMobilePhoneNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "mobile-phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"mobile-phone-numbers", "list",
 			"--max-items", "10",
 			"--page-number", "0",
 			"--page-size", "0",

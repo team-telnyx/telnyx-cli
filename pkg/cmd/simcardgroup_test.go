@@ -13,8 +13,9 @@ func TestSimCardGroupsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-groups", "create",
+			t,
 			"--api-key", "string",
+			"sim-card-groups", "create",
 			"--name", "My Test Group",
 			"--data-limit", "{amount: '2048.1', unit: MB}",
 		)
@@ -26,8 +27,9 @@ func TestSimCardGroupsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-groups", "create",
+			t,
 			"--api-key", "string",
+			"sim-card-groups", "create",
 			"--name", "My Test Group",
 			"--data-limit.amount", "2048.1",
 			"--data-limit.unit", "MB",
@@ -42,8 +44,9 @@ func TestSimCardGroupsCreate(t *testing.T) {
 			"  amount: '2048.1'\n" +
 			"  unit: MB\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "sim-card-groups", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"sim-card-groups", "create",
 		)
 	})
 }
@@ -52,8 +55,9 @@ func TestSimCardGroupsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-groups", "retrieve",
+			t,
 			"--api-key", "string",
+			"sim-card-groups", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--include-iccids=true",
 		)
@@ -64,8 +68,9 @@ func TestSimCardGroupsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-groups", "update",
+			t,
 			"--api-key", "string",
+			"sim-card-groups", "update",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--data-limit", "{amount: '2048.1', unit: MB}",
 			"--name", "My Test Group",
@@ -78,8 +83,9 @@ func TestSimCardGroupsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-groups", "update",
+			t,
 			"--api-key", "string",
+			"sim-card-groups", "update",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--data-limit.amount", "2048.1",
 			"--data-limit.unit", "MB",
@@ -95,8 +101,9 @@ func TestSimCardGroupsUpdate(t *testing.T) {
 			"  unit: MB\n" +
 			"name: My Test Group\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "sim-card-groups", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"sim-card-groups", "update",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -106,8 +113,9 @@ func TestSimCardGroupsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-groups", "list",
+			t,
 			"--api-key", "string",
+			"sim-card-groups", "list",
 			"--max-items", "10",
 			"--filter-name", "My Test Group",
 			"--filter-private-wireless-gateway-id", "7606c6d3-ff7c-49c1-943d-68879e9d584d",
@@ -122,8 +130,9 @@ func TestSimCardGroupsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "sim-card-groups", "delete",
+			t,
 			"--api-key", "string",
+			"sim-card-groups", "delete",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

@@ -13,8 +13,9 @@ func TestOtaUpdatesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ota-updates", "retrieve",
+			t,
 			"--api-key", "string",
+			"ota-updates", "retrieve",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -24,8 +25,9 @@ func TestOtaUpdatesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "ota-updates", "list",
+			t,
 			"--api-key", "string",
+			"ota-updates", "list",
 			"--max-items", "10",
 			"--filter", "{sim_card_id: sim_card_id, status: in-progress, type: sim_card_network_preferences}",
 			"--page-number", "0",
@@ -39,8 +41,9 @@ func TestOtaUpdatesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "ota-updates", "list",
+			t,
 			"--api-key", "string",
+			"ota-updates", "list",
 			"--max-items", "10",
 			"--filter.sim-card-id", "sim_card_id",
 			"--filter.status", "in-progress",

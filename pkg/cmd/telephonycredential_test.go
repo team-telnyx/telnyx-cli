@@ -13,8 +13,9 @@ func TestTelephonyCredentialsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "telephony-credentials", "create",
+			t,
 			"--api-key", "string",
+			"telephony-credentials", "create",
 			"--connection-id", "1234567890",
 			"--expires-at", "2018-02-02T22:25:27.521Z",
 			"--name", "My-new-credential",
@@ -30,8 +31,9 @@ func TestTelephonyCredentialsCreate(t *testing.T) {
 			"name: My-new-credential\n" +
 			"tag: some_tag\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "telephony-credentials", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"telephony-credentials", "create",
 		)
 	})
 }
@@ -40,8 +42,9 @@ func TestTelephonyCredentialsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "telephony-credentials", "retrieve",
+			t,
 			"--api-key", "string",
+			"telephony-credentials", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -51,8 +54,9 @@ func TestTelephonyCredentialsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "telephony-credentials", "update",
+			t,
 			"--api-key", "string",
+			"telephony-credentials", "update",
 			"--id", "id",
 			"--connection-id", "987654321",
 			"--expires-at", "2018-02-02T22:25:27.521Z",
@@ -69,8 +73,9 @@ func TestTelephonyCredentialsUpdate(t *testing.T) {
 			"name: My-new-updated-credential\n" +
 			"tag: some_tag\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "telephony-credentials", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"telephony-credentials", "update",
 			"--id", "id",
 		)
 	})
@@ -80,8 +85,9 @@ func TestTelephonyCredentialsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "telephony-credentials", "list",
+			t,
 			"--api-key", "string",
+			"telephony-credentials", "list",
 			"--max-items", "10",
 			"--filter", "{name: name, resource_id: resource_id, sip_username: sip_username, status: status, tag: tag}",
 			"--page-number", "0",
@@ -95,8 +101,9 @@ func TestTelephonyCredentialsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "telephony-credentials", "list",
+			t,
 			"--api-key", "string",
+			"telephony-credentials", "list",
 			"--max-items", "10",
 			"--filter.name", "name",
 			"--filter.resource-id", "resource_id",
@@ -113,8 +120,9 @@ func TestTelephonyCredentialsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "telephony-credentials", "delete",
+			t,
 			"--api-key", "string",
+			"telephony-credentials", "delete",
 			"--id", "id",
 		)
 	})

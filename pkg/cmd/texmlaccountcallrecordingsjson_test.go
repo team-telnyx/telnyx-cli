@@ -12,8 +12,9 @@ func TestTexmlAccountsCallsRecordingsJsonRecordingsJson(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls:recordings-json", "recordings-json",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls:recordings-json", "recordings-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 			"--play-beep=false",
@@ -37,8 +38,9 @@ func TestTexmlAccountsCallsRecordingsJsonRecordingsJson(t *testing.T) {
 			"RecordingTrack: inbound\n" +
 			"SendRecordingUrl: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "texml:accounts:calls:recordings-json", "recordings-json",
+			t, pipeData,
 			"--api-key", "string",
+			"texml:accounts:calls:recordings-json", "recordings-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 		)
@@ -49,8 +51,9 @@ func TestTexmlAccountsCallsRecordingsJsonRetrieveRecordingsJson(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "texml:accounts:calls:recordings-json", "retrieve-recordings-json",
+			t,
 			"--api-key", "string",
+			"texml:accounts:calls:recordings-json", "retrieve-recordings-json",
 			"--account-sid", "account_sid",
 			"--call-sid", "call_sid",
 		)

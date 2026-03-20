@@ -13,8 +13,9 @@ func TestShortCodesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "short-codes", "retrieve",
+			t,
 			"--api-key", "string",
+			"short-codes", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -24,8 +25,9 @@ func TestShortCodesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "short-codes", "update",
+			t,
 			"--api-key", "string",
+			"short-codes", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--messaging-profile-id", "abc85f64-5717-4562-b3fc-2c9600000000",
 			"--tag", "test_customer",
@@ -39,8 +41,9 @@ func TestShortCodesUpdate(t *testing.T) {
 			"tags:\n" +
 			"  - test_customer\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "short-codes", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"short-codes", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -50,8 +53,9 @@ func TestShortCodesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "short-codes", "list",
+			t,
 			"--api-key", "string",
+			"short-codes", "list",
 			"--max-items", "10",
 			"--filter", "{messaging_profile_id: messaging_profile_id}",
 			"--page-number", "0",
@@ -65,8 +69,9 @@ func TestShortCodesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "short-codes", "list",
+			t,
 			"--api-key", "string",
+			"short-codes", "list",
 			"--max-items", "10",
 			"--filter.messaging-profile-id", "messaging_profile_id",
 			"--page-number", "0",

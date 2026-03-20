@@ -13,8 +13,9 @@ func TestVerifyProfilesCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "create",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "create",
 			"--name", "Test Profile",
 			"--call", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 			"--flashcall", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
@@ -32,8 +33,9 @@ func TestVerifyProfilesCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "create",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "create",
 			"--name", "Test Profile",
 			"--call.app-name", "Example Secure App",
 			"--call.code-length", "6",
@@ -101,8 +103,9 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"webhook_failover_url: http://example.com/webhook/failover\n" +
 			"webhook_url: http://example.com/webhook\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "verify-profiles", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"verify-profiles", "create",
 		)
 	})
 }
@@ -111,8 +114,9 @@ func TestVerifyProfilesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "retrieve",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "retrieve",
 			"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		)
 	})
@@ -122,8 +126,9 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "update",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "update",
 			"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 			"--call", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 			"--flashcall", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
@@ -142,8 +147,9 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "update",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "update",
 			"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 			"--call.app-name", "Example Secure App",
 			"--call.code-length", "6",
@@ -212,8 +218,9 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"webhook_failover_url: http://example.com/webhook/failover\n" +
 			"webhook_url: http://example.com/webhook\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "verify-profiles", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"verify-profiles", "update",
 			"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		)
 	})
@@ -223,8 +230,9 @@ func TestVerifyProfilesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "list",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "list",
 			"--max-items", "10",
 			"--filter", "{name: name}",
 			"--page-number", "0",
@@ -238,8 +246,9 @@ func TestVerifyProfilesList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "list",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "list",
 			"--max-items", "10",
 			"--filter.name", "name",
 			"--page-number", "0",
@@ -252,8 +261,9 @@ func TestVerifyProfilesDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "delete",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "delete",
 			"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		)
 	})
@@ -263,8 +273,9 @@ func TestVerifyProfilesCreateTemplate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "create-template",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "create-template",
 			"--text", "Your {{app_name}} verification code is: {{code}}.",
 		)
 	})
@@ -273,8 +284,9 @@ func TestVerifyProfilesCreateTemplate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("text: 'Your {{app_name}} verification code is: {{code}}.'")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "verify-profiles", "create-template",
+			t, pipeData,
 			"--api-key", "string",
+			"verify-profiles", "create-template",
 		)
 	})
 }
@@ -283,8 +295,9 @@ func TestVerifyProfilesRetrieveTemplates(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "retrieve-templates",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "retrieve-templates",
 		)
 	})
 }
@@ -293,8 +306,9 @@ func TestVerifyProfilesUpdateTemplate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "verify-profiles", "update-template",
+			t,
 			"--api-key", "string",
+			"verify-profiles", "update-template",
 			"--template-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 			"--text", "Your {{app_name}} verification code is: {{code}}.",
 		)
@@ -304,8 +318,9 @@ func TestVerifyProfilesUpdateTemplate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("text: 'Your {{app_name}} verification code is: {{code}}.'")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "verify-profiles", "update-template",
+			t, pipeData,
 			"--api-key", "string",
+			"verify-profiles", "update-template",
 			"--template-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 		)
 	})

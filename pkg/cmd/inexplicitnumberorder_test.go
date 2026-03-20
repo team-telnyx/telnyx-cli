@@ -13,8 +13,9 @@ func TestInexplicitNumberOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "inexplicit-number-orders", "create",
+			t,
 			"--api-key", "string",
+			"inexplicit-number-orders", "create",
 			"--ordering-group", "{count_requested: count_requested, country_iso: US, phone_number_type: phone_number_type, administrative_area: administrative_area, exclude_held_numbers: true, features: [string], locality: locality, national_destination_code: national_destination_code, phone_number: {contains: contains, ends_with: ends_with, starts_with: starts_with}, quickship: true, strategy: always}",
 			"--billing-group-id", "billing_group_id",
 			"--connection-id", "connection_id",
@@ -29,8 +30,9 @@ func TestInexplicitNumberOrdersCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "inexplicit-number-orders", "create",
+			t,
 			"--api-key", "string",
+			"inexplicit-number-orders", "create",
 			"--ordering-group.count-requested", "count_requested",
 			"--ordering-group.country-iso", "US",
 			"--ordering-group.phone-number-type", "phone_number_type",
@@ -73,8 +75,9 @@ func TestInexplicitNumberOrdersCreate(t *testing.T) {
 			"customer_reference: customer_reference\n" +
 			"messaging_profile_id: messaging_profile_id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "inexplicit-number-orders", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"inexplicit-number-orders", "create",
 		)
 	})
 }
@@ -83,8 +86,9 @@ func TestInexplicitNumberOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "inexplicit-number-orders", "retrieve",
+			t,
 			"--api-key", "string",
+			"inexplicit-number-orders", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -94,8 +98,9 @@ func TestInexplicitNumberOrdersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "inexplicit-number-orders", "list",
+			t,
 			"--api-key", "string",
+			"inexplicit-number-orders", "list",
 			"--max-items", "10",
 			"--page-number", "1",
 			"--page-size", "1",

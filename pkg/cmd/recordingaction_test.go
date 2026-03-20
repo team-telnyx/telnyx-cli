@@ -12,8 +12,9 @@ func TestRecordingsActionsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "recordings:actions", "delete",
+			t,
 			"--api-key", "string",
+			"recordings:actions", "delete",
 			"--id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c1",
 			"--id", "428c31b6-7af4-4bcb-b7f5-5013ef9657c2",
 		)
@@ -26,8 +27,9 @@ func TestRecordingsActionsDelete(t *testing.T) {
 			"  - 428c31b6-7af4-4bcb-b7f5-5013ef9657c1\n" +
 			"  - 428c31b6-7af4-4bcb-b7f5-5013ef9657c2\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "recordings:actions", "delete",
+			t, pipeData,
 			"--api-key", "string",
+			"recordings:actions", "delete",
 		)
 	})
 }

@@ -13,8 +13,9 @@ func TestConnectionsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "connections", "retrieve",
+			t,
 			"--api-key", "string",
+			"connections", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -24,8 +25,9 @@ func TestConnectionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "connections", "list",
+			t,
 			"--api-key", "string",
+			"connections", "list",
 			"--max-items", "10",
 			"--filter", "{connection_name: {contains: contains}, fqdn: fqdn, outbound_voice_profile_id: '1293384261075731499'}",
 			"--page-number", "0",
@@ -40,8 +42,9 @@ func TestConnectionsList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "connections", "list",
+			t,
 			"--api-key", "string",
+			"connections", "list",
 			"--max-items", "10",
 			"--filter.connection-name", "{contains: contains}",
 			"--filter.fqdn", "fqdn",
@@ -57,8 +60,9 @@ func TestConnectionsListActiveCalls(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "connections", "list-active-calls",
+			t,
 			"--api-key", "string",
+			"connections", "list-active-calls",
 			"--max-items", "10",
 			"--connection-id", "1293384261075731461",
 			"--page-number", "0",

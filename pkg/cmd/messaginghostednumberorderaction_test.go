@@ -12,8 +12,9 @@ func TestMessagingHostedNumberOrdersActionsUploadFile(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "messaging-hosted-number-orders:actions", "upload-file",
+			t,
 			"--api-key", "string",
+			"messaging-hosted-number-orders:actions", "upload-file",
 			"--id", "id",
 			"--bill", "Example data",
 			"--loa", "Example data",
@@ -26,8 +27,9 @@ func TestMessagingHostedNumberOrdersActionsUploadFile(t *testing.T) {
 			"bill: Example data\n" +
 			"loa: Example data\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "messaging-hosted-number-orders:actions", "upload-file",
+			t, pipeData,
 			"--api-key", "string",
+			"messaging-hosted-number-orders:actions", "upload-file",
 			"--id", "id",
 		)
 	})

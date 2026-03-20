@@ -13,8 +13,9 @@ func TestMediaRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "media", "retrieve",
+			t,
 			"--api-key", "string",
+			"media", "retrieve",
 			"--media-name", "media_name",
 		)
 	})
@@ -24,8 +25,9 @@ func TestMediaUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "media", "update",
+			t,
 			"--api-key", "string",
+			"media", "update",
 			"--media-name", "media_name",
 			"--media-url", "http://www.example.com/audio.mp3",
 			"--ttl-secs", "86400",
@@ -38,8 +40,9 @@ func TestMediaUpdate(t *testing.T) {
 			"media_url: http://www.example.com/audio.mp3\n" +
 			"ttl_secs: 86400\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "media", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"media", "update",
 			"--media-name", "media_name",
 		)
 	})
@@ -49,8 +52,9 @@ func TestMediaList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "media", "list",
+			t,
 			"--api-key", "string",
+			"media", "list",
 			"--filter", "{content_type: [application_xml]}",
 		)
 	})
@@ -61,8 +65,9 @@ func TestMediaList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "media", "list",
+			t,
 			"--api-key", "string",
+			"media", "list",
 			"--filter.content-type", "[application_xml]",
 		)
 	})
@@ -72,8 +77,9 @@ func TestMediaDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "media", "delete",
+			t,
 			"--api-key", "string",
+			"media", "delete",
 			"--media-name", "media_name",
 		)
 	})
@@ -83,8 +89,9 @@ func TestMediaDownload(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "media", "download",
+			t,
 			"--api-key", "string",
+			"media", "download",
 			"--media-name", "media_name",
 			"--output", "/dev/null",
 		)
@@ -95,8 +102,9 @@ func TestMediaUpload(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "media", "upload",
+			t,
 			"--api-key", "string",
+			"media", "upload",
 			"--media-url", "http://www.example.com/audio.mp3",
 			"--media-name", "my-file",
 			"--ttl-secs", "86400",
@@ -110,8 +118,9 @@ func TestMediaUpload(t *testing.T) {
 			"media_name: my-file\n" +
 			"ttl_secs: 86400\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "media", "upload",
+			t, pipeData,
 			"--api-key", "string",
+			"media", "upload",
 		)
 	})
 }

@@ -12,8 +12,9 @@ func TestLegacyReportingUsageReportsNumberLookupCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:number-lookup", "create",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:number-lookup", "create",
 			"--aggregation-type", "ALL",
 			"--end-date", "'2025-02-10'",
 			"--managed-account", "f47ac10b-58cc-4372-a567-0e02b2c3d479",
@@ -32,8 +33,9 @@ func TestLegacyReportingUsageReportsNumberLookupCreate(t *testing.T) {
 			"  - 6ba7b810-9dad-11d1-80b4-00c04fd430c8\n" +
 			"startDate: '2025-02-10'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "legacy:reporting:usage-reports:number-lookup", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:number-lookup", "create",
 		)
 	})
 }
@@ -42,8 +44,9 @@ func TestLegacyReportingUsageReportsNumberLookupRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:number-lookup", "retrieve",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:number-lookup", "retrieve",
 			"--id", "id",
 		)
 	})
@@ -53,8 +56,9 @@ func TestLegacyReportingUsageReportsNumberLookupList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:number-lookup", "list",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:number-lookup", "list",
 		)
 	})
 }
@@ -63,8 +67,9 @@ func TestLegacyReportingUsageReportsNumberLookupDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "legacy:reporting:usage-reports:number-lookup", "delete",
+			t,
 			"--api-key", "string",
+			"legacy:reporting:usage-reports:number-lookup", "delete",
 			"--id", "id",
 		)
 	})

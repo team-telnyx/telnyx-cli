@@ -13,8 +13,9 @@ func TestPortingOrdersAssociatedPhoneNumbersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:associated-phone-numbers", "create",
+			t,
 			"--api-key", "string",
+			"porting-orders:associated-phone-numbers", "create",
 			"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--action", "keep",
 			"--phone-number-range", "{end_at: '+441234567899', start_at: '+441234567890'}",
@@ -27,8 +28,9 @@ func TestPortingOrdersAssociatedPhoneNumbersCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:associated-phone-numbers", "create",
+			t,
 			"--api-key", "string",
+			"porting-orders:associated-phone-numbers", "create",
 			"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--action", "keep",
 			"--phone-number-range.end-at", "+441234567899",
@@ -44,8 +46,9 @@ func TestPortingOrdersAssociatedPhoneNumbersCreate(t *testing.T) {
 			"  end_at: '+441234567899'\n" +
 			"  start_at: '+441234567890'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "porting-orders:associated-phone-numbers", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"porting-orders:associated-phone-numbers", "create",
 			"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
@@ -55,8 +58,9 @@ func TestPortingOrdersAssociatedPhoneNumbersList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:associated-phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:associated-phone-numbers", "list",
 			"--max-items", "10",
 			"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter", "{action: keep, phone_number: '+441234567890'}",
@@ -72,8 +76,9 @@ func TestPortingOrdersAssociatedPhoneNumbersList(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:associated-phone-numbers", "list",
+			t,
 			"--api-key", "string",
+			"porting-orders:associated-phone-numbers", "list",
 			"--max-items", "10",
 			"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter.action", "keep",
@@ -89,8 +94,9 @@ func TestPortingOrdersAssociatedPhoneNumbersDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "porting-orders:associated-phone-numbers", "delete",
+			t,
 			"--api-key", "string",
+			"porting-orders:associated-phone-numbers", "delete",
 			"--porting-order-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
