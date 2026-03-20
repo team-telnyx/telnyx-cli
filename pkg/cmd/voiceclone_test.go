@@ -19,6 +19,7 @@ func TestVoiceClonesCreate(t *testing.T) {
 			"--language", "en",
 			"--name", "clone-narrator",
 			"--voice-design-id", "550e8400-e29b-41d4-a716-446655440000",
+			"--provider", "telnyx",
 		)
 	})
 
@@ -28,7 +29,8 @@ func TestVoiceClonesCreate(t *testing.T) {
 			"gender: male\n" +
 			"language: en\n" +
 			"name: clone-narrator\n" +
-			"voice_design_id: 550e8400-e29b-41d4-a716-446655440000\n")
+			"voice_design_id: 550e8400-e29b-41d4-a716-446655440000\n" +
+			"provider: telnyx\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -75,6 +77,7 @@ func TestVoiceClonesList(t *testing.T) {
 			"voice-clones", "list",
 			"--max-items", "10",
 			"--filter-name", "filter[name]",
+			"--filter-provider", "telnyx",
 			"--page-number", "1",
 			"--page-size", "1",
 			"--sort", "name",
@@ -106,6 +109,7 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			"--name", "name",
 			"--gender", "male",
 			"--label", "label",
+			"--provider", "telnyx",
 			"--ref-text", "ref_text",
 		)
 	})
@@ -118,6 +122,7 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			"name: name\n" +
 			"gender: male\n" +
 			"label: label\n" +
+			"provider: telnyx\n" +
 			"ref_text: ref_text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

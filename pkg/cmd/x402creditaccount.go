@@ -15,8 +15,8 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var x402CreditAccountCreatePaymentQuote = cli.Command{
-	Name:    "create-payment-quote",
+var x402CreditAccountCreateQuote = cli.Command{
+	Name:    "create-quote",
 	Usage:   "Creates a payment quote for the specified USD amount. Returns payment details\nincluding the x402 payment requirements, network, and expiration time. The quote\nmust be settled before it expires.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -27,12 +27,12 @@ var x402CreditAccountCreatePaymentQuote = cli.Command{
 			BodyPath: "amount_usd",
 		},
 	},
-	Action:          handleX402CreditAccountCreatePaymentQuote,
+	Action:          handleX402CreditAccountCreateQuote,
 	HideHelpCommand: true,
 }
 
-var x402CreditAccountSettlePayment = cli.Command{
-	Name:    "settle-payment",
+var x402CreditAccountSettle = cli.Command{
+	Name:    "settle",
 	Usage:   "Settles an x402 payment using the quote ID and a signed payment authorization.\nThe payment signature can be provided via the `PAYMENT-SIGNATURE` header or the\n`payment_signature` body parameter. Settlement is idempotent — submitting the\nsame quote ID multiple times returns the existing transaction.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -52,11 +52,11 @@ var x402CreditAccountSettlePayment = cli.Command{
 			HeaderPath: "PAYMENT-SIGNATURE",
 		},
 	},
-	Action:          handleX402CreditAccountSettlePayment,
+	Action:          handleX402CreditAccountSettle,
 	HideHelpCommand: true,
 }
 
-func handleX402CreditAccountCreatePaymentQuote(ctx context.Context, cmd *cli.Command) error {
+func handleX402CreditAccountCreateQuote(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -64,7 +64,7 @@ func handleX402CreditAccountCreatePaymentQuote(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.X402CreditAccountNewPaymentQuoteParams{}
+	params := telnyx.X402CreditAccountNewQuoteParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -79,7 +79,7 @@ func handleX402CreditAccountCreatePaymentQuote(ctx context.Context, cmd *cli.Com
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.X402.CreditAccount.NewPaymentQuote(ctx, params, options...)
+	_, err = client.X402.CreditAccount.NewQuote(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -87,10 +87,10 @@ func handleX402CreditAccountCreatePaymentQuote(ctx context.Context, cmd *cli.Com
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "x402:credit-account create-payment-quote", obj, format, transform)
+	return ShowJSON(os.Stdout, "x402:credit-account create-quote", obj, format, transform)
 }
 
-func handleX402CreditAccountSettlePayment(ctx context.Context, cmd *cli.Command) error {
+func handleX402CreditAccountSettle(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -98,7 +98,7 @@ func handleX402CreditAccountSettlePayment(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.X402CreditAccountSettlePaymentParams{}
+	params := telnyx.X402CreditAccountSettleParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -113,7 +113,7 @@ func handleX402CreditAccountSettlePayment(ctx context.Context, cmd *cli.Command)
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.X402.CreditAccount.SettlePayment(ctx, params, options...)
+	_, err = client.X402.CreditAccount.Settle(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -121,5 +121,5 @@ func handleX402CreditAccountSettlePayment(ctx context.Context, cmd *cli.Command)
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "x402:credit-account settle-payment", obj, format, transform)
+	return ShowJSON(os.Stdout, "x402:credit-account settle", obj, format, transform)
 }

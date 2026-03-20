@@ -20,6 +20,7 @@ func TestVoiceDesignsCreate(t *testing.T) {
 			"--language", "Auto",
 			"--max-new-tokens", "100",
 			"--name", "friendly-narrator",
+			"--provider", "telnyx",
 			"--repetition-penalty", "1",
 			"--temperature", "0",
 			"--top-k", "1",
@@ -36,6 +37,7 @@ func TestVoiceDesignsCreate(t *testing.T) {
 			"language: Auto\n" +
 			"max_new_tokens: 100\n" +
 			"name: friendly-narrator\n" +
+			"provider: telnyx\n" +
 			"repetition_penalty: 1\n" +
 			"temperature: 0\n" +
 			"top_k: 1\n" +
@@ -58,30 +60,6 @@ func TestVoiceDesignsRetrieve(t *testing.T) {
 			"voice-designs", "retrieve",
 			"--id", "id",
 			"--version", "1",
-		)
-	})
-}
-
-func TestVoiceDesignsUpdate(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"voice-designs", "update",
-			"--id", "id",
-			"--name", "updated-narrator",
-		)
-	})
-
-	t.Run("piping data", func(t *testing.T) {
-		// Test piping YAML data over stdin
-		pipeData := []byte("name: updated-narrator")
-		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData,
-			"--api-key", "string",
-			"voice-designs", "update",
-			"--id", "id",
 		)
 	})
 }
@@ -137,6 +115,30 @@ func TestVoiceDesignsDownloadSample(t *testing.T) {
 			"--id", "id",
 			"--version", "1",
 			"--output", "/dev/null",
+		)
+	})
+}
+
+func TestVoiceDesignsRename(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"voice-designs", "rename",
+			"--id", "id",
+			"--name", "updated-narrator",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("name: updated-narrator")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"voice-designs", "rename",
+			"--id", "id",
 		)
 	})
 }
