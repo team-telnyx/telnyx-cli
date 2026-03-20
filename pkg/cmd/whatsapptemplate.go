@@ -22,26 +22,31 @@ var whatsappTemplatesCreate = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "category",
+			Usage:    "Template category: AUTHENTICATION, UTILITY, or MARKETING.",
 			Required: true,
 			BodyPath: "category",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "component",
+			Usage:    "Template components defining message structure. Passed through to Meta Graph API. Templates with variables must include example values. Supports HEADER, BODY, FOOTER, BUTTONS, CAROUSEL and any future Meta component types.",
 			Required: true,
 			BodyPath: "components",
 		},
 		&requestflag.Flag[string]{
 			Name:     "language",
+			Usage:    "Template language code (e.g. en_US, es, pt_BR).",
 			Required: true,
 			BodyPath: "language",
 		},
 		&requestflag.Flag[string]{
 			Name:     "name",
+			Usage:    "Template name. Lowercase letters, numbers, and underscores only.",
 			Required: true,
 			BodyPath: "name",
 		},
 		&requestflag.Flag[string]{
 			Name:     "waba-id",
+			Usage:    "The WhatsApp Business Account ID.",
 			Required: true,
 			BodyPath: "waba_id",
 		},
