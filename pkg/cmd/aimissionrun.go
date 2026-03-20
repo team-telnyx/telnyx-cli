@@ -86,6 +86,7 @@ var aiMissionsRunsUpdate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "status",
+			Usage:    `Allowed values: "pending", "running", "paused", "succeeded", "failed", "cancelled".`,
 			BodyPath: "status",
 		},
 	},

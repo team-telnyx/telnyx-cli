@@ -36,6 +36,7 @@ var messagingProfilesAutorespConfigsCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "op",
+			Usage:    `Allowed values: "start", "stop", "info".`,
 			Required: true,
 			BodyPath: "op",
 		},
@@ -91,6 +92,7 @@ var messagingProfilesAutorespConfigsUpdate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "op",
+			Usage:    `Allowed values: "start", "stop", "info".`,
 			Required: true,
 			BodyPath: "op",
 		},

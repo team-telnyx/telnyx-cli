@@ -46,6 +46,7 @@ var advancedOrdersCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "phone-number-type",
+			Usage:    `Allowed values: "local", "mobile", "toll_free", "shared_cost", "national", "landline".`,
 			Default:  "local",
 			BodyPath: "phone_number_type",
 		},
@@ -122,6 +123,7 @@ var advancedOrdersUpdateRequirementGroup = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "phone-number-type",
+			Usage:    `Allowed values: "local", "mobile", "toll_free", "shared_cost", "national", "landline".`,
 			Default:  "local",
 			BodyPath: "phone_number_type",
 		},

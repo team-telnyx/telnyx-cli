@@ -68,6 +68,7 @@ var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "inbound-call-screening",
+			Usage:    `Allowed values: "disabled", "reject_calls", "flag_calls".`,
 			BodyPath: "inbound_call_screening",
 		},
 		&requestflag.Flag[bool]{
@@ -93,6 +94,7 @@ var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[any]{
 			Name:       "call-forwarding.forwarding-type",
+			Usage:      `Allowed values: "always", "on-failure".`,
 			InnerField: "forwarding_type",
 		},
 		&requestflag.InnerFlag[any]{
@@ -103,6 +105,7 @@ var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 	"call-recording": {
 		&requestflag.InnerFlag[string]{
 			Name:       "call-recording.inbound-call-recording-channels",
+			Usage:      `Allowed values: "single", "dual".`,
 			InnerField: "inbound_call_recording_channels",
 		},
 		&requestflag.InnerFlag[bool]{
@@ -111,6 +114,7 @@ var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "call-recording.inbound-call-recording-format",
+			Usage:      `Allowed values: "wav", "mp3".`,
 			InnerField: "inbound_call_recording_format",
 		},
 	},

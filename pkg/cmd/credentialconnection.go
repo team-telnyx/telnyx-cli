@@ -183,6 +183,7 @@ var credentialConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "inbound.dnis-number-format",
+			Usage:      `Allowed values: "+e164", "e164", "national", "sip_username".`,
 			InnerField: "dnis_number_format",
 		},
 		&requestflag.InnerFlag[bool]{
@@ -504,6 +505,7 @@ var credentialConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "inbound.dnis-number-format",
+			Usage:      `Allowed values: "+e164", "e164", "national", "sip_username".`,
 			InnerField: "dnis_number_format",
 		},
 		&requestflag.InnerFlag[bool]{

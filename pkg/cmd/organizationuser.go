@@ -84,6 +84,7 @@ var organizationsUsersGetGroupsReport = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:       "accept",
+			Usage:      `Allowed values: "application/json", "text/csv".`,
 			Default:    "application/json",
 			HeaderPath: "Accept",
 		},

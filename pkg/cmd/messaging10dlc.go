@@ -22,6 +22,7 @@ var messaging10dlcGetEnum = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "endpoint",
+			Usage:    `Allowed values: "mno", "optionalAttributes", "usecase", "vertical", "altBusinessIdType", "brandIdentityStatus", "brandRelationship", "campaignStatus", "entityType", "extVettingProvider", "vettingStatus", "brandStatus", "operationStatus", "approvedPublicCompany", "stockExchange", "vettingClass".`,
 			Required: true,
 		},
 	},

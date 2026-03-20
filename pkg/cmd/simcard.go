@@ -85,6 +85,7 @@ var simCardsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "data-limit.unit",
+			Usage:      `Allowed values: "MB", "GB".`,
 			InnerField: "unit",
 		},
 	},

@@ -81,6 +81,7 @@ var integrationSecretsList = requestflag.WithInnerFlags(cli.Command{
 	"filter": {
 		&requestflag.InnerFlag[string]{
 			Name:       "filter.type",
+			Usage:      `Allowed values: "bearer", "basic".`,
 			InnerField: "type",
 		},
 	},
