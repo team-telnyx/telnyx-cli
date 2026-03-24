@@ -359,6 +359,8 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&aiAssistantsToolsAdd,
+					&aiAssistantsToolsRemove,
 					&aiAssistantsToolsTest,
 				},
 			},
@@ -635,6 +637,18 @@ func init() {
 				Commands: []*cli.Command{
 					&aiOpenAIEmbeddingsCreateEmbeddings,
 					&aiOpenAIEmbeddingsListEmbeddingModels,
+				},
+			},
+			{
+				Name:     "ai:tools",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiToolsCreate,
+					&aiToolsRetrieve,
+					&aiToolsUpdate,
+					&aiToolsList,
+					&aiToolsDelete,
 				},
 			},
 			{

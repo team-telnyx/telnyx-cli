@@ -108,6 +108,10 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "telephony-settings",
 			BodyPath: "telephony_settings",
 		},
+		&requestflag.Flag[[]string]{
+			Name:     "tool-id",
+			BodyPath: "tool_ids",
+		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "tool",
 			Usage:    "The tools that the assistant can use. These may be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables)",
