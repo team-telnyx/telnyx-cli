@@ -3136,6 +3136,58 @@ func init() {
 				},
 			},
 			{
+				Name:     "enterprises",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesCreate,
+					&enterprisesRetrieve,
+					&enterprisesUpdate,
+					&enterprisesList,
+					&enterprisesDelete,
+				},
+			},
+			{
+				Name:     "enterprises:reputation",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesReputationCreate,
+					&enterprisesReputationList,
+					&enterprisesReputationDeleteAll,
+					&enterprisesReputationUpdateFrequency,
+				},
+			},
+			{
+				Name:     "enterprises:reputation:numbers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesReputationNumbersCreate,
+					&enterprisesReputationNumbersRetrieve,
+					&enterprisesReputationNumbersList,
+					&enterprisesReputationNumbersDelete,
+				},
+			},
+			{
+				Name:     "reputation:numbers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&reputationNumbersRetrieve,
+					&reputationNumbersList,
+					&reputationNumbersDelete,
+				},
+			},
+			{
+				Name:     "terms-of-service:number-reputation",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&termsOfServiceNumberReputationAgree,
+				},
+			},
+			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",
 				UsageText:       "telnyx @manpages [-o telnyx.1] [--gzip]",
