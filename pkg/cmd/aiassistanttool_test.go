@@ -8,6 +8,32 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
+func TestAIAssistantsToolsAdd(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai:assistants:tools", "add",
+			"--assistant-id", "assistant_id",
+			"--tool-id", "tool_id",
+		)
+	})
+}
+
+func TestAIAssistantsToolsRemove(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai:assistants:tools", "remove",
+			"--assistant-id", "assistant_id",
+			"--tool-id", "tool_id",
+		)
+	})
+}
+
 func TestAIAssistantsToolsTest(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {

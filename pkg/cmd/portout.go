@@ -157,6 +157,7 @@ var portoutsUpdateStatus = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "status",
+			Usage:    `Allowed values: "authorized", "rejected-pending".`,
 			Required: true,
 		},
 		&requestflag.Flag[string]{

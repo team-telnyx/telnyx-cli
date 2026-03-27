@@ -34,6 +34,7 @@ var texmlAccountsCallsRecordingsRecordingSidJson = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "status",
+			Usage:    `Allowed values: "in-progress", "paused", "stopped".`,
 			BodyPath: "Status",
 		},
 	},

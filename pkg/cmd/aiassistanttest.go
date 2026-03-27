@@ -56,6 +56,7 @@ var aiAssistantsTestsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "telnyx-conversation-channel",
+			Usage:    `Allowed values: "phone_call", "web_call", "sms_chat", "web_chat".`,
 			BodyPath: "telnyx_conversation_channel",
 		},
 		&requestflag.Flag[string]{
@@ -136,6 +137,7 @@ var aiAssistantsTestsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "telnyx-conversation-channel",
+			Usage:    `Allowed values: "phone_call", "web_call", "sms_chat", "web_chat".`,
 			BodyPath: "telnyx_conversation_channel",
 		},
 		&requestflag.Flag[string]{

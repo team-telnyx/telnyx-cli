@@ -81,6 +81,7 @@ var portingOrdersVerificationCodesSend = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "verification-method",
+			Usage:    `Allowed values: "sms", "call".`,
 			BodyPath: "verification_method",
 		},
 	},

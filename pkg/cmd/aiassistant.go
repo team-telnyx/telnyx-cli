@@ -81,6 +81,10 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "telephony-settings",
 			BodyPath: "telephony_settings",
 		},
+		&requestflag.Flag[[]string]{
+			Name:     "tool-id",
+			BodyPath: "tool_ids",
+		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "tool",
 			Usage:    "The tools that the assistant can use. These may be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables)",
@@ -200,7 +204,7 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 	"voice-settings": {
 		&requestflag.InnerFlag[string]{
 			Name:       "voice-settings.voice",
-			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/api/call-control/list-text-to-speech-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart)",
+			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/docs/tts-stt/tts-available-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart)",
 			InnerField: "voice",
 		},
 		&requestflag.InnerFlag[string]{
@@ -416,6 +420,10 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "telephony-settings",
 			BodyPath: "telephony_settings",
 		},
+		&requestflag.Flag[[]string]{
+			Name:     "tool-id",
+			BodyPath: "tool_ids",
+		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "tool",
 			Usage:    "The tools that the assistant can use. These may be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables)",
@@ -535,7 +543,7 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 	"voice-settings": {
 		&requestflag.InnerFlag[string]{
 			Name:       "voice-settings.voice",
-			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/api/call-control/list-text-to-speech-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart)",
+			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/docs/tts-stt/tts-available-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart)",
 			InnerField: "voice",
 		},
 		&requestflag.InnerFlag[string]{

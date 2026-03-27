@@ -15,107 +15,89 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var integrationSecretsCreate = cli.Command{
-	Name:    "create",
-	Usage:   "Create a new secret with an associated identifier that can be used to securely\nintegrate with other services.",
+var reputationNumbersRetrieve = cli.Command{
+	Name:    "retrieve",
+	Usage:   "Get reputation data for a specific phone number without requiring an\n`enterprise_id`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "identifier",
-			Usage:    "The unique identifier of the secret.",
+			Name:     "phone-number",
 			Required: true,
-			BodyPath: "identifier",
 		},
-		&requestflag.Flag[string]{
-			Name:     "type",
-			Usage:    "The type of secret.",
-			Required: true,
-			BodyPath: "type",
-		},
-		&requestflag.Flag[string]{
-			Name:     "token",
-			Usage:    "The token for the secret. Required for bearer type secrets, ignored otherwise.",
-			BodyPath: "token",
-		},
-		&requestflag.Flag[string]{
-			Name:     "password",
-			Usage:    "The password for the secret. Required for basic type secrets, ignored otherwise.",
-			BodyPath: "password",
-		},
-		&requestflag.Flag[string]{
-			Name:     "username",
-			Usage:    "The username for the secret. Required for basic type secrets, ignored otherwise.",
-			BodyPath: "username",
+		&requestflag.Flag[bool]{
+			Name:      "fresh",
+			Usage:     "When true, fetches fresh reputation data (incurs API cost). When false, returns cached data.",
+			Default:   false,
+			QueryPath: "fresh",
 		},
 	},
-	Action:          handleIntegrationSecretsCreate,
+	Action:          handleReputationNumbersRetrieve,
 	HideHelpCommand: true,
 }
 
-var integrationSecretsList = requestflag.WithInnerFlags(cli.Command{
+var reputationNumbersList = cli.Command{
 	Name:    "list",
-	Usage:   "Retrieve a list of all integration secrets configured by the user.",
+	Usage:   "List all phone numbers enrolled in Number Reputation monitoring for your\naccount. This is a simplified endpoint that does not require an `enterprise_id`\n— it returns numbers across all your enterprises.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[map[string]any]{
-			Name:      "filter",
-			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[type]",
-			QueryPath: "filter",
-		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
+			Usage:     "Page number (1-indexed)",
+			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
+			Usage:     "Number of items per page",
+			Default:   10,
 			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "phone-number",
+			Usage:     "Filter by specific phone number (E.164 format)",
+			QueryPath: "phone_number",
 		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
-	Action:          handleIntegrationSecretsList,
-	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"filter": {
-		&requestflag.InnerFlag[string]{
-			Name:       "filter.type",
-			Usage:      `Allowed values: "bearer", "basic".`,
-			InnerField: "type",
-		},
-	},
-})
-
-var integrationSecretsDelete = cli.Command{
-	Name:    "delete",
-	Usage:   "Delete an integration secret given its ID.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
-		},
-	},
-	Action:          handleIntegrationSecretsDelete,
+	Action:          handleReputationNumbersList,
 	HideHelpCommand: true,
 }
 
-func handleIntegrationSecretsCreate(ctx context.Context, cmd *cli.Command) error {
+var reputationNumbersDelete = cli.Command{
+	Name:    "delete",
+	Usage:   "Remove a phone number from Number Reputation monitoring without requiring an\n`enterprise_id`.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "phone-number",
+			Required: true,
+		},
+	},
+	Action:          handleReputationNumbersDelete,
+	HideHelpCommand: true,
+}
+
+func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-
+	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
+		cmd.Set("phone-number", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.IntegrationSecretNewParams{}
+	params := telnyx.ReputationNumberGetParams{}
 
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
 		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
+		EmptyBody,
 		false,
 	)
 	if err != nil {
@@ -124,7 +106,12 @@ func handleIntegrationSecretsCreate(ctx context.Context, cmd *cli.Command) error
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.IntegrationSecrets.New(ctx, params, options...)
+	_, err = client.Reputation.Numbers.Get(
+		ctx,
+		cmd.Value("phone-number").(string),
+		params,
+		options...,
+	)
 	if err != nil {
 		return err
 	}
@@ -132,10 +119,10 @@ func handleIntegrationSecretsCreate(ctx context.Context, cmd *cli.Command) error
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "integration-secrets create", obj, format, transform)
+	return ShowJSON(os.Stdout, "reputation:numbers retrieve", obj, format, transform)
 }
 
-func handleIntegrationSecretsList(ctx context.Context, cmd *cli.Command) error {
+func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -143,7 +130,7 @@ func handleIntegrationSecretsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.IntegrationSecretListParams{}
+	params := telnyx.ReputationNumberListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -161,27 +148,27 @@ func handleIntegrationSecretsList(ctx context.Context, cmd *cli.Command) error {
 	if format == "raw" {
 		var res []byte
 		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.IntegrationSecrets.List(ctx, params, options...)
+		_, err = client.Reputation.Numbers.List(ctx, params, options...)
 		if err != nil {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "integration-secrets list", obj, format, transform)
+		return ShowJSON(os.Stdout, "reputation:numbers list", obj, format, transform)
 	} else {
-		iter := client.IntegrationSecrets.ListAutoPaging(ctx, params, options...)
+		iter := client.Reputation.Numbers.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "integration-secrets list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, "reputation:numbers list", iter, format, transform, maxItems)
 	}
 }
 
-func handleIntegrationSecretsDelete(ctx context.Context, cmd *cli.Command) error {
+func handleReputationNumbersDelete(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
-		cmd.Set("id", unusedArgs[0])
+	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
+		cmd.Set("phone-number", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
@@ -199,5 +186,5 @@ func handleIntegrationSecretsDelete(ctx context.Context, cmd *cli.Command) error
 		return err
 	}
 
-	return client.IntegrationSecrets.Delete(ctx, cmd.Value("id").(string), options...)
+	return client.Reputation.Numbers.Delete(ctx, cmd.Value("phone-number").(string), options...)
 }

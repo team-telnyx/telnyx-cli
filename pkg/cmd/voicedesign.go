@@ -48,6 +48,12 @@ var voiceDesignsCreate = cli.Command{
 			Usage:    "Name for the voice design. Required when creating a new design (`voice_design_id` is not provided); ignored when adding a version. Cannot be a UUID.",
 			BodyPath: "name",
 		},
+		&requestflag.Flag[string]{
+			Name:     "provider",
+			Usage:    "Voice synthesis provider. `telnyx` uses the Qwen3TTS model; `minimax` uses the Minimax speech models. Case-insensitive. Defaults to `telnyx`.",
+			Default:  "telnyx",
+			BodyPath: "provider",
+		},
 		&requestflag.Flag[float64]{
 			Name:     "repetition-penalty",
 			Usage:    "Repetition penalty to reduce repeated patterns in generated audio. Default: 1.05.",

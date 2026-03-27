@@ -103,6 +103,7 @@ var aiMissionsRunsEventsLog = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "type",
+			Usage:    `Allowed values: "status_change", "step_started", "step_completed", "step_failed", "tool_call", "tool_result", "message", "error", "custom".`,
 			Required: true,
 			BodyPath: "type",
 		},

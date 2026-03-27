@@ -359,6 +359,8 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&aiAssistantsToolsAdd,
+					&aiAssistantsToolsRemove,
 					&aiAssistantsToolsTest,
 				},
 			},
@@ -635,6 +637,18 @@ func init() {
 				Commands: []*cli.Command{
 					&aiOpenAIEmbeddingsCreateEmbeddings,
 					&aiOpenAIEmbeddingsListEmbeddingModels,
+				},
+			},
+			{
+				Name:     "ai:tools",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiToolsCreate,
+					&aiToolsRetrieve,
+					&aiToolsUpdate,
+					&aiToolsList,
+					&aiToolsDelete,
 				},
 			},
 			{
@@ -3105,6 +3119,58 @@ func init() {
 					&voiceDesignsDeleteVersion,
 					&voiceDesignsDownloadSample,
 					&voiceDesignsRename,
+				},
+			},
+			{
+				Name:     "enterprises",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesCreate,
+					&enterprisesRetrieve,
+					&enterprisesUpdate,
+					&enterprisesList,
+					&enterprisesDelete,
+				},
+			},
+			{
+				Name:     "enterprises:reputation",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesReputationCreate,
+					&enterprisesReputationList,
+					&enterprisesReputationDeleteAll,
+					&enterprisesReputationUpdateFrequency,
+				},
+			},
+			{
+				Name:     "enterprises:reputation:numbers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesReputationNumbersCreate,
+					&enterprisesReputationNumbersRetrieve,
+					&enterprisesReputationNumbersList,
+					&enterprisesReputationNumbersDelete,
+				},
+			},
+			{
+				Name:     "reputation:numbers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&reputationNumbersRetrieve,
+					&reputationNumbersList,
+					&reputationNumbersDelete,
+				},
+			},
+			{
+				Name:     "terms-of-service:number-reputation",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&termsOfServiceNumberReputationAgree,
 				},
 			},
 			{

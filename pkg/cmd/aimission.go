@@ -31,6 +31,7 @@ var aiMissionsCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "execution-mode",
+			Usage:    `Allowed values: "external", "managed".`,
 			Default:  "external",
 			BodyPath: "execution_mode",
 		},
@@ -164,6 +165,7 @@ var aiMissionsUpdateMission = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "execution-mode",
+			Usage:    `Allowed values: "external", "managed".`,
 			BodyPath: "execution_mode",
 		},
 		&requestflag.Flag[string]{

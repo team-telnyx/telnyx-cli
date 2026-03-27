@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.10.0 (2026-03-27)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* add default description for enum CLI flags without an explicit description ([3984c4e](https://github.com/team-telnyx/telnyx-cli/commit/3984c4e4c8046eb4d7d9ec5c778342d9e3672495))
+* Add Minimax provider support to Voice Designs and Voice Clones API spec ([541089f](https://github.com/team-telnyx/telnyx-cli/commit/541089f8f551a6848a0884f742918b8f19b9c540))
+* **api:** manual updates ([ce17e31](https://github.com/team-telnyx/telnyx-cli/commit/ce17e31cf722f807f8e9448e351b4347281ea6e3))
+* **api:** manual updates ([96cf66a](https://github.com/team-telnyx/telnyx-cli/commit/96cf66af4a01a5ee2a11da36f033a46fa0bfd5a2))
+* **api:** manual updates ([cbe7a45](https://github.com/team-telnyx/telnyx-cli/commit/cbe7a458eef881414a47693bb3ec9f96ad989c28))
+* **api:** manual updates ([333d745](https://github.com/team-telnyx/telnyx-cli/commit/333d745c5e9db537609369073a3aa0a2d9ab84a4))
+* **api:** Merge pull request [#30](https://github.com/team-telnyx/telnyx-cli/issues/30) from stainless-sdks/fix-schemaUnionDiscriminatorMissing ([473ae31](https://github.com/team-telnyx/telnyx-cli/commit/473ae316481cd10bf367b5f5d5a8dc910495c1cd))
+* New tools api ([53bbc57](https://github.com/team-telnyx/telnyx-cli/commit/53bbc57b833b0ebe491d95006feeb8a630e1d79f))
+* set CLI flag constant values automatically where `x-stainless-const` is set ([bdffc96](https://github.com/team-telnyx/telnyx-cli/commit/bdffc96a0e197d00b951c269f5a57affbd4c991b))
+* TELAPPS-5685: Add store_fields_as_variables to WebhookToolParams ([5486544](https://github.com/team-telnyx/telnyx-cli/commit/548654484ae8321c06bd823ca2e69697d97aacd0))
+* **wireless:** add traffic policy profiles endpoints to OpenAPI spec ([72a9cc3](https://github.com/team-telnyx/telnyx-cli/commit/72a9cc3a8ea4e66ca445ee870f1b9fd4881f9606))
+
+
+### Bug Fixes
+
+* cli no longer hangs when stdin is attached to a pipe with empty input ([df986e3](https://github.com/team-telnyx/telnyx-cli/commit/df986e320b6369da40abf118a94657362176518d))
+* **cli:** update go_sdk_version to v4.55.0 ([c171aa5](https://github.com/team-telnyx/telnyx-cli/commit/c171aa511fdecb16d36876708fb1ce1d5815fbf4))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([d1cdb62](https://github.com/team-telnyx/telnyx-cli/commit/d1cdb629356dddb5142ebe84f1dfdc2a9191ffd4))
+* **internal:** update gitignore ([6fe564c](https://github.com/team-telnyx/telnyx-cli/commit/6fe564c2080e8987788fb81e6d540c4fe0296d6a))
+* omit full usage information when missing required CLI parameters ([83bd447](https://github.com/team-telnyx/telnyx-cli/commit/83bd447d7ef30e59fddfa89bbf660ae3352fcf88))
+
+
+### Documentation
+
+* **branded-calling:** add Number Reputation API specs ([18ce61e](https://github.com/team-telnyx/telnyx-cli/commit/18ce61e40942615778c80aae22bc0d543a94ff9e))
+* fix voice settings available voices link ([2be640f](https://github.com/team-telnyx/telnyx-cli/commit/2be640f4c61a53798fa194c820b9e27d5dfb6319))
+* WhatsApp template components schema ([b92f5ed](https://github.com/team-telnyx/telnyx-cli/commit/b92f5ed6f05917352af8bc80eff59980a3aec528))
+
 ## 0.9.0 (2026-03-20)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.8.0...v0.9.0)

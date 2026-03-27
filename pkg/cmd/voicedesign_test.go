@@ -20,6 +20,7 @@ func TestVoiceDesignsCreate(t *testing.T) {
 			"--language", "Auto",
 			"--max-new-tokens", "100",
 			"--name", "friendly-narrator",
+			"--provider", "telnyx",
 			"--repetition-penalty", "1",
 			"--temperature", "0",
 			"--top-k", "1",
@@ -36,6 +37,7 @@ func TestVoiceDesignsCreate(t *testing.T) {
 			"language: Auto\n" +
 			"max_new_tokens: 100\n" +
 			"name: friendly-narrator\n" +
+			"provider: telnyx\n" +
 			"repetition_penalty: 1\n" +
 			"temperature: 0\n" +
 			"top_k: 1\n" +

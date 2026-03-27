@@ -15,109 +15,131 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var simCardDataUsageNotificationsCreate = requestflag.WithInnerFlags(cli.Command{
+var aiToolsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new SIM card data usage notification.",
+	Usage:   "Create Tool",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "sim-card-id",
-			Usage:    "The identification UUID of the related SIM card resource.",
+			Name:     "display-name",
 			Required: true,
-			BodyPath: "sim_card_id",
+			BodyPath: "display_name",
+		},
+		&requestflag.Flag[string]{
+			Name:     "type",
+			Required: true,
+			BodyPath: "type",
 		},
 		&requestflag.Flag[map[string]any]{
-			Name:     "threshold",
-			Usage:    "Data usage threshold that will trigger the notification.",
-			Required: true,
-			BodyPath: "threshold",
+			Name:     "function",
+			BodyPath: "function",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "handoff",
+			BodyPath: "handoff",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "invite",
+			BodyPath: "invite",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "retrieval",
+			BodyPath: "retrieval",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "timeout-ms",
+			Default:  5000,
+			BodyPath: "timeout_ms",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook",
+			BodyPath: "webhook",
 		},
 	},
-	Action:          handleSimCardDataUsageNotificationsCreate,
-	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"threshold": {
-		&requestflag.InnerFlag[string]{
-			Name:       "threshold.amount",
-			InnerField: "amount",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "threshold.unit",
-			Usage:      `Allowed values: "MB", "GB".`,
-			InnerField: "unit",
-		},
-	},
-})
-
-var simCardDataUsageNotificationsRetrieve = cli.Command{
-	Name:    "retrieve",
-	Usage:   "Get a single SIM Card Data Usage Notification.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
-		},
-	},
-	Action:          handleSimCardDataUsageNotificationsRetrieve,
+	Action:          handleAIToolsCreate,
 	HideHelpCommand: true,
 }
 
-var simCardDataUsageNotificationsUpdate = requestflag.WithInnerFlags(cli.Command{
-	Name:    "update",
-	Usage:   "Updates information for a SIM Card Data Usage Notification.",
+var aiToolsRetrieve = cli.Command{
+	Name:    "retrieve",
+	Usage:   "Get Tool",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "sim-card-data-usage-notification-id",
+			Name:     "tool-id",
+			Required: true,
+		},
+	},
+	Action:          handleAIToolsRetrieve,
+	HideHelpCommand: true,
+}
+
+var aiToolsUpdate = cli.Command{
+	Name:    "update",
+	Usage:   "Update Tool",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "tool-id",
 			Required: true,
 		},
 		&requestflag.Flag[string]{
-			Name:     "sim-card-id",
-			Usage:    "The identification UUID of the related SIM card resource.",
-			BodyPath: "sim_card_id",
+			Name:     "display-name",
+			BodyPath: "display_name",
 		},
 		&requestflag.Flag[map[string]any]{
-			Name:     "threshold",
-			Usage:    "Data usage threshold that will trigger the notification.",
-			BodyPath: "threshold",
+			Name:     "function",
+			BodyPath: "function",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "handoff",
+			BodyPath: "handoff",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "invite",
+			BodyPath: "invite",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "retrieval",
+			BodyPath: "retrieval",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "timeout-ms",
+			BodyPath: "timeout_ms",
+		},
+		&requestflag.Flag[string]{
+			Name:     "type",
+			BodyPath: "type",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook",
+			BodyPath: "webhook",
 		},
 	},
-	Action:          handleSimCardDataUsageNotificationsUpdate,
+	Action:          handleAIToolsUpdate,
 	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"threshold": {
-		&requestflag.InnerFlag[string]{
-			Name:       "threshold.amount",
-			InnerField: "amount",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "threshold.unit",
-			Usage:      `Allowed values: "MB", "GB".`,
-			InnerField: "unit",
-		},
-	},
-})
+}
 
-var simCardDataUsageNotificationsList = cli.Command{
+var aiToolsList = cli.Command{
 	Name:    "list",
-	Usage:   "Lists a paginated collection of SIM card data usage notifications. It enables\nexploring the collection using specific filters.",
+	Usage:   "List Tools",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:      "filter-sim-card-id",
-			Usage:     "A valid SIM card ID.",
-			QueryPath: "filter[sim_card_id]",
+			Name:      "filter-name",
+			QueryPath: "filter[name]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-type",
+			QueryPath: "filter[type]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
-			Usage:     "The page number to load.",
 			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
-			Usage:     "The size of the page.",
 			Default:   20,
 			QueryPath: "page[size]",
 		},
@@ -126,25 +148,25 @@ var simCardDataUsageNotificationsList = cli.Command{
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
-	Action:          handleSimCardDataUsageNotificationsList,
+	Action:          handleAIToolsList,
 	HideHelpCommand: true,
 }
 
-var simCardDataUsageNotificationsDelete = cli.Command{
+var aiToolsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete the SIM Card Data Usage Notification.",
+	Usage:   "Delete Tool",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
+			Name:     "tool-id",
 			Required: true,
 		},
 	},
-	Action:          handleSimCardDataUsageNotificationsDelete,
+	Action:          handleAIToolsDelete,
 	HideHelpCommand: true,
 }
 
-func handleSimCardDataUsageNotificationsCreate(ctx context.Context, cmd *cli.Command) error {
+func handleAIToolsCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -152,7 +174,7 @@ func handleSimCardDataUsageNotificationsCreate(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardDataUsageNotificationNewParams{}
+	params := telnyx.AIToolNewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -167,7 +189,7 @@ func handleSimCardDataUsageNotificationsCreate(ctx context.Context, cmd *cli.Com
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.SimCardDataUsageNotifications.New(ctx, params, options...)
+	_, err = client.AI.Tools.New(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -175,14 +197,14 @@ func handleSimCardDataUsageNotificationsCreate(ctx context.Context, cmd *cli.Com
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-card-data-usage-notifications create", obj, format, transform)
+	return ShowJSON(os.Stdout, "ai:tools create", obj, format, transform)
 }
 
-func handleSimCardDataUsageNotificationsRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handleAIToolsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
-		cmd.Set("id", unusedArgs[0])
+	if !cmd.IsSet("tool-id") && len(unusedArgs) > 0 {
+		cmd.Set("tool-id", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
@@ -202,7 +224,7 @@ func handleSimCardDataUsageNotificationsRetrieve(ctx context.Context, cmd *cli.C
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.SimCardDataUsageNotifications.Get(ctx, cmd.Value("id").(string), options...)
+	_, err = client.AI.Tools.Get(ctx, cmd.Value("tool-id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -210,21 +232,21 @@ func handleSimCardDataUsageNotificationsRetrieve(ctx context.Context, cmd *cli.C
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-card-data-usage-notifications retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, "ai:tools retrieve", obj, format, transform)
 }
 
-func handleSimCardDataUsageNotificationsUpdate(ctx context.Context, cmd *cli.Command) error {
+func handleAIToolsUpdate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("sim-card-data-usage-notification-id") && len(unusedArgs) > 0 {
-		cmd.Set("sim-card-data-usage-notification-id", unusedArgs[0])
+	if !cmd.IsSet("tool-id") && len(unusedArgs) > 0 {
+		cmd.Set("tool-id", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardDataUsageNotificationUpdateParams{}
+	params := telnyx.AIToolUpdateParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -239,9 +261,9 @@ func handleSimCardDataUsageNotificationsUpdate(ctx context.Context, cmd *cli.Com
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.SimCardDataUsageNotifications.Update(
+	_, err = client.AI.Tools.Update(
 		ctx,
-		cmd.Value("sim-card-data-usage-notification-id").(string),
+		cmd.Value("tool-id").(string),
 		params,
 		options...,
 	)
@@ -252,10 +274,10 @@ func handleSimCardDataUsageNotificationsUpdate(ctx context.Context, cmd *cli.Com
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-card-data-usage-notifications update", obj, format, transform)
+	return ShowJSON(os.Stdout, "ai:tools update", obj, format, transform)
 }
 
-func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Command) error {
+func handleAIToolsList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -263,7 +285,7 @@ func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardDataUsageNotificationListParams{}
+	params := telnyx.AIToolListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -281,27 +303,27 @@ func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Comma
 	if format == "raw" {
 		var res []byte
 		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.SimCardDataUsageNotifications.List(ctx, params, options...)
+		_, err = client.AI.Tools.List(ctx, params, options...)
 		if err != nil {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "sim-card-data-usage-notifications list", obj, format, transform)
+		return ShowJSON(os.Stdout, "ai:tools list", obj, format, transform)
 	} else {
-		iter := client.SimCardDataUsageNotifications.ListAutoPaging(ctx, params, options...)
+		iter := client.AI.Tools.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "sim-card-data-usage-notifications list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, "ai:tools list", iter, format, transform, maxItems)
 	}
 }
 
-func handleSimCardDataUsageNotificationsDelete(ctx context.Context, cmd *cli.Command) error {
+func handleAIToolsDelete(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
-		cmd.Set("id", unusedArgs[0])
+	if !cmd.IsSet("tool-id") && len(unusedArgs) > 0 {
+		cmd.Set("tool-id", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
@@ -321,7 +343,7 @@ func handleSimCardDataUsageNotificationsDelete(ctx context.Context, cmd *cli.Com
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.SimCardDataUsageNotifications.Delete(ctx, cmd.Value("id").(string), options...)
+	_, err = client.AI.Tools.Delete(ctx, cmd.Value("tool-id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -329,5 +351,5 @@ func handleSimCardDataUsageNotificationsDelete(ctx context.Context, cmd *cli.Com
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-card-data-usage-notifications delete", obj, format, transform)
+	return ShowJSON(os.Stdout, "ai:tools delete", obj, format, transform)
 }

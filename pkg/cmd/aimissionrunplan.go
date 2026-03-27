@@ -170,6 +170,7 @@ var aiMissionsRunsPlanUpdateStep = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "status",
+			Usage:    `Allowed values: "pending", "in_progress", "completed", "skipped", "failed".`,
 			BodyPath: "status",
 		},
 	},
