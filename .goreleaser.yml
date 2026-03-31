@@ -67,15 +67,15 @@ snapshot:
 
 signs:
   - cmd: cosign
+    signature: "${artifact}.sig"
     certificate: "${artifact}.pem"
     args:
       - sign-blob
-      - "--output-certificate=${certificate}"
       - "--output-signature=${signature}"
+      - "--output-certificate=${certificate}"
       - "${artifact}"
       - --yes
     artifacts: checksum
-    output: true
 
 nfpms:
   - license: MIT
