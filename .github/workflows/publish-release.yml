@@ -2,6 +2,7 @@
 name: Publish Release
 permissions:
   contents: write
+  id-token: write  # Required for Cosign OIDC signing
 
 concurrency:
   group: publish
@@ -22,6 +23,8 @@ jobs:
       uses: actions/setup-go@v5
       with:
         go-version-file: "go.mod"
+    - name: Install Cosign
+      uses: sigstore/cosign-installer@v3
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v6.1.0
       with:
