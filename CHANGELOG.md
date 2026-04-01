@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.11.0 (2026-04-01)
+
+Full Changelog: [v0.10.1...v0.11.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.10.1...v0.11.0)
+
+### Features
+
+* add Cosign binary signing for releases ([858b4fa](https://github.com/team-telnyx/telnyx-cli/commit/858b4facc1df6dbb043f3c99936bf7f9c5445c2e))
+
+
+### Bug Fixes
+
+* correct cosign signing config ([b0ac2fa](https://github.com/team-telnyx/telnyx-cli/commit/b0ac2faebecf98ba5e383cc66b5c31f300cdc34e))
+
 ## 0.10.1 (2026-03-28)
 
 Full Changelog: [v0.10.0...v0.10.1](https://github.com/team-telnyx/telnyx-cli/compare/v0.10.0...v0.10.1)

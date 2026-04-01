@@ -65,6 +65,18 @@ archives:
 snapshot:
   version_template: '{{ .Tag }}-next'
 
+signs:
+  - cmd: cosign
+    signature: "${artifact}.sig"
+    certificate: "${artifact}.pem"
+    args:
+      - sign-blob
+      - "--output-signature=${signature}"
+      - "--output-certificate=${certificate}"
+      - "${artifact}"
+      - --yes
+    artifacts: checksum
+
 nfpms:
   - license: MIT
     maintainer: support@telnyx.com
