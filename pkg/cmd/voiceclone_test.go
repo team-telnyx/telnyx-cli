@@ -3,6 +3,7 @@
 package cmd
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
@@ -104,7 +105,7 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"voice-clones", "create-from-upload",
-			"--audio-file", "Example data",
+			"--audio-file", mocktest.TestFile(t, "Example data"),
 			"--language", "lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf",
 			"--name", "name",
 			"--gender", "male",
@@ -115,15 +116,18 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 	})
 
 	t.Run("piping data", func(t *testing.T) {
+		testFile := mocktest.TestFile(t, "Example data")
 		// Test piping YAML data over stdin
-		pipeData := []byte("" +
+		pipeDataStr := "" +
 			"audio_file: Example data\n" +
 			"language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf\n" +
 			"name: name\n" +
 			"gender: male\n" +
 			"label: label\n" +
 			"provider: telnyx\n" +
-			"ref_text: ref_text\n")
+			"ref_text: ref_text\n"
+		pipeDataStr = strings.ReplaceAll(pipeDataStr, "Example data", testFile)
+		pipeData := []byte(pipeDataStr)
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
