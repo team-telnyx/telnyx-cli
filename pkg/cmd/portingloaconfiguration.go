@@ -669,7 +669,7 @@ func handlePortingLoaConfigurationsPreview(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
-	message, err := writeBinaryResponse(response, cmd.String("output"))
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
 	if message != "" {
 		fmt.Println(message)
 	}
@@ -701,7 +701,7 @@ func handlePortingLoaConfigurationsPreview0(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
-	message, err := writeBinaryResponse(response, cmd.String("output"))
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
 	if message != "" {
 		fmt.Println(message)
 	}
@@ -734,7 +734,7 @@ func handlePortingLoaConfigurationsPreview1(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
-	message, err := writeBinaryResponse(response, cmd.String("output"))
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
 	if message != "" {
 		fmt.Println(message)
 	}
