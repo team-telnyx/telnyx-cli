@@ -45,7 +45,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--name", "name",
 			"--observability-settings", "{host: host, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
 			"--privacy-settings", "{data_retention: true}",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_timeout_secs: 30, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_timeout_secs: 30, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription", "{language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, eot_threshold: 0, eot_timeout_ms: 0, numerals: true, smart_format: true}}",
@@ -86,7 +86,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
 			"--telephony-settings.noise-suppression", "krisp",
 			"--telephony-settings.noise-suppression-config", "{attenuation_limit: 0, mode: advanced}",
-			"--telephony-settings.recording-settings", "{channels: single, format: wav}",
+			"--telephony-settings.recording-settings", "{channels: single, enabled: true, format: wav}",
 			"--telephony-settings.supports-unauthenticated-web-calls=true",
 			"--telephony-settings.time-limit-secs", "30",
 			"--telephony-settings.user-idle-timeout-secs", "30",
@@ -157,6 +157,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"    mode: advanced\n" +
 			"  recording_settings:\n" +
 			"    channels: single\n" +
+			"    enabled: true\n" +
 			"    format: wav\n" +
 			"  supports_unauthenticated_web_calls: true\n" +
 			"  time_limit_secs: 30\n" +
