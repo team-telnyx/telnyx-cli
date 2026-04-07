@@ -43,6 +43,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--messaging-settings", "{conversation_inactivity_minutes: 1, default_messaging_profile_id: default_messaging_profile_id, delivery_status_webhook_url: delivery_status_webhook_url}",
 			"--model", "model",
 			"--name", "name",
+			"--observability-settings", "{host: host, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
 			"--privacy-settings", "{data_retention: true}",
 			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_timeout_secs: 30, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
@@ -77,6 +78,10 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--messaging-settings.delivery-status-webhook-url", "delivery_status_webhook_url",
 			"--model", "model",
 			"--name", "name",
+			"--observability-settings.host", "host",
+			"--observability-settings.public-key-ref", "public_key_ref",
+			"--observability-settings.secret-key-ref", "secret_key_ref",
+			"--observability-settings.status", "enabled",
 			"--privacy-settings.data-retention=true",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
 			"--telephony-settings.noise-suppression", "krisp",
@@ -137,6 +142,11 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"  delivery_status_webhook_url: delivery_status_webhook_url\n" +
 			"model: model\n" +
 			"name: name\n" +
+			"observability_settings:\n" +
+			"  host: host\n" +
+			"  public_key_ref: public_key_ref\n" +
+			"  secret_key_ref: secret_key_ref\n" +
+			"  status: enabled\n" +
 			"privacy_settings:\n" +
 			"  data_retention: true\n" +
 			"telephony_settings:\n" +
