@@ -2629,6 +2629,7 @@ func init() {
 					&verificationsTriggerCall,
 					&verificationsTriggerFlashcall,
 					&verificationsTriggerSMS,
+					&verificationsTriggerWhatsappVerification,
 				},
 			},
 			{

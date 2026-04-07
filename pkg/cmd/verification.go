@@ -128,6 +128,39 @@ var verificationsTriggerSMS = cli.Command{
 	HideHelpCommand: true,
 }
 
+var verificationsTriggerWhatsappVerification = cli.Command{
+	Name:    "trigger-whatsapp-verification",
+	Usage:   "Trigger WhatsApp verification",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "phone-number",
+			Usage:    "+E164 formatted phone number.",
+			Required: true,
+			BodyPath: "phone_number",
+		},
+		&requestflag.Flag[string]{
+			Name:     "verify-profile-id",
+			Usage:    "The identifier of the associated Verify profile.",
+			Required: true,
+			BodyPath: "verify_profile_id",
+		},
+		&requestflag.Flag[any]{
+			Name:     "custom-code",
+			Usage:    "Send a self-generated numeric code to the end-user",
+			Default:  nil,
+			BodyPath: "custom_code",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "timeout-secs",
+			Usage:    "The number of seconds the verification code is valid for.",
+			BodyPath: "timeout_secs",
+		},
+	},
+	Action:          handleVerificationsTriggerWhatsappVerification,
+	HideHelpCommand: true,
+}
+
 func handleVerificationsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -263,4 +296,38 @@ func handleVerificationsTriggerSMS(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
 	return ShowJSON(os.Stdout, "verifications trigger-sms", obj, format, transform)
+}
+
+func handleVerificationsTriggerWhatsappVerification(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.VerificationTriggerWhatsappVerificationParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Verifications.TriggerWhatsappVerification(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "verifications trigger-whatsapp-verification", obj, format, transform)
 }
