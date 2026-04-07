@@ -24,6 +24,7 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"--sms", "{alpha_sender: sqF, app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 			"--webhook-failover-url", "http://example.com/webhook/failover",
 			"--webhook-url", "http://example.com/webhook",
+			"--whatsapp", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
 		)
 	})
 
@@ -60,6 +61,9 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"--sms.whitelisted-destinations", "[US, CA]",
 			"--webhook-failover-url", "http://example.com/webhook/failover",
 			"--webhook-url", "http://example.com/webhook",
+			"--whatsapp.app-name", "Example Secure App",
+			"--whatsapp.default-verification-timeout-secs", "300",
+			"--whatsapp.whitelisted-destinations", "[US, CA]",
 		)
 	})
 
@@ -101,7 +105,13 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"    - US\n" +
 			"    - CA\n" +
 			"webhook_failover_url: http://example.com/webhook/failover\n" +
-			"webhook_url: http://example.com/webhook\n")
+			"webhook_url: http://example.com/webhook\n" +
+			"whatsapp:\n" +
+			"  app_name: Example Secure App\n" +
+			"  default_verification_timeout_secs: 300\n" +
+			"  whitelisted_destinations:\n" +
+			"    - US\n" +
+			"    - CA\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -138,6 +148,7 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"--sms", "{alpha_sender: sqF, app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 			"--webhook-failover-url", "http://example.com/webhook/failover",
 			"--webhook-url", "http://example.com/webhook",
+			"--whatsapp", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
 		)
 	})
 
@@ -175,6 +186,9 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"--sms.whitelisted-destinations", "[US, CA]",
 			"--webhook-failover-url", "http://example.com/webhook/failover",
 			"--webhook-url", "http://example.com/webhook",
+			"--whatsapp.app-name", "Example Secure App",
+			"--whatsapp.default-verification-timeout-secs", "300",
+			"--whatsapp.whitelisted-destinations", "[US, CA]",
 		)
 	})
 
@@ -216,7 +230,13 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"    - US\n" +
 			"    - CA\n" +
 			"webhook_failover_url: http://example.com/webhook/failover\n" +
-			"webhook_url: http://example.com/webhook\n")
+			"webhook_url: http://example.com/webhook\n" +
+			"whatsapp:\n" +
+			"  app_name: Example Secure App\n" +
+			"  default_verification_timeout_secs: 300\n" +
+			"  whitelisted_destinations:\n" +
+			"    - US\n" +
+			"    - CA\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
