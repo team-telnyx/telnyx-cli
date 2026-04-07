@@ -546,9 +546,19 @@ var messagesSendWhatsapp = requestflag.WithInnerFlags(cli.Command{
 			Name:       "whatsapp-message.sticker",
 			InnerField: "sticker",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.template",
+			Usage:      "Template message object. Provide either template_id or name + language to identify the template.",
+			InnerField: "template",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.text",
+			Usage:      "Text message content. Can only be sent within a 24-hour customer service window.",
+			InnerField: "text",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "whatsapp-message.type",
-			Usage:      `Allowed values: "audio", "document", "image", "sticker", "video", "interactive", "location", "template", "reaction", "contacts".`,
+			Usage:      `Allowed values: "audio", "document", "image", "sticker", "video", "interactive", "location", "template", "reaction", "contacts", "text".`,
 			InnerField: "type",
 		},
 		&requestflag.InnerFlag[map[string]any]{
