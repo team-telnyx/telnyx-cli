@@ -2286,6 +2286,11 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "preferred_codecs",
 		},
 		&requestflag.Flag[string]{
+			Name:     "privacy",
+			Usage:    "Indicates the privacy level to be used for the call. When set to `id`, caller ID information (name and number) will be hidden from the called party. When set to `none` or omitted, caller ID will be shown normally.",
+			BodyPath: "privacy",
+		},
+		&requestflag.Flag[string]{
 			Name:     "record",
 			Usage:    "Start recording automatically after an event. Disabled by default.",
 			BodyPath: "record",
