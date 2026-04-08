@@ -8,37 +8,13 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestEnterprisesReputationRetrieve(t *testing.T) {
+func TestEnterprisesReputationCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"enterprises:reputation", "retrieve",
-			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-		)
-	})
-}
-
-func TestEnterprisesReputationDisable(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"enterprises:reputation", "disable",
-			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-		)
-	})
-}
-
-func TestEnterprisesReputationEnable(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"enterprises:reputation", "enable",
+			"enterprises:reputation", "create",
 			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--loa-document-id", "doc_01HXYZ1234ABCDEF",
 			"--check-frequency", "business_daily",
@@ -53,7 +29,31 @@ func TestEnterprisesReputationEnable(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"enterprises:reputation", "enable",
+			"enterprises:reputation", "create",
+			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
+}
+
+func TestEnterprisesReputationList(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"enterprises:reputation", "list",
+			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
+}
+
+func TestEnterprisesReputationDeleteAll(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"enterprises:reputation", "delete-all",
 			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})

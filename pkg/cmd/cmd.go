@@ -3143,9 +3143,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&enterprisesReputationRetrieve,
-					&enterprisesReputationDisable,
-					&enterprisesReputationEnable,
+					&enterprisesReputationCreate,
+					&enterprisesReputationList,
+					&enterprisesReputationDeleteAll,
 					&enterprisesReputationUpdateFrequency,
 				},
 			},
@@ -3154,10 +3154,10 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&enterprisesReputationNumbersCreate,
 					&enterprisesReputationNumbersRetrieve,
 					&enterprisesReputationNumbersList,
-					&enterprisesReputationNumbersAssociate,
-					&enterprisesReputationNumbersDisassociate,
+					&enterprisesReputationNumbersDelete,
 				},
 			},
 			{
@@ -3176,6 +3176,18 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&termsOfServiceNumberReputationAgree,
+				},
+			},
+			{
+				Name:     "pronunciation-dicts",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&pronunciationDictsCreate,
+					&pronunciationDictsRetrieve,
+					&pronunciationDictsUpdate,
+					&pronunciationDictsList,
+					&pronunciationDictsDelete,
 				},
 			},
 			{
