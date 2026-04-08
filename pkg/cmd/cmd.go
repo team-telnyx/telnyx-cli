@@ -2459,6 +2459,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&texmlInitiateAICall,
 					&texmlSecrets,
 				},
 			},
@@ -3142,9 +3143,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&enterprisesReputationCreate,
-					&enterprisesReputationList,
-					&enterprisesReputationDeleteAll,
+					&enterprisesReputationRetrieve,
+					&enterprisesReputationDisable,
+					&enterprisesReputationEnable,
 					&enterprisesReputationUpdateFrequency,
 				},
 			},
@@ -3153,10 +3154,10 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&enterprisesReputationNumbersCreate,
 					&enterprisesReputationNumbersRetrieve,
 					&enterprisesReputationNumbersList,
-					&enterprisesReputationNumbersDelete,
+					&enterprisesReputationNumbersAssociate,
+					&enterprisesReputationNumbersDisassociate,
 				},
 			},
 			{

@@ -15,26 +15,6 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var enterprisesReputationNumbersCreate = cli.Command{
-	Name:    "create",
-	Usage:   "Associate one or more phone numbers with an enterprise for Number Reputation\nmonitoring.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
-		},
-		&requestflag.Flag[[]string]{
-			Name:     "phone-number",
-			Usage:    "List of phone numbers to associate for reputation monitoring (max 100)",
-			Required: true,
-			BodyPath: "phone_numbers",
-		},
-	},
-	Action:          handleEnterprisesReputationNumbersCreate,
-	HideHelpCommand: true,
-}
-
 var enterprisesReputationNumbersRetrieve = cli.Command{
 	Name:    "retrieve",
 	Usage:   "Get detailed reputation data for a specific phone number associated with an\nenterprise.",
@@ -94,8 +74,28 @@ var enterprisesReputationNumbersList = cli.Command{
 	HideHelpCommand: true,
 }
 
-var enterprisesReputationNumbersDelete = cli.Command{
-	Name:    "delete",
+var enterprisesReputationNumbersAssociate = cli.Command{
+	Name:    "associate",
+	Usage:   "Associate one or more phone numbers with an enterprise for Number Reputation\nmonitoring.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "enterprise-id",
+			Required: true,
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "phone-number",
+			Usage:    "List of phone numbers to associate for reputation monitoring (max 100)",
+			Required: true,
+			BodyPath: "phone_numbers",
+		},
+	},
+	Action:          handleEnterprisesReputationNumbersAssociate,
+	HideHelpCommand: true,
+}
+
+var enterprisesReputationNumbersDisassociate = cli.Command{
+	Name:    "disassociate",
 	Usage:   "Remove a phone number from Number Reputation monitoring for an enterprise.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -108,50 +108,8 @@ var enterprisesReputationNumbersDelete = cli.Command{
 			Required: true,
 		},
 	},
-	Action:          handleEnterprisesReputationNumbersDelete,
+	Action:          handleEnterprisesReputationNumbersDisassociate,
 	HideHelpCommand: true,
-}
-
-func handleEnterprisesReputationNumbersCreate(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
-		cmd.Set("enterprise-id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.EnterpriseReputationNumberNewParams{}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.Reputation.Numbers.New(
-		ctx,
-		cmd.Value("enterprise-id").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "enterprises:reputation:numbers create", obj, format, transform)
 }
 
 func handleEnterprisesReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -253,7 +211,49 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 	}
 }
 
-func handleEnterprisesReputationNumbersDelete(ctx context.Context, cmd *cli.Command) error {
+func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
+		cmd.Set("enterprise-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.EnterpriseReputationNumberAssociateParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Enterprises.Reputation.Numbers.Associate(
+		ctx,
+		cmd.Value("enterprise-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "enterprises:reputation:numbers associate", obj, format, transform)
+}
+
+func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
@@ -264,7 +264,7 @@ func handleEnterprisesReputationNumbersDelete(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNumberDeleteParams{
+	params := telnyx.EnterpriseReputationNumberDisassociateParams{
 		EnterpriseID: cmd.Value("enterprise-id").(string),
 	}
 
@@ -279,7 +279,7 @@ func handleEnterprisesReputationNumbersDelete(ctx context.Context, cmd *cli.Comm
 		return err
 	}
 
-	return client.Enterprises.Reputation.Numbers.Delete(
+	return client.Enterprises.Reputation.Numbers.Disassociate(
 		ctx,
 		cmd.Value("phone-number").(string),
 		params,

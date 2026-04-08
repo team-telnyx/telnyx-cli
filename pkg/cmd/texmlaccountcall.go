@@ -199,6 +199,12 @@ var texmlAccountsCallsCalls = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "MachineDetectionTimeout",
 		},
 		&requestflag.Flag[string]{
+			Name:     "media-encryption",
+			Usage:    "Defines whether media should be encrypted on the call. When set to `SRTP`, the call will use Secure Real-time Transport Protocol for media encryption. When set to `DTLS`, the call will use DTLS for media encryption. Only supported for SIP destinations.",
+			Default:  "disabled",
+			BodyPath: "MediaEncryption",
+		},
+		&requestflag.Flag[string]{
 			Name:     "preferred-codecs",
 			Usage:    "The list of comma-separated codecs to be offered on a call.",
 			BodyPath: "PreferredCodecs",

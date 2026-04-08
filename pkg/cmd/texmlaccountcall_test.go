@@ -88,6 +88,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--machine-detection-speech-end-threshold", "2000",
 			"--machine-detection-speech-threshold", "2000",
 			"--machine-detection-timeout", "5000",
+			"--media-encryption", "disabled",
 			"--preferred-codecs", "PCMA,PCMU",
 			"--record=false",
 			"--recording-channels", "dual",
@@ -142,6 +143,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--machine-detection-speech-end-threshold", "2000",
 			"--machine-detection-speech-threshold", "2000",
 			"--machine-detection-timeout", "5000",
+			"--media-encryption", "disabled",
 			"--preferred-codecs", "PCMA,PCMU",
 			"--record=false",
 			"--recording-channels", "dual",
@@ -190,6 +192,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"MachineDetectionSpeechEndThreshold: 2000\n" +
 			"MachineDetectionSpeechThreshold: 2000\n" +
 			"MachineDetectionTimeout: 5000\n" +
+			"MediaEncryption: disabled\n" +
 			"PreferredCodecs: PCMA,PCMU\n" +
 			"Record: false\n" +
 			"RecordingChannels: dual\n" +
