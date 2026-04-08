@@ -63,14 +63,13 @@ var wirelessBlocklistsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[string]{
 			Name:     "name",
 			Usage:    "The name of the Wireless Blocklist.",
 			BodyPath: "name",
-		},
-		&requestflag.Flag[string]{
-			Name:     "type",
-			Usage:    "The type of wireless blocklist.",
-			BodyPath: "type",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "value",
@@ -209,7 +208,10 @@ func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) err
 func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
@@ -229,7 +231,12 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.Update(ctx, params, options...)
+	_, err = client.WirelessBlocklists.Update(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
 	if err != nil {
 		return err
 	}
