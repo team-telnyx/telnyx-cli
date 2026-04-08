@@ -1,5 +1,53 @@
 # Changelog
 
+## 0.12.0 (2026-04-08)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* Add ai_calls endpoint documentation to OpenAPI spec ([f1c9bd5](https://github.com/team-telnyx/telnyx-cli/commit/f1c9bd5b00a76a33fea03270e7e9f5f7c8763e89))
+* add enabled boolean to recording_settings [AI-2178] ([ec91b1f](https://github.com/team-telnyx/telnyx-cli/commit/ec91b1f798c6a35209c379d9e2d1ea89e109fd15))
+* Add oneOf constraint for Url/Texml mutual exclusivity in InitiateCallRequest ([89a2239](https://github.com/team-telnyx/telnyx-cli/commit/89a2239d1c66a119a75498b22a0817735b8aebf3))
+* allow `-` as value representing stdin to binary-only file parameters in CLIs ([582ca25](https://github.com/team-telnyx/telnyx-cli/commit/582ca25e5725d84ed631076e495ab2017073b2e5))
+* **api:** Merge pull request [#39](https://github.com/team-telnyx/telnyx-cli/issues/39) from stainless-sdks/revert-a988c49-stainless-changes ([d0b4fb7](https://github.com/team-telnyx/telnyx-cli/commit/d0b4fb79c8a60f8a74d9240e1f66b22e5b2339b1))
+* Assistants: add observability ([30aeebd](https://github.com/team-telnyx/telnyx-cli/commit/30aeebd6a8af1ba58d88b21bef3c2f26a98c9be4))
+* better error message if scheme forgotten in CLI `*_BASE_URL`/`--base-url` ([fe6692f](https://github.com/team-telnyx/telnyx-cli/commit/fe6692fd3538537653fa41dd2549501c2e274cc8))
+* binary-only parameters become CLI flags that take filenames only ([48320fe](https://github.com/team-telnyx/telnyx-cli/commit/48320fe13015f3df8e374bbd5d6dfc08d6385a45))
+* CW-3815 fix PATCH /wirelss_blocklists/{id} endpoint ([e79b255](https://github.com/team-telnyx/telnyx-cli/commit/e79b255f0d19123d39810316ccef214a3cc9874e))
+* MSG-6666: Add template and text properties to WhatsApp send message schema ([ad850ce](https://github.com/team-telnyx/telnyx-cli/commit/ad850ce7285f90a8bf34871ca0317b91303655e6))
+* MSG-6673: Add WhatsApp verification endpoint and profile settings ([afa27f9](https://github.com/team-telnyx/telnyx-cli/commit/afa27f9c2c0505fc3e6e1be4978841a470caabc5))
+* TELAPPS-5689: Pronunciation dictionaries API docs ([b227761](https://github.com/team-telnyx/telnyx-cli/commit/b227761b27b3f40c16313d84dfc1f89cd93b89c1))
+* TELAPPS-5707: Add privacy parameter to Call Control dial and transfer ([2690bde](https://github.com/team-telnyx/telnyx-cli/commit/2690bdee6a35a0e666ad1353558f13c19bb9323a))
+
+
+### Bug Fixes
+
+* fall back to main branch if linking fails in CI ([b15fbd9](https://github.com/team-telnyx/telnyx-cli/commit/b15fbd971a4fb6e6e080d93f1551e543d389d42f))
+* fix quoting typo ([33cd916](https://github.com/team-telnyx/telnyx-cli/commit/33cd916b35dcad691428d091cd592793d196a45e))
+* handle empty data set using `--format explore` ([99a4d51](https://github.com/team-telnyx/telnyx-cli/commit/99a4d510cb87eb168047bf1c6fdeb0c437f62020))
+* use `RawJSON` when iterating items with `--format explore` in the CLI ([8ce1bdf](https://github.com/team-telnyx/telnyx-cli/commit/8ce1bdf40f58131276cb3fa93ba41fcad21cea05))
+
+
+### Reverts
+
+* restore stainless.yml SDK generation fixes ([d0b4fb7](https://github.com/team-telnyx/telnyx-cli/commit/d0b4fb79c8a60f8a74d9240e1f66b22e5b2339b1))
+* revert stainless.yml changes from 9c5e8d8 ([672e695](https://github.com/team-telnyx/telnyx-cli/commit/672e695abf10cce2170a230d46b898dfc2698955))
+* revert stainless.yml changes from pronunciation dictionaries commit ([6423199](https://github.com/team-telnyx/telnyx-cli/commit/6423199f049b4619c6e0e1fdc0e1b453e61d8947))
+
+
+### Chores
+
+* **cli:** let `--format raw` be used in conjunction with `--transform` ([3485c53](https://github.com/team-telnyx/telnyx-cli/commit/3485c53e921c61c6acfc8d291a31f608763d0f76))
+* mark all CLI-related tests in Go with `t.Parallel()` ([8160f26](https://github.com/team-telnyx/telnyx-cli/commit/8160f267fd92929774601c4c925a9b23493cdbae))
+* modify CLI tests to inject stdout so mutating `os.Stdout` isn't necessary ([6bec16e](https://github.com/team-telnyx/telnyx-cli/commit/6bec16e89f66b8283dc05208f2ec55fe2e1a307a))
+* switch some CLI Go tests from `os.Chdir` to `t.Chdir` ([94fe13c](https://github.com/team-telnyx/telnyx-cli/commit/94fe13c2ed0cadcba6d51548f4d9b5fa6b3e7239))
+
+
+### Documentation
+
+* update voice clone schemas to match Ultra/model_id implementation ([bae47cc](https://github.com/team-telnyx/telnyx-cli/commit/bae47cc372a0b56a77bb494f31baa90e28aff117))
+
 ## 0.11.0 (2026-04-01)
 
 Full Changelog: [v0.10.1...v0.11.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.10.1...v0.11.0)
