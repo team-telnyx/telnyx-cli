@@ -101,22 +101,15 @@ var texmlAccountsCallsCalls = requestflag.WithInnerFlags(cli.Command{
 			Required: true,
 		},
 		&requestflag.Flag[string]{
+			Name:     "url",
+			Usage:    "The URL from which Telnyx will retrieve the TeXML call instructions.",
+			Required: true,
+			BodyPath: "Url",
+		},
+		&requestflag.Flag[string]{
 			Name:     "application-sid",
 			Usage:    "The ID of the TeXML Application.",
-			Required: true,
 			BodyPath: "ApplicationSid",
-		},
-		&requestflag.Flag[string]{
-			Name:     "from",
-			Usage:    "The phone number of the party that initiated the call. Phone numbers are formatted with a `+` and country code.",
-			Required: true,
-			BodyPath: "From",
-		},
-		&requestflag.Flag[string]{
-			Name:     "to",
-			Usage:    "The phone number of the called party. Phone numbers are formatted with a `+` and country code.",
-			Required: true,
-			BodyPath: "To",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "async-amd",
@@ -167,6 +160,11 @@ var texmlAccountsCallsCalls = requestflag.WithInnerFlags(cli.Command{
 			Name:     "fallback-url",
 			Usage:    "A failover URL for which Telnyx will retrieve the TeXML call instructions if the `Url` is not responding.",
 			BodyPath: "FallbackUrl",
+		},
+		&requestflag.Flag[string]{
+			Name:     "from",
+			Usage:    "The phone number of the party that initiated the call. Phone numbers are formatted with a `+` and country code.",
+			BodyPath: "From",
 		},
 		&requestflag.Flag[string]{
 			Name:     "machine-detection",
@@ -295,9 +293,8 @@ var texmlAccountsCallsCalls = requestflag.WithInnerFlags(cli.Command{
 			Default:  "barge",
 			BodyPath: "SupervisingRole",
 		},
-		&requestflag.Flag[string]{
+		&requestflag.Flag[any]{
 			Name:     "texml",
-			Usage:    "TeXML to be used as instructions for the call. If provided, the call will execute these instructions instead of fetching from the Url.",
 			BodyPath: "Texml",
 		},
 		&requestflag.Flag[int64]{
@@ -313,14 +310,14 @@ var texmlAccountsCallsCalls = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "Timeout",
 		},
 		&requestflag.Flag[string]{
+			Name:     "to",
+			Usage:    "The phone number of the called party. Phone numbers are formatted with a `+` and country code.",
+			BodyPath: "To",
+		},
+		&requestflag.Flag[string]{
 			Name:     "trim",
 			Usage:    "Whether to trim any leading and trailing silence from the recording. Defaults to `trim-silence`.",
 			BodyPath: "Trim",
-		},
-		&requestflag.Flag[string]{
-			Name:     "url",
-			Usage:    "The URL from which Telnyx will retrieve the TeXML call instructions.",
-			BodyPath: "Url",
 		},
 		&requestflag.Flag[string]{
 			Name:     "url-method",
