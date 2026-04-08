@@ -3157,9 +3157,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&enterprisesReputationRetrieve,
-					&enterprisesReputationDisable,
-					&enterprisesReputationEnable,
+					&enterprisesReputationCreate,
+					&enterprisesReputationList,
+					&enterprisesReputationDeleteAll,
 					&enterprisesReputationUpdateFrequency,
 				},
 			},
@@ -3168,10 +3168,10 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&enterprisesReputationNumbersCreate,
 					&enterprisesReputationNumbersRetrieve,
 					&enterprisesReputationNumbersList,
-					&enterprisesReputationNumbersAssociate,
-					&enterprisesReputationNumbersDisassociate,
+					&enterprisesReputationNumbersDelete,
 				},
 			},
 			{
