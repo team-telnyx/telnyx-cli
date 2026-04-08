@@ -15,8 +15,36 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var enterprisesReputationCreate = cli.Command{
-	Name:    "create",
+var enterprisesReputationRetrieve = cli.Command{
+	Name:    "retrieve",
+	Usage:   "Retrieve the current Number Reputation settings for an enterprise.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "enterprise-id",
+			Required: true,
+		},
+	},
+	Action:          handleEnterprisesReputationRetrieve,
+	HideHelpCommand: true,
+}
+
+var enterprisesReputationDisable = cli.Command{
+	Name:    "disable",
+	Usage:   "Disable Number Reputation for an enterprise.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "enterprise-id",
+			Required: true,
+		},
+	},
+	Action:          handleEnterprisesReputationDisable,
+	HideHelpCommand: true,
+}
+
+var enterprisesReputationEnable = cli.Command{
+	Name:    "enable",
 	Usage:   "Enable Number Reputation service for an enterprise.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -37,35 +65,7 @@ var enterprisesReputationCreate = cli.Command{
 			BodyPath: "check_frequency",
 		},
 	},
-	Action:          handleEnterprisesReputationCreate,
-	HideHelpCommand: true,
-}
-
-var enterprisesReputationList = cli.Command{
-	Name:    "list",
-	Usage:   "Retrieve the current Number Reputation settings for an enterprise.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
-		},
-	},
-	Action:          handleEnterprisesReputationList,
-	HideHelpCommand: true,
-}
-
-var enterprisesReputationDeleteAll = cli.Command{
-	Name:    "delete-all",
-	Usage:   "Disable Number Reputation for an enterprise.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
-		},
-	},
-	Action:          handleEnterprisesReputationDeleteAll,
+	Action:          handleEnterprisesReputationEnable,
 	HideHelpCommand: true,
 }
 
@@ -89,7 +89,7 @@ var enterprisesReputationUpdateFrequency = cli.Command{
 	HideHelpCommand: true,
 }
 
-func handleEnterprisesReputationCreate(ctx context.Context, cmd *cli.Command) error {
+func handleEnterprisesReputationRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
@@ -100,7 +100,67 @@ func handleEnterprisesReputationCreate(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNewParams{}
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Enterprises.Reputation.Get(ctx, cmd.Value("enterprise-id").(string), options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(os.Stdout, "enterprises:reputation retrieve", obj, format, transform)
+}
+
+func handleEnterprisesReputationDisable(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
+		cmd.Set("enterprise-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	return client.Enterprises.Reputation.Disable(ctx, cmd.Value("enterprise-id").(string), options...)
+}
+
+func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
+		cmd.Set("enterprise-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.EnterpriseReputationEnableParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -115,7 +175,7 @@ func handleEnterprisesReputationCreate(ctx context.Context, cmd *cli.Command) er
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.Reputation.New(
+	_, err = client.Enterprises.Reputation.Enable(
 		ctx,
 		cmd.Value("enterprise-id").(string),
 		params,
@@ -128,67 +188,7 @@ func handleEnterprisesReputationCreate(ctx context.Context, cmd *cli.Command) er
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "enterprises:reputation create", obj, format, transform)
-}
-
-func handleEnterprisesReputationList(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
-		cmd.Set("enterprise-id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.Reputation.List(ctx, cmd.Value("enterprise-id").(string), options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "enterprises:reputation list", obj, format, transform)
-}
-
-func handleEnterprisesReputationDeleteAll(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
-		cmd.Set("enterprise-id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	return client.Enterprises.Reputation.DeleteAll(ctx, cmd.Value("enterprise-id").(string), options...)
+	return ShowJSON(os.Stdout, "enterprises:reputation enable", obj, format, transform)
 }
 
 func handleEnterprisesReputationUpdateFrequency(ctx context.Context, cmd *cli.Command) error {
