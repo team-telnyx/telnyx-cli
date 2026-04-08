@@ -1731,6 +1731,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--mute-dtmf", "opposite",
 			"--park-after-unbridge", "self",
 			"--preferred-codecs", "G722,PCMU,PCMA,G729,OPUS,VP8,H264",
+			"--privacy", "id",
 			"--record", "record-from-answer",
 			"--record-channels", "single",
 			"--record-custom-file-name", "my_recording_file_name",
@@ -1793,6 +1794,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--mute-dtmf", "opposite",
 			"--park-after-unbridge", "self",
 			"--preferred-codecs", "G722,PCMU,PCMA,G729,OPUS,VP8,H264",
+			"--privacy", "id",
 			"--record", "record-from-answer",
 			"--record-channels", "single",
 			"--record-custom-file-name", "my_recording_file_name",
@@ -1854,6 +1856,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"mute_dtmf: opposite\n" +
 			"park_after_unbridge: self\n" +
 			"preferred_codecs: G722,PCMU,PCMA,G729,OPUS,VP8,H264\n" +
+			"privacy: id\n" +
 			"record: record-from-answer\n" +
 			"record_channels: single\n" +
 			"record_custom_file_name: my_recording_file_name\n" +
