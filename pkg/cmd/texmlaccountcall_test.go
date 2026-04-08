@@ -71,9 +71,8 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--api-key", "string",
 			"texml:accounts:calls", "calls",
 			"--account-sid", "account_sid",
-			"--application-sid", "example-app-sid",
-			"--from", "+13120001234",
-			"--to", "+13121230000",
+			"--url", "https://www.example.com/instructions.xml",
+			"--application-sid", "ApplicationSid",
 			"--async-amd=true",
 			"--async-amd-status-callback", "https://www.example.com/callback",
 			"--async-amd-status-callback-method", "GET",
@@ -83,6 +82,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--custom-header", "{name: X-Custom-Header, value: custom-value}",
 			"--detection-mode", "Premium",
 			"--fallback-url", "https://www.example.com/instructions-fallback.xml",
+			"--from", "+16175551212",
 			"--machine-detection", "Enable",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
@@ -101,16 +101,16 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--sip-auth-password", "1234",
 			"--sip-auth-username", "user",
 			"--sip-region", "Canada",
-			"--status-callback", "https://www.example.com/statuscallback-listener",
+			"--status-callback", "https://www.example.com/callback",
 			"--status-callback-event", "initiated",
 			"--status-callback-method", "GET",
 			"--supervise-call-sid", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 			"--supervising-role", "monitor",
-			"--texml", `<?xml version="1.0" encoding="UTF-8"?><Response><Say>Hello</Say></Response>`,
+			"--texml", "{}",
 			"--time-limit", "3600",
 			"--timeout-seconds", "60",
+			"--to", "+16175551212",
 			"--trim", "trim-silence",
-			"--url", "https://www.example.com/texml.xml",
 			"--url-method", "GET",
 		)
 	})
@@ -125,9 +125,8 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--api-key", "string",
 			"texml:accounts:calls", "calls",
 			"--account-sid", "account_sid",
-			"--application-sid", "example-app-sid",
-			"--from", "+13120001234",
-			"--to", "+13121230000",
+			"--url", "https://www.example.com/instructions.xml",
+			"--application-sid", "ApplicationSid",
 			"--async-amd=true",
 			"--async-amd-status-callback", "https://www.example.com/callback",
 			"--async-amd-status-callback-method", "GET",
@@ -138,6 +137,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--custom-header.value", "custom-value",
 			"--detection-mode", "Premium",
 			"--fallback-url", "https://www.example.com/instructions-fallback.xml",
+			"--from", "+16175551212",
 			"--machine-detection", "Enable",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
@@ -156,16 +156,16 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--sip-auth-password", "1234",
 			"--sip-auth-username", "user",
 			"--sip-region", "Canada",
-			"--status-callback", "https://www.example.com/statuscallback-listener",
+			"--status-callback", "https://www.example.com/callback",
 			"--status-callback-event", "initiated",
 			"--status-callback-method", "GET",
 			"--supervise-call-sid", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 			"--supervising-role", "monitor",
-			"--texml", `<?xml version="1.0" encoding="UTF-8"?><Response><Say>Hello</Say></Response>`,
+			"--texml", "{}",
 			"--time-limit", "3600",
 			"--timeout-seconds", "60",
+			"--to", "+16175551212",
 			"--trim", "trim-silence",
-			"--url", "https://www.example.com/texml.xml",
 			"--url-method", "GET",
 		)
 	})
@@ -173,9 +173,8 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"ApplicationSid: example-app-sid\n" +
-			"From: '+13120001234'\n" +
-			"To: '+13121230000'\n" +
+			"Url: https://www.example.com/instructions.xml\n" +
+			"ApplicationSid: ApplicationSid\n" +
 			"AsyncAmd: true\n" +
 			"AsyncAmdStatusCallback: https://www.example.com/callback\n" +
 			"AsyncAmdStatusCallbackMethod: GET\n" +
@@ -187,6 +186,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"    value: custom-value\n" +
 			"DetectionMode: Premium\n" +
 			"FallbackUrl: https://www.example.com/instructions-fallback.xml\n" +
+			"From: '+16175551212'\n" +
 			"MachineDetection: Enable\n" +
 			"MachineDetectionSilenceTimeout: 2000\n" +
 			"MachineDetectionSpeechEndThreshold: 2000\n" +
@@ -205,16 +205,16 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"SipAuthPassword: '1234'\n" +
 			"SipAuthUsername: user\n" +
 			"SipRegion: Canada\n" +
-			"StatusCallback: https://www.example.com/statuscallback-listener\n" +
+			"StatusCallback: https://www.example.com/callback\n" +
 			"StatusCallbackEvent: initiated\n" +
 			"StatusCallbackMethod: GET\n" +
 			"SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg\n" +
 			"SupervisingRole: monitor\n" +
-			"Texml: <?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Hello</Say></Response>\n" +
+			"Texml: {}\n" +
 			"TimeLimit: 3600\n" +
 			"Timeout: 60\n" +
+			"To: '+16175551212'\n" +
 			"Trim: trim-silence\n" +
-			"Url: https://www.example.com/texml.xml\n" +
 			"UrlMethod: GET\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
