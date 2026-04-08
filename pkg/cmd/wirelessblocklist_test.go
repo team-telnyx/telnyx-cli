@@ -57,8 +57,8 @@ func TestWirelessBlocklistsUpdate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"wireless-blocklists", "update",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--name", "My Wireless Blocklist",
-			"--type", "country",
 			"--value", "CA",
 			"--value", "US",
 		)
@@ -68,7 +68,6 @@ func TestWirelessBlocklistsUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"name: My Wireless Blocklist\n" +
-			"type: country\n" +
 			"values:\n" +
 			"  - CA\n" +
 			"  - US\n")
@@ -76,6 +75,7 @@ func TestWirelessBlocklistsUpdate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"wireless-blocklists", "update",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
 }
