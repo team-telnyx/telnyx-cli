@@ -106,11 +106,12 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			"--api-key", "string",
 			"voice-clones", "create-from-upload",
 			"--audio-file", mocktest.TestFile(t, "Example data"),
+			"--gender", "male",
 			"--language", "lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf",
 			"--name", "name",
-			"--gender", "male",
-			"--label", "label",
 			"--provider", "telnyx",
+			"--label", "label",
+			"--model-id", "Qwen3TTS",
 			"--ref-text", "ref_text",
 		)
 	})
@@ -120,11 +121,12 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeDataStr := "" +
 			"audio_file: Example data\n" +
+			"gender: male\n" +
 			"language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf\n" +
 			"name: name\n" +
-			"gender: male\n" +
-			"label: label\n" +
 			"provider: telnyx\n" +
+			"label: label\n" +
+			"model_id: Qwen3TTS\n" +
 			"ref_text: ref_text\n"
 		pipeDataStr = strings.ReplaceAll(pipeDataStr, "Example data", testFile)
 		pipeData := []byte(pipeDataStr)

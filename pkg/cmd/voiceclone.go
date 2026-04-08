@@ -28,7 +28,7 @@ var voiceClonesCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "language",
-			Usage:    "ISO 639-1 language code for the clone (e.g. `en`, `fr`, `de`).",
+			Usage:    "ISO 639-1 language code for the clone. Supports the combined Telnyx language set.",
 			Required: true,
 			BodyPath: "language",
 		},
@@ -46,7 +46,7 @@ var voiceClonesCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "provider",
-			Usage:    "Voice synthesis provider. Case-insensitive. Defaults to `telnyx`.",
+			Usage:    "Voice synthesis provider. Defaults to `telnyx`.",
 			Default:  "telnyx",
 			BodyPath: "provider",
 		},
@@ -143,19 +143,25 @@ var voiceClonesDelete = cli.Command{
 
 var voiceClonesCreateFromUpload = cli.Command{
 	Name:    "create-from-upload",
-	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. For best results, provide 5–10 seconds of\nclear speech. Maximum file size: 2MB.",
+	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. For best results, provide 5–10 seconds of\nclear speech. Maximum file size: 5MB for Telnyx, 20MB for Minimax.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "audio-file",
-			Usage:     "Audio file to clone the voice from. Supported formats: WAV, MP3, FLAC, OGG, M4A. For best quality, provide 5–10 seconds of clear, uninterrupted speech. Maximum size: 5MB for Telnyx, 20MB for Minimax.",
+			Usage:     "Audio file to clone the voice from. Supported formats: WAV, MP3, FLAC, OGG, M4A. For best quality, provide 5–10 seconds of clear, uninterrupted speech. Maximum size: 5MB.",
 			Required:  true,
 			BodyPath:  "audio_file",
 			FileInput: true,
 		},
 		&requestflag.Flag[string]{
+			Name:     "gender",
+			Usage:    "Gender of the voice clone.",
+			Required: true,
+			BodyPath: "gender",
+		},
+		&requestflag.Flag[string]{
 			Name:     "language",
-			Usage:    "ISO 639-1 language code (e.g. `en`, `fr`) or `auto` for automatic detection.",
+			Usage:    "ISO 639-1 language code from the Qwen language set.",
 			Required: true,
 			BodyPath: "language",
 		},
@@ -166,20 +172,20 @@ var voiceClonesCreateFromUpload = cli.Command{
 			BodyPath: "name",
 		},
 		&requestflag.Flag[string]{
-			Name:     "gender",
-			Usage:    "Gender of the voice clone.",
-			BodyPath: "gender",
+			Name:     "provider",
+			Usage:    "Voice synthesis provider. Must be `telnyx`.",
+			Required: true,
+			BodyPath: "provider",
 		},
 		&requestflag.Flag[string]{
 			Name:     "label",
-			Usage:    "Optional custom label describing the voice style. If omitted, falls back to the source design's prompt text.",
+			Usage:    "Optional custom label describing the voice style.",
 			BodyPath: "label",
 		},
-		&requestflag.Flag[string]{
-			Name:     "provider",
-			Usage:    "Voice synthesis provider. Case-insensitive. Defaults to `telnyx`.",
-			Default:  "telnyx",
-			BodyPath: "provider",
+		&requestflag.Flag[any]{
+			Name:     "model-id",
+			Usage:    "TTS model identifier. Nullable/omittable — defaults to Qwen3TTS.",
+			BodyPath: "model_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "ref-text",
