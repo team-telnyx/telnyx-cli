@@ -48,7 +48,7 @@ var x402CreditAccountSettle = cli.Command{
 			BodyPath: "payment_signature",
 		},
 		&requestflag.Flag[string]{
-			Name:       "header-payment-signature",
+			Name:       "payment-signature",
 			HeaderPath: "PAYMENT-SIGNATURE",
 		},
 	},

@@ -39,7 +39,7 @@ func TestX402CreditAccountSettle(t *testing.T) {
 			"x402:credit-account", "settle",
 			"--id", "quote_abc123",
 			"--payment-signature", "0xabc123...",
-			"--header-payment-signature", "PAYMENT-SIGNATURE",
+			"--payment-signature", "PAYMENT-SIGNATURE",
 		)
 	})
 
@@ -52,7 +52,7 @@ func TestX402CreditAccountSettle(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"x402:credit-account", "settle",
-			"--header-payment-signature", "PAYMENT-SIGNATURE",
+			"--payment-signature", "PAYMENT-SIGNATURE",
 		)
 	})
 }
