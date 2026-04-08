@@ -3,7 +3,6 @@
 package cmd
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
@@ -16,11 +15,7 @@ func TestVoiceClonesCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"voice-clones", "create",
-			"--gender", "male",
-			"--language", "en",
-			"--name", "clone-narrator",
-			"--voice-design-id", "550e8400-e29b-41d4-a716-446655440000",
-			"--provider", "telnyx",
+			"--params", "{gender: male, language: en, name: clone-narrator, voice_design_id: 550e8400-e29b-41d4-a716-446655440000, provider: telnyx}",
 		)
 	})
 
@@ -105,21 +100,13 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"voice-clones", "create-from-upload",
-			"--audio-file", mocktest.TestFile(t, "Example data"),
-			"--gender", "male",
-			"--language", "lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf",
-			"--name", "name",
-			"--provider", "telnyx",
-			"--label", "label",
-			"--model-id", "Qwen3TTS",
-			"--ref-text", "ref_text",
+			"--params", "{audio_file: Example data, gender: male, language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf, name: name, provider: telnyx, label: label, model_id: Qwen3TTS, ref_text: ref_text}",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
-		testFile := mocktest.TestFile(t, "Example data")
 		// Test piping YAML data over stdin
-		pipeDataStr := "" +
+		pipeData := []byte("" +
 			"audio_file: Example data\n" +
 			"gender: male\n" +
 			"language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf\n" +
@@ -127,9 +114,7 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			"provider: telnyx\n" +
 			"label: label\n" +
 			"model_id: Qwen3TTS\n" +
-			"ref_text: ref_text\n"
-		pipeDataStr = strings.ReplaceAll(pipeDataStr, "Example data", testFile)
-		pipeData := []byte(pipeDataStr)
+			"ref_text: ref_text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
