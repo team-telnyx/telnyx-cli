@@ -3,6 +3,7 @@
 package cmd
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
@@ -16,7 +17,7 @@ func TestAIAudioTranscribe(t *testing.T) {
 			"--api-key", "string",
 			"ai:audio", "transcribe",
 			"--model", "distil-whisper/distil-large-v2",
-			"--file", "Example data",
+			"--file", mocktest.TestFile(t, "Example data"),
 			"--file-url", "https://example.com/file.mp3",
 			"--language", "en-US",
 			"--model-config", "{smart_format: bar, punctuate: bar}",
@@ -26,8 +27,9 @@ func TestAIAudioTranscribe(t *testing.T) {
 	})
 
 	t.Run("piping data", func(t *testing.T) {
+		testFile := mocktest.TestFile(t, "Example data")
 		// Test piping YAML data over stdin
-		pipeData := []byte("" +
+		pipeDataStr := "" +
 			"model: distil-whisper/distil-large-v2\n" +
 			"file: Example data\n" +
 			"file_url: https://example.com/file.mp3\n" +
@@ -36,7 +38,9 @@ func TestAIAudioTranscribe(t *testing.T) {
 			"  smart_format: bar\n" +
 			"  punctuate: bar\n" +
 			"response_format: json\n" +
-			"timestamp_granularities[]: segment\n")
+			"timestamp_granularities[]: segment\n"
+		pipeDataStr = strings.ReplaceAll(pipeDataStr, "Example data", testFile)
+		pipeData := []byte(pipeDataStr)
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

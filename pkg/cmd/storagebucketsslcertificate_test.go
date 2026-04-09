@@ -3,6 +3,7 @@
 package cmd
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
@@ -16,16 +17,19 @@ func TestStorageBucketsSslCertificateCreate(t *testing.T) {
 			"--api-key", "string",
 			"storage:buckets:ssl-certificate", "create",
 			"--bucket-name", "",
-			"--certificate", "Example data",
-			"--private-key", "Example data",
+			"--certificate", mocktest.TestFile(t, "Example data"),
+			"--private-key", mocktest.TestFile(t, "Example data"),
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
+		testFile := mocktest.TestFile(t, "Example data")
 		// Test piping YAML data over stdin
-		pipeData := []byte("" +
+		pipeDataStr := "" +
 			"certificate: Example data\n" +
-			"private_key: Example data\n")
+			"private_key: Example data\n"
+		pipeDataStr = strings.ReplaceAll(pipeDataStr, "Example data", testFile)
+		pipeData := []byte(pipeDataStr)
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

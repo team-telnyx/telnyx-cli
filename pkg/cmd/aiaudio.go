@@ -28,9 +28,10 @@ var aiAudioTranscribe = cli.Command{
 			BodyPath: "model",
 		},
 		&requestflag.Flag[string]{
-			Name:     "file",
-			Usage:    "The audio file object to transcribe, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. File uploads are limited to 100 MB. Cannot be used together with `file_url`. Note: `deepgram/nova-3` only supports mp3 and wav formats.",
-			BodyPath: "file",
+			Name:      "file",
+			Usage:     "The audio file object to transcribe, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. File uploads are limited to 100 MB. Cannot be used together with `file_url`. Note: `deepgram/nova-3` only supports mp3 and wav formats.",
+			BodyPath:  "file",
+			FileInput: true,
 		},
 		&requestflag.Flag[string]{
 			Name:     "file-url",

@@ -10,6 +10,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/tidwall/gjson"
 )
 
 func TestStreamOutput(t *testing.T) {
@@ -32,7 +33,7 @@ func TestWriteBinaryResponse(t *testing.T) {
 			Body: io.NopCloser(bytes.NewReader(body)),
 		}
 
-		msg, err := writeBinaryResponse(resp, outfile)
+		msg, err := writeBinaryResponse(resp, os.Stdout, outfile)
 
 		require.NoError(t, err)
 		assert.Contains(t, msg, outfile)
@@ -43,34 +44,24 @@ func TestWriteBinaryResponse(t *testing.T) {
 	})
 
 	t.Run("write to stdout", func(t *testing.T) {
-		oldStdout := os.Stdout
-		r, w, _ := os.Pipe()
-		os.Stdout = w
+		t.Parallel()
 
+		var buf bytes.Buffer
 		body := []byte("stdout content")
 		resp := &http.Response{
 			Body: io.NopCloser(bytes.NewReader(body)),
 		}
-		msg, err := writeBinaryResponse(resp, "-")
-
-		w.Close()
-		os.Stdout = oldStdout
+		msg, err := writeBinaryResponse(resp, &buf, "-")
 
 		require.NoError(t, err)
 		assert.Empty(t, msg)
-
-		var buf bytes.Buffer
-		_, _ = buf.ReadFrom(r)
 		assert.Equal(t, body, buf.Bytes())
 	})
 }
 
 func TestCreateDownloadFile(t *testing.T) {
 	t.Run("creates file with filename from header", func(t *testing.T) {
-		tmpDir := t.TempDir()
-		oldWd, _ := os.Getwd()
-		os.Chdir(tmpDir)
-		defer os.Chdir(oldWd)
+		t.Chdir(t.TempDir())
 
 		resp := &http.Response{
 			Header: http.Header{
@@ -96,10 +87,7 @@ func TestCreateDownloadFile(t *testing.T) {
 	})
 
 	t.Run("creates temp file when no header", func(t *testing.T) {
-		tmpDir := t.TempDir()
-		oldWd, _ := os.Getwd()
-		os.Chdir(tmpDir)
-		defer os.Chdir(oldWd)
+		t.Chdir(t.TempDir())
 
 		resp := &http.Response{Header: http.Header{}}
 		file, err := createDownloadFile(resp, []byte("test content"))
@@ -109,10 +97,7 @@ func TestCreateDownloadFile(t *testing.T) {
 	})
 
 	t.Run("prevents directory traversal", func(t *testing.T) {
-		tmpDir := t.TempDir()
-		oldWd, _ := os.Getwd()
-		os.Chdir(tmpDir)
-		defer os.Chdir(oldWd)
+		t.Chdir(t.TempDir())
 
 		resp := &http.Response{
 			Header: http.Header{
@@ -123,5 +108,85 @@ func TestCreateDownloadFile(t *testing.T) {
 		require.NoError(t, err)
 		defer file.Close()
 		assert.Equal(t, "passwd", filepath.Base(file.Name()))
+	})
+}
+
+func TestValidateBaseURL(t *testing.T) {
+	t.Parallel()
+
+	t.Run("ValidHTTPS", func(t *testing.T) {
+		t.Parallel()
+
+		require.NoError(t, ValidateBaseURL("https://api.example.com", "--base-url"))
+	})
+
+	t.Run("ValidHTTP", func(t *testing.T) {
+		t.Parallel()
+
+		require.NoError(t, ValidateBaseURL("http://localhost:8080", "--base-url"))
+	})
+
+	t.Run("Empty", func(t *testing.T) {
+		t.Parallel()
+
+		require.NoError(t, ValidateBaseURL("", "MY_BASE_URL"))
+	})
+
+	t.Run("MissingScheme", func(t *testing.T) {
+		t.Parallel()
+
+		err := ValidateBaseURL("localhost:8080", "MY_BASE_URL")
+		require.Error(t, err)
+		assert.Contains(t, err.Error(), "MY_BASE_URL")
+		assert.Contains(t, err.Error(), "missing a scheme")
+	})
+
+	t.Run("HostOnly", func(t *testing.T) {
+		t.Parallel()
+
+		err := ValidateBaseURL("api.example.com", "--base-url")
+		require.Error(t, err)
+		assert.Contains(t, err.Error(), "--base-url")
+	})
+}
+
+func TestFormatJSON(t *testing.T) {
+	t.Parallel()
+
+	t.Run("RawWithTransform", func(t *testing.T) {
+		t.Parallel()
+
+		res := gjson.Parse(`{"id":"abc123","name":"test"}`)
+		formatted, err := formatJSON(os.Stdout, "test", res, "raw", "id")
+		require.NoError(t, err)
+		require.Equal(t, `"abc123"`+"\n", string(formatted))
+	})
+
+	t.Run("RawWithoutTransform", func(t *testing.T) {
+		t.Parallel()
+
+		res := gjson.Parse(`{"id":"abc123","name":"test"}`)
+		formatted, err := formatJSON(os.Stdout, "test", res, "raw", "")
+		require.NoError(t, err)
+		require.Equal(t, `{"id":"abc123","name":"test"}`+"\n", string(formatted))
+	})
+
+	t.Run("RawWithNestedTransform", func(t *testing.T) {
+		t.Parallel()
+
+		res := gjson.Parse(`{"data":{"items":[1,2,3]}}`)
+		formatted, err := formatJSON(os.Stdout, "test", res, "raw", "data.items")
+		require.NoError(t, err)
+		require.Equal(t, "[1,2,3]\n", string(formatted))
+	})
+
+	t.Run("RawWithNonexistentTransform", func(t *testing.T) {
+		t.Parallel()
+
+		res := gjson.Parse(`{"id":"abc123"}`)
+		formatted, err := formatJSON(os.Stdout, "test", res, "raw", "missing")
+		require.NoError(t, err)
+		// Transform path doesn't exist, so original result is returned
+		require.Equal(t, `{"id":"abc123"}`+"\n", string(formatted))
 	})
 }

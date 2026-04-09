@@ -39,6 +39,7 @@ func TestCallsDial(t *testing.T) {
 			"--park-after-unbridge", "self",
 			"--preferred-codecs", "G722,PCMU,PCMA,G729,OPUS,VP8,H264",
 			"--prevent-double-bridge=true",
+			"--privacy", "id",
 			"--record", "record-from-answer",
 			"--record-channels", "single",
 			"--record-custom-file-name", "my_recording_file_name",
@@ -131,6 +132,7 @@ func TestCallsDial(t *testing.T) {
 			"--park-after-unbridge", "self",
 			"--preferred-codecs", "G722,PCMU,PCMA,G729,OPUS,VP8,H264",
 			"--prevent-double-bridge=true",
+			"--privacy", "id",
 			"--record", "record-from-answer",
 			"--record-channels", "single",
 			"--record-custom-file-name", "my_recording_file_name",
@@ -231,6 +233,7 @@ func TestCallsDial(t *testing.T) {
 			"park_after_unbridge: self\n" +
 			"preferred_codecs: G722,PCMU,PCMA,G729,OPUS,VP8,H264\n" +
 			"prevent_double_bridge: true\n" +
+			"privacy: id\n" +
 			"record: record-from-answer\n" +
 			"record_channels: single\n" +
 			"record_custom_file_name: my_recording_file_name\n" +

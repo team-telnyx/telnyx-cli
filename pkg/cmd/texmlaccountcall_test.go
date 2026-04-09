@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
-	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestTexmlAccountsCallsRetrieve(t *testing.T) {
@@ -71,109 +70,15 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--api-key", "string",
 			"texml:accounts:calls", "calls",
 			"--account-sid", "account_sid",
-			"--application-sid", "example-app-sid",
-			"--from", "+13120001234",
-			"--to", "+13121230000",
-			"--async-amd=true",
-			"--async-amd-status-callback", "https://www.example.com/callback",
-			"--async-amd-status-callback-method", "GET",
-			"--caller-id", "Info",
-			"--cancel-playback-on-detect-message-end=false",
-			"--cancel-playback-on-machine-detection=false",
-			"--custom-header", "{name: X-Custom-Header, value: custom-value}",
-			"--detection-mode", "Premium",
-			"--fallback-url", "https://www.example.com/instructions-fallback.xml",
-			"--machine-detection", "Enable",
-			"--machine-detection-silence-timeout", "2000",
-			"--machine-detection-speech-end-threshold", "2000",
-			"--machine-detection-speech-threshold", "2000",
-			"--machine-detection-timeout", "5000",
-			"--preferred-codecs", "PCMA,PCMU",
-			"--record=false",
-			"--recording-channels", "dual",
-			"--recording-status-callback", "https://example.com/recording_status_callback",
-			"--recording-status-callback-event", "in-progress completed absent",
-			"--recording-status-callback-method", "GET",
-			"--recording-timeout", "5",
-			"--recording-track", "inbound",
-			"--send-recording-url=false",
-			"--sip-auth-password", "1234",
-			"--sip-auth-username", "user",
-			"--sip-region", "Canada",
-			"--status-callback", "https://www.example.com/statuscallback-listener",
-			"--status-callback-event", "initiated",
-			"--status-callback-method", "GET",
-			"--supervise-call-sid", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
-			"--supervising-role", "monitor",
-			"--texml", `<?xml version="1.0" encoding="UTF-8"?><Response><Say>Hello</Say></Response>`,
-			"--time-limit", "3600",
-			"--timeout-seconds", "60",
-			"--trim", "trim-silence",
-			"--url", "https://www.example.com/texml.xml",
-			"--url-method", "GET",
-		)
-	})
-
-	t.Run("inner flags", func(t *testing.T) {
-		// Check that inner flags have been set up correctly
-		requestflag.CheckInnerFlags(texmlAccountsCallsCalls)
-
-		// Alternative argument passing style using inner flags
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"texml:accounts:calls", "calls",
-			"--account-sid", "account_sid",
-			"--application-sid", "example-app-sid",
-			"--from", "+13120001234",
-			"--to", "+13121230000",
-			"--async-amd=true",
-			"--async-amd-status-callback", "https://www.example.com/callback",
-			"--async-amd-status-callback-method", "GET",
-			"--caller-id", "Info",
-			"--cancel-playback-on-detect-message-end=false",
-			"--cancel-playback-on-machine-detection=false",
-			"--custom-header.name", "X-Custom-Header",
-			"--custom-header.value", "custom-value",
-			"--detection-mode", "Premium",
-			"--fallback-url", "https://www.example.com/instructions-fallback.xml",
-			"--machine-detection", "Enable",
-			"--machine-detection-silence-timeout", "2000",
-			"--machine-detection-speech-end-threshold", "2000",
-			"--machine-detection-speech-threshold", "2000",
-			"--machine-detection-timeout", "5000",
-			"--preferred-codecs", "PCMA,PCMU",
-			"--record=false",
-			"--recording-channels", "dual",
-			"--recording-status-callback", "https://example.com/recording_status_callback",
-			"--recording-status-callback-event", "in-progress completed absent",
-			"--recording-status-callback-method", "GET",
-			"--recording-timeout", "5",
-			"--recording-track", "inbound",
-			"--send-recording-url=false",
-			"--sip-auth-password", "1234",
-			"--sip-auth-username", "user",
-			"--sip-region", "Canada",
-			"--status-callback", "https://www.example.com/statuscallback-listener",
-			"--status-callback-event", "initiated",
-			"--status-callback-method", "GET",
-			"--supervise-call-sid", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
-			"--supervising-role", "monitor",
-			"--texml", `<?xml version="1.0" encoding="UTF-8"?><Response><Say>Hello</Say></Response>`,
-			"--time-limit", "3600",
-			"--timeout-seconds", "60",
-			"--trim", "trim-silence",
-			"--url", "https://www.example.com/texml.xml",
-			"--url-method", "GET",
+			"--params", "{Url: https://www.example.com/texml.xml, ApplicationSid: example-app-sid, AsyncAmd: true, AsyncAmdStatusCallback: https://www.example.com/callback, AsyncAmdStatusCallbackMethod: GET, CallerId: Info, CancelPlaybackOnDetectMessageEnd: false, CancelPlaybackOnMachineDetection: false, CustomHeaders: [{name: X-Custom-Header, value: custom-value}], DetectionMode: Premium, FallbackUrl: https://www.example.com/instructions-fallback.xml, From: '+13120001234', MachineDetection: Enable, MachineDetectionSilenceTimeout: 2000, MachineDetectionSpeechEndThreshold: 2000, MachineDetectionSpeechThreshold: 2000, MachineDetectionTimeout: 5000, MediaEncryption: disabled, PreferredCodecs: 'PCMA,PCMU', Record: false, RecordingChannels: dual, RecordingStatusCallback: https://example.com/recording_status_callback, RecordingStatusCallbackEvent: in-progress completed absent, RecordingStatusCallbackMethod: GET, RecordingTimeout: 5, RecordingTrack: inbound, SendRecordingUrl: false, SipAuthPassword: '1234', SipAuthUsername: user, SipRegion: Canada, StatusCallback: https://www.example.com/statuscallback-listener, StatusCallbackEvent: initiated, StatusCallbackMethod: GET, SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg, SupervisingRole: monitor, Texml: Texml, TimeLimit: 3600, Timeout: 60, To: '+13121230000', Trim: trim-silence, UrlMethod: GET}",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
+			"Url: https://www.example.com/texml.xml\n" +
 			"ApplicationSid: example-app-sid\n" +
-			"From: '+13120001234'\n" +
-			"To: '+13121230000'\n" +
 			"AsyncAmd: true\n" +
 			"AsyncAmdStatusCallback: https://www.example.com/callback\n" +
 			"AsyncAmdStatusCallbackMethod: GET\n" +
@@ -185,11 +90,13 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"    value: custom-value\n" +
 			"DetectionMode: Premium\n" +
 			"FallbackUrl: https://www.example.com/instructions-fallback.xml\n" +
+			"From: '+13120001234'\n" +
 			"MachineDetection: Enable\n" +
 			"MachineDetectionSilenceTimeout: 2000\n" +
 			"MachineDetectionSpeechEndThreshold: 2000\n" +
 			"MachineDetectionSpeechThreshold: 2000\n" +
 			"MachineDetectionTimeout: 5000\n" +
+			"MediaEncryption: disabled\n" +
 			"PreferredCodecs: PCMA,PCMU\n" +
 			"Record: false\n" +
 			"RecordingChannels: dual\n" +
@@ -207,11 +114,11 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"StatusCallbackMethod: GET\n" +
 			"SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg\n" +
 			"SupervisingRole: monitor\n" +
-			"Texml: <?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Hello</Say></Response>\n" +
+			"Texml: Texml\n" +
 			"TimeLimit: 3600\n" +
 			"Timeout: 60\n" +
+			"To: '+13121230000'\n" +
 			"Trim: trim-silence\n" +
-			"Url: https://www.example.com/texml.xml\n" +
 			"UrlMethod: GET\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

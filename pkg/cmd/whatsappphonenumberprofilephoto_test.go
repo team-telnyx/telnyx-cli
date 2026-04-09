@@ -3,6 +3,7 @@
 package cmd
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
@@ -28,13 +29,16 @@ func TestWhatsappPhoneNumbersProfilePhotoUpload(t *testing.T) {
 			"--api-key", "string",
 			"whatsapp:phone-numbers:profile:photo", "upload",
 			"--phone-number", "phone_number",
-			"--file", "Example data",
+			"--file", mocktest.TestFile(t, "Example data"),
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
+		testFile := mocktest.TestFile(t, "Example data")
 		// Test piping YAML data over stdin
-		pipeData := []byte("file: Example data")
+		pipeDataStr := "file: Example data"
+		pipeDataStr = strings.ReplaceAll(pipeDataStr, "Example data", testFile)
+		pipeData := []byte(pipeDataStr)
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

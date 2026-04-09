@@ -20,35 +20,11 @@ var voiceClonesCreate = cli.Command{
 	Usage:   "Creates a new voice clone by capturing the voice identity of an existing voice\ndesign. The clone can then be used for text-to-speech synthesis.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "gender",
-			Usage:    "Gender of the voice clone.",
+		&requestflag.Flag[map[string]any]{
+			Name:     "params",
+			Usage:    "Request body for creating a voice clone from an existing voice design.",
 			Required: true,
-			BodyPath: "gender",
-		},
-		&requestflag.Flag[string]{
-			Name:     "language",
-			Usage:    "ISO 639-1 language code for the clone (e.g. `en`, `fr`, `de`).",
-			Required: true,
-			BodyPath: "language",
-		},
-		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "Name for the voice clone.",
-			Required: true,
-			BodyPath: "name",
-		},
-		&requestflag.Flag[string]{
-			Name:     "voice-design-id",
-			Usage:    "UUID of the source voice design to clone.",
-			Required: true,
-			BodyPath: "voice_design_id",
-		},
-		&requestflag.Flag[string]{
-			Name:     "provider",
-			Usage:    "Voice synthesis provider. Case-insensitive. Defaults to `telnyx`.",
-			Default:  "telnyx",
-			BodyPath: "provider",
+			BodyRoot: true,
 		},
 	},
 	Action:          handleVoiceClonesCreate,
@@ -143,47 +119,14 @@ var voiceClonesDelete = cli.Command{
 
 var voiceClonesCreateFromUpload = cli.Command{
 	Name:    "create-from-upload",
-	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. For best results, provide 5–10 seconds of\nclear speech. Maximum file size: 2MB.",
+	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. For best results, provide 5–10 seconds of\nclear speech. Maximum file size: 5MB for Telnyx, 20MB for Minimax.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "audio-file",
-			Usage:    "Audio file to clone the voice from. Supported formats: WAV, MP3, FLAC, OGG, M4A. For best quality, provide 5–10 seconds of clear, uninterrupted speech. Maximum size: 5MB for Telnyx, 20MB for Minimax.",
+		&requestflag.Flag[any]{
+			Name:     "params",
+			Usage:    "Multipart form data for creating a voice clone from a direct audio upload. Maximum file size: 5MB for Telnyx, 20MB for Minimax.",
 			Required: true,
-			BodyPath: "audio_file",
-		},
-		&requestflag.Flag[string]{
-			Name:     "language",
-			Usage:    "ISO 639-1 language code (e.g. `en`, `fr`) or `auto` for automatic detection.",
-			Required: true,
-			BodyPath: "language",
-		},
-		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "Name for the voice clone.",
-			Required: true,
-			BodyPath: "name",
-		},
-		&requestflag.Flag[string]{
-			Name:     "gender",
-			Usage:    "Gender of the voice clone.",
-			BodyPath: "gender",
-		},
-		&requestflag.Flag[string]{
-			Name:     "label",
-			Usage:    "Optional custom label describing the voice style. If omitted, falls back to the source design's prompt text.",
-			BodyPath: "label",
-		},
-		&requestflag.Flag[string]{
-			Name:     "provider",
-			Usage:    "Voice synthesis provider. Case-insensitive. Defaults to `telnyx`.",
-			Default:  "telnyx",
-			BodyPath: "provider",
-		},
-		&requestflag.Flag[string]{
-			Name:     "ref-text",
-			Usage:    "Optional transcript of the audio file. Providing this improves clone quality.",
-			BodyPath: "ref_text",
+			BodyRoot: true,
 		},
 	},
 	Action:          handleVoiceClonesCreateFromUpload,
@@ -412,7 +355,7 @@ func handleVoiceClonesDownloadSample(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
-	message, err := writeBinaryResponse(response, cmd.String("output"))
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
 	if message != "" {
 		fmt.Println(message)
 	}

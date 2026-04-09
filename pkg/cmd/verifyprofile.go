@@ -53,6 +53,10 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "webhook-url",
 			BodyPath: "webhook_url",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "whatsapp",
+			BodyPath: "whatsapp",
+		},
 	},
 	Action:          handleVerifyProfilesCreate,
 	HideHelpCommand: true,
@@ -165,6 +169,23 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "whitelisted_destinations",
 		},
 	},
+	"whatsapp": {
+		&requestflag.InnerFlag[string]{
+			Name:       "whatsapp.app-name",
+			Usage:      "The name that identifies the application requesting 2fa in the verification message.",
+			InnerField: "app_name",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "whatsapp.default-verification-timeout-secs",
+			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
+			InnerField: "default_verification_timeout_secs",
+		},
+		&requestflag.InnerFlag[[]string]{
+			Name:       "whatsapp.whitelisted-destinations",
+			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
+			InnerField: "whitelisted_destinations",
+		},
+	},
 })
 
 var verifyProfilesRetrieve = cli.Command{
@@ -221,6 +242,10 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "webhook-url",
 			BodyPath: "webhook_url",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "whatsapp",
+			BodyPath: "whatsapp",
 		},
 	},
 	Action:          handleVerifyProfilesUpdate,
@@ -330,6 +355,23 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "sms.whitelisted-destinations",
+			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
+			InnerField: "whitelisted_destinations",
+		},
+	},
+	"whatsapp": {
+		&requestflag.InnerFlag[string]{
+			Name:       "whatsapp.app-name",
+			Usage:      "The name that identifies the application requesting 2fa in the verification message.",
+			InnerField: "app_name",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "whatsapp.default-verification-timeout-secs",
+			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
+			InnerField: "default_verification_timeout_secs",
+		},
+		&requestflag.InnerFlag[[]string]{
+			Name:       "whatsapp.whitelisted-destinations",
 			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
 			InnerField: "whitelisted_destinations",
 		},

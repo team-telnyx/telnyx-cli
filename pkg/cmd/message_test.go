@@ -321,7 +321,7 @@ func TestMessagesSendWhatsapp(t *testing.T) {
 			"messages", "send-whatsapp",
 			"--from", "+13125551234",
 			"--to", "+13125551234",
-			"--whatsapp-message", "{audio: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, biz_opaque_callback_data: biz_opaque_callback_data, contacts: [{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: name, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}], document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, interactive: {action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}, location: {address: address, latitude: latitude, longitude: longitude, name: name}, reaction: {emoji: emoji, message_id: message_id}, sticker: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: audio, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}",
+			"--whatsapp-message", "{audio: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, biz_opaque_callback_data: biz_opaque_callback_data, contacts: [{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: name, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}], document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, interactive: {action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}, location: {address: address, latitude: latitude, longitude: longitude, name: name}, reaction: {emoji: emoji, message_id: message_id}, sticker: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, template: {components: [{index: 0, parameters: [{text: text, type: text}], sub_type: quick_reply, type: header}], language: {code: en_US, policy: deterministic}, name: order_confirmation, template_id: 019cd44b-3a1c-781b-956e-bd33e9fd2ac6}, text: {body: Hello from Telnyx!, preview_url: true}, type: audio, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}",
 			"--type", "WHATSAPP",
 			"--webhook-url", "webhook_url",
 		)
@@ -347,6 +347,8 @@ func TestMessagesSendWhatsapp(t *testing.T) {
 			"--whatsapp-message.location", "{address: address, latitude: latitude, longitude: longitude, name: name}",
 			"--whatsapp-message.reaction", "{emoji: emoji, message_id: message_id}",
 			"--whatsapp-message.sticker", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
+			"--whatsapp-message.template", "{components: [{index: 0, parameters: [{text: text, type: text}], sub_type: quick_reply, type: header}], language: {code: en_US, policy: deterministic}, name: order_confirmation, template_id: 019cd44b-3a1c-781b-956e-bd33e9fd2ac6}",
+			"--whatsapp-message.text", "{body: Hello from Telnyx!, preview_url: true}",
 			"--whatsapp-message.type", "audio",
 			"--whatsapp-message.video", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
 			"--type", "WHATSAPP",
@@ -480,6 +482,22 @@ func TestMessagesSendWhatsapp(t *testing.T) {
 			"    filename: filename\n" +
 			"    link: http://example.com/media.jpg\n" +
 			"    voice: true\n" +
+			"  template:\n" +
+			"    components:\n" +
+			"      - index: 0\n" +
+			"        parameters:\n" +
+			"          - text: text\n" +
+			"            type: text\n" +
+			"        sub_type: quick_reply\n" +
+			"        type: header\n" +
+			"    language:\n" +
+			"      code: en_US\n" +
+			"      policy: deterministic\n" +
+			"    name: order_confirmation\n" +
+			"    template_id: 019cd44b-3a1c-781b-956e-bd33e9fd2ac6\n" +
+			"  text:\n" +
+			"    body: Hello from Telnyx!\n" +
+			"    preview_url: true\n" +
 			"  type: audio\n" +
 			"  video:\n" +
 			"    caption: caption\n" +

@@ -15,11 +15,7 @@ func TestVoiceClonesCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"voice-clones", "create",
-			"--gender", "male",
-			"--language", "en",
-			"--name", "clone-narrator",
-			"--voice-design-id", "550e8400-e29b-41d4-a716-446655440000",
-			"--provider", "telnyx",
+			"--params", "{gender: male, language: en, name: clone-narrator, voice_design_id: 550e8400-e29b-41d4-a716-446655440000, provider: telnyx}",
 		)
 	})
 
@@ -104,13 +100,7 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"voice-clones", "create-from-upload",
-			"--audio-file", "Example data",
-			"--language", "lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf",
-			"--name", "name",
-			"--gender", "male",
-			"--label", "label",
-			"--provider", "telnyx",
-			"--ref-text", "ref_text",
+			"--params", "{audio_file: Example data, gender: male, language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf, name: name, provider: telnyx, label: label, model_id: Qwen3TTS, ref_text: ref_text}",
 		)
 	})
 
@@ -118,11 +108,12 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"audio_file: Example data\n" +
+			"gender: male\n" +
 			"language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf\n" +
 			"name: name\n" +
-			"gender: male\n" +
-			"label: label\n" +
 			"provider: telnyx\n" +
+			"label: label\n" +
+			"model_id: Qwen3TTS\n" +
 			"ref_text: ref_text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

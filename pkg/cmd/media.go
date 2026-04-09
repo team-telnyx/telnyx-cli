@@ -297,7 +297,7 @@ func handleMediaDownload(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
-	message, err := writeBinaryResponse(response, cmd.String("output"))
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
 	if message != "" {
 		fmt.Println(message)
 	}

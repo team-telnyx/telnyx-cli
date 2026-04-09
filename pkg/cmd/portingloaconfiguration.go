@@ -572,13 +572,44 @@ func handlePortingLoaConfigurationsPreview(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
-	message, err := writeBinaryResponse(response, cmd.String("output"))
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
 	if message != "" {
 		fmt.Println(message)
 	}
 	return err
 }
 
+func handlePortingLoaConfigurationsPreview0(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.PortingLoaConfigurationPreview0Params{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	response, err := client.Porting.LoaConfigurations.Preview0(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
+	if message != "" {
+		fmt.Println(message)
+	}
+	return err
+}
 
 func handlePortingLoaConfigurationsPreview1(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
@@ -606,7 +637,7 @@ func handlePortingLoaConfigurationsPreview1(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
-	message, err := writeBinaryResponse(response, cmd.String("output"))
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
 	if message != "" {
 		fmt.Println(message)
 	}

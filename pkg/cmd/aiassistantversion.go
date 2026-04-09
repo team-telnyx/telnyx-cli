@@ -101,6 +101,10 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "name",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "observability-settings",
+			BodyPath: "observability_settings",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "privacy-settings",
 			BodyPath: "privacy_settings",
 		},
@@ -156,6 +160,25 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "messaging-settings.delivery-status-webhook-url",
 			Usage:      "The URL where webhooks related to delivery statused for assistant messages will be sent.",
 			InnerField: "delivery_status_webhook_url",
+		},
+	},
+	"observability-settings": {
+		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.host",
+			InnerField: "host",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.public-key-ref",
+			InnerField: "public_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.secret-key-ref",
+			InnerField: "secret_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.status",
+			Usage:      `Allowed values: "enabled", "disabled".`,
+			InnerField: "status",
 		},
 	},
 	"privacy-settings": {

@@ -39,6 +39,9 @@ func init() {
 				Name:        "base-url",
 				DefaultText: "url",
 				Usage:       "Override the base URL for API requests",
+				Validator: func(baseURL string) error {
+					return ValidateBaseURL(baseURL, "--base-url")
+				},
 			},
 			&cli.StringFlag{
 				Name:  "format",
@@ -2456,6 +2459,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&texmlInitiateAICall,
 					&texmlSecrets,
 				},
 			},
@@ -2625,6 +2629,7 @@ func init() {
 					&verificationsTriggerCall,
 					&verificationsTriggerFlashcall,
 					&verificationsTriggerSMS,
+					&verificationsTriggerWhatsappVerification,
 				},
 			},
 			{
@@ -3138,9 +3143,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&enterprisesReputationCreate,
-					&enterprisesReputationList,
-					&enterprisesReputationDeleteAll,
+					&enterprisesReputationRetrieve,
+					&enterprisesReputationDisable,
+					&enterprisesReputationEnable,
 					&enterprisesReputationUpdateFrequency,
 				},
 			},
@@ -3149,10 +3154,10 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&enterprisesReputationNumbersCreate,
 					&enterprisesReputationNumbersRetrieve,
 					&enterprisesReputationNumbersList,
-					&enterprisesReputationNumbersDelete,
+					&enterprisesReputationNumbersAssociate,
+					&enterprisesReputationNumbersDisassociate,
 				},
 			},
 			{
@@ -3171,6 +3176,18 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&termsOfServiceNumberReputationAgree,
+				},
+			},
+			{
+				Name:     "pronunciation-dicts",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&pronunciationDictsCreate,
+					&pronunciationDictsRetrieve,
+					&pronunciationDictsUpdate,
+					&pronunciationDictsList,
+					&pronunciationDictsDelete,
 				},
 			},
 			{
