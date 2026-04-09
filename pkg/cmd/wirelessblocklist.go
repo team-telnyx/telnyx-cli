@@ -233,7 +233,6 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 	options = append(options, option.WithResponseBodyInto(&res))
 	_, err = client.WirelessBlocklists.Update(
 		ctx,
-		cmd.Value("id").(string),
 		params,
 		options...,
 	)
