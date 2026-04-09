@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.12.1 (2026-04-09)
+
+Full Changelog: [v0.12.0...v0.12.1](https://github.com/team-telnyx/telnyx-cli/compare/v0.12.0...v0.12.1)
+
+### Bug Fixes
+
+* update CLI for Go SDK v4.56.0 API renames ([5041723](https://github.com/team-telnyx/telnyx-cli/commit/50417234c360f26dff07c8a16d026b15ff985b24))
+
+
+### Chores
+
+* update CLI go_sdk_version from v4.55.0 to v4.56.0 ([ed33191](https://github.com/team-telnyx/telnyx-cli/commit/ed331916ee7bdf69100216ff066f1172dfcfabf5))
+
 ## 0.12.0 (2026-04-08)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.11.0...v0.12.0)
