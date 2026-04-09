@@ -21,6 +21,7 @@ func TestCallsDial(t *testing.T) {
 			"--to", "+18005550100 or sip:username@sip.telnyx.com",
 			"--answering-machine-detection", "detect",
 			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
+			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {}, fallback_config: {}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{}], model: gpt-4o, name: name, observability_settings: {}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--bridge-intent=true",
@@ -98,6 +99,19 @@ func TestCallsDial(t *testing.T) {
 			"--answering-machine-detection-config.maximum-word-length-millis", "2000",
 			"--answering-machine-detection-config.silence-threshold", "512",
 			"--answering-machine-detection-config.total-analysis-time-millis", "5000",
+			"--assistant.id", "id",
+			"--assistant.dynamic-variables", "{customer_name: John, account_id: ACC-12345}",
+			"--assistant.external-llm", "{}",
+			"--assistant.fallback-config", "{}",
+			"--assistant.greeting", "greeting",
+			"--assistant.instructions", "You are a friendly voice assistant.",
+			"--assistant.llm-api-key-ref", "my_llm_api_key",
+			"--assistant.mcp-servers", "[{}]",
+			"--assistant.model", "gpt-4o",
+			"--assistant.name", "name",
+			"--assistant.observability-settings", "{}",
+			"--assistant.openai-api-key-ref", "my_openai_api_key",
+			"--assistant.tools", "[{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--bridge-intent=true",
@@ -194,6 +208,29 @@ func TestCallsDial(t *testing.T) {
 			"  maximum_word_length_millis: 2000\n" +
 			"  silence_threshold: 512\n" +
 			"  total_analysis_time_millis: 5000\n" +
+			"assistant:\n" +
+			"  id: id\n" +
+			"  dynamic_variables:\n" +
+			"    customer_name: John\n" +
+			"    account_id: ACC-12345\n" +
+			"  external_llm: {}\n" +
+			"  fallback_config: {}\n" +
+			"  greeting: greeting\n" +
+			"  instructions: You are a friendly voice assistant.\n" +
+			"  llm_api_key_ref: my_llm_api_key\n" +
+			"  mcp_servers:\n" +
+			"    - {}\n" +
+			"  model: gpt-4o\n" +
+			"  name: name\n" +
+			"  observability_settings: {}\n" +
+			"  openai_api_key_ref: my_openai_api_key\n" +
+			"  tools:\n" +
+			"    - book_appointment:\n" +
+			"        api_key_ref: my_calcom_api_key\n" +
+			"        event_type_id: 0\n" +
+			"        attendee_name: attendee_name\n" +
+			"        attendee_timezone: attendee_timezone\n" +
+			"      type: book_appointment\n" +
 			"audio_url: http://www.example.com/sounds/greeting.wav\n" +
 			"billing_group_id: f5586561-8ff0-4291-a0ac-84fe544797bd\n" +
 			"bridge_intent: true\n" +
