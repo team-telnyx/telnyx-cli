@@ -20,7 +20,7 @@ var mobilePushCredentialsCreate = cli.Command{
 	Usage:   "Creates a new mobile push credential",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "create-mobile-push-credential-request",
 			Required: true,
 			BodyRoot: true,

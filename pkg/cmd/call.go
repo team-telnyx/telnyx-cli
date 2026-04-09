@@ -596,7 +596,7 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Engine to use for speech recognition. Legacy values `A` - `Google`, `B` - `Telnyx` are supported for backward compatibility.",
 			InnerField: "transcription_engine",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "transcription-config.transcription-engine-config",
 			InnerField: "transcription_engine_config",
 		},

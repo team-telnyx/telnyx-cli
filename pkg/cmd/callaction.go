@@ -349,7 +349,7 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Engine to use for speech recognition. Legacy values `A` - `Google`, `B` - `Telnyx` are supported for backward compatibility.",
 			InnerField: "transcription_engine",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "transcription-config.transcription-engine-config",
 			InnerField: "transcription_engine_config",
 		},
@@ -686,7 +686,7 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Telnyx.KokoroTTS.af",
 			BodyPath: "voice",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
 			Usage:    "The settings associated with the voice selected",
 			BodyPath: "voice_settings",
@@ -926,7 +926,7 @@ var callsActionsGatherUsingSpeak = cli.Command{
 			Default:  "0123456789#*",
 			BodyPath: "valid_digits",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
 			Usage:    "The settings associated with the voice selected",
 			BodyPath: "voice_settings",
@@ -1358,7 +1358,7 @@ var callsActionsSpeak = cli.Command{
 			Default:  "self",
 			BodyPath: "target_legs",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
 			Usage:    "The settings associated with the voice selected",
 			BodyPath: "voice_settings",
@@ -1411,7 +1411,7 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "participant",
 			Usage:    "A list of participants to add to the conversation when it starts.",
-			Default:  []map[string]string{},
+			Default:  []map[string]any{},
 			BodyPath: "participants",
 		},
 		&requestflag.Flag[bool]{
@@ -1431,7 +1431,7 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Telnyx.KokoroTTS.af",
 			BodyPath: "voice",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
 			Usage:    "The settings associated with the voice selected",
 			BodyPath: "voice_settings",
@@ -2039,7 +2039,7 @@ var callsActionsStartTranscription = cli.Command{
 			Default:  "Google",
 			BodyPath: "transcription_engine",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "transcription-engine-config",
 			BodyPath: "transcription_engine_config",
 		},
