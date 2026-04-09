@@ -50,6 +50,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "answer",
 			"--call-control-id", "call_control_id",
+			"--assistant", "{id: asst_123, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {}, fallback_config: {}, greeting: 'Hi, I''m your assistant. How can I help?', instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{}], model: gpt-4o, name: name, observability_settings: {}, openai_api_key_ref: my_openai_api_key, tools: [{hangup: {description: description}, type: hangup}]}",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -93,6 +94,19 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "answer",
 			"--call-control-id", "call_control_id",
+			"--assistant.id", "asst_123",
+			"--assistant.dynamic-variables", "{customer_name: John, account_id: ACC-12345}",
+			"--assistant.external-llm", "{}",
+			"--assistant.fallback-config", "{}",
+			"--assistant.greeting", "Hi, I'm your assistant. How can I help?",
+			"--assistant.instructions", "You are a friendly voice assistant.",
+			"--assistant.llm-api-key-ref", "my_llm_api_key",
+			"--assistant.mcp-servers", "[{}]",
+			"--assistant.model", "gpt-4o",
+			"--assistant.name", "name",
+			"--assistant.observability-settings", "{}",
+			"--assistant.openai-api-key-ref", "my_openai_api_key",
+			"--assistant.tools", "[{hangup: {description: description}, type: hangup}]",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -139,6 +153,26 @@ func TestCallsActionsAnswer(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
+			"assistant:\n" +
+			"  id: asst_123\n" +
+			"  dynamic_variables:\n" +
+			"    customer_name: John\n" +
+			"    account_id: ACC-12345\n" +
+			"  external_llm: {}\n" +
+			"  fallback_config: {}\n" +
+			"  greeting: Hi, I'm your assistant. How can I help?\n" +
+			"  instructions: You are a friendly voice assistant.\n" +
+			"  llm_api_key_ref: my_llm_api_key\n" +
+			"  mcp_servers:\n" +
+			"    - {}\n" +
+			"  model: gpt-4o\n" +
+			"  name: name\n" +
+			"  observability_settings: {}\n" +
+			"  openai_api_key_ref: my_openai_api_key\n" +
+			"  tools:\n" +
+			"    - hangup:\n" +
+			"        description: description\n" +
+			"      type: hangup\n" +
 			"billing_group_id: f5586561-8ff0-4291-a0ac-84fe544797bd\n" +
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
@@ -977,7 +1011,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "start-ai-assistant",
 			"--call-control-id", "call_control_id",
-			"--assistant", "{id: id, instructions: You are a friendly voice assistant., openai_api_key_ref: openai_api_key_ref}",
+			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {}, fallback_config: {}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{}], model: gpt-4o, name: name, observability_settings: {}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--greeting", "Hello, can you tell me your age and where you live?",
@@ -1002,8 +1036,18 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"calls:actions", "start-ai-assistant",
 			"--call-control-id", "call_control_id",
 			"--assistant.id", "id",
+			"--assistant.dynamic-variables", "{customer_name: John, account_id: ACC-12345}",
+			"--assistant.external-llm", "{}",
+			"--assistant.fallback-config", "{}",
+			"--assistant.greeting", "greeting",
 			"--assistant.instructions", "You are a friendly voice assistant.",
-			"--assistant.openai-api-key-ref", "openai_api_key_ref",
+			"--assistant.llm-api-key-ref", "my_llm_api_key",
+			"--assistant.mcp-servers", "[{}]",
+			"--assistant.model", "gpt-4o",
+			"--assistant.name", "name",
+			"--assistant.observability-settings", "{}",
+			"--assistant.openai-api-key-ref", "my_openai_api_key",
+			"--assistant.tools", "[{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--greeting", "Hello, can you tell me your age and where you live?",
@@ -1025,8 +1069,27 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 		pipeData := []byte("" +
 			"assistant:\n" +
 			"  id: id\n" +
+			"  dynamic_variables:\n" +
+			"    customer_name: John\n" +
+			"    account_id: ACC-12345\n" +
+			"  external_llm: {}\n" +
+			"  fallback_config: {}\n" +
+			"  greeting: greeting\n" +
 			"  instructions: You are a friendly voice assistant.\n" +
-			"  openai_api_key_ref: openai_api_key_ref\n" +
+			"  llm_api_key_ref: my_llm_api_key\n" +
+			"  mcp_servers:\n" +
+			"    - {}\n" +
+			"  model: gpt-4o\n" +
+			"  name: name\n" +
+			"  observability_settings: {}\n" +
+			"  openai_api_key_ref: my_openai_api_key\n" +
+			"  tools:\n" +
+			"    - book_appointment:\n" +
+			"        api_key_ref: my_calcom_api_key\n" +
+			"        event_type_id: 0\n" +
+			"        attendee_name: attendee_name\n" +
+			"        attendee_timezone: attendee_timezone\n" +
+			"      type: book_appointment\n" +
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
 			"greeting: Hello, can you tell me your age and where you live?\n" +

@@ -49,6 +49,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance.",
 			BodyPath: "answering_machine_detection_config",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "assistant",
+			Usage:    "AI Assistant configuration. All fields except `id` are optional — the assistant's stored configuration will be used as fallback for any omitted fields.",
+			BodyPath: "assistant",
+		},
 		&requestflag.Flag[string]{
 			Name:     "audio-url",
 			Usage:    "The URL of a file to be played back to the callee when the call is answered. The URL can point to either a WAV or MP3 file. media_name and audio_url cannot be used together in one request.",
@@ -376,6 +381,73 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Name:       "answering-machine-detection-config.total-analysis-time-millis",
 			Usage:      "Maximum timeout threshold for overall detection.",
 			InnerField: "total_analysis_time_millis",
+		},
+	},
+	"assistant": {
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.id",
+			Usage:      "The identifier of the AI assistant to use.",
+			InnerField: "id",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.dynamic-variables",
+			Usage:      "Map of dynamic variables and their default values. Dynamic variables can be referenced in instructions, greeting, and tool definitions using the `{{variable_name}}` syntax. Call-control-agent automatically merges in `telnyx_call_*` variables (telnyx_call_to, telnyx_call_from, telnyx_conversation_channel, telnyx_agent_target, telnyx_end_user_target, telnyx_call_caller_id_name) and custom header variables.",
+			InnerField: "dynamic_variables",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "assistant.external-llm",
+			Usage:      "External LLM configuration for bringing your own LLM endpoint.",
+			InnerField: "external_llm",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "assistant.fallback-config",
+			Usage:      "Fallback LLM configuration used when the primary LLM provider is unavailable.",
+			InnerField: "fallback_config",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.greeting",
+			Usage:      "Initial greeting text spoken when the assistant starts. Can be plain text for any voice or SSML for `AWS.Polly.<voice_id>` voices. There is a 3,000 character limit.",
+			InnerField: "greeting",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.instructions",
+			Usage:      "System instructions for the voice assistant. Can be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables). This will overwrite the instructions set in the assistant configuration.",
+			InnerField: "instructions",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the LLM provider API key. Use this field to reference an [integration secret](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) containing your LLM provider API key. Supports any LLM provider (OpenAI, Anthropic, etc.).",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[[]any]{
+			Name:       "assistant.mcp-servers",
+			Usage:      "MCP (Model Context Protocol) server configurations for extending the assistant's capabilities with external tools and data sources.",
+			InnerField: "mcp_servers",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.model",
+			Usage:      "LLM model override for this call. If omitted, the assistant's configured model is used.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.name",
+			Usage:      "Assistant name override for this call.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "assistant.observability-settings",
+			Usage:      "Observability configuration for the assistant session, including Langfuse integration for tracing and monitoring.",
+			InnerField: "observability_settings",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.openai-api-key-ref",
+			Usage:      "Deprecated — use `llm_api_key_ref` instead. Integration secret identifier for the OpenAI API key. This field is maintained for backward compatibility; `llm_api_key_ref` is the canonical field name and supports all LLM providers.",
+			InnerField: "openai_api_key_ref",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "assistant.tools",
+			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
+			InnerField: "tools",
 		},
 	},
 	"conference-config": {
