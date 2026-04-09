@@ -620,7 +620,7 @@ var conferencesActionsSpeak = cli.Command{
 			Usage:    "Region where the conference data is located. Defaults to the region defined in user's data locality settings (Europe or US).",
 			BodyPath: "region",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
 			Usage:    "The settings associated with the voice selected",
 			BodyPath: "voice_settings",
