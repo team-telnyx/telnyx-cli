@@ -231,12 +231,12 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Map of dynamic variables and their default values. Dynamic variables can be referenced in instructions, greeting, and tool definitions using the `{{variable_name}}` syntax. Call-control-agent automatically merges in `telnyx_call_*` variables (telnyx_call_to, telnyx_call_from, telnyx_conversation_channel, telnyx_agent_target, telnyx_end_user_target, telnyx_call_caller_id_name) and custom header variables.",
 			InnerField: "dynamic_variables",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.external-llm",
 			Usage:      "External LLM configuration for bringing your own LLM endpoint.",
 			InnerField: "external_llm",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.fallback-config",
 			Usage:      "Fallback LLM configuration used when the primary LLM provider is unavailable.",
 			InnerField: "fallback_config",
@@ -256,7 +256,7 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Integration secret identifier for the LLM provider API key. Use this field to reference an [integration secret](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) containing your LLM provider API key. Supports any LLM provider (OpenAI, Anthropic, etc.).",
 			InnerField: "llm_api_key_ref",
 		},
-		&requestflag.InnerFlag[[]any]{
+		&requestflag.InnerFlag[[]map[string]any]{
 			Name:       "assistant.mcp-servers",
 			Usage:      "MCP (Model Context Protocol) server configurations for extending the assistant's capabilities with external tools and data sources.",
 			InnerField: "mcp_servers",
@@ -271,7 +271,7 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Assistant name override for this call.",
 			InnerField: "name",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.observability-settings",
 			Usage:      "Observability configuration for the assistant session, including Langfuse integration for tracing and monitoring.",
 			InnerField: "observability_settings",
@@ -1451,12 +1451,12 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Map of dynamic variables and their default values. Dynamic variables can be referenced in instructions, greeting, and tool definitions using the `{{variable_name}}` syntax. Call-control-agent automatically merges in `telnyx_call_*` variables (telnyx_call_to, telnyx_call_from, telnyx_conversation_channel, telnyx_agent_target, telnyx_end_user_target, telnyx_call_caller_id_name) and custom header variables.",
 			InnerField: "dynamic_variables",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.external-llm",
 			Usage:      "External LLM configuration for bringing your own LLM endpoint.",
 			InnerField: "external_llm",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.fallback-config",
 			Usage:      "Fallback LLM configuration used when the primary LLM provider is unavailable.",
 			InnerField: "fallback_config",
@@ -1476,7 +1476,7 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Integration secret identifier for the LLM provider API key. Use this field to reference an [integration secret](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) containing your LLM provider API key. Supports any LLM provider (OpenAI, Anthropic, etc.).",
 			InnerField: "llm_api_key_ref",
 		},
-		&requestflag.InnerFlag[[]any]{
+		&requestflag.InnerFlag[[]map[string]any]{
 			Name:       "assistant.mcp-servers",
 			Usage:      "MCP (Model Context Protocol) server configurations for extending the assistant's capabilities with external tools and data sources.",
 			InnerField: "mcp_servers",
@@ -1491,7 +1491,7 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Assistant name override for this call.",
 			InnerField: "name",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.observability-settings",
 			Usage:      "Observability configuration for the assistant session, including Langfuse integration for tracing and monitoring.",
 			InnerField: "observability_settings",

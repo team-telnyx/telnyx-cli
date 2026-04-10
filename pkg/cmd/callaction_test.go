@@ -50,7 +50,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "answer",
 			"--call-control-id", "call_control_id",
-			"--assistant", "{id: asst_123, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {}, fallback_config: {}, greeting: 'Hi, I''m your assistant. How can I help?', instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{}], model: gpt-4o, name: name, observability_settings: {}, openai_api_key_ref: my_openai_api_key, tools: [{hangup: {description: description}, type: hangup}]}",
+			"--assistant", "{id: asst_123, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {foo: bar}, fallback_config: {foo: bar}, greeting: 'Hi, I''m your assistant. How can I help?', instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{hangup: {description: description}, type: hangup}]}",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -96,15 +96,15 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--call-control-id", "call_control_id",
 			"--assistant.id", "asst_123",
 			"--assistant.dynamic-variables", "{customer_name: John, account_id: ACC-12345}",
-			"--assistant.external-llm", "{}",
-			"--assistant.fallback-config", "{}",
+			"--assistant.external-llm", "{foo: bar}",
+			"--assistant.fallback-config", "{foo: bar}",
 			"--assistant.greeting", "Hi, I'm your assistant. How can I help?",
 			"--assistant.instructions", "You are a friendly voice assistant.",
 			"--assistant.llm-api-key-ref", "my_llm_api_key",
-			"--assistant.mcp-servers", "[{}]",
+			"--assistant.mcp-servers", "[{foo: bar}]",
 			"--assistant.model", "gpt-4o",
 			"--assistant.name", "name",
-			"--assistant.observability-settings", "{}",
+			"--assistant.observability-settings", "{foo: bar}",
 			"--assistant.openai-api-key-ref", "my_openai_api_key",
 			"--assistant.tools", "[{hangup: {description: description}, type: hangup}]",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
@@ -158,16 +158,19 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"  dynamic_variables:\n" +
 			"    customer_name: John\n" +
 			"    account_id: ACC-12345\n" +
-			"  external_llm: {}\n" +
-			"  fallback_config: {}\n" +
+			"  external_llm:\n" +
+			"    foo: bar\n" +
+			"  fallback_config:\n" +
+			"    foo: bar\n" +
 			"  greeting: Hi, I'm your assistant. How can I help?\n" +
 			"  instructions: You are a friendly voice assistant.\n" +
 			"  llm_api_key_ref: my_llm_api_key\n" +
 			"  mcp_servers:\n" +
-			"    - {}\n" +
+			"    - foo: bar\n" +
 			"  model: gpt-4o\n" +
 			"  name: name\n" +
-			"  observability_settings: {}\n" +
+			"  observability_settings:\n" +
+			"    foo: bar\n" +
 			"  openai_api_key_ref: my_openai_api_key\n" +
 			"  tools:\n" +
 			"    - hangup:\n" +
@@ -1011,7 +1014,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "start-ai-assistant",
 			"--call-control-id", "call_control_id",
-			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {}, fallback_config: {}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{}], model: gpt-4o, name: name, observability_settings: {}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
+			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {foo: bar}, fallback_config: {foo: bar}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--greeting", "Hello, can you tell me your age and where you live?",
@@ -1037,15 +1040,15 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--call-control-id", "call_control_id",
 			"--assistant.id", "id",
 			"--assistant.dynamic-variables", "{customer_name: John, account_id: ACC-12345}",
-			"--assistant.external-llm", "{}",
-			"--assistant.fallback-config", "{}",
+			"--assistant.external-llm", "{foo: bar}",
+			"--assistant.fallback-config", "{foo: bar}",
 			"--assistant.greeting", "greeting",
 			"--assistant.instructions", "You are a friendly voice assistant.",
 			"--assistant.llm-api-key-ref", "my_llm_api_key",
-			"--assistant.mcp-servers", "[{}]",
+			"--assistant.mcp-servers", "[{foo: bar}]",
 			"--assistant.model", "gpt-4o",
 			"--assistant.name", "name",
-			"--assistant.observability-settings", "{}",
+			"--assistant.observability-settings", "{foo: bar}",
 			"--assistant.openai-api-key-ref", "my_openai_api_key",
 			"--assistant.tools", "[{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -1072,16 +1075,19 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"  dynamic_variables:\n" +
 			"    customer_name: John\n" +
 			"    account_id: ACC-12345\n" +
-			"  external_llm: {}\n" +
-			"  fallback_config: {}\n" +
+			"  external_llm:\n" +
+			"    foo: bar\n" +
+			"  fallback_config:\n" +
+			"    foo: bar\n" +
 			"  greeting: greeting\n" +
 			"  instructions: You are a friendly voice assistant.\n" +
 			"  llm_api_key_ref: my_llm_api_key\n" +
 			"  mcp_servers:\n" +
-			"    - {}\n" +
+			"    - foo: bar\n" +
 			"  model: gpt-4o\n" +
 			"  name: name\n" +
-			"  observability_settings: {}\n" +
+			"  observability_settings:\n" +
+			"    foo: bar\n" +
 			"  openai_api_key_ref: my_openai_api_key\n" +
 			"  tools:\n" +
 			"    - book_appointment:\n" +
