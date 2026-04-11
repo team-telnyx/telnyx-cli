@@ -100,7 +100,7 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"voice-clones", "create-from-upload",
-			"--params", "{audio_file: Example data, gender: male, language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf, name: name, provider: telnyx, label: label, model_id: Qwen3TTS, ref_text: ref_text}",
+			"--upload-params", "{audio_file: Example data, gender: male, language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf, name: name, provider: telnyx, label: label, model_id: Qwen3TTS, ref_text: ref_text}",
 		)
 	})
 
