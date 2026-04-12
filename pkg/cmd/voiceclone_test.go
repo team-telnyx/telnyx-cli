@@ -100,21 +100,13 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"voice-clones", "create-from-upload",
-			"--upload-params", "{audio_file: Example data, gender: male, language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf, name: name, provider: telnyx, label: label, model_id: Qwen3TTS, ref_text: ref_text}",
+			"--upload-params", "{}",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("" +
-			"audio_file: Example data\n" +
-			"gender: male\n" +
-			"language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf\n" +
-			"name: name\n" +
-			"provider: telnyx\n" +
-			"label: label\n" +
-			"model_id: Qwen3TTS\n" +
-			"ref_text: ref_text\n")
+		pipeData := []byte("{}")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
