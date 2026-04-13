@@ -30,7 +30,7 @@ var sessionAnalysisRetrieve = cli.Command{
 		},
 		&requestflag.Flag[any]{
 			Name:      "date-time",
-			Usage:     "ISO 8601 timestamp to narrow index selection for faster lookups.",
+			Usage:     "ISO 8601 timestamp or date to narrow index selection for faster lookups. Accepts full datetime (e.g., 2026-03-17T10:00:00Z) or date-only format (e.g., 2026-03-17).",
 			QueryPath: "date_time",
 		},
 		&requestflag.Flag[string]{

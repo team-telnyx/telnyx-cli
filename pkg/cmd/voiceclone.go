@@ -122,8 +122,9 @@ var voiceClonesCreateFromUpload = cli.Command{
 	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. For best results, provide 5–10 seconds of\nclear speech. Maximum file size: 5MB for Telnyx, 20MB for Minimax.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[any]{
-			Name:     "upload-params",
+		&requestflag.Flag[map[string]any]{
+			Name:     "params",
+			Usage:    "Multipart form data for creating a voice clone from a direct audio upload. Maximum file size: 5MB for Telnyx, 20MB for Minimax.",
 			Required: true,
 			BodyRoot: true,
 		},
