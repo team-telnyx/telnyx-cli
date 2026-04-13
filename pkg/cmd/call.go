@@ -316,6 +316,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Name:     "transcription-config",
 			BodyPath: "transcription_config",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook-retries-policies",
+			Usage:    "A map of event types to retry policies. Each retry policy contains an array of `retries_ms` specifying the delays between retry attempts in milliseconds. Maximum 5 retries, total delay cannot exceed 60 seconds.",
+			BodyPath: "webhook_retries_policies",
+		},
 		&requestflag.Flag[string]{
 			Name:     "webhook-url",
 			Usage:    "Use this field to override the URL for which Telnyx will send subsequent webhooks to for this call.",
@@ -326,6 +331,17 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "HTTP request type used for `webhook_url`.",
 			Default:  "POST",
 			BodyPath: "webhook_url_method",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook-urls",
+			Usage:    "A map of event types to webhook URLs. When an event of the specified type occurs, the webhook URL associated with that event type will be called instead of the default webhook URL. Events not mapped here will use the default webhook URL.",
+			BodyPath: "webhook_urls",
+		},
+		&requestflag.Flag[string]{
+			Name:     "webhook-urls-method",
+			Usage:    "HTTP request method to invoke `webhook_urls`.",
+			Default:  "POST",
+			BodyPath: "webhook_urls_method",
 		},
 	},
 	Action:          handleCallsDial,

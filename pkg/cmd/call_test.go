@@ -71,8 +71,11 @@ func TestCallsDial(t *testing.T) {
 			"--timeout-secs", "60",
 			"--transcription=true",
 			"--transcription-config", "{client_state: aGF2ZSBhIG5pY2UgZGF5ID1d, command_id: 891510ac-f3e4-11e8-af5b-de00688a4901, transcription_engine: Google, transcription_engine_config: {enable_speaker_diarization: true, hints: [string], interim_results: true, language: en, max_speaker_count: 4, min_speaker_count: 4, model: latest_long, profanity_filter: true, speech_context: [{boost: 1, phrases: [string]}], transcription_engine: Google, use_enhanced: true}, transcription_tracks: both}",
+			"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
+			"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+			"--webhook-urls-method", "POST",
 		)
 	})
 
@@ -185,8 +188,11 @@ func TestCallsDial(t *testing.T) {
 			"--transcription-config.transcription-engine", "Google",
 			"--transcription-config.transcription-engine-config", "{enable_speaker_diarization: true, hints: [string], interim_results: true, language: en, max_speaker_count: 4, min_speaker_count: 4, model: latest_long, profanity_filter: true, speech_context: [{boost: 1, phrases: [string]}], transcription_engine: Google, use_enhanced: true}",
 			"--transcription-config.transcription-tracks", "both",
+			"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
+			"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+			"--webhook-urls-method", "POST",
 		)
 	})
 
@@ -330,8 +336,18 @@ func TestCallsDial(t *testing.T) {
 			"    transcription_engine: Google\n" +
 			"    use_enhanced: true\n" +
 			"  transcription_tracks: both\n" +
+			"webhook_retries_policies:\n" +
+			"  call.hangup:\n" +
+			"    retries_ms:\n" +
+			"      - 1000\n" +
+			"      - 2000\n" +
+			"      - 5000\n" +
 			"webhook_url: https://www.example.com/server-b/\n" +
-			"webhook_url_method: POST\n")
+			"webhook_url_method: POST\n" +
+			"webhook_urls:\n" +
+			"  call.hangup: https://www.example.com/webhooks/hangup\n" +
+			"  call.bridge: https://www.example.com/webhooks/bridge\n" +
+			"webhook_urls_method: POST\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
