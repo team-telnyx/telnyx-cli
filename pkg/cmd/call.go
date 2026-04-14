@@ -97,6 +97,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "custom_headers",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "deepfake-detection",
+			Usage:    "Enables deepfake detection on the call. When enabled, audio from the remote party is streamed to a detection service that analyzes whether the voice is AI-generated. Results are delivered via the `call.deepfake_detection.result` webhook.",
+			BodyPath: "deepfake_detection",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "dialogflow-config",
 			BodyPath: "dialogflow_config",
 		},
@@ -548,6 +553,23 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Name:       "custom-header.value",
 			Usage:      "The value of the header.",
 			InnerField: "value",
+		},
+	},
+	"deepfake-detection": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "deepfake-detection.enabled",
+			Usage:      "Whether deepfake detection is enabled.",
+			InnerField: "enabled",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "deepfake-detection.rtp-timeout",
+			Usage:      "Maximum time in seconds to wait for RTP audio before timing out. If no audio is received within this window, detection stops with an error.",
+			InnerField: "rtp_timeout",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "deepfake-detection.timeout",
+			Usage:      "Maximum time in seconds to wait for a detection result before timing out.",
+			InnerField: "timeout",
 		},
 	},
 	"dialogflow-config": {
