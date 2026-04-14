@@ -60,6 +60,7 @@ func handleAIConversationsMessagesList(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:conversations:messages list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:messages list", obj, format, explicitFormat, transform)
 }

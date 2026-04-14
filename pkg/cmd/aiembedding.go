@@ -159,8 +159,9 @@ func handleAIEmbeddingsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:embeddings create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings create", obj, format, explicitFormat, transform)
 }
 
 func handleAIEmbeddingsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -194,8 +195,9 @@ func handleAIEmbeddingsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:embeddings retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIEmbeddingsList(ctx context.Context, cmd *cli.Command) error {
@@ -228,8 +230,9 @@ func handleAIEmbeddingsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:embeddings list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings list", obj, format, explicitFormat, transform)
 }
 
 func handleAIEmbeddingsSimilaritySearch(ctx context.Context, cmd *cli.Command) error {
@@ -262,8 +265,9 @@ func handleAIEmbeddingsSimilaritySearch(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:embeddings similarity-search", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings similarity-search", obj, format, explicitFormat, transform)
 }
 
 func handleAIEmbeddingsURL(ctx context.Context, cmd *cli.Command) error {
@@ -296,6 +300,7 @@ func handleAIEmbeddingsURL(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:embeddings url", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings url", obj, format, explicitFormat, transform)
 }

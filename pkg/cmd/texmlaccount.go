@@ -106,8 +106,9 @@ func handleTexmlAccountsRetrieveRecordingsJson(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts retrieve-recordings-json", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts retrieve-recordings-json", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlAccountsRetrieveTranscriptionsJson(ctx context.Context, cmd *cli.Command) error {
@@ -148,6 +149,7 @@ func handleTexmlAccountsRetrieveTranscriptionsJson(ctx context.Context, cmd *cli
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts retrieve-transcriptions-json", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts retrieve-transcriptions-json", obj, format, explicitFormat, transform)
 }

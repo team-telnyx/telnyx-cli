@@ -343,8 +343,9 @@ func handleConferencesCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences create", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -385,8 +386,9 @@ func handleConferencesRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesList(ctx context.Context, cmd *cli.Command) error {
@@ -411,6 +413,7 @@ func handleConferencesList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -420,14 +423,14 @@ func handleConferencesList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "conferences list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "conferences list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Conferences.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "conferences list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "conferences list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -456,6 +459,7 @@ func handleConferencesListParticipants(ctx context.Context, cmd *cli.Command) er
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -470,7 +474,7 @@ func handleConferencesListParticipants(ctx context.Context, cmd *cli.Command) er
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "conferences list-participants", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "conferences list-participants", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Conferences.ListParticipantsAutoPaging(
 			ctx,
@@ -482,7 +486,7 @@ func handleConferencesListParticipants(ctx context.Context, cmd *cli.Command) er
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "conferences list-participants", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "conferences list-participants", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -526,8 +530,9 @@ func handleConferencesRetrieveParticipant(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences retrieve-participant", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences retrieve-participant", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesUpdateParticipant(ctx context.Context, cmd *cli.Command) error {
@@ -570,6 +575,7 @@ func handleConferencesUpdateParticipant(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences update-participant", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences update-participant", obj, format, explicitFormat, transform)
 }

@@ -337,8 +337,9 @@ func handleTextToSpeechGenerate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "text-to-speech generate", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "text-to-speech generate", obj, format, explicitFormat, transform)
 }
 
 func handleTextToSpeechListVoices(ctx context.Context, cmd *cli.Command) error {
@@ -371,6 +372,7 @@ func handleTextToSpeechListVoices(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "text-to-speech list-voices", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "text-to-speech list-voices", obj, format, explicitFormat, transform)
 }

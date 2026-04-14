@@ -132,8 +132,9 @@ func handleRoomsSessionsActionsEnd(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:sessions:actions end", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "rooms:sessions:actions end", obj, format, explicitFormat, transform)
 }
 
 func handleRoomsSessionsActionsKick(ctx context.Context, cmd *cli.Command) error {
@@ -174,8 +175,9 @@ func handleRoomsSessionsActionsKick(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:sessions:actions kick", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "rooms:sessions:actions kick", obj, format, explicitFormat, transform)
 }
 
 func handleRoomsSessionsActionsMute(ctx context.Context, cmd *cli.Command) error {
@@ -216,8 +218,9 @@ func handleRoomsSessionsActionsMute(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:sessions:actions mute", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "rooms:sessions:actions mute", obj, format, explicitFormat, transform)
 }
 
 func handleRoomsSessionsActionsUnmute(ctx context.Context, cmd *cli.Command) error {
@@ -258,6 +261,7 @@ func handleRoomsSessionsActionsUnmute(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:sessions:actions unmute", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "rooms:sessions:actions unmute", obj, format, explicitFormat, transform)
 }

@@ -690,8 +690,9 @@ func handleCallsDial(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls dial", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "calls dial", obj, format, explicitFormat, transform)
 }
 
 func handleCallsRetrieveStatus(ctx context.Context, cmd *cli.Command) error {
@@ -725,6 +726,7 @@ func handleCallsRetrieveStatus(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls retrieve-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "calls retrieve-status", obj, format, explicitFormat, transform)
 }

@@ -102,8 +102,9 @@ func handleWhatsappBusinessAccountsSettingsRetrieve(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:business-accounts:settings retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:business-accounts:settings retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWhatsappBusinessAccountsSettingsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -144,6 +145,7 @@ func handleWhatsappBusinessAccountsSettingsUpdate(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:business-accounts:settings update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:business-accounts:settings update", obj, format, explicitFormat, transform)
 }

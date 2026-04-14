@@ -60,6 +60,7 @@ func handleMessaging10dlcCampaignOsrGetAttributes(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:campaign:osr get-attributes", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign:osr get-attributes", obj, format, explicitFormat, transform)
 }

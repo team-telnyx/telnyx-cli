@@ -165,8 +165,9 @@ func handlePortingOrdersAssociatedPhoneNumbersCreate(ctx context.Context, cmd *c
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:associated-phone-numbers create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:associated-phone-numbers create", obj, format, explicitFormat, transform)
 }
 
 func handlePortingOrdersAssociatedPhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -194,6 +195,7 @@ func handlePortingOrdersAssociatedPhoneNumbersList(ctx context.Context, cmd *cli
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -208,7 +210,7 @@ func handlePortingOrdersAssociatedPhoneNumbersList(ctx context.Context, cmd *cli
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting-orders:associated-phone-numbers list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:associated-phone-numbers list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.PortingOrders.AssociatedPhoneNumbers.ListAutoPaging(
 			ctx,
@@ -220,7 +222,7 @@ func handlePortingOrdersAssociatedPhoneNumbersList(ctx context.Context, cmd *cli
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting-orders:associated-phone-numbers list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:associated-phone-numbers list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -264,6 +266,7 @@ func handlePortingOrdersAssociatedPhoneNumbersDelete(ctx context.Context, cmd *c
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:associated-phone-numbers delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:associated-phone-numbers delete", obj, format, explicitFormat, transform)
 }

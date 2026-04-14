@@ -379,8 +379,9 @@ func handleTexmlApplicationsCreate(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml-applications create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml-applications create", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlApplicationsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -414,8 +415,9 @@ func handleTexmlApplicationsRetrieve(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml-applications retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml-applications retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlApplicationsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -456,8 +458,9 @@ func handleTexmlApplicationsUpdate(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml-applications update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml-applications update", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlApplicationsList(ctx context.Context, cmd *cli.Command) error {
@@ -482,6 +485,7 @@ func handleTexmlApplicationsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -491,14 +495,14 @@ func handleTexmlApplicationsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "texml-applications list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "texml-applications list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.TexmlApplications.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "texml-applications list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "texml-applications list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -533,6 +537,7 @@ func handleTexmlApplicationsDelete(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml-applications delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml-applications delete", obj, format, explicitFormat, transform)
 }

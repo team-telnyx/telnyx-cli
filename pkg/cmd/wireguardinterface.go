@@ -139,8 +139,9 @@ func handleWireguardInterfacesCreate(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireguard-interfaces create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireguard-interfaces create", obj, format, explicitFormat, transform)
 }
 
 func handleWireguardInterfacesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -174,8 +175,9 @@ func handleWireguardInterfacesRetrieve(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireguard-interfaces retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireguard-interfaces retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWireguardInterfacesList(ctx context.Context, cmd *cli.Command) error {
@@ -200,6 +202,7 @@ func handleWireguardInterfacesList(ctx context.Context, cmd *cli.Command) error 
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -209,14 +212,14 @@ func handleWireguardInterfacesList(ctx context.Context, cmd *cli.Command) error 
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "wireguard-interfaces list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "wireguard-interfaces list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.WireguardInterfaces.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "wireguard-interfaces list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "wireguard-interfaces list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -251,6 +254,7 @@ func handleWireguardInterfacesDelete(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireguard-interfaces delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireguard-interfaces delete", obj, format, explicitFormat, transform)
 }

@@ -316,8 +316,9 @@ func handleTexmlInitiateAICall(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml initiate-ai-call", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml initiate-ai-call", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlSecrets(ctx context.Context, cmd *cli.Command) error {
@@ -350,6 +351,7 @@ func handleTexmlSecrets(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml secrets", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml secrets", obj, format, explicitFormat, transform)
 }

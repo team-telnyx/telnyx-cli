@@ -143,6 +143,7 @@ func handlePortingOrdersVerificationCodesList(ctx context.Context, cmd *cli.Comm
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -157,7 +158,7 @@ func handlePortingOrdersVerificationCodesList(ctx context.Context, cmd *cli.Comm
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting-orders:verification-codes list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:verification-codes list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.PortingOrders.VerificationCodes.ListAutoPaging(
 			ctx,
@@ -169,7 +170,7 @@ func handlePortingOrdersVerificationCodesList(ctx context.Context, cmd *cli.Comm
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting-orders:verification-codes list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:verification-codes list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -243,6 +244,7 @@ func handlePortingOrdersVerificationCodesVerify(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:verification-codes verify", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:verification-codes verify", obj, format, explicitFormat, transform)
 }

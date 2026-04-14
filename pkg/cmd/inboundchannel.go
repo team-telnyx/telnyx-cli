@@ -70,8 +70,9 @@ func handleInboundChannelsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "inbound-channels update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "inbound-channels update", obj, format, explicitFormat, transform)
 }
 
 func handleInboundChannelsList(ctx context.Context, cmd *cli.Command) error {
@@ -102,6 +103,7 @@ func handleInboundChannelsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "inbound-channels list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "inbound-channels list", obj, format, explicitFormat, transform)
 }

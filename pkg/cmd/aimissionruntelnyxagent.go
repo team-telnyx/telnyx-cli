@@ -119,8 +119,9 @@ func handleAIMissionsRunsTelnyxAgentsList(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:telnyx-agents list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:runs:telnyx-agents list", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsRunsTelnyxAgentsLink(ctx context.Context, cmd *cli.Command) error {
@@ -163,8 +164,9 @@ func handleAIMissionsRunsTelnyxAgentsLink(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:telnyx-agents link", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:runs:telnyx-agents link", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsRunsTelnyxAgentsUnlink(ctx context.Context, cmd *cli.Command) error {

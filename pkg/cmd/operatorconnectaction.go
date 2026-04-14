@@ -51,6 +51,7 @@ func handleOperatorConnectActionsRefresh(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "operator-connect:actions refresh", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "operator-connect:actions refresh", obj, format, explicitFormat, transform)
 }

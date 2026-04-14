@@ -153,8 +153,9 @@ func handlePortingOrdersAdditionalDocumentsCreate(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:additional-documents create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:additional-documents create", obj, format, explicitFormat, transform)
 }
 
 func handlePortingOrdersAdditionalDocumentsList(ctx context.Context, cmd *cli.Command) error {
@@ -182,6 +183,7 @@ func handlePortingOrdersAdditionalDocumentsList(ctx context.Context, cmd *cli.Co
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -196,7 +198,7 @@ func handlePortingOrdersAdditionalDocumentsList(ctx context.Context, cmd *cli.Co
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting-orders:additional-documents list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:additional-documents list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.PortingOrders.AdditionalDocuments.ListAutoPaging(
 			ctx,
@@ -208,7 +210,7 @@ func handlePortingOrdersAdditionalDocumentsList(ctx context.Context, cmd *cli.Co
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting-orders:additional-documents list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:additional-documents list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 

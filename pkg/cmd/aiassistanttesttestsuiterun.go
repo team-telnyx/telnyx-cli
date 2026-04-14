@@ -95,6 +95,7 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -109,7 +110,7 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:assistants:tests:test-suites:runs list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:test-suites:runs list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AI.Assistants.Tests.TestSuites.Runs.ListAutoPaging(
 			ctx,
@@ -121,7 +122,7 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:assistants:tests:test-suites:runs list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:assistants:tests:test-suites:runs list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -163,6 +164,7 @@ func handleAIAssistantsTestsTestSuitesRunsTrigger(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tests:test-suites:runs trigger", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:test-suites:runs trigger", obj, format, explicitFormat, transform)
 }

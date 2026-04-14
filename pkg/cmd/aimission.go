@@ -219,8 +219,9 @@ func handleAIMissionsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions create", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -254,8 +255,9 @@ func handleAIMissionsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsList(ctx context.Context, cmd *cli.Command) error {
@@ -280,6 +282,7 @@ func handleAIMissionsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -289,14 +292,14 @@ func handleAIMissionsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:missions list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "ai:missions list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AI.Missions.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:missions list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:missions list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -331,8 +334,9 @@ func handleAIMissionsCloneMission(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions clone-mission", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions clone-mission", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsDeleteMission(ctx context.Context, cmd *cli.Command) error {
@@ -382,6 +386,7 @@ func handleAIMissionsListEvents(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -391,14 +396,14 @@ func handleAIMissionsListEvents(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:missions list-events", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "ai:missions list-events", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AI.Missions.ListEventsAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:missions list-events", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:missions list-events", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -440,6 +445,7 @@ func handleAIMissionsUpdateMission(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions update-mission", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions update-mission", obj, format, explicitFormat, transform)
 }

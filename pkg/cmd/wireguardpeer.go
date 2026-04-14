@@ -143,8 +143,9 @@ func handleWireguardPeersCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireguard-peers create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireguard-peers create", obj, format, explicitFormat, transform)
 }
 
 func handleWireguardPeersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -178,8 +179,9 @@ func handleWireguardPeersRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireguard-peers retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireguard-peers retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWireguardPeersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -220,8 +222,9 @@ func handleWireguardPeersUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireguard-peers update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireguard-peers update", obj, format, explicitFormat, transform)
 }
 
 func handleWireguardPeersList(ctx context.Context, cmd *cli.Command) error {
@@ -246,6 +249,7 @@ func handleWireguardPeersList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -255,14 +259,14 @@ func handleWireguardPeersList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "wireguard-peers list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "wireguard-peers list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.WireguardPeers.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "wireguard-peers list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "wireguard-peers list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -297,6 +301,7 @@ func handleWireguardPeersDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireguard-peers delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireguard-peers delete", obj, format, explicitFormat, transform)
 }

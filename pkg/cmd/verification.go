@@ -192,8 +192,9 @@ func handleVerificationsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verifications retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verifications retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleVerificationsTriggerCall(ctx context.Context, cmd *cli.Command) error {
@@ -226,8 +227,9 @@ func handleVerificationsTriggerCall(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verifications trigger-call", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verifications trigger-call", obj, format, explicitFormat, transform)
 }
 
 func handleVerificationsTriggerFlashcall(ctx context.Context, cmd *cli.Command) error {
@@ -260,8 +262,9 @@ func handleVerificationsTriggerFlashcall(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verifications trigger-flashcall", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verifications trigger-flashcall", obj, format, explicitFormat, transform)
 }
 
 func handleVerificationsTriggerSMS(ctx context.Context, cmd *cli.Command) error {
@@ -294,8 +297,9 @@ func handleVerificationsTriggerSMS(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verifications trigger-sms", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verifications trigger-sms", obj, format, explicitFormat, transform)
 }
 
 func handleVerificationsTriggerWhatsappVerification(ctx context.Context, cmd *cli.Command) error {
@@ -328,6 +332,7 @@ func handleVerificationsTriggerWhatsappVerification(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verifications trigger-whatsapp-verification", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verifications trigger-whatsapp-verification", obj, format, explicitFormat, transform)
 }

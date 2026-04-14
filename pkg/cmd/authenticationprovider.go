@@ -226,8 +226,9 @@ func handleAuthenticationProvidersCreate(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "authentication-providers create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "authentication-providers create", obj, format, explicitFormat, transform)
 }
 
 func handleAuthenticationProvidersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -261,8 +262,9 @@ func handleAuthenticationProvidersRetrieve(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "authentication-providers retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "authentication-providers retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAuthenticationProvidersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -303,8 +305,9 @@ func handleAuthenticationProvidersUpdate(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "authentication-providers update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "authentication-providers update", obj, format, explicitFormat, transform)
 }
 
 func handleAuthenticationProvidersList(ctx context.Context, cmd *cli.Command) error {
@@ -329,6 +332,7 @@ func handleAuthenticationProvidersList(ctx context.Context, cmd *cli.Command) er
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -338,14 +342,14 @@ func handleAuthenticationProvidersList(ctx context.Context, cmd *cli.Command) er
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "authentication-providers list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "authentication-providers list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AuthenticationProviders.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "authentication-providers list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "authentication-providers list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -380,6 +384,7 @@ func handleAuthenticationProvidersDelete(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "authentication-providers delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "authentication-providers delete", obj, format, explicitFormat, transform)
 }

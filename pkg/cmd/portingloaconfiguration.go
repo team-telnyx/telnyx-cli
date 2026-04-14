@@ -496,8 +496,9 @@ func handlePortingLoaConfigurationsCreate(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting:loa-configurations create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting:loa-configurations create", obj, format, explicitFormat, transform)
 }
 
 func handlePortingLoaConfigurationsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -531,8 +532,9 @@ func handlePortingLoaConfigurationsRetrieve(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting:loa-configurations retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting:loa-configurations retrieve", obj, format, explicitFormat, transform)
 }
 
 func handlePortingLoaConfigurationsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -573,8 +575,9 @@ func handlePortingLoaConfigurationsUpdate(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting:loa-configurations update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting:loa-configurations update", obj, format, explicitFormat, transform)
 }
 
 func handlePortingLoaConfigurationsList(ctx context.Context, cmd *cli.Command) error {
@@ -599,6 +602,7 @@ func handlePortingLoaConfigurationsList(ctx context.Context, cmd *cli.Command) e
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -608,14 +612,14 @@ func handlePortingLoaConfigurationsList(ctx context.Context, cmd *cli.Command) e
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting:loa-configurations list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "porting:loa-configurations list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Porting.LoaConfigurations.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting:loa-configurations list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "porting:loa-configurations list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 

@@ -110,8 +110,9 @@ func handleRequirementsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "requirements retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "requirements retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleRequirementsList(ctx context.Context, cmd *cli.Command) error {
@@ -136,6 +137,7 @@ func handleRequirementsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -145,13 +147,13 @@ func handleRequirementsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "requirements list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "requirements list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Requirements.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "requirements list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "requirements list", iter, format, explicitFormat, transform, maxItems)
 	}
 }

@@ -174,8 +174,9 @@ func handleDynamicEmergencyAddressesCreate(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dynamic-emergency-addresses create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "dynamic-emergency-addresses create", obj, format, explicitFormat, transform)
 }
 
 func handleDynamicEmergencyAddressesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -209,8 +210,9 @@ func handleDynamicEmergencyAddressesRetrieve(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dynamic-emergency-addresses retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "dynamic-emergency-addresses retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleDynamicEmergencyAddressesList(ctx context.Context, cmd *cli.Command) error {
@@ -235,6 +237,7 @@ func handleDynamicEmergencyAddressesList(ctx context.Context, cmd *cli.Command) 
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -244,14 +247,14 @@ func handleDynamicEmergencyAddressesList(ctx context.Context, cmd *cli.Command) 
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "dynamic-emergency-addresses list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "dynamic-emergency-addresses list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.DynamicEmergencyAddresses.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "dynamic-emergency-addresses list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "dynamic-emergency-addresses list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -286,6 +289,7 @@ func handleDynamicEmergencyAddressesDelete(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dynamic-emergency-addresses delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "dynamic-emergency-addresses delete", obj, format, explicitFormat, transform)
 }

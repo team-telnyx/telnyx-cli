@@ -166,8 +166,9 @@ func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless-blocklists create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists create", obj, format, explicitFormat, transform)
 }
 
 func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -201,8 +202,9 @@ func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless-blocklists retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -243,8 +245,9 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless-blocklists update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists update", obj, format, explicitFormat, transform)
 }
 
 func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
@@ -269,6 +272,7 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -278,14 +282,14 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "wireless-blocklists list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.WirelessBlocklists.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "wireless-blocklists list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "wireless-blocklists list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -320,6 +324,7 @@ func handleWirelessBlocklistsDelete(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless-blocklists delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists delete", obj, format, explicitFormat, transform)
 }

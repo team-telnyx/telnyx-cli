@@ -741,8 +741,9 @@ func handleConferencesActionsUpdate(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions update", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command) error {
@@ -783,8 +784,9 @@ func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions end-conference", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions end-conference", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Command) error {
@@ -825,8 +827,9 @@ func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions gather-dtmf-audio", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions gather-dtmf-audio", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsHold(ctx context.Context, cmd *cli.Command) error {
@@ -867,8 +870,9 @@ func handleConferencesActionsHold(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions hold", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions hold", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsJoin(ctx context.Context, cmd *cli.Command) error {
@@ -909,8 +913,9 @@ func handleConferencesActionsJoin(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions join", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions join", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsLeave(ctx context.Context, cmd *cli.Command) error {
@@ -951,8 +956,9 @@ func handleConferencesActionsLeave(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions leave", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions leave", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsMute(ctx context.Context, cmd *cli.Command) error {
@@ -993,8 +999,9 @@ func handleConferencesActionsMute(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions mute", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions mute", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsPlay(ctx context.Context, cmd *cli.Command) error {
@@ -1035,8 +1042,9 @@ func handleConferencesActionsPlay(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions play", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions play", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsRecordPause(ctx context.Context, cmd *cli.Command) error {
@@ -1077,8 +1085,9 @@ func handleConferencesActionsRecordPause(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions record-pause", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions record-pause", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsRecordResume(ctx context.Context, cmd *cli.Command) error {
@@ -1119,8 +1128,9 @@ func handleConferencesActionsRecordResume(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions record-resume", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions record-resume", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsRecordStart(ctx context.Context, cmd *cli.Command) error {
@@ -1161,8 +1171,9 @@ func handleConferencesActionsRecordStart(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions record-start", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions record-start", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsRecordStop(ctx context.Context, cmd *cli.Command) error {
@@ -1203,8 +1214,9 @@ func handleConferencesActionsRecordStop(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions record-stop", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions record-stop", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
@@ -1245,8 +1257,9 @@ func handleConferencesActionsSendDtmf(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions send-dtmf", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions send-dtmf", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsSpeak(ctx context.Context, cmd *cli.Command) error {
@@ -1287,8 +1300,9 @@ func handleConferencesActionsSpeak(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions speak", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions speak", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsStop(ctx context.Context, cmd *cli.Command) error {
@@ -1329,8 +1343,9 @@ func handleConferencesActionsStop(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions stop", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions stop", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsUnhold(ctx context.Context, cmd *cli.Command) error {
@@ -1371,8 +1386,9 @@ func handleConferencesActionsUnhold(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions unhold", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions unhold", obj, format, explicitFormat, transform)
 }
 
 func handleConferencesActionsUnmute(ctx context.Context, cmd *cli.Command) error {
@@ -1413,6 +1429,7 @@ func handleConferencesActionsUnmute(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "conferences:actions unmute", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions unmute", obj, format, explicitFormat, transform)
 }

@@ -97,8 +97,9 @@ func handlePortingOrdersCommentsCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:comments create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:comments create", obj, format, explicitFormat, transform)
 }
 
 func handlePortingOrdersCommentsList(ctx context.Context, cmd *cli.Command) error {
@@ -126,6 +127,7 @@ func handlePortingOrdersCommentsList(ctx context.Context, cmd *cli.Command) erro
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -140,7 +142,7 @@ func handlePortingOrdersCommentsList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting-orders:comments list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:comments list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.PortingOrders.Comments.ListAutoPaging(
 			ctx,
@@ -152,6 +154,6 @@ func handlePortingOrdersCommentsList(ctx context.Context, cmd *cli.Command) erro
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting-orders:comments list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:comments list", iter, format, explicitFormat, transform, maxItems)
 	}
 }

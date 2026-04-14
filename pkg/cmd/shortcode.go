@@ -119,8 +119,9 @@ func handleShortCodesRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "short-codes retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "short-codes retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleShortCodesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -161,8 +162,9 @@ func handleShortCodesUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "short-codes update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "short-codes update", obj, format, explicitFormat, transform)
 }
 
 func handleShortCodesList(ctx context.Context, cmd *cli.Command) error {
@@ -187,6 +189,7 @@ func handleShortCodesList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -196,13 +199,13 @@ func handleShortCodesList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "short-codes list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "short-codes list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.ShortCodes.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "short-codes list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "short-codes list", iter, format, explicitFormat, transform, maxItems)
 	}
 }

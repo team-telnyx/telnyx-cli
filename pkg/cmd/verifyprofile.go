@@ -502,8 +502,9 @@ func handleVerifyProfilesCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verify-profiles create", obj, format, explicitFormat, transform)
 }
 
 func handleVerifyProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -537,8 +538,9 @@ func handleVerifyProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verify-profiles retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleVerifyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -579,8 +581,9 @@ func handleVerifyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verify-profiles update", obj, format, explicitFormat, transform)
 }
 
 func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
@@ -605,6 +608,7 @@ func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -614,14 +618,14 @@ func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "verify-profiles list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "verify-profiles list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.VerifyProfiles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "verify-profiles list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "verify-profiles list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -656,8 +660,9 @@ func handleVerifyProfilesDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verify-profiles delete", obj, format, explicitFormat, transform)
 }
 
 func handleVerifyProfilesCreateTemplate(ctx context.Context, cmd *cli.Command) error {
@@ -690,8 +695,9 @@ func handleVerifyProfilesCreateTemplate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles create-template", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verify-profiles create-template", obj, format, explicitFormat, transform)
 }
 
 func handleVerifyProfilesRetrieveTemplates(ctx context.Context, cmd *cli.Command) error {
@@ -722,8 +728,9 @@ func handleVerifyProfilesRetrieveTemplates(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles retrieve-templates", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verify-profiles retrieve-templates", obj, format, explicitFormat, transform)
 }
 
 func handleVerifyProfilesUpdateTemplate(ctx context.Context, cmd *cli.Command) error {
@@ -764,6 +771,7 @@ func handleVerifyProfilesUpdateTemplate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles update-template", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verify-profiles update-template", obj, format, explicitFormat, transform)
 }

@@ -238,8 +238,9 @@ func handleVirtualCrossConnectsCreate(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "virtual-cross-connects create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "virtual-cross-connects create", obj, format, explicitFormat, transform)
 }
 
 func handleVirtualCrossConnectsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -273,8 +274,9 @@ func handleVirtualCrossConnectsRetrieve(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "virtual-cross-connects retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "virtual-cross-connects retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleVirtualCrossConnectsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -315,8 +317,9 @@ func handleVirtualCrossConnectsUpdate(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "virtual-cross-connects update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "virtual-cross-connects update", obj, format, explicitFormat, transform)
 }
 
 func handleVirtualCrossConnectsList(ctx context.Context, cmd *cli.Command) error {
@@ -341,6 +344,7 @@ func handleVirtualCrossConnectsList(ctx context.Context, cmd *cli.Command) error
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -350,14 +354,14 @@ func handleVirtualCrossConnectsList(ctx context.Context, cmd *cli.Command) error
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "virtual-cross-connects list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "virtual-cross-connects list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.VirtualCrossConnects.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "virtual-cross-connects list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "virtual-cross-connects list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -392,6 +396,7 @@ func handleVirtualCrossConnectsDelete(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "virtual-cross-connects delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "virtual-cross-connects delete", obj, format, explicitFormat, transform)
 }

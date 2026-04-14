@@ -244,8 +244,9 @@ func handleSimCardsActionsRetrieve(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
@@ -270,6 +271,7 @@ func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -279,14 +281,14 @@ func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "sim-cards:actions list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.SimCards.Actions.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "sim-cards:actions list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "sim-cards:actions list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -320,8 +322,9 @@ func handleSimCardsActionsBulkDisableVoice(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions bulk-disable-voice", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions bulk-disable-voice", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardsActionsBulkEnableVoice(ctx context.Context, cmd *cli.Command) error {
@@ -354,8 +357,9 @@ func handleSimCardsActionsBulkEnableVoice(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions bulk-enable-voice", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions bulk-enable-voice", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardsActionsBulkSetPublicIPs(ctx context.Context, cmd *cli.Command) error {
@@ -388,8 +392,9 @@ func handleSimCardsActionsBulkSetPublicIPs(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions bulk-set-public-ips", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions bulk-set-public-ips", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardsActionsDisable(ctx context.Context, cmd *cli.Command) error {
@@ -423,8 +428,9 @@ func handleSimCardsActionsDisable(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions disable", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions disable", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardsActionsEnable(ctx context.Context, cmd *cli.Command) error {
@@ -458,8 +464,9 @@ func handleSimCardsActionsEnable(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions enable", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions enable", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardsActionsRemovePublicIP(ctx context.Context, cmd *cli.Command) error {
@@ -493,8 +500,9 @@ func handleSimCardsActionsRemovePublicIP(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions remove-public-ip", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions remove-public-ip", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardsActionsSetPublicIP(ctx context.Context, cmd *cli.Command) error {
@@ -535,8 +543,9 @@ func handleSimCardsActionsSetPublicIP(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions set-public-ip", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions set-public-ip", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardsActionsSetStandby(ctx context.Context, cmd *cli.Command) error {
@@ -570,8 +579,9 @@ func handleSimCardsActionsSetStandby(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions set-standby", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions set-standby", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardsActionsValidateRegistrationCodes(ctx context.Context, cmd *cli.Command) error {
@@ -604,6 +614,7 @@ func handleSimCardsActionsValidateRegistrationCodes(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards:actions validate-registration-codes", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions validate-registration-codes", obj, format, explicitFormat, transform)
 }

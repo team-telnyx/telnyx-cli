@@ -95,8 +95,9 @@ func handleWhatsappPhoneNumbersProfilePhotoRetrieve(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:phone-numbers:profile:photo retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:phone-numbers:profile:photo retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWhatsappPhoneNumbersProfilePhotoDelete(ctx context.Context, cmd *cli.Command) error {
@@ -162,6 +163,7 @@ func handleWhatsappPhoneNumbersProfilePhotoUpload(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:phone-numbers:profile:photo upload", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:phone-numbers:profile:photo upload", obj, format, explicitFormat, transform)
 }

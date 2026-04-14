@@ -128,8 +128,9 @@ func handleAIMissionsMcpServersCreateMcpServer(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:mcp-servers create-mcp-server", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:mcp-servers create-mcp-server", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsMcpServersDeleteMcpServer(ctx context.Context, cmd *cli.Command) error {
@@ -206,8 +207,9 @@ func handleAIMissionsMcpServersGetMcpServer(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:mcp-servers get-mcp-server", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:mcp-servers get-mcp-server", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsMcpServersListMcpServers(ctx context.Context, cmd *cli.Command) error {
@@ -241,8 +243,9 @@ func handleAIMissionsMcpServersListMcpServers(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:mcp-servers list-mcp-servers", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:mcp-servers list-mcp-servers", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsMcpServersUpdateMcpServer(ctx context.Context, cmd *cli.Command) error {
@@ -285,6 +288,7 @@ func handleAIMissionsMcpServersUpdateMcpServer(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:mcp-servers update-mcp-server", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:mcp-servers update-mcp-server", obj, format, explicitFormat, transform)
 }

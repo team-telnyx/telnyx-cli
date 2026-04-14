@@ -205,8 +205,9 @@ func handleExternalConnectionsUploadsCreate(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections:uploads create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections:uploads create", obj, format, explicitFormat, transform)
 }
 
 func handleExternalConnectionsUploadsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -249,8 +250,9 @@ func handleExternalConnectionsUploadsRetrieve(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections:uploads retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections:uploads retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleExternalConnectionsUploadsList(ctx context.Context, cmd *cli.Command) error {
@@ -278,6 +280,7 @@ func handleExternalConnectionsUploadsList(ctx context.Context, cmd *cli.Command)
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -292,7 +295,7 @@ func handleExternalConnectionsUploadsList(ctx context.Context, cmd *cli.Command)
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "external-connections:uploads list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "external-connections:uploads list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.ExternalConnections.Uploads.ListAutoPaging(
 			ctx,
@@ -304,7 +307,7 @@ func handleExternalConnectionsUploadsList(ctx context.Context, cmd *cli.Command)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "external-connections:uploads list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "external-connections:uploads list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -339,8 +342,9 @@ func handleExternalConnectionsUploadsPendingCount(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections:uploads pending-count", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections:uploads pending-count", obj, format, explicitFormat, transform)
 }
 
 func handleExternalConnectionsUploadsRefreshStatus(ctx context.Context, cmd *cli.Command) error {
@@ -374,8 +378,9 @@ func handleExternalConnectionsUploadsRefreshStatus(ctx context.Context, cmd *cli
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections:uploads refresh-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections:uploads refresh-status", obj, format, explicitFormat, transform)
 }
 
 func handleExternalConnectionsUploadsRetry(ctx context.Context, cmd *cli.Command) error {
@@ -418,6 +423,7 @@ func handleExternalConnectionsUploadsRetry(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections:uploads retry", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections:uploads retry", obj, format, explicitFormat, transform)
 }

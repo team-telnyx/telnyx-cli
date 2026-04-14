@@ -61,6 +61,7 @@ func handleWirelessRetrieveRegions(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless retrieve-regions", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireless retrieve-regions", obj, format, explicitFormat, transform)
 }

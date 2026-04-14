@@ -139,8 +139,9 @@ func handleDynamicEmergencyEndpointsCreate(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dynamic-emergency-endpoints create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "dynamic-emergency-endpoints create", obj, format, explicitFormat, transform)
 }
 
 func handleDynamicEmergencyEndpointsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -174,8 +175,9 @@ func handleDynamicEmergencyEndpointsRetrieve(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dynamic-emergency-endpoints retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "dynamic-emergency-endpoints retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleDynamicEmergencyEndpointsList(ctx context.Context, cmd *cli.Command) error {
@@ -200,6 +202,7 @@ func handleDynamicEmergencyEndpointsList(ctx context.Context, cmd *cli.Command) 
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -209,14 +212,14 @@ func handleDynamicEmergencyEndpointsList(ctx context.Context, cmd *cli.Command) 
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "dynamic-emergency-endpoints list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "dynamic-emergency-endpoints list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.DynamicEmergencyEndpoints.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "dynamic-emergency-endpoints list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "dynamic-emergency-endpoints list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -251,6 +254,7 @@ func handleDynamicEmergencyEndpointsDelete(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dynamic-emergency-endpoints delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "dynamic-emergency-endpoints delete", obj, format, explicitFormat, transform)
 }

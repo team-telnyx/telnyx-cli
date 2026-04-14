@@ -146,8 +146,9 @@ func handleLegacyReportingUsageReportsVoiceCreate(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:voice create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:voice create", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingUsageReportsVoiceRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -181,8 +182,9 @@ func handleLegacyReportingUsageReportsVoiceRetrieve(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:voice retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:voice retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Command) error {
@@ -207,6 +209,7 @@ func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Co
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -216,14 +219,14 @@ func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Co
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:voice list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:voice list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Legacy.Reporting.UsageReports.Voice.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "legacy:reporting:usage-reports:voice list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:voice list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -258,6 +261,7 @@ func handleLegacyReportingUsageReportsVoiceDelete(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:voice delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:voice delete", obj, format, explicitFormat, transform)
 }

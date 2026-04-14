@@ -456,8 +456,9 @@ func handleAIAssistantsVersionsRetrieve(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:versions retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:versions retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsVersionsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -500,8 +501,9 @@ func handleAIAssistantsVersionsUpdate(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:versions update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:versions update", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsVersionsList(ctx context.Context, cmd *cli.Command) error {
@@ -535,8 +537,9 @@ func handleAIAssistantsVersionsList(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:versions list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:versions list", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsVersionsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -613,6 +616,7 @@ func handleAIAssistantsVersionsPromote(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:versions promote", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:versions promote", obj, format, explicitFormat, transform)
 }

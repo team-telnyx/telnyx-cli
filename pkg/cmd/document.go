@@ -254,8 +254,9 @@ func handleDocumentsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "documents retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "documents retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleDocumentsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -296,8 +297,9 @@ func handleDocumentsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "documents update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "documents update", obj, format, explicitFormat, transform)
 }
 
 func handleDocumentsList(ctx context.Context, cmd *cli.Command) error {
@@ -322,6 +324,7 @@ func handleDocumentsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -331,14 +334,14 @@ func handleDocumentsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "documents list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "documents list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Documents.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "documents list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "documents list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -373,8 +376,9 @@ func handleDocumentsDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "documents delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "documents delete", obj, format, explicitFormat, transform)
 }
 
 func handleDocumentsDownload(ctx context.Context, cmd *cli.Command) error {
@@ -441,8 +445,9 @@ func handleDocumentsGenerateDownloadLink(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "documents generate-download-link", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "documents generate-download-link", obj, format, explicitFormat, transform)
 }
 
 func handleDocumentsUpload(ctx context.Context, cmd *cli.Command) error {
@@ -475,8 +480,9 @@ func handleDocumentsUpload(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "documents upload", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "documents upload", obj, format, explicitFormat, transform)
 }
 
 func handleDocumentsUploadJson(ctx context.Context, cmd *cli.Command) error {
@@ -509,6 +515,7 @@ func handleDocumentsUploadJson(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "documents upload-json", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "documents upload-json", obj, format, explicitFormat, transform)
 }

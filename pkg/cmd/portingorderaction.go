@@ -112,8 +112,9 @@ func handlePortingOrdersActionsActivate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:actions activate", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:actions activate", obj, format, explicitFormat, transform)
 }
 
 func handlePortingOrdersActionsCancel(ctx context.Context, cmd *cli.Command) error {
@@ -147,8 +148,9 @@ func handlePortingOrdersActionsCancel(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:actions cancel", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:actions cancel", obj, format, explicitFormat, transform)
 }
 
 func handlePortingOrdersActionsConfirm(ctx context.Context, cmd *cli.Command) error {
@@ -182,8 +184,9 @@ func handlePortingOrdersActionsConfirm(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:actions confirm", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:actions confirm", obj, format, explicitFormat, transform)
 }
 
 func handlePortingOrdersActionsShare(ctx context.Context, cmd *cli.Command) error {
@@ -224,6 +227,7 @@ func handlePortingOrdersActionsShare(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:actions share", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:actions share", obj, format, explicitFormat, transform)
 }

@@ -301,8 +301,9 @@ func handlePhoneNumbersJobsRetrieve(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:jobs retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs retrieve", obj, format, explicitFormat, transform)
 }
 
 func handlePhoneNumbersJobsList(ctx context.Context, cmd *cli.Command) error {
@@ -327,6 +328,7 @@ func handlePhoneNumbersJobsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -336,14 +338,14 @@ func handlePhoneNumbersJobsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "phone-numbers:jobs list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.PhoneNumbers.Jobs.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "phone-numbers:jobs list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "phone-numbers:jobs list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -377,8 +379,9 @@ func handlePhoneNumbersJobsDeleteBatch(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:jobs delete-batch", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs delete-batch", obj, format, explicitFormat, transform)
 }
 
 func handlePhoneNumbersJobsUpdateBatch(ctx context.Context, cmd *cli.Command) error {
@@ -411,8 +414,9 @@ func handlePhoneNumbersJobsUpdateBatch(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:jobs update-batch", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs update-batch", obj, format, explicitFormat, transform)
 }
 
 func handlePhoneNumbersJobsUpdateEmergencySettingsBatch(ctx context.Context, cmd *cli.Command) error {
@@ -445,6 +449,7 @@ func handlePhoneNumbersJobsUpdateEmergencySettingsBatch(ctx context.Context, cmd
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:jobs update-emergency-settings-batch", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs update-emergency-settings-batch", obj, format, explicitFormat, transform)
 }

@@ -182,8 +182,9 @@ func handleVoiceClonesCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-clones create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "voice-clones create", obj, format, explicitFormat, transform)
 }
 
 func handleVoiceClonesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -224,8 +225,9 @@ func handleVoiceClonesUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-clones update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "voice-clones update", obj, format, explicitFormat, transform)
 }
 
 func handleVoiceClonesList(ctx context.Context, cmd *cli.Command) error {
@@ -250,6 +252,7 @@ func handleVoiceClonesList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -259,14 +262,14 @@ func handleVoiceClonesList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "voice-clones list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "voice-clones list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.VoiceClones.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "voice-clones list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "voice-clones list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -325,8 +328,9 @@ func handleVoiceClonesCreateFromUpload(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-clones create-from-upload", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "voice-clones create-from-upload", obj, format, explicitFormat, transform)
 }
 
 func handleVoiceClonesDownloadSample(ctx context.Context, cmd *cli.Command) error {

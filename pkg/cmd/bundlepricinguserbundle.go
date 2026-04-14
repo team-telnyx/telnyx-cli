@@ -220,8 +220,9 @@ func handleBundlePricingUserBundlesCreate(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "bundle-pricing:user-bundles create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "bundle-pricing:user-bundles create", obj, format, explicitFormat, transform)
 }
 
 func handleBundlePricingUserBundlesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -262,8 +263,9 @@ func handleBundlePricingUserBundlesRetrieve(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "bundle-pricing:user-bundles retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "bundle-pricing:user-bundles retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleBundlePricingUserBundlesList(ctx context.Context, cmd *cli.Command) error {
@@ -288,6 +290,7 @@ func handleBundlePricingUserBundlesList(ctx context.Context, cmd *cli.Command) e
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -297,14 +300,14 @@ func handleBundlePricingUserBundlesList(ctx context.Context, cmd *cli.Command) e
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "bundle-pricing:user-bundles list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "bundle-pricing:user-bundles list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.BundlePricing.UserBundles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "bundle-pricing:user-bundles list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "bundle-pricing:user-bundles list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -346,8 +349,9 @@ func handleBundlePricingUserBundlesDeactivate(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "bundle-pricing:user-bundles deactivate", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "bundle-pricing:user-bundles deactivate", obj, format, explicitFormat, transform)
 }
 
 func handleBundlePricingUserBundlesListResources(ctx context.Context, cmd *cli.Command) error {
@@ -388,8 +392,9 @@ func handleBundlePricingUserBundlesListResources(ctx context.Context, cmd *cli.C
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "bundle-pricing:user-bundles list-resources", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "bundle-pricing:user-bundles list-resources", obj, format, explicitFormat, transform)
 }
 
 func handleBundlePricingUserBundlesListUnused(ctx context.Context, cmd *cli.Command) error {
@@ -422,6 +427,7 @@ func handleBundlePricingUserBundlesListUnused(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "bundle-pricing:user-bundles list-unused", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "bundle-pricing:user-bundles list-unused", obj, format, explicitFormat, transform)
 }

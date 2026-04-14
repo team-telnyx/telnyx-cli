@@ -104,8 +104,9 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextCreate(ctx context.Conte
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:batch-detail-records:speech-to-text create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:speech-to-text create", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingBatchDetailRecordsSpeechToTextRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -139,8 +140,9 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextRetrieve(ctx context.Con
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:batch-detail-records:speech-to-text retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:speech-to-text retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingBatchDetailRecordsSpeechToTextList(ctx context.Context, cmd *cli.Command) error {
@@ -171,8 +173,9 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextList(ctx context.Context
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:batch-detail-records:speech-to-text list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:speech-to-text list", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingBatchDetailRecordsSpeechToTextDelete(ctx context.Context, cmd *cli.Command) error {
@@ -206,6 +209,7 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextDelete(ctx context.Conte
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:batch-detail-records:speech-to-text delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:speech-to-text delete", obj, format, explicitFormat, transform)
 }

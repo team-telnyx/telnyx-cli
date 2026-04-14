@@ -69,8 +69,9 @@ func handleAIIntegrationsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:integrations retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:integrations retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIIntegrationsList(ctx context.Context, cmd *cli.Command) error {
@@ -101,6 +102,7 @@ func handleAIIntegrationsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:integrations list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:integrations list", obj, format, explicitFormat, transform)
 }

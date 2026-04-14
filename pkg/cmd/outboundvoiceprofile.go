@@ -370,8 +370,9 @@ func handleOutboundVoiceProfilesCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "outbound-voice-profiles create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "outbound-voice-profiles create", obj, format, explicitFormat, transform)
 }
 
 func handleOutboundVoiceProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -405,8 +406,9 @@ func handleOutboundVoiceProfilesRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "outbound-voice-profiles retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "outbound-voice-profiles retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleOutboundVoiceProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -447,8 +449,9 @@ func handleOutboundVoiceProfilesUpdate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "outbound-voice-profiles update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "outbound-voice-profiles update", obj, format, explicitFormat, transform)
 }
 
 func handleOutboundVoiceProfilesList(ctx context.Context, cmd *cli.Command) error {
@@ -473,6 +476,7 @@ func handleOutboundVoiceProfilesList(ctx context.Context, cmd *cli.Command) erro
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -482,14 +486,14 @@ func handleOutboundVoiceProfilesList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "outbound-voice-profiles list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "outbound-voice-profiles list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.OutboundVoiceProfiles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "outbound-voice-profiles list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "outbound-voice-profiles list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -524,6 +528,7 @@ func handleOutboundVoiceProfilesDelete(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "outbound-voice-profiles delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "outbound-voice-profiles delete", obj, format, explicitFormat, transform)
 }

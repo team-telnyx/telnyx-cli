@@ -192,8 +192,9 @@ func handleLegacyReportingBatchDetailRecordsMessagingCreate(ctx context.Context,
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:batch-detail-records:messaging create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:messaging create", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingBatchDetailRecordsMessagingRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -227,8 +228,9 @@ func handleLegacyReportingBatchDetailRecordsMessagingRetrieve(ctx context.Contex
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:batch-detail-records:messaging retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:messaging retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingBatchDetailRecordsMessagingList(ctx context.Context, cmd *cli.Command) error {
@@ -259,8 +261,9 @@ func handleLegacyReportingBatchDetailRecordsMessagingList(ctx context.Context, c
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:batch-detail-records:messaging list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:messaging list", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingBatchDetailRecordsMessagingDelete(ctx context.Context, cmd *cli.Command) error {
@@ -294,6 +297,7 @@ func handleLegacyReportingBatchDetailRecordsMessagingDelete(ctx context.Context,
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:batch-detail-records:messaging delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:messaging delete", obj, format, explicitFormat, transform)
 }

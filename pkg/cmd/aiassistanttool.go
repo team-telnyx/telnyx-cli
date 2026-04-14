@@ -119,8 +119,9 @@ func handleAIAssistantsToolsAdd(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tools add", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tools add", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsToolsRemove(ctx context.Context, cmd *cli.Command) error {
@@ -163,8 +164,9 @@ func handleAIAssistantsToolsRemove(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tools remove", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tools remove", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsToolsTest(ctx context.Context, cmd *cli.Command) error {
@@ -207,6 +209,7 @@ func handleAIAssistantsToolsTest(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tools test", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tools test", obj, format, explicitFormat, transform)
 }

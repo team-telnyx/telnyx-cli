@@ -131,8 +131,9 @@ func handleCustomStorageCredentialsCreate(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "custom-storage-credentials create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "custom-storage-credentials create", obj, format, explicitFormat, transform)
 }
 
 func handleCustomStorageCredentialsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -166,8 +167,9 @@ func handleCustomStorageCredentialsRetrieve(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "custom-storage-credentials retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "custom-storage-credentials retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleCustomStorageCredentialsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -208,8 +210,9 @@ func handleCustomStorageCredentialsUpdate(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "custom-storage-credentials update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "custom-storage-credentials update", obj, format, explicitFormat, transform)
 }
 
 func handleCustomStorageCredentialsDelete(ctx context.Context, cmd *cli.Command) error {

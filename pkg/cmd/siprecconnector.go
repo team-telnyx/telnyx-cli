@@ -143,8 +143,9 @@ func handleSiprecConnectorsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "siprec-connectors create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "siprec-connectors create", obj, format, explicitFormat, transform)
 }
 
 func handleSiprecConnectorsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -178,8 +179,9 @@ func handleSiprecConnectorsRetrieve(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "siprec-connectors retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "siprec-connectors retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleSiprecConnectorsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -220,8 +222,9 @@ func handleSiprecConnectorsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "siprec-connectors update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "siprec-connectors update", obj, format, explicitFormat, transform)
 }
 
 func handleSiprecConnectorsDelete(ctx context.Context, cmd *cli.Command) error {

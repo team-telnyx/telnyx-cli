@@ -120,8 +120,9 @@ func handlePhoneNumberBlocksJobsRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-number-blocks:jobs retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-number-blocks:jobs retrieve", obj, format, explicitFormat, transform)
 }
 
 func handlePhoneNumberBlocksJobsList(ctx context.Context, cmd *cli.Command) error {
@@ -146,6 +147,7 @@ func handlePhoneNumberBlocksJobsList(ctx context.Context, cmd *cli.Command) erro
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -155,14 +157,14 @@ func handlePhoneNumberBlocksJobsList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "phone-number-blocks:jobs list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "phone-number-blocks:jobs list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.PhoneNumberBlocks.Jobs.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "phone-number-blocks:jobs list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "phone-number-blocks:jobs list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -196,6 +198,7 @@ func handlePhoneNumberBlocksJobsDeletePhoneNumberBlock(ctx context.Context, cmd 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-number-blocks:jobs delete-phone-number-block", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-number-blocks:jobs delete-phone-number-block", obj, format, explicitFormat, transform)
 }

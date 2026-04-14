@@ -100,8 +100,9 @@ func handleStorageBucketsUsageGetAPIUsage(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:buckets:usage get-api-usage", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:usage get-api-usage", obj, format, explicitFormat, transform)
 }
 
 func handleStorageBucketsUsageGetBucketUsage(ctx context.Context, cmd *cli.Command) error {
@@ -135,6 +136,7 @@ func handleStorageBucketsUsageGetBucketUsage(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:buckets:usage get-bucket-usage", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:usage get-bucket-usage", obj, format, explicitFormat, transform)
 }

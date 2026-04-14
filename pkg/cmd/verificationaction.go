@@ -77,6 +77,7 @@ func handleVerificationsActionsVerify(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verifications:actions verify", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verifications:actions verify", obj, format, explicitFormat, transform)
 }

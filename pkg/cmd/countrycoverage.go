@@ -66,8 +66,9 @@ func handleCountryCoverageRetrieve(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "country-coverage retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "country-coverage retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleCountryCoverageRetrieveCountry(ctx context.Context, cmd *cli.Command) error {
@@ -101,6 +102,7 @@ func handleCountryCoverageRetrieveCountry(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "country-coverage retrieve-country", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "country-coverage retrieve-country", obj, format, explicitFormat, transform)
 }

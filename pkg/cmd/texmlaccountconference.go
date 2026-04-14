@@ -191,8 +191,9 @@ func handleTexmlAccountsConferencesRetrieve(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlAccountsConferencesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -235,8 +236,9 @@ func handleTexmlAccountsConferencesUpdate(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences update", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlAccountsConferencesRetrieveConferences(ctx context.Context, cmd *cli.Command) error {
@@ -277,8 +279,9 @@ func handleTexmlAccountsConferencesRetrieveConferences(ctx context.Context, cmd 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences retrieve-conferences", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences retrieve-conferences", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlAccountsConferencesRetrieveRecordings(ctx context.Context, cmd *cli.Command) error {
@@ -321,8 +324,9 @@ func handleTexmlAccountsConferencesRetrieveRecordings(ctx context.Context, cmd *
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences retrieve-recordings", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences retrieve-recordings", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlAccountsConferencesRetrieveRecordingsJson(ctx context.Context, cmd *cli.Command) error {
@@ -365,6 +369,7 @@ func handleTexmlAccountsConferencesRetrieveRecordingsJson(ctx context.Context, c
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences retrieve-recordings-json", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences retrieve-recordings-json", obj, format, explicitFormat, transform)
 }

@@ -308,8 +308,9 @@ func handleFaxApplicationsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "fax-applications create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "fax-applications create", obj, format, explicitFormat, transform)
 }
 
 func handleFaxApplicationsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -343,8 +344,9 @@ func handleFaxApplicationsRetrieve(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "fax-applications retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "fax-applications retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleFaxApplicationsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -385,8 +387,9 @@ func handleFaxApplicationsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "fax-applications update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "fax-applications update", obj, format, explicitFormat, transform)
 }
 
 func handleFaxApplicationsList(ctx context.Context, cmd *cli.Command) error {
@@ -411,6 +414,7 @@ func handleFaxApplicationsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -420,14 +424,14 @@ func handleFaxApplicationsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "fax-applications list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "fax-applications list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.FaxApplications.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "fax-applications list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "fax-applications list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -462,6 +466,7 @@ func handleFaxApplicationsDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "fax-applications delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "fax-applications delete", obj, format, explicitFormat, transform)
 }

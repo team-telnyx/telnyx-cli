@@ -95,8 +95,9 @@ func handleChannelZonesUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "channel-zones update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "channel-zones update", obj, format, explicitFormat, transform)
 }
 
 func handleChannelZonesList(ctx context.Context, cmd *cli.Command) error {
@@ -121,6 +122,7 @@ func handleChannelZonesList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -130,13 +132,13 @@ func handleChannelZonesList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "channel-zones list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "channel-zones list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.ChannelZones.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "channel-zones list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "channel-zones list", iter, format, explicitFormat, transform, maxItems)
 	}
 }

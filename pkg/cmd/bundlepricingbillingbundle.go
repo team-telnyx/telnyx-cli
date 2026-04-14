@@ -118,8 +118,9 @@ func handleBundlePricingBillingBundlesRetrieve(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "bundle-pricing:billing-bundles retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "bundle-pricing:billing-bundles retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleBundlePricingBillingBundlesList(ctx context.Context, cmd *cli.Command) error {
@@ -144,6 +145,7 @@ func handleBundlePricingBillingBundlesList(ctx context.Context, cmd *cli.Command
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -153,13 +155,13 @@ func handleBundlePricingBillingBundlesList(ctx context.Context, cmd *cli.Command
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "bundle-pricing:billing-bundles list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "bundle-pricing:billing-bundles list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.BundlePricing.BillingBundles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "bundle-pricing:billing-bundles list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "bundle-pricing:billing-bundles list", iter, format, explicitFormat, transform, maxItems)
 	}
 }

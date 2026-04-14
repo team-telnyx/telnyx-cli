@@ -207,8 +207,9 @@ func handleCustomerServiceRecordsCreate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "customer-service-records create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "customer-service-records create", obj, format, explicitFormat, transform)
 }
 
 func handleCustomerServiceRecordsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -242,8 +243,9 @@ func handleCustomerServiceRecordsRetrieve(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "customer-service-records retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "customer-service-records retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleCustomerServiceRecordsList(ctx context.Context, cmd *cli.Command) error {
@@ -268,6 +270,7 @@ func handleCustomerServiceRecordsList(ctx context.Context, cmd *cli.Command) err
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -277,14 +280,14 @@ func handleCustomerServiceRecordsList(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "customer-service-records list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "customer-service-records list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.CustomerServiceRecords.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "customer-service-records list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "customer-service-records list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -318,6 +321,7 @@ func handleCustomerServiceRecordsVerifyPhoneNumberCoverage(ctx context.Context, 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "customer-service-records verify-phone-number-coverage", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "customer-service-records verify-phone-number-coverage", obj, format, explicitFormat, transform)
 }

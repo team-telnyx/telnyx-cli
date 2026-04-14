@@ -83,8 +83,9 @@ func handleAIIntegrationsConnectionsRetrieve(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:integrations:connections retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:integrations:connections retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIIntegrationsConnectionsList(ctx context.Context, cmd *cli.Command) error {
@@ -115,8 +116,9 @@ func handleAIIntegrationsConnectionsList(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:integrations:connections list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:integrations:connections list", obj, format, explicitFormat, transform)
 }
 
 func handleAIIntegrationsConnectionsDelete(ctx context.Context, cmd *cli.Command) error {

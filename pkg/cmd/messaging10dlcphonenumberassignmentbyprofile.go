@@ -133,8 +133,9 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileAssign(ctx context.Contex
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-assignment-by-profile assign", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-assignment-by-profile assign", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(ctx context.Context, cmd *cli.Command) error {
@@ -175,8 +176,9 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(ctx
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-assignment-by-profile list-phone-number-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-assignment-by-profile list-phone-number-status", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus(ctx context.Context, cmd *cli.Command) error {
@@ -217,8 +219,9 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-assignment-by-profile retrieve-phone-number-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-assignment-by-profile retrieve-phone-number-status", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrieveStatus(ctx context.Context, cmd *cli.Command) error {
@@ -252,6 +255,7 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrieveStatus(ctx contex
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-assignment-by-profile retrieve-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-assignment-by-profile retrieve-status", obj, format, explicitFormat, transform)
 }

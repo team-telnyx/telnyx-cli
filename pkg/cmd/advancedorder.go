@@ -172,8 +172,9 @@ func handleAdvancedOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "advanced-orders create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "advanced-orders create", obj, format, explicitFormat, transform)
 }
 
 func handleAdvancedOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -207,8 +208,9 @@ func handleAdvancedOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "advanced-orders retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "advanced-orders retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAdvancedOrdersList(ctx context.Context, cmd *cli.Command) error {
@@ -239,8 +241,9 @@ func handleAdvancedOrdersList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "advanced-orders list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "advanced-orders list", obj, format, explicitFormat, transform)
 }
 
 func handleAdvancedOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.Command) error {
@@ -281,6 +284,7 @@ func handleAdvancedOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "advanced-orders update-requirement-group", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "advanced-orders update-requirement-group", obj, format, explicitFormat, transform)
 }

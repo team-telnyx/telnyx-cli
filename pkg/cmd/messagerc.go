@@ -184,8 +184,9 @@ func handleMessagesRcsGenerateDeeplink(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messages:rcs generate-deeplink", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messages:rcs generate-deeplink", obj, format, explicitFormat, transform)
 }
 
 func handleMessagesRcsSend(ctx context.Context, cmd *cli.Command) error {
@@ -218,6 +219,7 @@ func handleMessagesRcsSend(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messages:rcs send", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messages:rcs send", obj, format, explicitFormat, transform)
 }

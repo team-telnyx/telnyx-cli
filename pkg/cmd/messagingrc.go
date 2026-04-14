@@ -113,8 +113,9 @@ func handleMessagingRcsInviteTestNumber(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging:rcs invite-test-number", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging:rcs invite-test-number", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingRcsListBulkCapabilities(ctx context.Context, cmd *cli.Command) error {
@@ -147,8 +148,9 @@ func handleMessagingRcsListBulkCapabilities(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging:rcs list-bulk-capabilities", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging:rcs list-bulk-capabilities", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingRcsRetrieveCapabilities(ctx context.Context, cmd *cli.Command) error {
@@ -191,6 +193,7 @@ func handleMessagingRcsRetrieveCapabilities(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging:rcs retrieve-capabilities", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging:rcs retrieve-capabilities", obj, format, explicitFormat, transform)
 }

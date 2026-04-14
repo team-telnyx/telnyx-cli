@@ -86,8 +86,9 @@ func handlePortoutsCommentsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "portouts:comments create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "portouts:comments create", obj, format, explicitFormat, transform)
 }
 
 func handlePortoutsCommentsList(ctx context.Context, cmd *cli.Command) error {
@@ -121,6 +122,7 @@ func handlePortoutsCommentsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "portouts:comments list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "portouts:comments list", obj, format, explicitFormat, transform)
 }

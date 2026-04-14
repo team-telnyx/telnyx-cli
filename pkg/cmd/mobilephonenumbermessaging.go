@@ -82,8 +82,9 @@ func handleMobilePhoneNumbersMessagingRetrieve(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "mobile-phone-numbers:messaging retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "mobile-phone-numbers:messaging retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleMobilePhoneNumbersMessagingList(ctx context.Context, cmd *cli.Command) error {
@@ -108,6 +109,7 @@ func handleMobilePhoneNumbersMessagingList(ctx context.Context, cmd *cli.Command
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -117,13 +119,13 @@ func handleMobilePhoneNumbersMessagingList(ctx context.Context, cmd *cli.Command
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "mobile-phone-numbers:messaging list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "mobile-phone-numbers:messaging list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.MobilePhoneNumbers.Messaging.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "mobile-phone-numbers:messaging list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "mobile-phone-numbers:messaging list", iter, format, explicitFormat, transform, maxItems)
 	}
 }

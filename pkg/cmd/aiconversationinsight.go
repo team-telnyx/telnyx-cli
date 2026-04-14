@@ -158,8 +158,9 @@ func handleAIConversationsInsightsCreate(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:conversations:insights create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insights create", obj, format, explicitFormat, transform)
 }
 
 func handleAIConversationsInsightsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -193,8 +194,9 @@ func handleAIConversationsInsightsRetrieve(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:conversations:insights retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insights retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIConversationsInsightsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -235,8 +237,9 @@ func handleAIConversationsInsightsUpdate(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:conversations:insights update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insights update", obj, format, explicitFormat, transform)
 }
 
 func handleAIConversationsInsightsList(ctx context.Context, cmd *cli.Command) error {
@@ -261,6 +264,7 @@ func handleAIConversationsInsightsList(ctx context.Context, cmd *cli.Command) er
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -270,14 +274,14 @@ func handleAIConversationsInsightsList(ctx context.Context, cmd *cli.Command) er
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:conversations:insights list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insights list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AI.Conversations.Insights.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:conversations:insights list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:conversations:insights list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 

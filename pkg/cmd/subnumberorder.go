@@ -188,8 +188,9 @@ func handleSubNumberOrdersRetrieve(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sub-number-orders retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleSubNumberOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -230,8 +231,9 @@ func handleSubNumberOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sub-number-orders update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders update", obj, format, explicitFormat, transform)
 }
 
 func handleSubNumberOrdersList(ctx context.Context, cmd *cli.Command) error {
@@ -264,8 +266,9 @@ func handleSubNumberOrdersList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sub-number-orders list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders list", obj, format, explicitFormat, transform)
 }
 
 func handleSubNumberOrdersCancel(ctx context.Context, cmd *cli.Command) error {
@@ -299,8 +302,9 @@ func handleSubNumberOrdersCancel(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sub-number-orders cancel", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders cancel", obj, format, explicitFormat, transform)
 }
 
 func handleSubNumberOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.Command) error {
@@ -341,6 +345,7 @@ func handleSubNumberOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.C
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sub-number-orders update-requirement-group", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders update-requirement-group", obj, format, explicitFormat, transform)
 }
