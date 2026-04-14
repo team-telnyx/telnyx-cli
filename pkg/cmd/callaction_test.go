@@ -56,6 +56,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--custom-header", "{name: head_1, value: val_1}",
 			"--custom-header", "{name: head_2, value: val_2}",
+			"--deepfake-detection", "{enabled: true, rtp_timeout: 30, timeout: 15}",
 			"--preferred-codecs", "G722,PCMU,PCMA,G729,OPUS,VP8,H264",
 			"--record", "record-from-answer",
 			"--record-channels", "single",
@@ -114,6 +115,9 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--custom-header.value", "val_1",
 			"--custom-header.name", "head_2",
 			"--custom-header.value", "val_2",
+			"--deepfake-detection.enabled=true",
+			"--deepfake-detection.rtp-timeout", "30",
+			"--deepfake-detection.timeout", "15",
 			"--preferred-codecs", "G722,PCMU,PCMA,G729,OPUS,VP8,H264",
 			"--record", "record-from-answer",
 			"--record-channels", "single",
@@ -184,6 +188,10 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"    value: val_1\n" +
 			"  - name: head_2\n" +
 			"    value: val_2\n" +
+			"deepfake_detection:\n" +
+			"  enabled: true\n" +
+			"  rtp_timeout: 30\n" +
+			"  timeout: 15\n" +
 			"preferred_codecs: G722,PCMU,PCMA,G729,OPUS,VP8,H264\n" +
 			"record: record-from-answer\n" +
 			"record_channels: single\n" +

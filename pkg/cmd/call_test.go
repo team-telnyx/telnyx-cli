@@ -31,6 +31,7 @@ func TestCallsDial(t *testing.T) {
 			"--conference-config", "{id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, beep_enabled: on_exit, conference_name: telnyx-conference, early_media: false, end_conference_on_exit: true, hold: true, hold_audio_url: http://example.com/message.wav, hold_media_name: my_media_uploaded_to_media_storage_api, mute: true, soft_end_conference_on_exit: true, start_conference_on_create: false, start_conference_on_enter: true, supervisor_role: whisper, whisper_call_control_ids: [v2:Sg1xxxQ_U3ixxxyXT_VDNI3xxxazZdg6Vxxxs4-GNYxxxVaJPOhFMRQ, v2:qqpb0mmvd-ovhhBr0BUQQn0fld5jIboaaX3-De0DkqXHzbf8d75xkw]}",
 			"--custom-header", "{name: head_1, value: val_1}",
 			"--custom-header", "{name: head_2, value: val_2}",
+			"--deepfake-detection", "{enabled: true, rtp_timeout: 30, timeout: 15}",
 			"--dialogflow-config", "{analyze_sentiment: false, partial_automated_agent_reply: false}",
 			"--enable-dialogflow=false",
 			"--from-display-name", "Company Name",
@@ -139,6 +140,9 @@ func TestCallsDial(t *testing.T) {
 			"--custom-header.value", "val_1",
 			"--custom-header.name", "head_2",
 			"--custom-header.value", "val_2",
+			"--deepfake-detection.enabled=true",
+			"--deepfake-detection.rtp-timeout", "30",
+			"--deepfake-detection.timeout", "15",
 			"--dialogflow-config.analyze-sentiment=false",
 			"--dialogflow-config.partial-automated-agent-reply=false",
 			"--enable-dialogflow=false",
@@ -268,6 +272,10 @@ func TestCallsDial(t *testing.T) {
 			"    value: val_1\n" +
 			"  - name: head_2\n" +
 			"    value: val_2\n" +
+			"deepfake_detection:\n" +
+			"  enabled: true\n" +
+			"  rtp_timeout: 30\n" +
+			"  timeout: 15\n" +
 			"dialogflow_config:\n" +
 			"  analyze_sentiment: false\n" +
 			"  partial_automated_agent_reply: false\n" +
