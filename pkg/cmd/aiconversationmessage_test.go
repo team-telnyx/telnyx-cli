@@ -15,7 +15,10 @@ func TestAIConversationsMessagesList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:conversations:messages", "list",
+			"--max-items", "10",
 			"--conversation-id", "conversation_id",
+			"--page-number", "1",
+			"--page-size", "1",
 		)
 	})
 }

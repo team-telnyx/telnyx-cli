@@ -23,6 +23,22 @@ var aiConversationsMessagesList = cli.Command{
 			Name:     "conversation-id",
 			Required: true,
 		},
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			Usage:     "The page number to retrieve.",
+			Default:   1,
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			Usage:     "The number of messages to return per page.",
+			Default:   20,
+			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleAIConversationsMessagesList,
 	HideHelpCommand: true,
@@ -39,6 +55,8 @@ func handleAIConversationsMessagesList(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
+	params := telnyx.AIConversationMessageListParams{}
+
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -50,21 +68,44 @@ func handleAIConversationsMessagesList(ctx context.Context, cmd *cli.Command) er
 		return err
 	}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.Conversations.Messages.List(ctx, cmd.Value("conversation-id").(string), options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		Title:          "ai:conversations:messages list",
-		Transform:      transform,
-	})
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.AI.Conversations.Messages.List(
+			ctx,
+			cmd.Value("conversation-id").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:conversations:messages list",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.AI.Conversations.Messages.ListAutoPaging(
+			ctx,
+			cmd.Value("conversation-id").(string),
+			params,
+			options...,
+		)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:conversations:messages list",
+			Transform:      transform,
+		})
+	}
 }
