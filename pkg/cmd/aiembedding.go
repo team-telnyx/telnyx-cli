@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -161,7 +160,12 @@ func handleAIEmbeddingsCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:embeddings create",
+		Transform:      transform,
+	})
 }
 
 func handleAIEmbeddingsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -197,7 +201,12 @@ func handleAIEmbeddingsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:embeddings retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAIEmbeddingsList(ctx context.Context, cmd *cli.Command) error {
@@ -232,7 +241,12 @@ func handleAIEmbeddingsList(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:embeddings list",
+		Transform:      transform,
+	})
 }
 
 func handleAIEmbeddingsSimilaritySearch(ctx context.Context, cmd *cli.Command) error {
@@ -267,7 +281,12 @@ func handleAIEmbeddingsSimilaritySearch(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings similarity-search", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:embeddings similarity-search",
+		Transform:      transform,
+	})
 }
 
 func handleAIEmbeddingsURL(ctx context.Context, cmd *cli.Command) error {
@@ -302,5 +321,10 @@ func handleAIEmbeddingsURL(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:embeddings url", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:embeddings url",
+		Transform:      transform,
+	})
 }

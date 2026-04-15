@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -135,7 +134,12 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileAssign(ctx context.Contex
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-assignment-by-profile assign", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:phone-number-assignment-by-profile assign",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(ctx context.Context, cmd *cli.Command) error {
@@ -178,7 +182,12 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(ctx
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-assignment-by-profile list-phone-number-status", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:phone-number-assignment-by-profile list-phone-number-status",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus(ctx context.Context, cmd *cli.Command) error {
@@ -221,7 +230,12 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-assignment-by-profile retrieve-phone-number-status", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:phone-number-assignment-by-profile retrieve-phone-number-status",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrieveStatus(ctx context.Context, cmd *cli.Command) error {
@@ -257,5 +271,10 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrieveStatus(ctx contex
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-assignment-by-profile retrieve-status", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:phone-number-assignment-by-profile retrieve-status",
+		Transform:      transform,
+	})
 }

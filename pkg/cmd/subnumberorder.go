@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -190,7 +189,12 @@ func handleSubNumberOrdersRetrieve(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sub-number-orders retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleSubNumberOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -233,7 +237,12 @@ func handleSubNumberOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sub-number-orders update",
+		Transform:      transform,
+	})
 }
 
 func handleSubNumberOrdersList(ctx context.Context, cmd *cli.Command) error {
@@ -268,7 +277,12 @@ func handleSubNumberOrdersList(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sub-number-orders list",
+		Transform:      transform,
+	})
 }
 
 func handleSubNumberOrdersCancel(ctx context.Context, cmd *cli.Command) error {
@@ -304,7 +318,12 @@ func handleSubNumberOrdersCancel(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders cancel", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sub-number-orders cancel",
+		Transform:      transform,
+	})
 }
 
 func handleSubNumberOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.Command) error {
@@ -347,5 +366,10 @@ func handleSubNumberOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.C
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders update-requirement-group", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sub-number-orders update-requirement-group",
+		Transform:      transform,
+	})
 }

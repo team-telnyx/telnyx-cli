@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -104,7 +103,12 @@ func handleWhatsappBusinessAccountsSettingsRetrieve(ctx context.Context, cmd *cl
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:business-accounts:settings retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "whatsapp:business-accounts:settings retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleWhatsappBusinessAccountsSettingsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -147,5 +151,10 @@ func handleWhatsappBusinessAccountsSettingsUpdate(ctx context.Context, cmd *cli.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:business-accounts:settings update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "whatsapp:business-accounts:settings update",
+		Transform:      transform,
+	})
 }

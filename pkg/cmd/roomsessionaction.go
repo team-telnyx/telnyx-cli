@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -134,7 +133,12 @@ func handleRoomsSessionsActionsEnd(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "rooms:sessions:actions end", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "rooms:sessions:actions end",
+		Transform:      transform,
+	})
 }
 
 func handleRoomsSessionsActionsKick(ctx context.Context, cmd *cli.Command) error {
@@ -177,7 +181,12 @@ func handleRoomsSessionsActionsKick(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "rooms:sessions:actions kick", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "rooms:sessions:actions kick",
+		Transform:      transform,
+	})
 }
 
 func handleRoomsSessionsActionsMute(ctx context.Context, cmd *cli.Command) error {
@@ -220,7 +229,12 @@ func handleRoomsSessionsActionsMute(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "rooms:sessions:actions mute", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "rooms:sessions:actions mute",
+		Transform:      transform,
+	})
 }
 
 func handleRoomsSessionsActionsUnmute(ctx context.Context, cmd *cli.Command) error {
@@ -263,5 +277,10 @@ func handleRoomsSessionsActionsUnmute(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "rooms:sessions:actions unmute", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "rooms:sessions:actions unmute",
+		Transform:      transform,
+	})
 }

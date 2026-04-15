@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -115,7 +114,12 @@ func handleMessagingRcsInviteTestNumber(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging:rcs invite-test-number", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging:rcs invite-test-number",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingRcsListBulkCapabilities(ctx context.Context, cmd *cli.Command) error {
@@ -150,7 +154,12 @@ func handleMessagingRcsListBulkCapabilities(ctx context.Context, cmd *cli.Comman
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging:rcs list-bulk-capabilities", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging:rcs list-bulk-capabilities",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingRcsRetrieveCapabilities(ctx context.Context, cmd *cli.Command) error {
@@ -195,5 +204,10 @@ func handleMessagingRcsRetrieveCapabilities(ctx context.Context, cmd *cli.Comman
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging:rcs retrieve-capabilities", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging:rcs retrieve-capabilities",
+		Transform:      transform,
+	})
 }

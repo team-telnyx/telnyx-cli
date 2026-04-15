@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -181,7 +180,12 @@ func handleInexplicitNumberOrdersCreate(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "inexplicit-number-orders create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "inexplicit-number-orders create",
+		Transform:      transform,
+	})
 }
 
 func handleInexplicitNumberOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -217,7 +221,12 @@ func handleInexplicitNumberOrdersRetrieve(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "inexplicit-number-orders retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "inexplicit-number-orders retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleInexplicitNumberOrdersList(ctx context.Context, cmd *cli.Command) error {
@@ -252,13 +261,23 @@ func handleInexplicitNumberOrdersList(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "inexplicit-number-orders list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "inexplicit-number-orders list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.InexplicitNumberOrders.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "inexplicit-number-orders list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "inexplicit-number-orders list",
+			Transform:      transform,
+		})
 	}
 }

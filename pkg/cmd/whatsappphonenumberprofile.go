@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -104,7 +103,12 @@ func handleWhatsappPhoneNumbersProfileRetrieve(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:phone-numbers:profile retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "whatsapp:phone-numbers:profile retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleWhatsappPhoneNumbersProfileUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -147,5 +151,10 @@ func handleWhatsappPhoneNumbersProfileUpdate(ctx context.Context, cmd *cli.Comma
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:phone-numbers:profile update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "whatsapp:phone-numbers:profile update",
+		Transform:      transform,
+	})
 }

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -151,7 +150,12 @@ func handleAIConversationsInsightGroupsRetrieve(ctx context.Context, cmd *cli.Co
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insight-groups retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:conversations:insight-groups retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAIConversationsInsightGroupsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -194,7 +198,12 @@ func handleAIConversationsInsightGroupsUpdate(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insight-groups update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:conversations:insight-groups update",
+		Transform:      transform,
+	})
 }
 
 func handleAIConversationsInsightGroupsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -254,7 +263,12 @@ func handleAIConversationsInsightGroupsInsightGroups(ctx context.Context, cmd *c
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insight-groups insight-groups", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:conversations:insight-groups insight-groups",
+		Transform:      transform,
+	})
 }
 
 func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context, cmd *cli.Command) error {
@@ -289,13 +303,23 @@ func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insight-groups retrieve-insight-groups", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:conversations:insight-groups retrieve-insight-groups",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.AI.Conversations.InsightGroups.GetInsightGroupsAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:conversations:insight-groups retrieve-insight-groups", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:conversations:insight-groups retrieve-insight-groups",
+			Transform:      transform,
+		})
 	}
 }

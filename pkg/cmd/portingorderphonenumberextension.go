@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -180,7 +179,12 @@ func handlePortingOrdersPhoneNumberExtensionsCreate(ctx context.Context, cmd *cl
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:phone-number-extensions create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:phone-number-extensions create",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersPhoneNumberExtensionsList(ctx context.Context, cmd *cli.Command) error {
@@ -223,7 +227,12 @@ func handlePortingOrdersPhoneNumberExtensionsList(ctx context.Context, cmd *cli.
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:phone-number-extensions list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:phone-number-extensions list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.PhoneNumberExtensions.ListAutoPaging(
 			ctx,
@@ -235,7 +244,12 @@ func handlePortingOrdersPhoneNumberExtensionsList(ctx context.Context, cmd *cli.
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:phone-number-extensions list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:phone-number-extensions list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -281,5 +295,10 @@ func handlePortingOrdersPhoneNumberExtensionsDelete(ctx context.Context, cmd *cl
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:phone-number-extensions delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:phone-number-extensions delete",
+		Transform:      transform,
+	})
 }

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -158,7 +157,12 @@ func handlePortingOrdersActionRequirementsList(ctx context.Context, cmd *cli.Com
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:action-requirements list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:action-requirements list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.ActionRequirements.ListAutoPaging(
 			ctx,
@@ -170,7 +174,12 @@ func handlePortingOrdersActionRequirementsList(ctx context.Context, cmd *cli.Com
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:action-requirements list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:action-requirements list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -216,5 +225,10 @@ func handlePortingOrdersActionRequirementsInitiate(ctx context.Context, cmd *cli
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:action-requirements initiate", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:action-requirements initiate",
+		Transform:      transform,
+	})
 }

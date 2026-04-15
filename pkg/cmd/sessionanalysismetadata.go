@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -68,7 +67,12 @@ func handleSessionAnalysisMetadataRetrieve(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "session-analysis:metadata retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "session-analysis:metadata retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleSessionAnalysisMetadataRetrieveRecordType(ctx context.Context, cmd *cli.Command) error {
@@ -104,5 +108,10 @@ func handleSessionAnalysisMetadataRetrieveRecordType(ctx context.Context, cmd *c
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "session-analysis:metadata retrieve-record-type", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "session-analysis:metadata retrieve-record-type",
+		Transform:      transform,
+	})
 }

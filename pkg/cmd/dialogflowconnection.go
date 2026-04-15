@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -165,7 +164,12 @@ func handleDialogflowConnectionsCreate(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "dialogflow-connections create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "dialogflow-connections create",
+		Transform:      transform,
+	})
 }
 
 func handleDialogflowConnectionsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -201,7 +205,12 @@ func handleDialogflowConnectionsRetrieve(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "dialogflow-connections retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "dialogflow-connections retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleDialogflowConnectionsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -244,7 +253,12 @@ func handleDialogflowConnectionsUpdate(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "dialogflow-connections update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "dialogflow-connections update",
+		Transform:      transform,
+	})
 }
 
 func handleDialogflowConnectionsDelete(ctx context.Context, cmd *cli.Command) error {

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -130,7 +129,12 @@ func handleAIMissionsKnowledgeBasesCreateKnowledgeBase(ctx context.Context, cmd 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:knowledge-bases create-knowledge-base", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:missions:knowledge-bases create-knowledge-base",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsKnowledgeBasesDeleteKnowledgeBase(ctx context.Context, cmd *cli.Command) error {
@@ -209,7 +213,12 @@ func handleAIMissionsKnowledgeBasesGetKnowledgeBase(ctx context.Context, cmd *cl
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:knowledge-bases get-knowledge-base", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:missions:knowledge-bases get-knowledge-base",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsKnowledgeBasesListKnowledgeBases(ctx context.Context, cmd *cli.Command) error {
@@ -245,7 +254,12 @@ func handleAIMissionsKnowledgeBasesListKnowledgeBases(ctx context.Context, cmd *
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:knowledge-bases list-knowledge-bases", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:missions:knowledge-bases list-knowledge-bases",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsKnowledgeBasesUpdateKnowledgeBase(ctx context.Context, cmd *cli.Command) error {
@@ -290,5 +304,10 @@ func handleAIMissionsKnowledgeBasesUpdateKnowledgeBase(ctx context.Context, cmd 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:knowledge-bases update-knowledge-base", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:missions:knowledge-bases update-knowledge-base",
+		Transform:      transform,
+	})
 }

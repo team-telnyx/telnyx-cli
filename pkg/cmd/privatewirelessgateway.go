@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -153,7 +152,12 @@ func handlePrivateWirelessGatewaysCreate(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "private-wireless-gateways create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "private-wireless-gateways create",
+		Transform:      transform,
+	})
 }
 
 func handlePrivateWirelessGatewaysRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -189,7 +193,12 @@ func handlePrivateWirelessGatewaysRetrieve(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "private-wireless-gateways retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "private-wireless-gateways retrieve",
+		Transform:      transform,
+	})
 }
 
 func handlePrivateWirelessGatewaysList(ctx context.Context, cmd *cli.Command) error {
@@ -224,14 +233,24 @@ func handlePrivateWirelessGatewaysList(ctx context.Context, cmd *cli.Command) er
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "private-wireless-gateways list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "private-wireless-gateways list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PrivateWirelessGateways.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "private-wireless-gateways list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "private-wireless-gateways list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -268,5 +287,10 @@ func handlePrivateWirelessGatewaysDelete(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "private-wireless-gateways delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "private-wireless-gateways delete",
+		Transform:      transform,
+	})
 }

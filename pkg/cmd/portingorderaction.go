@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -114,7 +113,12 @@ func handlePortingOrdersActionsActivate(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:actions activate", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:actions activate",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersActionsCancel(ctx context.Context, cmd *cli.Command) error {
@@ -150,7 +154,12 @@ func handlePortingOrdersActionsCancel(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:actions cancel", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:actions cancel",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersActionsConfirm(ctx context.Context, cmd *cli.Command) error {
@@ -186,7 +195,12 @@ func handlePortingOrdersActionsConfirm(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:actions confirm", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:actions confirm",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersActionsShare(ctx context.Context, cmd *cli.Command) error {
@@ -229,5 +243,10 @@ func handlePortingOrdersActionsShare(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:actions share", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:actions share",
+		Transform:      transform,
+	})
 }

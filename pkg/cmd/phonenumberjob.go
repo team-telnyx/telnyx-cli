@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -303,7 +302,12 @@ func handlePhoneNumbersJobsRetrieve(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "phone-numbers:jobs retrieve",
+		Transform:      transform,
+	})
 }
 
 func handlePhoneNumbersJobsList(ctx context.Context, cmd *cli.Command) error {
@@ -338,14 +342,24 @@ func handlePhoneNumbersJobsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "phone-numbers:jobs list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PhoneNumbers.Jobs.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "phone-numbers:jobs list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "phone-numbers:jobs list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -381,7 +395,12 @@ func handlePhoneNumbersJobsDeleteBatch(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs delete-batch", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "phone-numbers:jobs delete-batch",
+		Transform:      transform,
+	})
 }
 
 func handlePhoneNumbersJobsUpdateBatch(ctx context.Context, cmd *cli.Command) error {
@@ -416,7 +435,12 @@ func handlePhoneNumbersJobsUpdateBatch(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs update-batch", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "phone-numbers:jobs update-batch",
+		Transform:      transform,
+	})
 }
 
 func handlePhoneNumbersJobsUpdateEmergencySettingsBatch(ctx context.Context, cmd *cli.Command) error {
@@ -451,5 +475,10 @@ func handlePhoneNumbersJobsUpdateEmergencySettingsBatch(ctx context.Context, cmd
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:jobs update-emergency-settings-batch", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "phone-numbers:jobs update-emergency-settings-batch",
+		Transform:      transform,
+	})
 }

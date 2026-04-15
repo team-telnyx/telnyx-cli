@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -109,7 +108,12 @@ func handleStorageBucketsSslCertificateCreate(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:ssl-certificate create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "storage:buckets:ssl-certificate create",
+		Transform:      transform,
+	})
 }
 
 func handleStorageBucketsSslCertificateRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -145,7 +149,12 @@ func handleStorageBucketsSslCertificateRetrieve(ctx context.Context, cmd *cli.Co
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:ssl-certificate retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "storage:buckets:ssl-certificate retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleStorageBucketsSslCertificateDelete(ctx context.Context, cmd *cli.Command) error {
@@ -181,5 +190,10 @@ func handleStorageBucketsSslCertificateDelete(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:ssl-certificate delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "storage:buckets:ssl-certificate delete",
+		Transform:      transform,
+	})
 }

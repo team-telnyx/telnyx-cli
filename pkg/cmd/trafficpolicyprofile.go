@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -227,7 +226,12 @@ func handleTrafficPolicyProfilesCreate(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "traffic-policy-profiles create",
+		Transform:      transform,
+	})
 }
 
 func handleTrafficPolicyProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -263,7 +267,12 @@ func handleTrafficPolicyProfilesRetrieve(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "traffic-policy-profiles retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleTrafficPolicyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -306,7 +315,12 @@ func handleTrafficPolicyProfilesUpdate(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "traffic-policy-profiles update",
+		Transform:      transform,
+	})
 }
 
 func handleTrafficPolicyProfilesList(ctx context.Context, cmd *cli.Command) error {
@@ -341,14 +355,24 @@ func handleTrafficPolicyProfilesList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "traffic-policy-profiles list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.TrafficPolicyProfiles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "traffic-policy-profiles list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "traffic-policy-profiles list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -385,7 +409,12 @@ func handleTrafficPolicyProfilesDelete(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "traffic-policy-profiles delete",
+		Transform:      transform,
+	})
 }
 
 func handleTrafficPolicyProfilesListServices(ctx context.Context, cmd *cli.Command) error {
@@ -420,13 +449,23 @@ func handleTrafficPolicyProfilesListServices(ctx context.Context, cmd *cli.Comma
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles list-services", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "traffic-policy-profiles list-services",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.TrafficPolicyProfiles.ListServicesAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "traffic-policy-profiles list-services", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "traffic-policy-profiles list-services",
+			Transform:      transform,
+		})
 	}
 }

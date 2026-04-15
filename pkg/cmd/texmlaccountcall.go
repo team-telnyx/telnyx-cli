@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -348,7 +347,12 @@ func handleTexmlAccountsCallsRetrieve(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:calls retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:calls retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -393,7 +397,12 @@ func handleTexmlAccountsCallsUpdate(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:calls update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:calls update",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsCalls(ctx context.Context, cmd *cli.Command) error {
@@ -436,7 +445,12 @@ func handleTexmlAccountsCallsCalls(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:calls calls", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:calls calls",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsRetrieveCalls(ctx context.Context, cmd *cli.Command) error {
@@ -479,7 +493,12 @@ func handleTexmlAccountsCallsRetrieveCalls(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:calls retrieve-calls", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:calls retrieve-calls",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsSiprecJson(ctx context.Context, cmd *cli.Command) error {
@@ -524,7 +543,12 @@ func handleTexmlAccountsCallsSiprecJson(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:calls siprec-json", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:calls siprec-json",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsStreamsJson(ctx context.Context, cmd *cli.Command) error {
@@ -569,5 +593,10 @@ func handleTexmlAccountsCallsStreamsJson(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:calls streams-json", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:calls streams-json",
+		Transform:      transform,
+	})
 }

@@ -442,7 +442,12 @@ func handlePortingOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders create",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -485,7 +490,12 @@ func handlePortingOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders retrieve",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -528,7 +538,12 @@ func handlePortingOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders update",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersList(ctx context.Context, cmd *cli.Command) error {
@@ -563,14 +578,24 @@ func handlePortingOrdersList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "porting-orders list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -632,7 +657,12 @@ func handlePortingOrdersRetrieveAllowedFocWindows(ctx context.Context, cmd *cli.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders retrieve-allowed-foc-windows", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders retrieve-allowed-foc-windows",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersRetrieveExceptionTypes(ctx context.Context, cmd *cli.Command) error {
@@ -665,7 +695,12 @@ func handlePortingOrdersRetrieveExceptionTypes(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders retrieve-exception-types", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders retrieve-exception-types",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersRetrieveLoaTemplate(ctx context.Context, cmd *cli.Command) error {
@@ -748,7 +783,12 @@ func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Comma
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "porting-orders retrieve-requirements", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders retrieve-requirements",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.GetRequirementsAutoPaging(
 			ctx,
@@ -760,7 +800,12 @@ func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Comma
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders retrieve-requirements", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders retrieve-requirements",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -797,5 +842,10 @@ func handlePortingOrdersRetrieveSubRequest(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders retrieve-sub-request", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders retrieve-sub-request",
+		Transform:      transform,
+	})
 }

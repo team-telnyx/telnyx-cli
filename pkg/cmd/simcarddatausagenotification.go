@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -176,7 +175,12 @@ func handleSimCardDataUsageNotificationsCreate(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-card-data-usage-notifications create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-card-data-usage-notifications create",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardDataUsageNotificationsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -212,7 +216,12 @@ func handleSimCardDataUsageNotificationsRetrieve(ctx context.Context, cmd *cli.C
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-card-data-usage-notifications retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-card-data-usage-notifications retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardDataUsageNotificationsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -255,7 +264,12 @@ func handleSimCardDataUsageNotificationsUpdate(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-card-data-usage-notifications update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-card-data-usage-notifications update",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Command) error {
@@ -290,14 +304,24 @@ func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Comma
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "sim-card-data-usage-notifications list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "sim-card-data-usage-notifications list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.SimCardDataUsageNotifications.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "sim-card-data-usage-notifications list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "sim-card-data-usage-notifications list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -334,5 +358,10 @@ func handleSimCardDataUsageNotificationsDelete(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-card-data-usage-notifications delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-card-data-usage-notifications delete",
+		Transform:      transform,
+	})
 }

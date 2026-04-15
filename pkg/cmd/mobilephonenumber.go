@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -201,7 +200,12 @@ func handleMobilePhoneNumbersRetrieve(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "mobile-phone-numbers retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "mobile-phone-numbers retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMobilePhoneNumbersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -244,7 +248,12 @@ func handleMobilePhoneNumbersUpdate(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "mobile-phone-numbers update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "mobile-phone-numbers update",
+		Transform:      transform,
+	})
 }
 
 func handleMobilePhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -279,13 +288,23 @@ func handleMobilePhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "mobile-phone-numbers list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "mobile-phone-numbers list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.MobilePhoneNumbers.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "mobile-phone-numbers list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "mobile-phone-numbers list",
+			Transform:      transform,
+		})
 	}
 }

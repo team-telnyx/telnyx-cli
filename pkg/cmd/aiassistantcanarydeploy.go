@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -149,7 +148,12 @@ func handleAIAssistantsCanaryDeploysCreate(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:canary-deploys create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants:canary-deploys create",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsCanaryDeploysRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -185,7 +189,12 @@ func handleAIAssistantsCanaryDeploysRetrieve(ctx context.Context, cmd *cli.Comma
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:canary-deploys retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants:canary-deploys retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -228,7 +237,12 @@ func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:canary-deploys update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants:canary-deploys update",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsCanaryDeploysDelete(ctx context.Context, cmd *cli.Command) error {

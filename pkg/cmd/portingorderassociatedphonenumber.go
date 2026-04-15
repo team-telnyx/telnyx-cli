@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -167,7 +166,12 @@ func handlePortingOrdersAssociatedPhoneNumbersCreate(ctx context.Context, cmd *c
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:associated-phone-numbers create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:associated-phone-numbers create",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersAssociatedPhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -210,7 +214,12 @@ func handlePortingOrdersAssociatedPhoneNumbersList(ctx context.Context, cmd *cli
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:associated-phone-numbers list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:associated-phone-numbers list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.AssociatedPhoneNumbers.ListAutoPaging(
 			ctx,
@@ -222,7 +231,12 @@ func handlePortingOrdersAssociatedPhoneNumbersList(ctx context.Context, cmd *cli
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:associated-phone-numbers list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:associated-phone-numbers list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -268,5 +282,10 @@ func handlePortingOrdersAssociatedPhoneNumbersDelete(ctx context.Context, cmd *c
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:associated-phone-numbers delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:associated-phone-numbers delete",
+		Transform:      transform,
+	})
 }

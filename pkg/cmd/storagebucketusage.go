@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -102,7 +101,12 @@ func handleStorageBucketsUsageGetAPIUsage(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:usage get-api-usage", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "storage:buckets:usage get-api-usage",
+		Transform:      transform,
+	})
 }
 
 func handleStorageBucketsUsageGetBucketUsage(ctx context.Context, cmd *cli.Command) error {
@@ -138,5 +142,10 @@ func handleStorageBucketsUsageGetBucketUsage(ctx context.Context, cmd *cli.Comma
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:usage get-bucket-usage", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "storage:buckets:usage get-bucket-usage",
+		Transform:      transform,
+	})
 }

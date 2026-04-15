@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -194,7 +193,12 @@ func handleManagedAccountsCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "managed-accounts create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "managed-accounts create",
+		Transform:      transform,
+	})
 }
 
 func handleManagedAccountsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -230,7 +234,12 @@ func handleManagedAccountsRetrieve(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "managed-accounts retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "managed-accounts retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleManagedAccountsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -273,7 +282,12 @@ func handleManagedAccountsUpdate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "managed-accounts update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "managed-accounts update",
+		Transform:      transform,
+	})
 }
 
 func handleManagedAccountsList(ctx context.Context, cmd *cli.Command) error {
@@ -308,14 +322,24 @@ func handleManagedAccountsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "managed-accounts list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "managed-accounts list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.ManagedAccounts.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "managed-accounts list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "managed-accounts list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -349,7 +373,12 @@ func handleManagedAccountsGetAllocatableGlobalOutboundChannels(ctx context.Conte
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "managed-accounts get-allocatable-global-outbound-channels", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "managed-accounts get-allocatable-global-outbound-channels",
+		Transform:      transform,
+	})
 }
 
 func handleManagedAccountsUpdateGlobalChannelLimit(ctx context.Context, cmd *cli.Command) error {
@@ -392,5 +421,10 @@ func handleManagedAccountsUpdateGlobalChannelLimit(ctx context.Context, cmd *cli
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "managed-accounts update-global-channel-limit", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "managed-accounts update-global-channel-limit",
+		Transform:      transform,
+	})
 }

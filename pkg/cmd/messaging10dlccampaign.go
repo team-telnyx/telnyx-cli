@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -262,7 +261,12 @@ func handleMessaging10dlcCampaignRetrieve(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:campaign retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcCampaignUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -305,7 +309,12 @@ func handleMessaging10dlcCampaignUpdate(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:campaign update",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcCampaignList(ctx context.Context, cmd *cli.Command) error {
@@ -340,14 +349,24 @@ func handleMessaging10dlcCampaignList(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "messaging-10dlc:campaign list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Messaging10dlc.Campaign.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-10dlc:campaign list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "messaging-10dlc:campaign list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -384,7 +403,12 @@ func handleMessaging10dlcCampaignAcceptSharing(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign accept-sharing", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:campaign accept-sharing",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcCampaignDeactivate(ctx context.Context, cmd *cli.Command) error {
@@ -420,7 +444,12 @@ func handleMessaging10dlcCampaignDeactivate(ctx context.Context, cmd *cli.Comman
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign deactivate", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:campaign deactivate",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcCampaignGetMnoMetadata(ctx context.Context, cmd *cli.Command) error {
@@ -456,7 +485,12 @@ func handleMessaging10dlcCampaignGetMnoMetadata(ctx context.Context, cmd *cli.Co
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign get-mno-metadata", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:campaign get-mno-metadata",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcCampaignGetOperationStatus(ctx context.Context, cmd *cli.Command) error {
@@ -492,7 +526,12 @@ func handleMessaging10dlcCampaignGetOperationStatus(ctx context.Context, cmd *cl
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign get-operation-status", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:campaign get-operation-status",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcCampaignGetSharingStatus(ctx context.Context, cmd *cli.Command) error {
@@ -528,7 +567,12 @@ func handleMessaging10dlcCampaignGetSharingStatus(ctx context.Context, cmd *cli.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign get-sharing-status", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:campaign get-sharing-status",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcCampaignSubmitAppeal(ctx context.Context, cmd *cli.Command) error {
@@ -571,5 +615,10 @@ func handleMessaging10dlcCampaignSubmitAppeal(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign submit-appeal", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:campaign submit-appeal",
+		Transform:      transform,
+	})
 }

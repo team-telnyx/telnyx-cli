@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -159,7 +158,12 @@ func handleMessaging10dlcPartnerCampaignsRetrieve(ctx context.Context, cmd *cli.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:partner-campaigns retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcPartnerCampaignsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -202,7 +206,12 @@ func handleMessaging10dlcPartnerCampaignsUpdate(ctx context.Context, cmd *cli.Co
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:partner-campaigns update",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Command) error {
@@ -237,14 +246,24 @@ func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Comm
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "messaging-10dlc:partner-campaigns list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Messaging10dlc.PartnerCampaigns.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "messaging-10dlc:partner-campaigns list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -280,14 +299,24 @@ func handleMessaging10dlcPartnerCampaignsListSharedByMe(ctx context.Context, cmd
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns list-shared-by-me", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "messaging-10dlc:partner-campaigns list-shared-by-me",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Messaging10dlc.PartnerCampaigns.ListSharedByMeAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns list-shared-by-me", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "messaging-10dlc:partner-campaigns list-shared-by-me",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -324,5 +353,10 @@ func handleMessaging10dlcPartnerCampaignsRetrieveSharingStatus(ctx context.Conte
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns retrieve-sharing-status", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:partner-campaigns retrieve-sharing-status",
+		Transform:      transform,
+	})
 }

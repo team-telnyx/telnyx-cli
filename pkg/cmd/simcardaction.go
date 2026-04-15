@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -246,7 +245,12 @@ func handleSimCardsActionsRetrieve(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
@@ -281,14 +285,24 @@ func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "sim-cards:actions list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.SimCards.Actions.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "sim-cards:actions list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "sim-cards:actions list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -324,7 +338,12 @@ func handleSimCardsActionsBulkDisableVoice(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions bulk-disable-voice", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions bulk-disable-voice",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsActionsBulkEnableVoice(ctx context.Context, cmd *cli.Command) error {
@@ -359,7 +378,12 @@ func handleSimCardsActionsBulkEnableVoice(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions bulk-enable-voice", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions bulk-enable-voice",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsActionsBulkSetPublicIPs(ctx context.Context, cmd *cli.Command) error {
@@ -394,7 +418,12 @@ func handleSimCardsActionsBulkSetPublicIPs(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions bulk-set-public-ips", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions bulk-set-public-ips",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsActionsDisable(ctx context.Context, cmd *cli.Command) error {
@@ -430,7 +459,12 @@ func handleSimCardsActionsDisable(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions disable", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions disable",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsActionsEnable(ctx context.Context, cmd *cli.Command) error {
@@ -466,7 +500,12 @@ func handleSimCardsActionsEnable(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions enable", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions enable",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsActionsRemovePublicIP(ctx context.Context, cmd *cli.Command) error {
@@ -502,7 +541,12 @@ func handleSimCardsActionsRemovePublicIP(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions remove-public-ip", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions remove-public-ip",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsActionsSetPublicIP(ctx context.Context, cmd *cli.Command) error {
@@ -545,7 +589,12 @@ func handleSimCardsActionsSetPublicIP(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions set-public-ip", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions set-public-ip",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsActionsSetStandby(ctx context.Context, cmd *cli.Command) error {
@@ -581,7 +630,12 @@ func handleSimCardsActionsSetStandby(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions set-standby", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions set-standby",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsActionsValidateRegistrationCodes(ctx context.Context, cmd *cli.Command) error {
@@ -616,5 +670,10 @@ func handleSimCardsActionsValidateRegistrationCodes(ctx context.Context, cmd *cl
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "sim-cards:actions validate-registration-codes", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "sim-cards:actions validate-registration-codes",
+		Transform:      transform,
+	})
 }
