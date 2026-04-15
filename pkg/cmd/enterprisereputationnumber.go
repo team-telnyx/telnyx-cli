@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -154,7 +153,12 @@ func handleEnterprisesReputationNumbersRetrieve(ctx context.Context, cmd *cli.Co
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "enterprises:reputation:numbers retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "enterprises:reputation:numbers retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -197,7 +201,12 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "enterprises:reputation:numbers list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "enterprises:reputation:numbers list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Enterprises.Reputation.Numbers.ListAutoPaging(
 			ctx,
@@ -209,7 +218,12 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "enterprises:reputation:numbers list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "enterprises:reputation:numbers list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -253,7 +267,12 @@ func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.C
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "enterprises:reputation:numbers associate", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "enterprises:reputation:numbers associate",
+		Transform:      transform,
+	})
 }
 
 func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cli.Command) error {

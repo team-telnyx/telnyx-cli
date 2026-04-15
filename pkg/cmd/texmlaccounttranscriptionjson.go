@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -127,5 +126,10 @@ func handleTexmlAccountsTranscriptionsJsonRetrieveRecordingTranscriptionSidJson(
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:transcriptions:json retrieve-recording-transcription-sid-json", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:transcriptions:json retrieve-recording-transcription-sid-json",
+		Transform:      transform,
+	})
 }

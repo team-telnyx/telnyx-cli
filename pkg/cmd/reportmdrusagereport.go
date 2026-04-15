@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -155,7 +154,12 @@ func handleReportsMdrUsageReportsCreate(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "reports:mdr-usage-reports create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "reports:mdr-usage-reports create",
+		Transform:      transform,
+	})
 }
 
 func handleReportsMdrUsageReportsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -191,7 +195,12 @@ func handleReportsMdrUsageReportsRetrieve(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "reports:mdr-usage-reports retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "reports:mdr-usage-reports retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) error {
@@ -226,14 +235,24 @@ func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "reports:mdr-usage-reports list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "reports:mdr-usage-reports list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Reports.MdrUsageReports.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "reports:mdr-usage-reports list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "reports:mdr-usage-reports list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -270,7 +289,12 @@ func handleReportsMdrUsageReportsDelete(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "reports:mdr-usage-reports delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "reports:mdr-usage-reports delete",
+		Transform:      transform,
+	})
 }
 
 func handleReportsMdrUsageReportsFetchSync(ctx context.Context, cmd *cli.Command) error {
@@ -305,5 +329,10 @@ func handleReportsMdrUsageReportsFetchSync(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "reports:mdr-usage-reports fetch-sync", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "reports:mdr-usage-reports fetch-sync",
+		Transform:      transform,
+	})
 }

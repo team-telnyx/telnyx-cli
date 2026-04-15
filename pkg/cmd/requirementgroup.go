@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -215,7 +214,12 @@ func handleRequirementGroupsCreate(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "requirement-groups create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "requirement-groups create",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -251,7 +255,12 @@ func handleRequirementGroupsRetrieve(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "requirement-groups retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "requirement-groups retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -294,7 +303,12 @@ func handleRequirementGroupsUpdate(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "requirement-groups update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "requirement-groups update",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsList(ctx context.Context, cmd *cli.Command) error {
@@ -329,7 +343,12 @@ func handleRequirementGroupsList(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "requirement-groups list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "requirement-groups list",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -365,7 +384,12 @@ func handleRequirementGroupsDelete(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "requirement-groups delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "requirement-groups delete",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsSubmitForApproval(ctx context.Context, cmd *cli.Command) error {
@@ -401,5 +425,10 @@ func handleRequirementGroupsSubmitForApproval(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "requirement-groups submit-for-approval", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "requirement-groups submit-for-approval",
+		Transform:      transform,
+	})
 }

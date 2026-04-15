@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -136,7 +135,12 @@ func handleNumberOrderPhoneNumbersRetrieve(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "number-order-phone-numbers retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "number-order-phone-numbers retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleNumberOrderPhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -171,7 +175,12 @@ func handleNumberOrderPhoneNumbersList(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "number-order-phone-numbers list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "number-order-phone-numbers list",
+		Transform:      transform,
+	})
 }
 
 func handleNumberOrderPhoneNumbersUpdateRequirementGroup(ctx context.Context, cmd *cli.Command) error {
@@ -214,7 +223,12 @@ func handleNumberOrderPhoneNumbersUpdateRequirementGroup(ctx context.Context, cm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "number-order-phone-numbers update-requirement-group", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "number-order-phone-numbers update-requirement-group",
+		Transform:      transform,
+	})
 }
 
 func handleNumberOrderPhoneNumbersUpdateRequirements(ctx context.Context, cmd *cli.Command) error {
@@ -257,5 +271,10 @@ func handleNumberOrderPhoneNumbersUpdateRequirements(ctx context.Context, cmd *c
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "number-order-phone-numbers update-requirements", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "number-order-phone-numbers update-requirements",
+		Transform:      transform,
+	})
 }

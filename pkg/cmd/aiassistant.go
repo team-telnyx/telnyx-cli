@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -878,7 +877,12 @@ func handleAIAssistantsCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants create",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -921,7 +925,12 @@ func handleAIAssistantsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -964,7 +973,12 @@ func handleAIAssistantsUpdate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants update",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsList(ctx context.Context, cmd *cli.Command) error {
@@ -997,7 +1011,12 @@ func handleAIAssistantsList(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants list",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -1033,7 +1052,12 @@ func handleAIAssistantsDelete(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants delete",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsChat(ctx context.Context, cmd *cli.Command) error {
@@ -1076,7 +1100,12 @@ func handleAIAssistantsChat(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants chat", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants chat",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsClone(ctx context.Context, cmd *cli.Command) error {
@@ -1112,7 +1141,12 @@ func handleAIAssistantsClone(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants clone", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants clone",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsGetTexml(ctx context.Context, cmd *cli.Command) error {
@@ -1148,7 +1182,12 @@ func handleAIAssistantsGetTexml(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants get-texml", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants get-texml",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsImports(ctx context.Context, cmd *cli.Command) error {
@@ -1183,7 +1222,12 @@ func handleAIAssistantsImports(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants imports", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants imports",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsSendSMS(ctx context.Context, cmd *cli.Command) error {
@@ -1226,5 +1270,10 @@ func handleAIAssistantsSendSMS(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants send-sms", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants send-sms",
+		Transform:      transform,
+	})
 }

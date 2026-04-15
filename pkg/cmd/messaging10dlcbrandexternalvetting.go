@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -119,7 +118,12 @@ func handleMessaging10dlcBrandExternalVettingList(ctx context.Context, cmd *cli.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:brand:external-vetting list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:brand:external-vetting list",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandExternalVettingImports(ctx context.Context, cmd *cli.Command) error {
@@ -162,7 +166,12 @@ func handleMessaging10dlcBrandExternalVettingImports(ctx context.Context, cmd *c
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:brand:external-vetting imports", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:brand:external-vetting imports",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandExternalVettingOrder(ctx context.Context, cmd *cli.Command) error {
@@ -205,5 +214,10 @@ func handleMessaging10dlcBrandExternalVettingOrder(ctx context.Context, cmd *cli
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:brand:external-vetting order", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-10dlc:brand:external-vetting order",
+		Transform:      transform,
+	})
 }

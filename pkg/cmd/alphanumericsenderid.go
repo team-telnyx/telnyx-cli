@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -133,7 +132,12 @@ func handleAlphanumericSenderIDsCreate(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "alphanumeric-sender-ids create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "alphanumeric-sender-ids create",
+		Transform:      transform,
+	})
 }
 
 func handleAlphanumericSenderIDsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -169,7 +173,12 @@ func handleAlphanumericSenderIDsRetrieve(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "alphanumeric-sender-ids retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "alphanumeric-sender-ids retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) error {
@@ -204,14 +213,24 @@ func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "alphanumeric-sender-ids list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "alphanumeric-sender-ids list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.AlphanumericSenderIDs.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "alphanumeric-sender-ids list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "alphanumeric-sender-ids list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -248,5 +267,10 @@ func handleAlphanumericSenderIDsDelete(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "alphanumeric-sender-ids delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "alphanumeric-sender-ids delete",
+		Transform:      transform,
+	})
 }

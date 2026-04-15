@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -124,7 +123,12 @@ func handlePortingOrdersActivationJobsRetrieve(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:activation-jobs retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:activation-jobs retrieve",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersActivationJobsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -169,7 +173,12 @@ func handlePortingOrdersActivationJobsUpdate(ctx context.Context, cmd *cli.Comma
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:activation-jobs update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:activation-jobs update",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersActivationJobsList(ctx context.Context, cmd *cli.Command) error {
@@ -212,7 +221,12 @@ func handlePortingOrdersActivationJobsList(ctx context.Context, cmd *cli.Command
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:activation-jobs list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:activation-jobs list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.ActivationJobs.ListAutoPaging(
 			ctx,
@@ -224,6 +238,11 @@ func handlePortingOrdersActivationJobsList(ctx context.Context, cmd *cli.Command
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:activation-jobs list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:activation-jobs list",
+			Transform:      transform,
+		})
 	}
 }

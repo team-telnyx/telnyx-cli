@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -114,7 +113,12 @@ func handleLegacyReportingUsageReportsNumberLookupCreate(ctx context.Context, cm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:number-lookup create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:usage-reports:number-lookup create",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingUsageReportsNumberLookupRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -150,7 +154,12 @@ func handleLegacyReportingUsageReportsNumberLookupRetrieve(ctx context.Context, 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:number-lookup retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:usage-reports:number-lookup retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingUsageReportsNumberLookupList(ctx context.Context, cmd *cli.Command) error {
@@ -183,7 +192,12 @@ func handleLegacyReportingUsageReportsNumberLookupList(ctx context.Context, cmd 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:number-lookup list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:usage-reports:number-lookup list",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingUsageReportsNumberLookupDelete(ctx context.Context, cmd *cli.Command) error {

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -171,7 +170,12 @@ func handleAIMissionsRunsEventsList(ctx context.Context, cmd *cli.Command) error
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "ai:missions:runs:events list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:missions:runs:events list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.AI.Missions.Runs.Events.ListAutoPaging(
 			ctx,
@@ -183,7 +187,12 @@ func handleAIMissionsRunsEventsList(ctx context.Context, cmd *cli.Command) error
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:missions:runs:events list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:missions:runs:events list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -230,7 +239,12 @@ func handleAIMissionsRunsEventsGetEventDetails(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:runs:events get-event-details", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:missions:runs:events get-event-details",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsEventsLog(ctx context.Context, cmd *cli.Command) error {
@@ -275,5 +289,10 @@ func handleAIMissionsRunsEventsLog(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:runs:events log", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:missions:runs:events log",
+		Transform:      transform,
+	})
 }

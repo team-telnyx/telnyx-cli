@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -475,7 +474,12 @@ func handleTexmlAccountsConferencesParticipantsRetrieve(ctx context.Context, cmd
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences:participants retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:conferences:participants retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesParticipantsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -521,7 +525,12 @@ func handleTexmlAccountsConferencesParticipantsUpdate(ctx context.Context, cmd *
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences:participants update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:conferences:participants update",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesParticipantsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -601,7 +610,12 @@ func handleTexmlAccountsConferencesParticipantsParticipants(ctx context.Context,
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences:participants participants", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:conferences:participants participants",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesParticipantsRetrieveParticipants(ctx context.Context, cmd *cli.Command) error {
@@ -646,5 +660,10 @@ func handleTexmlAccountsConferencesParticipantsRetrieveParticipants(ctx context.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences:participants retrieve-participants", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:conferences:participants retrieve-participants",
+		Transform:      transform,
+	})
 }

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -212,7 +211,12 @@ func handleMessagingProfilesAutorespConfigsCreate(ctx context.Context, cmd *cli.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles:autoresp-configs create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-profiles:autoresp-configs create",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingProfilesAutorespConfigsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -257,7 +261,12 @@ func handleMessagingProfilesAutorespConfigsRetrieve(ctx context.Context, cmd *cl
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles:autoresp-configs retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-profiles:autoresp-configs retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingProfilesAutorespConfigsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -302,7 +311,12 @@ func handleMessagingProfilesAutorespConfigsUpdate(ctx context.Context, cmd *cli.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles:autoresp-configs update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-profiles:autoresp-configs update",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingProfilesAutorespConfigsList(ctx context.Context, cmd *cli.Command) error {
@@ -345,7 +359,12 @@ func handleMessagingProfilesAutorespConfigsList(ctx context.Context, cmd *cli.Co
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles:autoresp-configs list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-profiles:autoresp-configs list",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingProfilesAutorespConfigsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -390,5 +409,10 @@ func handleMessagingProfilesAutorespConfigsDelete(ctx context.Context, cmd *cli.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles:autoresp-configs delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-profiles:autoresp-configs delete",
+		Transform:      transform,
+	})
 }

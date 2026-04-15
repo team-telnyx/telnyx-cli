@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -266,7 +265,12 @@ func handleOAuthRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "oauth retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "oauth retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleOAuthGrants(ctx context.Context, cmd *cli.Command) error {
@@ -301,7 +305,12 @@ func handleOAuthGrants(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "oauth grants", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "oauth grants",
+		Transform:      transform,
+	})
 }
 
 func handleOAuthIntrospect(ctx context.Context, cmd *cli.Command) error {
@@ -336,7 +345,12 @@ func handleOAuthIntrospect(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "oauth introspect", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "oauth introspect",
+		Transform:      transform,
+	})
 }
 
 func handleOAuthRegister(ctx context.Context, cmd *cli.Command) error {
@@ -371,7 +385,12 @@ func handleOAuthRegister(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "oauth register", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "oauth register",
+		Transform:      transform,
+	})
 }
 
 func handleOAuthRetrieveAuthorize(ctx context.Context, cmd *cli.Command) error {
@@ -428,7 +447,12 @@ func handleOAuthRetrieveJwks(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "oauth retrieve-jwks", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "oauth retrieve-jwks",
+		Transform:      transform,
+	})
 }
 
 func handleOAuthToken(ctx context.Context, cmd *cli.Command) error {
@@ -463,5 +487,10 @@ func handleOAuthToken(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "oauth token", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "oauth token",
+		Transform:      transform,
+	})
 }

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -181,7 +180,12 @@ func handleTexmlAccountsQueuesCreate(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:queues create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:queues create",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsQueuesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -226,7 +230,12 @@ func handleTexmlAccountsQueuesRetrieve(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:queues retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:queues retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsQueuesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -271,7 +280,12 @@ func handleTexmlAccountsQueuesUpdate(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:queues update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:queues update",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error {
@@ -314,7 +328,12 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:queues list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "texml:accounts:queues list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Texml.Accounts.Queues.ListAutoPaging(
 			ctx,
@@ -326,7 +345,12 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "texml:accounts:queues list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "texml:accounts:queues list",
+			Transform:      transform,
+		})
 	}
 }
 

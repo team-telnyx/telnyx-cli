@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -743,7 +742,12 @@ func handleConferencesActionsUpdate(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions update",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command) error {
@@ -786,7 +790,12 @@ func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions end-conference", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions end-conference",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Command) error {
@@ -829,7 +838,12 @@ func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Comma
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions gather-dtmf-audio", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions gather-dtmf-audio",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsHold(ctx context.Context, cmd *cli.Command) error {
@@ -872,7 +886,12 @@ func handleConferencesActionsHold(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions hold", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions hold",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsJoin(ctx context.Context, cmd *cli.Command) error {
@@ -915,7 +934,12 @@ func handleConferencesActionsJoin(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions join", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions join",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsLeave(ctx context.Context, cmd *cli.Command) error {
@@ -958,7 +982,12 @@ func handleConferencesActionsLeave(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions leave", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions leave",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsMute(ctx context.Context, cmd *cli.Command) error {
@@ -1001,7 +1030,12 @@ func handleConferencesActionsMute(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions mute", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions mute",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsPlay(ctx context.Context, cmd *cli.Command) error {
@@ -1044,7 +1078,12 @@ func handleConferencesActionsPlay(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions play", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions play",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsRecordPause(ctx context.Context, cmd *cli.Command) error {
@@ -1087,7 +1126,12 @@ func handleConferencesActionsRecordPause(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions record-pause", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions record-pause",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsRecordResume(ctx context.Context, cmd *cli.Command) error {
@@ -1130,7 +1174,12 @@ func handleConferencesActionsRecordResume(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions record-resume", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions record-resume",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsRecordStart(ctx context.Context, cmd *cli.Command) error {
@@ -1173,7 +1222,12 @@ func handleConferencesActionsRecordStart(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions record-start", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions record-start",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsRecordStop(ctx context.Context, cmd *cli.Command) error {
@@ -1216,7 +1270,12 @@ func handleConferencesActionsRecordStop(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions record-stop", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions record-stop",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
@@ -1259,7 +1318,12 @@ func handleConferencesActionsSendDtmf(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions send-dtmf", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions send-dtmf",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsSpeak(ctx context.Context, cmd *cli.Command) error {
@@ -1302,7 +1366,12 @@ func handleConferencesActionsSpeak(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions speak", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions speak",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsStop(ctx context.Context, cmd *cli.Command) error {
@@ -1345,7 +1414,12 @@ func handleConferencesActionsStop(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions stop", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions stop",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsUnhold(ctx context.Context, cmd *cli.Command) error {
@@ -1388,7 +1462,12 @@ func handleConferencesActionsUnhold(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions unhold", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions unhold",
+		Transform:      transform,
+	})
 }
 
 func handleConferencesActionsUnmute(ctx context.Context, cmd *cli.Command) error {
@@ -1431,5 +1510,10 @@ func handleConferencesActionsUnmute(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "conferences:actions unmute", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "conferences:actions unmute",
+		Transform:      transform,
+	})
 }

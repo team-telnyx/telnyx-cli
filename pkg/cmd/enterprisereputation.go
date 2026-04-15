@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -122,7 +121,12 @@ func handleEnterprisesReputationRetrieve(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "enterprises:reputation retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "enterprises:reputation retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleEnterprisesReputationDisable(ctx context.Context, cmd *cli.Command) error {
@@ -190,7 +194,12 @@ func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "enterprises:reputation enable", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "enterprises:reputation enable",
+		Transform:      transform,
+	})
 }
 
 func handleEnterprisesReputationUpdateFrequency(ctx context.Context, cmd *cli.Command) error {
@@ -233,5 +242,10 @@ func handleEnterprisesReputationUpdateFrequency(ctx context.Context, cmd *cli.Co
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "enterprises:reputation update-frequency", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "enterprises:reputation update-frequency",
+		Transform:      transform,
+	})
 }

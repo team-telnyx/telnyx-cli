@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -117,7 +116,12 @@ func handlePhoneNumbersActionsChangeBundleStatus(ctx context.Context, cmd *cli.C
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:actions change-bundle-status", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "phone-numbers:actions change-bundle-status",
+		Transform:      transform,
+	})
 }
 
 func handlePhoneNumbersActionsEnableEmergency(ctx context.Context, cmd *cli.Command) error {
@@ -160,7 +164,12 @@ func handlePhoneNumbersActionsEnableEmergency(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:actions enable-emergency", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "phone-numbers:actions enable-emergency",
+		Transform:      transform,
+	})
 }
 
 func handlePhoneNumbersActionsVerifyOwnership(ctx context.Context, cmd *cli.Command) error {
@@ -195,5 +204,10 @@ func handlePhoneNumbersActionsVerifyOwnership(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:actions verify-ownership", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "phone-numbers:actions verify-ownership",
+		Transform:      transform,
+	})
 }

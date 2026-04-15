@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -125,7 +124,12 @@ func handleAIAssistantsTestsRunsRetrieve(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:runs retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants:tests:runs retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsTestsRunsList(ctx context.Context, cmd *cli.Command) error {
@@ -168,7 +172,12 @@ func handleAIAssistantsTestsRunsList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:runs list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:assistants:tests:runs list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.AI.Assistants.Tests.Runs.ListAutoPaging(
 			ctx,
@@ -180,7 +189,12 @@ func handleAIAssistantsTestsRunsList(ctx context.Context, cmd *cli.Command) erro
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:assistants:tests:runs list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:assistants:tests:runs list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -224,5 +238,10 @@ func handleAIAssistantsTestsRunsTrigger(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:runs trigger", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants:tests:runs trigger",
+		Transform:      transform,
+	})
 }

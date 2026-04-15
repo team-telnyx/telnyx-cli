@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -208,7 +207,12 @@ func handleLegacyReportingBatchDetailRecordsVoiceCreate(ctx context.Context, cmd
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:voice create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:voice create",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsVoiceRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -244,7 +248,12 @@ func handleLegacyReportingBatchDetailRecordsVoiceRetrieve(ctx context.Context, c
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:voice retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:voice retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsVoiceList(ctx context.Context, cmd *cli.Command) error {
@@ -277,7 +286,12 @@ func handleLegacyReportingBatchDetailRecordsVoiceList(ctx context.Context, cmd *
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:voice list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:voice list",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsVoiceDelete(ctx context.Context, cmd *cli.Command) error {
@@ -313,7 +327,12 @@ func handleLegacyReportingBatchDetailRecordsVoiceDelete(ctx context.Context, cmd
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:voice delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:voice delete",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsVoiceRetrieveFields(ctx context.Context, cmd *cli.Command) error {
@@ -346,5 +365,10 @@ func handleLegacyReportingBatchDetailRecordsVoiceRetrieveFields(ctx context.Cont
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:voice retrieve-fields", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:voice retrieve-fields",
+		Transform:      transform,
+	})
 }

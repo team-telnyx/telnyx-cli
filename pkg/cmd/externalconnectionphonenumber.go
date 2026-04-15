@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -144,7 +143,12 @@ func handleExternalConnectionsPhoneNumbersRetrieve(ctx context.Context, cmd *cli
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "external-connections:phone-numbers retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "external-connections:phone-numbers retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleExternalConnectionsPhoneNumbersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -189,7 +193,12 @@ func handleExternalConnectionsPhoneNumbersUpdate(ctx context.Context, cmd *cli.C
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "external-connections:phone-numbers update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "external-connections:phone-numbers update",
+		Transform:      transform,
+	})
 }
 
 func handleExternalConnectionsPhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -232,7 +241,12 @@ func handleExternalConnectionsPhoneNumbersList(ctx context.Context, cmd *cli.Com
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "external-connections:phone-numbers list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "external-connections:phone-numbers list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.ExternalConnections.PhoneNumbers.ListAutoPaging(
 			ctx,
@@ -244,6 +258,11 @@ func handleExternalConnectionsPhoneNumbersList(ctx context.Context, cmd *cli.Com
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "external-connections:phone-numbers list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "external-connections:phone-numbers list",
+			Transform:      transform,
+		})
 	}
 }

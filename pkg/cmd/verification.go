@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -194,7 +193,12 @@ func handleVerificationsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "verifications retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "verifications retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleVerificationsTriggerCall(ctx context.Context, cmd *cli.Command) error {
@@ -229,7 +233,12 @@ func handleVerificationsTriggerCall(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "verifications trigger-call", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "verifications trigger-call",
+		Transform:      transform,
+	})
 }
 
 func handleVerificationsTriggerFlashcall(ctx context.Context, cmd *cli.Command) error {
@@ -264,7 +273,12 @@ func handleVerificationsTriggerFlashcall(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "verifications trigger-flashcall", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "verifications trigger-flashcall",
+		Transform:      transform,
+	})
 }
 
 func handleVerificationsTriggerSMS(ctx context.Context, cmd *cli.Command) error {
@@ -299,7 +313,12 @@ func handleVerificationsTriggerSMS(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "verifications trigger-sms", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "verifications trigger-sms",
+		Transform:      transform,
+	})
 }
 
 func handleVerificationsTriggerWhatsappVerification(ctx context.Context, cmd *cli.Command) error {
@@ -334,5 +353,10 @@ func handleVerificationsTriggerWhatsappVerification(ctx context.Context, cmd *cl
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "verifications trigger-whatsapp-verification", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "verifications trigger-whatsapp-verification",
+		Transform:      transform,
+	})
 }

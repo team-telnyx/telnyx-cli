@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -89,7 +88,12 @@ func handleMessagingNumbersBulkUpdatesCreate(ctx context.Context, cmd *cli.Comma
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-numbers-bulk-updates create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-numbers-bulk-updates create",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingNumbersBulkUpdatesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -125,5 +129,10 @@ func handleMessagingNumbersBulkUpdatesRetrieve(ctx context.Context, cmd *cli.Com
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-numbers-bulk-updates retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-numbers-bulk-updates retrieve",
+		Transform:      transform,
+	})
 }

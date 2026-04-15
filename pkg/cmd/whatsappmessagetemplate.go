@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -100,7 +99,12 @@ func handleWhatsappMessageTemplatesRetrieve(ctx context.Context, cmd *cli.Comman
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "whatsapp-message-templates retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "whatsapp-message-templates retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleWhatsappMessageTemplatesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -143,7 +147,12 @@ func handleWhatsappMessageTemplatesUpdate(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "whatsapp-message-templates update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "whatsapp-message-templates update",
+		Transform:      transform,
+	})
 }
 
 func handleWhatsappMessageTemplatesDelete(ctx context.Context, cmd *cli.Command) error {

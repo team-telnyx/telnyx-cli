@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -106,7 +105,12 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextCreate(ctx context.Conte
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:speech-to-text create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:speech-to-text create",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsSpeechToTextRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -142,7 +146,12 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextRetrieve(ctx context.Con
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:speech-to-text retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:speech-to-text retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsSpeechToTextList(ctx context.Context, cmd *cli.Command) error {
@@ -175,7 +184,12 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextList(ctx context.Context
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:speech-to-text list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:speech-to-text list",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsSpeechToTextDelete(ctx context.Context, cmd *cli.Command) error {
@@ -211,5 +225,10 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextDelete(ctx context.Conte
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:speech-to-text delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:speech-to-text delete",
+		Transform:      transform,
+	})
 }

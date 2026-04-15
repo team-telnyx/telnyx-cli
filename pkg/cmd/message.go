@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -650,7 +649,12 @@ func handleMessagesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesCancelScheduled(ctx context.Context, cmd *cli.Command) error {
@@ -686,7 +690,12 @@ func handleMessagesCancelScheduled(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages cancel-scheduled", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages cancel-scheduled",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesRetrieveGroupMessages(ctx context.Context, cmd *cli.Command) error {
@@ -722,7 +731,12 @@ func handleMessagesRetrieveGroupMessages(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages retrieve-group-messages", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages retrieve-group-messages",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesSchedule(ctx context.Context, cmd *cli.Command) error {
@@ -757,7 +771,12 @@ func handleMessagesSchedule(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages schedule", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages schedule",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesSend(ctx context.Context, cmd *cli.Command) error {
@@ -792,7 +811,12 @@ func handleMessagesSend(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages send", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages send",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesSendGroupMms(ctx context.Context, cmd *cli.Command) error {
@@ -827,7 +851,12 @@ func handleMessagesSendGroupMms(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages send-group-mms", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages send-group-mms",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesSendLongCode(ctx context.Context, cmd *cli.Command) error {
@@ -862,7 +891,12 @@ func handleMessagesSendLongCode(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages send-long-code", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages send-long-code",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesSendNumberPool(ctx context.Context, cmd *cli.Command) error {
@@ -897,7 +931,12 @@ func handleMessagesSendNumberPool(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages send-number-pool", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages send-number-pool",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesSendShortCode(ctx context.Context, cmd *cli.Command) error {
@@ -932,7 +971,12 @@ func handleMessagesSendShortCode(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages send-short-code", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages send-short-code",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesSendWhatsapp(ctx context.Context, cmd *cli.Command) error {
@@ -967,7 +1011,12 @@ func handleMessagesSendWhatsapp(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages send-whatsapp", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages send-whatsapp",
+		Transform:      transform,
+	})
 }
 
 func handleMessagesSendWithAlphanumericSender(ctx context.Context, cmd *cli.Command) error {
@@ -1002,5 +1051,10 @@ func handleMessagesSendWithAlphanumericSender(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messages send-with-alphanumeric-sender", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messages send-with-alphanumeric-sender",
+		Transform:      transform,
+	})
 }

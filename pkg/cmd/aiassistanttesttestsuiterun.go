@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -110,7 +109,12 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:test-suites:runs list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:assistants:tests:test-suites:runs list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.AI.Assistants.Tests.TestSuites.Runs.ListAutoPaging(
 			ctx,
@@ -122,7 +126,12 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:assistants:tests:test-suites:runs list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "ai:assistants:tests:test-suites:runs list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -166,5 +175,10 @@ func handleAIAssistantsTestsTestSuitesRunsTrigger(ctx context.Context, cmd *cli.
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:test-suites:runs trigger", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:assistants:tests:test-suites:runs trigger",
+		Transform:      transform,
+	})
 }

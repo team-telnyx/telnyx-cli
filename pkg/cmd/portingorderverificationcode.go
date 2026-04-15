@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -158,7 +157,12 @@ func handlePortingOrdersVerificationCodesList(ctx context.Context, cmd *cli.Comm
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:verification-codes list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:verification-codes list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.VerificationCodes.ListAutoPaging(
 			ctx,
@@ -170,7 +174,12 @@ func handlePortingOrdersVerificationCodesList(ctx context.Context, cmd *cli.Comm
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:verification-codes list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "porting-orders:verification-codes list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -246,5 +255,10 @@ func handlePortingOrdersVerificationCodesVerify(ctx context.Context, cmd *cli.Co
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:verification-codes verify", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "porting-orders:verification-codes verify",
+		Transform:      transform,
+	})
 }

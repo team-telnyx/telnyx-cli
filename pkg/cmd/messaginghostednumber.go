@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -149,7 +148,12 @@ func handleMessagingHostedNumbersRetrieve(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-hosted-numbers retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-hosted-numbers retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingHostedNumbersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -192,7 +196,12 @@ func handleMessagingHostedNumbersUpdate(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-hosted-numbers update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-hosted-numbers update",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingHostedNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -227,14 +236,24 @@ func handleMessagingHostedNumbersList(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "messaging-hosted-numbers list", obj, format, explicitFormat, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "messaging-hosted-numbers list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.MessagingHostedNumbers.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-hosted-numbers list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			Title:          "messaging-hosted-numbers list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -271,5 +290,10 @@ func handleMessagingHostedNumbersDelete(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "messaging-hosted-numbers delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "messaging-hosted-numbers delete",
+		Transform:      transform,
+	})
 }

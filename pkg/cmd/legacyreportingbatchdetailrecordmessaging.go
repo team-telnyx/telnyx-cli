@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -194,7 +193,12 @@ func handleLegacyReportingBatchDetailRecordsMessagingCreate(ctx context.Context,
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:messaging create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:messaging create",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsMessagingRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -230,7 +234,12 @@ func handleLegacyReportingBatchDetailRecordsMessagingRetrieve(ctx context.Contex
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:messaging retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:messaging retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsMessagingList(ctx context.Context, cmd *cli.Command) error {
@@ -263,7 +272,12 @@ func handleLegacyReportingBatchDetailRecordsMessagingList(ctx context.Context, c
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:messaging list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:messaging list",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingBatchDetailRecordsMessagingDelete(ctx context.Context, cmd *cli.Command) error {
@@ -299,5 +313,10 @@ func handleLegacyReportingBatchDetailRecordsMessagingDelete(ctx context.Context,
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:batch-detail-records:messaging delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "legacy:reporting:batch-detail-records:messaging delete",
+		Transform:      transform,
+	})
 }

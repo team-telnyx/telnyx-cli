@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -2719,7 +2718,12 @@ func handleCallsActionsAddAIAssistantMessages(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions add-ai-assistant-messages", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions add-ai-assistant-messages",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsAnswer(ctx context.Context, cmd *cli.Command) error {
@@ -2762,7 +2766,12 @@ func handleCallsActionsAnswer(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions answer", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions answer",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsBridge(ctx context.Context, cmd *cli.Command) error {
@@ -2805,7 +2814,12 @@ func handleCallsActionsBridge(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions bridge", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions bridge",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsEnqueue(ctx context.Context, cmd *cli.Command) error {
@@ -2848,7 +2862,12 @@ func handleCallsActionsEnqueue(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions enqueue", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions enqueue",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsGather(ctx context.Context, cmd *cli.Command) error {
@@ -2891,7 +2910,12 @@ func handleCallsActionsGather(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions gather", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions gather",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsGatherUsingAI(ctx context.Context, cmd *cli.Command) error {
@@ -2934,7 +2958,12 @@ func handleCallsActionsGatherUsingAI(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions gather-using-ai", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions gather-using-ai",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsGatherUsingAudio(ctx context.Context, cmd *cli.Command) error {
@@ -2977,7 +3006,12 @@ func handleCallsActionsGatherUsingAudio(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions gather-using-audio", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions gather-using-audio",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsGatherUsingSpeak(ctx context.Context, cmd *cli.Command) error {
@@ -3020,7 +3054,12 @@ func handleCallsActionsGatherUsingSpeak(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions gather-using-speak", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions gather-using-speak",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsHangup(ctx context.Context, cmd *cli.Command) error {
@@ -3063,7 +3102,12 @@ func handleCallsActionsHangup(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions hangup", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions hangup",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsJoinAIAssistant(ctx context.Context, cmd *cli.Command) error {
@@ -3106,7 +3150,12 @@ func handleCallsActionsJoinAIAssistant(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions join-ai-assistant", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions join-ai-assistant",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsLeaveQueue(ctx context.Context, cmd *cli.Command) error {
@@ -3149,7 +3198,12 @@ func handleCallsActionsLeaveQueue(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions leave-queue", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions leave-queue",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsPauseRecording(ctx context.Context, cmd *cli.Command) error {
@@ -3192,7 +3246,12 @@ func handleCallsActionsPauseRecording(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions pause-recording", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions pause-recording",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsRefer(ctx context.Context, cmd *cli.Command) error {
@@ -3235,7 +3294,12 @@ func handleCallsActionsRefer(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions refer", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions refer",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsReject(ctx context.Context, cmd *cli.Command) error {
@@ -3278,7 +3342,12 @@ func handleCallsActionsReject(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions reject", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions reject",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsResumeRecording(ctx context.Context, cmd *cli.Command) error {
@@ -3321,7 +3390,12 @@ func handleCallsActionsResumeRecording(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions resume-recording", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions resume-recording",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
@@ -3364,7 +3438,12 @@ func handleCallsActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions send-dtmf", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions send-dtmf",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsSendSipInfo(ctx context.Context, cmd *cli.Command) error {
@@ -3407,7 +3486,12 @@ func handleCallsActionsSendSipInfo(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions send-sip-info", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions send-sip-info",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsSpeak(ctx context.Context, cmd *cli.Command) error {
@@ -3450,7 +3534,12 @@ func handleCallsActionsSpeak(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions speak", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions speak",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartAIAssistant(ctx context.Context, cmd *cli.Command) error {
@@ -3493,7 +3582,12 @@ func handleCallsActionsStartAIAssistant(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions start-ai-assistant", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions start-ai-assistant",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartForking(ctx context.Context, cmd *cli.Command) error {
@@ -3536,7 +3630,12 @@ func handleCallsActionsStartForking(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions start-forking", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions start-forking",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartNoiseSuppression(ctx context.Context, cmd *cli.Command) error {
@@ -3579,7 +3678,12 @@ func handleCallsActionsStartNoiseSuppression(ctx context.Context, cmd *cli.Comma
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions start-noise-suppression", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions start-noise-suppression",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartPlayback(ctx context.Context, cmd *cli.Command) error {
@@ -3622,7 +3726,12 @@ func handleCallsActionsStartPlayback(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions start-playback", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions start-playback",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartRecording(ctx context.Context, cmd *cli.Command) error {
@@ -3665,7 +3774,12 @@ func handleCallsActionsStartRecording(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions start-recording", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions start-recording",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartSiprec(ctx context.Context, cmd *cli.Command) error {
@@ -3708,7 +3822,12 @@ func handleCallsActionsStartSiprec(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions start-siprec", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions start-siprec",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartStreaming(ctx context.Context, cmd *cli.Command) error {
@@ -3751,7 +3870,12 @@ func handleCallsActionsStartStreaming(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions start-streaming", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions start-streaming",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartTranscription(ctx context.Context, cmd *cli.Command) error {
@@ -3794,7 +3918,12 @@ func handleCallsActionsStartTranscription(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions start-transcription", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions start-transcription",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopAIAssistant(ctx context.Context, cmd *cli.Command) error {
@@ -3837,7 +3966,12 @@ func handleCallsActionsStopAIAssistant(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions stop-ai-assistant", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions stop-ai-assistant",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopForking(ctx context.Context, cmd *cli.Command) error {
@@ -3880,7 +4014,12 @@ func handleCallsActionsStopForking(ctx context.Context, cmd *cli.Command) error 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions stop-forking", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions stop-forking",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopGather(ctx context.Context, cmd *cli.Command) error {
@@ -3923,7 +4062,12 @@ func handleCallsActionsStopGather(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions stop-gather", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions stop-gather",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopNoiseSuppression(ctx context.Context, cmd *cli.Command) error {
@@ -3966,7 +4110,12 @@ func handleCallsActionsStopNoiseSuppression(ctx context.Context, cmd *cli.Comman
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions stop-noise-suppression", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions stop-noise-suppression",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopPlayback(ctx context.Context, cmd *cli.Command) error {
@@ -4009,7 +4158,12 @@ func handleCallsActionsStopPlayback(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions stop-playback", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions stop-playback",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopRecording(ctx context.Context, cmd *cli.Command) error {
@@ -4052,7 +4206,12 @@ func handleCallsActionsStopRecording(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions stop-recording", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions stop-recording",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopSiprec(ctx context.Context, cmd *cli.Command) error {
@@ -4095,7 +4254,12 @@ func handleCallsActionsStopSiprec(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions stop-siprec", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions stop-siprec",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopStreaming(ctx context.Context, cmd *cli.Command) error {
@@ -4138,7 +4302,12 @@ func handleCallsActionsStopStreaming(ctx context.Context, cmd *cli.Command) erro
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions stop-streaming", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions stop-streaming",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopTranscription(ctx context.Context, cmd *cli.Command) error {
@@ -4181,7 +4350,12 @@ func handleCallsActionsStopTranscription(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions stop-transcription", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions stop-transcription",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsSwitchSupervisorRole(ctx context.Context, cmd *cli.Command) error {
@@ -4224,7 +4398,12 @@ func handleCallsActionsSwitchSupervisorRole(ctx context.Context, cmd *cli.Comman
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions switch-supervisor-role", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions switch-supervisor-role",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsTransfer(ctx context.Context, cmd *cli.Command) error {
@@ -4267,7 +4446,12 @@ func handleCallsActionsTransfer(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions transfer", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions transfer",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsUpdateClientState(ctx context.Context, cmd *cli.Command) error {
@@ -4310,5 +4494,10 @@ func handleCallsActionsUpdateClientState(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "calls:actions update-client-state", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "calls:actions update-client-state",
+		Transform:      transform,
+	})
 }

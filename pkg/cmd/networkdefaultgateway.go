@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -102,7 +101,12 @@ func handleNetworksDefaultGatewayCreate(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "networks:default-gateway create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "networks:default-gateway create",
+		Transform:      transform,
+	})
 }
 
 func handleNetworksDefaultGatewayRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -138,7 +142,12 @@ func handleNetworksDefaultGatewayRetrieve(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "networks:default-gateway retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "networks:default-gateway retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleNetworksDefaultGatewayDelete(ctx context.Context, cmd *cli.Command) error {
@@ -174,5 +183,10 @@ func handleNetworksDefaultGatewayDelete(ctx context.Context, cmd *cli.Command) e
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "networks:default-gateway delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "networks:default-gateway delete",
+		Transform:      transform,
+	})
 }

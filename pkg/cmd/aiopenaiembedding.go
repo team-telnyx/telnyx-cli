@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -94,7 +93,12 @@ func handleAIOpenAIEmbeddingsCreateEmbeddings(ctx context.Context, cmd *cli.Comm
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:openai:embeddings create-embeddings", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:openai:embeddings create-embeddings",
+		Transform:      transform,
+	})
 }
 
 func handleAIOpenAIEmbeddingsListEmbeddingModels(ctx context.Context, cmd *cli.Command) error {
@@ -127,5 +131,10 @@ func handleAIOpenAIEmbeddingsListEmbeddingModels(ctx context.Context, cmd *cli.C
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "ai:openai:embeddings list-embedding-models", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "ai:openai:embeddings list-embedding-models",
+		Transform:      transform,
+	})
 }

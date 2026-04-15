@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -193,7 +192,12 @@ func handleTexmlAccountsConferencesRetrieve(ctx context.Context, cmd *cli.Comman
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:conferences retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -238,7 +242,12 @@ func handleTexmlAccountsConferencesUpdate(ctx context.Context, cmd *cli.Command)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences update", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:conferences update",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesRetrieveConferences(ctx context.Context, cmd *cli.Command) error {
@@ -281,7 +290,12 @@ func handleTexmlAccountsConferencesRetrieveConferences(ctx context.Context, cmd 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences retrieve-conferences", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:conferences retrieve-conferences",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesRetrieveRecordings(ctx context.Context, cmd *cli.Command) error {
@@ -326,7 +340,12 @@ func handleTexmlAccountsConferencesRetrieveRecordings(ctx context.Context, cmd *
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences retrieve-recordings", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:conferences retrieve-recordings",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesRetrieveRecordingsJson(ctx context.Context, cmd *cli.Command) error {
@@ -371,5 +390,10 @@ func handleTexmlAccountsConferencesRetrieveRecordingsJson(ctx context.Context, c
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences retrieve-recordings-json", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "texml:accounts:conferences retrieve-recordings-json",
+		Transform:      transform,
+	})
 }

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -129,7 +128,12 @@ func handleStorageMigrationSourcesCreate(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "storage:migration-sources create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "storage:migration-sources create",
+		Transform:      transform,
+	})
 }
 
 func handleStorageMigrationSourcesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -165,7 +169,12 @@ func handleStorageMigrationSourcesRetrieve(ctx context.Context, cmd *cli.Command
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "storage:migration-sources retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "storage:migration-sources retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleStorageMigrationSourcesList(ctx context.Context, cmd *cli.Command) error {
@@ -198,7 +207,12 @@ func handleStorageMigrationSourcesList(ctx context.Context, cmd *cli.Command) er
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "storage:migration-sources list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "storage:migration-sources list",
+		Transform:      transform,
+	})
 }
 
 func handleStorageMigrationSourcesDelete(ctx context.Context, cmd *cli.Command) error {
@@ -234,5 +248,10 @@ func handleStorageMigrationSourcesDelete(ctx context.Context, cmd *cli.Command) 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "storage:migration-sources delete", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "storage:migration-sources delete",
+		Transform:      transform,
+	})
 }
