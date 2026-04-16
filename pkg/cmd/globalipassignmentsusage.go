@@ -73,6 +73,7 @@ func handleGlobalIPAssignmentsUsageRetrieve(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "global-ip-assignments-usage retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "global-ip-assignments-usage retrieve", obj, format, explicitFormat, transform)
 }

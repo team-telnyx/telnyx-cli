@@ -181,8 +181,9 @@ func handleNotificationChannelsCreate(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "notification-channels create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "notification-channels create", obj, format, explicitFormat, transform)
 }
 
 func handleNotificationChannelsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -216,8 +217,9 @@ func handleNotificationChannelsRetrieve(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "notification-channels retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "notification-channels retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleNotificationChannelsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -258,8 +260,9 @@ func handleNotificationChannelsUpdate(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "notification-channels update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "notification-channels update", obj, format, explicitFormat, transform)
 }
 
 func handleNotificationChannelsList(ctx context.Context, cmd *cli.Command) error {
@@ -284,6 +287,7 @@ func handleNotificationChannelsList(ctx context.Context, cmd *cli.Command) error
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -293,14 +297,14 @@ func handleNotificationChannelsList(ctx context.Context, cmd *cli.Command) error
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "notification-channels list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "notification-channels list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.NotificationChannels.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "notification-channels list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "notification-channels list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -335,6 +339,7 @@ func handleNotificationChannelsDelete(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "notification-channels delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "notification-channels delete", obj, format, explicitFormat, transform)
 }

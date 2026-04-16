@@ -115,8 +115,9 @@ func handlePhoneNumbersVoicemailCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:voicemail create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:voicemail create", obj, format, explicitFormat, transform)
 }
 
 func handlePhoneNumbersVoicemailRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -150,8 +151,9 @@ func handlePhoneNumbersVoicemailRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:voicemail retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:voicemail retrieve", obj, format, explicitFormat, transform)
 }
 
 func handlePhoneNumbersVoicemailUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -192,6 +194,7 @@ func handlePhoneNumbersVoicemailUpdate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:voicemail update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:voicemail update", obj, format, explicitFormat, transform)
 }

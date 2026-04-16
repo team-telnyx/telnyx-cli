@@ -301,8 +301,9 @@ func handleExternalConnectionsCreate(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections create", obj, format, explicitFormat, transform)
 }
 
 func handleExternalConnectionsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -336,8 +337,9 @@ func handleExternalConnectionsRetrieve(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleExternalConnectionsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -378,8 +380,9 @@ func handleExternalConnectionsUpdate(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections update", obj, format, explicitFormat, transform)
 }
 
 func handleExternalConnectionsList(ctx context.Context, cmd *cli.Command) error {
@@ -404,6 +407,7 @@ func handleExternalConnectionsList(ctx context.Context, cmd *cli.Command) error 
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -413,14 +417,14 @@ func handleExternalConnectionsList(ctx context.Context, cmd *cli.Command) error 
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "external-connections list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "external-connections list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.ExternalConnections.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "external-connections list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "external-connections list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -455,8 +459,9 @@ func handleExternalConnectionsDelete(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections delete", obj, format, explicitFormat, transform)
 }
 
 func handleExternalConnectionsUpdateLocation(ctx context.Context, cmd *cli.Command) error {
@@ -499,6 +504,7 @@ func handleExternalConnectionsUpdateLocation(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections update-location", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections update-location", obj, format, explicitFormat, transform)
 }

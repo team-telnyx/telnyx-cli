@@ -60,8 +60,9 @@ func handleWellKnownRetrieveAuthorizationServerMetadata(ctx context.Context, cmd
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "well-known retrieve-authorization-server-metadata", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "well-known retrieve-authorization-server-metadata", obj, format, explicitFormat, transform)
 }
 
 func handleWellKnownRetrieveProtectedResourceMetadata(ctx context.Context, cmd *cli.Command) error {
@@ -92,6 +93,7 @@ func handleWellKnownRetrieveProtectedResourceMetadata(ctx context.Context, cmd *
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "well-known retrieve-protected-resource-metadata", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "well-known retrieve-protected-resource-metadata", obj, format, explicitFormat, transform)
 }

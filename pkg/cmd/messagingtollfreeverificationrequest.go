@@ -563,8 +563,9 @@ func handleMessagingTollfreeVerificationRequestsCreate(ctx context.Context, cmd 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-tollfree:verification:requests create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-tollfree:verification:requests create", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingTollfreeVerificationRequestsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -598,8 +599,9 @@ func handleMessagingTollfreeVerificationRequestsRetrieve(ctx context.Context, cm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-tollfree:verification:requests retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-tollfree:verification:requests retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingTollfreeVerificationRequestsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -640,8 +642,9 @@ func handleMessagingTollfreeVerificationRequestsUpdate(ctx context.Context, cmd 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-tollfree:verification:requests update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-tollfree:verification:requests update", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingTollfreeVerificationRequestsList(ctx context.Context, cmd *cli.Command) error {
@@ -666,6 +669,7 @@ func handleMessagingTollfreeVerificationRequestsList(ctx context.Context, cmd *c
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -675,14 +679,14 @@ func handleMessagingTollfreeVerificationRequestsList(ctx context.Context, cmd *c
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-tollfree:verification:requests list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "messaging-tollfree:verification:requests list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.MessagingTollfree.Verification.Requests.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-tollfree:verification:requests list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-tollfree:verification:requests list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -749,6 +753,7 @@ func handleMessagingTollfreeVerificationRequestsRetrieveStatusHistory(ctx contex
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-tollfree:verification:requests retrieve-status-history", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-tollfree:verification:requests retrieve-status-history", obj, format, explicitFormat, transform)
 }

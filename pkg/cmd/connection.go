@@ -137,8 +137,9 @@ func handleConnectionsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "connections retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "connections retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleConnectionsList(ctx context.Context, cmd *cli.Command) error {
@@ -163,6 +164,7 @@ func handleConnectionsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -172,14 +174,14 @@ func handleConnectionsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "connections list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "connections list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Connections.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "connections list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "connections list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -208,6 +210,7 @@ func handleConnectionsListActiveCalls(ctx context.Context, cmd *cli.Command) err
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -222,7 +225,7 @@ func handleConnectionsListActiveCalls(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "connections list-active-calls", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "connections list-active-calls", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Connections.ListActiveCallsAutoPaging(
 			ctx,
@@ -234,6 +237,6 @@ func handleConnectionsListActiveCalls(ctx context.Context, cmd *cli.Command) err
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "connections list-active-calls", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "connections list-active-calls", iter, format, explicitFormat, transform, maxItems)
 	}
 }

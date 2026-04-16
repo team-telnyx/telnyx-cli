@@ -191,8 +191,9 @@ func handleTelephonyCredentialsCreate(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "telephony-credentials create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "telephony-credentials create", obj, format, explicitFormat, transform)
 }
 
 func handleTelephonyCredentialsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -226,8 +227,9 @@ func handleTelephonyCredentialsRetrieve(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "telephony-credentials retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "telephony-credentials retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleTelephonyCredentialsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -268,8 +270,9 @@ func handleTelephonyCredentialsUpdate(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "telephony-credentials update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "telephony-credentials update", obj, format, explicitFormat, transform)
 }
 
 func handleTelephonyCredentialsList(ctx context.Context, cmd *cli.Command) error {
@@ -294,6 +297,7 @@ func handleTelephonyCredentialsList(ctx context.Context, cmd *cli.Command) error
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -303,14 +307,14 @@ func handleTelephonyCredentialsList(ctx context.Context, cmd *cli.Command) error
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "telephony-credentials list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "telephony-credentials list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.TelephonyCredentials.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "telephony-credentials list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "telephony-credentials list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -345,6 +349,7 @@ func handleTelephonyCredentialsDelete(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "telephony-credentials delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "telephony-credentials delete", obj, format, explicitFormat, transform)
 }

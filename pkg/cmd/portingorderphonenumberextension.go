@@ -178,8 +178,9 @@ func handlePortingOrdersPhoneNumberExtensionsCreate(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:phone-number-extensions create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:phone-number-extensions create", obj, format, explicitFormat, transform)
 }
 
 func handlePortingOrdersPhoneNumberExtensionsList(ctx context.Context, cmd *cli.Command) error {
@@ -207,6 +208,7 @@ func handlePortingOrdersPhoneNumberExtensionsList(ctx context.Context, cmd *cli.
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -221,7 +223,7 @@ func handlePortingOrdersPhoneNumberExtensionsList(ctx context.Context, cmd *cli.
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting-orders:phone-number-extensions list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:phone-number-extensions list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.PortingOrders.PhoneNumberExtensions.ListAutoPaging(
 			ctx,
@@ -233,7 +235,7 @@ func handlePortingOrdersPhoneNumberExtensionsList(ctx context.Context, cmd *cli.
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting-orders:phone-number-extensions list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:phone-number-extensions list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -277,6 +279,7 @@ func handlePortingOrdersPhoneNumberExtensionsDelete(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:phone-number-extensions delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:phone-number-extensions delete", obj, format, explicitFormat, transform)
 }

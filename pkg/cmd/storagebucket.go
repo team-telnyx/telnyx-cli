@@ -78,6 +78,7 @@ func handleStorageBucketsCreatePresignedURL(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:buckets create-presigned-url", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets create-presigned-url", obj, format, explicitFormat, transform)
 }

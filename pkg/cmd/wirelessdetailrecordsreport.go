@@ -115,8 +115,9 @@ func handleWirelessDetailRecordsReportsCreate(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless:detail-records-reports create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireless:detail-records-reports create", obj, format, explicitFormat, transform)
 }
 
 func handleWirelessDetailRecordsReportsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -150,8 +151,9 @@ func handleWirelessDetailRecordsReportsRetrieve(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless:detail-records-reports retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireless:detail-records-reports retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWirelessDetailRecordsReportsList(ctx context.Context, cmd *cli.Command) error {
@@ -184,8 +186,9 @@ func handleWirelessDetailRecordsReportsList(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless:detail-records-reports list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireless:detail-records-reports list", obj, format, explicitFormat, transform)
 }
 
 func handleWirelessDetailRecordsReportsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -219,6 +222,7 @@ func handleWirelessDetailRecordsReportsDelete(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless:detail-records-reports delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "wireless:detail-records-reports delete", obj, format, explicitFormat, transform)
 }

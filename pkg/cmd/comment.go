@@ -124,8 +124,9 @@ func handleCommentsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "comments create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "comments create", obj, format, explicitFormat, transform)
 }
 
 func handleCommentsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -159,8 +160,9 @@ func handleCommentsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "comments retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "comments retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleCommentsList(ctx context.Context, cmd *cli.Command) error {
@@ -193,8 +195,9 @@ func handleCommentsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "comments list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "comments list", obj, format, explicitFormat, transform)
 }
 
 func handleCommentsMarkAsRead(ctx context.Context, cmd *cli.Command) error {
@@ -228,6 +231,7 @@ func handleCommentsMarkAsRead(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "comments mark-as-read", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "comments mark-as-read", obj, format, explicitFormat, transform)
 }

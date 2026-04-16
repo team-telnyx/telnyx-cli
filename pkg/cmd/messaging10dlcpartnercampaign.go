@@ -157,8 +157,9 @@ func handleMessaging10dlcPartnerCampaignsRetrieve(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:partner-campaigns retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcPartnerCampaignsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -199,8 +200,9 @@ func handleMessaging10dlcPartnerCampaignsUpdate(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:partner-campaigns update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns update", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Command) error {
@@ -225,6 +227,7 @@ func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Comm
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -234,14 +237,14 @@ func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Comm
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-10dlc:partner-campaigns list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Messaging10dlc.PartnerCampaigns.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-10dlc:partner-campaigns list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -267,6 +270,7 @@ func handleMessaging10dlcPartnerCampaignsListSharedByMe(ctx context.Context, cmd
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -276,14 +280,14 @@ func handleMessaging10dlcPartnerCampaignsListSharedByMe(ctx context.Context, cmd
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-10dlc:partner-campaigns list-shared-by-me", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns list-shared-by-me", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Messaging10dlc.PartnerCampaigns.ListSharedByMeAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-10dlc:partner-campaigns list-shared-by-me", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns list-shared-by-me", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -318,6 +322,7 @@ func handleMessaging10dlcPartnerCampaignsRetrieveSharingStatus(ctx context.Conte
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:partner-campaigns retrieve-sharing-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:partner-campaigns retrieve-sharing-status", obj, format, explicitFormat, transform)
 }

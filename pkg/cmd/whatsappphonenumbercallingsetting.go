@@ -79,8 +79,9 @@ func handleWhatsappPhoneNumbersCallingSettingsRetrieve(ctx context.Context, cmd 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:phone-numbers:calling-settings retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:phone-numbers:calling-settings retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWhatsappPhoneNumbersCallingSettingsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -121,6 +122,7 @@ func handleWhatsappPhoneNumbersCallingSettingsUpdate(ctx context.Context, cmd *c
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:phone-numbers:calling-settings update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:phone-numbers:calling-settings update", obj, format, explicitFormat, transform)
 }

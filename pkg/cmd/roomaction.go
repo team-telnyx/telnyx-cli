@@ -104,8 +104,9 @@ func handleRoomsActionsGenerateJoinClientToken(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:actions generate-join-client-token", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "rooms:actions generate-join-client-token", obj, format, explicitFormat, transform)
 }
 
 func handleRoomsActionsRefreshClientToken(ctx context.Context, cmd *cli.Command) error {
@@ -146,6 +147,7 @@ func handleRoomsActionsRefreshClientToken(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:actions refresh-client-token", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "rooms:actions refresh-client-token", obj, format, explicitFormat, transform)
 }

@@ -79,8 +79,9 @@ func handleAIRetrieveModels(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai retrieve-models", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai retrieve-models", obj, format, explicitFormat, transform)
 }
 
 func handleAISummarize(ctx context.Context, cmd *cli.Command) error {
@@ -113,6 +114,7 @@ func handleAISummarize(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai summarize", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai summarize", obj, format, explicitFormat, transform)
 }

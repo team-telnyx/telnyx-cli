@@ -89,8 +89,9 @@ func handleAIAssistantsTagsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tags list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tags list", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsTagsAdd(ctx context.Context, cmd *cli.Command) error {
@@ -131,8 +132,9 @@ func handleAIAssistantsTagsAdd(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tags add", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tags add", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsTagsRemove(ctx context.Context, cmd *cli.Command) error {
@@ -175,6 +177,7 @@ func handleAIAssistantsTagsRemove(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tags remove", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tags remove", obj, format, explicitFormat, transform)
 }

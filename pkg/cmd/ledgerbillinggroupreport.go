@@ -79,8 +79,9 @@ func handleLedgerBillingGroupReportsCreate(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ledger-billing-group-reports create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ledger-billing-group-reports create", obj, format, explicitFormat, transform)
 }
 
 func handleLedgerBillingGroupReportsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -114,6 +115,7 @@ func handleLedgerBillingGroupReportsRetrieve(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ledger-billing-group-reports retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ledger-billing-group-reports retrieve", obj, format, explicitFormat, transform)
 }

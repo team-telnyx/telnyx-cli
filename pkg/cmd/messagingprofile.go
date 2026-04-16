@@ -526,8 +526,9 @@ func handleMessagingProfilesCreate(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles create", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -561,8 +562,9 @@ func handleMessagingProfilesRetrieve(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -603,8 +605,9 @@ func handleMessagingProfilesUpdate(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles update", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
@@ -629,6 +632,7 @@ func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -638,14 +642,14 @@ func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-profiles list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.MessagingProfiles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-profiles list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-profiles list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -680,8 +684,9 @@ func handleMessagingProfilesDelete(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles delete", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *cli.Command) error {
@@ -709,6 +714,7 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -723,7 +729,7 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-profiles list-alphanumeric-sender-ids", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles list-alphanumeric-sender-ids", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.MessagingProfiles.ListAlphanumericSenderIDsAutoPaging(
 			ctx,
@@ -735,7 +741,7 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-profiles list-alphanumeric-sender-ids", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-profiles list-alphanumeric-sender-ids", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -764,6 +770,7 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -778,7 +785,7 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-profiles list-phone-numbers", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles list-phone-numbers", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.MessagingProfiles.ListPhoneNumbersAutoPaging(
 			ctx,
@@ -790,7 +797,7 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-profiles list-phone-numbers", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-profiles list-phone-numbers", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -819,6 +826,7 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -833,7 +841,7 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-profiles list-short-codes", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles list-short-codes", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.MessagingProfiles.ListShortCodesAutoPaging(
 			ctx,
@@ -845,7 +853,7 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-profiles list-short-codes", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-profiles list-short-codes", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -887,6 +895,7 @@ func handleMessagingProfilesRetrieveMetrics(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles retrieve-metrics", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles retrieve-metrics", obj, format, explicitFormat, transform)
 }

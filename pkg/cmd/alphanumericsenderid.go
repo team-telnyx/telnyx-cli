@@ -131,8 +131,9 @@ func handleAlphanumericSenderIDsCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "alphanumeric-sender-ids create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "alphanumeric-sender-ids create", obj, format, explicitFormat, transform)
 }
 
 func handleAlphanumericSenderIDsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -166,8 +167,9 @@ func handleAlphanumericSenderIDsRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "alphanumeric-sender-ids retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "alphanumeric-sender-ids retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) error {
@@ -192,6 +194,7 @@ func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) erro
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -201,14 +204,14 @@ func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "alphanumeric-sender-ids list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "alphanumeric-sender-ids list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AlphanumericSenderIDs.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "alphanumeric-sender-ids list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "alphanumeric-sender-ids list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -243,6 +246,7 @@ func handleAlphanumericSenderIDsDelete(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "alphanumeric-sender-ids delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "alphanumeric-sender-ids delete", obj, format, explicitFormat, transform)
 }

@@ -178,8 +178,9 @@ func handleReportsListMdrs(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "reports list-mdrs", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "reports list-mdrs", obj, format, explicitFormat, transform)
 }
 
 func handleReportsListWdrs(ctx context.Context, cmd *cli.Command) error {
@@ -204,6 +205,7 @@ func handleReportsListWdrs(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -213,13 +215,13 @@ func handleReportsListWdrs(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "reports list-wdrs", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "reports list-wdrs", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Reports.ListWdrsAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "reports list-wdrs", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "reports list-wdrs", iter, format, explicitFormat, transform, maxItems)
 	}
 }

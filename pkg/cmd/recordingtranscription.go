@@ -113,8 +113,9 @@ func handleRecordingTranscriptionsRetrieve(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "recording-transcriptions retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "recording-transcriptions retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleRecordingTranscriptionsList(ctx context.Context, cmd *cli.Command) error {
@@ -139,6 +140,7 @@ func handleRecordingTranscriptionsList(ctx context.Context, cmd *cli.Command) er
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -148,14 +150,14 @@ func handleRecordingTranscriptionsList(ctx context.Context, cmd *cli.Command) er
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "recording-transcriptions list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "recording-transcriptions list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.RecordingTranscriptions.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "recording-transcriptions list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "recording-transcriptions list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -190,6 +192,7 @@ func handleRecordingTranscriptionsDelete(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "recording-transcriptions delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "recording-transcriptions delete", obj, format, explicitFormat, transform)
 }

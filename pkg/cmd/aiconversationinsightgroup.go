@@ -149,8 +149,9 @@ func handleAIConversationsInsightGroupsRetrieve(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:conversations:insight-groups retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insight-groups retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIConversationsInsightGroupsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -191,8 +192,9 @@ func handleAIConversationsInsightGroupsUpdate(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:conversations:insight-groups update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insight-groups update", obj, format, explicitFormat, transform)
 }
 
 func handleAIConversationsInsightGroupsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -250,8 +252,9 @@ func handleAIConversationsInsightGroupsInsightGroups(ctx context.Context, cmd *c
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:conversations:insight-groups insight-groups", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insight-groups insight-groups", obj, format, explicitFormat, transform)
 }
 
 func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context, cmd *cli.Command) error {
@@ -276,6 +279,7 @@ func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -285,13 +289,13 @@ func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:conversations:insight-groups retrieve-insight-groups", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "ai:conversations:insight-groups retrieve-insight-groups", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AI.Conversations.InsightGroups.GetInsightGroupsAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:conversations:insight-groups retrieve-insight-groups", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:conversations:insight-groups retrieve-insight-groups", iter, format, explicitFormat, transform, maxItems)
 	}
 }

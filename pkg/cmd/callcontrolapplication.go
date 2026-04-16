@@ -433,8 +433,9 @@ func handleCallControlApplicationsCreate(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "call-control-applications create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "call-control-applications create", obj, format, explicitFormat, transform)
 }
 
 func handleCallControlApplicationsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -468,8 +469,9 @@ func handleCallControlApplicationsRetrieve(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "call-control-applications retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "call-control-applications retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleCallControlApplicationsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -510,8 +512,9 @@ func handleCallControlApplicationsUpdate(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "call-control-applications update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "call-control-applications update", obj, format, explicitFormat, transform)
 }
 
 func handleCallControlApplicationsList(ctx context.Context, cmd *cli.Command) error {
@@ -536,6 +539,7 @@ func handleCallControlApplicationsList(ctx context.Context, cmd *cli.Command) er
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -545,14 +549,14 @@ func handleCallControlApplicationsList(ctx context.Context, cmd *cli.Command) er
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "call-control-applications list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "call-control-applications list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.CallControlApplications.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "call-control-applications list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "call-control-applications list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -587,6 +591,7 @@ func handleCallControlApplicationsDelete(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "call-control-applications delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "call-control-applications delete", obj, format, explicitFormat, transform)
 }

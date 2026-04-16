@@ -87,8 +87,9 @@ func handleMessagingNumbersBulkUpdatesCreate(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-numbers-bulk-updates create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-numbers-bulk-updates create", obj, format, explicitFormat, transform)
 }
 
 func handleMessagingNumbersBulkUpdatesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -122,6 +123,7 @@ func handleMessagingNumbersBulkUpdatesRetrieve(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-numbers-bulk-updates retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-numbers-bulk-updates retrieve", obj, format, explicitFormat, transform)
 }

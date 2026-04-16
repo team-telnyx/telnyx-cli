@@ -107,8 +107,9 @@ func handleStorageBucketsSslCertificateCreate(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:buckets:ssl-certificate create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:ssl-certificate create", obj, format, explicitFormat, transform)
 }
 
 func handleStorageBucketsSslCertificateRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -142,8 +143,9 @@ func handleStorageBucketsSslCertificateRetrieve(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:buckets:ssl-certificate retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:ssl-certificate retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleStorageBucketsSslCertificateDelete(ctx context.Context, cmd *cli.Command) error {
@@ -177,6 +179,7 @@ func handleStorageBucketsSslCertificateDelete(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:buckets:ssl-certificate delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:buckets:ssl-certificate delete", obj, format, explicitFormat, transform)
 }

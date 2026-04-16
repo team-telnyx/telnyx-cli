@@ -129,8 +129,9 @@ func handleNotificationProfilesCreate(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "notification-profiles create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "notification-profiles create", obj, format, explicitFormat, transform)
 }
 
 func handleNotificationProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -164,8 +165,9 @@ func handleNotificationProfilesRetrieve(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "notification-profiles retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "notification-profiles retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleNotificationProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -206,8 +208,9 @@ func handleNotificationProfilesUpdate(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "notification-profiles update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "notification-profiles update", obj, format, explicitFormat, transform)
 }
 
 func handleNotificationProfilesList(ctx context.Context, cmd *cli.Command) error {
@@ -232,6 +235,7 @@ func handleNotificationProfilesList(ctx context.Context, cmd *cli.Command) error
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -241,14 +245,14 @@ func handleNotificationProfilesList(ctx context.Context, cmd *cli.Command) error
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "notification-profiles list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "notification-profiles list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.NotificationProfiles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "notification-profiles list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "notification-profiles list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -283,6 +287,7 @@ func handleNotificationProfilesDelete(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "notification-profiles delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "notification-profiles delete", obj, format, explicitFormat, transform)
 }

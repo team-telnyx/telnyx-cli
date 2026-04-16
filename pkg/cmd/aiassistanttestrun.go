@@ -123,8 +123,9 @@ func handleAIAssistantsTestsRunsRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tests:runs retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:runs retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsTestsRunsList(ctx context.Context, cmd *cli.Command) error {
@@ -152,6 +153,7 @@ func handleAIAssistantsTestsRunsList(ctx context.Context, cmd *cli.Command) erro
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -166,7 +168,7 @@ func handleAIAssistantsTestsRunsList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:assistants:tests:runs list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:runs list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AI.Assistants.Tests.Runs.ListAutoPaging(
 			ctx,
@@ -178,7 +180,7 @@ func handleAIAssistantsTestsRunsList(ctx context.Context, cmd *cli.Command) erro
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:assistants:tests:runs list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:assistants:tests:runs list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -220,6 +222,7 @@ func handleAIAssistantsTestsRunsTrigger(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tests:runs trigger", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:tests:runs trigger", obj, format, explicitFormat, transform)
 }

@@ -123,8 +123,9 @@ func handleGlobalIPAssignmentsCreate(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "global-ip-assignments create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "global-ip-assignments create", obj, format, explicitFormat, transform)
 }
 
 func handleGlobalIPAssignmentsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -158,8 +159,9 @@ func handleGlobalIPAssignmentsRetrieve(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "global-ip-assignments retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "global-ip-assignments retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleGlobalIPAssignmentsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -200,8 +202,9 @@ func handleGlobalIPAssignmentsUpdate(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "global-ip-assignments update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "global-ip-assignments update", obj, format, explicitFormat, transform)
 }
 
 func handleGlobalIPAssignmentsList(ctx context.Context, cmd *cli.Command) error {
@@ -226,6 +229,7 @@ func handleGlobalIPAssignmentsList(ctx context.Context, cmd *cli.Command) error 
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -235,14 +239,14 @@ func handleGlobalIPAssignmentsList(ctx context.Context, cmd *cli.Command) error 
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "global-ip-assignments list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "global-ip-assignments list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.GlobalIPAssignments.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "global-ip-assignments list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "global-ip-assignments list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -277,6 +281,7 @@ func handleGlobalIPAssignmentsDelete(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "global-ip-assignments delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "global-ip-assignments delete", obj, format, explicitFormat, transform)
 }

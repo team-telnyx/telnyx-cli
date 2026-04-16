@@ -163,8 +163,9 @@ func handleDialogflowConnectionsCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dialogflow-connections create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "dialogflow-connections create", obj, format, explicitFormat, transform)
 }
 
 func handleDialogflowConnectionsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -198,8 +199,9 @@ func handleDialogflowConnectionsRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dialogflow-connections retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "dialogflow-connections retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleDialogflowConnectionsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -240,8 +242,9 @@ func handleDialogflowConnectionsUpdate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dialogflow-connections update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "dialogflow-connections update", obj, format, explicitFormat, transform)
 }
 
 func handleDialogflowConnectionsDelete(ctx context.Context, cmd *cli.Command) error {

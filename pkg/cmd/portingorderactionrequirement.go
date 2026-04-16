@@ -143,6 +143,7 @@ func handlePortingOrdersActionRequirementsList(ctx context.Context, cmd *cli.Com
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -157,7 +158,7 @@ func handlePortingOrdersActionRequirementsList(ctx context.Context, cmd *cli.Com
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting-orders:action-requirements list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "porting-orders:action-requirements list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.PortingOrders.ActionRequirements.ListAutoPaging(
 			ctx,
@@ -169,7 +170,7 @@ func handlePortingOrdersActionRequirementsList(ctx context.Context, cmd *cli.Com
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting-orders:action-requirements list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "porting-orders:action-requirements list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -213,6 +214,7 @@ func handlePortingOrdersActionRequirementsInitiate(ctx context.Context, cmd *cli
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:action-requirements initiate", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting-orders:action-requirements initiate", obj, format, explicitFormat, transform)
 }

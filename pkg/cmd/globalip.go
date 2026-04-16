@@ -120,8 +120,9 @@ func handleGlobalIPsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "global-ips create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "global-ips create", obj, format, explicitFormat, transform)
 }
 
 func handleGlobalIPsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -155,8 +156,9 @@ func handleGlobalIPsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "global-ips retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "global-ips retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleGlobalIPsList(ctx context.Context, cmd *cli.Command) error {
@@ -181,6 +183,7 @@ func handleGlobalIPsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -190,14 +193,14 @@ func handleGlobalIPsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "global-ips list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "global-ips list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.GlobalIPs.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "global-ips list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "global-ips list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -232,6 +235,7 @@ func handleGlobalIPsDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "global-ips delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "global-ips delete", obj, format, explicitFormat, transform)
 }

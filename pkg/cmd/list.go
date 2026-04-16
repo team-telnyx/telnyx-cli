@@ -66,8 +66,9 @@ func handleListRetrieveAll(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "list retrieve-all", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "list retrieve-all", obj, format, explicitFormat, transform)
 }
 
 func handleListRetrieveByZone(ctx context.Context, cmd *cli.Command) error {
@@ -101,6 +102,7 @@ func handleListRetrieveByZone(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "list retrieve-by-zone", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "list retrieve-by-zone", obj, format, explicitFormat, transform)
 }

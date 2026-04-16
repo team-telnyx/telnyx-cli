@@ -101,8 +101,9 @@ func handleStorageMigrationsCreate(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:migrations create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:migrations create", obj, format, explicitFormat, transform)
 }
 
 func handleStorageMigrationsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -136,8 +137,9 @@ func handleStorageMigrationsRetrieve(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:migrations retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:migrations retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleStorageMigrationsList(ctx context.Context, cmd *cli.Command) error {
@@ -168,6 +170,7 @@ func handleStorageMigrationsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:migrations list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:migrations list", obj, format, explicitFormat, transform)
 }

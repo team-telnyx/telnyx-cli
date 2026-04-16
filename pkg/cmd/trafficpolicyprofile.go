@@ -15,25 +15,45 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var networksCreate = cli.Command{
+var trafficPolicyProfilesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new Network.",
+	Usage:   "Create a new traffic policy profile. At least one of `services`, `ip_ranges`, or\n`domains` must be provided.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "A user specified name for the network.",
+			Name:     "type",
+			Usage:    "The type of the traffic policy profile.",
 			Required: true,
-			BodyPath: "name",
+			BodyPath: "type",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "domain",
+			Usage:    "Array of domain names.",
+			BodyPath: "domains",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "ip-range",
+			Usage:    "Array of IP ranges in CIDR notation.",
+			BodyPath: "ip_ranges",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "limit-bw-kbps",
+			Usage:    "Bandwidth limit in kbps. Must be 512 or 1024.",
+			BodyPath: "limit_bw_kbps",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "service",
+			Usage:    "Array of PCEF service IDs to include in the profile.",
+			BodyPath: "services",
 		},
 	},
-	Action:          handleNetworksCreate,
+	Action:          handleTrafficPolicyProfilesCreate,
 	HideHelpCommand: true,
 }
 
-var networksRetrieve = cli.Command{
+var trafficPolicyProfilesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a Network.",
+	Usage:   "Returns the details regarding a specific traffic policy profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -41,99 +61,129 @@ var networksRetrieve = cli.Command{
 			Required: true,
 		},
 	},
-	Action:          handleNetworksRetrieve,
+	Action:          handleTrafficPolicyProfilesRetrieve,
 	HideHelpCommand: true,
 }
 
-var networksUpdate = cli.Command{
+var trafficPolicyProfilesUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a Network.",
+	Usage:   "Updates a traffic policy profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "network-id",
+			Name:     "id",
 			Required: true,
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "domain",
+			Usage:    "Array of domain names.",
+			BodyPath: "domains",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "ip-range",
+			Usage:    "Array of IP ranges in CIDR notation.",
+			BodyPath: "ip_ranges",
+		},
+		&requestflag.Flag[any]{
+			Name:     "limit-bw-kbps",
+			Usage:    "Bandwidth limit in kbps. Must be 512 or 1024, or null to remove.",
+			BodyPath: "limit_bw_kbps",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "service",
+			Usage:    "Array of PCEF service IDs to include in the profile.",
+			BodyPath: "services",
 		},
 		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "A user specified name for the network.",
-			Required: true,
-			BodyPath: "name",
+			Name:     "type",
+			Usage:    "The type of the traffic policy profile.",
+			BodyPath: "type",
 		},
 	},
-	Action:          handleNetworksUpdate,
+	Action:          handleTrafficPolicyProfilesUpdate,
 	HideHelpCommand: true,
 }
 
-var networksList = requestflag.WithInnerFlags(cli.Command{
+var trafficPolicyProfilesList = cli.Command{
 	Name:    "list",
-	Usage:   "List all Networks.",
+	Usage:   "Get all traffic policy profiles belonging to the user that match the given\nfilters.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[map[string]any]{
-			Name:      "filter",
-			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[name]",
-			QueryPath: "filter",
+		&requestflag.Flag[string]{
+			Name:      "filter-service",
+			Usage:     "Filter by service ID.",
+			QueryPath: "filter[service]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-type",
+			Usage:     "Filter by traffic policy profile type.",
+			QueryPath: "filter[type]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
+			Usage:     "The page number to load.",
+			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
+			Usage:     "The size of the page.",
+			Default:   20,
 			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "sort",
+			Usage:     "Sorts traffic policy profiles by the given field. Defaults to ascending order unless field is prefixed with a minus sign.",
+			QueryPath: "sort",
 		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
-	Action:          handleNetworksList,
-	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"filter": {
-		&requestflag.InnerFlag[string]{
-			Name:       "filter.name",
-			Usage:      "The network name to filter on.",
-			InnerField: "name",
-		},
-	},
-})
-
-var networksDelete = cli.Command{
-	Name:    "delete",
-	Usage:   "Delete a Network.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
-		},
-	},
-	Action:          handleNetworksDelete,
+	Action:          handleTrafficPolicyProfilesList,
 	HideHelpCommand: true,
 }
 
-var networksListInterfaces = requestflag.WithInnerFlags(cli.Command{
-	Name:    "list-interfaces",
-	Usage:   "List all Interfaces for a Network.",
+var trafficPolicyProfilesDelete = cli.Command{
+	Name:    "delete",
+	Usage:   "Deletes the traffic policy profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "id",
 			Required: true,
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:      "filter",
-			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[name], filter[type], filter[status]",
-			QueryPath: "filter",
+	},
+	Action:          handleTrafficPolicyProfilesDelete,
+	HideHelpCommand: true,
+}
+
+var trafficPolicyProfilesListServices = cli.Command{
+	Name:    "list-services",
+	Usage:   "Get all available PCEF services that can be used in traffic policy profiles.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "filter-group",
+			Usage:     "Filter services by group.",
+			QueryPath: "filter[group]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-name",
+			Usage:     "Filter services by name.",
+			QueryPath: "filter[name]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
+			Usage:     "The page number to load.",
+			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
+			Usage:     "The size of the page.",
+			Default:   20,
 			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[int64]{
@@ -141,29 +191,11 @@ var networksListInterfaces = requestflag.WithInnerFlags(cli.Command{
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
-	Action:          handleNetworksListInterfaces,
+	Action:          handleTrafficPolicyProfilesListServices,
 	HideHelpCommand: true,
-}, map[string][]requestflag.HasOuterFlag{
-	"filter": {
-		&requestflag.InnerFlag[string]{
-			Name:       "filter.name",
-			Usage:      "The interface name to filter on.",
-			InnerField: "name",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "filter.status",
-			Usage:      "The current status of the interface deployment.",
-			InnerField: "status",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "filter.type",
-			Usage:      "The interface type to filter on.",
-			InnerField: "type",
-		},
-	},
-})
+}
 
-func handleNetworksCreate(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -171,7 +203,7 @@ func handleNetworksCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NetworkNewParams{}
+	params := telnyx.TrafficPolicyProfileNewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -186,7 +218,7 @@ func handleNetworksCreate(ctx context.Context, cmd *cli.Command) error {
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Networks.New(ctx, params, options...)
+	_, err = client.TrafficPolicyProfiles.New(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -195,10 +227,10 @@ func handleNetworksCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "networks create", obj, format, explicitFormat, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles create", obj, format, explicitFormat, transform)
 }
 
-func handleNetworksRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -222,7 +254,7 @@ func handleNetworksRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Networks.Get(ctx, cmd.Value("id").(string), options...)
+	_, err = client.TrafficPolicyProfiles.Get(ctx, cmd.Value("id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -231,21 +263,21 @@ func handleNetworksRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "networks retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles retrieve", obj, format, explicitFormat, transform)
 }
 
-func handleNetworksUpdate(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("network-id") && len(unusedArgs) > 0 {
-		cmd.Set("network-id", unusedArgs[0])
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NetworkUpdateParams{}
+	params := telnyx.TrafficPolicyProfileUpdateParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -260,9 +292,9 @@ func handleNetworksUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Networks.Update(
+	_, err = client.TrafficPolicyProfiles.Update(
 		ctx,
-		cmd.Value("network-id").(string),
+		cmd.Value("id").(string),
 		params,
 		options...,
 	)
@@ -274,10 +306,10 @@ func handleNetworksUpdate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "networks update", obj, format, explicitFormat, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles update", obj, format, explicitFormat, transform)
 }
 
-func handleNetworksList(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -285,7 +317,7 @@ func handleNetworksList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NetworkListParams{}
+	params := telnyx.TrafficPolicyProfileListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -304,23 +336,23 @@ func handleNetworksList(ctx context.Context, cmd *cli.Command) error {
 	if format == "raw" {
 		var res []byte
 		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.Networks.List(ctx, params, options...)
+		_, err = client.TrafficPolicyProfiles.List(ctx, params, options...)
 		if err != nil {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "networks list", obj, format, explicitFormat, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles list", obj, format, explicitFormat, transform)
 	} else {
-		iter := client.Networks.ListAutoPaging(ctx, params, options...)
+		iter := client.TrafficPolicyProfiles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "networks list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "traffic-policy-profiles list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
-func handleNetworksDelete(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesDelete(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -344,7 +376,7 @@ func handleNetworksDelete(ctx context.Context, cmd *cli.Command) error {
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Networks.Delete(ctx, cmd.Value("id").(string), options...)
+	_, err = client.TrafficPolicyProfiles.Delete(ctx, cmd.Value("id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -353,21 +385,18 @@ func handleNetworksDelete(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "networks delete", obj, format, explicitFormat, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles delete", obj, format, explicitFormat, transform)
 }
 
-func handleNetworksListInterfaces(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesListServices(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
-		cmd.Set("id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
+
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NetworkListInterfacesParams{}
+	params := telnyx.TrafficPolicyProfileListServicesParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -386,28 +415,18 @@ func handleNetworksListInterfaces(ctx context.Context, cmd *cli.Command) error {
 	if format == "raw" {
 		var res []byte
 		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.Networks.ListInterfaces(
-			ctx,
-			cmd.Value("id").(string),
-			params,
-			options...,
-		)
+		_, err = client.TrafficPolicyProfiles.ListServices(ctx, params, options...)
 		if err != nil {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "networks list-interfaces", obj, format, explicitFormat, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "traffic-policy-profiles list-services", obj, format, explicitFormat, transform)
 	} else {
-		iter := client.Networks.ListInterfacesAutoPaging(
-			ctx,
-			cmd.Value("id").(string),
-			params,
-			options...,
-		)
+		iter := client.TrafficPolicyProfiles.ListServicesAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "networks list-interfaces", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "traffic-policy-profiles list-services", iter, format, explicitFormat, transform, maxItems)
 	}
 }

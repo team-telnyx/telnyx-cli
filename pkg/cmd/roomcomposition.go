@@ -165,8 +165,9 @@ func handleRoomCompositionsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "room-compositions create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "room-compositions create", obj, format, explicitFormat, transform)
 }
 
 func handleRoomCompositionsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -200,8 +201,9 @@ func handleRoomCompositionsRetrieve(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "room-compositions retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "room-compositions retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleRoomCompositionsList(ctx context.Context, cmd *cli.Command) error {
@@ -226,6 +228,7 @@ func handleRoomCompositionsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -235,14 +238,14 @@ func handleRoomCompositionsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "room-compositions list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "room-compositions list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.RoomCompositions.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "room-compositions list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "room-compositions list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 

@@ -208,8 +208,9 @@ func handlePortoutsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "portouts retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "portouts retrieve", obj, format, explicitFormat, transform)
 }
 
 func handlePortoutsList(ctx context.Context, cmd *cli.Command) error {
@@ -234,6 +235,7 @@ func handlePortoutsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -243,14 +245,14 @@ func handlePortoutsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "portouts list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "portouts list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Portouts.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "portouts list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "portouts list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -292,8 +294,9 @@ func handlePortoutsListRejectionCodes(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "portouts list-rejection-codes", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "portouts list-rejection-codes", obj, format, explicitFormat, transform)
 }
 
 func handlePortoutsUpdateStatus(ctx context.Context, cmd *cli.Command) error {
@@ -336,6 +339,7 @@ func handlePortoutsUpdateStatus(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "portouts update-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "portouts update-status", obj, format, explicitFormat, transform)
 }

@@ -196,8 +196,9 @@ func handleAIToolsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:tools create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:tools create", obj, format, explicitFormat, transform)
 }
 
 func handleAIToolsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -231,8 +232,9 @@ func handleAIToolsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:tools retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:tools retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIToolsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -273,8 +275,9 @@ func handleAIToolsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:tools update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:tools update", obj, format, explicitFormat, transform)
 }
 
 func handleAIToolsList(ctx context.Context, cmd *cli.Command) error {
@@ -299,6 +302,7 @@ func handleAIToolsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -308,14 +312,14 @@ func handleAIToolsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:tools list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "ai:tools list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AI.Tools.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:tools list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:tools list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -350,6 +354,7 @@ func handleAIToolsDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:tools delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:tools delete", obj, format, explicitFormat, transform)
 }

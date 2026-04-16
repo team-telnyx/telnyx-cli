@@ -124,8 +124,9 @@ func handleExternalConnectionsReleasesRetrieve(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections:releases retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "external-connections:releases retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleExternalConnectionsReleasesList(ctx context.Context, cmd *cli.Command) error {
@@ -153,6 +154,7 @@ func handleExternalConnectionsReleasesList(ctx context.Context, cmd *cli.Command
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -167,7 +169,7 @@ func handleExternalConnectionsReleasesList(ctx context.Context, cmd *cli.Command
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "external-connections:releases list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "external-connections:releases list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.ExternalConnections.Releases.ListAutoPaging(
 			ctx,
@@ -179,6 +181,6 @@ func handleExternalConnectionsReleasesList(ctx context.Context, cmd *cli.Command
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "external-connections:releases list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "external-connections:releases list", iter, format, explicitFormat, transform, maxItems)
 	}
 }

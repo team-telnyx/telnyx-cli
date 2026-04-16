@@ -187,8 +187,9 @@ func handleSimCardGroupsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-card-groups create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-card-groups create", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardGroupsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -229,8 +230,9 @@ func handleSimCardGroupsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-card-groups retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-card-groups retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardGroupsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -271,8 +273,9 @@ func handleSimCardGroupsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-card-groups update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-card-groups update", obj, format, explicitFormat, transform)
 }
 
 func handleSimCardGroupsList(ctx context.Context, cmd *cli.Command) error {
@@ -297,6 +300,7 @@ func handleSimCardGroupsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -306,14 +310,14 @@ func handleSimCardGroupsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "sim-card-groups list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "sim-card-groups list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.SimCardGroups.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "sim-card-groups list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "sim-card-groups list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -348,6 +352,7 @@ func handleSimCardGroupsDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-card-groups delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sim-card-groups delete", obj, format, explicitFormat, transform)
 }

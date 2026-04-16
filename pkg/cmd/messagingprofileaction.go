@@ -60,6 +60,7 @@ func handleMessagingProfilesActionsRegenerateSecret(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles:actions regenerate-secret", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-profiles:actions regenerate-secret", obj, format, explicitFormat, transform)
 }

@@ -92,8 +92,9 @@ func handleAIOpenAIEmbeddingsCreateEmbeddings(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:openai:embeddings create-embeddings", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:openai:embeddings create-embeddings", obj, format, explicitFormat, transform)
 }
 
 func handleAIOpenAIEmbeddingsListEmbeddingModels(ctx context.Context, cmd *cli.Command) error {
@@ -124,6 +125,7 @@ func handleAIOpenAIEmbeddingsListEmbeddingModels(ctx context.Context, cmd *cli.C
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:openai:embeddings list-embedding-models", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:openai:embeddings list-embedding-models", obj, format, explicitFormat, transform)
 }

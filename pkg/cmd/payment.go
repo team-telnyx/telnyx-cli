@@ -61,6 +61,7 @@ func handlePaymentCreateStoredPaymentTransaction(ctx context.Context, cmd *cli.C
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "payment create-stored-payment-transaction", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "payment create-stored-payment-transaction", obj, format, explicitFormat, transform)
 }

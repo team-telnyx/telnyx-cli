@@ -137,8 +137,9 @@ func handleAccessIPAddressCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "access-ip-address create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "access-ip-address create", obj, format, explicitFormat, transform)
 }
 
 func handleAccessIPAddressRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -172,8 +173,9 @@ func handleAccessIPAddressRetrieve(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "access-ip-address retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "access-ip-address retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAccessIPAddressList(ctx context.Context, cmd *cli.Command) error {
@@ -198,6 +200,7 @@ func handleAccessIPAddressList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -207,14 +210,14 @@ func handleAccessIPAddressList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "access-ip-address list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "access-ip-address list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AccessIPAddress.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "access-ip-address list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "access-ip-address list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -249,6 +252,7 @@ func handleAccessIPAddressDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "access-ip-address delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "access-ip-address delete", obj, format, explicitFormat, transform)
 }

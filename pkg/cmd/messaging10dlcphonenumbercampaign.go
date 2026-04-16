@@ -179,8 +179,9 @@ func handleMessaging10dlcPhoneNumberCampaignsCreate(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-campaigns create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-campaigns create", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcPhoneNumberCampaignsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -214,8 +215,9 @@ func handleMessaging10dlcPhoneNumberCampaignsRetrieve(ctx context.Context, cmd *
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-campaigns retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-campaigns retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcPhoneNumberCampaignsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -256,8 +258,9 @@ func handleMessaging10dlcPhoneNumberCampaignsUpdate(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-campaigns update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-campaigns update", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcPhoneNumberCampaignsList(ctx context.Context, cmd *cli.Command) error {
@@ -282,6 +285,7 @@ func handleMessaging10dlcPhoneNumberCampaignsList(ctx context.Context, cmd *cli.
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -291,14 +295,14 @@ func handleMessaging10dlcPhoneNumberCampaignsList(ctx context.Context, cmd *cli.
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-campaigns list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-campaigns list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Messaging10dlc.PhoneNumberCampaigns.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-10dlc:phone-number-campaigns list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-campaigns list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -333,6 +337,7 @@ func handleMessaging10dlcPhoneNumberCampaignsDelete(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:phone-number-campaigns delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:phone-number-campaigns delete", obj, format, explicitFormat, transform)
 }

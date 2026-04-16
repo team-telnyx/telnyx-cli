@@ -109,6 +109,7 @@ func handleVirtualCrossConnectsCoverageList(ctx context.Context, cmd *cli.Comman
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -118,13 +119,13 @@ func handleVirtualCrossConnectsCoverageList(ctx context.Context, cmd *cli.Comman
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "virtual-cross-connects-coverage list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "virtual-cross-connects-coverage list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.VirtualCrossConnectsCoverage.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "virtual-cross-connects-coverage list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "virtual-cross-connects-coverage list", iter, format, explicitFormat, transform, maxItems)
 	}
 }

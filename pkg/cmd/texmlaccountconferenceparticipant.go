@@ -473,8 +473,9 @@ func handleTexmlAccountsConferencesParticipantsRetrieve(ctx context.Context, cmd
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences:participants retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences:participants retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlAccountsConferencesParticipantsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -518,8 +519,9 @@ func handleTexmlAccountsConferencesParticipantsUpdate(ctx context.Context, cmd *
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences:participants update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences:participants update", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlAccountsConferencesParticipantsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -597,8 +599,9 @@ func handleTexmlAccountsConferencesParticipantsParticipants(ctx context.Context,
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences:participants participants", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences:participants participants", obj, format, explicitFormat, transform)
 }
 
 func handleTexmlAccountsConferencesParticipantsRetrieveParticipants(ctx context.Context, cmd *cli.Command) error {
@@ -641,6 +644,7 @@ func handleTexmlAccountsConferencesParticipantsRetrieveParticipants(ctx context.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences:participants retrieve-participants", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "texml:accounts:conferences:participants retrieve-participants", obj, format, explicitFormat, transform)
 }

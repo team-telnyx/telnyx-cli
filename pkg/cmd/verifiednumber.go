@@ -123,8 +123,9 @@ func handleVerifiedNumbersCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verified-numbers create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verified-numbers create", obj, format, explicitFormat, transform)
 }
 
 func handleVerifiedNumbersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -158,8 +159,9 @@ func handleVerifiedNumbersRetrieve(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verified-numbers retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verified-numbers retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleVerifiedNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -184,6 +186,7 @@ func handleVerifiedNumbersList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -193,14 +196,14 @@ func handleVerifiedNumbersList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "verified-numbers list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "verified-numbers list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.VerifiedNumbers.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "verified-numbers list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "verified-numbers list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -235,6 +238,7 @@ func handleVerifiedNumbersDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verified-numbers delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "verified-numbers delete", obj, format, explicitFormat, transform)
 }

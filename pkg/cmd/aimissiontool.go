@@ -128,8 +128,9 @@ func handleAIMissionsToolsCreateTool(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:tools create-tool", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:tools create-tool", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsToolsDeleteTool(ctx context.Context, cmd *cli.Command) error {
@@ -206,8 +207,9 @@ func handleAIMissionsToolsGetTool(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:tools get-tool", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:tools get-tool", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsToolsListTools(ctx context.Context, cmd *cli.Command) error {
@@ -241,8 +243,9 @@ func handleAIMissionsToolsListTools(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:tools list-tools", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:tools list-tools", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsToolsUpdateTool(ctx context.Context, cmd *cli.Command) error {
@@ -285,6 +288,7 @@ func handleAIMissionsToolsUpdateTool(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:tools update-tool", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:tools update-tool", obj, format, explicitFormat, transform)
 }

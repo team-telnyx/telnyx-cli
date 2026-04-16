@@ -133,8 +133,9 @@ func handlePublicInternetGatewaysCreate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "public-internet-gateways create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "public-internet-gateways create", obj, format, explicitFormat, transform)
 }
 
 func handlePublicInternetGatewaysRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -168,8 +169,9 @@ func handlePublicInternetGatewaysRetrieve(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "public-internet-gateways retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "public-internet-gateways retrieve", obj, format, explicitFormat, transform)
 }
 
 func handlePublicInternetGatewaysList(ctx context.Context, cmd *cli.Command) error {
@@ -194,6 +196,7 @@ func handlePublicInternetGatewaysList(ctx context.Context, cmd *cli.Command) err
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -203,14 +206,14 @@ func handlePublicInternetGatewaysList(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "public-internet-gateways list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "public-internet-gateways list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.PublicInternetGateways.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "public-internet-gateways list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "public-internet-gateways list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -245,6 +248,7 @@ func handlePublicInternetGatewaysDelete(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "public-internet-gateways delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "public-internet-gateways delete", obj, format, explicitFormat, transform)
 }

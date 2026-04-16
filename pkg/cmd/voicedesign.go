@@ -246,8 +246,9 @@ func handleVoiceDesignsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-designs create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "voice-designs create", obj, format, explicitFormat, transform)
 }
 
 func handleVoiceDesignsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -288,8 +289,9 @@ func handleVoiceDesignsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-designs retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "voice-designs retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleVoiceDesignsList(ctx context.Context, cmd *cli.Command) error {
@@ -314,6 +316,7 @@ func handleVoiceDesignsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -323,14 +326,14 @@ func handleVoiceDesignsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "voice-designs list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "voice-designs list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.VoiceDesigns.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "voice-designs list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "voice-designs list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -471,6 +474,7 @@ func handleVoiceDesignsRename(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-designs rename", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "voice-designs rename", obj, format, explicitFormat, transform)
 }

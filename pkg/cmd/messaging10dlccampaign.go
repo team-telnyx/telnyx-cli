@@ -260,8 +260,9 @@ func handleMessaging10dlcCampaignRetrieve(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:campaign retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcCampaignUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -302,8 +303,9 @@ func handleMessaging10dlcCampaignUpdate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:campaign update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign update", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcCampaignList(ctx context.Context, cmd *cli.Command) error {
@@ -328,6 +330,7 @@ func handleMessaging10dlcCampaignList(ctx context.Context, cmd *cli.Command) err
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -337,14 +340,14 @@ func handleMessaging10dlcCampaignList(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-10dlc:campaign list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Messaging10dlc.Campaign.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-10dlc:campaign list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "messaging-10dlc:campaign list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -379,8 +382,9 @@ func handleMessaging10dlcCampaignAcceptSharing(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:campaign accept-sharing", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign accept-sharing", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcCampaignDeactivate(ctx context.Context, cmd *cli.Command) error {
@@ -414,8 +418,9 @@ func handleMessaging10dlcCampaignDeactivate(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:campaign deactivate", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign deactivate", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcCampaignGetMnoMetadata(ctx context.Context, cmd *cli.Command) error {
@@ -449,8 +454,9 @@ func handleMessaging10dlcCampaignGetMnoMetadata(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:campaign get-mno-metadata", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign get-mno-metadata", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcCampaignGetOperationStatus(ctx context.Context, cmd *cli.Command) error {
@@ -484,8 +490,9 @@ func handleMessaging10dlcCampaignGetOperationStatus(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:campaign get-operation-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign get-operation-status", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcCampaignGetSharingStatus(ctx context.Context, cmd *cli.Command) error {
@@ -519,8 +526,9 @@ func handleMessaging10dlcCampaignGetSharingStatus(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:campaign get-sharing-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign get-sharing-status", obj, format, explicitFormat, transform)
 }
 
 func handleMessaging10dlcCampaignSubmitAppeal(ctx context.Context, cmd *cli.Command) error {
@@ -561,6 +569,7 @@ func handleMessaging10dlcCampaignSubmitAppeal(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:campaign submit-appeal", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "messaging-10dlc:campaign submit-appeal", obj, format, explicitFormat, transform)
 }

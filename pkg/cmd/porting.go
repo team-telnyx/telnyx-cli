@@ -51,6 +51,7 @@ func handlePortingListUkCarriers(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting list-uk-carriers", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "porting list-uk-carriers", obj, format, explicitFormat, transform)
 }

@@ -100,8 +100,9 @@ func handleNetworksDefaultGatewayCreate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "networks:default-gateway create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "networks:default-gateway create", obj, format, explicitFormat, transform)
 }
 
 func handleNetworksDefaultGatewayRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -135,8 +136,9 @@ func handleNetworksDefaultGatewayRetrieve(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "networks:default-gateway retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "networks:default-gateway retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleNetworksDefaultGatewayDelete(ctx context.Context, cmd *cli.Command) error {
@@ -170,6 +172,7 @@ func handleNetworksDefaultGatewayDelete(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "networks:default-gateway delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "networks:default-gateway delete", obj, format, explicitFormat, transform)
 }

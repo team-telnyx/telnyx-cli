@@ -96,8 +96,9 @@ func handleWhatsappBusinessAccountsRetrieve(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:business-accounts retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "whatsapp:business-accounts retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWhatsappBusinessAccountsList(ctx context.Context, cmd *cli.Command) error {
@@ -122,6 +123,7 @@ func handleWhatsappBusinessAccountsList(ctx context.Context, cmd *cli.Command) e
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -131,14 +133,14 @@ func handleWhatsappBusinessAccountsList(ctx context.Context, cmd *cli.Command) e
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "whatsapp:business-accounts list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "whatsapp:business-accounts list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Whatsapp.BusinessAccounts.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "whatsapp:business-accounts list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "whatsapp:business-accounts list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 

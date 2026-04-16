@@ -80,8 +80,9 @@ func handleManagedAccountsActionsDisable(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "managed-accounts:actions disable", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "managed-accounts:actions disable", obj, format, explicitFormat, transform)
 }
 
 func handleManagedAccountsActionsEnable(ctx context.Context, cmd *cli.Command) error {
@@ -122,6 +123,7 @@ func handleManagedAccountsActionsEnable(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "managed-accounts:actions enable", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "managed-accounts:actions enable", obj, format, explicitFormat, transform)
 }

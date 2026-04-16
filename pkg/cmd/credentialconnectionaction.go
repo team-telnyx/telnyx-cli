@@ -60,6 +60,7 @@ func handleCredentialConnectionsActionsCheckRegistrationStatus(ctx context.Conte
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "credential-connections:actions check-registration-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "credential-connections:actions check-registration-status", obj, format, explicitFormat, transform)
 }

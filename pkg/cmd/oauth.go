@@ -264,8 +264,9 @@ func handleOAuthRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "oauth retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "oauth retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleOAuthGrants(ctx context.Context, cmd *cli.Command) error {
@@ -298,8 +299,9 @@ func handleOAuthGrants(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "oauth grants", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "oauth grants", obj, format, explicitFormat, transform)
 }
 
 func handleOAuthIntrospect(ctx context.Context, cmd *cli.Command) error {
@@ -332,8 +334,9 @@ func handleOAuthIntrospect(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "oauth introspect", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "oauth introspect", obj, format, explicitFormat, transform)
 }
 
 func handleOAuthRegister(ctx context.Context, cmd *cli.Command) error {
@@ -366,8 +369,9 @@ func handleOAuthRegister(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "oauth register", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "oauth register", obj, format, explicitFormat, transform)
 }
 
 func handleOAuthRetrieveAuthorize(ctx context.Context, cmd *cli.Command) error {
@@ -422,8 +426,9 @@ func handleOAuthRetrieveJwks(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "oauth retrieve-jwks", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "oauth retrieve-jwks", obj, format, explicitFormat, transform)
 }
 
 func handleOAuthToken(ctx context.Context, cmd *cli.Command) error {
@@ -456,6 +461,7 @@ func handleOAuthToken(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "oauth token", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "oauth token", obj, format, explicitFormat, transform)
 }

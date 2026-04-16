@@ -141,8 +141,9 @@ func handleQueuesCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "queues create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "queues create", obj, format, explicitFormat, transform)
 }
 
 func handleQueuesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -176,8 +177,9 @@ func handleQueuesRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "queues retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "queues retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleQueuesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -218,8 +220,9 @@ func handleQueuesUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "queues update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "queues update", obj, format, explicitFormat, transform)
 }
 
 func handleQueuesList(ctx context.Context, cmd *cli.Command) error {
@@ -244,6 +247,7 @@ func handleQueuesList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -253,14 +257,14 @@ func handleQueuesList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "queues list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "queues list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Queues.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "queues list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "queues list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 

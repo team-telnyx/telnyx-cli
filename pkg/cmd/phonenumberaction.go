@@ -115,8 +115,9 @@ func handlePhoneNumbersActionsChangeBundleStatus(ctx context.Context, cmd *cli.C
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:actions change-bundle-status", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:actions change-bundle-status", obj, format, explicitFormat, transform)
 }
 
 func handlePhoneNumbersActionsEnableEmergency(ctx context.Context, cmd *cli.Command) error {
@@ -157,8 +158,9 @@ func handlePhoneNumbersActionsEnableEmergency(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:actions enable-emergency", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:actions enable-emergency", obj, format, explicitFormat, transform)
 }
 
 func handlePhoneNumbersActionsVerifyOwnership(ctx context.Context, cmd *cli.Command) error {
@@ -191,6 +193,7 @@ func handlePhoneNumbersActionsVerifyOwnership(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:actions verify-ownership", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "phone-numbers:actions verify-ownership", obj, format, explicitFormat, transform)
 }

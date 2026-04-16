@@ -122,8 +122,9 @@ func handleAIFineTuningJobsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:fine-tuning:jobs create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:fine-tuning:jobs create", obj, format, explicitFormat, transform)
 }
 
 func handleAIFineTuningJobsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -157,8 +158,9 @@ func handleAIFineTuningJobsRetrieve(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:fine-tuning:jobs retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:fine-tuning:jobs retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIFineTuningJobsList(ctx context.Context, cmd *cli.Command) error {
@@ -189,8 +191,9 @@ func handleAIFineTuningJobsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:fine-tuning:jobs list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:fine-tuning:jobs list", obj, format, explicitFormat, transform)
 }
 
 func handleAIFineTuningJobsCancel(ctx context.Context, cmd *cli.Command) error {
@@ -224,6 +227,7 @@ func handleAIFineTuningJobsCancel(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:fine-tuning:jobs cancel", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:fine-tuning:jobs cancel", obj, format, explicitFormat, transform)
 }

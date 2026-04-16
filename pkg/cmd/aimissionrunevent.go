@@ -156,6 +156,7 @@ func handleAIMissionsRunsEventsList(ctx context.Context, cmd *cli.Command) error
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -170,7 +171,7 @@ func handleAIMissionsRunsEventsList(ctx context.Context, cmd *cli.Command) error
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:missions:runs:events list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "ai:missions:runs:events list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.AI.Missions.Runs.Events.ListAutoPaging(
 			ctx,
@@ -182,7 +183,7 @@ func handleAIMissionsRunsEventsList(ctx context.Context, cmd *cli.Command) error
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:missions:runs:events list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "ai:missions:runs:events list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
@@ -227,8 +228,9 @@ func handleAIMissionsRunsEventsGetEventDetails(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:events get-event-details", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:runs:events get-event-details", obj, format, explicitFormat, transform)
 }
 
 func handleAIMissionsRunsEventsLog(ctx context.Context, cmd *cli.Command) error {
@@ -271,6 +273,7 @@ func handleAIMissionsRunsEventsLog(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:events log", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:missions:runs:events log", obj, format, explicitFormat, transform)
 }

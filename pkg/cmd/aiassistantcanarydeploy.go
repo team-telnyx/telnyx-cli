@@ -147,8 +147,9 @@ func handleAIAssistantsCanaryDeploysCreate(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:canary-deploys create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:canary-deploys create", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsCanaryDeploysRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -182,8 +183,9 @@ func handleAIAssistantsCanaryDeploysRetrieve(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:canary-deploys retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:canary-deploys retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -224,8 +226,9 @@ func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:canary-deploys update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants:canary-deploys update", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsCanaryDeploysDelete(ctx context.Context, cmd *cli.Command) error {

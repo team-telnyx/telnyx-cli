@@ -134,8 +134,9 @@ func handleNumberOrderPhoneNumbersRetrieve(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "number-order-phone-numbers retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "number-order-phone-numbers retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleNumberOrderPhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -168,8 +169,9 @@ func handleNumberOrderPhoneNumbersList(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "number-order-phone-numbers list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "number-order-phone-numbers list", obj, format, explicitFormat, transform)
 }
 
 func handleNumberOrderPhoneNumbersUpdateRequirementGroup(ctx context.Context, cmd *cli.Command) error {
@@ -210,8 +212,9 @@ func handleNumberOrderPhoneNumbersUpdateRequirementGroup(ctx context.Context, cm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "number-order-phone-numbers update-requirement-group", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "number-order-phone-numbers update-requirement-group", obj, format, explicitFormat, transform)
 }
 
 func handleNumberOrderPhoneNumbersUpdateRequirements(ctx context.Context, cmd *cli.Command) error {
@@ -252,6 +255,7 @@ func handleNumberOrderPhoneNumbersUpdateRequirements(ctx context.Context, cmd *c
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "number-order-phone-numbers update-requirements", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "number-order-phone-numbers update-requirements", obj, format, explicitFormat, transform)
 }

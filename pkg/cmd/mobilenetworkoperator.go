@@ -97,6 +97,7 @@ func handleMobileNetworkOperatorsList(ctx context.Context, cmd *cli.Command) err
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -106,13 +107,13 @@ func handleMobileNetworkOperatorsList(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "mobile-network-operators list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "mobile-network-operators list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.MobileNetworkOperators.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "mobile-network-operators list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "mobile-network-operators list", iter, format, explicitFormat, transform, maxItems)
 	}
 }

@@ -73,6 +73,7 @@ func handleGlobalIPAssignmentHealthRetrieve(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "global-ip-assignment-health retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "global-ip-assignment-health retrieve", obj, format, explicitFormat, transform)
 }

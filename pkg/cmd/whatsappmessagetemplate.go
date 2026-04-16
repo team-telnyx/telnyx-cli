@@ -98,8 +98,9 @@ func handleWhatsappMessageTemplatesRetrieve(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp-message-templates retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "whatsapp-message-templates retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleWhatsappMessageTemplatesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -140,8 +141,9 @@ func handleWhatsappMessageTemplatesUpdate(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp-message-templates update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "whatsapp-message-templates update", obj, format, explicitFormat, transform)
 }
 
 func handleWhatsappMessageTemplatesDelete(ctx context.Context, cmd *cli.Command) error {

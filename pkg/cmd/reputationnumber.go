@@ -118,8 +118,9 @@ func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "reputation:numbers retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "reputation:numbers retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -144,6 +145,7 @@ func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -153,14 +155,14 @@ func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "reputation:numbers list", obj, format, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "reputation:numbers list", obj, format, explicitFormat, transform)
 	} else {
 		iter := client.Reputation.Numbers.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "reputation:numbers list", iter, format, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "reputation:numbers list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 

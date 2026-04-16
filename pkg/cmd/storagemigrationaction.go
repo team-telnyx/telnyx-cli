@@ -60,6 +60,7 @@ func handleStorageMigrationsActionsStop(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "storage:migrations:actions stop", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "storage:migrations:actions stop", obj, format, explicitFormat, transform)
 }

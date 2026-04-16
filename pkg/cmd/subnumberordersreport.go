@@ -99,8 +99,9 @@ func handleSubNumberOrdersReportCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sub-number-orders-report create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders-report create", obj, format, explicitFormat, transform)
 }
 
 func handleSubNumberOrdersReportRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -134,6 +135,7 @@ func handleSubNumberOrdersReportRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sub-number-orders-report retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "sub-number-orders-report retrieve", obj, format, explicitFormat, transform)
 }

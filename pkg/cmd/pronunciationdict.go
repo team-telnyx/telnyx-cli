@@ -15,37 +15,31 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var wirelessBlocklistsCreate = cli.Command{
+var pronunciationDictsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a Wireless Blocklist to prevent SIMs from connecting to certain networks.",
+	Usage:   "Create a new pronunciation dictionary for the authenticated organization. Each\ndictionary contains a list of items that control how specific words are spoken.\nItems can be alias type (text replacement) or phoneme type (IPA pronunciation\nnotation).",
 	Suggest: true,
 	Flags: []cli.Flag{
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "item",
+			Usage:    "List of pronunciation items (alias or phoneme type). At least one item is required.",
+			Required: true,
+			BodyPath: "items",
+		},
 		&requestflag.Flag[string]{
 			Name:     "name",
-			Usage:    "The name of the Wireless Blocklist.",
+			Usage:    "Human-readable name. Must be unique within the organization.",
 			Required: true,
 			BodyPath: "name",
 		},
-		&requestflag.Flag[string]{
-			Name:     "type",
-			Usage:    "The type of wireless blocklist.",
-			Required: true,
-			BodyPath: "type",
-		},
-		&requestflag.Flag[[]string]{
-			Name:     "value",
-			Usage:    "Values to block. The values here depend on the `type` of Wireless Blocklist.",
-			Required: true,
-			BodyPath: "values",
-		},
 	},
-	Action:          handleWirelessBlocklistsCreate,
+	Action:          handlePronunciationDictsCreate,
 	HideHelpCommand: true,
 }
 
-var wirelessBlocklistsRetrieve = cli.Command{
+var pronunciationDictsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve information about a Wireless Blocklist.",
+	Usage:   "Retrieve a single pronunciation dictionary by ID.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -53,63 +47,48 @@ var wirelessBlocklistsRetrieve = cli.Command{
 			Required: true,
 		},
 	},
-	Action:          handleWirelessBlocklistsRetrieve,
+	Action:          handlePronunciationDictsRetrieve,
 	HideHelpCommand: true,
 }
 
-var wirelessBlocklistsUpdate = cli.Command{
+var pronunciationDictsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a Wireless Blocklist.",
+	Usage:   "Update the name and/or items of an existing pronunciation dictionary. Uses\noptimistic locking — if the dictionary was modified concurrently, the request\nreturns 409 Conflict.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "id",
 			Required: true,
+		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "item",
+			Usage:    "Updated list of pronunciation items (alias or phoneme type).",
+			BodyPath: "items",
 		},
 		&requestflag.Flag[string]{
 			Name:     "name",
-			Usage:    "The name of the Wireless Blocklist.",
+			Usage:    "Updated dictionary name.",
 			BodyPath: "name",
 		},
-		&requestflag.Flag[[]string]{
-			Name:     "value",
-			Usage:    "Values to block. The values here depend on the `type` of Wireless Blocklist.",
-			BodyPath: "values",
-		},
 	},
-	Action:          handleWirelessBlocklistsUpdate,
+	Action:          handlePronunciationDictsUpdate,
 	HideHelpCommand: true,
 }
 
-var wirelessBlocklistsList = cli.Command{
+var pronunciationDictsList = cli.Command{
 	Name:    "list",
-	Usage:   "Get all Wireless Blocklists belonging to the user.",
+	Usage:   "List all pronunciation dictionaries for the authenticated organization. Results\nare paginated using offset-based pagination.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "filter-name",
-			Usage:     "The name of the Wireless Blocklist.",
-			QueryPath: "filter[name]",
-		},
-		&requestflag.Flag[string]{
-			Name:      "filter-type",
-			Usage:     "When the Private Wireless Gateway was last updated.",
-			QueryPath: "filter[type]",
-		},
-		&requestflag.Flag[string]{
-			Name:      "filter-values",
-			Usage:     "Values to filter on (inclusive).",
-			QueryPath: "filter[values]",
-		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
-			Usage:     "The page number to load.",
+			Usage:     "Page number (1-based). Defaults to 1.",
 			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
-			Usage:     "The size of the page.",
+			Usage:     "Number of results per page. Defaults to 20, maximum 250.",
 			Default:   20,
 			QueryPath: "page[size]",
 		},
@@ -118,13 +97,13 @@ var wirelessBlocklistsList = cli.Command{
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
-	Action:          handleWirelessBlocklistsList,
+	Action:          handlePronunciationDictsList,
 	HideHelpCommand: true,
 }
 
-var wirelessBlocklistsDelete = cli.Command{
+var pronunciationDictsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes the Wireless Blocklist.",
+	Usage:   "Permanently delete a pronunciation dictionary.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -132,11 +111,11 @@ var wirelessBlocklistsDelete = cli.Command{
 			Required: true,
 		},
 	},
-	Action:          handleWirelessBlocklistsDelete,
+	Action:          handlePronunciationDictsDelete,
 	HideHelpCommand: true,
 }
 
-func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error {
+func handlePronunciationDictsCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -144,7 +123,7 @@ func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WirelessBlocklistNewParams{}
+	params := telnyx.PronunciationDictNewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -159,7 +138,7 @@ func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.New(ctx, params, options...)
+	_, err = client.PronunciationDicts.New(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -168,10 +147,10 @@ func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists create", obj, format, explicitFormat, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "pronunciation-dicts create", obj, format, explicitFormat, transform)
 }
 
-func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handlePronunciationDictsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -195,7 +174,7 @@ func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) err
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.Get(ctx, cmd.Value("id").(string), options...)
+	_, err = client.PronunciationDicts.Get(ctx, cmd.Value("id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -204,10 +183,10 @@ func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) err
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "pronunciation-dicts retrieve", obj, format, explicitFormat, transform)
 }
 
-func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error {
+func handlePronunciationDictsUpdate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -218,7 +197,7 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WirelessBlocklistUpdateParams{}
+	params := telnyx.PronunciationDictUpdateParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -233,8 +212,9 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.Update(
+	_, err = client.PronunciationDicts.Update(
 		ctx,
+		cmd.Value("id").(string),
 		params,
 		options...,
 	)
@@ -246,10 +226,10 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists update", obj, format, explicitFormat, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "pronunciation-dicts update", obj, format, explicitFormat, transform)
 }
 
-func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
+func handlePronunciationDictsList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -257,7 +237,7 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WirelessBlocklistListParams{}
+	params := telnyx.PronunciationDictListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -276,23 +256,23 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 	if format == "raw" {
 		var res []byte
 		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.WirelessBlocklists.List(ctx, params, options...)
+		_, err = client.PronunciationDicts.List(ctx, params, options...)
 		if err != nil {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists list", obj, format, explicitFormat, transform)
+		return ShowJSON(os.Stdout, os.Stderr, "pronunciation-dicts list", obj, format, explicitFormat, transform)
 	} else {
-		iter := client.WirelessBlocklists.ListAutoPaging(ctx, params, options...)
+		iter := client.PronunciationDicts.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, os.Stderr, "wireless-blocklists list", iter, format, explicitFormat, transform, maxItems)
+		return ShowJSONIterator(os.Stdout, os.Stderr, "pronunciation-dicts list", iter, format, explicitFormat, transform, maxItems)
 	}
 }
 
-func handleWirelessBlocklistsDelete(ctx context.Context, cmd *cli.Command) error {
+func handlePronunciationDictsDelete(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -314,16 +294,5 @@ func handleWirelessBlocklistsDelete(ctx context.Context, cmd *cli.Command) error
 		return err
 	}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.Delete(ctx, cmd.Value("id").(string), options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "wireless-blocklists delete", obj, format, explicitFormat, transform)
+	return client.PronunciationDicts.Delete(ctx, cmd.Value("id").(string), options...)
 }

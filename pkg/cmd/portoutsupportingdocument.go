@@ -99,8 +99,9 @@ func handlePortoutsSupportingDocumentsCreate(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "portouts:supporting-documents create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "portouts:supporting-documents create", obj, format, explicitFormat, transform)
 }
 
 func handlePortoutsSupportingDocumentsList(ctx context.Context, cmd *cli.Command) error {
@@ -134,6 +135,7 @@ func handlePortoutsSupportingDocumentsList(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "portouts:supporting-documents list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "portouts:supporting-documents list", obj, format, explicitFormat, transform)
 }

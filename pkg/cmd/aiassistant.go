@@ -876,8 +876,9 @@ func handleAIAssistantsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants create", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -918,8 +919,9 @@ func handleAIAssistantsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -960,8 +962,9 @@ func handleAIAssistantsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants update", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants update", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsList(ctx context.Context, cmd *cli.Command) error {
@@ -992,8 +995,9 @@ func handleAIAssistantsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants list", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -1027,8 +1031,9 @@ func handleAIAssistantsDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants delete", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants delete", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsChat(ctx context.Context, cmd *cli.Command) error {
@@ -1069,8 +1074,9 @@ func handleAIAssistantsChat(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants chat", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants chat", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsClone(ctx context.Context, cmd *cli.Command) error {
@@ -1104,8 +1110,9 @@ func handleAIAssistantsClone(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants clone", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants clone", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsGetTexml(ctx context.Context, cmd *cli.Command) error {
@@ -1139,8 +1146,9 @@ func handleAIAssistantsGetTexml(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants get-texml", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants get-texml", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsImports(ctx context.Context, cmd *cli.Command) error {
@@ -1173,8 +1181,9 @@ func handleAIAssistantsImports(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants imports", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants imports", obj, format, explicitFormat, transform)
 }
 
 func handleAIAssistantsSendSMS(ctx context.Context, cmd *cli.Command) error {
@@ -1215,6 +1224,7 @@ func handleAIAssistantsSendSMS(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants send-sms", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "ai:assistants send-sms", obj, format, explicitFormat, transform)
 }

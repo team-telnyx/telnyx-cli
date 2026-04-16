@@ -112,8 +112,9 @@ func handleLegacyReportingUsageReportsNumberLookupCreate(ctx context.Context, cm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:number-lookup create", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:number-lookup create", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingUsageReportsNumberLookupRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -147,8 +148,9 @@ func handleLegacyReportingUsageReportsNumberLookupRetrieve(ctx context.Context, 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:number-lookup retrieve", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:number-lookup retrieve", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingUsageReportsNumberLookupList(ctx context.Context, cmd *cli.Command) error {
@@ -179,8 +181,9 @@ func handleLegacyReportingUsageReportsNumberLookupList(ctx context.Context, cmd 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:number-lookup list", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "legacy:reporting:usage-reports:number-lookup list", obj, format, explicitFormat, transform)
 }
 
 func handleLegacyReportingUsageReportsNumberLookupDelete(ctx context.Context, cmd *cli.Command) error {

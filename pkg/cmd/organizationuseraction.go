@@ -60,6 +60,7 @@ func handleOrganizationsUsersActionsRemove(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "organizations:users:actions remove", obj, format, transform)
+	return ShowJSON(os.Stdout, os.Stderr, "organizations:users:actions remove", obj, format, explicitFormat, transform)
 }
