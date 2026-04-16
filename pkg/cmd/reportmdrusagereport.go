@@ -157,6 +157,7 @@ func handleReportsMdrUsageReportsCreate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "reports:mdr-usage-reports create",
 		Transform:      transform,
 	})
@@ -198,6 +199,7 @@ func handleReportsMdrUsageReportsRetrieve(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "reports:mdr-usage-reports retrieve",
 		Transform:      transform,
 	})
@@ -238,6 +240,7 @@ func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "reports:mdr-usage-reports list",
 			Transform:      transform,
 		})
@@ -250,6 +253,7 @@ func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "reports:mdr-usage-reports list",
 			Transform:      transform,
 		})
@@ -292,6 +296,7 @@ func handleReportsMdrUsageReportsDelete(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "reports:mdr-usage-reports delete",
 		Transform:      transform,
 	})
@@ -332,6 +337,7 @@ func handleReportsMdrUsageReportsFetchSync(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "reports:mdr-usage-reports fetch-sync",
 		Transform:      transform,
 	})

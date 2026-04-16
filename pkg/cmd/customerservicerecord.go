@@ -211,6 +211,7 @@ func handleCustomerServiceRecordsCreate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "customer-service-records create",
 		Transform:      transform,
 	})
@@ -252,6 +253,7 @@ func handleCustomerServiceRecordsRetrieve(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "customer-service-records retrieve",
 		Transform:      transform,
 	})
@@ -292,6 +294,7 @@ func handleCustomerServiceRecordsList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "customer-service-records list",
 			Transform:      transform,
 		})
@@ -304,6 +307,7 @@ func handleCustomerServiceRecordsList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "customer-service-records list",
 			Transform:      transform,
 		})
@@ -345,6 +349,7 @@ func handleCustomerServiceRecordsVerifyPhoneNumberCoverage(ctx context.Context, 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "customer-service-records verify-phone-number-coverage",
 		Transform:      transform,
 	})

@@ -477,6 +477,7 @@ func handleTexmlAccountsConferencesParticipantsRetrieve(ctx context.Context, cmd
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:conferences:participants retrieve",
 		Transform:      transform,
 	})
@@ -528,6 +529,7 @@ func handleTexmlAccountsConferencesParticipantsUpdate(ctx context.Context, cmd *
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:conferences:participants update",
 		Transform:      transform,
 	})
@@ -613,6 +615,7 @@ func handleTexmlAccountsConferencesParticipantsParticipants(ctx context.Context,
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:conferences:participants participants",
 		Transform:      transform,
 	})
@@ -663,6 +666,7 @@ func handleTexmlAccountsConferencesParticipantsRetrieveParticipants(ctx context.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:conferences:participants retrieve-participants",
 		Transform:      transform,
 	})

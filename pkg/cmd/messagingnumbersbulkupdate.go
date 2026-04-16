@@ -91,6 +91,7 @@ func handleMessagingNumbersBulkUpdatesCreate(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-numbers-bulk-updates create",
 		Transform:      transform,
 	})
@@ -132,6 +133,7 @@ func handleMessagingNumbersBulkUpdatesRetrieve(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-numbers-bulk-updates retrieve",
 		Transform:      transform,
 	})

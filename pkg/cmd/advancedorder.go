@@ -176,6 +176,7 @@ func handleAdvancedOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "advanced-orders create",
 		Transform:      transform,
 	})
@@ -217,6 +218,7 @@ func handleAdvancedOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "advanced-orders retrieve",
 		Transform:      transform,
 	})
@@ -255,6 +257,7 @@ func handleAdvancedOrdersList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "advanced-orders list",
 		Transform:      transform,
 	})
@@ -303,6 +306,7 @@ func handleAdvancedOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "advanced-orders update-requirement-group",
 		Transform:      transform,
 	})

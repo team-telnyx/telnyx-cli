@@ -149,6 +149,7 @@ func handleUsageReportsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "usage-reports list",
 			Transform:      transform,
 		})
@@ -161,6 +162,7 @@ func handleUsageReportsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "usage-reports list",
 			Transform:      transform,
 		})
@@ -202,6 +204,7 @@ func handleUsageReportsGetOptions(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "usage-reports get-options",
 		Transform:      transform,
 	})

@@ -383,6 +383,7 @@ func handleTexmlApplicationsCreate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml-applications create",
 		Transform:      transform,
 	})
@@ -424,6 +425,7 @@ func handleTexmlApplicationsRetrieve(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml-applications retrieve",
 		Transform:      transform,
 	})
@@ -472,6 +474,7 @@ func handleTexmlApplicationsUpdate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml-applications update",
 		Transform:      transform,
 	})
@@ -512,6 +515,7 @@ func handleTexmlApplicationsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "texml-applications list",
 			Transform:      transform,
 		})
@@ -524,6 +528,7 @@ func handleTexmlApplicationsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "texml-applications list",
 			Transform:      transform,
 		})
@@ -566,6 +571,7 @@ func handleTexmlApplicationsDelete(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml-applications delete",
 		Transform:      transform,
 	})

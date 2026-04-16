@@ -55,6 +55,7 @@ func handleStorageListMigrationSourceCoverage(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage list-migration-source-coverage",
 		Transform:      transform,
 	})

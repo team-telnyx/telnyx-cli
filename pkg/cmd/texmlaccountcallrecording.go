@@ -87,6 +87,7 @@ func handleTexmlAccountsCallsRecordingsRecordingSidJson(ctx context.Context, cmd
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:calls:recordings recording-sid-json",
 		Transform:      transform,
 	})

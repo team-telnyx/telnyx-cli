@@ -743,6 +743,7 @@ func handleCredentialConnectionsCreate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "credential-connections create",
 		Transform:      transform,
 	})
@@ -784,6 +785,7 @@ func handleCredentialConnectionsRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "credential-connections retrieve",
 		Transform:      transform,
 	})
@@ -832,6 +834,7 @@ func handleCredentialConnectionsUpdate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "credential-connections update",
 		Transform:      transform,
 	})
@@ -872,6 +875,7 @@ func handleCredentialConnectionsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "credential-connections list",
 			Transform:      transform,
 		})
@@ -884,6 +888,7 @@ func handleCredentialConnectionsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "credential-connections list",
 			Transform:      transform,
 		})
@@ -926,6 +931,7 @@ func handleCredentialConnectionsDelete(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "credential-connections delete",
 		Transform:      transform,
 	})

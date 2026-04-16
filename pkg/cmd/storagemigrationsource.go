@@ -131,6 +131,7 @@ func handleStorageMigrationSourcesCreate(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:migration-sources create",
 		Transform:      transform,
 	})
@@ -172,6 +173,7 @@ func handleStorageMigrationSourcesRetrieve(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:migration-sources retrieve",
 		Transform:      transform,
 	})
@@ -210,6 +212,7 @@ func handleStorageMigrationSourcesList(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:migration-sources list",
 		Transform:      transform,
 	})
@@ -251,6 +254,7 @@ func handleStorageMigrationSourcesDelete(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:migration-sources delete",
 		Transform:      transform,
 	})

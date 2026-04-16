@@ -88,6 +88,7 @@ func handleTexmlAccountsCallsStreamsStreamingSidJson(ctx context.Context, cmd *c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:calls:streams streaming-sid-json",
 		Transform:      transform,
 	})

@@ -65,6 +65,7 @@ func handleWirelessBlocklistValuesList(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireless-blocklist-values list",
 		Transform:      transform,
 	})

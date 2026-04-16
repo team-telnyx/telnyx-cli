@@ -141,6 +141,7 @@ func handleLegacyReportingUsageReportsMessagingCreate(ctx context.Context, cmd *
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports:messaging create",
 		Transform:      transform,
 	})
@@ -182,6 +183,7 @@ func handleLegacyReportingUsageReportsMessagingRetrieve(ctx context.Context, cmd
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports:messaging retrieve",
 		Transform:      transform,
 	})
@@ -222,6 +224,7 @@ func handleLegacyReportingUsageReportsMessagingList(ctx context.Context, cmd *cl
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "legacy:reporting:usage-reports:messaging list",
 			Transform:      transform,
 		})
@@ -234,6 +237,7 @@ func handleLegacyReportingUsageReportsMessagingList(ctx context.Context, cmd *cl
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "legacy:reporting:usage-reports:messaging list",
 			Transform:      transform,
 		})
@@ -276,6 +280,7 @@ func handleLegacyReportingUsageReportsMessagingDelete(ctx context.Context, cmd *
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports:messaging delete",
 		Transform:      transform,
 	})

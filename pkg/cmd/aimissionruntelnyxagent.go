@@ -123,6 +123,7 @@ func handleAIMissionsRunsTelnyxAgentsList(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs:telnyx-agents list",
 		Transform:      transform,
 	})
@@ -173,6 +174,7 @@ func handleAIMissionsRunsTelnyxAgentsLink(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs:telnyx-agents link",
 		Transform:      transform,
 	})

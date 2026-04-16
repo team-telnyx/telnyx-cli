@@ -147,6 +147,7 @@ func handleWireguardPeersCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireguard-peers create",
 		Transform:      transform,
 	})
@@ -188,6 +189,7 @@ func handleWireguardPeersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireguard-peers retrieve",
 		Transform:      transform,
 	})
@@ -236,6 +238,7 @@ func handleWireguardPeersUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireguard-peers update",
 		Transform:      transform,
 	})
@@ -276,6 +279,7 @@ func handleWireguardPeersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "wireguard-peers list",
 			Transform:      transform,
 		})
@@ -288,6 +292,7 @@ func handleWireguardPeersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "wireguard-peers list",
 			Transform:      transform,
 		})
@@ -330,6 +335,7 @@ func handleWireguardPeersDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireguard-peers delete",
 		Transform:      transform,
 	})

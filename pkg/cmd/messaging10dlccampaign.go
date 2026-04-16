@@ -264,6 +264,7 @@ func handleMessaging10dlcCampaignRetrieve(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:campaign retrieve",
 		Transform:      transform,
 	})
@@ -312,6 +313,7 @@ func handleMessaging10dlcCampaignUpdate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:campaign update",
 		Transform:      transform,
 	})
@@ -352,6 +354,7 @@ func handleMessaging10dlcCampaignList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:campaign list",
 			Transform:      transform,
 		})
@@ -364,6 +367,7 @@ func handleMessaging10dlcCampaignList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:campaign list",
 			Transform:      transform,
 		})
@@ -406,6 +410,7 @@ func handleMessaging10dlcCampaignAcceptSharing(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:campaign accept-sharing",
 		Transform:      transform,
 	})
@@ -447,6 +452,7 @@ func handleMessaging10dlcCampaignDeactivate(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:campaign deactivate",
 		Transform:      transform,
 	})
@@ -488,6 +494,7 @@ func handleMessaging10dlcCampaignGetMnoMetadata(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:campaign get-mno-metadata",
 		Transform:      transform,
 	})
@@ -529,6 +536,7 @@ func handleMessaging10dlcCampaignGetOperationStatus(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:campaign get-operation-status",
 		Transform:      transform,
 	})
@@ -570,6 +578,7 @@ func handleMessaging10dlcCampaignGetSharingStatus(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:campaign get-sharing-status",
 		Transform:      transform,
 	})
@@ -618,6 +627,7 @@ func handleMessaging10dlcCampaignSubmitAppeal(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:campaign submit-appeal",
 		Transform:      transform,
 	})

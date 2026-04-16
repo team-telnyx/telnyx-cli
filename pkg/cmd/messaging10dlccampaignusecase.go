@@ -64,6 +64,7 @@ func handleMessaging10dlcCampaignUsecaseGetCost(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:campaign:usecase get-cost",
 		Transform:      transform,
 	})

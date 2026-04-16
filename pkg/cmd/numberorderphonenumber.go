@@ -138,6 +138,7 @@ func handleNumberOrderPhoneNumbersRetrieve(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "number-order-phone-numbers retrieve",
 		Transform:      transform,
 	})
@@ -178,6 +179,7 @@ func handleNumberOrderPhoneNumbersList(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "number-order-phone-numbers list",
 		Transform:      transform,
 	})
@@ -226,6 +228,7 @@ func handleNumberOrderPhoneNumbersUpdateRequirementGroup(ctx context.Context, cm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "number-order-phone-numbers update-requirement-group",
 		Transform:      transform,
 	})
@@ -274,6 +277,7 @@ func handleNumberOrderPhoneNumbersUpdateRequirements(ctx context.Context, cmd *c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "number-order-phone-numbers update-requirements",
 		Transform:      transform,
 	})

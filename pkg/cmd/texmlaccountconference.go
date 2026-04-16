@@ -195,6 +195,7 @@ func handleTexmlAccountsConferencesRetrieve(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:conferences retrieve",
 		Transform:      transform,
 	})
@@ -245,6 +246,7 @@ func handleTexmlAccountsConferencesUpdate(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:conferences update",
 		Transform:      transform,
 	})
@@ -293,6 +295,7 @@ func handleTexmlAccountsConferencesRetrieveConferences(ctx context.Context, cmd 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:conferences retrieve-conferences",
 		Transform:      transform,
 	})
@@ -343,6 +346,7 @@ func handleTexmlAccountsConferencesRetrieveRecordings(ctx context.Context, cmd *
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:conferences retrieve-recordings",
 		Transform:      transform,
 	})
@@ -393,6 +397,7 @@ func handleTexmlAccountsConferencesRetrieveRecordingsJson(ctx context.Context, c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:conferences retrieve-recordings-json",
 		Transform:      transform,
 	})

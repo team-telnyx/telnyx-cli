@@ -460,6 +460,7 @@ func handleAIAssistantsVersionsRetrieve(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:versions retrieve",
 		Transform:      transform,
 	})
@@ -510,6 +511,7 @@ func handleAIAssistantsVersionsUpdate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:versions update",
 		Transform:      transform,
 	})
@@ -551,6 +553,7 @@ func handleAIAssistantsVersionsList(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:versions list",
 		Transform:      transform,
 	})
@@ -635,6 +638,7 @@ func handleAIAssistantsVersionsPromote(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:versions promote",
 		Transform:      transform,
 	})

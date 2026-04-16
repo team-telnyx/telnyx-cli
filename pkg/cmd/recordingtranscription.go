@@ -117,6 +117,7 @@ func handleRecordingTranscriptionsRetrieve(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "recording-transcriptions retrieve",
 		Transform:      transform,
 	})
@@ -157,6 +158,7 @@ func handleRecordingTranscriptionsList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "recording-transcriptions list",
 			Transform:      transform,
 		})
@@ -169,6 +171,7 @@ func handleRecordingTranscriptionsList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "recording-transcriptions list",
 			Transform:      transform,
 		})
@@ -211,6 +214,7 @@ func handleRecordingTranscriptionsDelete(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "recording-transcriptions delete",
 		Transform:      transform,
 	})

@@ -121,6 +121,7 @@ func handleVirtualCrossConnectsCoverageList(ctx context.Context, cmd *cli.Comman
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "virtual-cross-connects-coverage list",
 			Transform:      transform,
 		})
@@ -133,6 +134,7 @@ func handleVirtualCrossConnectsCoverageList(ctx context.Context, cmd *cli.Comman
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "virtual-cross-connects-coverage list",
 			Transform:      transform,
 		})

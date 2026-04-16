@@ -132,6 +132,7 @@ func handleMobilePushCredentialsCreate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "mobile-push-credentials create",
 		Transform:      transform,
 	})
@@ -173,6 +174,7 @@ func handleMobilePushCredentialsRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "mobile-push-credentials retrieve",
 		Transform:      transform,
 	})
@@ -213,6 +215,7 @@ func handleMobilePushCredentialsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "mobile-push-credentials list",
 			Transform:      transform,
 		})
@@ -225,6 +228,7 @@ func handleMobilePushCredentialsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "mobile-push-credentials list",
 			Transform:      transform,
 		})

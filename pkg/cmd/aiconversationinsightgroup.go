@@ -153,6 +153,7 @@ func handleAIConversationsInsightGroupsRetrieve(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:conversations:insight-groups retrieve",
 		Transform:      transform,
 	})
@@ -201,6 +202,7 @@ func handleAIConversationsInsightGroupsUpdate(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:conversations:insight-groups update",
 		Transform:      transform,
 	})
@@ -266,6 +268,7 @@ func handleAIConversationsInsightGroupsInsightGroups(ctx context.Context, cmd *c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:conversations:insight-groups insight-groups",
 		Transform:      transform,
 	})
@@ -306,6 +309,7 @@ func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:conversations:insight-groups retrieve-insight-groups",
 			Transform:      transform,
 		})
@@ -318,6 +322,7 @@ func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:conversations:insight-groups retrieve-insight-groups",
 			Transform:      transform,
 		})

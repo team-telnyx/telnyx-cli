@@ -182,6 +182,7 @@ func handleReportsListMdrs(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "reports list-mdrs",
 		Transform:      transform,
 	})
@@ -222,6 +223,7 @@ func handleReportsListWdrs(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "reports list-wdrs",
 			Transform:      transform,
 		})
@@ -234,6 +236,7 @@ func handleReportsListWdrs(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "reports list-wdrs",
 			Transform:      transform,
 		})

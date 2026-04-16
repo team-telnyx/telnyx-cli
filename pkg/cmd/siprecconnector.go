@@ -147,6 +147,7 @@ func handleSiprecConnectorsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "siprec-connectors create",
 		Transform:      transform,
 	})
@@ -188,6 +189,7 @@ func handleSiprecConnectorsRetrieve(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "siprec-connectors retrieve",
 		Transform:      transform,
 	})
@@ -236,6 +238,7 @@ func handleSiprecConnectorsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "siprec-connectors update",
 		Transform:      transform,
 	})

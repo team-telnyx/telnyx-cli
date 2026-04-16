@@ -104,6 +104,7 @@ func handleOAuthGrantsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth-grants retrieve",
 		Transform:      transform,
 	})
@@ -144,6 +145,7 @@ func handleOAuthGrantsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "oauth-grants list",
 			Transform:      transform,
 		})
@@ -156,6 +158,7 @@ func handleOAuthGrantsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "oauth-grants list",
 			Transform:      transform,
 		})
@@ -198,6 +201,7 @@ func handleOAuthGrantsDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth-grants delete",
 		Transform:      transform,
 	})

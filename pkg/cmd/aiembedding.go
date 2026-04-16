@@ -163,6 +163,7 @@ func handleAIEmbeddingsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:embeddings create",
 		Transform:      transform,
 	})
@@ -204,6 +205,7 @@ func handleAIEmbeddingsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:embeddings retrieve",
 		Transform:      transform,
 	})
@@ -244,6 +246,7 @@ func handleAIEmbeddingsList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:embeddings list",
 		Transform:      transform,
 	})
@@ -284,6 +287,7 @@ func handleAIEmbeddingsSimilaritySearch(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:embeddings similarity-search",
 		Transform:      transform,
 	})
@@ -324,6 +328,7 @@ func handleAIEmbeddingsURL(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:embeddings url",
 		Transform:      transform,
 	})

@@ -65,6 +65,7 @@ func handleMessagingProfileMetricsList(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profile-metrics list",
 		Transform:      transform,
 	})

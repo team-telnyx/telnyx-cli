@@ -196,6 +196,7 @@ func handleManagedAccountsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "managed-accounts create",
 		Transform:      transform,
 	})
@@ -237,6 +238,7 @@ func handleManagedAccountsRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "managed-accounts retrieve",
 		Transform:      transform,
 	})
@@ -285,6 +287,7 @@ func handleManagedAccountsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "managed-accounts update",
 		Transform:      transform,
 	})
@@ -325,6 +328,7 @@ func handleManagedAccountsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "managed-accounts list",
 			Transform:      transform,
 		})
@@ -337,6 +341,7 @@ func handleManagedAccountsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "managed-accounts list",
 			Transform:      transform,
 		})
@@ -376,6 +381,7 @@ func handleManagedAccountsGetAllocatableGlobalOutboundChannels(ctx context.Conte
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "managed-accounts get-allocatable-global-outbound-channels",
 		Transform:      transform,
 	})
@@ -424,6 +430,7 @@ func handleManagedAccountsUpdateGlobalChannelLimit(ctx context.Context, cmd *cli
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "managed-accounts update-global-channel-limit",
 		Transform:      transform,
 	})

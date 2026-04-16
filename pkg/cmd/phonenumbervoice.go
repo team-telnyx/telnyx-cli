@@ -246,6 +246,7 @@ func handlePhoneNumbersVoiceRetrieve(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:voice retrieve",
 		Transform:      transform,
 	})
@@ -294,6 +295,7 @@ func handlePhoneNumbersVoiceUpdate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:voice update",
 		Transform:      transform,
 	})
@@ -334,6 +336,7 @@ func handlePhoneNumbersVoiceList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers:voice list",
 			Transform:      transform,
 		})
@@ -346,6 +349,7 @@ func handlePhoneNumbersVoiceList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers:voice list",
 			Transform:      transform,
 		})

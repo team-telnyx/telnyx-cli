@@ -126,6 +126,7 @@ func handlePortingOrdersActivationJobsRetrieve(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:activation-jobs retrieve",
 		Transform:      transform,
 	})
@@ -176,6 +177,7 @@ func handlePortingOrdersActivationJobsUpdate(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:activation-jobs update",
 		Transform:      transform,
 	})
@@ -224,6 +226,7 @@ func handlePortingOrdersActivationJobsList(ctx context.Context, cmd *cli.Command
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:activation-jobs list",
 			Transform:      transform,
 		})
@@ -241,6 +244,7 @@ func handlePortingOrdersActivationJobsList(ctx context.Context, cmd *cli.Command
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:activation-jobs list",
 			Transform:      transform,
 		})

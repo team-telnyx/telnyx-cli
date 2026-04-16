@@ -506,6 +506,7 @@ func handleVerifyProfilesCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verify-profiles create",
 		Transform:      transform,
 	})
@@ -547,6 +548,7 @@ func handleVerifyProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verify-profiles retrieve",
 		Transform:      transform,
 	})
@@ -595,6 +597,7 @@ func handleVerifyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verify-profiles update",
 		Transform:      transform,
 	})
@@ -635,6 +638,7 @@ func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "verify-profiles list",
 			Transform:      transform,
 		})
@@ -647,6 +651,7 @@ func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "verify-profiles list",
 			Transform:      transform,
 		})
@@ -689,6 +694,7 @@ func handleVerifyProfilesDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verify-profiles delete",
 		Transform:      transform,
 	})
@@ -729,6 +735,7 @@ func handleVerifyProfilesCreateTemplate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verify-profiles create-template",
 		Transform:      transform,
 	})
@@ -767,6 +774,7 @@ func handleVerifyProfilesRetrieveTemplates(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verify-profiles retrieve-templates",
 		Transform:      transform,
 	})
@@ -815,6 +823,7 @@ func handleVerifyProfilesUpdateTemplate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verify-profiles update-template",
 		Transform:      transform,
 	})

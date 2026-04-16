@@ -132,6 +132,7 @@ func handleAIMissionsToolsCreateTool(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:tools create-tool",
 		Transform:      transform,
 	})
@@ -216,6 +217,7 @@ func handleAIMissionsToolsGetTool(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:tools get-tool",
 		Transform:      transform,
 	})
@@ -257,6 +259,7 @@ func handleAIMissionsToolsListTools(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:tools list-tools",
 		Transform:      transform,
 	})
@@ -307,6 +310,7 @@ func handleAIMissionsToolsUpdateTool(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:tools update-tool",
 		Transform:      transform,
 	})

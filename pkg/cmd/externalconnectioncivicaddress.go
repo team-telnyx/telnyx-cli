@@ -104,6 +104,7 @@ func handleExternalConnectionsCivicAddressesRetrieve(ctx context.Context, cmd *c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:civic-addresses retrieve",
 		Transform:      transform,
 	})
@@ -152,6 +153,7 @@ func handleExternalConnectionsCivicAddressesList(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:civic-addresses list",
 		Transform:      transform,
 	})

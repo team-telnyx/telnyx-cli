@@ -67,6 +67,7 @@ func handleLegacyReportingUsageReportsRetrieveSpeechToText(ctx context.Context, 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports retrieve-speech-to-text",
 		Transform:      transform,
 	})

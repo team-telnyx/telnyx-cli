@@ -72,6 +72,7 @@ func handlePhoneNumbersRegulatoryRequirementsRetrieve(ctx context.Context, cmd *
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers-regulatory-requirements retrieve",
 		Transform:      transform,
 	})

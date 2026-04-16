@@ -210,6 +210,7 @@ func handleLegacyReportingBatchDetailRecordsVoiceCreate(ctx context.Context, cmd
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:voice create",
 		Transform:      transform,
 	})
@@ -251,6 +252,7 @@ func handleLegacyReportingBatchDetailRecordsVoiceRetrieve(ctx context.Context, c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:voice retrieve",
 		Transform:      transform,
 	})
@@ -289,6 +291,7 @@ func handleLegacyReportingBatchDetailRecordsVoiceList(ctx context.Context, cmd *
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:voice list",
 		Transform:      transform,
 	})
@@ -330,6 +333,7 @@ func handleLegacyReportingBatchDetailRecordsVoiceDelete(ctx context.Context, cmd
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:voice delete",
 		Transform:      transform,
 	})
@@ -368,6 +372,7 @@ func handleLegacyReportingBatchDetailRecordsVoiceRetrieveFields(ctx context.Cont
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:voice retrieve-fields",
 		Transform:      transform,
 	})

@@ -149,6 +149,7 @@ func handlePronunciationDictsCreate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "pronunciation-dicts create",
 		Transform:      transform,
 	})
@@ -190,6 +191,7 @@ func handlePronunciationDictsRetrieve(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "pronunciation-dicts retrieve",
 		Transform:      transform,
 	})
@@ -238,6 +240,7 @@ func handlePronunciationDictsUpdate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "pronunciation-dicts update",
 		Transform:      transform,
 	})
@@ -278,6 +281,7 @@ func handlePronunciationDictsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "pronunciation-dicts list",
 			Transform:      transform,
 		})
@@ -290,6 +294,7 @@ func handlePronunciationDictsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "pronunciation-dicts list",
 			Transform:      transform,
 		})

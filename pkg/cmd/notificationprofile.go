@@ -133,6 +133,7 @@ func handleNotificationProfilesCreate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-profiles create",
 		Transform:      transform,
 	})
@@ -174,6 +175,7 @@ func handleNotificationProfilesRetrieve(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-profiles retrieve",
 		Transform:      transform,
 	})
@@ -222,6 +224,7 @@ func handleNotificationProfilesUpdate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-profiles update",
 		Transform:      transform,
 	})
@@ -262,6 +265,7 @@ func handleNotificationProfilesList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "notification-profiles list",
 			Transform:      transform,
 		})
@@ -274,6 +278,7 @@ func handleNotificationProfilesList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "notification-profiles list",
 			Transform:      transform,
 		})
@@ -316,6 +321,7 @@ func handleNotificationProfilesDelete(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-profiles delete",
 		Transform:      transform,
 	})

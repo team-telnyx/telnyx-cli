@@ -160,6 +160,7 @@ func handlePortingOrdersActionRequirementsList(ctx context.Context, cmd *cli.Com
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:action-requirements list",
 			Transform:      transform,
 		})
@@ -177,6 +178,7 @@ func handlePortingOrdersActionRequirementsList(ctx context.Context, cmd *cli.Com
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:action-requirements list",
 			Transform:      transform,
 		})
@@ -228,6 +230,7 @@ func handlePortingOrdersActionRequirementsInitiate(ctx context.Context, cmd *cli
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:action-requirements initiate",
 		Transform:      transform,
 	})

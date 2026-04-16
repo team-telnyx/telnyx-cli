@@ -350,6 +350,7 @@ func handleTexmlAccountsCallsRetrieve(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:calls retrieve",
 		Transform:      transform,
 	})
@@ -400,6 +401,7 @@ func handleTexmlAccountsCallsUpdate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:calls update",
 		Transform:      transform,
 	})
@@ -448,6 +450,7 @@ func handleTexmlAccountsCallsCalls(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:calls calls",
 		Transform:      transform,
 	})
@@ -496,6 +499,7 @@ func handleTexmlAccountsCallsRetrieveCalls(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:calls retrieve-calls",
 		Transform:      transform,
 	})
@@ -546,6 +550,7 @@ func handleTexmlAccountsCallsSiprecJson(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:calls siprec-json",
 		Transform:      transform,
 	})
@@ -596,6 +601,7 @@ func handleTexmlAccountsCallsStreamsJson(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:calls streams-json",
 		Transform:      transform,
 	})

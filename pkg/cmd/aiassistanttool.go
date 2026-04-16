@@ -123,6 +123,7 @@ func handleAIAssistantsToolsAdd(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tools add",
 		Transform:      transform,
 	})
@@ -173,6 +174,7 @@ func handleAIAssistantsToolsRemove(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tools remove",
 		Transform:      transform,
 	})
@@ -223,6 +225,7 @@ func handleAIAssistantsToolsTest(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tools test",
 		Transform:      transform,
 	})

@@ -124,6 +124,7 @@ func handlePhoneNumberBlocksJobsRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-number-blocks:jobs retrieve",
 		Transform:      transform,
 	})
@@ -164,6 +165,7 @@ func handlePhoneNumberBlocksJobsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-number-blocks:jobs list",
 			Transform:      transform,
 		})
@@ -176,6 +178,7 @@ func handlePhoneNumberBlocksJobsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-number-blocks:jobs list",
 			Transform:      transform,
 		})
@@ -217,6 +220,7 @@ func handlePhoneNumberBlocksJobsDeletePhoneNumberBlock(ctx context.Context, cmd 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-number-blocks:jobs delete-phone-number-block",
 		Transform:      transform,
 	})

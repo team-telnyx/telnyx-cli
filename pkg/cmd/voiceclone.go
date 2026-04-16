@@ -187,6 +187,7 @@ func handleVoiceClonesCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "voice-clones create",
 		Transform:      transform,
 	})
@@ -235,6 +236,7 @@ func handleVoiceClonesUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "voice-clones update",
 		Transform:      transform,
 	})
@@ -275,6 +277,7 @@ func handleVoiceClonesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "voice-clones list",
 			Transform:      transform,
 		})
@@ -287,6 +290,7 @@ func handleVoiceClonesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "voice-clones list",
 			Transform:      transform,
 		})
@@ -353,6 +357,7 @@ func handleVoiceClonesCreateFromUpload(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "voice-clones create-from-upload",
 		Transform:      transform,
 	})

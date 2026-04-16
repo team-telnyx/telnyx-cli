@@ -104,6 +104,7 @@ func handleStorageBucketsUsageGetAPIUsage(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:buckets:usage get-api-usage",
 		Transform:      transform,
 	})
@@ -145,6 +146,7 @@ func handleStorageBucketsUsageGetBucketUsage(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:buckets:usage get-bucket-usage",
 		Transform:      transform,
 	})

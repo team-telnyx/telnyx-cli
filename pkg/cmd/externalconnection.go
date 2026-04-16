@@ -305,6 +305,7 @@ func handleExternalConnectionsCreate(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections create",
 		Transform:      transform,
 	})
@@ -346,6 +347,7 @@ func handleExternalConnectionsRetrieve(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections retrieve",
 		Transform:      transform,
 	})
@@ -394,6 +396,7 @@ func handleExternalConnectionsUpdate(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections update",
 		Transform:      transform,
 	})
@@ -434,6 +437,7 @@ func handleExternalConnectionsList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections list",
 			Transform:      transform,
 		})
@@ -446,6 +450,7 @@ func handleExternalConnectionsList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections list",
 			Transform:      transform,
 		})
@@ -488,6 +493,7 @@ func handleExternalConnectionsDelete(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections delete",
 		Transform:      transform,
 	})
@@ -538,6 +544,7 @@ func handleExternalConnectionsUpdateLocation(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections update-location",
 		Transform:      transform,
 	})

@@ -128,6 +128,7 @@ func handleExternalConnectionsReleasesRetrieve(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:releases retrieve",
 		Transform:      transform,
 	})
@@ -176,6 +177,7 @@ func handleExternalConnectionsReleasesList(ctx context.Context, cmd *cli.Command
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections:releases list",
 			Transform:      transform,
 		})
@@ -193,6 +195,7 @@ func handleExternalConnectionsReleasesList(ctx context.Context, cmd *cli.Command
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections:releases list",
 			Transform:      transform,
 		})

@@ -196,6 +196,7 @@ func handleLegacyReportingBatchDetailRecordsMessagingCreate(ctx context.Context,
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:messaging create",
 		Transform:      transform,
 	})
@@ -237,6 +238,7 @@ func handleLegacyReportingBatchDetailRecordsMessagingRetrieve(ctx context.Contex
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:messaging retrieve",
 		Transform:      transform,
 	})
@@ -275,6 +277,7 @@ func handleLegacyReportingBatchDetailRecordsMessagingList(ctx context.Context, c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:messaging list",
 		Transform:      transform,
 	})
@@ -316,6 +319,7 @@ func handleLegacyReportingBatchDetailRecordsMessagingDelete(ctx context.Context,
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:messaging delete",
 		Transform:      transform,
 	})

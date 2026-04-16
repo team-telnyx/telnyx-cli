@@ -530,6 +530,7 @@ func handleMessagingProfilesCreate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles create",
 		Transform:      transform,
 	})
@@ -571,6 +572,7 @@ func handleMessagingProfilesRetrieve(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles retrieve",
 		Transform:      transform,
 	})
@@ -619,6 +621,7 @@ func handleMessagingProfilesUpdate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles update",
 		Transform:      transform,
 	})
@@ -659,6 +662,7 @@ func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-profiles list",
 			Transform:      transform,
 		})
@@ -671,6 +675,7 @@ func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-profiles list",
 			Transform:      transform,
 		})
@@ -713,6 +718,7 @@ func handleMessagingProfilesDelete(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles delete",
 		Transform:      transform,
 	})
@@ -761,6 +767,7 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-profiles list-alphanumeric-sender-ids",
 			Transform:      transform,
 		})
@@ -778,6 +785,7 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-profiles list-alphanumeric-sender-ids",
 			Transform:      transform,
 		})
@@ -827,6 +835,7 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-profiles list-phone-numbers",
 			Transform:      transform,
 		})
@@ -844,6 +853,7 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-profiles list-phone-numbers",
 			Transform:      transform,
 		})
@@ -893,6 +903,7 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-profiles list-short-codes",
 			Transform:      transform,
 		})
@@ -910,6 +921,7 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-profiles list-short-codes",
 			Transform:      transform,
 		})
@@ -959,6 +971,7 @@ func handleMessagingProfilesRetrieveMetrics(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles retrieve-metrics",
 		Transform:      transform,
 	})

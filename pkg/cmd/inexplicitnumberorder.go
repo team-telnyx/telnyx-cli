@@ -183,6 +183,7 @@ func handleInexplicitNumberOrdersCreate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "inexplicit-number-orders create",
 		Transform:      transform,
 	})
@@ -224,6 +225,7 @@ func handleInexplicitNumberOrdersRetrieve(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "inexplicit-number-orders retrieve",
 		Transform:      transform,
 	})
@@ -264,6 +266,7 @@ func handleInexplicitNumberOrdersList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "inexplicit-number-orders list",
 			Transform:      transform,
 		})
@@ -276,6 +279,7 @@ func handleInexplicitNumberOrdersList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "inexplicit-number-orders list",
 			Transform:      transform,
 		})

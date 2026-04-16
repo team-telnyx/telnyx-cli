@@ -222,6 +222,7 @@ func handleAIMissionsRunsPlanCreate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs:plan create",
 		Transform:      transform,
 	})
@@ -272,6 +273,7 @@ func handleAIMissionsRunsPlanRetrieve(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs:plan retrieve",
 		Transform:      transform,
 	})
@@ -322,6 +324,7 @@ func handleAIMissionsRunsPlanAddStepsToPlan(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs:plan add-steps-to-plan",
 		Transform:      transform,
 	})
@@ -373,6 +376,7 @@ func handleAIMissionsRunsPlanGetStepDetails(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs:plan get-step-details",
 		Transform:      transform,
 	})
@@ -424,6 +428,7 @@ func handleAIMissionsRunsPlanUpdateStep(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs:plan update-step",
 		Transform:      transform,
 	})

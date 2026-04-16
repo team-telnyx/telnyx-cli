@@ -137,6 +137,7 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileAssign(ctx context.Contex
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:phone-number-assignment-by-profile assign",
 		Transform:      transform,
 	})
@@ -185,6 +186,7 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(ctx
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:phone-number-assignment-by-profile list-phone-number-status",
 		Transform:      transform,
 	})
@@ -233,6 +235,7 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:phone-number-assignment-by-profile retrieve-phone-number-status",
 		Transform:      transform,
 	})
@@ -274,6 +277,7 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrieveStatus(ctx contex
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:phone-number-assignment-by-profile retrieve-status",
 		Transform:      transform,
 	})

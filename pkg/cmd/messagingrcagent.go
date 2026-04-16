@@ -115,6 +115,7 @@ func handleMessagingRcsAgentsRetrieve(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging:rcs:agents retrieve",
 		Transform:      transform,
 	})
@@ -163,6 +164,7 @@ func handleMessagingRcsAgentsUpdate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging:rcs:agents update",
 		Transform:      transform,
 	})
@@ -203,6 +205,7 @@ func handleMessagingRcsAgentsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging:rcs:agents list",
 			Transform:      transform,
 		})
@@ -215,6 +218,7 @@ func handleMessagingRcsAgentsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging:rcs:agents list",
 			Transform:      transform,
 		})

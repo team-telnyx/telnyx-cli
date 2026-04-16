@@ -135,6 +135,7 @@ func handleAlphanumericSenderIDsCreate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "alphanumeric-sender-ids create",
 		Transform:      transform,
 	})
@@ -176,6 +177,7 @@ func handleAlphanumericSenderIDsRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "alphanumeric-sender-ids retrieve",
 		Transform:      transform,
 	})
@@ -216,6 +218,7 @@ func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "alphanumeric-sender-ids list",
 			Transform:      transform,
 		})
@@ -228,6 +231,7 @@ func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "alphanumeric-sender-ids list",
 			Transform:      transform,
 		})
@@ -270,6 +274,7 @@ func handleAlphanumericSenderIDsDelete(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "alphanumeric-sender-ids delete",
 		Transform:      transform,
 	})

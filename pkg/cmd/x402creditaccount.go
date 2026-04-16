@@ -90,6 +90,7 @@ func handleX402CreditAccountCreateQuote(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "x402:credit-account create-quote",
 		Transform:      transform,
 	})
@@ -130,6 +131,7 @@ func handleX402CreditAccountSettle(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "x402:credit-account settle",
 		Transform:      transform,
 	})

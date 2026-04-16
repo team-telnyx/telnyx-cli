@@ -83,6 +83,7 @@ func handleMessagingHostedNumberOrdersActionsUploadFile(ctx context.Context, cmd
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-number-orders:actions upload-file",
 		Transform:      transform,
 	})

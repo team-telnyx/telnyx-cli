@@ -320,6 +320,7 @@ func handleTexmlInitiateAICall(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml initiate-ai-call",
 		Transform:      transform,
 	})
@@ -360,6 +361,7 @@ func handleTexmlSecrets(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml secrets",
 		Transform:      transform,
 	})

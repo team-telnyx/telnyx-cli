@@ -224,6 +224,7 @@ func handleBundlePricingUserBundlesCreate(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "bundle-pricing:user-bundles create",
 		Transform:      transform,
 	})
@@ -272,6 +273,7 @@ func handleBundlePricingUserBundlesRetrieve(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "bundle-pricing:user-bundles retrieve",
 		Transform:      transform,
 	})
@@ -312,6 +314,7 @@ func handleBundlePricingUserBundlesList(ctx context.Context, cmd *cli.Command) e
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "bundle-pricing:user-bundles list",
 			Transform:      transform,
 		})
@@ -324,6 +327,7 @@ func handleBundlePricingUserBundlesList(ctx context.Context, cmd *cli.Command) e
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "bundle-pricing:user-bundles list",
 			Transform:      transform,
 		})
@@ -373,6 +377,7 @@ func handleBundlePricingUserBundlesDeactivate(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "bundle-pricing:user-bundles deactivate",
 		Transform:      transform,
 	})
@@ -421,6 +426,7 @@ func handleBundlePricingUserBundlesListResources(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "bundle-pricing:user-bundles list-resources",
 		Transform:      transform,
 	})
@@ -461,6 +467,7 @@ func handleBundlePricingUserBundlesListUnused(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "bundle-pricing:user-bundles list-unused",
 		Transform:      transform,
 	})

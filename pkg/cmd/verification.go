@@ -196,6 +196,7 @@ func handleVerificationsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verifications retrieve",
 		Transform:      transform,
 	})
@@ -236,6 +237,7 @@ func handleVerificationsTriggerCall(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verifications trigger-call",
 		Transform:      transform,
 	})
@@ -276,6 +278,7 @@ func handleVerificationsTriggerFlashcall(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verifications trigger-flashcall",
 		Transform:      transform,
 	})
@@ -316,6 +319,7 @@ func handleVerificationsTriggerSMS(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verifications trigger-sms",
 		Transform:      transform,
 	})
@@ -356,6 +360,7 @@ func handleVerificationsTriggerWhatsappVerification(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verifications trigger-whatsapp-verification",
 		Transform:      transform,
 	})

@@ -118,6 +118,7 @@ func handleExternalConnectionsLogMessagesRetrieve(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:log-messages retrieve",
 		Transform:      transform,
 	})
@@ -158,6 +159,7 @@ func handleExternalConnectionsLogMessagesList(ctx context.Context, cmd *cli.Comm
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections:log-messages list",
 			Transform:      transform,
 		})
@@ -170,6 +172,7 @@ func handleExternalConnectionsLogMessagesList(ctx context.Context, cmd *cli.Comm
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections:log-messages list",
 			Transform:      transform,
 		})
@@ -212,6 +215,7 @@ func handleExternalConnectionsLogMessagesDismiss(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:log-messages dismiss",
 		Transform:      transform,
 	})

@@ -188,6 +188,7 @@ func handleMessagesRcsGenerateDeeplink(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages:rcs generate-deeplink",
 		Transform:      transform,
 	})
@@ -228,6 +229,7 @@ func handleMessagesRcsSend(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages:rcs send",
 		Transform:      transform,
 	})

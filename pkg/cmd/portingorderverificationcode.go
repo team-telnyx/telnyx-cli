@@ -160,6 +160,7 @@ func handlePortingOrdersVerificationCodesList(ctx context.Context, cmd *cli.Comm
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:verification-codes list",
 			Transform:      transform,
 		})
@@ -177,6 +178,7 @@ func handlePortingOrdersVerificationCodesList(ctx context.Context, cmd *cli.Comm
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:verification-codes list",
 			Transform:      transform,
 		})
@@ -258,6 +260,7 @@ func handlePortingOrdersVerificationCodesVerify(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:verification-codes verify",
 		Transform:      transform,
 	})

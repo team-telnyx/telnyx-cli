@@ -96,6 +96,7 @@ func handleAIOpenAIEmbeddingsCreateEmbeddings(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:openai:embeddings create-embeddings",
 		Transform:      transform,
 	})
@@ -134,6 +135,7 @@ func handleAIOpenAIEmbeddingsListEmbeddingModels(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:openai:embeddings list-embedding-models",
 		Transform:      transform,
 	})

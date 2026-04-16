@@ -70,6 +70,7 @@ func handleSessionAnalysisMetadataRetrieve(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "session-analysis:metadata retrieve",
 		Transform:      transform,
 	})
@@ -111,6 +112,7 @@ func handleSessionAnalysisMetadataRetrieveRecordType(ctx context.Context, cmd *c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "session-analysis:metadata retrieve-record-type",
 		Transform:      transform,
 	})

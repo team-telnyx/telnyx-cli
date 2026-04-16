@@ -108,6 +108,7 @@ func handleRoomsActionsGenerateJoinClientToken(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "rooms:actions generate-join-client-token",
 		Transform:      transform,
 	})
@@ -156,6 +157,7 @@ func handleRoomsActionsRefreshClientToken(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "rooms:actions refresh-client-token",
 		Transform:      transform,
 	})

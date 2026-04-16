@@ -156,6 +156,7 @@ func handleEnterprisesReputationNumbersRetrieve(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "enterprises:reputation:numbers retrieve",
 		Transform:      transform,
 	})
@@ -204,6 +205,7 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "enterprises:reputation:numbers list",
 			Transform:      transform,
 		})
@@ -221,6 +223,7 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "enterprises:reputation:numbers list",
 			Transform:      transform,
 		})
@@ -270,6 +273,7 @@ func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "enterprises:reputation:numbers associate",
 		Transform:      transform,
 	})

@@ -171,6 +171,7 @@ func handleNotificationSettingsCreate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-settings create",
 		Transform:      transform,
 	})
@@ -212,6 +213,7 @@ func handleNotificationSettingsRetrieve(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-settings retrieve",
 		Transform:      transform,
 	})
@@ -252,6 +254,7 @@ func handleNotificationSettingsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "notification-settings list",
 			Transform:      transform,
 		})
@@ -264,6 +267,7 @@ func handleNotificationSettingsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "notification-settings list",
 			Transform:      transform,
 		})
@@ -306,6 +310,7 @@ func handleNotificationSettingsDelete(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-settings delete",
 		Transform:      transform,
 	})

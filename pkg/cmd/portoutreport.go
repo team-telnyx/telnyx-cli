@@ -133,6 +133,7 @@ func handlePortoutsReportsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "portouts:reports create",
 		Transform:      transform,
 	})
@@ -174,6 +175,7 @@ func handlePortoutsReportsRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "portouts:reports retrieve",
 		Transform:      transform,
 	})
@@ -214,6 +216,7 @@ func handlePortoutsReportsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "portouts:reports list",
 			Transform:      transform,
 		})
@@ -226,6 +229,7 @@ func handlePortoutsReportsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "portouts:reports list",
 			Transform:      transform,
 		})

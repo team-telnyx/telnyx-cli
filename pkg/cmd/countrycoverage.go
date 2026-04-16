@@ -70,6 +70,7 @@ func handleCountryCoverageRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "country-coverage retrieve",
 		Transform:      transform,
 	})
@@ -111,6 +112,7 @@ func handleCountryCoverageRetrieveCountry(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "country-coverage retrieve-country",
 		Transform:      transform,
 	})

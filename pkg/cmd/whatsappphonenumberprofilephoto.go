@@ -99,6 +99,7 @@ func handleWhatsappPhoneNumbersProfilePhotoRetrieve(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:phone-numbers:profile:photo retrieve",
 		Transform:      transform,
 	})
@@ -172,6 +173,7 @@ func handleWhatsappPhoneNumbersProfilePhotoUpload(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:phone-numbers:profile:photo upload",
 		Transform:      transform,
 	})

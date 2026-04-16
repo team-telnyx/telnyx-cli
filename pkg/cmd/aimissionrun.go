@@ -254,6 +254,7 @@ func handleAIMissionsRunsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs create",
 		Transform:      transform,
 	})
@@ -304,6 +305,7 @@ func handleAIMissionsRunsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs retrieve",
 		Transform:      transform,
 	})
@@ -354,6 +356,7 @@ func handleAIMissionsRunsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs update",
 		Transform:      transform,
 	})
@@ -402,6 +405,7 @@ func handleAIMissionsRunsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:missions:runs list",
 			Transform:      transform,
 		})
@@ -419,6 +423,7 @@ func handleAIMissionsRunsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:missions:runs list",
 			Transform:      transform,
 		})
@@ -470,6 +475,7 @@ func handleAIMissionsRunsCancelRun(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs cancel-run",
 		Transform:      transform,
 	})
@@ -510,6 +516,7 @@ func handleAIMissionsRunsListRuns(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:missions:runs list-runs",
 			Transform:      transform,
 		})
@@ -522,6 +529,7 @@ func handleAIMissionsRunsListRuns(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:missions:runs list-runs",
 			Transform:      transform,
 		})
@@ -573,6 +581,7 @@ func handleAIMissionsRunsPauseRun(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs pause-run",
 		Transform:      transform,
 	})
@@ -623,6 +632,7 @@ func handleAIMissionsRunsResumeRun(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs resume-run",
 		Transform:      transform,
 	})

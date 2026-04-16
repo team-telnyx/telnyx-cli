@@ -437,6 +437,7 @@ func handleCallControlApplicationsCreate(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "call-control-applications create",
 		Transform:      transform,
 	})
@@ -478,6 +479,7 @@ func handleCallControlApplicationsRetrieve(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "call-control-applications retrieve",
 		Transform:      transform,
 	})
@@ -526,6 +528,7 @@ func handleCallControlApplicationsUpdate(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "call-control-applications update",
 		Transform:      transform,
 	})
@@ -566,6 +569,7 @@ func handleCallControlApplicationsList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "call-control-applications list",
 			Transform:      transform,
 		})
@@ -578,6 +582,7 @@ func handleCallControlApplicationsList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "call-control-applications list",
 			Transform:      transform,
 		})
@@ -620,6 +625,7 @@ func handleCallControlApplicationsDelete(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "call-control-applications delete",
 		Transform:      transform,
 	})

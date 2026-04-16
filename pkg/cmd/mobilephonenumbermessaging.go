@@ -86,6 +86,7 @@ func handleMobilePhoneNumbersMessagingRetrieve(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "mobile-phone-numbers:messaging retrieve",
 		Transform:      transform,
 	})
@@ -126,6 +127,7 @@ func handleMobilePhoneNumbersMessagingList(ctx context.Context, cmd *cli.Command
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "mobile-phone-numbers:messaging list",
 			Transform:      transform,
 		})
@@ -138,6 +140,7 @@ func handleMobilePhoneNumbersMessagingList(ctx context.Context, cmd *cli.Command
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "mobile-phone-numbers:messaging list",
 			Transform:      transform,
 		})

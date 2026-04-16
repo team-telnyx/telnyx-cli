@@ -119,6 +119,7 @@ func handlePhoneNumbersVoicemailCreate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:voicemail create",
 		Transform:      transform,
 	})
@@ -160,6 +161,7 @@ func handlePhoneNumbersVoicemailRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:voicemail retrieve",
 		Transform:      transform,
 	})
@@ -208,6 +210,7 @@ func handlePhoneNumbersVoicemailUpdate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:voicemail update",
 		Transform:      transform,
 	})

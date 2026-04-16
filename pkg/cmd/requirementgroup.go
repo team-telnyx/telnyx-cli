@@ -217,6 +217,7 @@ func handleRequirementGroupsCreate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "requirement-groups create",
 		Transform:      transform,
 	})
@@ -258,6 +259,7 @@ func handleRequirementGroupsRetrieve(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "requirement-groups retrieve",
 		Transform:      transform,
 	})
@@ -306,6 +308,7 @@ func handleRequirementGroupsUpdate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "requirement-groups update",
 		Transform:      transform,
 	})
@@ -346,6 +349,7 @@ func handleRequirementGroupsList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "requirement-groups list",
 		Transform:      transform,
 	})
@@ -387,6 +391,7 @@ func handleRequirementGroupsDelete(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "requirement-groups delete",
 		Transform:      transform,
 	})
@@ -428,6 +433,7 @@ func handleRequirementGroupsSubmitForApproval(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "requirement-groups submit-for-approval",
 		Transform:      transform,
 	})

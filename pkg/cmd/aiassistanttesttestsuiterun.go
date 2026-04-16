@@ -112,6 +112,7 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:assistants:tests:test-suites:runs list",
 			Transform:      transform,
 		})
@@ -129,6 +130,7 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:assistants:tests:test-suites:runs list",
 			Transform:      transform,
 		})
@@ -178,6 +180,7 @@ func handleAIAssistantsTestsTestSuitesRunsTrigger(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tests:test-suites:runs trigger",
 		Transform:      transform,
 	})

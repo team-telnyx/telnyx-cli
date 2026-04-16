@@ -64,6 +64,7 @@ func handleStorageMigrationsActionsStop(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:migrations:actions stop",
 		Transform:      transform,
 	})
