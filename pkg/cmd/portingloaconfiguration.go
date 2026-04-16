@@ -404,6 +404,7 @@ func handlePortingLoaConfigurationsCreate(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting:loa-configurations create",
 		Transform:      transform,
 	})
@@ -445,6 +446,7 @@ func handlePortingLoaConfigurationsRetrieve(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting:loa-configurations retrieve",
 		Transform:      transform,
 	})
@@ -493,6 +495,7 @@ func handlePortingLoaConfigurationsUpdate(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting:loa-configurations update",
 		Transform:      transform,
 	})
@@ -533,6 +536,7 @@ func handlePortingLoaConfigurationsList(ctx context.Context, cmd *cli.Command) e
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting:loa-configurations list",
 			Transform:      transform,
 		})
@@ -545,6 +549,7 @@ func handlePortingLoaConfigurationsList(ctx context.Context, cmd *cli.Command) e
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting:loa-configurations list",
 			Transform:      transform,
 		})

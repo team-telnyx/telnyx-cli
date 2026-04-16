@@ -105,6 +105,7 @@ func handleStorageMigrationsCreate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:migrations create",
 		Transform:      transform,
 	})
@@ -146,6 +147,7 @@ func handleStorageMigrationsRetrieve(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:migrations retrieve",
 		Transform:      transform,
 	})
@@ -184,6 +186,7 @@ func handleStorageMigrationsList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:migrations list",
 		Transform:      transform,
 	})

@@ -185,6 +185,7 @@ func handleNotificationChannelsCreate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-channels create",
 		Transform:      transform,
 	})
@@ -226,6 +227,7 @@ func handleNotificationChannelsRetrieve(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-channels retrieve",
 		Transform:      transform,
 	})
@@ -274,6 +276,7 @@ func handleNotificationChannelsUpdate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-channels update",
 		Transform:      transform,
 	})
@@ -314,6 +317,7 @@ func handleNotificationChannelsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "notification-channels list",
 			Transform:      transform,
 		})
@@ -326,6 +330,7 @@ func handleNotificationChannelsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "notification-channels list",
 			Transform:      transform,
 		})
@@ -368,6 +373,7 @@ func handleNotificationChannelsDelete(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "notification-channels delete",
 		Transform:      transform,
 	})

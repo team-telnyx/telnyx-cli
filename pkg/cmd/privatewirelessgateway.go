@@ -155,6 +155,7 @@ func handlePrivateWirelessGatewaysCreate(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "private-wireless-gateways create",
 		Transform:      transform,
 	})
@@ -196,6 +197,7 @@ func handlePrivateWirelessGatewaysRetrieve(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "private-wireless-gateways retrieve",
 		Transform:      transform,
 	})
@@ -236,6 +238,7 @@ func handlePrivateWirelessGatewaysList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "private-wireless-gateways list",
 			Transform:      transform,
 		})
@@ -248,6 +251,7 @@ func handlePrivateWirelessGatewaysList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "private-wireless-gateways list",
 			Transform:      transform,
 		})
@@ -290,6 +294,7 @@ func handlePrivateWirelessGatewaysDelete(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "private-wireless-gateways delete",
 		Transform:      transform,
 	})

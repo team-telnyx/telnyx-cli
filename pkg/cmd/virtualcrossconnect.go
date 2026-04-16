@@ -242,6 +242,7 @@ func handleVirtualCrossConnectsCreate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "virtual-cross-connects create",
 		Transform:      transform,
 	})
@@ -283,6 +284,7 @@ func handleVirtualCrossConnectsRetrieve(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "virtual-cross-connects retrieve",
 		Transform:      transform,
 	})
@@ -331,6 +333,7 @@ func handleVirtualCrossConnectsUpdate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "virtual-cross-connects update",
 		Transform:      transform,
 	})
@@ -371,6 +374,7 @@ func handleVirtualCrossConnectsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "virtual-cross-connects list",
 			Transform:      transform,
 		})
@@ -383,6 +387,7 @@ func handleVirtualCrossConnectsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "virtual-cross-connects list",
 			Transform:      transform,
 		})
@@ -425,6 +430,7 @@ func handleVirtualCrossConnectsDelete(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "virtual-cross-connects delete",
 		Transform:      transform,
 	})

@@ -124,6 +124,7 @@ func handleEnterprisesReputationRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "enterprises:reputation retrieve",
 		Transform:      transform,
 	})
@@ -197,6 +198,7 @@ func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "enterprises:reputation enable",
 		Transform:      transform,
 	})
@@ -245,6 +247,7 @@ func handleEnterprisesReputationUpdateFrequency(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "enterprises:reputation update-frequency",
 		Transform:      transform,
 	})

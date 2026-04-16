@@ -65,6 +65,7 @@ func handlePaymentCreateStoredPaymentTransaction(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "payment create-stored-payment-transaction",
 		Transform:      transform,
 	})

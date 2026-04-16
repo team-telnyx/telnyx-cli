@@ -173,6 +173,7 @@ func handleAIMissionsRunsEventsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:missions:runs:events list",
 			Transform:      transform,
 		})
@@ -190,6 +191,7 @@ func handleAIMissionsRunsEventsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:missions:runs:events list",
 			Transform:      transform,
 		})
@@ -242,6 +244,7 @@ func handleAIMissionsRunsEventsGetEventDetails(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs:events get-event-details",
 		Transform:      transform,
 	})
@@ -292,6 +295,7 @@ func handleAIMissionsRunsEventsLog(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:runs:events log",
 		Transform:      transform,
 	})

@@ -70,6 +70,7 @@ func handleListRetrieveAll(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "list retrieve-all",
 		Transform:      transform,
 	})
@@ -111,6 +112,7 @@ func handleListRetrieveByZone(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "list retrieve-by-zone",
 		Transform:      transform,
 	})

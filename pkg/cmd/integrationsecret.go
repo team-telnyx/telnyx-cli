@@ -135,6 +135,7 @@ func handleIntegrationSecretsCreate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "integration-secrets create",
 		Transform:      transform,
 	})
@@ -175,6 +176,7 @@ func handleIntegrationSecretsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "integration-secrets list",
 			Transform:      transform,
 		})
@@ -187,6 +189,7 @@ func handleIntegrationSecretsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "integration-secrets list",
 			Transform:      transform,
 		})

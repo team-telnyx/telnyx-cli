@@ -652,6 +652,7 @@ func handleMessagesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages retrieve",
 		Transform:      transform,
 	})
@@ -693,6 +694,7 @@ func handleMessagesCancelScheduled(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages cancel-scheduled",
 		Transform:      transform,
 	})
@@ -734,6 +736,7 @@ func handleMessagesRetrieveGroupMessages(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages retrieve-group-messages",
 		Transform:      transform,
 	})
@@ -774,6 +777,7 @@ func handleMessagesSchedule(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages schedule",
 		Transform:      transform,
 	})
@@ -814,6 +818,7 @@ func handleMessagesSend(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages send",
 		Transform:      transform,
 	})
@@ -854,6 +859,7 @@ func handleMessagesSendGroupMms(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages send-group-mms",
 		Transform:      transform,
 	})
@@ -894,6 +900,7 @@ func handleMessagesSendLongCode(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages send-long-code",
 		Transform:      transform,
 	})
@@ -934,6 +941,7 @@ func handleMessagesSendNumberPool(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages send-number-pool",
 		Transform:      transform,
 	})
@@ -974,6 +982,7 @@ func handleMessagesSendShortCode(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages send-short-code",
 		Transform:      transform,
 	})
@@ -1014,6 +1023,7 @@ func handleMessagesSendWhatsapp(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages send-whatsapp",
 		Transform:      transform,
 	})
@@ -1054,6 +1064,7 @@ func handleMessagesSendWithAlphanumericSender(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages send-with-alphanumeric-sender",
 		Transform:      transform,
 	})

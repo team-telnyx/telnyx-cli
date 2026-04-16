@@ -445,6 +445,7 @@ func handlePortingOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders create",
 		Transform:      transform,
 	})
@@ -493,6 +494,7 @@ func handlePortingOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders retrieve",
 		Transform:      transform,
 	})
@@ -541,6 +543,7 @@ func handlePortingOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders update",
 		Transform:      transform,
 	})
@@ -581,6 +584,7 @@ func handlePortingOrdersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders list",
 			Transform:      transform,
 		})
@@ -593,6 +597,7 @@ func handlePortingOrdersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders list",
 			Transform:      transform,
 		})
@@ -660,6 +665,7 @@ func handlePortingOrdersRetrieveAllowedFocWindows(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders retrieve-allowed-foc-windows",
 		Transform:      transform,
 	})
@@ -698,6 +704,7 @@ func handlePortingOrdersRetrieveExceptionTypes(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders retrieve-exception-types",
 		Transform:      transform,
 	})
@@ -786,6 +793,7 @@ func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Comma
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders retrieve-requirements",
 			Transform:      transform,
 		})
@@ -803,6 +811,7 @@ func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Comma
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders retrieve-requirements",
 			Transform:      transform,
 		})
@@ -845,6 +854,7 @@ func handlePortingOrdersRetrieveSubRequest(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders retrieve-sub-request",
 		Transform:      transform,
 	})

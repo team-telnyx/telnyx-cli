@@ -181,6 +181,7 @@ func handleAIClustersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:clusters retrieve",
 		Transform:      transform,
 	})
@@ -221,6 +222,7 @@ func handleAIClustersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:clusters list",
 			Transform:      transform,
 		})
@@ -233,6 +235,7 @@ func handleAIClustersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:clusters list",
 			Transform:      transform,
 		})
@@ -299,6 +302,7 @@ func handleAIClustersCompute(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:clusters compute",
 		Transform:      transform,
 	})

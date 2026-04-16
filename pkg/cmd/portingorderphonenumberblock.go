@@ -201,6 +201,7 @@ func handlePortingOrdersPhoneNumberBlocksCreate(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:phone-number-blocks create",
 		Transform:      transform,
 	})
@@ -249,6 +250,7 @@ func handlePortingOrdersPhoneNumberBlocksList(ctx context.Context, cmd *cli.Comm
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:phone-number-blocks list",
 			Transform:      transform,
 		})
@@ -266,6 +268,7 @@ func handlePortingOrdersPhoneNumberBlocksList(ctx context.Context, cmd *cli.Comm
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:phone-number-blocks list",
 			Transform:      transform,
 		})
@@ -317,6 +320,7 @@ func handlePortingOrdersPhoneNumberBlocksDelete(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:phone-number-blocks delete",
 		Transform:      transform,
 	})

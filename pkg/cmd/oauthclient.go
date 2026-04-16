@@ -248,6 +248,7 @@ func handleOAuthClientsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth-clients create",
 		Transform:      transform,
 	})
@@ -289,6 +290,7 @@ func handleOAuthClientsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth-clients retrieve",
 		Transform:      transform,
 	})
@@ -337,6 +339,7 @@ func handleOAuthClientsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth-clients update",
 		Transform:      transform,
 	})
@@ -377,6 +380,7 @@ func handleOAuthClientsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "oauth-clients list",
 			Transform:      transform,
 		})
@@ -389,6 +393,7 @@ func handleOAuthClientsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "oauth-clients list",
 			Transform:      transform,
 		})

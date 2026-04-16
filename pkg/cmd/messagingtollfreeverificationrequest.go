@@ -567,6 +567,7 @@ func handleMessagingTollfreeVerificationRequestsCreate(ctx context.Context, cmd 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-tollfree:verification:requests create",
 		Transform:      transform,
 	})
@@ -608,6 +609,7 @@ func handleMessagingTollfreeVerificationRequestsRetrieve(ctx context.Context, cm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-tollfree:verification:requests retrieve",
 		Transform:      transform,
 	})
@@ -656,6 +658,7 @@ func handleMessagingTollfreeVerificationRequestsUpdate(ctx context.Context, cmd 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-tollfree:verification:requests update",
 		Transform:      transform,
 	})
@@ -696,6 +699,7 @@ func handleMessagingTollfreeVerificationRequestsList(ctx context.Context, cmd *c
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-tollfree:verification:requests list",
 			Transform:      transform,
 		})
@@ -708,6 +712,7 @@ func handleMessagingTollfreeVerificationRequestsList(ctx context.Context, cmd *c
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-tollfree:verification:requests list",
 			Transform:      transform,
 		})
@@ -782,6 +787,7 @@ func handleMessagingTollfreeVerificationRequestsRetrieveStatusHistory(ctx contex
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-tollfree:verification:requests retrieve-status-history",
 		Transform:      transform,
 	})

@@ -143,6 +143,7 @@ func handleWireguardInterfacesCreate(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireguard-interfaces create",
 		Transform:      transform,
 	})
@@ -184,6 +185,7 @@ func handleWireguardInterfacesRetrieve(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireguard-interfaces retrieve",
 		Transform:      transform,
 	})
@@ -224,6 +226,7 @@ func handleWireguardInterfacesList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "wireguard-interfaces list",
 			Transform:      transform,
 		})
@@ -236,6 +239,7 @@ func handleWireguardInterfacesList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "wireguard-interfaces list",
 			Transform:      transform,
 		})
@@ -278,6 +282,7 @@ func handleWireguardInterfacesDelete(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireguard-interfaces delete",
 		Transform:      transform,
 	})

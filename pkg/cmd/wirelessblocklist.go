@@ -170,6 +170,7 @@ func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireless-blocklists create",
 		Transform:      transform,
 	})
@@ -211,6 +212,7 @@ func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireless-blocklists retrieve",
 		Transform:      transform,
 	})
@@ -258,6 +260,7 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireless-blocklists update",
 		Transform:      transform,
 	})
@@ -298,6 +301,7 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "wireless-blocklists list",
 			Transform:      transform,
 		})
@@ -310,6 +314,7 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "wireless-blocklists list",
 			Transform:      transform,
 		})
@@ -352,6 +357,7 @@ func handleWirelessBlocklistsDelete(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireless-blocklists delete",
 		Transform:      transform,
 	})

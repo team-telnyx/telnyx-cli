@@ -214,6 +214,7 @@ func handleMessagingProfilesAutorespConfigsCreate(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles:autoresp-configs create",
 		Transform:      transform,
 	})
@@ -264,6 +265,7 @@ func handleMessagingProfilesAutorespConfigsRetrieve(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles:autoresp-configs retrieve",
 		Transform:      transform,
 	})
@@ -314,6 +316,7 @@ func handleMessagingProfilesAutorespConfigsUpdate(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles:autoresp-configs update",
 		Transform:      transform,
 	})
@@ -362,6 +365,7 @@ func handleMessagingProfilesAutorespConfigsList(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles:autoresp-configs list",
 		Transform:      transform,
 	})
@@ -412,6 +416,7 @@ func handleMessagingProfilesAutorespConfigsDelete(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-profiles:autoresp-configs delete",
 		Transform:      transform,
 	})

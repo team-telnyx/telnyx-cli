@@ -91,6 +91,7 @@ func handleRequirementTypesRetrieve(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "requirement-types retrieve",
 		Transform:      transform,
 	})
@@ -131,6 +132,7 @@ func handleRequirementTypesList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "requirement-types list",
 		Transform:      transform,
 	})

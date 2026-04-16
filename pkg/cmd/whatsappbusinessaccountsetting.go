@@ -106,6 +106,7 @@ func handleWhatsappBusinessAccountsSettingsRetrieve(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:business-accounts:settings retrieve",
 		Transform:      transform,
 	})
@@ -154,6 +155,7 @@ func handleWhatsappBusinessAccountsSettingsUpdate(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:business-accounts:settings update",
 		Transform:      transform,
 	})

@@ -305,6 +305,7 @@ func handlePhoneNumbersJobsRetrieve(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:jobs retrieve",
 		Transform:      transform,
 	})
@@ -345,6 +346,7 @@ func handlePhoneNumbersJobsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers:jobs list",
 			Transform:      transform,
 		})
@@ -357,6 +359,7 @@ func handlePhoneNumbersJobsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers:jobs list",
 			Transform:      transform,
 		})
@@ -398,6 +401,7 @@ func handlePhoneNumbersJobsDeleteBatch(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:jobs delete-batch",
 		Transform:      transform,
 	})
@@ -438,6 +442,7 @@ func handlePhoneNumbersJobsUpdateBatch(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:jobs update-batch",
 		Transform:      transform,
 	})
@@ -478,6 +483,7 @@ func handlePhoneNumbersJobsUpdateEmergencySettingsBatch(ctx context.Context, cmd
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:jobs update-emergency-settings-batch",
 		Transform:      transform,
 	})

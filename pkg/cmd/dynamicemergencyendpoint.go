@@ -143,6 +143,7 @@ func handleDynamicEmergencyEndpointsCreate(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "dynamic-emergency-endpoints create",
 		Transform:      transform,
 	})
@@ -184,6 +185,7 @@ func handleDynamicEmergencyEndpointsRetrieve(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "dynamic-emergency-endpoints retrieve",
 		Transform:      transform,
 	})
@@ -224,6 +226,7 @@ func handleDynamicEmergencyEndpointsList(ctx context.Context, cmd *cli.Command) 
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "dynamic-emergency-endpoints list",
 			Transform:      transform,
 		})
@@ -236,6 +239,7 @@ func handleDynamicEmergencyEndpointsList(ctx context.Context, cmd *cli.Command) 
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "dynamic-emergency-endpoints list",
 			Transform:      transform,
 		})
@@ -278,6 +282,7 @@ func handleDynamicEmergencyEndpointsDelete(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "dynamic-emergency-endpoints delete",
 		Transform:      transform,
 	})

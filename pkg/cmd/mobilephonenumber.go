@@ -203,6 +203,7 @@ func handleMobilePhoneNumbersRetrieve(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "mobile-phone-numbers retrieve",
 		Transform:      transform,
 	})
@@ -251,6 +252,7 @@ func handleMobilePhoneNumbersUpdate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "mobile-phone-numbers update",
 		Transform:      transform,
 	})
@@ -291,6 +293,7 @@ func handleMobilePhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "mobile-phone-numbers list",
 			Transform:      transform,
 		})
@@ -303,6 +306,7 @@ func handleMobilePhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "mobile-phone-numbers list",
 			Transform:      transform,
 		})

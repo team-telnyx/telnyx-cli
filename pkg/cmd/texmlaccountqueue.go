@@ -183,6 +183,7 @@ func handleTexmlAccountsQueuesCreate(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:queues create",
 		Transform:      transform,
 	})
@@ -233,6 +234,7 @@ func handleTexmlAccountsQueuesRetrieve(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:queues retrieve",
 		Transform:      transform,
 	})
@@ -283,6 +285,7 @@ func handleTexmlAccountsQueuesUpdate(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts:queues update",
 		Transform:      transform,
 	})
@@ -331,6 +334,7 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "texml:accounts:queues list",
 			Transform:      transform,
 		})
@@ -348,6 +352,7 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "texml:accounts:queues list",
 			Transform:      transform,
 		})

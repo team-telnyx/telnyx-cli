@@ -183,6 +183,7 @@ func handleMessaging10dlcPhoneNumberCampaignsCreate(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:phone-number-campaigns create",
 		Transform:      transform,
 	})
@@ -224,6 +225,7 @@ func handleMessaging10dlcPhoneNumberCampaignsRetrieve(ctx context.Context, cmd *
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:phone-number-campaigns retrieve",
 		Transform:      transform,
 	})
@@ -272,6 +274,7 @@ func handleMessaging10dlcPhoneNumberCampaignsUpdate(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:phone-number-campaigns update",
 		Transform:      transform,
 	})
@@ -312,6 +315,7 @@ func handleMessaging10dlcPhoneNumberCampaignsList(ctx context.Context, cmd *cli.
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:phone-number-campaigns list",
 			Transform:      transform,
 		})
@@ -324,6 +328,7 @@ func handleMessaging10dlcPhoneNumberCampaignsList(ctx context.Context, cmd *cli.
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:phone-number-campaigns list",
 			Transform:      transform,
 		})
@@ -366,6 +371,7 @@ func handleMessaging10dlcPhoneNumberCampaignsDelete(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:phone-number-campaigns delete",
 		Transform:      transform,
 	})

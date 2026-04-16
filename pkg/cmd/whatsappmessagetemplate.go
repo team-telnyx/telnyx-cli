@@ -102,6 +102,7 @@ func handleWhatsappMessageTemplatesRetrieve(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp-message-templates retrieve",
 		Transform:      transform,
 	})
@@ -150,6 +151,7 @@ func handleWhatsappMessageTemplatesUpdate(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp-message-templates update",
 		Transform:      transform,
 	})

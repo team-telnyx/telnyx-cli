@@ -248,6 +248,7 @@ func handleSimCardsActionsRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions retrieve",
 		Transform:      transform,
 	})
@@ -288,6 +289,7 @@ func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-cards:actions list",
 			Transform:      transform,
 		})
@@ -300,6 +302,7 @@ func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-cards:actions list",
 			Transform:      transform,
 		})
@@ -341,6 +344,7 @@ func handleSimCardsActionsBulkDisableVoice(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions bulk-disable-voice",
 		Transform:      transform,
 	})
@@ -381,6 +385,7 @@ func handleSimCardsActionsBulkEnableVoice(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions bulk-enable-voice",
 		Transform:      transform,
 	})
@@ -421,6 +426,7 @@ func handleSimCardsActionsBulkSetPublicIPs(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions bulk-set-public-ips",
 		Transform:      transform,
 	})
@@ -462,6 +468,7 @@ func handleSimCardsActionsDisable(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions disable",
 		Transform:      transform,
 	})
@@ -503,6 +510,7 @@ func handleSimCardsActionsEnable(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions enable",
 		Transform:      transform,
 	})
@@ -544,6 +552,7 @@ func handleSimCardsActionsRemovePublicIP(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions remove-public-ip",
 		Transform:      transform,
 	})
@@ -592,6 +601,7 @@ func handleSimCardsActionsSetPublicIP(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions set-public-ip",
 		Transform:      transform,
 	})
@@ -633,6 +643,7 @@ func handleSimCardsActionsSetStandby(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions set-standby",
 		Transform:      transform,
 	})
@@ -673,6 +684,7 @@ func handleSimCardsActionsValidateRegistrationCodes(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions validate-registration-codes",
 		Transform:      transform,
 	})

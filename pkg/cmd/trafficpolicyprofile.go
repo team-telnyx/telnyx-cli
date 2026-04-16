@@ -229,6 +229,7 @@ func handleTrafficPolicyProfilesCreate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "traffic-policy-profiles create",
 		Transform:      transform,
 	})
@@ -270,6 +271,7 @@ func handleTrafficPolicyProfilesRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "traffic-policy-profiles retrieve",
 		Transform:      transform,
 	})
@@ -318,6 +320,7 @@ func handleTrafficPolicyProfilesUpdate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "traffic-policy-profiles update",
 		Transform:      transform,
 	})
@@ -358,6 +361,7 @@ func handleTrafficPolicyProfilesList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "traffic-policy-profiles list",
 			Transform:      transform,
 		})
@@ -370,6 +374,7 @@ func handleTrafficPolicyProfilesList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "traffic-policy-profiles list",
 			Transform:      transform,
 		})
@@ -412,6 +417,7 @@ func handleTrafficPolicyProfilesDelete(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "traffic-policy-profiles delete",
 		Transform:      transform,
 	})
@@ -452,6 +458,7 @@ func handleTrafficPolicyProfilesListServices(ctx context.Context, cmd *cli.Comma
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "traffic-policy-profiles list-services",
 			Transform:      transform,
 		})
@@ -464,6 +471,7 @@ func handleTrafficPolicyProfilesListServices(ctx context.Context, cmd *cli.Comma
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "traffic-policy-profiles list-services",
 			Transform:      transform,
 		})

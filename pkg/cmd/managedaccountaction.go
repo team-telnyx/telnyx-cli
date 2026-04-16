@@ -84,6 +84,7 @@ func handleManagedAccountsActionsDisable(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "managed-accounts:actions disable",
 		Transform:      transform,
 	})
@@ -132,6 +133,7 @@ func handleManagedAccountsActionsEnable(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "managed-accounts:actions enable",
 		Transform:      transform,
 	})

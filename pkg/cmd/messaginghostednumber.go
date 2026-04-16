@@ -151,6 +151,7 @@ func handleMessagingHostedNumbersRetrieve(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-numbers retrieve",
 		Transform:      transform,
 	})
@@ -199,6 +200,7 @@ func handleMessagingHostedNumbersUpdate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-numbers update",
 		Transform:      transform,
 	})
@@ -239,6 +241,7 @@ func handleMessagingHostedNumbersList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-hosted-numbers list",
 			Transform:      transform,
 		})
@@ -251,6 +254,7 @@ func handleMessagingHostedNumbersList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-hosted-numbers list",
 			Transform:      transform,
 		})
@@ -293,6 +297,7 @@ func handleMessagingHostedNumbersDelete(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-numbers delete",
 		Transform:      transform,
 	})

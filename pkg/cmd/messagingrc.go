@@ -117,6 +117,7 @@ func handleMessagingRcsInviteTestNumber(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging:rcs invite-test-number",
 		Transform:      transform,
 	})
@@ -157,6 +158,7 @@ func handleMessagingRcsListBulkCapabilities(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging:rcs list-bulk-capabilities",
 		Transform:      transform,
 	})
@@ -207,6 +209,7 @@ func handleMessagingRcsRetrieveCapabilities(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging:rcs retrieve-capabilities",
 		Transform:      transform,
 	})

@@ -127,6 +127,7 @@ func handleGlobalIPAssignmentsCreate(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "global-ip-assignments create",
 		Transform:      transform,
 	})
@@ -168,6 +169,7 @@ func handleGlobalIPAssignmentsRetrieve(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "global-ip-assignments retrieve",
 		Transform:      transform,
 	})
@@ -216,6 +218,7 @@ func handleGlobalIPAssignmentsUpdate(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "global-ip-assignments update",
 		Transform:      transform,
 	})
@@ -256,6 +259,7 @@ func handleGlobalIPAssignmentsList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "global-ip-assignments list",
 			Transform:      transform,
 		})
@@ -268,6 +272,7 @@ func handleGlobalIPAssignmentsList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "global-ip-assignments list",
 			Transform:      transform,
 		})
@@ -310,6 +315,7 @@ func handleGlobalIPAssignmentsDelete(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "global-ip-assignments delete",
 		Transform:      transform,
 	})

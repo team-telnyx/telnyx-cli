@@ -178,6 +178,7 @@ func handleSimCardDataUsageNotificationsCreate(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-data-usage-notifications create",
 		Transform:      transform,
 	})
@@ -219,6 +220,7 @@ func handleSimCardDataUsageNotificationsRetrieve(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-data-usage-notifications retrieve",
 		Transform:      transform,
 	})
@@ -267,6 +269,7 @@ func handleSimCardDataUsageNotificationsUpdate(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-data-usage-notifications update",
 		Transform:      transform,
 	})
@@ -307,6 +310,7 @@ func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Comma
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-card-data-usage-notifications list",
 			Transform:      transform,
 		})
@@ -319,6 +323,7 @@ func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Comma
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-card-data-usage-notifications list",
 			Transform:      transform,
 		})
@@ -361,6 +366,7 @@ func handleSimCardDataUsageNotificationsDelete(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-data-usage-notifications delete",
 		Transform:      transform,
 	})

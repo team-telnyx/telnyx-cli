@@ -159,6 +159,7 @@ func handlePhoneNumbersCsvDownloadsCreate(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:csv-downloads create",
 		Transform:      transform,
 	})
@@ -200,6 +201,7 @@ func handlePhoneNumbersCsvDownloadsRetrieve(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:csv-downloads retrieve",
 		Transform:      transform,
 	})
@@ -240,6 +242,7 @@ func handlePhoneNumbersCsvDownloadsList(ctx context.Context, cmd *cli.Command) e
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers:csv-downloads list",
 			Transform:      transform,
 		})
@@ -252,6 +255,7 @@ func handlePhoneNumbersCsvDownloadsList(ctx context.Context, cmd *cli.Command) e
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers:csv-downloads list",
 			Transform:      transform,
 		})

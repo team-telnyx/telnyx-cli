@@ -122,6 +122,7 @@ func handleBundlePricingBillingBundlesRetrieve(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "bundle-pricing:billing-bundles retrieve",
 		Transform:      transform,
 	})
@@ -162,6 +163,7 @@ func handleBundlePricingBillingBundlesList(ctx context.Context, cmd *cli.Command
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "bundle-pricing:billing-bundles list",
 			Transform:      transform,
 		})
@@ -174,6 +176,7 @@ func handleBundlePricingBillingBundlesList(ctx context.Context, cmd *cli.Command
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "bundle-pricing:billing-bundles list",
 			Transform:      transform,
 		})

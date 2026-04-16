@@ -240,6 +240,7 @@ func handleRoomsSessionsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "rooms:sessions retrieve",
 		Transform:      transform,
 	})
@@ -280,6 +281,7 @@ func handleRoomsSessionsList0(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "rooms:sessions list-0",
 			Transform:      transform,
 		})
@@ -292,6 +294,7 @@ func handleRoomsSessionsList0(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "rooms:sessions list-0",
 			Transform:      transform,
 		})
@@ -341,6 +344,7 @@ func handleRoomsSessionsList1(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "rooms:sessions list-1",
 			Transform:      transform,
 		})
@@ -358,6 +362,7 @@ func handleRoomsSessionsList1(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "rooms:sessions list-1",
 			Transform:      transform,
 		})
@@ -407,6 +412,7 @@ func handleRoomsSessionsRetrieveParticipants(ctx context.Context, cmd *cli.Comma
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "rooms:sessions retrieve-participants",
 			Transform:      transform,
 		})
@@ -424,6 +430,7 @@ func handleRoomsSessionsRetrieveParticipants(ctx context.Context, cmd *cli.Comma
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "rooms:sessions retrieve-participants",
 			Transform:      transform,
 		})

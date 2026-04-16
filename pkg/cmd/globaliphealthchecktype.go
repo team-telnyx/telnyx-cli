@@ -55,6 +55,7 @@ func handleGlobalIPHealthCheckTypesList(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "global-ip-health-check-types list",
 		Transform:      transform,
 	})

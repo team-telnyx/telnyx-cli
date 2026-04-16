@@ -169,6 +169,7 @@ func handleRoomCompositionsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "room-compositions create",
 		Transform:      transform,
 	})
@@ -210,6 +211,7 @@ func handleRoomCompositionsRetrieve(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "room-compositions retrieve",
 		Transform:      transform,
 	})
@@ -250,6 +252,7 @@ func handleRoomCompositionsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "room-compositions list",
 			Transform:      transform,
 		})
@@ -262,6 +265,7 @@ func handleRoomCompositionsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "room-compositions list",
 			Transform:      transform,
 		})

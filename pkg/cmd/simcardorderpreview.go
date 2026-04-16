@@ -71,6 +71,7 @@ func handleSimCardOrderPreviewPreview(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-order-preview preview",
 		Transform:      transform,
 	})

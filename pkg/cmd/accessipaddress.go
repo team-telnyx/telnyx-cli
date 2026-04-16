@@ -141,6 +141,7 @@ func handleAccessIPAddressCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "access-ip-address create",
 		Transform:      transform,
 	})
@@ -182,6 +183,7 @@ func handleAccessIPAddressRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "access-ip-address retrieve",
 		Transform:      transform,
 	})
@@ -222,6 +224,7 @@ func handleAccessIPAddressList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "access-ip-address list",
 			Transform:      transform,
 		})
@@ -234,6 +237,7 @@ func handleAccessIPAddressList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "access-ip-address list",
 			Transform:      transform,
 		})
@@ -276,6 +280,7 @@ func handleAccessIPAddressDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "access-ip-address delete",
 		Transform:      transform,
 	})

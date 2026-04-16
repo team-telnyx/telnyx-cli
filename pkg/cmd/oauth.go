@@ -268,6 +268,7 @@ func handleOAuthRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth retrieve",
 		Transform:      transform,
 	})
@@ -308,6 +309,7 @@ func handleOAuthGrants(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth grants",
 		Transform:      transform,
 	})
@@ -348,6 +350,7 @@ func handleOAuthIntrospect(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth introspect",
 		Transform:      transform,
 	})
@@ -388,6 +391,7 @@ func handleOAuthRegister(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth register",
 		Transform:      transform,
 	})
@@ -450,6 +454,7 @@ func handleOAuthRetrieveJwks(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth retrieve-jwks",
 		Transform:      transform,
 	})
@@ -490,6 +495,7 @@ func handleOAuthToken(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "oauth token",
 		Transform:      transform,
 	})

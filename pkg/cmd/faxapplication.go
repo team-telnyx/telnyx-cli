@@ -312,6 +312,7 @@ func handleFaxApplicationsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "fax-applications create",
 		Transform:      transform,
 	})
@@ -353,6 +354,7 @@ func handleFaxApplicationsRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "fax-applications retrieve",
 		Transform:      transform,
 	})
@@ -401,6 +403,7 @@ func handleFaxApplicationsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "fax-applications update",
 		Transform:      transform,
 	})
@@ -441,6 +444,7 @@ func handleFaxApplicationsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "fax-applications list",
 			Transform:      transform,
 		})
@@ -453,6 +457,7 @@ func handleFaxApplicationsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "fax-applications list",
 			Transform:      transform,
 		})
@@ -495,6 +500,7 @@ func handleFaxApplicationsDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "fax-applications delete",
 		Transform:      transform,
 	})

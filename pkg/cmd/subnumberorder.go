@@ -192,6 +192,7 @@ func handleSubNumberOrdersRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sub-number-orders retrieve",
 		Transform:      transform,
 	})
@@ -240,6 +241,7 @@ func handleSubNumberOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sub-number-orders update",
 		Transform:      transform,
 	})
@@ -280,6 +282,7 @@ func handleSubNumberOrdersList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sub-number-orders list",
 		Transform:      transform,
 	})
@@ -321,6 +324,7 @@ func handleSubNumberOrdersCancel(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sub-number-orders cancel",
 		Transform:      transform,
 	})
@@ -369,6 +373,7 @@ func handleSubNumberOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sub-number-orders update-requirement-group",
 		Transform:      transform,
 	})

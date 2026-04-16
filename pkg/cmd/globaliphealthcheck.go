@@ -124,6 +124,7 @@ func handleGlobalIPHealthChecksCreate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "global-ip-health-checks create",
 		Transform:      transform,
 	})
@@ -165,6 +166,7 @@ func handleGlobalIPHealthChecksRetrieve(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "global-ip-health-checks retrieve",
 		Transform:      transform,
 	})
@@ -205,6 +207,7 @@ func handleGlobalIPHealthChecksList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "global-ip-health-checks list",
 			Transform:      transform,
 		})
@@ -217,6 +220,7 @@ func handleGlobalIPHealthChecksList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "global-ip-health-checks list",
 			Transform:      transform,
 		})
@@ -259,6 +263,7 @@ func handleGlobalIPHealthChecksDelete(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "global-ip-health-checks delete",
 		Transform:      transform,
 	})

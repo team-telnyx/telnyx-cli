@@ -2721,6 +2721,7 @@ func handleCallsActionsAddAIAssistantMessages(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions add-ai-assistant-messages",
 		Transform:      transform,
 	})
@@ -2769,6 +2770,7 @@ func handleCallsActionsAnswer(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions answer",
 		Transform:      transform,
 	})
@@ -2817,6 +2819,7 @@ func handleCallsActionsBridge(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions bridge",
 		Transform:      transform,
 	})
@@ -2865,6 +2868,7 @@ func handleCallsActionsEnqueue(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions enqueue",
 		Transform:      transform,
 	})
@@ -2913,6 +2917,7 @@ func handleCallsActionsGather(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions gather",
 		Transform:      transform,
 	})
@@ -2961,6 +2966,7 @@ func handleCallsActionsGatherUsingAI(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions gather-using-ai",
 		Transform:      transform,
 	})
@@ -3009,6 +3015,7 @@ func handleCallsActionsGatherUsingAudio(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions gather-using-audio",
 		Transform:      transform,
 	})
@@ -3057,6 +3064,7 @@ func handleCallsActionsGatherUsingSpeak(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions gather-using-speak",
 		Transform:      transform,
 	})
@@ -3105,6 +3113,7 @@ func handleCallsActionsHangup(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions hangup",
 		Transform:      transform,
 	})
@@ -3153,6 +3162,7 @@ func handleCallsActionsJoinAIAssistant(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions join-ai-assistant",
 		Transform:      transform,
 	})
@@ -3201,6 +3211,7 @@ func handleCallsActionsLeaveQueue(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions leave-queue",
 		Transform:      transform,
 	})
@@ -3249,6 +3260,7 @@ func handleCallsActionsPauseRecording(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions pause-recording",
 		Transform:      transform,
 	})
@@ -3297,6 +3309,7 @@ func handleCallsActionsRefer(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions refer",
 		Transform:      transform,
 	})
@@ -3345,6 +3358,7 @@ func handleCallsActionsReject(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions reject",
 		Transform:      transform,
 	})
@@ -3393,6 +3407,7 @@ func handleCallsActionsResumeRecording(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions resume-recording",
 		Transform:      transform,
 	})
@@ -3441,6 +3456,7 @@ func handleCallsActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions send-dtmf",
 		Transform:      transform,
 	})
@@ -3489,6 +3505,7 @@ func handleCallsActionsSendSipInfo(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions send-sip-info",
 		Transform:      transform,
 	})
@@ -3537,6 +3554,7 @@ func handleCallsActionsSpeak(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions speak",
 		Transform:      transform,
 	})
@@ -3585,6 +3603,7 @@ func handleCallsActionsStartAIAssistant(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions start-ai-assistant",
 		Transform:      transform,
 	})
@@ -3633,6 +3652,7 @@ func handleCallsActionsStartForking(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions start-forking",
 		Transform:      transform,
 	})
@@ -3681,6 +3701,7 @@ func handleCallsActionsStartNoiseSuppression(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions start-noise-suppression",
 		Transform:      transform,
 	})
@@ -3729,6 +3750,7 @@ func handleCallsActionsStartPlayback(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions start-playback",
 		Transform:      transform,
 	})
@@ -3777,6 +3799,7 @@ func handleCallsActionsStartRecording(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions start-recording",
 		Transform:      transform,
 	})
@@ -3825,6 +3848,7 @@ func handleCallsActionsStartSiprec(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions start-siprec",
 		Transform:      transform,
 	})
@@ -3873,6 +3897,7 @@ func handleCallsActionsStartStreaming(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions start-streaming",
 		Transform:      transform,
 	})
@@ -3921,6 +3946,7 @@ func handleCallsActionsStartTranscription(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions start-transcription",
 		Transform:      transform,
 	})
@@ -3969,6 +3995,7 @@ func handleCallsActionsStopAIAssistant(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-ai-assistant",
 		Transform:      transform,
 	})
@@ -4017,6 +4044,7 @@ func handleCallsActionsStopForking(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-forking",
 		Transform:      transform,
 	})
@@ -4065,6 +4093,7 @@ func handleCallsActionsStopGather(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-gather",
 		Transform:      transform,
 	})
@@ -4113,6 +4142,7 @@ func handleCallsActionsStopNoiseSuppression(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-noise-suppression",
 		Transform:      transform,
 	})
@@ -4161,6 +4191,7 @@ func handleCallsActionsStopPlayback(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-playback",
 		Transform:      transform,
 	})
@@ -4209,6 +4240,7 @@ func handleCallsActionsStopRecording(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-recording",
 		Transform:      transform,
 	})
@@ -4257,6 +4289,7 @@ func handleCallsActionsStopSiprec(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-siprec",
 		Transform:      transform,
 	})
@@ -4305,6 +4338,7 @@ func handleCallsActionsStopStreaming(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-streaming",
 		Transform:      transform,
 	})
@@ -4353,6 +4387,7 @@ func handleCallsActionsStopTranscription(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-transcription",
 		Transform:      transform,
 	})
@@ -4401,6 +4436,7 @@ func handleCallsActionsSwitchSupervisorRole(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions switch-supervisor-role",
 		Transform:      transform,
 	})
@@ -4449,6 +4485,7 @@ func handleCallsActionsTransfer(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions transfer",
 		Transform:      transform,
 	})
@@ -4497,6 +4534,7 @@ func handleCallsActionsUpdateClientState(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions update-client-state",
 		Transform:      transform,
 	})

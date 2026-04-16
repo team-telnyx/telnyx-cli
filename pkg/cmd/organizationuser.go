@@ -135,6 +135,7 @@ func handleOrganizationsUsersRetrieve(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "organizations:users retrieve",
 		Transform:      transform,
 	})
@@ -175,6 +176,7 @@ func handleOrganizationsUsersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "organizations:users list",
 			Transform:      transform,
 		})
@@ -187,6 +189,7 @@ func handleOrganizationsUsersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "organizations:users list",
 			Transform:      transform,
 		})
@@ -228,6 +231,7 @@ func handleOrganizationsUsersGetGroupsReport(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "organizations:users get-groups-report",
 		Transform:      transform,
 	})

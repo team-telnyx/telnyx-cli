@@ -103,6 +103,7 @@ func handleSubNumberOrdersReportCreate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sub-number-orders-report create",
 		Transform:      transform,
 	})
@@ -144,6 +145,7 @@ func handleSubNumberOrdersReportRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sub-number-orders-report retrieve",
 		Transform:      transform,
 	})

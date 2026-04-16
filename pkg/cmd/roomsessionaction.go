@@ -136,6 +136,7 @@ func handleRoomsSessionsActionsEnd(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "rooms:sessions:actions end",
 		Transform:      transform,
 	})
@@ -184,6 +185,7 @@ func handleRoomsSessionsActionsKick(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "rooms:sessions:actions kick",
 		Transform:      transform,
 	})
@@ -232,6 +234,7 @@ func handleRoomsSessionsActionsMute(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "rooms:sessions:actions mute",
 		Transform:      transform,
 	})
@@ -280,6 +283,7 @@ func handleRoomsSessionsActionsUnmute(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "rooms:sessions:actions unmute",
 		Transform:      transform,
 	})

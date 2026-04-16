@@ -119,6 +119,7 @@ func handleWirelessDetailRecordsReportsCreate(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireless:detail-records-reports create",
 		Transform:      transform,
 	})
@@ -160,6 +161,7 @@ func handleWirelessDetailRecordsReportsRetrieve(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireless:detail-records-reports retrieve",
 		Transform:      transform,
 	})
@@ -200,6 +202,7 @@ func handleWirelessDetailRecordsReportsList(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireless:detail-records-reports list",
 		Transform:      transform,
 	})
@@ -241,6 +244,7 @@ func handleWirelessDetailRecordsReportsDelete(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "wireless:detail-records-reports delete",
 		Transform:      transform,
 	})

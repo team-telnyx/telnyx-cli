@@ -119,6 +119,7 @@ func handleWebhookDeliveriesRetrieve(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "webhook-deliveries retrieve",
 		Transform:      transform,
 	})
@@ -159,6 +160,7 @@ func handleWebhookDeliveriesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "webhook-deliveries list",
 			Transform:      transform,
 		})
@@ -171,6 +173,7 @@ func handleWebhookDeliveriesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "webhook-deliveries list",
 			Transform:      transform,
 		})

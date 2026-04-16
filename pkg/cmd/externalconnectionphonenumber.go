@@ -146,6 +146,7 @@ func handleExternalConnectionsPhoneNumbersRetrieve(ctx context.Context, cmd *cli
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:phone-numbers retrieve",
 		Transform:      transform,
 	})
@@ -196,6 +197,7 @@ func handleExternalConnectionsPhoneNumbersUpdate(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:phone-numbers update",
 		Transform:      transform,
 	})
@@ -244,6 +246,7 @@ func handleExternalConnectionsPhoneNumbersList(ctx context.Context, cmd *cli.Com
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections:phone-numbers list",
 			Transform:      transform,
 		})
@@ -261,6 +264,7 @@ func handleExternalConnectionsPhoneNumbersList(ctx context.Context, cmd *cli.Com
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections:phone-numbers list",
 			Transform:      transform,
 		})

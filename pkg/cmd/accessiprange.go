@@ -122,6 +122,7 @@ func handleAccessIPRangesCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "access-ip-ranges create",
 		Transform:      transform,
 	})
@@ -162,6 +163,7 @@ func handleAccessIPRangesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "access-ip-ranges list",
 			Transform:      transform,
 		})
@@ -174,6 +176,7 @@ func handleAccessIPRangesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "access-ip-ranges list",
 			Transform:      transform,
 		})
@@ -216,6 +219,7 @@ func handleAccessIPRangesDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "access-ip-ranges delete",
 		Transform:      transform,
 	})

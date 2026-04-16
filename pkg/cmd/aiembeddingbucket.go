@@ -87,6 +87,7 @@ func handleAIEmbeddingsBucketsRetrieve(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:embeddings:buckets retrieve",
 		Transform:      transform,
 	})
@@ -125,6 +126,7 @@ func handleAIEmbeddingsBucketsList(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:embeddings:buckets list",
 		Transform:      transform,
 	})

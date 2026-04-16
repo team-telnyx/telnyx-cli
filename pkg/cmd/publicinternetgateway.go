@@ -137,6 +137,7 @@ func handlePublicInternetGatewaysCreate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "public-internet-gateways create",
 		Transform:      transform,
 	})
@@ -178,6 +179,7 @@ func handlePublicInternetGatewaysRetrieve(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "public-internet-gateways retrieve",
 		Transform:      transform,
 	})
@@ -218,6 +220,7 @@ func handlePublicInternetGatewaysList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "public-internet-gateways list",
 			Transform:      transform,
 		})
@@ -230,6 +233,7 @@ func handlePublicInternetGatewaysList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "public-internet-gateways list",
 			Transform:      transform,
 		})
@@ -272,6 +276,7 @@ func handlePublicInternetGatewaysDelete(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "public-internet-gateways delete",
 		Transform:      transform,
 	})

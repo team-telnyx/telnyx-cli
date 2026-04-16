@@ -64,6 +64,7 @@ func handleWellKnownRetrieveAuthorizationServerMetadata(ctx context.Context, cmd
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "well-known retrieve-authorization-server-metadata",
 		Transform:      transform,
 	})
@@ -102,6 +103,7 @@ func handleWellKnownRetrieveProtectedResourceMetadata(ctx context.Context, cmd *
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "well-known retrieve-protected-resource-metadata",
 		Transform:      transform,
 	})

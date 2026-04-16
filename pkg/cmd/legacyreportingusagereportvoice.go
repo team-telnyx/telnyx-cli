@@ -150,6 +150,7 @@ func handleLegacyReportingUsageReportsVoiceCreate(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports:voice create",
 		Transform:      transform,
 	})
@@ -191,6 +192,7 @@ func handleLegacyReportingUsageReportsVoiceRetrieve(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports:voice retrieve",
 		Transform:      transform,
 	})
@@ -231,6 +233,7 @@ func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Co
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "legacy:reporting:usage-reports:voice list",
 			Transform:      transform,
 		})
@@ -243,6 +246,7 @@ func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Co
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "legacy:reporting:usage-reports:voice list",
 			Transform:      transform,
 		})
@@ -285,6 +289,7 @@ func handleLegacyReportingUsageReportsVoiceDelete(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports:voice delete",
 		Transform:      transform,
 	})

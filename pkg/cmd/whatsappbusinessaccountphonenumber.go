@@ -118,6 +118,7 @@ func handleWhatsappBusinessAccountsPhoneNumbersList(ctx context.Context, cmd *cl
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "whatsapp:business-accounts:phone-numbers list",
 			Transform:      transform,
 		})
@@ -135,6 +136,7 @@ func handleWhatsappBusinessAccountsPhoneNumbersList(ctx context.Context, cmd *cl
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "whatsapp:business-accounts:phone-numbers list",
 			Transform:      transform,
 		})

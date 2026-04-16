@@ -210,6 +210,7 @@ func handleRoomRecordingsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "room-recordings retrieve",
 		Transform:      transform,
 	})
@@ -250,6 +251,7 @@ func handleRoomRecordingsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "room-recordings list",
 			Transform:      transform,
 		})
@@ -262,6 +264,7 @@ func handleRoomRecordingsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "room-recordings list",
 			Transform:      transform,
 		})
@@ -328,6 +331,7 @@ func handleRoomRecordingsDeleteBulk(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "room-recordings delete-bulk",
 		Transform:      transform,
 	})

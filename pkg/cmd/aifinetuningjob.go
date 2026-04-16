@@ -126,6 +126,7 @@ func handleAIFineTuningJobsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:fine-tuning:jobs create",
 		Transform:      transform,
 	})
@@ -167,6 +168,7 @@ func handleAIFineTuningJobsRetrieve(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:fine-tuning:jobs retrieve",
 		Transform:      transform,
 	})
@@ -205,6 +207,7 @@ func handleAIFineTuningJobsList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:fine-tuning:jobs list",
 		Transform:      transform,
 	})
@@ -246,6 +249,7 @@ func handleAIFineTuningJobsCancel(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:fine-tuning:jobs cancel",
 		Transform:      transform,
 	})

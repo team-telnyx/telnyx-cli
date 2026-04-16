@@ -534,6 +534,7 @@ func handleMessaging10dlcBrandCreate(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand create",
 		Transform:      transform,
 	})
@@ -575,6 +576,7 @@ func handleMessaging10dlcBrandRetrieve(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand retrieve",
 		Transform:      transform,
 	})
@@ -623,6 +625,7 @@ func handleMessaging10dlcBrandUpdate(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand update",
 		Transform:      transform,
 	})
@@ -663,6 +666,7 @@ func handleMessaging10dlcBrandList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:brand list",
 			Transform:      transform,
 		})
@@ -675,6 +679,7 @@ func handleMessaging10dlcBrandList(ctx context.Context, cmd *cli.Command) error 
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:brand list",
 			Transform:      transform,
 		})
@@ -742,6 +747,7 @@ func handleMessaging10dlcBrandGetFeedback(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand get-feedback",
 		Transform:      transform,
 	})
@@ -790,6 +796,7 @@ func handleMessaging10dlcBrandGetSMSOtpByReference(ctx context.Context, cmd *cli
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand get-sms-otp-by-reference",
 		Transform:      transform,
 	})
@@ -856,6 +863,7 @@ func handleMessaging10dlcBrandRetrieveSMSOtpStatus(ctx context.Context, cmd *cli
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand retrieve-sms-otp-status",
 		Transform:      transform,
 	})
@@ -897,6 +905,7 @@ func handleMessaging10dlcBrandRevet(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand revet",
 		Transform:      transform,
 	})
@@ -945,6 +954,7 @@ func handleMessaging10dlcBrandTriggerSMSOtp(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand trigger-sms-otp",
 		Transform:      transform,
 	})

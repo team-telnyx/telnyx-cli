@@ -838,6 +838,7 @@ func handleFqdnConnectionsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "fqdn-connections create",
 		Transform:      transform,
 	})
@@ -879,6 +880,7 @@ func handleFqdnConnectionsRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "fqdn-connections retrieve",
 		Transform:      transform,
 	})
@@ -927,6 +929,7 @@ func handleFqdnConnectionsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "fqdn-connections update",
 		Transform:      transform,
 	})
@@ -967,6 +970,7 @@ func handleFqdnConnectionsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "fqdn-connections list",
 			Transform:      transform,
 		})
@@ -979,6 +983,7 @@ func handleFqdnConnectionsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "fqdn-connections list",
 			Transform:      transform,
 		})
@@ -1021,6 +1026,7 @@ func handleFqdnConnectionsDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "fqdn-connections delete",
 		Transform:      transform,
 	})

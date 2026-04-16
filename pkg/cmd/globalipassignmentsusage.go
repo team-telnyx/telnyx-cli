@@ -77,6 +77,7 @@ func handleGlobalIPAssignmentsUsageRetrieve(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "global-ip-assignments-usage retrieve",
 		Transform:      transform,
 	})

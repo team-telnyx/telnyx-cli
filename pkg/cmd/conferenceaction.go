@@ -745,6 +745,7 @@ func handleConferencesActionsUpdate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions update",
 		Transform:      transform,
 	})
@@ -793,6 +794,7 @@ func handleConferencesActionsEndConference(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions end-conference",
 		Transform:      transform,
 	})
@@ -841,6 +843,7 @@ func handleConferencesActionsGatherDtmfAudio(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions gather-dtmf-audio",
 		Transform:      transform,
 	})
@@ -889,6 +892,7 @@ func handleConferencesActionsHold(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions hold",
 		Transform:      transform,
 	})
@@ -937,6 +941,7 @@ func handleConferencesActionsJoin(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions join",
 		Transform:      transform,
 	})
@@ -985,6 +990,7 @@ func handleConferencesActionsLeave(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions leave",
 		Transform:      transform,
 	})
@@ -1033,6 +1039,7 @@ func handleConferencesActionsMute(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions mute",
 		Transform:      transform,
 	})
@@ -1081,6 +1088,7 @@ func handleConferencesActionsPlay(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions play",
 		Transform:      transform,
 	})
@@ -1129,6 +1137,7 @@ func handleConferencesActionsRecordPause(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions record-pause",
 		Transform:      transform,
 	})
@@ -1177,6 +1186,7 @@ func handleConferencesActionsRecordResume(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions record-resume",
 		Transform:      transform,
 	})
@@ -1225,6 +1235,7 @@ func handleConferencesActionsRecordStart(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions record-start",
 		Transform:      transform,
 	})
@@ -1273,6 +1284,7 @@ func handleConferencesActionsRecordStop(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions record-stop",
 		Transform:      transform,
 	})
@@ -1321,6 +1333,7 @@ func handleConferencesActionsSendDtmf(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions send-dtmf",
 		Transform:      transform,
 	})
@@ -1369,6 +1382,7 @@ func handleConferencesActionsSpeak(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions speak",
 		Transform:      transform,
 	})
@@ -1417,6 +1431,7 @@ func handleConferencesActionsStop(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions stop",
 		Transform:      transform,
 	})
@@ -1465,6 +1480,7 @@ func handleConferencesActionsUnhold(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions unhold",
 		Transform:      transform,
 	})
@@ -1513,6 +1529,7 @@ func handleConferencesActionsUnmute(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences:actions unmute",
 		Transform:      transform,
 	})

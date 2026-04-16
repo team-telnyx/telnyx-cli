@@ -374,6 +374,7 @@ func handleOutboundVoiceProfilesCreate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "outbound-voice-profiles create",
 		Transform:      transform,
 	})
@@ -415,6 +416,7 @@ func handleOutboundVoiceProfilesRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "outbound-voice-profiles retrieve",
 		Transform:      transform,
 	})
@@ -463,6 +465,7 @@ func handleOutboundVoiceProfilesUpdate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "outbound-voice-profiles update",
 		Transform:      transform,
 	})
@@ -503,6 +506,7 @@ func handleOutboundVoiceProfilesList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "outbound-voice-profiles list",
 			Transform:      transform,
 		})
@@ -515,6 +519,7 @@ func handleOutboundVoiceProfilesList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "outbound-voice-profiles list",
 			Transform:      transform,
 		})
@@ -557,6 +562,7 @@ func handleOutboundVoiceProfilesDelete(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "outbound-voice-profiles delete",
 		Transform:      transform,
 	})

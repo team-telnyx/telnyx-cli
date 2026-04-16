@@ -78,6 +78,7 @@ func handleFaxesActionsCancel(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "faxes:actions cancel",
 		Transform:      transform,
 	})
@@ -119,6 +120,7 @@ func handleFaxesActionsRefresh(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "faxes:actions refresh",
 		Transform:      transform,
 	})

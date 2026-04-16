@@ -132,6 +132,7 @@ func handleAIMissionsMcpServersCreateMcpServer(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:mcp-servers create-mcp-server",
 		Transform:      transform,
 	})
@@ -216,6 +217,7 @@ func handleAIMissionsMcpServersGetMcpServer(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:mcp-servers get-mcp-server",
 		Transform:      transform,
 	})
@@ -257,6 +259,7 @@ func handleAIMissionsMcpServersListMcpServers(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:mcp-servers list-mcp-servers",
 		Transform:      transform,
 	})
@@ -307,6 +310,7 @@ func handleAIMissionsMcpServersUpdateMcpServer(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:missions:mcp-servers update-mcp-server",
 		Transform:      transform,
 	})

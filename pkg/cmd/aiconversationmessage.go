@@ -87,6 +87,7 @@ func handleAIConversationsMessagesList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:conversations:messages list",
 			Transform:      transform,
 		})
@@ -104,6 +105,7 @@ func handleAIConversationsMessagesList(ctx context.Context, cmd *cli.Command) er
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:conversations:messages list",
 			Transform:      transform,
 		})

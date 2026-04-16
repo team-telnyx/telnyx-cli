@@ -100,6 +100,7 @@ func handleWhatsappBusinessAccountsRetrieve(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:business-accounts retrieve",
 		Transform:      transform,
 	})
@@ -140,6 +141,7 @@ func handleWhatsappBusinessAccountsList(ctx context.Context, cmd *cli.Command) e
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "whatsapp:business-accounts list",
 			Transform:      transform,
 		})
@@ -152,6 +154,7 @@ func handleWhatsappBusinessAccountsList(ctx context.Context, cmd *cli.Command) e
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "whatsapp:business-accounts list",
 			Transform:      transform,
 		})

@@ -880,6 +880,7 @@ func handleAIAssistantsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants create",
 		Transform:      transform,
 	})
@@ -928,6 +929,7 @@ func handleAIAssistantsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants retrieve",
 		Transform:      transform,
 	})
@@ -976,6 +978,7 @@ func handleAIAssistantsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants update",
 		Transform:      transform,
 	})
@@ -1014,6 +1017,7 @@ func handleAIAssistantsList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants list",
 		Transform:      transform,
 	})
@@ -1055,6 +1059,7 @@ func handleAIAssistantsDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants delete",
 		Transform:      transform,
 	})
@@ -1103,6 +1108,7 @@ func handleAIAssistantsChat(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants chat",
 		Transform:      transform,
 	})
@@ -1144,6 +1150,7 @@ func handleAIAssistantsClone(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants clone",
 		Transform:      transform,
 	})
@@ -1185,6 +1192,7 @@ func handleAIAssistantsGetTexml(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants get-texml",
 		Transform:      transform,
 	})
@@ -1225,6 +1233,7 @@ func handleAIAssistantsImports(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants imports",
 		Transform:      transform,
 	})
@@ -1273,6 +1282,7 @@ func handleAIAssistantsSendSMS(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants send-sms",
 		Transform:      transform,
 	})

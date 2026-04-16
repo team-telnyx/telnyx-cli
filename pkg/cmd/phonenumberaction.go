@@ -119,6 +119,7 @@ func handlePhoneNumbersActionsChangeBundleStatus(ctx context.Context, cmd *cli.C
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:actions change-bundle-status",
 		Transform:      transform,
 	})
@@ -167,6 +168,7 @@ func handlePhoneNumbersActionsEnableEmergency(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:actions enable-emergency",
 		Transform:      transform,
 	})
@@ -207,6 +209,7 @@ func handlePhoneNumbersActionsVerifyOwnership(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers:actions verify-ownership",
 		Transform:      transform,
 	})

@@ -116,6 +116,7 @@ func handleLegacyReportingUsageReportsNumberLookupCreate(ctx context.Context, cm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports:number-lookup create",
 		Transform:      transform,
 	})
@@ -157,6 +158,7 @@ func handleLegacyReportingUsageReportsNumberLookupRetrieve(ctx context.Context, 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports:number-lookup retrieve",
 		Transform:      transform,
 	})
@@ -195,6 +197,7 @@ func handleLegacyReportingUsageReportsNumberLookupList(ctx context.Context, cmd 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:usage-reports:number-lookup list",
 		Transform:      transform,
 	})

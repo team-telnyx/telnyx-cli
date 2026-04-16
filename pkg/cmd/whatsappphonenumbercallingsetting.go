@@ -83,6 +83,7 @@ func handleWhatsappPhoneNumbersCallingSettingsRetrieve(ctx context.Context, cmd 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:phone-numbers:calling-settings retrieve",
 		Transform:      transform,
 	})
@@ -131,6 +132,7 @@ func handleWhatsappPhoneNumbersCallingSettingsUpdate(ctx context.Context, cmd *c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:phone-numbers:calling-settings update",
 		Transform:      transform,
 	})

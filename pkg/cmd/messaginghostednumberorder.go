@@ -190,6 +190,7 @@ func handleMessagingHostedNumberOrdersCreate(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-number-orders create",
 		Transform:      transform,
 	})
@@ -231,6 +232,7 @@ func handleMessagingHostedNumberOrdersRetrieve(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-number-orders retrieve",
 		Transform:      transform,
 	})
@@ -271,6 +273,7 @@ func handleMessagingHostedNumberOrdersList(ctx context.Context, cmd *cli.Command
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-hosted-number-orders list",
 			Transform:      transform,
 		})
@@ -283,6 +286,7 @@ func handleMessagingHostedNumberOrdersList(ctx context.Context, cmd *cli.Command
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-hosted-number-orders list",
 			Transform:      transform,
 		})
@@ -325,6 +329,7 @@ func handleMessagingHostedNumberOrdersDelete(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-number-orders delete",
 		Transform:      transform,
 	})
@@ -365,6 +370,7 @@ func handleMessagingHostedNumberOrdersCheckEligibility(ctx context.Context, cmd 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-number-orders check-eligibility",
 		Transform:      transform,
 	})
@@ -413,6 +419,7 @@ func handleMessagingHostedNumberOrdersCreateVerificationCodes(ctx context.Contex
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-number-orders create-verification-codes",
 		Transform:      transform,
 	})
@@ -461,6 +468,7 @@ func handleMessagingHostedNumberOrdersValidateCodes(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-hosted-number-orders validate-codes",
 		Transform:      transform,
 	})

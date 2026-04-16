@@ -108,6 +108,7 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextCreate(ctx context.Conte
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:speech-to-text create",
 		Transform:      transform,
 	})
@@ -149,6 +150,7 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextRetrieve(ctx context.Con
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:speech-to-text retrieve",
 		Transform:      transform,
 	})
@@ -187,6 +189,7 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextList(ctx context.Context
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:speech-to-text list",
 		Transform:      transform,
 	})
@@ -228,6 +231,7 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextDelete(ctx context.Conte
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "legacy:reporting:batch-detail-records:speech-to-text delete",
 		Transform:      transform,
 	})

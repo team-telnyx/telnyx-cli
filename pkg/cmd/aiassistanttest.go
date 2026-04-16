@@ -248,6 +248,7 @@ func handleAIAssistantsTestsCreate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tests create",
 		Transform:      transform,
 	})
@@ -289,6 +290,7 @@ func handleAIAssistantsTestsRetrieve(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tests retrieve",
 		Transform:      transform,
 	})
@@ -337,6 +339,7 @@ func handleAIAssistantsTestsUpdate(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tests update",
 		Transform:      transform,
 	})
@@ -377,6 +380,7 @@ func handleAIAssistantsTestsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:assistants:tests list",
 			Transform:      transform,
 		})
@@ -389,6 +393,7 @@ func handleAIAssistantsTestsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "ai:assistants:tests list",
 			Transform:      transform,
 		})

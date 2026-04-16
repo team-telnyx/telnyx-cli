@@ -191,6 +191,7 @@ func handleSimCardGroupsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-groups create",
 		Transform:      transform,
 	})
@@ -239,6 +240,7 @@ func handleSimCardGroupsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-groups retrieve",
 		Transform:      transform,
 	})
@@ -287,6 +289,7 @@ func handleSimCardGroupsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-groups update",
 		Transform:      transform,
 	})
@@ -327,6 +330,7 @@ func handleSimCardGroupsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-card-groups list",
 			Transform:      transform,
 		})
@@ -339,6 +343,7 @@ func handleSimCardGroupsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-card-groups list",
 			Transform:      transform,
 		})
@@ -381,6 +386,7 @@ func handleSimCardGroupsDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-groups delete",
 		Transform:      transform,
 	})

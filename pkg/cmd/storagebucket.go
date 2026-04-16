@@ -82,6 +82,7 @@ func handleStorageBucketsCreatePresignedURL(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:buckets create-presigned-url",
 		Transform:      transform,
 	})

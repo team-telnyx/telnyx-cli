@@ -64,6 +64,7 @@ func handleOrganizationsUsersActionsRemove(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "organizations:users:actions remove",
 		Transform:      transform,
 	})

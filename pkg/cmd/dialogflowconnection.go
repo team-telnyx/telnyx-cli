@@ -167,6 +167,7 @@ func handleDialogflowConnectionsCreate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "dialogflow-connections create",
 		Transform:      transform,
 	})
@@ -208,6 +209,7 @@ func handleDialogflowConnectionsRetrieve(ctx context.Context, cmd *cli.Command) 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "dialogflow-connections retrieve",
 		Transform:      transform,
 	})
@@ -256,6 +258,7 @@ func handleDialogflowConnectionsUpdate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "dialogflow-connections update",
 		Transform:      transform,
 	})

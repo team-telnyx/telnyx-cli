@@ -116,6 +116,7 @@ func handleRoomParticipantsRetrieve(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "room-participants retrieve",
 		Transform:      transform,
 	})
@@ -156,6 +157,7 @@ func handleRoomParticipantsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "room-participants list",
 			Transform:      transform,
 		})
@@ -168,6 +170,7 @@ func handleRoomParticipantsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "room-participants list",
 			Transform:      transform,
 		})

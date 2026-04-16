@@ -106,6 +106,7 @@ func handleWhatsappPhoneNumbersProfileRetrieve(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:phone-numbers:profile retrieve",
 		Transform:      transform,
 	})
@@ -154,6 +155,7 @@ func handleWhatsappPhoneNumbersProfileUpdate(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:phone-numbers:profile update",
 		Transform:      transform,
 	})

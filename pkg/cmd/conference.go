@@ -347,6 +347,7 @@ func handleConferencesCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences create",
 		Transform:      transform,
 	})
@@ -395,6 +396,7 @@ func handleConferencesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences retrieve",
 		Transform:      transform,
 	})
@@ -435,6 +437,7 @@ func handleConferencesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "conferences list",
 			Transform:      transform,
 		})
@@ -447,6 +450,7 @@ func handleConferencesList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "conferences list",
 			Transform:      transform,
 		})
@@ -496,6 +500,7 @@ func handleConferencesListParticipants(ctx context.Context, cmd *cli.Command) er
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "conferences list-participants",
 			Transform:      transform,
 		})
@@ -513,6 +518,7 @@ func handleConferencesListParticipants(ctx context.Context, cmd *cli.Command) er
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "conferences list-participants",
 			Transform:      transform,
 		})
@@ -564,6 +570,7 @@ func handleConferencesRetrieveParticipant(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences retrieve-participant",
 		Transform:      transform,
 	})
@@ -614,6 +621,7 @@ func handleConferencesUpdateParticipant(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "conferences update-participant",
 		Transform:      transform,
 	})

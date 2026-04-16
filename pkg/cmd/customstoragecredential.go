@@ -135,6 +135,7 @@ func handleCustomStorageCredentialsCreate(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "custom-storage-credentials create",
 		Transform:      transform,
 	})
@@ -176,6 +177,7 @@ func handleCustomStorageCredentialsRetrieve(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "custom-storage-credentials retrieve",
 		Transform:      transform,
 	})
@@ -224,6 +226,7 @@ func handleCustomStorageCredentialsUpdate(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "custom-storage-credentials update",
 		Transform:      transform,
 	})

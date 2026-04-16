@@ -103,6 +103,7 @@ func handlePortoutsSupportingDocumentsCreate(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "portouts:supporting-documents create",
 		Transform:      transform,
 	})
@@ -144,6 +145,7 @@ func handlePortoutsSupportingDocumentsList(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "portouts:supporting-documents list",
 		Transform:      transform,
 	})

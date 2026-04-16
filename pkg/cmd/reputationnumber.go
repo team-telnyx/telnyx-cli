@@ -122,6 +122,7 @@ func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "reputation:numbers retrieve",
 		Transform:      transform,
 	})
@@ -162,6 +163,7 @@ func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "reputation:numbers list",
 			Transform:      transform,
 		})
@@ -174,6 +176,7 @@ func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "reputation:numbers list",
 			Transform:      transform,
 		})

@@ -195,6 +195,7 @@ func handleTelephonyCredentialsCreate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "telephony-credentials create",
 		Transform:      transform,
 	})
@@ -236,6 +237,7 @@ func handleTelephonyCredentialsRetrieve(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "telephony-credentials retrieve",
 		Transform:      transform,
 	})
@@ -284,6 +286,7 @@ func handleTelephonyCredentialsUpdate(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "telephony-credentials update",
 		Transform:      transform,
 	})
@@ -324,6 +327,7 @@ func handleTelephonyCredentialsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "telephony-credentials list",
 			Transform:      transform,
 		})
@@ -336,6 +340,7 @@ func handleTelephonyCredentialsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "telephony-credentials list",
 			Transform:      transform,
 		})
@@ -378,6 +383,7 @@ func handleTelephonyCredentialsDelete(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "telephony-credentials delete",
 		Transform:      transform,
 	})

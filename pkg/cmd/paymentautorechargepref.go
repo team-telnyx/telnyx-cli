@@ -92,6 +92,7 @@ func handlePaymentAutoRechargePrefsUpdate(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "payment:auto-recharge-prefs update",
 		Transform:      transform,
 	})
@@ -130,6 +131,7 @@ func handlePaymentAutoRechargePrefsList(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "payment:auto-recharge-prefs list",
 		Transform:      transform,
 	})

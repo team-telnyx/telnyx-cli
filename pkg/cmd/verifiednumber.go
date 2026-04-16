@@ -127,6 +127,7 @@ func handleVerifiedNumbersCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verified-numbers create",
 		Transform:      transform,
 	})
@@ -168,6 +169,7 @@ func handleVerifiedNumbersRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verified-numbers retrieve",
 		Transform:      transform,
 	})
@@ -208,6 +210,7 @@ func handleVerifiedNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "verified-numbers list",
 			Transform:      transform,
 		})
@@ -220,6 +223,7 @@ func handleVerifiedNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "verified-numbers list",
 			Transform:      transform,
 		})
@@ -262,6 +266,7 @@ func handleVerifiedNumbersDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verified-numbers delete",
 		Transform:      transform,
 	})

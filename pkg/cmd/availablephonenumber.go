@@ -132,6 +132,7 @@ func handleAvailablePhoneNumbersList(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "available-phone-numbers list",
 		Transform:      transform,
 	})

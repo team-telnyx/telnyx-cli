@@ -121,6 +121,7 @@ func handleMessaging10dlcBrandExternalVettingList(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand:external-vetting list",
 		Transform:      transform,
 	})
@@ -169,6 +170,7 @@ func handleMessaging10dlcBrandExternalVettingImports(ctx context.Context, cmd *c
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand:external-vetting imports",
 		Transform:      transform,
 	})
@@ -217,6 +219,7 @@ func handleMessaging10dlcBrandExternalVettingOrder(ctx context.Context, cmd *cli
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:brand:external-vetting order",
 		Transform:      transform,
 	})

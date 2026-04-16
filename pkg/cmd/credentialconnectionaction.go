@@ -64,6 +64,7 @@ func handleCredentialConnectionsActionsCheckRegistrationStatus(ctx context.Conte
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "credential-connections:actions check-registration-status",
 		Transform:      transform,
 	})

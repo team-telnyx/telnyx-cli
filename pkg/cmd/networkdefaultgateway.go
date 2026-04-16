@@ -104,6 +104,7 @@ func handleNetworksDefaultGatewayCreate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "networks:default-gateway create",
 		Transform:      transform,
 	})
@@ -145,6 +146,7 @@ func handleNetworksDefaultGatewayRetrieve(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "networks:default-gateway retrieve",
 		Transform:      transform,
 	})
@@ -186,6 +188,7 @@ func handleNetworksDefaultGatewayDelete(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "networks:default-gateway delete",
 		Transform:      transform,
 	})

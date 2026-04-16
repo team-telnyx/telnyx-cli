@@ -209,6 +209,7 @@ func handleExternalConnectionsUploadsCreate(ctx context.Context, cmd *cli.Comman
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:uploads create",
 		Transform:      transform,
 	})
@@ -259,6 +260,7 @@ func handleExternalConnectionsUploadsRetrieve(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:uploads retrieve",
 		Transform:      transform,
 	})
@@ -307,6 +309,7 @@ func handleExternalConnectionsUploadsList(ctx context.Context, cmd *cli.Command)
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections:uploads list",
 			Transform:      transform,
 		})
@@ -324,6 +327,7 @@ func handleExternalConnectionsUploadsList(ctx context.Context, cmd *cli.Command)
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "external-connections:uploads list",
 			Transform:      transform,
 		})
@@ -366,6 +370,7 @@ func handleExternalConnectionsUploadsPendingCount(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:uploads pending-count",
 		Transform:      transform,
 	})
@@ -407,6 +412,7 @@ func handleExternalConnectionsUploadsRefreshStatus(ctx context.Context, cmd *cli
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:uploads refresh-status",
 		Transform:      transform,
 	})
@@ -457,6 +463,7 @@ func handleExternalConnectionsUploadsRetry(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "external-connections:uploads retry",
 		Transform:      transform,
 	})

@@ -248,6 +248,7 @@ func handleAIConversationsCreate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:conversations create",
 		Transform:      transform,
 	})
@@ -289,6 +290,7 @@ func handleAIConversationsRetrieve(ctx context.Context, cmd *cli.Command) error 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:conversations retrieve",
 		Transform:      transform,
 	})
@@ -337,6 +339,7 @@ func handleAIConversationsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:conversations update",
 		Transform:      transform,
 	})
@@ -377,6 +380,7 @@ func handleAIConversationsList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:conversations list",
 		Transform:      transform,
 	})
@@ -475,6 +479,7 @@ func handleAIConversationsRetrieveConversationsInsights(ctx context.Context, cmd
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:conversations retrieve-conversations-insights",
 		Transform:      transform,
 	})

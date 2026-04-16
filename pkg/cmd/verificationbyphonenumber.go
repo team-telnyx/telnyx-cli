@@ -65,6 +65,7 @@ func handleVerificationsByPhoneNumberList(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "verifications:by-phone-number list",
 		Transform:      transform,
 	})

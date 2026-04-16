@@ -111,6 +111,7 @@ func handleStorageBucketsSslCertificateCreate(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:buckets:ssl-certificate create",
 		Transform:      transform,
 	})
@@ -152,6 +153,7 @@ func handleStorageBucketsSslCertificateRetrieve(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:buckets:ssl-certificate retrieve",
 		Transform:      transform,
 	})
@@ -193,6 +195,7 @@ func handleStorageBucketsSslCertificateDelete(ctx context.Context, cmd *cli.Comm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "storage:buckets:ssl-certificate delete",
 		Transform:      transform,
 	})

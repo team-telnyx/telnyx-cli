@@ -110,6 +110,7 @@ func handleTexmlAccountsRetrieveRecordingsJson(ctx context.Context, cmd *cli.Com
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts retrieve-recordings-json",
 		Transform:      transform,
 	})
@@ -158,6 +159,7 @@ func handleTexmlAccountsRetrieveTranscriptionsJson(ctx context.Context, cmd *cli
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "texml:accounts retrieve-transcriptions-json",
 		Transform:      transform,
 	})

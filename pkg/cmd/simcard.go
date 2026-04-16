@@ -303,6 +303,7 @@ func handleSimCardsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards retrieve",
 		Transform:      transform,
 	})
@@ -351,6 +352,7 @@ func handleSimCardsUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards update",
 		Transform:      transform,
 	})
@@ -391,6 +393,7 @@ func handleSimCardsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-cards list",
 			Transform:      transform,
 		})
@@ -403,6 +406,7 @@ func handleSimCardsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-cards list",
 			Transform:      transform,
 		})
@@ -452,6 +456,7 @@ func handleSimCardsDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards delete",
 		Transform:      transform,
 	})
@@ -493,6 +498,7 @@ func handleSimCardsGetActivationCode(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards get-activation-code",
 		Transform:      transform,
 	})
@@ -534,6 +540,7 @@ func handleSimCardsGetDeviceDetails(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards get-device-details",
 		Transform:      transform,
 	})
@@ -575,6 +582,7 @@ func handleSimCardsGetPublicIP(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards get-public-ip",
 		Transform:      transform,
 	})
@@ -623,6 +631,7 @@ func handleSimCardsListWirelessConnectivityLogs(ctx context.Context, cmd *cli.Co
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-cards list-wireless-connectivity-logs",
 			Transform:      transform,
 		})
@@ -640,6 +649,7 @@ func handleSimCardsListWirelessConnectivityLogs(ctx context.Context, cmd *cli.Co
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-cards list-wireless-connectivity-logs",
 			Transform:      transform,
 		})

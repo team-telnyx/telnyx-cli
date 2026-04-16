@@ -83,6 +83,7 @@ func handleLedgerBillingGroupReportsCreate(ctx context.Context, cmd *cli.Command
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ledger-billing-group-reports create",
 		Transform:      transform,
 	})
@@ -124,6 +125,7 @@ func handleLedgerBillingGroupReportsRetrieve(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ledger-billing-group-reports retrieve",
 		Transform:      transform,
 	})

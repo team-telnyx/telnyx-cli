@@ -93,6 +93,7 @@ func handleAIAssistantsTagsList(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tags list",
 		Transform:      transform,
 	})
@@ -141,6 +142,7 @@ func handleAIAssistantsTagsAdd(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tags add",
 		Transform:      transform,
 	})
@@ -191,6 +193,7 @@ func handleAIAssistantsTagsRemove(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai:assistants:tags remove",
 		Transform:      transform,
 	})

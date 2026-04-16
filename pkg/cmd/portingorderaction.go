@@ -116,6 +116,7 @@ func handlePortingOrdersActionsActivate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:actions activate",
 		Transform:      transform,
 	})
@@ -157,6 +158,7 @@ func handlePortingOrdersActionsCancel(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:actions cancel",
 		Transform:      transform,
 	})
@@ -198,6 +200,7 @@ func handlePortingOrdersActionsConfirm(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:actions confirm",
 		Transform:      transform,
 	})
@@ -246,6 +249,7 @@ func handlePortingOrdersActionsShare(ctx context.Context, cmd *cli.Command) erro
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:actions share",
 		Transform:      transform,
 	})

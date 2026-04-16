@@ -173,6 +173,7 @@ func handleSimCardGroupsActionsRetrieve(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-groups:actions retrieve",
 		Transform:      transform,
 	})
@@ -213,6 +214,7 @@ func handleSimCardGroupsActionsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-card-groups:actions list",
 			Transform:      transform,
 		})
@@ -225,6 +227,7 @@ func handleSimCardGroupsActionsList(ctx context.Context, cmd *cli.Command) error
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "sim-card-groups:actions list",
 			Transform:      transform,
 		})
@@ -267,6 +270,7 @@ func handleSimCardGroupsActionsRemovePrivateWirelessGateway(ctx context.Context,
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-groups:actions remove-private-wireless-gateway",
 		Transform:      transform,
 	})
@@ -308,6 +312,7 @@ func handleSimCardGroupsActionsRemoveWirelessBlocklist(ctx context.Context, cmd 
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-groups:actions remove-wireless-blocklist",
 		Transform:      transform,
 	})
@@ -356,6 +361,7 @@ func handleSimCardGroupsActionsSetPrivateWirelessGateway(ctx context.Context, cm
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-groups:actions set-private-wireless-gateway",
 		Transform:      transform,
 	})
@@ -404,6 +410,7 @@ func handleSimCardGroupsActionsSetWirelessBlocklist(ctx context.Context, cmd *cl
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-card-groups:actions set-wireless-blocklist",
 		Transform:      transform,
 	})

@@ -246,6 +246,7 @@ func handleMobileVoiceConnectionsCreate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "mobile-voice-connections create",
 		Transform:      transform,
 	})
@@ -287,6 +288,7 @@ func handleMobileVoiceConnectionsRetrieve(ctx context.Context, cmd *cli.Command)
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "mobile-voice-connections retrieve",
 		Transform:      transform,
 	})
@@ -335,6 +337,7 @@ func handleMobileVoiceConnectionsUpdate(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "mobile-voice-connections update",
 		Transform:      transform,
 	})
@@ -375,6 +378,7 @@ func handleMobileVoiceConnectionsList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "mobile-voice-connections list",
 			Transform:      transform,
 		})
@@ -387,6 +391,7 @@ func handleMobileVoiceConnectionsList(ctx context.Context, cmd *cli.Command) err
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "mobile-voice-connections list",
 			Transform:      transform,
 		})
@@ -429,6 +434,7 @@ func handleMobileVoiceConnectionsDelete(ctx context.Context, cmd *cli.Command) e
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "mobile-voice-connections delete",
 		Transform:      transform,
 	})

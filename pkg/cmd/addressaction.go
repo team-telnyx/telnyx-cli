@@ -119,6 +119,7 @@ func handleAddressesActionsAcceptSuggestions(ctx context.Context, cmd *cli.Comma
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "addresses:actions accept-suggestions",
 		Transform:      transform,
 	})
@@ -159,6 +160,7 @@ func handleAddressesActionsValidate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "addresses:actions validate",
 		Transform:      transform,
 	})

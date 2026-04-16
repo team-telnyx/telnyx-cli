@@ -101,6 +101,7 @@ func handlePortingOrdersCommentsCreate(ctx context.Context, cmd *cli.Command) er
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:comments create",
 		Transform:      transform,
 	})
@@ -149,6 +150,7 @@ func handlePortingOrdersCommentsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:comments list",
 			Transform:      transform,
 		})
@@ -166,6 +168,7 @@ func handlePortingOrdersCommentsList(ctx context.Context, cmd *cli.Command) erro
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:comments list",
 			Transform:      transform,
 		})

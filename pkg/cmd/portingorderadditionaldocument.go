@@ -157,6 +157,7 @@ func handlePortingOrdersAdditionalDocumentsCreate(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "porting-orders:additional-documents create",
 		Transform:      transform,
 	})
@@ -205,6 +206,7 @@ func handlePortingOrdersAdditionalDocumentsList(ctx context.Context, cmd *cli.Co
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:additional-documents list",
 			Transform:      transform,
 		})
@@ -222,6 +224,7 @@ func handlePortingOrdersAdditionalDocumentsList(ctx context.Context, cmd *cli.Co
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "porting-orders:additional-documents list",
 			Transform:      transform,
 		})

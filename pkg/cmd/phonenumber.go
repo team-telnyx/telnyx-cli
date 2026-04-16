@@ -340,6 +340,7 @@ func handlePhoneNumbersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers retrieve",
 		Transform:      transform,
 	})
@@ -388,6 +389,7 @@ func handlePhoneNumbersUpdate(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers update",
 		Transform:      transform,
 	})
@@ -428,6 +430,7 @@ func handlePhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers list",
 			Transform:      transform,
 		})
@@ -440,6 +443,7 @@ func handlePhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers list",
 			Transform:      transform,
 		})
@@ -482,6 +486,7 @@ func handlePhoneNumbersDelete(ctx context.Context, cmd *cli.Command) error {
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "phone-numbers delete",
 		Transform:      transform,
 	})
@@ -522,6 +527,7 @@ func handlePhoneNumbersSlimList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers slim-list",
 			Transform:      transform,
 		})
@@ -534,6 +540,7 @@ func handlePhoneNumbersSlimList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "phone-numbers slim-list",
 			Transform:      transform,
 		})

@@ -161,6 +161,7 @@ func handleMessaging10dlcPartnerCampaignsRetrieve(ctx context.Context, cmd *cli.
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:partner-campaigns retrieve",
 		Transform:      transform,
 	})
@@ -209,6 +210,7 @@ func handleMessaging10dlcPartnerCampaignsUpdate(ctx context.Context, cmd *cli.Co
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:partner-campaigns update",
 		Transform:      transform,
 	})
@@ -249,6 +251,7 @@ func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Comm
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:partner-campaigns list",
 			Transform:      transform,
 		})
@@ -261,6 +264,7 @@ func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Comm
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:partner-campaigns list",
 			Transform:      transform,
 		})
@@ -302,6 +306,7 @@ func handleMessaging10dlcPartnerCampaignsListSharedByMe(ctx context.Context, cmd
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:partner-campaigns list-shared-by-me",
 			Transform:      transform,
 		})
@@ -314,6 +319,7 @@ func handleMessaging10dlcPartnerCampaignsListSharedByMe(ctx context.Context, cmd
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "messaging-10dlc:partner-campaigns list-shared-by-me",
 			Transform:      transform,
 		})
@@ -356,6 +362,7 @@ func handleMessaging10dlcPartnerCampaignsRetrieveSharingStatus(ctx context.Conte
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messaging-10dlc:partner-campaigns retrieve-sharing-status",
 		Transform:      transform,
 	})

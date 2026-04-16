@@ -172,6 +172,7 @@ func handleNumberReservationsCreate(ctx context.Context, cmd *cli.Command) error
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "number-reservations create",
 		Transform:      transform,
 	})
@@ -213,6 +214,7 @@ func handleNumberReservationsRetrieve(ctx context.Context, cmd *cli.Command) err
 	return ShowJSON(obj, ShowJSONOpts{
 		ExplicitFormat: explicitFormat,
 		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "number-reservations retrieve",
 		Transform:      transform,
 	})
@@ -253,6 +255,7 @@ func handleNumberReservationsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSON(obj, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "number-reservations list",
 			Transform:      transform,
 		})
@@ -265,6 +268,7 @@ func handleNumberReservationsList(ctx context.Context, cmd *cli.Command) error {
 		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
 			ExplicitFormat: explicitFormat,
 			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
 			Title:          "number-reservations list",
 			Transform:      transform,
 		})
