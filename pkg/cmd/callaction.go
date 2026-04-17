@@ -2362,7 +2362,7 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "answering-machine-detection-config",
-			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance.",
+			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance. Only `total_analysis_time_millis` and `greeting_duration_millis` parameters are applicable when `premium` is selected as answering_machine_detection.",
 			BodyPath: "answering_machine_detection_config",
 		},
 		&requestflag.Flag[string]{
