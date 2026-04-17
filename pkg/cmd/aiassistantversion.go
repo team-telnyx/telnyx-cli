@@ -219,6 +219,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "time_limit_secs",
 		},
 		&requestflag.InnerFlag[int64]{
+			Name:       "telephony-settings.user-idle-reply-secs",
+			Usage:      "Duration in seconds of end user silence before the assistant checks in on the user. When this limit is reached the assistant will prompt the user to respond. This is distinct from user_idle_timeout_secs which stops the assistant entirely.",
+			InnerField: "user_idle_reply_secs",
+		},
+		&requestflag.InnerFlag[int64]{
 			Name:       "telephony-settings.user-idle-timeout-secs",
 			Usage:      "Maximum duration in seconds of end user silence on the call. When this limit is reached the assistant will be stopped. This limit does not apply to portions of a call without an active assistant (for instance, a call transferred to a human representative).",
 			InnerField: "user_idle_timeout_secs",
