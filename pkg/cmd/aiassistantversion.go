@@ -104,6 +104,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "observability_settings",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "post-conversation-settings",
+			Usage:    "Configuration for post-conversation processing. When enabled, the assistant receives one additional LLM turn after the conversation ends, allowing it to execute tool calls such as logging to a CRM or sending a summary. The assistant can execute multiple parallel or sequential tools during this phase. Telephony-control tools (e.g. hangup, transfer) are unavailable post-conversation. Beta feature.",
+			BodyPath: "post_conversation_settings",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "privacy-settings",
 			BodyPath: "privacy_settings",
 		},
@@ -178,6 +183,13 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "observability-settings.status",
 			Usage:      `Allowed values: "enabled", "disabled".`,
 			InnerField: "status",
+		},
+	},
+	"post-conversation-settings": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "post-conversation-settings.enabled",
+			Usage:      "Whether post-conversation processing is enabled. When true, the assistant will be invoked after the conversation ends to perform any final tool calls. Defaults to false.",
+			InnerField: "enabled",
 		},
 	},
 	"privacy-settings": {

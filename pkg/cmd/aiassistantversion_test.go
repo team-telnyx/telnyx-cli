@@ -44,6 +44,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--model", "model",
 			"--name", "name",
 			"--observability-settings", "{host: host, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
+			"--post-conversation-settings", "{enabled: true}",
 			"--privacy-settings", "{data_retention: true}",
 			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
@@ -82,6 +83,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--observability-settings.public-key-ref", "public_key_ref",
 			"--observability-settings.secret-key-ref", "secret_key_ref",
 			"--observability-settings.status", "enabled",
+			"--post-conversation-settings.enabled=true",
 			"--privacy-settings.data-retention=true",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
 			"--telephony-settings.noise-suppression", "krisp",
@@ -148,6 +150,8 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"  public_key_ref: public_key_ref\n" +
 			"  secret_key_ref: secret_key_ref\n" +
 			"  status: enabled\n" +
+			"post_conversation_settings:\n" +
+			"  enabled: true\n" +
 			"privacy_settings:\n" +
 			"  data_retention: true\n" +
 			"telephony_settings:\n" +
