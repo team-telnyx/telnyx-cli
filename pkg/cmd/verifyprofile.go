@@ -169,15 +169,25 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"whatsapp": {
-		&requestflag.InnerFlag[string]{
-			Name:       "whatsapp.app-name",
-			Usage:      "The name that identifies the application requesting 2fa in the verification message.",
-			InnerField: "app_name",
-		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "whatsapp.default-verification-timeout-secs",
 			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
 			InnerField: "default_verification_timeout_secs",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.sender-phone-number",
+			Usage:      "Phone number registered on the customer WABA to send OTPs from",
+			InnerField: "sender_phone_number",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.template-id",
+			Usage:      "Customer pre-approved authentication template name registered on Meta",
+			InnerField: "template_id",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.waba-id",
+			Usage:      "Customer Meta WABA ID for Bring-Your-Own-WABA sending",
+			InnerField: "waba_id",
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "whatsapp.whitelisted-destinations",
@@ -359,15 +369,25 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"whatsapp": {
-		&requestflag.InnerFlag[string]{
-			Name:       "whatsapp.app-name",
-			Usage:      "The name that identifies the application requesting 2fa in the verification message.",
-			InnerField: "app_name",
-		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "whatsapp.default-verification-timeout-secs",
 			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
 			InnerField: "default_verification_timeout_secs",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.sender-phone-number",
+			Usage:      "Phone number registered on the customer WABA to send OTPs from",
+			InnerField: "sender_phone_number",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.template-id",
+			Usage:      "Customer pre-approved authentication template name registered on Meta",
+			InnerField: "template_id",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.waba-id",
+			Usage:      "Customer Meta WABA ID for Bring-Your-Own-WABA sending",
+			InnerField: "waba_id",
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "whatsapp.whitelisted-destinations",
