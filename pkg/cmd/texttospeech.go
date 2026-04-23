@@ -96,6 +96,11 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Provider-specific voice settings. Contents vary by provider — see provider-specific parameter objects below.",
 			BodyPath: "voice_settings",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "xai",
+			Usage:    "xAI provider-specific parameters.",
+			BodyPath: "xai",
+		},
 	},
 	Action:          handleTextToSpeechGenerate,
 	HideHelpCommand: true,
@@ -282,6 +287,28 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "telnyx.volume",
 			Usage:      "Volume level for the Ultra model. Range: 0.0 to 2.0.",
 			InnerField: "volume",
+		},
+	},
+	"xai": {
+		&requestflag.InnerFlag[string]{
+			Name:       "xai.voice-id",
+			Usage:      "xAI voice identifier.",
+			InnerField: "voice_id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "xai.language",
+			Usage:      "Language code, or `auto` to detect.",
+			InnerField: "language",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "xai.output-format",
+			Usage:      "Audio output format.",
+			InnerField: "output_format",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "xai.sample-rate",
+			Usage:      "Audio sample rate in Hz.",
+			InnerField: "sample_rate",
 		},
 	},
 })
