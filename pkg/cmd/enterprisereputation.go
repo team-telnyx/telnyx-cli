@@ -113,7 +113,7 @@ func handleEnterprisesReputationRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.Reputation.List(ctx, cmd.Value("enterprise-id").(string), options...)
+	_, err = client.Enterprises.Reputation.Get(ctx, cmd.Value("enterprise-id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -146,7 +146,7 @@ func handleEnterprisesReputationDisable(ctx context.Context, cmd *cli.Command) e
 		return err
 	}
 
-	return client.Enterprises.Reputation.DeleteAll(ctx, cmd.Value("enterprise-id").(string), options...)
+	return client.Enterprises.Reputation.Disable(ctx, cmd.Value("enterprise-id").(string), options...)
 }
 
 func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) error {
@@ -160,7 +160,7 @@ func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNewParams{}
+	params := telnyx.EnterpriseReputationEnableParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -175,7 +175,7 @@ func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) er
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.Reputation.New(
+	_, err = client.Enterprises.Reputation.Enable(
 		ctx,
 		cmd.Value("enterprise-id").(string),
 		params,
