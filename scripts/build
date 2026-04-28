@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # Mark the necessary Go modules as private to avoid Go's proxy
-export GOPRIVATE="${GOPRIVATE:+$GOPRIVATE,}github.com/team-telnyx/telnyx-go/v4,github.com/stainless-sdks/telnyx-go/v4"
+export GOPRIVATE="${GOPRIVATE:+$GOPRIVATE,}github.com/team-telnyx/telnyx-go,github.com/stainless-sdks/telnyx-go"
 
 echo "==> Building telnyx"
 go build ./cmd/telnyx

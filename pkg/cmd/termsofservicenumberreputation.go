@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
-	"github.com/team-telnyx/telnyx-go/v4"
+	"github.com/team-telnyx/telnyx-go"
 	"github.com/urfave/cli/v3"
 )
 

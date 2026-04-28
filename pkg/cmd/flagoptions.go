@@ -20,7 +20,7 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/debugmiddleware"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
-	"github.com/team-telnyx/telnyx-go/v4/option"
+	"github.com/team-telnyx/telnyx-go/option"
 
 	"github.com/goccy/go-yaml"
 	"github.com/urfave/cli/v3"

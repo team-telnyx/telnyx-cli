@@ -5,12 +5,12 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # Mark the necessary Go modules as private to avoid Go's proxy
-export GOPRIVATE="${GOPRIVATE:+$GOPRIVATE,}github.com/team-telnyx/telnyx-go/v4,github.com/stainless-sdks/telnyx-go/v4"
+export GOPRIVATE="${GOPRIVATE:+$GOPRIVATE,}github.com/team-telnyx/telnyx-go,github.com/stainless-sdks/telnyx-go"
 
 REPLACEMENT="${1:-"../telnyx-go"}"
 echo "==> Replacing Go SDK with $REPLACEMENT"
 if [[ -d "$REPLACEMENT" ]] || go list -m "$REPLACEMENT" >/dev/null; then
-    go mod edit -replace github.com/team-telnyx/telnyx-go/v4="$REPLACEMENT"
+    go mod edit -replace github.com/team-telnyx/telnyx-go="$REPLACEMENT"
     go mod tidy -e
 else
     echo "Skipping Go SDK replacement (branch may not exist on Go SDK)"
