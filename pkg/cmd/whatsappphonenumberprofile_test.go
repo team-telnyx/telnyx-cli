@@ -34,6 +34,7 @@ func TestWhatsappPhoneNumbersProfileUpdate(t *testing.T) {
 			"--description", "description",
 			"--display-name", "display_name",
 			"--email", "email",
+			"--profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--website", "website",
 		)
 	})
@@ -47,6 +48,7 @@ func TestWhatsappPhoneNumbersProfileUpdate(t *testing.T) {
 			"description: description\n" +
 			"display_name: display_name\n" +
 			"email: email\n" +
+			"profile_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\n" +
 			"website: website\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
