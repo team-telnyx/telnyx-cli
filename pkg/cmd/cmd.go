@@ -2464,6 +2464,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&texmlInitiateAICall,
 					&texmlSecrets,
 				},
 			},
@@ -3183,7 +3184,18 @@ func init() {
 					&termsOfServiceNumberReputationAgree,
 				},
 			},
-
+			{
+				Name:     "pronunciation-dicts",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&pronunciationDictsCreate,
+					&pronunciationDictsRetrieve,
+					&pronunciationDictsUpdate,
+					&pronunciationDictsList,
+					&pronunciationDictsDelete,
+				},
+			},
 			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",
