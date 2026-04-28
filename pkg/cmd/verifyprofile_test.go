@@ -18,9 +18,10 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"verify-profiles", "create",
 			"--name", "Test Profile",
 			"--call", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
+			"--daily-spend-limit", "100",
+			"--daily-spend-limit-enabled=true",
 			"--flashcall", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
 			"--language", "en-US",
-			"--rcs", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, sms_fallback: true, whitelisted_destinations: [US, CA]}",
 			"--sms", "{alpha_sender: sqF, app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 			"--webhook-failover-url", "http://example.com/webhook/failover",
 			"--webhook-url", "http://example.com/webhook",
@@ -43,16 +44,12 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"--call.default-verification-timeout-secs", "300",
 			"--call.messaging-template-id", "0abb5b4f-459f-445a-bfcd-488998b7572d",
 			"--call.whitelisted-destinations", "[US, CA]",
+			"--daily-spend-limit", "100",
+			"--daily-spend-limit-enabled=true",
 			"--flashcall.app-name", "Example Secure App",
 			"--flashcall.default-verification-timeout-secs", "300",
 			"--flashcall.whitelisted-destinations", "[US, CA]",
 			"--language", "en-US",
-			"--rcs.app-name", "Example Secure App",
-			"--rcs.code-length", "6",
-			"--rcs.default-verification-timeout-secs", "300",
-			"--rcs.messaging-template-id", "0abb5b4f-459f-445a-bfcd-488998b7572d",
-			"--rcs.sms-fallback=true",
-			"--rcs.whitelisted-destinations", "[US, CA]",
 			"--sms.alpha-sender", "sqF",
 			"--sms.app-name", "Example Secure App",
 			"--sms.code-length", "6",
@@ -81,6 +78,8 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"  whitelisted_destinations:\n" +
 			"    - US\n" +
 			"    - CA\n" +
+			"daily_spend_limit: 100\n" +
+			"daily_spend_limit_enabled: true\n" +
 			"flashcall:\n" +
 			"  app_name: Example Secure App\n" +
 			"  default_verification_timeout_secs: 300\n" +
@@ -88,15 +87,6 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"    - US\n" +
 			"    - CA\n" +
 			"language: en-US\n" +
-			"rcs:\n" +
-			"  app_name: Example Secure App\n" +
-			"  code_length: 6\n" +
-			"  default_verification_timeout_secs: 300\n" +
-			"  messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d\n" +
-			"  sms_fallback: true\n" +
-			"  whitelisted_destinations:\n" +
-			"    - US\n" +
-			"    - CA\n" +
 			"sms:\n" +
 			"  alpha_sender: sqF\n" +
 			"  app_name: Example Secure App\n" +
@@ -145,10 +135,10 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"verify-profiles", "update",
 			"--verify-profile-id", "12ade33a-21c0-473b-b055-b3c836e1c292",
 			"--call", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
-			"--flashcall", "{app_name: Example Secure App, default_verification_timeout_secs: 300, whitelisted_destinations: [US, CA]}",
+			"--daily-spend-limit", "100",
+			"--daily-spend-limit-enabled=true",
 			"--language", "en-US",
 			"--name", "Test Profile",
-			"--rcs", "{app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, sms_fallback: true, whitelisted_destinations: [US, CA]}",
 			"--sms", "{alpha_sender: sqF, app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 			"--webhook-failover-url", "http://example.com/webhook/failover",
 			"--webhook-url", "http://example.com/webhook",
@@ -171,17 +161,10 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"--call.default-verification-timeout-secs", "300",
 			"--call.messaging-template-id", "0abb5b4f-459f-445a-bfcd-488998b7572d",
 			"--call.whitelisted-destinations", "[US, CA]",
-			"--flashcall.app-name", "Example Secure App",
-			"--flashcall.default-verification-timeout-secs", "300",
-			"--flashcall.whitelisted-destinations", "[US, CA]",
+			"--daily-spend-limit", "100",
+			"--daily-spend-limit-enabled=true",
 			"--language", "en-US",
 			"--name", "Test Profile",
-			"--rcs.app-name", "Example Secure App",
-			"--rcs.code-length", "6",
-			"--rcs.default-verification-timeout-secs", "300",
-			"--rcs.messaging-template-id", "0abb5b4f-459f-445a-bfcd-488998b7572d",
-			"--rcs.sms-fallback=true",
-			"--rcs.whitelisted-destinations", "[US, CA]",
 			"--sms.alpha-sender", "sqF",
 			"--sms.app-name", "Example Secure App",
 			"--sms.code-length", "6",
@@ -209,23 +192,10 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"  whitelisted_destinations:\n" +
 			"    - US\n" +
 			"    - CA\n" +
-			"flashcall:\n" +
-			"  app_name: Example Secure App\n" +
-			"  default_verification_timeout_secs: 300\n" +
-			"  whitelisted_destinations:\n" +
-			"    - US\n" +
-			"    - CA\n" +
+			"daily_spend_limit: 100\n" +
+			"daily_spend_limit_enabled: true\n" +
 			"language: en-US\n" +
 			"name: Test Profile\n" +
-			"rcs:\n" +
-			"  app_name: Example Secure App\n" +
-			"  code_length: 6\n" +
-			"  default_verification_timeout_secs: 300\n" +
-			"  messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d\n" +
-			"  sms_fallback: true\n" +
-			"  whitelisted_destinations:\n" +
-			"    - US\n" +
-			"    - CA\n" +
 			"sms:\n" +
 			"  alpha_sender: sqF\n" +
 			"  app_name: Example Secure App\n" +
