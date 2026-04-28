@@ -70,7 +70,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--api-key", "string",
 			"texml:accounts:calls", "calls",
 			"--account-sid", "account_sid",
-			"--params", "{Url: https://www.example.com/texml.xml, ApplicationSid: example-app-sid, AsyncAmd: true, AsyncAmdStatusCallback: https://www.example.com/callback, AsyncAmdStatusCallbackMethod: GET, CallerId: Info, CancelPlaybackOnDetectMessageEnd: false, CancelPlaybackOnMachineDetection: false, CustomHeaders: [{name: X-Custom-Header, value: custom-value}], DetectionMode: Premium, FallbackUrl: https://www.example.com/instructions-fallback.xml, From: '+13120001234', MachineDetection: Enable, MachineDetectionSilenceTimeout: 2000, MachineDetectionSpeechEndThreshold: 2000, MachineDetectionSpeechThreshold: 2000, MachineDetectionTimeout: 5000, MediaEncryption: disabled, PreferredCodecs: 'PCMA,PCMU', Record: false, RecordingChannels: dual, RecordingStatusCallback: https://example.com/recording_status_callback, RecordingStatusCallbackEvent: in-progress completed absent, RecordingStatusCallbackMethod: GET, RecordingTimeout: 5, RecordingTrack: inbound, SendRecordingUrl: false, SipAuthPassword: '1234', SipAuthUsername: user, SipRegion: Canada, StatusCallback: https://www.example.com/statuscallback-listener, StatusCallbackEvent: initiated, StatusCallbackMethod: GET, SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg, SupervisingRole: monitor, Texml: Texml, TimeLimit: 3600, Timeout: 60, To: '+13121230000', Trim: trim-silence, UrlMethod: GET}",
+			"--params", "{Url: https://www.example.com/texml.xml, ApplicationSid: example-app-sid, AsyncAmd: true, AsyncAmdStatusCallback: https://www.example.com/callback, AsyncAmdStatusCallbackMethod: GET, CallerId: Info, CancelPlaybackOnDetectMessageEnd: false, CancelPlaybackOnMachineDetection: false, CustomHeaders: [{name: X-Custom-Header, value: custom-value}], DeepfakeDetection: Enable, DeepfakeDetectionCallbackMethod: GET, DeepfakeDetectionCallbackUrl: https://www.example.com/deepfake-callback, DetectionMode: Premium, FallbackUrl: https://www.example.com/instructions-fallback.xml, From: '+13120001234', MachineDetection: Enable, MachineDetectionSilenceTimeout: 2000, MachineDetectionSpeechEndThreshold: 2000, MachineDetectionSpeechThreshold: 2000, MachineDetectionTimeout: 5000, MediaEncryption: disabled, PreferredCodecs: 'PCMA,PCMU', Record: false, RecordingChannels: dual, RecordingStatusCallback: https://example.com/recording_status_callback, RecordingStatusCallbackEvent: in-progress completed absent, RecordingStatusCallbackMethod: GET, RecordingTimeout: 5, RecordingTrack: inbound, SendRecordingUrl: false, SipAuthPassword: '1234', SipAuthUsername: user, SipRegion: Canada, StatusCallback: https://www.example.com/statuscallback-listener, StatusCallbackEvent: initiated, StatusCallbackMethod: GET, SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg, SupervisingRole: monitor, Texml: Texml, TimeLimit: 3600, Timeout: 60, To: '+13121230000', Trim: trim-silence, UrlMethod: GET}",
 		)
 	})
 
@@ -88,6 +88,9 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"CustomHeaders:\n" +
 			"  - name: X-Custom-Header\n" +
 			"    value: custom-value\n" +
+			"DeepfakeDetection: Enable\n" +
+			"DeepfakeDetectionCallbackMethod: GET\n" +
+			"DeepfakeDetectionCallbackUrl: https://www.example.com/deepfake-callback\n" +
 			"DetectionMode: Premium\n" +
 			"FallbackUrl: https://www.example.com/instructions-fallback.xml\n" +
 			"From: '+13120001234'\n" +
