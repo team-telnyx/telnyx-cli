@@ -494,6 +494,11 @@ var messagesSendWhatsapp = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "whatsapp_message",
 		},
 		&requestflag.Flag[string]{
+			Name:     "messaging-profile-id",
+			Usage:    "Messaging profile ID - required if the 'from' number is not SMS-enabled",
+			BodyPath: "messaging_profile_id",
+		},
+		&requestflag.Flag[string]{
 			Name:     "type",
 			Usage:    `Message type - must be set to "WHATSAPP"`,
 			BodyPath: "type",

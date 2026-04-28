@@ -62,6 +62,11 @@ var whatsappPhoneNumbersProfileUpdate = cli.Command{
 			BodyPath: "email",
 		},
 		&requestflag.Flag[string]{
+			Name:     "profile-id",
+			Usage:    "Messaging profile ID for inbound messages",
+			BodyPath: "profile_id",
+		},
+		&requestflag.Flag[string]{
 			Name:     "website",
 			BodyPath: "website",
 		},
