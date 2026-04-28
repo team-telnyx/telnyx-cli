@@ -36,6 +36,8 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-url", "dynamic_variables_webhook_url",
 			"--enabled-feature", "telephony",
+			"--external-llm", "{base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}",
+			"--fallback-config", "{external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}",
 			"--greeting", "greeting",
 			"--insight-settings", "{insight_group_id: insight_group_id}",
 			"--instructions", "instructions",
@@ -70,6 +72,16 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-url", "dynamic_variables_webhook_url",
 			"--enabled-feature", "telephony",
+			"--external-llm.base-url", "base_url",
+			"--external-llm.model", "model",
+			"--external-llm.authentication-method", "token",
+			"--external-llm.certificate-ref", "certificate_ref",
+			"--external-llm.forward-metadata=true",
+			"--external-llm.llm-api-key-ref", "llm_api_key_ref",
+			"--external-llm.token-retrieval-url", "token_retrieval_url",
+			"--fallback-config.external-llm", "{base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}",
+			"--fallback-config.llm-api-key-ref", "llm_api_key_ref",
+			"--fallback-config.model", "model",
 			"--greeting", "greeting",
 			"--insight-settings.insight-group-id", "insight_group_id",
 			"--instructions", "instructions",
@@ -135,6 +147,25 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"dynamic_variables_webhook_url: dynamic_variables_webhook_url\n" +
 			"enabled_features:\n" +
 			"  - telephony\n" +
+			"external_llm:\n" +
+			"  base_url: base_url\n" +
+			"  model: model\n" +
+			"  authentication_method: token\n" +
+			"  certificate_ref: certificate_ref\n" +
+			"  forward_metadata: true\n" +
+			"  llm_api_key_ref: llm_api_key_ref\n" +
+			"  token_retrieval_url: token_retrieval_url\n" +
+			"fallback_config:\n" +
+			"  external_llm:\n" +
+			"    base_url: base_url\n" +
+			"    model: model\n" +
+			"    authentication_method: token\n" +
+			"    certificate_ref: certificate_ref\n" +
+			"    forward_metadata: true\n" +
+			"    llm_api_key_ref: llm_api_key_ref\n" +
+			"    token_retrieval_url: token_retrieval_url\n" +
+			"  llm_api_key_ref: llm_api_key_ref\n" +
+			"  model: model\n" +
 			"greeting: greeting\n" +
 			"insight_settings:\n" +
 			"  insight_group_id: insight_group_id\n" +

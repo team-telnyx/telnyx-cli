@@ -21,7 +21,7 @@ func TestCallsDial(t *testing.T) {
 			"--to", "+18005550100 or sip:username@sip.telnyx.com",
 			"--answering-machine-detection", "detect",
 			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
-			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {foo: bar}, fallback_config: {foo: bar}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
+			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--bridge-intent=true",
@@ -105,8 +105,8 @@ func TestCallsDial(t *testing.T) {
 			"--answering-machine-detection-config.total-analysis-time-millis", "5000",
 			"--assistant.id", "id",
 			"--assistant.dynamic-variables", "{customer_name: John, account_id: ACC-12345}",
-			"--assistant.external-llm", "{foo: bar}",
-			"--assistant.fallback-config", "{foo: bar}",
+			"--assistant.external-llm", "{authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}",
+			"--assistant.fallback-config", "{external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}",
 			"--assistant.greeting", "greeting",
 			"--assistant.instructions", "You are a friendly voice assistant.",
 			"--assistant.llm-api-key-ref", "my_llm_api_key",
@@ -224,9 +224,24 @@ func TestCallsDial(t *testing.T) {
 			"    customer_name: John\n" +
 			"    account_id: ACC-12345\n" +
 			"  external_llm:\n" +
-			"    foo: bar\n" +
+			"    authentication_method: token\n" +
+			"    base_url: base_url\n" +
+			"    certificate_ref: certificate_ref\n" +
+			"    forward_metadata: true\n" +
+			"    llm_api_key_ref: llm_api_key_ref\n" +
+			"    model: model\n" +
+			"    token_retrieval_url: token_retrieval_url\n" +
 			"  fallback_config:\n" +
-			"    foo: bar\n" +
+			"    external_llm:\n" +
+			"      authentication_method: token\n" +
+			"      base_url: base_url\n" +
+			"      certificate_ref: certificate_ref\n" +
+			"      forward_metadata: true\n" +
+			"      llm_api_key_ref: llm_api_key_ref\n" +
+			"      model: model\n" +
+			"      token_retrieval_url: token_retrieval_url\n" +
+			"    llm_api_key_ref: llm_api_key_ref\n" +
+			"    model: model\n" +
 			"  greeting: greeting\n" +
 			"  instructions: You are a friendly voice assistant.\n" +
 			"  llm_api_key_ref: my_llm_api_key\n" +
