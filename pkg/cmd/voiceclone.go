@@ -122,7 +122,7 @@ var voiceClonesCreateFromUpload = cli.Command{
 	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. For best results, provide 5–10 seconds of\nclear speech. Maximum file size: 5MB for Telnyx, 20MB for Minimax.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "params",
 			Usage:    "Multipart form data for creating a voice clone from a direct audio upload. Maximum file size: 5MB for Telnyx, 20MB for Minimax.",
 			Required: true,
@@ -182,8 +182,15 @@ func handleVoiceClonesCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-clones create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "voice-clones create",
+		Transform:      transform,
+	})
 }
 
 func handleVoiceClonesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -224,8 +231,15 @@ func handleVoiceClonesUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-clones update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "voice-clones update",
+		Transform:      transform,
+	})
 }
 
 func handleVoiceClonesList(ctx context.Context, cmd *cli.Command) error {
@@ -250,6 +264,7 @@ func handleVoiceClonesList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -259,14 +274,26 @@ func handleVoiceClonesList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "voice-clones list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "voice-clones list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.VoiceClones.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "voice-clones list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "voice-clones list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -325,8 +352,15 @@ func handleVoiceClonesCreateFromUpload(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "voice-clones create-from-upload", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "voice-clones create-from-upload",
+		Transform:      transform,
+	})
 }
 
 func handleVoiceClonesDownloadSample(ctx context.Context, cmd *cli.Command) error {

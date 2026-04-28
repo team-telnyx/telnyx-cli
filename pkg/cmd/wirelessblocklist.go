@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -166,8 +165,15 @@ func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless-blocklists create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "wireless-blocklists create",
+		Transform:      transform,
+	})
 }
 
 func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -201,8 +207,15 @@ func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless-blocklists retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "wireless-blocklists retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -233,6 +246,7 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 	options = append(options, option.WithResponseBodyInto(&res))
 	_, err = client.WirelessBlocklists.Update(
 		ctx,
+		cmd.Value("id").(string),
 		params,
 		options...,
 	)
@@ -242,8 +256,15 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless-blocklists update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "wireless-blocklists update",
+		Transform:      transform,
+	})
 }
 
 func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
@@ -268,6 +289,7 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -277,14 +299,26 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "wireless-blocklists list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "wireless-blocklists list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.WirelessBlocklists.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "wireless-blocklists list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "wireless-blocklists list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -319,6 +353,13 @@ func handleWirelessBlocklistsDelete(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless-blocklists delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "wireless-blocklists delete",
+		Transform:      transform,
+	})
 }

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -96,6 +95,11 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "voice-settings",
 			Usage:    "Provider-specific voice settings. Contents vary by provider — see provider-specific parameter objects below.",
 			BodyPath: "voice_settings",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "xai",
+			Usage:    "xAI provider-specific parameters.",
+			BodyPath: "xai",
 		},
 	},
 	Action:          handleTextToSpeechGenerate,
@@ -285,6 +289,28 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "volume",
 		},
 	},
+	"xai": {
+		&requestflag.InnerFlag[string]{
+			Name:       "xai.voice-id",
+			Usage:      "xAI voice identifier.",
+			InnerField: "voice_id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "xai.language",
+			Usage:      "Language code, or `auto` to detect.",
+			InnerField: "language",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "xai.output-format",
+			Usage:      "Audio output format.",
+			InnerField: "output_format",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "xai.sample-rate",
+			Usage:      "Audio sample rate in Hz.",
+			InnerField: "sample_rate",
+		},
+	},
 })
 
 var textToSpeechListVoices = cli.Command{
@@ -337,8 +363,15 @@ func handleTextToSpeechGenerate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "text-to-speech generate", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "text-to-speech generate",
+		Transform:      transform,
+	})
 }
 
 func handleTextToSpeechListVoices(ctx context.Context, cmd *cli.Command) error {
@@ -371,6 +404,13 @@ func handleTextToSpeechListVoices(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "text-to-speech list-voices", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "text-to-speech list-voices",
+		Transform:      transform,
+	})
 }

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -115,8 +114,15 @@ func handleWirelessDetailRecordsReportsCreate(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless:detail-records-reports create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "wireless:detail-records-reports create",
+		Transform:      transform,
+	})
 }
 
 func handleWirelessDetailRecordsReportsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -150,8 +156,15 @@ func handleWirelessDetailRecordsReportsRetrieve(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless:detail-records-reports retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "wireless:detail-records-reports retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleWirelessDetailRecordsReportsList(ctx context.Context, cmd *cli.Command) error {
@@ -184,8 +197,15 @@ func handleWirelessDetailRecordsReportsList(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless:detail-records-reports list", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "wireless:detail-records-reports list",
+		Transform:      transform,
+	})
 }
 
 func handleWirelessDetailRecordsReportsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -219,6 +239,13 @@ func handleWirelessDetailRecordsReportsDelete(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "wireless:detail-records-reports delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "wireless:detail-records-reports delete",
+		Transform:      transform,
+	})
 }

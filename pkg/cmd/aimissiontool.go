@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -128,8 +127,15 @@ func handleAIMissionsToolsCreateTool(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:tools create-tool", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:tools create-tool",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsToolsDeleteTool(ctx context.Context, cmd *cli.Command) error {
@@ -206,8 +212,15 @@ func handleAIMissionsToolsGetTool(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:tools get-tool", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:tools get-tool",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsToolsListTools(ctx context.Context, cmd *cli.Command) error {
@@ -241,8 +254,15 @@ func handleAIMissionsToolsListTools(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:tools list-tools", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:tools list-tools",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsToolsUpdateTool(ctx context.Context, cmd *cli.Command) error {
@@ -285,6 +305,13 @@ func handleAIMissionsToolsUpdateTool(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:tools update-tool", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:tools update-tool",
+		Transform:      transform,
+	})
 }

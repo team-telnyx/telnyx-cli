@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -132,8 +131,15 @@ func handleRoomsSessionsActionsEnd(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:sessions:actions end", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "rooms:sessions:actions end",
+		Transform:      transform,
+	})
 }
 
 func handleRoomsSessionsActionsKick(ctx context.Context, cmd *cli.Command) error {
@@ -174,8 +180,15 @@ func handleRoomsSessionsActionsKick(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:sessions:actions kick", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "rooms:sessions:actions kick",
+		Transform:      transform,
+	})
 }
 
 func handleRoomsSessionsActionsMute(ctx context.Context, cmd *cli.Command) error {
@@ -216,8 +229,15 @@ func handleRoomsSessionsActionsMute(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:sessions:actions mute", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "rooms:sessions:actions mute",
+		Transform:      transform,
+	})
 }
 
 func handleRoomsSessionsActionsUnmute(ctx context.Context, cmd *cli.Command) error {
@@ -258,6 +278,13 @@ func handleRoomsSessionsActionsUnmute(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "rooms:sessions:actions unmute", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "rooms:sessions:actions unmute",
+		Transform:      transform,
+	})
 }

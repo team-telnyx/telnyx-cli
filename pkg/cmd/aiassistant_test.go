@@ -23,16 +23,19 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-url", "dynamic_variables_webhook_url",
 			"--enabled-feature", "telephony",
+			"--external-llm", "{base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}",
+			"--fallback-config", "{external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}",
 			"--greeting", "greeting",
 			"--insight-settings", "{insight_group_id: insight_group_id}",
 			"--llm-api-key-ref", "llm_api_key_ref",
 			"--messaging-settings", "{conversation_inactivity_minutes: 1, default_messaging_profile_id: default_messaging_profile_id, delivery_status_webhook_url: delivery_status_webhook_url}",
 			"--observability-settings", "{host: host, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
+			"--post-conversation-settings", "{enabled: true}",
 			"--privacy-settings", "{data_retention: true}",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_timeout_secs: 30, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
-			"--transcription", "{language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, eot_threshold: 0, eot_timeout_ms: 0, numerals: true, smart_format: true}}",
+			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, keyterm: keyterm, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
 			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
 		)
@@ -54,6 +57,16 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-url", "dynamic_variables_webhook_url",
 			"--enabled-feature", "telephony",
+			"--external-llm.base-url", "base_url",
+			"--external-llm.model", "model",
+			"--external-llm.authentication-method", "token",
+			"--external-llm.certificate-ref", "certificate_ref",
+			"--external-llm.forward-metadata=true",
+			"--external-llm.llm-api-key-ref", "llm_api_key_ref",
+			"--external-llm.token-retrieval-url", "token_retrieval_url",
+			"--fallback-config.external-llm", "{base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}",
+			"--fallback-config.llm-api-key-ref", "llm_api_key_ref",
+			"--fallback-config.model", "model",
 			"--greeting", "greeting",
 			"--insight-settings.insight-group-id", "insight_group_id",
 			"--llm-api-key-ref", "llm_api_key_ref",
@@ -64,6 +77,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--observability-settings.public-key-ref", "public_key_ref",
 			"--observability-settings.secret-key-ref", "secret_key_ref",
 			"--observability-settings.status", "enabled",
+			"--post-conversation-settings.enabled=true",
 			"--privacy-settings.data-retention=true",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
 			"--telephony-settings.noise-suppression", "krisp",
@@ -71,14 +85,16 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--telephony-settings.recording-settings", "{channels: single, enabled: true, format: wav}",
 			"--telephony-settings.supports-unauthenticated-web-calls=true",
 			"--telephony-settings.time-limit-secs", "30",
-			"--telephony-settings.user-idle-timeout-secs", "30",
+			"--telephony-settings.user-idle-reply-secs", "0",
+			"--telephony-settings.user-idle-timeout-secs", "10",
 			"--telephony-settings.voicemail-detection", "{on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--transcription.api-key-ref", "api_key_ref",
 			"--transcription.language", "language",
 			"--transcription.model", "deepgram/flux",
 			"--transcription.region", "region",
-			"--transcription.settings", "{eager_eot_threshold: 0.3, eot_threshold: 0, eot_timeout_ms: 0, numerals: true, smart_format: true}",
+			"--transcription.settings", "{eager_eot_threshold: 0.3, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, keyterm: keyterm, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}",
 			"--voice-settings.voice", "voice",
 			"--voice-settings.api-key-ref", "api_key_ref",
 			"--voice-settings.background-audio", "{type: predefined_media, value: silence}",
@@ -116,6 +132,25 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"dynamic_variables_webhook_url: dynamic_variables_webhook_url\n" +
 			"enabled_features:\n" +
 			"  - telephony\n" +
+			"external_llm:\n" +
+			"  base_url: base_url\n" +
+			"  model: model\n" +
+			"  authentication_method: token\n" +
+			"  certificate_ref: certificate_ref\n" +
+			"  forward_metadata: true\n" +
+			"  llm_api_key_ref: llm_api_key_ref\n" +
+			"  token_retrieval_url: token_retrieval_url\n" +
+			"fallback_config:\n" +
+			"  external_llm:\n" +
+			"    base_url: base_url\n" +
+			"    model: model\n" +
+			"    authentication_method: token\n" +
+			"    certificate_ref: certificate_ref\n" +
+			"    forward_metadata: true\n" +
+			"    llm_api_key_ref: llm_api_key_ref\n" +
+			"    token_retrieval_url: token_retrieval_url\n" +
+			"  llm_api_key_ref: llm_api_key_ref\n" +
+			"  model: model\n" +
 			"greeting: greeting\n" +
 			"insight_settings:\n" +
 			"  insight_group_id: insight_group_id\n" +
@@ -129,6 +164,8 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"  public_key_ref: public_key_ref\n" +
 			"  secret_key_ref: secret_key_ref\n" +
 			"  status: enabled\n" +
+			"post_conversation_settings:\n" +
+			"  enabled: true\n" +
 			"privacy_settings:\n" +
 			"  data_retention: true\n" +
 			"telephony_settings:\n" +
@@ -143,7 +180,8 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"    format: wav\n" +
 			"  supports_unauthenticated_web_calls: true\n" +
 			"  time_limit_secs: 30\n" +
-			"  user_idle_timeout_secs: 30\n" +
+			"  user_idle_reply_secs: 0\n" +
+			"  user_idle_timeout_secs: 10\n" +
 			"  voicemail_detection:\n" +
 			"    on_voicemail_detected:\n" +
 			"      action: stop_assistant\n" +
@@ -189,13 +227,18 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"          value_path: x\n" +
 			"      timeout_ms: 500\n" +
 			"transcription:\n" +
+			"  api_key_ref: api_key_ref\n" +
 			"  language: language\n" +
 			"  model: deepgram/flux\n" +
 			"  region: region\n" +
 			"  settings:\n" +
 			"    eager_eot_threshold: 0.3\n" +
-			"    eot_threshold: 0\n" +
-			"    eot_timeout_ms: 0\n" +
+			"    end_of_turn_confidence_threshold: 0\n" +
+			"    eot_threshold: 0.5\n" +
+			"    eot_timeout_ms: 500\n" +
+			"    keyterm: keyterm\n" +
+			"    max_turn_silence: 100\n" +
+			"    min_turn_silence: 100\n" +
 			"    numerals: true\n" +
 			"    smart_format: true\n" +
 			"voice_settings:\n" +
@@ -262,6 +305,8 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-url", "dynamic_variables_webhook_url",
 			"--enabled-feature", "telephony",
+			"--external-llm", "{base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}",
+			"--fallback-config", "{external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}",
 			"--greeting", "greeting",
 			"--insight-settings", "{insight_group_id: insight_group_id}",
 			"--instructions", "instructions",
@@ -270,12 +315,13 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--model", "model",
 			"--name", "name",
 			"--observability-settings", "{host: host, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
+			"--post-conversation-settings", "{enabled: true}",
 			"--privacy-settings", "{data_retention: true}",
 			"--promote-to-main=true",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_timeout_secs: 30, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
-			"--transcription", "{language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, eot_threshold: 0, eot_timeout_ms: 0, numerals: true, smart_format: true}}",
+			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, keyterm: keyterm, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
 			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
 		)
@@ -295,6 +341,16 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-url", "dynamic_variables_webhook_url",
 			"--enabled-feature", "telephony",
+			"--external-llm.base-url", "base_url",
+			"--external-llm.model", "model",
+			"--external-llm.authentication-method", "token",
+			"--external-llm.certificate-ref", "certificate_ref",
+			"--external-llm.forward-metadata=true",
+			"--external-llm.llm-api-key-ref", "llm_api_key_ref",
+			"--external-llm.token-retrieval-url", "token_retrieval_url",
+			"--fallback-config.external-llm", "{base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}",
+			"--fallback-config.llm-api-key-ref", "llm_api_key_ref",
+			"--fallback-config.model", "model",
 			"--greeting", "greeting",
 			"--insight-settings.insight-group-id", "insight_group_id",
 			"--instructions", "instructions",
@@ -308,6 +364,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--observability-settings.public-key-ref", "public_key_ref",
 			"--observability-settings.secret-key-ref", "secret_key_ref",
 			"--observability-settings.status", "enabled",
+			"--post-conversation-settings.enabled=true",
 			"--privacy-settings.data-retention=true",
 			"--promote-to-main=true",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
@@ -316,14 +373,16 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--telephony-settings.recording-settings", "{channels: single, enabled: true, format: wav}",
 			"--telephony-settings.supports-unauthenticated-web-calls=true",
 			"--telephony-settings.time-limit-secs", "30",
-			"--telephony-settings.user-idle-timeout-secs", "30",
+			"--telephony-settings.user-idle-reply-secs", "0",
+			"--telephony-settings.user-idle-timeout-secs", "10",
 			"--telephony-settings.voicemail-detection", "{on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--transcription.api-key-ref", "api_key_ref",
 			"--transcription.language", "language",
 			"--transcription.model", "deepgram/flux",
 			"--transcription.region", "region",
-			"--transcription.settings", "{eager_eot_threshold: 0.3, eot_threshold: 0, eot_timeout_ms: 0, numerals: true, smart_format: true}",
+			"--transcription.settings", "{eager_eot_threshold: 0.3, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, keyterm: keyterm, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}",
 			"--voice-settings.voice", "voice",
 			"--voice-settings.api-key-ref", "api_key_ref",
 			"--voice-settings.background-audio", "{type: predefined_media, value: silence}",
@@ -358,6 +417,25 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"dynamic_variables_webhook_url: dynamic_variables_webhook_url\n" +
 			"enabled_features:\n" +
 			"  - telephony\n" +
+			"external_llm:\n" +
+			"  base_url: base_url\n" +
+			"  model: model\n" +
+			"  authentication_method: token\n" +
+			"  certificate_ref: certificate_ref\n" +
+			"  forward_metadata: true\n" +
+			"  llm_api_key_ref: llm_api_key_ref\n" +
+			"  token_retrieval_url: token_retrieval_url\n" +
+			"fallback_config:\n" +
+			"  external_llm:\n" +
+			"    base_url: base_url\n" +
+			"    model: model\n" +
+			"    authentication_method: token\n" +
+			"    certificate_ref: certificate_ref\n" +
+			"    forward_metadata: true\n" +
+			"    llm_api_key_ref: llm_api_key_ref\n" +
+			"    token_retrieval_url: token_retrieval_url\n" +
+			"  llm_api_key_ref: llm_api_key_ref\n" +
+			"  model: model\n" +
 			"greeting: greeting\n" +
 			"insight_settings:\n" +
 			"  insight_group_id: insight_group_id\n" +
@@ -374,6 +452,8 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"  public_key_ref: public_key_ref\n" +
 			"  secret_key_ref: secret_key_ref\n" +
 			"  status: enabled\n" +
+			"post_conversation_settings:\n" +
+			"  enabled: true\n" +
 			"privacy_settings:\n" +
 			"  data_retention: true\n" +
 			"promote_to_main: true\n" +
@@ -389,7 +469,8 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"    format: wav\n" +
 			"  supports_unauthenticated_web_calls: true\n" +
 			"  time_limit_secs: 30\n" +
-			"  user_idle_timeout_secs: 30\n" +
+			"  user_idle_reply_secs: 0\n" +
+			"  user_idle_timeout_secs: 10\n" +
 			"  voicemail_detection:\n" +
 			"    on_voicemail_detected:\n" +
 			"      action: stop_assistant\n" +
@@ -435,13 +516,18 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"          value_path: x\n" +
 			"      timeout_ms: 500\n" +
 			"transcription:\n" +
+			"  api_key_ref: api_key_ref\n" +
 			"  language: language\n" +
 			"  model: deepgram/flux\n" +
 			"  region: region\n" +
 			"  settings:\n" +
 			"    eager_eot_threshold: 0.3\n" +
-			"    eot_threshold: 0\n" +
-			"    eot_timeout_ms: 0\n" +
+			"    end_of_turn_confidence_threshold: 0\n" +
+			"    eot_threshold: 0.5\n" +
+			"    eot_timeout_ms: 500\n" +
+			"    keyterm: keyterm\n" +
+			"    max_turn_silence: 100\n" +
+			"    min_turn_silence: 100\n" +
 			"    numerals: true\n" +
 			"    smart_format: true\n" +
 			"voice_settings:\n" +

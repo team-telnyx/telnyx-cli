@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -117,8 +116,15 @@ func handleMessaging10dlcBrandExternalVettingList(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand:external-vetting list", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand:external-vetting list",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandExternalVettingImports(ctx context.Context, cmd *cli.Command) error {
@@ -159,8 +165,15 @@ func handleMessaging10dlcBrandExternalVettingImports(ctx context.Context, cmd *c
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand:external-vetting imports", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand:external-vetting imports",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandExternalVettingOrder(ctx context.Context, cmd *cli.Command) error {
@@ -201,6 +214,13 @@ func handleMessaging10dlcBrandExternalVettingOrder(ctx context.Context, cmd *cli
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand:external-vetting order", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand:external-vetting order",
+		Transform:      transform,
+	})
 }

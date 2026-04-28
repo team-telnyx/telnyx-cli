@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -99,8 +98,15 @@ func handleSubNumberOrdersReportCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sub-number-orders-report create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sub-number-orders-report create",
+		Transform:      transform,
+	})
 }
 
 func handleSubNumberOrdersReportRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -134,6 +140,13 @@ func handleSubNumberOrdersReportRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sub-number-orders-report retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sub-number-orders-report retrieve",
+		Transform:      transform,
+	})
 }

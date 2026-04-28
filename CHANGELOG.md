@@ -1,5 +1,72 @@
 # Changelog
 
+## 0.13.0 (2026-04-28)
+
+Full Changelog: [v0.12.1...v0.13.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.12.1...v0.13.0)
+
+### Features
+
+* [TDA-6425] Fix session analysis API spec: relaxed date_time, remove status & completed_at ([76c9dda](https://github.com/team-telnyx/telnyx-cli/commit/76c9ddadad7d32b232ad2a2312b203246b4e083d))
+* Add assistant external LLM forward metadata to OpenAPI ([05732cd](https://github.com/team-telnyx/telnyx-cli/commit/05732cd0b228a590f9aea33af828fd11e30ad826))
+* Add keyterm field to TranscriptionSettingsConfig ([0442806](https://github.com/team-telnyx/telnyx-cli/commit/0442806d35f26ea0c55ef10300fda652916351fd))
+* Add post_conversation_settings to AI Assistants API spec ([a7d4068](https://github.com/team-telnyx/telnyx-cli/commit/a7d406818fffc0a08810afe2448f73215242ee04))
+* add shared CallAssistantRequest schema for call-control assistant object ([0483354](https://github.com/team-telnyx/telnyx-cli/commit/04833549b8bf1187a240cb510ec093725df0a59c))
+* Add user_idle_reply_secs to TelephonySettings spec ([4379cba](https://github.com/team-telnyx/telnyx-cli/commit/4379cba6c583836b86a12dcc8c6da3fecd031196))
+* Add webhook_urls, webhook_urls_method, webhook_retries_policies to Dial endpoint ([9d780dd](https://github.com/team-telnyx/telnyx-cli/commit/9d780dd5b49830858b946840ca2d1ff7ac40e2b3))
+* Add xAI provider to standalone STT and TTS specs ([8e06bee](https://github.com/team-telnyx/telnyx-cli/commit/8e06bee4ddfa5b8291b456242cd50d40133499fc))
+* **api:** manual updates ([3446dd2](https://github.com/team-telnyx/telnyx-cli/commit/3446dd29a02a82d3d4e6166e56389c357d902e0a))
+* **api:** Merge pull request [#46](https://github.com/team-telnyx/telnyx-cli/issues/46) from stainless-sdks/FixModelRecommendation ([48a0459](https://github.com/team-telnyx/telnyx-cli/commit/48a0459204bd52378e60536bc85b06667276b3e7))
+* **api:** Merge pull request [#49](https://github.com/team-telnyx/telnyx-cli/issues/49) from stainless-sdks/fix/cli-go-sdk-version-sync ([62037a5](https://github.com/team-telnyx/telnyx-cli/commit/62037a5f7ea5ffc670f975ed16e7a38344002afa))
+* **cli:** add `--raw-output`/`-r` option to print raw (non-JSON) strings ([7c395f1](https://github.com/team-telnyx/telnyx-cli/commit/7c395f18c06b33139609ec913ad98d7ae310a840))
+* **cli:** alias parameters in data with `x-stainless-cli-data-alias` ([cd8b6ef](https://github.com/team-telnyx/telnyx-cli/commit/cd8b6ef73737598c5b200f84bcc4cd83c75593ee))
+* **cli:** send filename and content type when reading input from files ([1e7f69c](https://github.com/team-telnyx/telnyx-cli/commit/1e7f69cc77fd7a1a397b827c391fbf1c58f85f36))
+* Correct external LLM forwarded metadata docs ([1c4c8df](https://github.com/team-telnyx/telnyx-cli/commit/1c4c8dfdcccdd4348152473f67a34d2880075309))
+* Document Flux transcription language hints ([bde83af](https://github.com/team-telnyx/telnyx-cli/commit/bde83afcbf1668e78fd8963c22a8bf4557a9b38c))
+* ENGDESK-51445: added profile ID fields to Whatsapp messages ([62cf39a](https://github.com/team-telnyx/telnyx-cli/commit/62cf39a5f3d89b5839b9babda78a82ffefea532e))
+* Fix CreateVerifyProfileRequest to match messaging-2fa schema ([bdb3e10](https://github.com/team-telnyx/telnyx-cli/commit/bdb3e1024e6d3f9b1ef54c4b87f0b3d3f8c36dcf))
+* Lower user_idle_timeout_secs minimum from 30s to 10s ([6e1a347](https://github.com/team-telnyx/telnyx-cli/commit/6e1a3478e9da22ddae7bf643d1faa44ad8696131))
+* MSG-6841: add missing whatsapp api docs ([033aa3d](https://github.com/team-telnyx/telnyx-cli/commit/033aa3db737e530728ba429eaa0d63a2b2c262c8))
+* MSG-6846: add GET /profile/photo docs for whatsapp API ([daa250b](https://github.com/team-telnyx/telnyx-cli/commit/daa250b81d15d1b114f78c0c3a21808fefe8c61d))
+* MSG-6868: document whitelisted_destinations as conditionally required ([348313f](https://github.com/team-telnyx/telnyx-cli/commit/348313f9e40bbf33c05c4fe78ef12967c3a43b07))
+* TELAPPS Provide description what params can be used for premium amd ([7eb2b62](https://github.com/team-telnyx/telnyx-cli/commit/7eb2b625b650165d5c14724584c17da908f91551))
+* TELAPPS-5712: Add deepfake detection to call-control API spec ([90c37ca](https://github.com/team-telnyx/telnyx-cli/commit/90c37ca9c1c881f6cee34beccc706394793219e4))
+* TELAPPS-5725: Add deepfake detection params to call-scripting API docs ([7e8ff82](https://github.com/team-telnyx/telnyx-cli/commit/7e8ff82b1e6d02646cb749d3ba8474401b7ee775))
+* Update assistant transcription settings spec ([e63e176](https://github.com/team-telnyx/telnyx-cli/commit/e63e176ba05378d4b939da8fbea8cc4801ff0711))
+
+
+### Bug Fixes
+
+* align CLI with generated Go SDK ([62037a5](https://github.com/team-telnyx/telnyx-cli/commit/62037a5f7ea5ffc670f975ed16e7a38344002afa))
+* **cli:** fix incompatible Go types for flag generated as array of maps ([5e74dfc](https://github.com/team-telnyx/telnyx-cli/commit/5e74dfce077615c514d025c998aa0d731aea1327))
+* fix for failing to drop invalid module replace in link script ([5e6e6b1](https://github.com/team-telnyx/telnyx-cli/commit/5e6e6b1940f41ba633633d63945c152ef5ed0d85))
+* remove texml initiate-ai-call command ([6919b49](https://github.com/team-telnyx/telnyx-cli/commit/6919b494c9d3594ce398c9f340e66c278e3ad82d))
+* set additionalProperties=false on VoiceCloneUploadRequest to prevent codegen errors ([b8690d4](https://github.com/team-telnyx/telnyx-cli/commit/b8690d48133ffad60c3b93b361ac7ab18e6e910f))
+
+
+### Reverts
+
+* restore stainless.yml to pre-6a6df5b state ([2ba0de3](https://github.com/team-telnyx/telnyx-cli/commit/2ba0de3eb8c87aaa4608af04abee4713025036a9))
+* revert CLI Go SDK v4.56.0 rename fixes ([b1f3932](https://github.com/team-telnyx/telnyx-cli/commit/b1f3932325c02b8aec6a07bed7939d92fcc4389b))
+
+
+### Chores
+
+* add documentation for ./scripts/link ([6574be2](https://github.com/team-telnyx/telnyx-cli/commit/6574be279c859c48b50ceb4831f9b5ec736c1218))
+* **ci:** support manually triggering release workflow ([42b763a](https://github.com/team-telnyx/telnyx-cli/commit/42b763a5f4754dc4a5a6b3761c46310273d43b2e))
+* **cli:** additional test cases for `ShowJSONIterator` ([fd724b4](https://github.com/team-telnyx/telnyx-cli/commit/fd724b4ad27ba05c19862d09161fbb86a76895f7))
+* **cli:** fall back to JSON when using default "explore" with non-TTY ([7da5552](https://github.com/team-telnyx/telnyx-cli/commit/7da5552ec10cbaf8bc341bf3d1a28e5c46f22ce3))
+* **cli:** switch long lists of positional args over to param structs ([ac4bbaa](https://github.com/team-telnyx/telnyx-cli/commit/ac4bbaa9dc4d5bc2389cd2c4849d20f7834cb58a))
+* **cli:** use `ShowJSONOpts` as argument to `formatJSON` instead of many positionals ([2b896a1](https://github.com/team-telnyx/telnyx-cli/commit/2b896a1e81e453631c4e1075b200f1bebdcfe638))
+* **internal:** codegen related update ([2836da9](https://github.com/team-telnyx/telnyx-cli/commit/2836da9529c3ecdc93657e0f98eaf42a77d38ee0))
+* **internal:** codegen related update ([8e733ec](https://github.com/team-telnyx/telnyx-cli/commit/8e733ecd8dda0525f6d4fbf6cc0607d25984297a))
+* **internal:** more robust bootstrap script ([b3d91df](https://github.com/team-telnyx/telnyx-cli/commit/b3d91dfc512d1eb80cd521ab7a662a1ad3b6bced))
+
+
+### Documentation
+
+* add pagination params to conversation messages endpoint ([e71219c](https://github.com/team-telnyx/telnyx-cli/commit/e71219c1442a4037ceba0a480cecfcee17523c87))
+* document dynamic variable support for voice_settings.voice ([4d5369c](https://github.com/team-telnyx/telnyx-cli/commit/4d5369c7d72e840100bd01a8d979d8704d9a4d7c))
+
 ## 0.12.1 (2026-04-09)
 
 Full Changelog: [v0.12.0...v0.12.1](https://github.com/team-telnyx/telnyx-cli/compare/v0.12.0...v0.12.1)

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -152,8 +151,15 @@ func handleEnterprisesReputationNumbersRetrieve(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "enterprises:reputation:numbers retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "enterprises:reputation:numbers retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
@@ -181,6 +187,7 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -195,7 +202,13 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "enterprises:reputation:numbers list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "enterprises:reputation:numbers list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Enterprises.Reputation.Numbers.ListAutoPaging(
 			ctx,
@@ -207,7 +220,13 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "enterprises:reputation:numbers list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "enterprises:reputation:numbers list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -222,7 +241,7 @@ func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.C
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNumberNewParams{}
+	params := telnyx.EnterpriseReputationNumberAssociateParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -237,7 +256,7 @@ func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.C
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.Reputation.Numbers.New(
+	_, err = client.Enterprises.Reputation.Numbers.Associate(
 		ctx,
 		cmd.Value("enterprise-id").(string),
 		params,
@@ -249,8 +268,15 @@ func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.C
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "enterprises:reputation:numbers associate", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "enterprises:reputation:numbers associate",
+		Transform:      transform,
+	})
 }
 
 func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cli.Command) error {
@@ -264,7 +290,7 @@ func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNumberDeleteParams{
+	params := telnyx.EnterpriseReputationNumberDisassociateParams{
 		EnterpriseID: cmd.Value("enterprise-id").(string),
 	}
 
@@ -279,7 +305,7 @@ func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cl
 		return err
 	}
 
-	return client.Enterprises.Reputation.Numbers.Delete(
+	return client.Enterprises.Reputation.Numbers.Disassociate(
 		ctx,
 		cmd.Value("phone-number").(string),
 		params,

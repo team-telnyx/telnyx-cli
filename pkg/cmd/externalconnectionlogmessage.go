@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -114,8 +113,15 @@ func handleExternalConnectionsLogMessagesRetrieve(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections:log-messages retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "external-connections:log-messages retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleExternalConnectionsLogMessagesList(ctx context.Context, cmd *cli.Command) error {
@@ -140,6 +146,7 @@ func handleExternalConnectionsLogMessagesList(ctx context.Context, cmd *cli.Comm
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -149,14 +156,26 @@ func handleExternalConnectionsLogMessagesList(ctx context.Context, cmd *cli.Comm
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "external-connections:log-messages list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "external-connections:log-messages list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.ExternalConnections.LogMessages.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "external-connections:log-messages list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "external-connections:log-messages list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -191,6 +210,13 @@ func handleExternalConnectionsLogMessagesDismiss(ctx context.Context, cmd *cli.C
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "external-connections:log-messages dismiss", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "external-connections:log-messages dismiss",
+		Transform:      transform,
+	})
 }

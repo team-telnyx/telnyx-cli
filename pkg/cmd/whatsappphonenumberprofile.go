@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -63,6 +62,11 @@ var whatsappPhoneNumbersProfileUpdate = cli.Command{
 			BodyPath: "email",
 		},
 		&requestflag.Flag[string]{
+			Name:     "profile-id",
+			Usage:    "Messaging profile ID for inbound messages",
+			BodyPath: "profile_id",
+		},
+		&requestflag.Flag[string]{
 			Name:     "website",
 			BodyPath: "website",
 		},
@@ -102,8 +106,15 @@ func handleWhatsappPhoneNumbersProfileRetrieve(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:phone-numbers:profile retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "whatsapp:phone-numbers:profile retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleWhatsappPhoneNumbersProfileUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -144,6 +155,13 @@ func handleWhatsappPhoneNumbersProfileUpdate(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:phone-numbers:profile update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "whatsapp:phone-numbers:profile update",
+		Transform:      transform,
+	})
 }

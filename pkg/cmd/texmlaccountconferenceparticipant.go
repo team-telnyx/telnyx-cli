@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -473,8 +472,15 @@ func handleTexmlAccountsConferencesParticipantsRetrieve(ctx context.Context, cmd
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences:participants retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:conferences:participants retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesParticipantsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -518,8 +524,15 @@ func handleTexmlAccountsConferencesParticipantsUpdate(ctx context.Context, cmd *
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences:participants update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:conferences:participants update",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesParticipantsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -597,8 +610,15 @@ func handleTexmlAccountsConferencesParticipantsParticipants(ctx context.Context,
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences:participants participants", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:conferences:participants participants",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsConferencesParticipantsRetrieveParticipants(ctx context.Context, cmd *cli.Command) error {
@@ -641,6 +661,13 @@ func handleTexmlAccountsConferencesParticipantsRetrieveParticipants(ctx context.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:conferences:participants retrieve-participants", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:conferences:participants retrieve-participants",
+		Transform:      transform,
+	})
 }

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -153,8 +152,15 @@ func handleReportsMdrUsageReportsCreate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "reports:mdr-usage-reports create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "reports:mdr-usage-reports create",
+		Transform:      transform,
+	})
 }
 
 func handleReportsMdrUsageReportsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -188,8 +194,15 @@ func handleReportsMdrUsageReportsRetrieve(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "reports:mdr-usage-reports retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "reports:mdr-usage-reports retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) error {
@@ -214,6 +227,7 @@ func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) err
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -223,14 +237,26 @@ func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) err
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "reports:mdr-usage-reports list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "reports:mdr-usage-reports list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Reports.MdrUsageReports.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "reports:mdr-usage-reports list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "reports:mdr-usage-reports list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -265,8 +291,15 @@ func handleReportsMdrUsageReportsDelete(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "reports:mdr-usage-reports delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "reports:mdr-usage-reports delete",
+		Transform:      transform,
+	})
 }
 
 func handleReportsMdrUsageReportsFetchSync(ctx context.Context, cmd *cli.Command) error {
@@ -299,6 +332,13 @@ func handleReportsMdrUsageReportsFetchSync(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "reports:mdr-usage-reports fetch-sync", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "reports:mdr-usage-reports fetch-sync",
+		Transform:      transform,
+	})
 }

@@ -9,5 +9,9 @@ export GOPRIVATE="${GOPRIVATE:+$GOPRIVATE,}github.com/team-telnyx/telnyx-go/v4,g
 
 REPLACEMENT="${1:-"../telnyx-go"}"
 echo "==> Replacing Go SDK with $REPLACEMENT"
-go mod edit -replace github.com/team-telnyx/telnyx-go/v4="$REPLACEMENT"
-go mod tidy -e
+if [[ -d "$REPLACEMENT" ]] || go list -m "$REPLACEMENT" >/dev/null; then
+    go mod edit -replace github.com/team-telnyx/telnyx-go/v4="$REPLACEMENT"
+    go mod tidy -e
+else
+    echo "Skipping Go SDK replacement (branch may not exist on Go SDK)"
+fi

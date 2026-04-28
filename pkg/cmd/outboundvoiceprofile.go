@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -370,8 +369,15 @@ func handleOutboundVoiceProfilesCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "outbound-voice-profiles create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "outbound-voice-profiles create",
+		Transform:      transform,
+	})
 }
 
 func handleOutboundVoiceProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -405,8 +411,15 @@ func handleOutboundVoiceProfilesRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "outbound-voice-profiles retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "outbound-voice-profiles retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleOutboundVoiceProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -447,8 +460,15 @@ func handleOutboundVoiceProfilesUpdate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "outbound-voice-profiles update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "outbound-voice-profiles update",
+		Transform:      transform,
+	})
 }
 
 func handleOutboundVoiceProfilesList(ctx context.Context, cmd *cli.Command) error {
@@ -473,6 +493,7 @@ func handleOutboundVoiceProfilesList(ctx context.Context, cmd *cli.Command) erro
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -482,14 +503,26 @@ func handleOutboundVoiceProfilesList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "outbound-voice-profiles list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "outbound-voice-profiles list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.OutboundVoiceProfiles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "outbound-voice-profiles list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "outbound-voice-profiles list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -524,6 +557,13 @@ func handleOutboundVoiceProfilesDelete(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "outbound-voice-profiles delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "outbound-voice-profiles delete",
+		Transform:      transform,
+	})
 }

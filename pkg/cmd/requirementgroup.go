@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -213,8 +212,15 @@ func handleRequirementGroupsCreate(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "requirement-groups create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "requirement-groups create",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -248,8 +254,15 @@ func handleRequirementGroupsRetrieve(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "requirement-groups retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "requirement-groups retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -290,8 +303,15 @@ func handleRequirementGroupsUpdate(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "requirement-groups update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "requirement-groups update",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsList(ctx context.Context, cmd *cli.Command) error {
@@ -324,8 +344,15 @@ func handleRequirementGroupsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "requirement-groups list", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "requirement-groups list",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -359,8 +386,15 @@ func handleRequirementGroupsDelete(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "requirement-groups delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "requirement-groups delete",
+		Transform:      transform,
+	})
 }
 
 func handleRequirementGroupsSubmitForApproval(ctx context.Context, cmd *cli.Command) error {
@@ -394,6 +428,13 @@ func handleRequirementGroupsSubmitForApproval(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "requirement-groups submit-for-approval", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "requirement-groups submit-for-approval",
+		Transform:      transform,
+	})
 }

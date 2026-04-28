@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -163,8 +162,15 @@ func handleDialogflowConnectionsCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dialogflow-connections create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "dialogflow-connections create",
+		Transform:      transform,
+	})
 }
 
 func handleDialogflowConnectionsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -198,8 +204,15 @@ func handleDialogflowConnectionsRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dialogflow-connections retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "dialogflow-connections retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleDialogflowConnectionsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -240,8 +253,15 @@ func handleDialogflowConnectionsUpdate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "dialogflow-connections update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "dialogflow-connections update",
+		Transform:      transform,
+	})
 }
 
 func handleDialogflowConnectionsDelete(ctx context.Context, cmd *cli.Command) error {

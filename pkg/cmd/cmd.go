@@ -73,6 +73,11 @@ func init() {
 				Name:  "transform-error",
 				Usage: "The GJSON transformation for errors.",
 			},
+			&cli.BoolFlag{
+				Name:    "raw-output",
+				Aliases: []string{"r"},
+				Usage:   "If the result is a string, print it without JSON quotes. This can be useful for making output transforms talk to non-JSON-based systems.",
+			},
 			&requestflag.Flag[string]{
 				Name:    "api-key",
 				Sources: cli.EnvVars("TELNYX_API_KEY"),
@@ -3075,6 +3080,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&whatsappPhoneNumbersProfilePhotoRetrieve,
 					&whatsappPhoneNumbersProfilePhotoDelete,
 					&whatsappPhoneNumbersProfilePhotoUpload,
 				},
@@ -3177,7 +3183,18 @@ func init() {
 					&termsOfServiceNumberReputationAgree,
 				},
 			},
-
+			{
+				Name:     "pronunciation-dicts",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&pronunciationDictsCreate,
+					&pronunciationDictsRetrieve,
+					&pronunciationDictsUpdate,
+					&pronunciationDictsList,
+					&pronunciationDictsDelete,
+				},
+			},
 			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",

@@ -31,6 +31,7 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"--text-type", "text",
 			"--voice", "voice",
 			"--voice-settings", "{foo: bar}",
+			"--xai", "{voice_id: eve, language: language, output_format: mp3, sample_rate: 8000}",
 		)
 	})
 
@@ -85,6 +86,10 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"--text-type", "text",
 			"--voice", "voice",
 			"--voice-settings", "{foo: bar}",
+			"--xai.voice-id", "eve",
+			"--xai.language", "language",
+			"--xai.output-format", "mp3",
+			"--xai.sample-rate", "8000",
 		)
 	})
 
@@ -142,7 +147,12 @@ func TestTextToSpeechGenerate(t *testing.T) {
 			"text_type: text\n" +
 			"voice: voice\n" +
 			"voice_settings:\n" +
-			"  foo: bar\n")
+			"  foo: bar\n" +
+			"xai:\n" +
+			"  voice_id: eve\n" +
+			"  language: language\n" +
+			"  output_format: mp3\n" +
+			"  sample_rate: 8000\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

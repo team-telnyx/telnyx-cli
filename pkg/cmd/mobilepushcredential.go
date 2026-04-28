@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -20,7 +19,7 @@ var mobilePushCredentialsCreate = cli.Command{
 	Usage:   "Creates a new mobile push credential",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "create-mobile-push-credential-request",
 			Required: true,
 			BodyRoot: true,
@@ -128,8 +127,15 @@ func handleMobilePushCredentialsCreate(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "mobile-push-credentials create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "mobile-push-credentials create",
+		Transform:      transform,
+	})
 }
 
 func handleMobilePushCredentialsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -163,8 +169,15 @@ func handleMobilePushCredentialsRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "mobile-push-credentials retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "mobile-push-credentials retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMobilePushCredentialsList(ctx context.Context, cmd *cli.Command) error {
@@ -189,6 +202,7 @@ func handleMobilePushCredentialsList(ctx context.Context, cmd *cli.Command) erro
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -198,14 +212,26 @@ func handleMobilePushCredentialsList(ctx context.Context, cmd *cli.Command) erro
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "mobile-push-credentials list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "mobile-push-credentials list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.MobilePushCredentials.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "mobile-push-credentials list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "mobile-push-credentials list",
+			Transform:      transform,
+		})
 	}
 }
 

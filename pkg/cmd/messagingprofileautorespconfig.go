@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -210,8 +209,15 @@ func handleMessagingProfilesAutorespConfigsCreate(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles:autoresp-configs create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-profiles:autoresp-configs create",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingProfilesAutorespConfigsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -254,8 +260,15 @@ func handleMessagingProfilesAutorespConfigsRetrieve(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles:autoresp-configs retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-profiles:autoresp-configs retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingProfilesAutorespConfigsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -298,8 +311,15 @@ func handleMessagingProfilesAutorespConfigsUpdate(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles:autoresp-configs update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-profiles:autoresp-configs update",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingProfilesAutorespConfigsList(ctx context.Context, cmd *cli.Command) error {
@@ -340,8 +360,15 @@ func handleMessagingProfilesAutorespConfigsList(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles:autoresp-configs list", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-profiles:autoresp-configs list",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingProfilesAutorespConfigsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -384,6 +411,13 @@ func handleMessagingProfilesAutorespConfigsDelete(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-profiles:autoresp-configs delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-profiles:autoresp-configs delete",
+		Transform:      transform,
+	})
 }

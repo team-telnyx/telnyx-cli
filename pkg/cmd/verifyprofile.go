@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -29,6 +28,17 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "call",
 			BodyPath: "call",
 		},
+		&requestflag.Flag[float64]{
+			Name:     "daily-spend-limit",
+			Usage:    "The maximum daily spend allowed on this verify profile, in USD.",
+			BodyPath: "daily_spend_limit",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "daily-spend-limit-enabled",
+			Usage:    "Whether the daily spend limit is enforced for this verify profile.",
+			Default:  false,
+			BodyPath: "daily_spend_limit_enabled",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "flashcall",
 			BodyPath: "flashcall",
@@ -36,10 +46,6 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "language",
 			BodyPath: "language",
-		},
-		&requestflag.Flag[map[string]any]{
-			Name:     "rcs",
-			BodyPath: "rcs",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "sms",
@@ -84,7 +90,7 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "call.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
+			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed. **Conditionally required:** this field must be provided when your organization is configured to require explicit whitelisted destinations; otherwise it is optional.",
 			InnerField: "whitelisted_destinations",
 		},
 	},
@@ -101,39 +107,7 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "flashcall.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
-			InnerField: "whitelisted_destinations",
-		},
-	},
-	"rcs": {
-		&requestflag.InnerFlag[string]{
-			Name:       "rcs.app-name",
-			Usage:      "The name that identifies the application requesting 2fa in the verification message.",
-			InnerField: "app_name",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "rcs.code-length",
-			Usage:      "The length of the verify code to generate.",
-			InnerField: "code_length",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "rcs.default-verification-timeout-secs",
-			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
-			InnerField: "default_verification_timeout_secs",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "rcs.messaging-template-id",
-			Usage:      "The message template identifier selected from /verify_profiles/templates",
-			InnerField: "messaging_template_id",
-		},
-		&requestflag.InnerFlag[bool]{
-			Name:       "rcs.sms-fallback",
-			Usage:      "Enable SMS fallback when RCS delivery fails.",
-			InnerField: "sms_fallback",
-		},
-		&requestflag.InnerFlag[[]string]{
-			Name:       "rcs.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
+			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed. **Conditionally required:** this field must be provided when your organization is configured to require explicit whitelisted destinations; otherwise it is optional.",
 			InnerField: "whitelisted_destinations",
 		},
 	},
@@ -165,24 +139,34 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "sms.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
+			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed. **Conditionally required:** this field must be provided when your organization is configured to require explicit whitelisted destinations; otherwise it is optional.",
 			InnerField: "whitelisted_destinations",
 		},
 	},
 	"whatsapp": {
-		&requestflag.InnerFlag[string]{
-			Name:       "whatsapp.app-name",
-			Usage:      "The name that identifies the application requesting 2fa in the verification message.",
-			InnerField: "app_name",
-		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "whatsapp.default-verification-timeout-secs",
 			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
 			InnerField: "default_verification_timeout_secs",
 		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.sender-phone-number",
+			Usage:      "Phone number registered on the customer WABA to send OTPs from",
+			InnerField: "sender_phone_number",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.template-id",
+			Usage:      "Customer pre-approved authentication template name registered on Meta",
+			InnerField: "template_id",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.waba-id",
+			Usage:      "Customer Meta WABA ID for Bring-Your-Own-WABA sending",
+			InnerField: "waba_id",
+		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "whatsapp.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
+			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed. **Conditionally required:** this field must be provided when your organization is configured to require explicit whitelisted destinations; otherwise it is optional.",
 			InnerField: "whitelisted_destinations",
 		},
 	},
@@ -215,9 +199,15 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "call",
 			BodyPath: "call",
 		},
-		&requestflag.Flag[map[string]any]{
-			Name:     "flashcall",
-			BodyPath: "flashcall",
+		&requestflag.Flag[float64]{
+			Name:     "daily-spend-limit",
+			Usage:    "The maximum daily spend allowed on this verify profile, in USD.",
+			BodyPath: "daily_spend_limit",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "daily-spend-limit-enabled",
+			Usage:    "Whether the daily spend limit is enforced for this verify profile.",
+			BodyPath: "daily_spend_limit_enabled",
 		},
 		&requestflag.Flag[string]{
 			Name:     "language",
@@ -226,10 +216,6 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "name",
 			BodyPath: "name",
-		},
-		&requestflag.Flag[map[string]any]{
-			Name:     "rcs",
-			BodyPath: "rcs",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "sms",
@@ -274,56 +260,7 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "call.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
-			InnerField: "whitelisted_destinations",
-		},
-	},
-	"flashcall": {
-		&requestflag.InnerFlag[string]{
-			Name:       "flashcall.app-name",
-			Usage:      "The name that identifies the application requesting 2fa in the verification message.",
-			InnerField: "app_name",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "flashcall.default-verification-timeout-secs",
-			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
-			InnerField: "default_verification_timeout_secs",
-		},
-		&requestflag.InnerFlag[[]string]{
-			Name:       "flashcall.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
-			InnerField: "whitelisted_destinations",
-		},
-	},
-	"rcs": {
-		&requestflag.InnerFlag[string]{
-			Name:       "rcs.app-name",
-			Usage:      "The name that identifies the application requesting 2fa in the verification message.",
-			InnerField: "app_name",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "rcs.code-length",
-			Usage:      "The length of the verify code to generate.",
-			InnerField: "code_length",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "rcs.default-verification-timeout-secs",
-			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
-			InnerField: "default_verification_timeout_secs",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "rcs.messaging-template-id",
-			Usage:      "The message template identifier selected from /verify_profiles/templates",
-			InnerField: "messaging_template_id",
-		},
-		&requestflag.InnerFlag[bool]{
-			Name:       "rcs.sms-fallback",
-			Usage:      "Enable SMS fallback when RCS delivery fails.",
-			InnerField: "sms_fallback",
-		},
-		&requestflag.InnerFlag[[]string]{
-			Name:       "rcs.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
+			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed. **Conditionally required:** this field must be provided when your organization is configured to require explicit whitelisted destinations; otherwise it is optional.",
 			InnerField: "whitelisted_destinations",
 		},
 	},
@@ -355,24 +292,34 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "sms.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
+			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed. **Conditionally required:** this field must be provided when your organization is configured to require explicit whitelisted destinations; otherwise it is optional.",
 			InnerField: "whitelisted_destinations",
 		},
 	},
 	"whatsapp": {
-		&requestflag.InnerFlag[string]{
-			Name:       "whatsapp.app-name",
-			Usage:      "The name that identifies the application requesting 2fa in the verification message.",
-			InnerField: "app_name",
-		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "whatsapp.default-verification-timeout-secs",
 			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
 			InnerField: "default_verification_timeout_secs",
 		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.sender-phone-number",
+			Usage:      "Phone number registered on the customer WABA to send OTPs from",
+			InnerField: "sender_phone_number",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.template-id",
+			Usage:      "Customer pre-approved authentication template name registered on Meta",
+			InnerField: "template_id",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "whatsapp.waba-id",
+			Usage:      "Customer Meta WABA ID for Bring-Your-Own-WABA sending",
+			InnerField: "waba_id",
+		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "whatsapp.whitelisted-destinations",
-			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed.",
+			Usage:      "Enabled country destinations to send verification codes. The elements in the list must be valid ISO 3166-1 alpha-2 country codes. If set to `[\"*\"]`, all destinations will be allowed. **Conditionally required:** this field must be provided when your organization is configured to require explicit whitelisted destinations; otherwise it is optional.",
 			InnerField: "whitelisted_destinations",
 		},
 	},
@@ -502,8 +449,15 @@ func handleVerifyProfilesCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "verify-profiles create",
+		Transform:      transform,
+	})
 }
 
 func handleVerifyProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -537,8 +491,15 @@ func handleVerifyProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "verify-profiles retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleVerifyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -579,8 +540,15 @@ func handleVerifyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "verify-profiles update",
+		Transform:      transform,
+	})
 }
 
 func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
@@ -605,6 +573,7 @@ func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -614,14 +583,26 @@ func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "verify-profiles list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "verify-profiles list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.VerifyProfiles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "verify-profiles list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "verify-profiles list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -656,8 +637,15 @@ func handleVerifyProfilesDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "verify-profiles delete",
+		Transform:      transform,
+	})
 }
 
 func handleVerifyProfilesCreateTemplate(ctx context.Context, cmd *cli.Command) error {
@@ -690,8 +678,15 @@ func handleVerifyProfilesCreateTemplate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles create-template", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "verify-profiles create-template",
+		Transform:      transform,
+	})
 }
 
 func handleVerifyProfilesRetrieveTemplates(ctx context.Context, cmd *cli.Command) error {
@@ -722,8 +717,15 @@ func handleVerifyProfilesRetrieveTemplates(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles retrieve-templates", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "verify-profiles retrieve-templates",
+		Transform:      transform,
+	})
 }
 
 func handleVerifyProfilesUpdateTemplate(ctx context.Context, cmd *cli.Command) error {
@@ -764,6 +766,13 @@ func handleVerifyProfilesUpdateTemplate(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "verify-profiles update-template", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "verify-profiles update-template",
+		Transform:      transform,
+	})
 }

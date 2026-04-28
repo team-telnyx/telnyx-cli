@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -146,8 +145,15 @@ func handleLegacyReportingUsageReportsVoiceCreate(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:voice create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "legacy:reporting:usage-reports:voice create",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingUsageReportsVoiceRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -181,8 +187,15 @@ func handleLegacyReportingUsageReportsVoiceRetrieve(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:voice retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "legacy:reporting:usage-reports:voice retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Command) error {
@@ -207,6 +220,7 @@ func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Co
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -216,14 +230,26 @@ func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Co
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:voice list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "legacy:reporting:usage-reports:voice list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Legacy.Reporting.UsageReports.Voice.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "legacy:reporting:usage-reports:voice list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "legacy:reporting:usage-reports:voice list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -258,6 +284,13 @@ func handleLegacyReportingUsageReportsVoiceDelete(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "legacy:reporting:usage-reports:voice delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "legacy:reporting:usage-reports:voice delete",
+		Transform:      transform,
+	})
 }

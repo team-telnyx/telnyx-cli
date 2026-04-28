@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -186,8 +185,15 @@ func handleMessagingHostedNumberOrdersCreate(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-hosted-number-orders create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-hosted-number-orders create",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingHostedNumberOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -221,8 +227,15 @@ func handleMessagingHostedNumberOrdersRetrieve(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-hosted-number-orders retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-hosted-number-orders retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingHostedNumberOrdersList(ctx context.Context, cmd *cli.Command) error {
@@ -247,6 +260,7 @@ func handleMessagingHostedNumberOrdersList(ctx context.Context, cmd *cli.Command
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -256,14 +270,26 @@ func handleMessagingHostedNumberOrdersList(ctx context.Context, cmd *cli.Command
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-hosted-number-orders list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "messaging-hosted-number-orders list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.MessagingHostedNumberOrders.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-hosted-number-orders list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "messaging-hosted-number-orders list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -298,8 +324,15 @@ func handleMessagingHostedNumberOrdersDelete(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-hosted-number-orders delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-hosted-number-orders delete",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingHostedNumberOrdersCheckEligibility(ctx context.Context, cmd *cli.Command) error {
@@ -332,8 +365,15 @@ func handleMessagingHostedNumberOrdersCheckEligibility(ctx context.Context, cmd 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-hosted-number-orders check-eligibility", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-hosted-number-orders check-eligibility",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingHostedNumberOrdersCreateVerificationCodes(ctx context.Context, cmd *cli.Command) error {
@@ -374,8 +414,15 @@ func handleMessagingHostedNumberOrdersCreateVerificationCodes(ctx context.Contex
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-hosted-number-orders create-verification-codes", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-hosted-number-orders create-verification-codes",
+		Transform:      transform,
+	})
 }
 
 func handleMessagingHostedNumberOrdersValidateCodes(ctx context.Context, cmd *cli.Command) error {
@@ -416,6 +463,13 @@ func handleMessagingHostedNumberOrdersValidateCodes(ctx context.Context, cmd *cl
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-hosted-number-orders validate-codes", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-hosted-number-orders validate-codes",
+		Transform:      transform,
+	})
 }

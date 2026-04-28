@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -115,8 +114,15 @@ func handlePhoneNumbersActionsChangeBundleStatus(ctx context.Context, cmd *cli.C
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:actions change-bundle-status", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "phone-numbers:actions change-bundle-status",
+		Transform:      transform,
+	})
 }
 
 func handlePhoneNumbersActionsEnableEmergency(ctx context.Context, cmd *cli.Command) error {
@@ -157,8 +163,15 @@ func handlePhoneNumbersActionsEnableEmergency(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:actions enable-emergency", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "phone-numbers:actions enable-emergency",
+		Transform:      transform,
+	})
 }
 
 func handlePhoneNumbersActionsVerifyOwnership(ctx context.Context, cmd *cli.Command) error {
@@ -191,6 +204,13 @@ func handlePhoneNumbersActionsVerifyOwnership(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "phone-numbers:actions verify-ownership", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "phone-numbers:actions verify-ownership",
+		Transform:      transform,
+	})
 }

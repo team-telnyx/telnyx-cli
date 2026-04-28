@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -113,15 +112,22 @@ func handleEnterprisesReputationRetrieve(ctx context.Context, cmd *cli.Command) 
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.Reputation.List(ctx, cmd.Value("enterprise-id").(string), options...)
+	_, err = client.Enterprises.Reputation.Get(ctx, cmd.Value("enterprise-id").(string), options...)
 	if err != nil {
 		return err
 	}
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "enterprises:reputation retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "enterprises:reputation retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleEnterprisesReputationDisable(ctx context.Context, cmd *cli.Command) error {
@@ -146,7 +152,7 @@ func handleEnterprisesReputationDisable(ctx context.Context, cmd *cli.Command) e
 		return err
 	}
 
-	return client.Enterprises.Reputation.DeleteAll(ctx, cmd.Value("enterprise-id").(string), options...)
+	return client.Enterprises.Reputation.Disable(ctx, cmd.Value("enterprise-id").(string), options...)
 }
 
 func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) error {
@@ -160,7 +166,7 @@ func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNewParams{}
+	params := telnyx.EnterpriseReputationEnableParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -175,7 +181,7 @@ func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) er
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.Reputation.New(
+	_, err = client.Enterprises.Reputation.Enable(
 		ctx,
 		cmd.Value("enterprise-id").(string),
 		params,
@@ -187,8 +193,15 @@ func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "enterprises:reputation enable", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "enterprises:reputation enable",
+		Transform:      transform,
+	})
 }
 
 func handleEnterprisesReputationUpdateFrequency(ctx context.Context, cmd *cli.Command) error {
@@ -229,6 +242,13 @@ func handleEnterprisesReputationUpdateFrequency(ctx context.Context, cmd *cli.Co
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "enterprises:reputation update-frequency", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "enterprises:reputation update-frequency",
+		Transform:      transform,
+	})
 }

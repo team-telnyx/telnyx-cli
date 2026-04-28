@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -346,8 +345,15 @@ func handleTexmlAccountsCallsRetrieve(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:calls retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:calls retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -390,8 +396,15 @@ func handleTexmlAccountsCallsUpdate(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:calls update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:calls update",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsCalls(ctx context.Context, cmd *cli.Command) error {
@@ -432,8 +445,15 @@ func handleTexmlAccountsCallsCalls(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:calls calls", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:calls calls",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsRetrieveCalls(ctx context.Context, cmd *cli.Command) error {
@@ -474,8 +494,15 @@ func handleTexmlAccountsCallsRetrieveCalls(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:calls retrieve-calls", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:calls retrieve-calls",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsSiprecJson(ctx context.Context, cmd *cli.Command) error {
@@ -518,8 +545,15 @@ func handleTexmlAccountsCallsSiprecJson(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:calls siprec-json", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:calls siprec-json",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsCallsStreamsJson(ctx context.Context, cmd *cli.Command) error {
@@ -562,6 +596,13 @@ func handleTexmlAccountsCallsStreamsJson(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:calls streams-json", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:calls streams-json",
+		Transform:      transform,
+	})
 }

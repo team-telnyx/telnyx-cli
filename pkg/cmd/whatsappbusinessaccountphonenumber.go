@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -101,6 +100,7 @@ func handleWhatsappBusinessAccountsPhoneNumbersList(ctx context.Context, cmd *cl
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -115,7 +115,13 @@ func handleWhatsappBusinessAccountsPhoneNumbersList(ctx context.Context, cmd *cl
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "whatsapp:business-accounts:phone-numbers list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "whatsapp:business-accounts:phone-numbers list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Whatsapp.BusinessAccounts.PhoneNumbers.ListAutoPaging(
 			ctx,
@@ -127,7 +133,13 @@ func handleWhatsappBusinessAccountsPhoneNumbersList(ctx context.Context, cmd *cl
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "whatsapp:business-accounts:phone-numbers list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "whatsapp:business-accounts:phone-numbers list",
+			Transform:      transform,
+		})
 	}
 }
 

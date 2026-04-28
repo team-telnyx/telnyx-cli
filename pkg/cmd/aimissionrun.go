@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -250,8 +249,15 @@ func handleAIMissionsRunsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs create",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -294,8 +300,15 @@ func handleAIMissionsRunsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -338,8 +351,15 @@ func handleAIMissionsRunsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs update",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsList(ctx context.Context, cmd *cli.Command) error {
@@ -367,6 +387,7 @@ func handleAIMissionsRunsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -381,7 +402,13 @@ func handleAIMissionsRunsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:missions:runs list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "ai:missions:runs list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.AI.Missions.Runs.ListAutoPaging(
 			ctx,
@@ -393,7 +420,13 @@ func handleAIMissionsRunsList(ctx context.Context, cmd *cli.Command) error {
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:missions:runs list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "ai:missions:runs list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -437,8 +470,15 @@ func handleAIMissionsRunsCancelRun(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs cancel-run", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs cancel-run",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsListRuns(ctx context.Context, cmd *cli.Command) error {
@@ -463,6 +503,7 @@ func handleAIMissionsRunsListRuns(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -472,14 +513,26 @@ func handleAIMissionsRunsListRuns(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:missions:runs list-runs", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "ai:missions:runs list-runs",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.AI.Missions.Runs.ListRunsAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:missions:runs list-runs", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "ai:missions:runs list-runs",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -523,8 +576,15 @@ func handleAIMissionsRunsPauseRun(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs pause-run", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs pause-run",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsResumeRun(ctx context.Context, cmd *cli.Command) error {
@@ -567,6 +627,13 @@ func handleAIMissionsRunsResumeRun(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs resume-run", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs resume-run",
+		Transform:      transform,
+	})
 }

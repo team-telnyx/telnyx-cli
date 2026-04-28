@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -55,6 +54,14 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "enabled-feature",
 			BodyPath: "enabled_features",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "external-llm",
+			BodyPath: "external_llm",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "fallback-config",
+			BodyPath: "fallback_config",
+		},
 		&requestflag.Flag[string]{
 			Name:     "greeting",
 			Usage:    "Text that the assistant will use to start the conversation. This may be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables). Use an empty string to have the assistant wait for the user to speak first. Use the special value `<assistant-speaks-first-with-model-generated-message>` to have the assistant generate the greeting based on the system instructions.",
@@ -76,6 +83,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[map[string]any]{
 			Name:     "observability-settings",
 			BodyPath: "observability_settings",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "post-conversation-settings",
+			Usage:    "Configuration for post-conversation processing. When enabled, the assistant receives one additional LLM turn after the conversation ends, allowing it to execute tool calls such as logging to a CRM or sending a summary. The assistant can execute multiple parallel or sequential tools during this phase. Telephony-control tools (e.g. hangup, transfer) are unavailable post-conversation. Beta feature.",
+			BodyPath: "post_conversation_settings",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "privacy-settings",
@@ -111,6 +123,59 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleAIAssistantsCreate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"external-llm": {
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.base-url",
+			Usage:      "Base URL for the external LLM endpoint.",
+			InnerField: "base_url",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.model",
+			Usage:      "Model identifier to use with the external LLM endpoint.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.authentication-method",
+			Usage:      "Authentication method used when connecting to the external LLM endpoint.",
+			InnerField: "authentication_method",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.certificate-ref",
+			Usage:      "Integration secret identifier for the client certificate used with certificate authentication.",
+			InnerField: "certificate_ref",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "external-llm.forward-metadata",
+			Usage:      "When enabled, Telnyx forwards the assistant's dynamic variables to the external LLM endpoint. Defaults to false. The chat completion request includes a top-level `extra_metadata` object when dynamic variables are available. For example: `{\"extra_metadata\":{\"customer_name\":\"Jane\",\"account_id\":\"acct_789\",\"telnyx_agent_target\":\"+13125550100\",\"telnyx_end_user_target\":\"+13125550123\"}}`.",
+			InnerField: "forward_metadata",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the external LLM API key.",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.token-retrieval-url",
+			Usage:      "URL used to retrieve an access token when certificate authentication is enabled.",
+			InnerField: "token_retrieval_url",
+		},
+	},
+	"fallback-config": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "fallback-config.external-llm",
+			InnerField: "external_llm",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "fallback-config.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the fallback model API key.",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "fallback-config.model",
+			Usage:      "Fallback Telnyx-hosted model to use when the primary LLM provider is unavailable.",
+			InnerField: "model",
+		},
+	},
 	"insight-settings": {
 		&requestflag.InnerFlag[string]{
 			Name:       "insight-settings.insight-group-id",
@@ -154,6 +219,13 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "status",
 		},
 	},
+	"post-conversation-settings": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "post-conversation-settings.enabled",
+			Usage:      "Whether post-conversation processing is enabled. When true, the assistant will be invoked after the conversation ends to perform any final tool calls. Defaults to false.",
+			InnerField: "enabled",
+		},
+	},
 	"privacy-settings": {
 		&requestflag.InnerFlag[bool]{
 			Name:       "privacy-settings.data-retention",
@@ -193,6 +265,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "time_limit_secs",
 		},
 		&requestflag.InnerFlag[int64]{
+			Name:       "telephony-settings.user-idle-reply-secs",
+			Usage:      "Duration in seconds of end user silence before the assistant checks in on the user. When this limit is reached the assistant will prompt the user to respond. This is distinct from user_idle_timeout_secs which stops the assistant entirely.",
+			InnerField: "user_idle_reply_secs",
+		},
+		&requestflag.InnerFlag[int64]{
 			Name:       "telephony-settings.user-idle-timeout-secs",
 			Usage:      "Maximum duration in seconds of end user silence on the call. When this limit is reached the assistant will be stopped. This limit does not apply to portions of a call without an active assistant (for instance, a call transferred to a human representative).",
 			InnerField: "user_idle_timeout_secs",
@@ -205,18 +282,23 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 	},
 	"transcription": {
 		&requestflag.InnerFlag[string]{
+			Name:       "transcription.api-key-ref",
+			Usage:      "Integration secret identifier for the transcription provider API key. Currently used for Azure transcription regions that require a customer-provided API key.",
+			InnerField: "api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, of if set to `auto`, the model will automatically detect the language.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. All the deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking but is English-only.\n- `deepgram/nova-3` is multi-lingual with automatic language detection but slightly higher latency.",
+			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-streaming` is a multilingual streaming model with configurable turn detection.\n- `xai/grok-stt` is a multilingual Grok STT model.",
 			InnerField: "model",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.region",
-			Usage:      "Region on third party cloud providers (currently Azure) if using one of their models",
+			Usage:      "Region on third party cloud providers (currently Azure) if using one of their models. Some regions require `api_key_ref`.",
 			InnerField: "region",
 		},
 		&requestflag.InnerFlag[map[string]any]{
@@ -227,7 +309,7 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 	"voice-settings": {
 		&requestflag.InnerFlag[string]{
 			Name:       "voice-settings.voice",
-			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/docs/tts-stt/tts-available-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart)",
+			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/docs/tts-stt/tts-available-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart).\nThe voice portion of the identifier supports [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables) using mustache syntax (e.g. `Telnyx.Ultra.{{voice_id}}`). The variable is resolved at call time from your dynamic variables webhook, allowing you to select the voice dynamically per call.",
 			InnerField: "voice",
 		},
 		&requestflag.InnerFlag[string]{
@@ -397,6 +479,14 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "enabled-feature",
 			BodyPath: "enabled_features",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "external-llm",
+			BodyPath: "external_llm",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "fallback-config",
+			BodyPath: "fallback_config",
+		},
 		&requestflag.Flag[string]{
 			Name:     "greeting",
 			Usage:    "Text that the assistant will use to start the conversation. This may be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables). Use an empty string to have the assistant wait for the user to speak first. Use the special value `<assistant-speaks-first-with-model-generated-message>` to have the assistant generate the greeting based on the system instructions.",
@@ -432,6 +522,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[map[string]any]{
 			Name:     "observability-settings",
 			BodyPath: "observability_settings",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "post-conversation-settings",
+			Usage:    "Configuration for post-conversation processing. When enabled, the assistant receives one additional LLM turn after the conversation ends, allowing it to execute tool calls such as logging to a CRM or sending a summary. The assistant can execute multiple parallel or sequential tools during this phase. Telephony-control tools (e.g. hangup, transfer) are unavailable post-conversation. Beta feature.",
+			BodyPath: "post_conversation_settings",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "privacy-settings",
@@ -473,6 +568,59 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleAIAssistantsUpdate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"external-llm": {
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.base-url",
+			Usage:      "Base URL for the external LLM endpoint.",
+			InnerField: "base_url",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.model",
+			Usage:      "Model identifier to use with the external LLM endpoint.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.authentication-method",
+			Usage:      "Authentication method used when connecting to the external LLM endpoint.",
+			InnerField: "authentication_method",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.certificate-ref",
+			Usage:      "Integration secret identifier for the client certificate used with certificate authentication.",
+			InnerField: "certificate_ref",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "external-llm.forward-metadata",
+			Usage:      "When enabled, Telnyx forwards the assistant's dynamic variables to the external LLM endpoint. Defaults to false. The chat completion request includes a top-level `extra_metadata` object when dynamic variables are available. For example: `{\"extra_metadata\":{\"customer_name\":\"Jane\",\"account_id\":\"acct_789\",\"telnyx_agent_target\":\"+13125550100\",\"telnyx_end_user_target\":\"+13125550123\"}}`.",
+			InnerField: "forward_metadata",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the external LLM API key.",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.token-retrieval-url",
+			Usage:      "URL used to retrieve an access token when certificate authentication is enabled.",
+			InnerField: "token_retrieval_url",
+		},
+	},
+	"fallback-config": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "fallback-config.external-llm",
+			InnerField: "external_llm",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "fallback-config.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the fallback model API key.",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "fallback-config.model",
+			Usage:      "Fallback Telnyx-hosted model to use when the primary LLM provider is unavailable.",
+			InnerField: "model",
+		},
+	},
 	"insight-settings": {
 		&requestflag.InnerFlag[string]{
 			Name:       "insight-settings.insight-group-id",
@@ -516,6 +664,13 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "status",
 		},
 	},
+	"post-conversation-settings": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "post-conversation-settings.enabled",
+			Usage:      "Whether post-conversation processing is enabled. When true, the assistant will be invoked after the conversation ends to perform any final tool calls. Defaults to false.",
+			InnerField: "enabled",
+		},
+	},
 	"privacy-settings": {
 		&requestflag.InnerFlag[bool]{
 			Name:       "privacy-settings.data-retention",
@@ -555,6 +710,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "time_limit_secs",
 		},
 		&requestflag.InnerFlag[int64]{
+			Name:       "telephony-settings.user-idle-reply-secs",
+			Usage:      "Duration in seconds of end user silence before the assistant checks in on the user. When this limit is reached the assistant will prompt the user to respond. This is distinct from user_idle_timeout_secs which stops the assistant entirely.",
+			InnerField: "user_idle_reply_secs",
+		},
+		&requestflag.InnerFlag[int64]{
 			Name:       "telephony-settings.user-idle-timeout-secs",
 			Usage:      "Maximum duration in seconds of end user silence on the call. When this limit is reached the assistant will be stopped. This limit does not apply to portions of a call without an active assistant (for instance, a call transferred to a human representative).",
 			InnerField: "user_idle_timeout_secs",
@@ -567,18 +727,23 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 	},
 	"transcription": {
 		&requestflag.InnerFlag[string]{
+			Name:       "transcription.api-key-ref",
+			Usage:      "Integration secret identifier for the transcription provider API key. Currently used for Azure transcription regions that require a customer-provided API key.",
+			InnerField: "api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, of if set to `auto`, the model will automatically detect the language.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. All the deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking but is English-only.\n- `deepgram/nova-3` is multi-lingual with automatic language detection but slightly higher latency.",
+			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-streaming` is a multilingual streaming model with configurable turn detection.\n- `xai/grok-stt` is a multilingual Grok STT model.",
 			InnerField: "model",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.region",
-			Usage:      "Region on third party cloud providers (currently Azure) if using one of their models",
+			Usage:      "Region on third party cloud providers (currently Azure) if using one of their models. Some regions require `api_key_ref`.",
 			InnerField: "region",
 		},
 		&requestflag.InnerFlag[map[string]any]{
@@ -589,7 +754,7 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 	"voice-settings": {
 		&requestflag.InnerFlag[string]{
 			Name:       "voice-settings.voice",
-			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/docs/tts-stt/tts-available-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart)",
+			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/docs/tts-stt/tts-available-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart).\nThe voice portion of the identifier supports [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables) using mustache syntax (e.g. `Telnyx.Ultra.{{voice_id}}`). The variable is resolved at call time from your dynamic variables webhook, allowing you to select the voice dynamically per call.",
 			InnerField: "voice",
 		},
 		&requestflag.InnerFlag[string]{
@@ -876,8 +1041,15 @@ func handleAIAssistantsCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants create",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -918,8 +1090,15 @@ func handleAIAssistantsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -960,8 +1139,15 @@ func handleAIAssistantsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants update",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsList(ctx context.Context, cmd *cli.Command) error {
@@ -992,8 +1178,15 @@ func handleAIAssistantsList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants list", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants list",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsDelete(ctx context.Context, cmd *cli.Command) error {
@@ -1027,8 +1220,15 @@ func handleAIAssistantsDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants delete",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsChat(ctx context.Context, cmd *cli.Command) error {
@@ -1069,8 +1269,15 @@ func handleAIAssistantsChat(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants chat", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants chat",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsClone(ctx context.Context, cmd *cli.Command) error {
@@ -1104,8 +1311,15 @@ func handleAIAssistantsClone(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants clone", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants clone",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsGetTexml(ctx context.Context, cmd *cli.Command) error {
@@ -1139,8 +1353,15 @@ func handleAIAssistantsGetTexml(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants get-texml", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants get-texml",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsImports(ctx context.Context, cmd *cli.Command) error {
@@ -1173,8 +1394,15 @@ func handleAIAssistantsImports(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants imports", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants imports",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsSendSMS(ctx context.Context, cmd *cli.Command) error {
@@ -1215,6 +1443,13 @@ func handleAIAssistantsSendSMS(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants send-sms", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants send-sms",
+		Transform:      transform,
+	})
 }

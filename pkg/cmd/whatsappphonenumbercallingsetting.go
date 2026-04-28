@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -79,8 +78,15 @@ func handleWhatsappPhoneNumbersCallingSettingsRetrieve(ctx context.Context, cmd 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:phone-numbers:calling-settings retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "whatsapp:phone-numbers:calling-settings retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleWhatsappPhoneNumbersCallingSettingsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -121,6 +127,13 @@ func handleWhatsappPhoneNumbersCallingSettingsUpdate(ctx context.Context, cmd *c
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "whatsapp:phone-numbers:calling-settings update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "whatsapp:phone-numbers:calling-settings update",
+		Transform:      transform,
+	})
 }
