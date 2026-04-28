@@ -222,7 +222,7 @@ func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.C
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNumberNewParams{}
+	params := telnyx.EnterpriseReputationNumberAssociateParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -237,7 +237,7 @@ func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.C
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.Reputation.Numbers.New(
+	_, err = client.Enterprises.Reputation.Numbers.Associate(
 		ctx,
 		cmd.Value("enterprise-id").(string),
 		params,
@@ -264,7 +264,7 @@ func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNumberDeleteParams{
+	params := telnyx.EnterpriseReputationNumberDisassociateParams{
 		EnterpriseID: cmd.Value("enterprise-id").(string),
 	}
 
@@ -279,7 +279,7 @@ func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cl
 		return err
 	}
 
-	return client.Enterprises.Reputation.Numbers.Delete(
+	return client.Enterprises.Reputation.Numbers.Disassociate(
 		ctx,
 		cmd.Value("phone-number").(string),
 		params,
