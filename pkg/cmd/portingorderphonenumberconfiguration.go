@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -128,8 +127,15 @@ func handlePortingOrdersPhoneNumberConfigurationsCreate(ctx context.Context, cmd
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders:phone-number-configurations create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "porting-orders:phone-number-configurations create",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersPhoneNumberConfigurationsList(ctx context.Context, cmd *cli.Command) error {
@@ -154,6 +160,7 @@ func handlePortingOrdersPhoneNumberConfigurationsList(ctx context.Context, cmd *
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -163,13 +170,25 @@ func handlePortingOrdersPhoneNumberConfigurationsList(ctx context.Context, cmd *
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting-orders:phone-number-configurations list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "porting-orders:phone-number-configurations list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.PhoneNumberConfigurations.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting-orders:phone-number-configurations list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "porting-orders:phone-number-configurations list",
+			Transform:      transform,
+		})
 	}
 }

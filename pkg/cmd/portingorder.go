@@ -440,8 +440,15 @@ func handlePortingOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "porting-orders create",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -482,8 +489,15 @@ func handlePortingOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "porting-orders retrieve",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -524,8 +538,15 @@ func handlePortingOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "porting-orders update",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersList(ctx context.Context, cmd *cli.Command) error {
@@ -550,6 +571,7 @@ func handlePortingOrdersList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -559,14 +581,26 @@ func handlePortingOrdersList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting-orders list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "porting-orders list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting-orders list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "porting-orders list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -626,8 +660,15 @@ func handlePortingOrdersRetrieveAllowedFocWindows(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders retrieve-allowed-foc-windows", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "porting-orders retrieve-allowed-foc-windows",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersRetrieveExceptionTypes(ctx context.Context, cmd *cli.Command) error {
@@ -658,8 +699,15 @@ func handlePortingOrdersRetrieveExceptionTypes(ctx context.Context, cmd *cli.Com
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders retrieve-exception-types", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "porting-orders retrieve-exception-types",
+		Transform:      transform,
+	})
 }
 
 func handlePortingOrdersRetrieveLoaTemplate(ctx context.Context, cmd *cli.Command) error {
@@ -727,6 +775,7 @@ func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Comma
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -741,7 +790,13 @@ func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Comma
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "porting-orders retrieve-requirements", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "porting-orders retrieve-requirements",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.PortingOrders.GetRequirementsAutoPaging(
 			ctx,
@@ -753,7 +808,13 @@ func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Comma
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "porting-orders retrieve-requirements", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "porting-orders retrieve-requirements",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -788,6 +849,13 @@ func handlePortingOrdersRetrieveSubRequest(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "porting-orders retrieve-sub-request", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "porting-orders retrieve-sub-request",
+		Transform:      transform,
+	})
 }

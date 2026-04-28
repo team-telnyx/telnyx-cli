@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -218,8 +217,15 @@ func handleAIMissionsRunsPlanCreate(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:plan create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs:plan create",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsPlanRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -262,8 +268,15 @@ func handleAIMissionsRunsPlanRetrieve(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:plan retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs:plan retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsPlanAddStepsToPlan(ctx context.Context, cmd *cli.Command) error {
@@ -306,8 +319,15 @@ func handleAIMissionsRunsPlanAddStepsToPlan(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:plan add-steps-to-plan", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs:plan add-steps-to-plan",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsPlanGetStepDetails(ctx context.Context, cmd *cli.Command) error {
@@ -351,8 +371,15 @@ func handleAIMissionsRunsPlanGetStepDetails(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:plan get-step-details", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs:plan get-step-details",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsPlanUpdateStep(ctx context.Context, cmd *cli.Command) error {
@@ -396,6 +423,13 @@ func handleAIMissionsRunsPlanUpdateStep(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:plan update-step", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs:plan update-step",
+		Transform:      transform,
+	})
 }

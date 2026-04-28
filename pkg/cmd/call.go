@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -46,8 +45,13 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "answering-machine-detection-config",
-			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance.",
+			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance. Only `total_analysis_time_millis` and `greeting_duration_millis` parameters are applicable when `premium` is selected as answering_machine_detection.",
 			BodyPath: "answering_machine_detection_config",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "assistant",
+			Usage:    "AI Assistant configuration. All fields except `id` are optional — the assistant's stored configuration will be used as fallback for any omitted fields.",
+			BodyPath: "assistant",
 		},
 		&requestflag.Flag[string]{
 			Name:     "audio-url",
@@ -90,6 +94,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Name:     "custom-header",
 			Usage:    "Custom headers to be added to the SIP INVITE.",
 			BodyPath: "custom_headers",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "deepfake-detection",
+			Usage:    "Enables deepfake detection on the call. When enabled, audio from the remote party is streamed to a detection service that analyzes whether the voice is AI-generated. Results are delivered via the `call.deepfake_detection.result` webhook.",
+			BodyPath: "deepfake_detection",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "dialogflow-config",
@@ -311,6 +320,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Name:     "transcription-config",
 			BodyPath: "transcription_config",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook-retries-policies",
+			Usage:    "A map of event types to retry policies. Each retry policy contains an array of `retries_ms` specifying the delays between retry attempts in milliseconds. Maximum 5 retries, total delay cannot exceed 60 seconds.",
+			BodyPath: "webhook_retries_policies",
+		},
 		&requestflag.Flag[string]{
 			Name:     "webhook-url",
 			Usage:    "Use this field to override the URL for which Telnyx will send subsequent webhooks to for this call.",
@@ -321,6 +335,17 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "HTTP request type used for `webhook_url`.",
 			Default:  "POST",
 			BodyPath: "webhook_url_method",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "webhook-urls",
+			Usage:    "A map of event types to webhook URLs. When an event of the specified type occurs, the webhook URL associated with that event type will be called instead of the default webhook URL. Events not mapped here will use the default webhook URL.",
+			BodyPath: "webhook_urls",
+		},
+		&requestflag.Flag[string]{
+			Name:     "webhook-urls-method",
+			Usage:    "HTTP request method to invoke `webhook_urls`.",
+			Default:  "POST",
+			BodyPath: "webhook_urls_method",
 		},
 	},
 	Action:          handleCallsDial,
@@ -376,6 +401,73 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Name:       "answering-machine-detection-config.total-analysis-time-millis",
 			Usage:      "Maximum timeout threshold for overall detection.",
 			InnerField: "total_analysis_time_millis",
+		},
+	},
+	"assistant": {
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.id",
+			Usage:      "The identifier of the AI assistant to use.",
+			InnerField: "id",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.dynamic-variables",
+			Usage:      "Map of dynamic variables and their default values. Dynamic variables can be referenced in instructions, greeting, and tool definitions using the `{{variable_name}}` syntax. Call-control-agent automatically merges in `telnyx_call_*` variables (telnyx_call_to, telnyx_call_from, telnyx_conversation_channel, telnyx_agent_target, telnyx_end_user_target, telnyx_call_caller_id_name) and custom header variables.",
+			InnerField: "dynamic_variables",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.external-llm",
+			Usage:      "External LLM configuration for bringing your own LLM endpoint.",
+			InnerField: "external_llm",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.fallback-config",
+			Usage:      "Fallback LLM configuration used when the primary LLM provider is unavailable.",
+			InnerField: "fallback_config",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.greeting",
+			Usage:      "Initial greeting text spoken when the assistant starts. Can be plain text for any voice or SSML for `AWS.Polly.<voice_id>` voices. There is a 3,000 character limit.",
+			InnerField: "greeting",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.instructions",
+			Usage:      "System instructions for the voice assistant. Can be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables). This will overwrite the instructions set in the assistant configuration.",
+			InnerField: "instructions",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the LLM provider API key. Use this field to reference an [integration secret](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) containing your LLM provider API key. Supports any LLM provider (OpenAI, Anthropic, etc.).",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "assistant.mcp-servers",
+			Usage:      "MCP (Model Context Protocol) server configurations for extending the assistant's capabilities with external tools and data sources.",
+			InnerField: "mcp_servers",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.model",
+			Usage:      "LLM model override for this call. If omitted, the assistant's configured model is used.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.name",
+			Usage:      "Assistant name override for this call.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.observability-settings",
+			Usage:      "Observability configuration for the assistant session, including Langfuse integration for tracing and monitoring.",
+			InnerField: "observability_settings",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.openai-api-key-ref",
+			Usage:      "Deprecated — use `llm_api_key_ref` instead. Integration secret identifier for the OpenAI API key. This field is maintained for backward compatibility; `llm_api_key_ref` is the canonical field name and supports all LLM providers.",
+			InnerField: "openai_api_key_ref",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "assistant.tools",
+			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
+			InnerField: "tools",
 		},
 	},
 	"conference-config": {
@@ -462,6 +554,23 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "value",
 		},
 	},
+	"deepfake-detection": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "deepfake-detection.enabled",
+			Usage:      "Whether deepfake detection is enabled.",
+			InnerField: "enabled",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "deepfake-detection.rtp-timeout",
+			Usage:      "Maximum time in seconds to wait for RTP audio before timing out. If no audio is received within this window, detection stops with an error.",
+			InnerField: "rtp_timeout",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "deepfake-detection.timeout",
+			Usage:      "Maximum time in seconds to wait for a detection result before timing out.",
+			InnerField: "timeout",
+		},
+	},
 	"dialogflow-config": {
 		&requestflag.InnerFlag[bool]{
 			Name:       "dialogflow-config.analyze-sentiment",
@@ -524,7 +633,7 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Engine to use for speech recognition. Legacy values `A` - `Google`, `B` - `Telnyx` are supported for backward compatibility.",
 			InnerField: "transcription_engine",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "transcription-config.transcription-engine-config",
 			InnerField: "transcription_engine_config",
 		},
@@ -580,8 +689,15 @@ func handleCallsDial(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls dial", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls dial",
+		Transform:      transform,
+	})
 }
 
 func handleCallsRetrieveStatus(ctx context.Context, cmd *cli.Command) error {
@@ -615,6 +731,13 @@ func handleCallsRetrieveStatus(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls retrieve-status", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls retrieve-status",
+		Transform:      transform,
+	})
 }

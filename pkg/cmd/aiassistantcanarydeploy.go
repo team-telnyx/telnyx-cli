@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -147,8 +146,15 @@ func handleAIAssistantsCanaryDeploysCreate(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:canary-deploys create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants:canary-deploys create",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsCanaryDeploysRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -182,8 +188,15 @@ func handleAIAssistantsCanaryDeploysRetrieve(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:canary-deploys retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants:canary-deploys retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -224,8 +237,15 @@ func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:canary-deploys update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants:canary-deploys update",
+		Transform:      transform,
+	})
 }
 
 func handleAIAssistantsCanaryDeploysDelete(ctx context.Context, cmd *cli.Command) error {

@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -53,6 +52,11 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Name:     "call-control-id",
 			Required: true,
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "assistant",
+			Usage:    "AI Assistant configuration. All fields except `id` are optional — the assistant's stored configuration will be used as fallback for any omitted fields.",
+			BodyPath: "assistant",
+		},
 		&requestflag.Flag[string]{
 			Name:     "billing-group-id",
 			Usage:    "Use this field to set the Billing Group ID for the call. Must be a valid and existing Billing Group ID.",
@@ -72,6 +76,11 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Name:     "custom-header",
 			Usage:    "Custom headers to be added to the SIP INVITE response.",
 			BodyPath: "custom_headers",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "deepfake-detection",
+			Usage:    "Enables deepfake detection on the call. When enabled, audio from the remote party is streamed to a detection service that analyzes whether the voice is AI-generated. Results are delivered via the `call.deepfake_detection.result` webhook.",
+			BodyPath: "deepfake_detection",
 		},
 		&requestflag.Flag[string]{
 			Name:     "preferred-codecs",
@@ -215,6 +224,73 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleCallsActionsAnswer,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"assistant": {
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.id",
+			Usage:      "The identifier of the AI assistant to use.",
+			InnerField: "id",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.dynamic-variables",
+			Usage:      "Map of dynamic variables and their default values. Dynamic variables can be referenced in instructions, greeting, and tool definitions using the `{{variable_name}}` syntax. Call-control-agent automatically merges in `telnyx_call_*` variables (telnyx_call_to, telnyx_call_from, telnyx_conversation_channel, telnyx_agent_target, telnyx_end_user_target, telnyx_call_caller_id_name) and custom header variables.",
+			InnerField: "dynamic_variables",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.external-llm",
+			Usage:      "External LLM configuration for bringing your own LLM endpoint.",
+			InnerField: "external_llm",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.fallback-config",
+			Usage:      "Fallback LLM configuration used when the primary LLM provider is unavailable.",
+			InnerField: "fallback_config",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.greeting",
+			Usage:      "Initial greeting text spoken when the assistant starts. Can be plain text for any voice or SSML for `AWS.Polly.<voice_id>` voices. There is a 3,000 character limit.",
+			InnerField: "greeting",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.instructions",
+			Usage:      "System instructions for the voice assistant. Can be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables). This will overwrite the instructions set in the assistant configuration.",
+			InnerField: "instructions",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the LLM provider API key. Use this field to reference an [integration secret](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) containing your LLM provider API key. Supports any LLM provider (OpenAI, Anthropic, etc.).",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "assistant.mcp-servers",
+			Usage:      "MCP (Model Context Protocol) server configurations for extending the assistant's capabilities with external tools and data sources.",
+			InnerField: "mcp_servers",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.model",
+			Usage:      "LLM model override for this call. If omitted, the assistant's configured model is used.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.name",
+			Usage:      "Assistant name override for this call.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.observability-settings",
+			Usage:      "Observability configuration for the assistant session, including Langfuse integration for tracing and monitoring.",
+			InnerField: "observability_settings",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.openai-api-key-ref",
+			Usage:      "Deprecated — use `llm_api_key_ref` instead. Integration secret identifier for the OpenAI API key. This field is maintained for backward compatibility; `llm_api_key_ref` is the canonical field name and supports all LLM providers.",
+			InnerField: "openai_api_key_ref",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "assistant.tools",
+			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
+			InnerField: "tools",
+		},
+	},
 	"custom-header": {
 		&requestflag.InnerFlag[string]{
 			Name:       "custom-header.name",
@@ -225,6 +301,23 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Name:       "custom-header.value",
 			Usage:      "The value of the header.",
 			InnerField: "value",
+		},
+	},
+	"deepfake-detection": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "deepfake-detection.enabled",
+			Usage:      "Whether deepfake detection is enabled.",
+			InnerField: "enabled",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "deepfake-detection.rtp-timeout",
+			Usage:      "Maximum time in seconds to wait for RTP audio before timing out. If no audio is received within this window, detection stops with an error.",
+			InnerField: "rtp_timeout",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "deepfake-detection.timeout",
+			Usage:      "Maximum time in seconds to wait for a detection result before timing out.",
+			InnerField: "timeout",
 		},
 	},
 	"sip-header": {
@@ -277,7 +370,7 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Engine to use for speech recognition. Legacy values `A` - `Google`, `B` - `Telnyx` are supported for backward compatibility.",
 			InnerField: "transcription_engine",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "transcription-config.transcription-engine-config",
 			InnerField: "transcription_engine_config",
 		},
@@ -614,7 +707,7 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Telnyx.KokoroTTS.af",
 			BodyPath: "voice",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
 			Usage:    "The settings associated with the voice selected",
 			BodyPath: "voice_settings",
@@ -854,7 +947,7 @@ var callsActionsGatherUsingSpeak = cli.Command{
 			Default:  "0123456789#*",
 			BodyPath: "valid_digits",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
 			Usage:    "The settings associated with the voice selected",
 			BodyPath: "voice_settings",
@@ -1286,7 +1379,7 @@ var callsActionsSpeak = cli.Command{
 			Default:  "self",
 			BodyPath: "target_legs",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
 			Usage:    "The settings associated with the voice selected",
 			BodyPath: "voice_settings",
@@ -1307,7 +1400,7 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "assistant",
-			Usage:    "AI Assistant configuration",
+			Usage:    "AI Assistant configuration. All fields except `id` are optional — the assistant's stored configuration will be used as fallback for any omitted fields.",
 			BodyPath: "assistant",
 		},
 		&requestflag.Flag[string]{
@@ -1359,7 +1452,7 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Telnyx.KokoroTTS.af",
 			BodyPath: "voice",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
 			Usage:    "The settings associated with the voice selected",
 			BodyPath: "voice_settings",
@@ -1371,18 +1464,68 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 	"assistant": {
 		&requestflag.InnerFlag[string]{
 			Name:       "assistant.id",
-			Usage:      "The identifier of the AI assistant to use",
+			Usage:      "The identifier of the AI assistant to use.",
 			InnerField: "id",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.dynamic-variables",
+			Usage:      "Map of dynamic variables and their default values. Dynamic variables can be referenced in instructions, greeting, and tool definitions using the `{{variable_name}}` syntax. Call-control-agent automatically merges in `telnyx_call_*` variables (telnyx_call_to, telnyx_call_from, telnyx_conversation_channel, telnyx_agent_target, telnyx_end_user_target, telnyx_call_caller_id_name) and custom header variables.",
+			InnerField: "dynamic_variables",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.external-llm",
+			Usage:      "External LLM configuration for bringing your own LLM endpoint.",
+			InnerField: "external_llm",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.fallback-config",
+			Usage:      "Fallback LLM configuration used when the primary LLM provider is unavailable.",
+			InnerField: "fallback_config",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.greeting",
+			Usage:      "Initial greeting text spoken when the assistant starts. Can be plain text for any voice or SSML for `AWS.Polly.<voice_id>` voices. There is a 3,000 character limit.",
+			InnerField: "greeting",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "assistant.instructions",
-			Usage:      "The system instructions that the voice assistant uses during the start assistant command. This will overwrite the instructions set in the assistant configuration.",
+			Usage:      "System instructions for the voice assistant. Can be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables). This will overwrite the instructions set in the assistant configuration.",
 			InnerField: "instructions",
 		},
 		&requestflag.InnerFlag[string]{
+			Name:       "assistant.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the LLM provider API key. Use this field to reference an [integration secret](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) containing your LLM provider API key. Supports any LLM provider (OpenAI, Anthropic, etc.).",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "assistant.mcp-servers",
+			Usage:      "MCP (Model Context Protocol) server configurations for extending the assistant's capabilities with external tools and data sources.",
+			InnerField: "mcp_servers",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.model",
+			Usage:      "LLM model override for this call. If omitted, the assistant's configured model is used.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assistant.name",
+			Usage:      "Assistant name override for this call.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.observability-settings",
+			Usage:      "Observability configuration for the assistant session, including Langfuse integration for tracing and monitoring.",
+			InnerField: "observability_settings",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "assistant.openai-api-key-ref",
-			Usage:      "Reference to the OpenAI API key. Required only when using OpenAI models",
+			Usage:      "Deprecated — use `llm_api_key_ref` instead. Integration secret identifier for the OpenAI API key. This field is maintained for backward compatibility; `llm_api_key_ref` is the canonical field name and supports all LLM providers.",
 			InnerField: "openai_api_key_ref",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "assistant.tools",
+			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
+			InnerField: "tools",
 		},
 	},
 	"interruption-settings": {
@@ -1917,7 +2060,7 @@ var callsActionsStartTranscription = cli.Command{
 			Default:  "Google",
 			BodyPath: "transcription_engine",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "transcription-engine-config",
 			BodyPath: "transcription_engine_config",
 		},
@@ -2219,7 +2362,7 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "answering-machine-detection-config",
-			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance.",
+			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance. Only `total_analysis_time_millis` and `greeting_duration_millis` parameters are applicable when `premium` is selected as answering_machine_detection.",
 			BodyPath: "answering_machine_detection_config",
 		},
 		&requestflag.Flag[string]{
@@ -2573,8 +2716,15 @@ func handleCallsActionsAddAIAssistantMessages(ctx context.Context, cmd *cli.Comm
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions add-ai-assistant-messages", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions add-ai-assistant-messages",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsAnswer(ctx context.Context, cmd *cli.Command) error {
@@ -2615,8 +2765,15 @@ func handleCallsActionsAnswer(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions answer", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions answer",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsBridge(ctx context.Context, cmd *cli.Command) error {
@@ -2657,8 +2814,15 @@ func handleCallsActionsBridge(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions bridge", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions bridge",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsEnqueue(ctx context.Context, cmd *cli.Command) error {
@@ -2699,8 +2863,15 @@ func handleCallsActionsEnqueue(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions enqueue", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions enqueue",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsGather(ctx context.Context, cmd *cli.Command) error {
@@ -2741,8 +2912,15 @@ func handleCallsActionsGather(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions gather", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions gather",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsGatherUsingAI(ctx context.Context, cmd *cli.Command) error {
@@ -2783,8 +2961,15 @@ func handleCallsActionsGatherUsingAI(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions gather-using-ai", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions gather-using-ai",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsGatherUsingAudio(ctx context.Context, cmd *cli.Command) error {
@@ -2825,8 +3010,15 @@ func handleCallsActionsGatherUsingAudio(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions gather-using-audio", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions gather-using-audio",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsGatherUsingSpeak(ctx context.Context, cmd *cli.Command) error {
@@ -2867,8 +3059,15 @@ func handleCallsActionsGatherUsingSpeak(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions gather-using-speak", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions gather-using-speak",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsHangup(ctx context.Context, cmd *cli.Command) error {
@@ -2909,8 +3108,15 @@ func handleCallsActionsHangup(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions hangup", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions hangup",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsJoinAIAssistant(ctx context.Context, cmd *cli.Command) error {
@@ -2951,8 +3157,15 @@ func handleCallsActionsJoinAIAssistant(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions join-ai-assistant", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions join-ai-assistant",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsLeaveQueue(ctx context.Context, cmd *cli.Command) error {
@@ -2993,8 +3206,15 @@ func handleCallsActionsLeaveQueue(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions leave-queue", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions leave-queue",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsPauseRecording(ctx context.Context, cmd *cli.Command) error {
@@ -3035,8 +3255,15 @@ func handleCallsActionsPauseRecording(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions pause-recording", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions pause-recording",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsRefer(ctx context.Context, cmd *cli.Command) error {
@@ -3077,8 +3304,15 @@ func handleCallsActionsRefer(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions refer", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions refer",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsReject(ctx context.Context, cmd *cli.Command) error {
@@ -3119,8 +3353,15 @@ func handleCallsActionsReject(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions reject", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions reject",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsResumeRecording(ctx context.Context, cmd *cli.Command) error {
@@ -3161,8 +3402,15 @@ func handleCallsActionsResumeRecording(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions resume-recording", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions resume-recording",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
@@ -3203,8 +3451,15 @@ func handleCallsActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions send-dtmf", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions send-dtmf",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsSendSipInfo(ctx context.Context, cmd *cli.Command) error {
@@ -3245,8 +3500,15 @@ func handleCallsActionsSendSipInfo(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions send-sip-info", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions send-sip-info",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsSpeak(ctx context.Context, cmd *cli.Command) error {
@@ -3287,8 +3549,15 @@ func handleCallsActionsSpeak(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions speak", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions speak",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartAIAssistant(ctx context.Context, cmd *cli.Command) error {
@@ -3329,8 +3598,15 @@ func handleCallsActionsStartAIAssistant(ctx context.Context, cmd *cli.Command) e
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions start-ai-assistant", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions start-ai-assistant",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartForking(ctx context.Context, cmd *cli.Command) error {
@@ -3371,8 +3647,15 @@ func handleCallsActionsStartForking(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions start-forking", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions start-forking",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartNoiseSuppression(ctx context.Context, cmd *cli.Command) error {
@@ -3413,8 +3696,15 @@ func handleCallsActionsStartNoiseSuppression(ctx context.Context, cmd *cli.Comma
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions start-noise-suppression", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions start-noise-suppression",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartPlayback(ctx context.Context, cmd *cli.Command) error {
@@ -3455,8 +3745,15 @@ func handleCallsActionsStartPlayback(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions start-playback", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions start-playback",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartRecording(ctx context.Context, cmd *cli.Command) error {
@@ -3497,8 +3794,15 @@ func handleCallsActionsStartRecording(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions start-recording", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions start-recording",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartSiprec(ctx context.Context, cmd *cli.Command) error {
@@ -3539,8 +3843,15 @@ func handleCallsActionsStartSiprec(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions start-siprec", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions start-siprec",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartStreaming(ctx context.Context, cmd *cli.Command) error {
@@ -3581,8 +3892,15 @@ func handleCallsActionsStartStreaming(ctx context.Context, cmd *cli.Command) err
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions start-streaming", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions start-streaming",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStartTranscription(ctx context.Context, cmd *cli.Command) error {
@@ -3623,8 +3941,15 @@ func handleCallsActionsStartTranscription(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions start-transcription", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions start-transcription",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopAIAssistant(ctx context.Context, cmd *cli.Command) error {
@@ -3665,8 +3990,15 @@ func handleCallsActionsStopAIAssistant(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions stop-ai-assistant", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-ai-assistant",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopForking(ctx context.Context, cmd *cli.Command) error {
@@ -3707,8 +4039,15 @@ func handleCallsActionsStopForking(ctx context.Context, cmd *cli.Command) error 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions stop-forking", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-forking",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopGather(ctx context.Context, cmd *cli.Command) error {
@@ -3749,8 +4088,15 @@ func handleCallsActionsStopGather(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions stop-gather", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-gather",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopNoiseSuppression(ctx context.Context, cmd *cli.Command) error {
@@ -3791,8 +4137,15 @@ func handleCallsActionsStopNoiseSuppression(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions stop-noise-suppression", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-noise-suppression",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopPlayback(ctx context.Context, cmd *cli.Command) error {
@@ -3833,8 +4186,15 @@ func handleCallsActionsStopPlayback(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions stop-playback", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-playback",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopRecording(ctx context.Context, cmd *cli.Command) error {
@@ -3875,8 +4235,15 @@ func handleCallsActionsStopRecording(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions stop-recording", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-recording",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopSiprec(ctx context.Context, cmd *cli.Command) error {
@@ -3917,8 +4284,15 @@ func handleCallsActionsStopSiprec(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions stop-siprec", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-siprec",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopStreaming(ctx context.Context, cmd *cli.Command) error {
@@ -3959,8 +4333,15 @@ func handleCallsActionsStopStreaming(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions stop-streaming", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-streaming",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsStopTranscription(ctx context.Context, cmd *cli.Command) error {
@@ -4001,8 +4382,15 @@ func handleCallsActionsStopTranscription(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions stop-transcription", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-transcription",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsSwitchSupervisorRole(ctx context.Context, cmd *cli.Command) error {
@@ -4043,8 +4431,15 @@ func handleCallsActionsSwitchSupervisorRole(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions switch-supervisor-role", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions switch-supervisor-role",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsTransfer(ctx context.Context, cmd *cli.Command) error {
@@ -4085,8 +4480,15 @@ func handleCallsActionsTransfer(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions transfer", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions transfer",
+		Transform:      transform,
+	})
 }
 
 func handleCallsActionsUpdateClientState(ctx context.Context, cmd *cli.Command) error {
@@ -4127,6 +4529,13 @@ func handleCallsActionsUpdateClientState(ctx context.Context, cmd *cli.Command) 
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "calls:actions update-client-state", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions update-client-state",
+		Transform:      transform,
+	})
 }

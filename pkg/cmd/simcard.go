@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -299,8 +298,15 @@ func handleSimCardsRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sim-cards retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -341,8 +347,15 @@ func handleSimCardsUpdate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sim-cards update",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsList(ctx context.Context, cmd *cli.Command) error {
@@ -367,6 +380,7 @@ func handleSimCardsList(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -376,14 +390,26 @@ func handleSimCardsList(ctx context.Context, cmd *cli.Command) error {
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "sim-cards list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "sim-cards list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.SimCards.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "sim-cards list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "sim-cards list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -425,8 +451,15 @@ func handleSimCardsDelete(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards delete", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sim-cards delete",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsGetActivationCode(ctx context.Context, cmd *cli.Command) error {
@@ -460,8 +493,15 @@ func handleSimCardsGetActivationCode(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards get-activation-code", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sim-cards get-activation-code",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsGetDeviceDetails(ctx context.Context, cmd *cli.Command) error {
@@ -495,8 +535,15 @@ func handleSimCardsGetDeviceDetails(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards get-device-details", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sim-cards get-device-details",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsGetPublicIP(ctx context.Context, cmd *cli.Command) error {
@@ -530,8 +577,15 @@ func handleSimCardsGetPublicIP(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "sim-cards get-public-ip", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sim-cards get-public-ip",
+		Transform:      transform,
+	})
 }
 
 func handleSimCardsListWirelessConnectivityLogs(ctx context.Context, cmd *cli.Command) error {
@@ -559,6 +613,7 @@ func handleSimCardsListWirelessConnectivityLogs(ctx context.Context, cmd *cli.Co
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -573,7 +628,13 @@ func handleSimCardsListWirelessConnectivityLogs(ctx context.Context, cmd *cli.Co
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "sim-cards list-wireless-connectivity-logs", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "sim-cards list-wireless-connectivity-logs",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.SimCards.ListWirelessConnectivityLogsAutoPaging(
 			ctx,
@@ -585,6 +646,12 @@ func handleSimCardsListWirelessConnectivityLogs(ctx context.Context, cmd *cli.Co
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "sim-cards list-wireless-connectivity-logs", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "sim-cards list-wireless-connectivity-logs",
+			Transform:      transform,
+		})
 	}
 }

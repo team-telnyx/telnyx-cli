@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -119,8 +118,15 @@ func handleAIMissionsRunsTelnyxAgentsList(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:telnyx-agents list", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs:telnyx-agents list",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsTelnyxAgentsLink(ctx context.Context, cmd *cli.Command) error {
@@ -163,8 +169,15 @@ func handleAIMissionsRunsTelnyxAgentsLink(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:missions:runs:telnyx-agents link", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:missions:runs:telnyx-agents link",
+		Transform:      transform,
+	})
 }
 
 func handleAIMissionsRunsTelnyxAgentsUnlink(ctx context.Context, cmd *cli.Command) error {

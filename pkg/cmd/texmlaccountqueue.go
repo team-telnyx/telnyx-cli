@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -179,8 +178,15 @@ func handleTexmlAccountsQueuesCreate(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:queues create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:queues create",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsQueuesRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -223,8 +229,15 @@ func handleTexmlAccountsQueuesRetrieve(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:queues retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:queues retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsQueuesUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -267,8 +280,15 @@ func handleTexmlAccountsQueuesUpdate(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "texml:accounts:queues update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "texml:accounts:queues update",
+		Transform:      transform,
+	})
 }
 
 func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error {
@@ -296,6 +316,7 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -310,7 +331,13 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "texml:accounts:queues list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "texml:accounts:queues list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Texml.Accounts.Queues.ListAutoPaging(
 			ctx,
@@ -322,7 +349,13 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "texml:accounts:queues list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "texml:accounts:queues list",
+			Transform:      transform,
+		})
 	}
 }
 

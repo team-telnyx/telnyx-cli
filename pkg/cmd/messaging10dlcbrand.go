@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -530,8 +529,15 @@ func handleMessaging10dlcBrandCreate(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand create",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -565,8 +571,15 @@ func handleMessaging10dlcBrandRetrieve(ctx context.Context, cmd *cli.Command) er
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -607,8 +620,15 @@ func handleMessaging10dlcBrandUpdate(ctx context.Context, cmd *cli.Command) erro
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand update", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand update",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandList(ctx context.Context, cmd *cli.Command) error {
@@ -633,6 +653,7 @@ func handleMessaging10dlcBrandList(ctx context.Context, cmd *cli.Command) error 
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -642,14 +663,26 @@ func handleMessaging10dlcBrandList(ctx context.Context, cmd *cli.Command) error 
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "messaging-10dlc:brand list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "messaging-10dlc:brand list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.Messaging10dlc.Brand.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "messaging-10dlc:brand list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "messaging-10dlc:brand list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -709,8 +742,15 @@ func handleMessaging10dlcBrandGetFeedback(ctx context.Context, cmd *cli.Command)
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand get-feedback", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand get-feedback",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandGetSMSOtpByReference(ctx context.Context, cmd *cli.Command) error {
@@ -751,8 +791,15 @@ func handleMessaging10dlcBrandGetSMSOtpByReference(ctx context.Context, cmd *cli
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand get-sms-otp-by-reference", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand get-sms-otp-by-reference",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandResend2faEmail(ctx context.Context, cmd *cli.Command) error {
@@ -811,8 +858,15 @@ func handleMessaging10dlcBrandRetrieveSMSOtpStatus(ctx context.Context, cmd *cli
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand retrieve-sms-otp-status", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand retrieve-sms-otp-status",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandRevet(ctx context.Context, cmd *cli.Command) error {
@@ -846,8 +900,15 @@ func handleMessaging10dlcBrandRevet(ctx context.Context, cmd *cli.Command) error
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand revet", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand revet",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandTriggerSMSOtp(ctx context.Context, cmd *cli.Command) error {
@@ -888,8 +949,15 @@ func handleMessaging10dlcBrandTriggerSMSOtp(ctx context.Context, cmd *cli.Comman
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "messaging-10dlc:brand trigger-sms-otp", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messaging-10dlc:brand trigger-sms-otp",
+		Transform:      transform,
+	})
 }
 
 func handleMessaging10dlcBrandVerifySMSOtp(ctx context.Context, cmd *cli.Command) error {

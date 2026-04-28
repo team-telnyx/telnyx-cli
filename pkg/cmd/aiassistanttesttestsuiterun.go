@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -95,6 +94,7 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 	}
 
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
 	if format == "raw" {
 		var res []byte
@@ -109,7 +109,13 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 			return err
 		}
 		obj := gjson.ParseBytes(res)
-		return ShowJSON(os.Stdout, "ai:assistants:tests:test-suites:runs list", obj, format, transform)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "ai:assistants:tests:test-suites:runs list",
+			Transform:      transform,
+		})
 	} else {
 		iter := client.AI.Assistants.Tests.TestSuites.Runs.ListAutoPaging(
 			ctx,
@@ -121,7 +127,13 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
 		}
-		return ShowJSONIterator(os.Stdout, "ai:assistants:tests:test-suites:runs list", iter, format, transform, maxItems)
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "ai:assistants:tests:test-suites:runs list",
+			Transform:      transform,
+		})
 	}
 }
 
@@ -163,6 +175,13 @@ func handleAIAssistantsTestsTestSuitesRunsTrigger(ctx context.Context, cmd *cli.
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "ai:assistants:tests:test-suites:runs trigger", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai:assistants:tests:test-suites:runs trigger",
+		Transform:      transform,
+	})
 }

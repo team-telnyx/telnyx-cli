@@ -21,6 +21,7 @@ func TestCallsDial(t *testing.T) {
 			"--to", "+18005550100 or sip:username@sip.telnyx.com",
 			"--answering-machine-detection", "detect",
 			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
+			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--bridge-intent=true",
@@ -30,6 +31,7 @@ func TestCallsDial(t *testing.T) {
 			"--conference-config", "{id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, beep_enabled: on_exit, conference_name: telnyx-conference, early_media: false, end_conference_on_exit: true, hold: true, hold_audio_url: http://example.com/message.wav, hold_media_name: my_media_uploaded_to_media_storage_api, mute: true, soft_end_conference_on_exit: true, start_conference_on_create: false, start_conference_on_enter: true, supervisor_role: whisper, whisper_call_control_ids: [v2:Sg1xxxQ_U3ixxxyXT_VDNI3xxxazZdg6Vxxxs4-GNYxxxVaJPOhFMRQ, v2:qqpb0mmvd-ovhhBr0BUQQn0fld5jIboaaX3-De0DkqXHzbf8d75xkw]}",
 			"--custom-header", "{name: head_1, value: val_1}",
 			"--custom-header", "{name: head_2, value: val_2}",
+			"--deepfake-detection", "{enabled: true, rtp_timeout: 30, timeout: 15}",
 			"--dialogflow-config", "{analyze_sentiment: false, partial_automated_agent_reply: false}",
 			"--enable-dialogflow=false",
 			"--from-display-name", "Company Name",
@@ -70,8 +72,11 @@ func TestCallsDial(t *testing.T) {
 			"--timeout-secs", "60",
 			"--transcription=true",
 			"--transcription-config", "{client_state: aGF2ZSBhIG5pY2UgZGF5ID1d, command_id: 891510ac-f3e4-11e8-af5b-de00688a4901, transcription_engine: Google, transcription_engine_config: {enable_speaker_diarization: true, hints: [string], interim_results: true, language: en, max_speaker_count: 4, min_speaker_count: 4, model: latest_long, profanity_filter: true, speech_context: [{boost: 1, phrases: [string]}], transcription_engine: Google, use_enhanced: true}, transcription_tracks: both}",
+			"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
+			"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+			"--webhook-urls-method", "POST",
 		)
 	})
 
@@ -98,6 +103,19 @@ func TestCallsDial(t *testing.T) {
 			"--answering-machine-detection-config.maximum-word-length-millis", "2000",
 			"--answering-machine-detection-config.silence-threshold", "512",
 			"--answering-machine-detection-config.total-analysis-time-millis", "5000",
+			"--assistant.id", "id",
+			"--assistant.dynamic-variables", "{customer_name: John, account_id: ACC-12345}",
+			"--assistant.external-llm", "{authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}",
+			"--assistant.fallback-config", "{external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}",
+			"--assistant.greeting", "greeting",
+			"--assistant.instructions", "You are a friendly voice assistant.",
+			"--assistant.llm-api-key-ref", "my_llm_api_key",
+			"--assistant.mcp-servers", "[{foo: bar}]",
+			"--assistant.model", "gpt-4o",
+			"--assistant.name", "name",
+			"--assistant.observability-settings", "{foo: bar}",
+			"--assistant.openai-api-key-ref", "my_openai_api_key",
+			"--assistant.tools", "[{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--bridge-intent=true",
@@ -122,6 +140,9 @@ func TestCallsDial(t *testing.T) {
 			"--custom-header.value", "val_1",
 			"--custom-header.name", "head_2",
 			"--custom-header.value", "val_2",
+			"--deepfake-detection.enabled=true",
+			"--deepfake-detection.rtp-timeout", "30",
+			"--deepfake-detection.timeout", "15",
 			"--dialogflow-config.analyze-sentiment=false",
 			"--dialogflow-config.partial-automated-agent-reply=false",
 			"--enable-dialogflow=false",
@@ -171,8 +192,11 @@ func TestCallsDial(t *testing.T) {
 			"--transcription-config.transcription-engine", "Google",
 			"--transcription-config.transcription-engine-config", "{enable_speaker_diarization: true, hints: [string], interim_results: true, language: en, max_speaker_count: 4, min_speaker_count: 4, model: latest_long, profanity_filter: true, speech_context: [{boost: 1, phrases: [string]}], transcription_engine: Google, use_enhanced: true}",
 			"--transcription-config.transcription-tracks", "both",
+			"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
+			"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+			"--webhook-urls-method", "POST",
 		)
 	})
 
@@ -194,6 +218,47 @@ func TestCallsDial(t *testing.T) {
 			"  maximum_word_length_millis: 2000\n" +
 			"  silence_threshold: 512\n" +
 			"  total_analysis_time_millis: 5000\n" +
+			"assistant:\n" +
+			"  id: id\n" +
+			"  dynamic_variables:\n" +
+			"    customer_name: John\n" +
+			"    account_id: ACC-12345\n" +
+			"  external_llm:\n" +
+			"    authentication_method: token\n" +
+			"    base_url: base_url\n" +
+			"    certificate_ref: certificate_ref\n" +
+			"    forward_metadata: true\n" +
+			"    llm_api_key_ref: llm_api_key_ref\n" +
+			"    model: model\n" +
+			"    token_retrieval_url: token_retrieval_url\n" +
+			"  fallback_config:\n" +
+			"    external_llm:\n" +
+			"      authentication_method: token\n" +
+			"      base_url: base_url\n" +
+			"      certificate_ref: certificate_ref\n" +
+			"      forward_metadata: true\n" +
+			"      llm_api_key_ref: llm_api_key_ref\n" +
+			"      model: model\n" +
+			"      token_retrieval_url: token_retrieval_url\n" +
+			"    llm_api_key_ref: llm_api_key_ref\n" +
+			"    model: model\n" +
+			"  greeting: greeting\n" +
+			"  instructions: You are a friendly voice assistant.\n" +
+			"  llm_api_key_ref: my_llm_api_key\n" +
+			"  mcp_servers:\n" +
+			"    - foo: bar\n" +
+			"  model: gpt-4o\n" +
+			"  name: name\n" +
+			"  observability_settings:\n" +
+			"    foo: bar\n" +
+			"  openai_api_key_ref: my_openai_api_key\n" +
+			"  tools:\n" +
+			"    - book_appointment:\n" +
+			"        api_key_ref: my_calcom_api_key\n" +
+			"        event_type_id: 0\n" +
+			"        attendee_name: attendee_name\n" +
+			"        attendee_timezone: attendee_timezone\n" +
+			"      type: book_appointment\n" +
 			"audio_url: http://www.example.com/sounds/greeting.wav\n" +
 			"billing_group_id: f5586561-8ff0-4291-a0ac-84fe544797bd\n" +
 			"bridge_intent: true\n" +
@@ -222,6 +287,10 @@ func TestCallsDial(t *testing.T) {
 			"    value: val_1\n" +
 			"  - name: head_2\n" +
 			"    value: val_2\n" +
+			"deepfake_detection:\n" +
+			"  enabled: true\n" +
+			"  rtp_timeout: 30\n" +
+			"  timeout: 15\n" +
 			"dialogflow_config:\n" +
 			"  analyze_sentiment: false\n" +
 			"  partial_automated_agent_reply: false\n" +
@@ -290,8 +359,18 @@ func TestCallsDial(t *testing.T) {
 			"    transcription_engine: Google\n" +
 			"    use_enhanced: true\n" +
 			"  transcription_tracks: both\n" +
+			"webhook_retries_policies:\n" +
+			"  call.hangup:\n" +
+			"    retries_ms:\n" +
+			"      - 1000\n" +
+			"      - 2000\n" +
+			"      - 5000\n" +
 			"webhook_url: https://www.example.com/server-b/\n" +
-			"webhook_url_method: POST\n")
+			"webhook_url_method: POST\n" +
+			"webhook_urls:\n" +
+			"  call.hangup: https://www.example.com/webhooks/hangup\n" +
+			"  call.bridge: https://www.example.com/webhooks/bridge\n" +
+			"webhook_urls_method: POST\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

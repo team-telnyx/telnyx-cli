@@ -14,91 +14,164 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var wirelessBlocklistsCreate = cli.Command{
+var trafficPolicyProfilesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a Wireless Blocklist to prevent SIMs from connecting to certain networks.",
+	Usage:   "Create a new traffic policy profile. At least one of `services`, `ip_ranges`, or\n`domains` must be provided.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "The name of the Wireless Blocklist.",
-			Required: true,
-			BodyPath: "name",
-		},
-		&requestflag.Flag[string]{
 			Name:     "type",
-			Usage:    "The type of wireless blocklist.",
+			Usage:    "The type of the traffic policy profile.",
 			Required: true,
 			BodyPath: "type",
 		},
 		&requestflag.Flag[[]string]{
-			Name:     "value",
-			Usage:    "Values to block. The values here depend on the `type` of Wireless Blocklist.",
-			Required: true,
-			BodyPath: "values",
-		},
-	},
-	Action:          handleWirelessBlocklistsCreate,
-	HideHelpCommand: true,
-}
-
-var wirelessBlocklistsRetrieve = cli.Command{
-	Name:    "retrieve",
-	Usage:   "Retrieve information about a Wireless Blocklist.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
-		},
-	},
-	Action:          handleWirelessBlocklistsRetrieve,
-	HideHelpCommand: true,
-}
-
-var wirelessBlocklistsUpdate = cli.Command{
-	Name:    "update",
-	Usage:   "Update a Wireless Blocklist.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
-		},
-		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "The name of the Wireless Blocklist.",
-			BodyPath: "name",
+			Name:     "domain",
+			Usage:    "Array of domain names.",
+			BodyPath: "domains",
 		},
 		&requestflag.Flag[[]string]{
-			Name:     "value",
-			Usage:    "Values to block. The values here depend on the `type` of Wireless Blocklist.",
-			BodyPath: "values",
+			Name:     "ip-range",
+			Usage:    "Array of IP ranges in CIDR notation.",
+			BodyPath: "ip_ranges",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "limit-bw-kbps",
+			Usage:    "Bandwidth limit in kbps. Must be 512 or 1024.",
+			BodyPath: "limit_bw_kbps",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "service",
+			Usage:    "Array of PCEF service IDs to include in the profile.",
+			BodyPath: "services",
 		},
 	},
-	Action:          handleWirelessBlocklistsUpdate,
+	Action:          handleTrafficPolicyProfilesCreate,
 	HideHelpCommand: true,
 }
 
-var wirelessBlocklistsList = cli.Command{
-	Name:    "list",
-	Usage:   "Get all Wireless Blocklists belonging to the user.",
+var trafficPolicyProfilesRetrieve = cli.Command{
+	Name:    "retrieve",
+	Usage:   "Returns the details regarding a specific traffic policy profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:      "filter-name",
-			Usage:     "The name of the Wireless Blocklist.",
-			QueryPath: "filter[name]",
+			Name:     "id",
+			Required: true,
+		},
+	},
+	Action:          handleTrafficPolicyProfilesRetrieve,
+	HideHelpCommand: true,
+}
+
+var trafficPolicyProfilesUpdate = cli.Command{
+	Name:    "update",
+	Usage:   "Updates a traffic policy profile.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "domain",
+			Usage:    "Array of domain names.",
+			BodyPath: "domains",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "ip-range",
+			Usage:    "Array of IP ranges in CIDR notation.",
+			BodyPath: "ip_ranges",
+		},
+		&requestflag.Flag[any]{
+			Name:     "limit-bw-kbps",
+			Usage:    "Bandwidth limit in kbps. Must be 512 or 1024, or null to remove.",
+			BodyPath: "limit_bw_kbps",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "service",
+			Usage:    "Array of PCEF service IDs to include in the profile.",
+			BodyPath: "services",
+		},
+		&requestflag.Flag[string]{
+			Name:     "type",
+			Usage:    "The type of the traffic policy profile.",
+			BodyPath: "type",
+		},
+	},
+	Action:          handleTrafficPolicyProfilesUpdate,
+	HideHelpCommand: true,
+}
+
+var trafficPolicyProfilesList = cli.Command{
+	Name:    "list",
+	Usage:   "Get all traffic policy profiles belonging to the user that match the given\nfilters.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "filter-service",
+			Usage:     "Filter by service ID.",
+			QueryPath: "filter[service]",
 		},
 		&requestflag.Flag[string]{
 			Name:      "filter-type",
-			Usage:     "When the Private Wireless Gateway was last updated.",
+			Usage:     "Filter by traffic policy profile type.",
 			QueryPath: "filter[type]",
 		},
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			Usage:     "The page number to load.",
+			Default:   1,
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			Usage:     "The size of the page.",
+			Default:   20,
+			QueryPath: "page[size]",
+		},
 		&requestflag.Flag[string]{
-			Name:      "filter-values",
-			Usage:     "Values to filter on (inclusive).",
-			QueryPath: "filter[values]",
+			Name:      "sort",
+			Usage:     "Sorts traffic policy profiles by the given field. Defaults to ascending order unless field is prefixed with a minus sign.",
+			QueryPath: "sort",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
+	},
+	Action:          handleTrafficPolicyProfilesList,
+	HideHelpCommand: true,
+}
+
+var trafficPolicyProfilesDelete = cli.Command{
+	Name:    "delete",
+	Usage:   "Deletes the traffic policy profile.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "id",
+			Required: true,
+		},
+	},
+	Action:          handleTrafficPolicyProfilesDelete,
+	HideHelpCommand: true,
+}
+
+var trafficPolicyProfilesListServices = cli.Command{
+	Name:    "list-services",
+	Usage:   "Get all available PCEF services that can be used in traffic policy profiles.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "filter-group",
+			Usage:     "Filter services by group.",
+			QueryPath: "filter[group]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-name",
+			Usage:     "Filter services by name.",
+			QueryPath: "filter[name]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -117,25 +190,11 @@ var wirelessBlocklistsList = cli.Command{
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
-	Action:          handleWirelessBlocklistsList,
+	Action:          handleTrafficPolicyProfilesListServices,
 	HideHelpCommand: true,
 }
 
-var wirelessBlocklistsDelete = cli.Command{
-	Name:    "delete",
-	Usage:   "Deletes the Wireless Blocklist.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
-		},
-	},
-	Action:          handleWirelessBlocklistsDelete,
-	HideHelpCommand: true,
-}
-
-func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -143,7 +202,7 @@ func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WirelessBlocklistNewParams{}
+	params := telnyx.TrafficPolicyProfileNewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -158,7 +217,7 @@ func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.New(ctx, params, options...)
+	_, err = client.TrafficPolicyProfiles.New(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -171,12 +230,12 @@ func handleWirelessBlocklistsCreate(ctx context.Context, cmd *cli.Command) error
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "wireless-blocklists create",
+		Title:          "traffic-policy-profiles create",
 		Transform:      transform,
 	})
 }
 
-func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -200,7 +259,7 @@ func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) err
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.Get(ctx, cmd.Value("id").(string), options...)
+	_, err = client.TrafficPolicyProfiles.Get(ctx, cmd.Value("id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -213,12 +272,12 @@ func handleWirelessBlocklistsRetrieve(ctx context.Context, cmd *cli.Command) err
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "wireless-blocklists retrieve",
+		Title:          "traffic-policy-profiles retrieve",
 		Transform:      transform,
 	})
 }
 
-func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -229,7 +288,7 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WirelessBlocklistUpdateParams{}
+	params := telnyx.TrafficPolicyProfileUpdateParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -244,7 +303,7 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.Update(
+	_, err = client.TrafficPolicyProfiles.Update(
 		ctx,
 		cmd.Value("id").(string),
 		params,
@@ -262,12 +321,12 @@ func handleWirelessBlocklistsUpdate(ctx context.Context, cmd *cli.Command) error
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "wireless-blocklists update",
+		Title:          "traffic-policy-profiles update",
 		Transform:      transform,
 	})
 }
 
-func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -275,7 +334,7 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WirelessBlocklistListParams{}
+	params := telnyx.TrafficPolicyProfileListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -294,7 +353,7 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 	if format == "raw" {
 		var res []byte
 		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.WirelessBlocklists.List(ctx, params, options...)
+		_, err = client.TrafficPolicyProfiles.List(ctx, params, options...)
 		if err != nil {
 			return err
 		}
@@ -303,11 +362,11 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 			ExplicitFormat: explicitFormat,
 			Format:         format,
 			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "wireless-blocklists list",
+			Title:          "traffic-policy-profiles list",
 			Transform:      transform,
 		})
 	} else {
-		iter := client.WirelessBlocklists.ListAutoPaging(ctx, params, options...)
+		iter := client.TrafficPolicyProfiles.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
@@ -316,13 +375,13 @@ func handleWirelessBlocklistsList(ctx context.Context, cmd *cli.Command) error {
 			ExplicitFormat: explicitFormat,
 			Format:         format,
 			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "wireless-blocklists list",
+			Title:          "traffic-policy-profiles list",
 			Transform:      transform,
 		})
 	}
 }
 
-func handleWirelessBlocklistsDelete(ctx context.Context, cmd *cli.Command) error {
+func handleTrafficPolicyProfilesDelete(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -346,7 +405,7 @@ func handleWirelessBlocklistsDelete(ctx context.Context, cmd *cli.Command) error
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.Delete(ctx, cmd.Value("id").(string), options...)
+	_, err = client.TrafficPolicyProfiles.Delete(ctx, cmd.Value("id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -359,7 +418,62 @@ func handleWirelessBlocklistsDelete(ctx context.Context, cmd *cli.Command) error
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "wireless-blocklists delete",
+		Title:          "traffic-policy-profiles delete",
 		Transform:      transform,
 	})
+}
+
+func handleTrafficPolicyProfilesListServices(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	params := telnyx.TrafficPolicyProfileListServicesParams{}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.TrafficPolicyProfiles.ListServices(ctx, params, options...)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "traffic-policy-profiles list-services",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.TrafficPolicyProfiles.ListServicesAutoPaging(ctx, params, options...)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "traffic-policy-profiles list-services",
+			Transform:      transform,
+		})
+	}
 }
