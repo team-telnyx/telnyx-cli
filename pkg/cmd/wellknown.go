@@ -7,8 +7,8 @@ import (
 	"fmt"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
-	"github.com/team-telnyx/telnyx-go/v4"
-	"github.com/team-telnyx/telnyx-go/v4/option"
+	"github.com/team-telnyx/telnyx-go"
+	"github.com/team-telnyx/telnyx-go/option"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )

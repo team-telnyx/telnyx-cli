@@ -17,7 +17,7 @@ import (
 	"syscall"
 
 	"github.com/team-telnyx/telnyx-cli/internal/jsonview"
-	"github.com/team-telnyx/telnyx-go/v4/option"
+	"github.com/team-telnyx/telnyx-go/option"
 
 	"github.com/charmbracelet/x/term"
 	"github.com/itchyny/json2yaml"
