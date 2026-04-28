@@ -67,6 +67,14 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "enabled-feature",
 			BodyPath: "enabled_features",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "external-llm",
+			BodyPath: "external_llm",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "fallback-config",
+			BodyPath: "fallback_config",
+		},
 		&requestflag.Flag[string]{
 			Name:     "greeting",
 			Usage:    "Text that the assistant will use to start the conversation. This may be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables). Use an empty string to have the assistant wait for the user to speak first. Use the special value `<assistant-speaks-first-with-model-generated-message>` to have the assistant generate the greeting based on the system instructions.",
@@ -142,6 +150,59 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleAIAssistantsVersionsUpdate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"external-llm": {
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.base-url",
+			Usage:      "Base URL for the external LLM endpoint.",
+			InnerField: "base_url",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.model",
+			Usage:      "Model identifier to use with the external LLM endpoint.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.authentication-method",
+			Usage:      "Authentication method used when connecting to the external LLM endpoint.",
+			InnerField: "authentication_method",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.certificate-ref",
+			Usage:      "Integration secret identifier for the client certificate used with certificate authentication.",
+			InnerField: "certificate_ref",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "external-llm.forward-metadata",
+			Usage:      "When enabled, Telnyx forwards conversation metadata and dynamic variables to the external LLM endpoint. Defaults to false. The external endpoint receives the standard chat completions payload with top-level `metadata` and `dynamic_variables` objects when values are available. For example: `{\"metadata\":{\"conversation_id\":\"conv_123\",\"assistant_id\":\"assistant_456\",\"call_control_id\":\"v3:abc123\",\"telnyx_conversation_channel\":\"phone_call\"},\"dynamic_variables\":{\"customer_name\":\"Jane\",\"account_id\":\"acct_789\",\"telnyx_agent_target\":\"+13125550100\",\"telnyx_end_user_target\":\"+13125550123\"}}`.",
+			InnerField: "forward_metadata",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the external LLM API key.",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "external-llm.token-retrieval-url",
+			Usage:      "URL used to retrieve an access token when certificate authentication is enabled.",
+			InnerField: "token_retrieval_url",
+		},
+	},
+	"fallback-config": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "fallback-config.external-llm",
+			InnerField: "external_llm",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "fallback-config.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the fallback model API key.",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "fallback-config.model",
+			Usage:      "Fallback Telnyx-hosted model to use when the primary LLM provider is unavailable.",
+			InnerField: "model",
+		},
+	},
 	"insight-settings": {
 		&requestflag.InnerFlag[string]{
 			Name:       "insight-settings.insight-group-id",
