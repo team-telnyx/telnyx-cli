@@ -2464,7 +2464,6 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&texmlInitiateAICall,
 					&texmlSecrets,
 				},
 			},
