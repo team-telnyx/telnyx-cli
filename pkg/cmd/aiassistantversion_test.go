@@ -49,7 +49,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
-			"--transcription", "{language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, eot_threshold: 0, eot_timeout_ms: 0, keyterm: keyterm, numerals: true, smart_format: true}}",
+			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, keyterm: keyterm, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
 			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
 		)
@@ -96,10 +96,11 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--telephony-settings.voicemail-detection", "{on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--transcription.api-key-ref", "api_key_ref",
 			"--transcription.language", "language",
 			"--transcription.model", "deepgram/flux",
 			"--transcription.region", "region",
-			"--transcription.settings", "{eager_eot_threshold: 0.3, eot_threshold: 0, eot_timeout_ms: 0, keyterm: keyterm, numerals: true, smart_format: true}",
+			"--transcription.settings", "{eager_eot_threshold: 0.3, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, keyterm: keyterm, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}",
 			"--voice-settings.voice", "voice",
 			"--voice-settings.api-key-ref", "api_key_ref",
 			"--voice-settings.background-audio", "{type: predefined_media, value: silence}",
@@ -213,14 +214,18 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"          value_path: x\n" +
 			"      timeout_ms: 500\n" +
 			"transcription:\n" +
+			"  api_key_ref: api_key_ref\n" +
 			"  language: language\n" +
 			"  model: deepgram/flux\n" +
 			"  region: region\n" +
 			"  settings:\n" +
 			"    eager_eot_threshold: 0.3\n" +
-			"    eot_threshold: 0\n" +
-			"    eot_timeout_ms: 0\n" +
+			"    end_of_turn_confidence_threshold: 0\n" +
+			"    eot_threshold: 0.5\n" +
+			"    eot_timeout_ms: 500\n" +
 			"    keyterm: keyterm\n" +
+			"    max_turn_silence: 100\n" +
+			"    min_turn_silence: 100\n" +
 			"    numerals: true\n" +
 			"    smart_format: true\n" +
 			"voice_settings:\n" +
