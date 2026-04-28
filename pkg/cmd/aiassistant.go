@@ -221,18 +221,23 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 	},
 	"transcription": {
 		&requestflag.InnerFlag[string]{
+			Name:       "transcription.api-key-ref",
+			Usage:      "Integration secret identifier for the transcription provider API key. Currently used for Azure transcription regions that require a customer-provided API key.",
+			InnerField: "api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, of if set to `auto`, the model will automatically detect the language.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, the model will automatically detect the language.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. All the deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking but is English-only.\n- `deepgram/nova-3` is multi-lingual with automatic language detection but slightly higher latency.",
+			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking but is English-only.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-streaming` is a multilingual streaming model with configurable turn detection.\n- `xai/grok-stt` is a multilingual Grok STT model.",
 			InnerField: "model",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.region",
-			Usage:      "Region on third party cloud providers (currently Azure) if using one of their models",
+			Usage:      "Region on third party cloud providers (currently Azure) if using one of their models. Some regions require `api_key_ref`.",
 			InnerField: "region",
 		},
 		&requestflag.InnerFlag[map[string]any]{
@@ -600,18 +605,23 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 	},
 	"transcription": {
 		&requestflag.InnerFlag[string]{
+			Name:       "transcription.api-key-ref",
+			Usage:      "Integration secret identifier for the transcription provider API key. Currently used for Azure transcription regions that require a customer-provided API key.",
+			InnerField: "api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, of if set to `auto`, the model will automatically detect the language.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, the model will automatically detect the language.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. All the deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking but is English-only.\n- `deepgram/nova-3` is multi-lingual with automatic language detection but slightly higher latency.",
+			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking but is English-only.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-streaming` is a multilingual streaming model with configurable turn detection.\n- `xai/grok-stt` is a multilingual Grok STT model.",
 			InnerField: "model",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.region",
-			Usage:      "Region on third party cloud providers (currently Azure) if using one of their models",
+			Usage:      "Region on third party cloud providers (currently Azure) if using one of their models. Some regions require `api_key_ref`.",
 			InnerField: "region",
 		},
 		&requestflag.InnerFlag[map[string]any]{
