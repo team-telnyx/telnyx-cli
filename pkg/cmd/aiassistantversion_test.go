@@ -34,6 +34,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--version-id", "version_id",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
+			"--dynamic-variables-webhook-timeout-ms", "1",
 			"--dynamic-variables-webhook-url", "dynamic_variables_webhook_url",
 			"--enabled-feature", "telephony",
 			"--external-llm", "{base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}",
@@ -41,17 +42,22 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--greeting", "greeting",
 			"--insight-settings", "{insight_group_id: insight_group_id}",
 			"--instructions", "instructions",
+			"--integration", "{integration_id: integration_id, allowed_list: [string]}",
+			"--interruption-settings", "{enable: true, start_speaking_plan: {transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}}",
 			"--llm-api-key-ref", "llm_api_key_ref",
+			"--mcp-server", "{id: id, allowed_tools: [string]}",
 			"--messaging-settings", "{conversation_inactivity_minutes: 1, default_messaging_profile_id: default_messaging_profile_id, delivery_status_webhook_url: delivery_status_webhook_url}",
 			"--model", "model",
 			"--name", "name",
 			"--observability-settings", "{host: host, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
 			"--post-conversation-settings", "{enabled: true}",
 			"--privacy-settings", "{data_retention: true}",
+			"--tag", "string",
 			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, keyterm: keyterm, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
+			"--version-name", "version_name",
 			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
 		)
@@ -70,6 +76,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--version-id", "version_id",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
+			"--dynamic-variables-webhook-timeout-ms", "1",
 			"--dynamic-variables-webhook-url", "dynamic_variables_webhook_url",
 			"--enabled-feature", "telephony",
 			"--external-llm.base-url", "base_url",
@@ -85,7 +92,13 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--greeting", "greeting",
 			"--insight-settings.insight-group-id", "insight_group_id",
 			"--instructions", "instructions",
+			"--integration.integration-id", "integration_id",
+			"--integration.allowed-list", "[string]",
+			"--interruption-settings.enable=true",
+			"--interruption-settings.start-speaking-plan", "{transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}",
 			"--llm-api-key-ref", "llm_api_key_ref",
+			"--mcp-server.id", "id",
+			"--mcp-server.allowed-tools", "[string]",
 			"--messaging-settings.conversation-inactivity-minutes", "1",
 			"--messaging-settings.default-messaging-profile-id", "default_messaging_profile_id",
 			"--messaging-settings.delivery-status-webhook-url", "delivery_status_webhook_url",
@@ -97,6 +110,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--observability-settings.status", "enabled",
 			"--post-conversation-settings.enabled=true",
 			"--privacy-settings.data-retention=true",
+			"--tag", "string",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
 			"--telephony-settings.noise-suppression", "krisp",
 			"--telephony-settings.noise-suppression-config", "{attenuation_limit: 0, mode: advanced}",
@@ -113,6 +127,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--transcription.model", "deepgram/flux",
 			"--transcription.region", "region",
 			"--transcription.settings", "{eager_eot_threshold: 0.3, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, keyterm: keyterm, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}",
+			"--version-name", "version_name",
 			"--voice-settings.voice", "voice",
 			"--voice-settings.api-key-ref", "api_key_ref",
 			"--voice-settings.background-audio", "{type: predefined_media, value: silence}",
@@ -144,6 +159,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"description: description\n" +
 			"dynamic_variables:\n" +
 			"  foo: bar\n" +
+			"dynamic_variables_webhook_timeout_ms: 1\n" +
 			"dynamic_variables_webhook_url: dynamic_variables_webhook_url\n" +
 			"enabled_features:\n" +
 			"  - telephony\n" +
@@ -170,7 +186,23 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"insight_settings:\n" +
 			"  insight_group_id: insight_group_id\n" +
 			"instructions: instructions\n" +
+			"integrations:\n" +
+			"  - integration_id: integration_id\n" +
+			"    allowed_list:\n" +
+			"      - string\n" +
+			"interruption_settings:\n" +
+			"  enable: true\n" +
+			"  start_speaking_plan:\n" +
+			"    transcription_endpointing_plan:\n" +
+			"      on_no_punctuation_seconds: 0\n" +
+			"      on_number_seconds: 0\n" +
+			"      on_punctuation_seconds: 0\n" +
+			"    wait_seconds: 0\n" +
 			"llm_api_key_ref: llm_api_key_ref\n" +
+			"mcp_servers:\n" +
+			"  - id: id\n" +
+			"    allowed_tools:\n" +
+			"      - string\n" +
 			"messaging_settings:\n" +
 			"  conversation_inactivity_minutes: 1\n" +
 			"  default_messaging_profile_id: default_messaging_profile_id\n" +
@@ -186,6 +218,8 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"  enabled: true\n" +
 			"privacy_settings:\n" +
 			"  data_retention: true\n" +
+			"tags:\n" +
+			"  - string\n" +
 			"telephony_settings:\n" +
 			"  default_texml_app_id: default_texml_app_id\n" +
 			"  noise_suppression: krisp\n" +
@@ -259,6 +293,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"    min_turn_silence: 100\n" +
 			"    numerals: true\n" +
 			"    smart_format: true\n" +
+			"version_name: version_name\n" +
 			"voice_settings:\n" +
 			"  voice: voice\n" +
 			"  api_key_ref: api_key_ref\n" +
