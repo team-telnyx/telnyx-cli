@@ -606,12 +606,12 @@ var messagesSendWithAlphanumericSender = cli.Command{
 			Usage:    "If true, use the messaging profile's webhook settings.",
 			BodyPath: "use_profile_webhooks",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-failover-url",
 			Usage:    "Failover callback URL for delivery status updates.",
 			BodyPath: "webhook_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-url",
 			Usage:    "Callback URL for delivery status updates.",
 			BodyPath: "webhook_url",

@@ -48,7 +48,7 @@ var credentialConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Latency",
 			BodyPath: "anchorsite_override",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "android-push-credential-id",
 			Usage:    "The uuid of the push credential for Android",
 			Default:  nil,
@@ -78,7 +78,7 @@ var credentialConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  false,
 			BodyPath: "encode_contact_header_enabled",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "encrypted-media",
 			Usage:    "Enable use of SRTP for encryption. Cannot be set if the transport_portocol is TLS.",
 			BodyPath: "encrypted_media",
@@ -87,7 +87,7 @@ var credentialConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "inbound",
 			BodyPath: "inbound",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "ios-push-credential-id",
 			Usage:    "The uuid of the push credential for Ios",
 			Default:  nil,
@@ -138,10 +138,10 @@ var credentialConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "1",
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			Usage:    "The failover URL where webhooks related to this connection will be sent if sending to the primary URL fails. Must include a scheme, such as 'https'.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_event_failover_url",
 		},
 		&requestflag.Flag[string]{
@@ -149,7 +149,7 @@ var credentialConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "The URL where webhooks related to this connection will be sent. Must include a scheme, such as 'https'.",
 			BodyPath: "webhook_event_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "webhook-timeout-secs",
 			Usage:    "Specifies how many seconds to wait before timing out a webhook.",
 			Default:  nil,
@@ -266,7 +266,7 @@ var credentialConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Specifies when we apply your ani_override setting. Only applies when ani_override is not blank.",
 			InnerField: "ani_override_type",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*bool]{
 			Name:       "outbound.call-parking-enabled",
 			Usage:      `Forces all SIP calls originated on this connection to be "parked" instead of "bridged" to the destination specified on the URI. Parked calls will return ringback to the caller and will await for a Call Control command to define which action will be taken next.`,
 			InnerField: "call_parking_enabled",
@@ -355,7 +355,7 @@ var credentialConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Latency",
 			BodyPath: "anchorsite_override",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "android-push-credential-id",
 			Usage:    "The uuid of the push credential for Android",
 			Default:  nil,
@@ -390,7 +390,7 @@ var credentialConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Default:  false,
 			BodyPath: "encode_contact_header_enabled",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "encrypted-media",
 			Usage:    "Enable use of SRTP for encryption. Cannot be set if the transport_portocol is TLS.",
 			BodyPath: "encrypted_media",
@@ -399,7 +399,7 @@ var credentialConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "inbound",
 			BodyPath: "inbound",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "ios-push-credential-id",
 			Usage:    "The uuid of the push credential for Ios",
 			Default:  nil,
@@ -460,10 +460,10 @@ var credentialConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "1",
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			Usage:    "The failover URL where webhooks related to this connection will be sent if sending to the primary URL fails. Must include a scheme, such as 'https'.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_event_failover_url",
 		},
 		&requestflag.Flag[string]{
@@ -471,7 +471,7 @@ var credentialConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "The URL where webhooks related to this connection will be sent. Must include a scheme, such as 'https'.",
 			BodyPath: "webhook_event_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "webhook-timeout-secs",
 			Usage:    "Specifies how many seconds to wait before timing out a webhook.",
 			Default:  nil,
@@ -588,7 +588,7 @@ var credentialConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Specifies when we apply your ani_override setting. Only applies when ani_override is not blank.",
 			InnerField: "ani_override_type",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*bool]{
 			Name:       "outbound.call-parking-enabled",
 			Usage:      `Forces all SIP calls originated on this connection to be "parked" instead of "bridged" to the destination specified on the URI. Parked calls will return ringback to the caller and will await for a Call Control command to define which action will be taken next.`,
 			InnerField: "call_parking_enabled",

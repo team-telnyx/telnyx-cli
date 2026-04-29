@@ -37,17 +37,17 @@ var messagingRcsAgentsUpdate = cli.Command{
 			Name:     "id",
 			Required: true,
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "profile-id",
 			Usage:    "Messaging profile ID associated with the RCS Agent",
 			BodyPath: "profile_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-failover-url",
 			Usage:    "Failover URL to receive RCS events",
 			BodyPath: "webhook_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-url",
 			Usage:    "URL to receive RCS events",
 			BodyPath: "webhook_url",

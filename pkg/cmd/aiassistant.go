@@ -392,7 +392,7 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Enables emotionally expressive speech using SSML emotion tags. When enabled, the assistant uses audio tags like angry, excited, content, and sad to add emotional nuance. Only supported for Telnyx Ultra voices.",
 			InnerField: "expressive_mode",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "voice-settings.language-boost",
 			Usage:      "Enhances recognition for specific languages and dialects during MiniMax TTS synthesis. Default is null (no boost). Set to 'auto' for automatic language detection. Only applicable when using MiniMax voices.",
 			InnerField: "language_boost",
@@ -443,12 +443,12 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The default state of the widget.",
 			InnerField: "default_state",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.give-feedback-url",
 			Usage:      "URL for users to give feedback.",
 			InnerField: "give_feedback_url",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.logo-icon-url",
 			Usage:      "URL to a custom logo icon for the widget.",
 			InnerField: "logo_icon_url",
@@ -458,7 +458,7 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The positioning style for the widget.",
 			InnerField: "position",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.report-issue-url",
 			Usage:      "URL for users to report issues.",
 			InnerField: "report_issue_url",
@@ -478,7 +478,7 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The visual theme for the widget.",
 			InnerField: "theme",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.view-history-url",
 			Usage:      "URL to view conversation history.",
 			InnerField: "view_history_url",
@@ -909,7 +909,7 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Enables emotionally expressive speech using SSML emotion tags. When enabled, the assistant uses audio tags like angry, excited, content, and sad to add emotional nuance. Only supported for Telnyx Ultra voices.",
 			InnerField: "expressive_mode",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "voice-settings.language-boost",
 			Usage:      "Enhances recognition for specific languages and dialects during MiniMax TTS synthesis. Default is null (no boost). Set to 'auto' for automatic language detection. Only applicable when using MiniMax voices.",
 			InnerField: "language_boost",
@@ -960,12 +960,12 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The default state of the widget.",
 			InnerField: "default_state",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.give-feedback-url",
 			Usage:      "URL for users to give feedback.",
 			InnerField: "give_feedback_url",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.logo-icon-url",
 			Usage:      "URL to a custom logo icon for the widget.",
 			InnerField: "logo_icon_url",
@@ -975,7 +975,7 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The positioning style for the widget.",
 			InnerField: "position",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.report-issue-url",
 			Usage:      "URL for users to report issues.",
 			InnerField: "report_issue_url",
@@ -995,7 +995,7 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The visual theme for the widget.",
 			InnerField: "theme",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.view-history-url",
 			Usage:      "URL to view conversation history.",
 			InnerField: "view_history_url",

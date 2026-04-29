@@ -47,15 +47,15 @@ var mobileVoiceConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "2",
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			BodyPath: "webhook_event_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-url",
 			BodyPath: "webhook_event_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "webhook-timeout-secs",
 			BodyPath: "webhook_timeout_secs",
 		},
@@ -129,11 +129,11 @@ var mobileVoiceConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    `Allowed values: "1", "2".`,
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			BodyPath: "webhook_event_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-url",
 			BodyPath: "webhook_event_url",
 		},

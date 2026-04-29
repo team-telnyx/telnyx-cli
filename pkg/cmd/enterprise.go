@@ -155,7 +155,7 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Street address",
 			InnerField: "street_address",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "billing-address.extended-address",
 			Usage:      "Additional address line (suite, apt, etc.)",
 			InnerField: "extended_address",
@@ -236,7 +236,7 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Street address",
 			InnerField: "street_address",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "organization-physical-address.extended-address",
 			Usage:      "Additional address line (suite, apt, etc.)",
 			InnerField: "extended_address",
@@ -374,7 +374,7 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Street address",
 			InnerField: "street_address",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "billing-address.extended-address",
 			Usage:      "Additional address line (suite, apt, etc.)",
 			InnerField: "extended_address",
@@ -455,7 +455,7 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Street address",
 			InnerField: "street_address",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "organization-physical-address.extended-address",
 			Usage:      "Additional address line (suite, apt, etc.)",
 			InnerField: "extended_address",
