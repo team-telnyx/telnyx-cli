@@ -31,12 +31,12 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Required: true,
 			BodyPath: "whitelisted_destinations",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "ai-assistant-id",
 			Usage:    "The AI assistant ID to associate with this messaging profile.",
 			BodyPath: "ai_assistant_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "alpha-sender",
 			Usage:    "The alphanumeric sender ID to use when sending to destinations that require an alphanumeric sender ID.",
 			BodyPath: "alpha_sender",
@@ -57,7 +57,7 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  true,
 			BodyPath: "enabled",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "health-webhook-url",
 			Usage:    "A URL to receive health check webhooks for numbers in this profile.",
 			BodyPath: "health_webhook_url",
@@ -85,7 +85,7 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Number Pool allows you to send messages from a pool of numbers of different types, assigning\nweights to each type. The pool consists of all the long code and toll free numbers\nassigned to the messaging profile.\n\nTo disable this feature, set the object field to `null`.\n",
 			BodyPath: "number_pool_settings",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "resource-group-id",
 			Usage:    "The resource group ID to associate with this messaging profile.",
 			BodyPath: "resource_group_id",
@@ -107,16 +107,16 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "2",
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-failover-url",
 			Usage:    "The failover URL where webhooks related to this messaging profile will be sent if sending to the primary URL fails.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-url",
 			Usage:    "The URL where webhooks related to this messaging profile will be sent.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_url",
 		},
 	},
@@ -197,7 +197,7 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "messaging-profile-id",
 			Required: true,
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "alpha-sender",
 			Usage:    "The alphanumeric sender ID to use when sending to destinations that require an alphanumeric sender ID.",
 			BodyPath: "alpha_sender",
@@ -266,12 +266,12 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Determines which webhook format will be used, Telnyx API v1, v2, or a legacy 2010-04-01 format.",
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-failover-url",
 			Usage:    "The failover URL where webhooks related to this messaging profile will be sent if sending to the primary URL fails.",
 			BodyPath: "webhook_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-url",
 			Usage:    "The URL where webhooks related to this messaging profile will be sent.",
 			BodyPath: "webhook_url",

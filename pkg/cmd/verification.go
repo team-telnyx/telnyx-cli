@@ -45,13 +45,13 @@ var verificationsTriggerCall = cli.Command{
 			Required: true,
 			BodyPath: "verify_profile_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "custom-code",
 			Usage:    "Send a self-generated numeric code to the end-user",
 			Default:  nil,
 			BodyPath: "custom_code",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "extension",
 			Usage:    "Optional extension to dial after call is answered using DTMF digits. Valid digits are 0-9, A-D, *, and #. Pauses can be added using w (0.5s) and W (1s).",
 			Default:  nil,
@@ -111,7 +111,7 @@ var verificationsTriggerSMS = cli.Command{
 			Required: true,
 			BodyPath: "verify_profile_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "custom-code",
 			Usage:    "Send a self-generated numeric code to the end-user",
 			Default:  nil,
@@ -144,7 +144,7 @@ var verificationsTriggerWhatsappVerification = cli.Command{
 			Required: true,
 			BodyPath: "verify_profile_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "custom-code",
 			Usage:    "Send a self-generated numeric code to the end-user",
 			Default:  nil,

@@ -31,7 +31,7 @@ var portingOrdersCreate = cli.Command{
 			Usage:    "A customer-specified group reference for customer bookkeeping purposes",
 			BodyPath: "customer_group_reference",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "customer-reference",
 			Usage:    "A customer-specified reference number for customer bookkeeping purposes",
 			BodyPath: "customer_reference",
@@ -133,12 +133,12 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"documents": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "documents.invoice",
 			Usage:      "Returned ID of the submitted Invoice via the Documents endpoint",
 			InnerField: "invoice",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "documents.loa",
 			Usage:      "Returned ID of the submitted LOA via the Documents endpoint",
 			InnerField: "loa",
@@ -162,12 +162,12 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"misc": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "misc.new-billing-phone-number",
 			Usage:      "New billing phone number for the remaining numbers. Used in case the current billing phone number is being ported to Telnyx. This will be set on your account with your current service provider and should be one of the numbers remaining on that account.",
 			InnerField: "new_billing_phone_number",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "misc.remaining-numbers-action",
 			Usage:      "Remaining numbers can be either kept with their current service provider or disconnected. 'new_billing_telephone_number' is required when 'remaining_numbers_action' is 'keep'.",
 			InnerField: "remaining_numbers_action",
@@ -179,22 +179,22 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"phone-number-configuration": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "phone-number-configuration.billing-group-id",
 			Usage:      "identifies the billing group to set on the numbers when ported",
 			InnerField: "billing_group_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "phone-number-configuration.connection-id",
 			Usage:      "identifies the connection to set on the numbers when ported",
 			InnerField: "connection_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "phone-number-configuration.emergency-address-id",
 			Usage:      "identifies the emergency address to set on the numbers when ported",
 			InnerField: "emergency_address_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "phone-number-configuration.messaging-profile-id",
 			Usage:      "identifies the messaging profile to set on the numbers when ported",
 			InnerField: "messaging_profile_id",
@@ -217,12 +217,12 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"user-feedback": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "user-feedback.user-comment",
 			Usage:      "A comment related to the customer rating.",
 			InnerField: "user_comment",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*int64]{
 			Name:       "user-feedback.user-rating",
 			Usage:      "Once an order is ported, cancellation is requested or the request is cancelled, the user may rate their experience",
 			InnerField: "user_rating",
