@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.14.0 (2026-04-29)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* Add xAI and AssemblyAI transcription engines to call-control API docs ([83215e7](https://github.com/team-telnyx/telnyx-cli/commit/83215e7be2390a202e5cbcedafa171ca34d3ddec))
+* Document assistant CRUD fields ([224cb63](https://github.com/team-telnyx/telnyx-cli/commit/224cb639d0439b89643c253a6402fea644b473bc))
+
+
+### Bug Fixes
+
+* **cli:** correctly load zsh autocompletion ([ad87ef3](https://github.com/team-telnyx/telnyx-cli/commit/ad87ef331c77e2ffbdc491caae732d7abfb678ed))
+* flags for nullable body scalar fields are strictly typed ([be4431e](https://github.com/team-telnyx/telnyx-cli/commit/be4431ef14fdcb659d4e84d599b51a20d70f5244))
+
 ## 0.13.0 (2026-04-28)
 
 Full Changelog: [v0.12.1...v0.13.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.12.1...v0.13.0)
