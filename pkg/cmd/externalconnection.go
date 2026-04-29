@@ -46,10 +46,10 @@ var externalConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Tags associated with the connection.",
 			BodyPath: "tags",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			Usage:    "The failover URL where webhooks related to this connection will be sent if sending to the primary URL fails. Must include a scheme, such as 'https'.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_event_failover_url",
 		},
 		&requestflag.Flag[string]{
@@ -57,7 +57,7 @@ var externalConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "The URL where webhooks related to this connection will be sent. Must include a scheme, such as 'https'.",
 			BodyPath: "webhook_event_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "webhook-timeout-secs",
 			Usage:    "Specifies how many seconds to wait before timing out a webhook.",
 			Default:  nil,
@@ -136,10 +136,10 @@ var externalConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Tags associated with the connection.",
 			BodyPath: "tags",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			Usage:    "The failover URL where webhooks related to this connection will be sent if sending to the primary URL fails. Must include a scheme, such as 'https'.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_event_failover_url",
 		},
 		&requestflag.Flag[string]{
@@ -147,7 +147,7 @@ var externalConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "The URL where webhooks related to this connection will be sent. Must include a scheme, such as 'https'.",
 			BodyPath: "webhook_event_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "webhook-timeout-secs",
 			Usage:    "Specifies how many seconds to wait before timing out a webhook.",
 			Default:  nil,

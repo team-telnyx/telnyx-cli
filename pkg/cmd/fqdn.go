@@ -37,10 +37,10 @@ var fqdnsCreate = cli.Command{
 			Required: true,
 			BodyPath: "fqdn",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "port",
 			Usage:    "Port to use when connecting to this FQDN.",
-			Default:  5060,
+			Default:  requestflag.Ptr[int64](5060),
 			BodyPath: "port",
 		},
 	},
@@ -86,10 +86,10 @@ var fqdnsUpdate = cli.Command{
 			Usage:    "FQDN represented by this resource.",
 			BodyPath: "fqdn",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "port",
 			Usage:    "Port to use when connecting to this FQDN.",
-			Default:  5060,
+			Default:  requestflag.Ptr[int64](5060),
 			BodyPath: "port",
 		},
 	},

@@ -38,7 +38,7 @@ var aiMcpServersCreate = cli.Command{
 			Name:     "allowed-tool",
 			BodyPath: "allowed_tools",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "api-key-ref",
 			BodyPath: "api_key_ref",
 		},
@@ -78,7 +78,7 @@ var aiMcpServersUpdate = cli.Command{
 			Name:     "allowed-tool",
 			BodyPath: "allowed_tools",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "api-key-ref",
 			BodyPath: "api_key_ref",
 		},

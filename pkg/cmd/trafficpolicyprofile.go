@@ -83,7 +83,7 @@ var trafficPolicyProfilesUpdate = cli.Command{
 			Usage:    "Array of IP ranges in CIDR notation.",
 			BodyPath: "ip_ranges",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "limit-bw-kbps",
 			Usage:    "Bandwidth limit in kbps. Must be 512 or 1024, or null to remove.",
 			BodyPath: "limit_bw_kbps",

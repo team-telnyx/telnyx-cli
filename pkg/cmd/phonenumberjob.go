@@ -259,7 +259,7 @@ var phoneNumbersJobsUpdateEmergencySettingsBatch = cli.Command{
 			Required: true,
 			BodyPath: "phone_numbers",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "emergency-address-id",
 			Usage:    "Identifies the address to be used with emergency services. Required if emergency_enabled is true, must be null or omitted if emergency_enabled is false.",
 			BodyPath: "emergency_address_id",

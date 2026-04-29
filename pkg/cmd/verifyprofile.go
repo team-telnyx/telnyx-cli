@@ -112,7 +112,7 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"sms": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "sms.alpha-sender",
 			Usage:      "The alphanumeric sender ID to use when sending to destinations that require an alphanumeric sender ID.",
 			InnerField: "alpha_sender",
@@ -149,17 +149,17 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
 			InnerField: "default_verification_timeout_secs",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "whatsapp.sender-phone-number",
 			Usage:      "Phone number registered on the customer WABA to send OTPs from",
 			InnerField: "sender_phone_number",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "whatsapp.template-id",
 			Usage:      "Customer pre-approved authentication template name registered on Meta",
 			InnerField: "template_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "whatsapp.waba-id",
 			Usage:      "Customer Meta WABA ID for Bring-Your-Own-WABA sending",
 			InnerField: "waba_id",
@@ -265,7 +265,7 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"sms": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "sms.alpha-sender",
 			Usage:      "The alphanumeric sender ID to use when sending to destinations that require an alphanumeric sender ID.",
 			InnerField: "alpha_sender",
@@ -302,17 +302,17 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "For every request that is initiated via this Verify profile, this sets the number of seconds before a verification request code expires. Once the verification request expires, the user cannot use the code to verify their identity.",
 			InnerField: "default_verification_timeout_secs",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "whatsapp.sender-phone-number",
 			Usage:      "Phone number registered on the customer WABA to send OTPs from",
 			InnerField: "sender_phone_number",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "whatsapp.template-id",
 			Usage:      "Customer pre-approved authentication template name registered on Meta",
 			InnerField: "template_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "whatsapp.waba-id",
 			Usage:      "Customer Meta WABA ID for Bring-Your-Own-WABA sending",
 			InnerField: "waba_id",

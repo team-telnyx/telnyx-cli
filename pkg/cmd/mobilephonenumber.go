@@ -53,11 +53,11 @@ var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "cnam-listing",
 			BodyPath: "cnam_listing",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "connection-id",
 			BodyPath: "connection_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "customer-reference",
 			BodyPath: "customer_reference",
 		},
@@ -91,12 +91,12 @@ var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "call-forwarding.call-forwarding-enabled",
 			InnerField: "call_forwarding_enabled",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "call-forwarding.forwarding-type",
 			Usage:      `Allowed values: "always", "on-failure".`,
 			InnerField: "forwarding_type",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "call-forwarding.forwards-to",
 			InnerField: "forwards_to",
 		},
@@ -118,7 +118,7 @@ var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"cnam-listing": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "cnam-listing.cnam-listing-details",
 			InnerField: "cnam_listing_details",
 		},
@@ -128,14 +128,14 @@ var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"inbound": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.interception-app-id",
 			Usage:      "The ID of the CallControl or TeXML Application that will intercept inbound calls.",
 			InnerField: "interception_app_id",
 		},
 	},
 	"outbound": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "outbound.interception-app-id",
 			Usage:      "The ID of the CallControl or TeXML Application that will intercept outbound calls.",
 			InnerField: "interception_app_id",

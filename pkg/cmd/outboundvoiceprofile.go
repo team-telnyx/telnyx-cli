@@ -25,7 +25,7 @@ var outboundVoiceProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Required: true,
 			BodyPath: "name",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "billing-group-id",
 			Usage:    "The ID of the billing group associated with the outbound proflile. Defaults to null (for no group assigned).",
 			Default:  nil,
@@ -40,7 +40,7 @@ var outboundVoiceProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "(BETA) Specifies the time window and call limits for calls made using this outbound voice profile. Note that all times are UTC in 24-hour clock time.",
 			BodyPath: "calling_window",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "concurrent-call-limit",
 			Usage:    "Must be no more than your global concurrent call limit. Null means no limit.",
 			BodyPath: "concurrent_call_limit",
@@ -169,7 +169,7 @@ var outboundVoiceProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Required: true,
 			BodyPath: "name",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "billing-group-id",
 			Usage:    "The ID of the billing group associated with the outbound proflile. Defaults to null (for no group assigned).",
 			Default:  nil,
@@ -184,7 +184,7 @@ var outboundVoiceProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "(BETA) Specifies the time window and call limits for calls made using this outbound voice profile.",
 			BodyPath: "calling_window",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "concurrent-call-limit",
 			Usage:    "Must be no more than your global concurrent call limit. Null means no limit.",
 			BodyPath: "concurrent_call_limit",
