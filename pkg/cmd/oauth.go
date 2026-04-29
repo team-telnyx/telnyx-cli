@@ -20,8 +20,9 @@ var oauthRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "consent-token",
-			Required: true,
+			Name:      "consent-token",
+			Required:  true,
+			PathParam: "consent_token",
 		},
 	},
 	Action:          handleOAuthRetrieve,
@@ -282,8 +283,6 @@ func handleOAuthGrants(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.OAuthGrantsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -294,6 +293,8 @@ func handleOAuthGrants(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.OAuthGrantsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -323,8 +324,6 @@ func handleOAuthIntrospect(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.OAuthIntrospectParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -335,6 +334,8 @@ func handleOAuthIntrospect(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.OAuthIntrospectParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -364,8 +365,6 @@ func handleOAuthRegister(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.OAuthRegisterParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -376,6 +375,8 @@ func handleOAuthRegister(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.OAuthRegisterParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -405,8 +406,6 @@ func handleOAuthRetrieveAuthorize(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.OAuthGetAuthorizeParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -417,6 +416,8 @@ func handleOAuthRetrieveAuthorize(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.OAuthGetAuthorizeParams{}
 
 	return client.OAuth.GetAuthorize(ctx, params, options...)
 }
@@ -468,8 +469,6 @@ func handleOAuthToken(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.OAuthTokenParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -480,6 +479,8 @@ func handleOAuthToken(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.OAuthTokenParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

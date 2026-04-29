@@ -20,12 +20,14 @@ var queuesCallsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "queue-name",
-			Required: true,
+			Name:      "queue-name",
+			Required:  true,
+			PathParam: "queue_name",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 	},
 	Action:          handleQueuesCallsRetrieve,
@@ -38,12 +40,14 @@ var queuesCallsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "queue-name",
-			Required: true,
+			Name:      "queue-name",
+			Required:  true,
+			PathParam: "queue_name",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "keep-after-hangup",
@@ -61,8 +65,9 @@ var queuesCallsList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "queue-name",
-			Required: true,
+			Name:      "queue-name",
+			Required:  true,
+			PathParam: "queue_name",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -87,12 +92,14 @@ var queuesCallsRemove = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "queue-name",
-			Required: true,
+			Name:      "queue-name",
+			Required:  true,
+			PathParam: "queue_name",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 	},
 	Action:          handleQueuesCallsRemove,
@@ -110,10 +117,6 @@ func handleQueuesCallsRetrieve(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.QueueCallGetParams{
-		QueueName: cmd.Value("queue-name").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -123,6 +126,10 @@ func handleQueuesCallsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.QueueCallGetParams{
+		QueueName: cmd.Value("queue-name").(string),
 	}
 
 	var res []byte
@@ -161,10 +168,6 @@ func handleQueuesCallsUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.QueueCallUpdateParams{
-		QueueName: cmd.Value("queue-name").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -174,6 +177,10 @@ func handleQueuesCallsUpdate(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.QueueCallUpdateParams{
+		QueueName: cmd.Value("queue-name").(string),
 	}
 
 	return client.Queues.Calls.Update(
@@ -195,8 +202,6 @@ func handleQueuesCallsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.QueueCallListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -207,6 +212,8 @@ func handleQueuesCallsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.QueueCallListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -263,10 +270,6 @@ func handleQueuesCallsRemove(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.QueueCallRemoveParams{
-		QueueName: cmd.Value("queue-name").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -276,6 +279,10 @@ func handleQueuesCallsRemove(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.QueueCallRemoveParams{
+		QueueName: cmd.Value("queue-name").(string),
 	}
 
 	return client.Queues.Calls.Remove(

@@ -65,8 +65,6 @@ func handlePaymentAutoRechargePrefsUpdate(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PaymentAutoRechargePrefUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -77,6 +75,8 @@ func handlePaymentAutoRechargePrefsUpdate(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PaymentAutoRechargePrefUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

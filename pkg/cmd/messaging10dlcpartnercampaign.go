@@ -20,8 +20,9 @@ var messaging10dlcPartnerCampaignsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Required: true,
+			Name:      "campaign-id",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 	},
 	Action:          handleMessaging10dlcPartnerCampaignsRetrieve,
@@ -34,8 +35,9 @@ var messaging10dlcPartnerCampaignsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Required: true,
+			Name:      "campaign-id",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 		&requestflag.Flag[string]{
 			Name:     "webhook-failover-url",
@@ -116,9 +118,10 @@ var messaging10dlcPartnerCampaignsRetrieveSharingStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Usage:    "ID of the campaign in question",
-			Required: true,
+			Name:      "campaign-id",
+			Usage:     "ID of the campaign in question",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 	},
 	Action:          handleMessaging10dlcPartnerCampaignsRetrieveSharingStatus,
@@ -178,8 +181,6 @@ func handleMessaging10dlcPartnerCampaignsUpdate(ctx context.Context, cmd *cli.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcPartnerCampaignUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -190,6 +191,8 @@ func handleMessaging10dlcPartnerCampaignsUpdate(ctx context.Context, cmd *cli.Co
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcPartnerCampaignUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -224,8 +227,6 @@ func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcPartnerCampaignListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -236,6 +237,8 @@ func handleMessaging10dlcPartnerCampaignsList(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcPartnerCampaignListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -279,8 +282,6 @@ func handleMessaging10dlcPartnerCampaignsListSharedByMe(ctx context.Context, cmd
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcPartnerCampaignListSharedByMeParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -291,6 +292,8 @@ func handleMessaging10dlcPartnerCampaignsListSharedByMe(ctx context.Context, cmd
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcPartnerCampaignListSharedByMeParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

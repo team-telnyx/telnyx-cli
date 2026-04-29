@@ -63,8 +63,6 @@ func handleX402CreditAccountCreateQuote(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.X402CreditAccountNewQuoteParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -75,6 +73,8 @@ func handleX402CreditAccountCreateQuote(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.X402CreditAccountNewQuoteParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -104,8 +104,6 @@ func handleX402CreditAccountSettle(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.X402CreditAccountSettleParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -116,6 +114,8 @@ func handleX402CreditAccountSettle(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.X402CreditAccountSettleParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

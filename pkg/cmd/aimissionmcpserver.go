@@ -20,8 +20,9 @@ var aiMissionsMcpServersCreateMcpServer = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 	},
 	Action:          handleAIMissionsMcpServersCreateMcpServer,
@@ -34,12 +35,14 @@ var aiMissionsMcpServersDeleteMcpServer = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "mcp-server-id",
-			Required: true,
+			Name:      "mcp-server-id",
+			Required:  true,
+			PathParam: "mcp_server_id",
 		},
 	},
 	Action:          handleAIMissionsMcpServersDeleteMcpServer,
@@ -52,12 +55,14 @@ var aiMissionsMcpServersGetMcpServer = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "mcp-server-id",
-			Required: true,
+			Name:      "mcp-server-id",
+			Required:  true,
+			PathParam: "mcp_server_id",
 		},
 	},
 	Action:          handleAIMissionsMcpServersGetMcpServer,
@@ -70,8 +75,9 @@ var aiMissionsMcpServersListMcpServers = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 	},
 	Action:          handleAIMissionsMcpServersListMcpServers,
@@ -84,12 +90,14 @@ var aiMissionsMcpServersUpdateMcpServer = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "mcp-server-id",
-			Required: true,
+			Name:      "mcp-server-id",
+			Required:  true,
+			PathParam: "mcp_server_id",
 		},
 	},
 	Action:          handleAIMissionsMcpServersUpdateMcpServer,
@@ -149,10 +157,6 @@ func handleAIMissionsMcpServersDeleteMcpServer(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionMcpServerDeleteMcpServerParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -162,6 +166,10 @@ func handleAIMissionsMcpServersDeleteMcpServer(ctx context.Context, cmd *cli.Com
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionMcpServerDeleteMcpServerParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	return client.AI.Missions.McpServers.DeleteMcpServer(
@@ -183,10 +191,6 @@ func handleAIMissionsMcpServersGetMcpServer(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionMcpServerGetMcpServerParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -196,6 +200,10 @@ func handleAIMissionsMcpServersGetMcpServer(ctx context.Context, cmd *cli.Comman
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionMcpServerGetMcpServerParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -276,10 +284,6 @@ func handleAIMissionsMcpServersUpdateMcpServer(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionMcpServerUpdateMcpServerParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -289,6 +293,10 @@ func handleAIMissionsMcpServersUpdateMcpServer(ctx context.Context, cmd *cli.Com
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionMcpServerUpdateMcpServerParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte

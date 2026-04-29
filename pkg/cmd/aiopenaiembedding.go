@@ -69,8 +69,6 @@ func handleAIOpenAIEmbeddingsCreateEmbeddings(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIOpenAIEmbeddingNewEmbeddingsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -81,6 +79,8 @@ func handleAIOpenAIEmbeddingsCreateEmbeddings(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIOpenAIEmbeddingNewEmbeddingsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

@@ -20,8 +20,9 @@ var roomsSessionsActionsEnd = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-session-id",
-			Required: true,
+			Name:      "room-session-id",
+			Required:  true,
+			PathParam: "room_session_id",
 		},
 	},
 	Action:          handleRoomsSessionsActionsEnd,
@@ -34,8 +35,9 @@ var roomsSessionsActionsKick = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-session-id",
-			Required: true,
+			Name:      "room-session-id",
+			Required:  true,
+			PathParam: "room_session_id",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "exclude",
@@ -58,8 +60,9 @@ var roomsSessionsActionsMute = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-session-id",
-			Required: true,
+			Name:      "room-session-id",
+			Required:  true,
+			PathParam: "room_session_id",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "exclude",
@@ -82,8 +85,9 @@ var roomsSessionsActionsUnmute = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-session-id",
-			Required: true,
+			Name:      "room-session-id",
+			Required:  true,
+			PathParam: "room_session_id",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "exclude",
@@ -153,8 +157,6 @@ func handleRoomsSessionsActionsKick(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomSessionActionKickParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -165,6 +167,8 @@ func handleRoomsSessionsActionsKick(ctx context.Context, cmd *cli.Command) error
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomSessionActionKickParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -202,8 +206,6 @@ func handleRoomsSessionsActionsMute(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomSessionActionMuteParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -214,6 +216,8 @@ func handleRoomsSessionsActionsMute(ctx context.Context, cmd *cli.Command) error
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomSessionActionMuteParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -251,8 +255,6 @@ func handleRoomsSessionsActionsUnmute(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomSessionActionUnmuteParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -263,6 +265,8 @@ func handleRoomsSessionsActionsUnmute(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomSessionActionUnmuteParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

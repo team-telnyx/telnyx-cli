@@ -20,8 +20,9 @@ var portingOrdersAssociatedPhoneNumbersCreate = requestflag.WithInnerFlags(cli.C
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "porting-order-id",
-			Required: true,
+			Name:      "porting-order-id",
+			Required:  true,
+			PathParam: "porting_order_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "action",
@@ -58,8 +59,9 @@ var portingOrdersAssociatedPhoneNumbersList = requestflag.WithInnerFlags(cli.Com
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "porting-order-id",
-			Required: true,
+			Name:      "porting-order-id",
+			Required:  true,
+			PathParam: "porting_order_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -114,12 +116,14 @@ var portingOrdersAssociatedPhoneNumbersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "porting-order-id",
-			Required: true,
+			Name:      "porting-order-id",
+			Required:  true,
+			PathParam: "porting_order_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePortingOrdersAssociatedPhoneNumbersDelete,
@@ -137,8 +141,6 @@ func handlePortingOrdersAssociatedPhoneNumbersCreate(ctx context.Context, cmd *c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderAssociatedPhoneNumberNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -149,6 +151,8 @@ func handlePortingOrdersAssociatedPhoneNumbersCreate(ctx context.Context, cmd *c
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderAssociatedPhoneNumberNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -186,8 +190,6 @@ func handlePortingOrdersAssociatedPhoneNumbersList(ctx context.Context, cmd *cli
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderAssociatedPhoneNumberListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -198,6 +200,8 @@ func handlePortingOrdersAssociatedPhoneNumbersList(ctx context.Context, cmd *cli
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderAssociatedPhoneNumberListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -254,10 +258,6 @@ func handlePortingOrdersAssociatedPhoneNumbersDelete(ctx context.Context, cmd *c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderAssociatedPhoneNumberDeleteParams{
-		PortingOrderID: cmd.Value("porting-order-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -267,6 +267,10 @@ func handlePortingOrdersAssociatedPhoneNumbersDelete(ctx context.Context, cmd *c
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.PortingOrderAssociatedPhoneNumberDeleteParams{
+		PortingOrderID: cmd.Value("porting-order-id").(string),
 	}
 
 	var res []byte

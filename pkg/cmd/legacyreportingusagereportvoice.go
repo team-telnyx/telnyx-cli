@@ -67,8 +67,9 @@ var legacyReportingUsageReportsVoiceRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleLegacyReportingUsageReportsVoiceRetrieve,
@@ -107,8 +108,9 @@ var legacyReportingUsageReportsVoiceDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleLegacyReportingUsageReportsVoiceDelete,
@@ -123,8 +125,6 @@ func handleLegacyReportingUsageReportsVoiceCreate(ctx context.Context, cmd *cli.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.LegacyReportingUsageReportVoiceNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -135,6 +135,8 @@ func handleLegacyReportingUsageReportsVoiceCreate(ctx context.Context, cmd *cli.
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.LegacyReportingUsageReportVoiceNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -206,8 +208,6 @@ func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.LegacyReportingUsageReportVoiceListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -218,6 +218,8 @@ func handleLegacyReportingUsageReportsVoiceList(ctx context.Context, cmd *cli.Co
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.LegacyReportingUsageReportVoiceListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

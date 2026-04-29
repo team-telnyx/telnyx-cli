@@ -20,12 +20,14 @@ var texmlAccountsRecordingsJsonDeleteRecordingSidJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "recording-sid",
-			Required: true,
+			Name:      "recording-sid",
+			Required:  true,
+			PathParam: "recording_sid",
 		},
 	},
 	Action:          handleTexmlAccountsRecordingsJsonDeleteRecordingSidJson,
@@ -38,12 +40,14 @@ var texmlAccountsRecordingsJsonRetrieveRecordingSidJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "recording-sid",
-			Required: true,
+			Name:      "recording-sid",
+			Required:  true,
+			PathParam: "recording_sid",
 		},
 	},
 	Action:          handleTexmlAccountsRecordingsJsonRetrieveRecordingSidJson,
@@ -61,10 +65,6 @@ func handleTexmlAccountsRecordingsJsonDeleteRecordingSidJson(ctx context.Context
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountRecordingJsonDeleteRecordingSidJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -74,6 +74,10 @@ func handleTexmlAccountsRecordingsJsonDeleteRecordingSidJson(ctx context.Context
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountRecordingJsonDeleteRecordingSidJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	return client.Texml.Accounts.Recordings.Json.DeleteRecordingSidJson(
@@ -95,10 +99,6 @@ func handleTexmlAccountsRecordingsJsonRetrieveRecordingSidJson(ctx context.Conte
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountRecordingJsonGetRecordingSidJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -108,6 +108,10 @@ func handleTexmlAccountsRecordingsJsonRetrieveRecordingSidJson(ctx context.Conte
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountRecordingJsonGetRecordingSidJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte

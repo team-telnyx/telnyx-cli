@@ -20,8 +20,9 @@ var phoneNumbersVoicemailCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number-id",
-			Required: true,
+			Name:      "phone-number-id",
+			Required:  true,
+			PathParam: "phone_number_id",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "enabled",
@@ -44,8 +45,9 @@ var phoneNumbersVoicemailRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number-id",
-			Required: true,
+			Name:      "phone-number-id",
+			Required:  true,
+			PathParam: "phone_number_id",
 		},
 	},
 	Action:          handlePhoneNumbersVoicemailRetrieve,
@@ -58,8 +60,9 @@ var phoneNumbersVoicemailUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number-id",
-			Required: true,
+			Name:      "phone-number-id",
+			Required:  true,
+			PathParam: "phone_number_id",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "enabled",
@@ -87,8 +90,6 @@ func handlePhoneNumbersVoicemailCreate(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberVoicemailNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -99,6 +100,8 @@ func handlePhoneNumbersVoicemailCreate(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberVoicemailNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -178,8 +181,6 @@ func handlePhoneNumbersVoicemailUpdate(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberVoicemailUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -190,6 +191,8 @@ func handlePhoneNumbersVoicemailUpdate(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberVoicemailUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

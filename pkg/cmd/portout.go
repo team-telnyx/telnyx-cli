@@ -20,8 +20,9 @@ var portoutsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePortoutsRetrieve,
@@ -124,8 +125,9 @@ var portoutsListRejectionCodes = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "portout-id",
-			Required: true,
+			Name:      "portout-id",
+			Required:  true,
+			PathParam: "portout_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -151,13 +153,15 @@ var portoutsUpdateStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "status",
-			Usage:    `Allowed values: "authorized", "rejected-pending".`,
-			Required: true,
+			Name:      "status",
+			Usage:     `Allowed values: "authorized", "rejected-pending".`,
+			Required:  true,
+			PathParam: "status",
 		},
 		&requestflag.Flag[string]{
 			Name:     "reason",
@@ -226,8 +230,6 @@ func handlePortoutsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortoutListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -238,6 +240,8 @@ func handlePortoutsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortoutListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -284,8 +288,6 @@ func handlePortoutsListRejectionCodes(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortoutListRejectionCodesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -296,6 +298,8 @@ func handlePortoutsListRejectionCodes(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortoutListRejectionCodesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -333,10 +337,6 @@ func handlePortoutsUpdateStatus(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortoutUpdateStatusParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -346,6 +346,10 @@ func handlePortoutsUpdateStatus(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.PortoutUpdateStatusParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte

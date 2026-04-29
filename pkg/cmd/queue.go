@@ -42,8 +42,9 @@ var queuesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "queue-name",
-			Required: true,
+			Name:      "queue-name",
+			Required:  true,
+			PathParam: "queue_name",
 		},
 	},
 	Action:          handleQueuesRetrieve,
@@ -56,8 +57,9 @@ var queuesUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "queue-name",
-			Required: true,
+			Name:      "queue-name",
+			Required:  true,
+			PathParam: "queue_name",
 		},
 		&requestflag.Flag[int64]{
 			Name:     "max-size",
@@ -102,8 +104,9 @@ var queuesDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "queue-name",
-			Required: true,
+			Name:      "queue-name",
+			Required:  true,
+			PathParam: "queue_name",
 		},
 	},
 	Action:          handleQueuesDelete,
@@ -118,8 +121,6 @@ func handleQueuesCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.QueueNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -130,6 +131,8 @@ func handleQueuesCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.QueueNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -204,8 +207,6 @@ func handleQueuesUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.QueueUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -216,6 +217,8 @@ func handleQueuesUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.QueueUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -250,8 +253,6 @@ func handleQueuesList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.QueueListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -262,6 +263,8 @@ func handleQueuesList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.QueueListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

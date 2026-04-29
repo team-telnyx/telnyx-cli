@@ -21,8 +21,9 @@ var mediaRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "media-name",
-			Required: true,
+			Name:      "media-name",
+			Required:  true,
+			PathParam: "media_name",
 		},
 	},
 	Action:          handleMediaRetrieve,
@@ -35,8 +36,9 @@ var mediaUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "media-name",
-			Required: true,
+			Name:      "media-name",
+			Required:  true,
+			PathParam: "media_name",
 		},
 		&requestflag.Flag[string]{
 			Name:     "media-url",
@@ -82,8 +84,9 @@ var mediaDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "media-name",
-			Required: true,
+			Name:      "media-name",
+			Required:  true,
+			PathParam: "media_name",
 		},
 	},
 	Action:          handleMediaDelete,
@@ -96,8 +99,9 @@ var mediaDownload = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "media-name",
-			Required: true,
+			Name:      "media-name",
+			Required:  true,
+			PathParam: "media_name",
 		},
 		&requestflag.Flag[string]{
 			Name:    "output",
@@ -188,8 +192,6 @@ func handleMediaUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MediaUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -200,6 +202,8 @@ func handleMediaUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MediaUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -234,8 +238,6 @@ func handleMediaList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MediaListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -246,6 +248,8 @@ func handleMediaList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MediaListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -333,8 +337,6 @@ func handleMediaUpload(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MediaUploadParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -345,6 +347,8 @@ func handleMediaUpload(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MediaUploadParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

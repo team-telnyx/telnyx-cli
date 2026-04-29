@@ -29,8 +29,9 @@ var countryCoverageRetrieveCountry = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "country-code",
-			Required: true,
+			Name:      "country-code",
+			Required:  true,
+			PathParam: "country_code",
 		},
 	},
 	Action:          handleCountryCoverageRetrieveCountry,

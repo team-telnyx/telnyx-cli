@@ -70,8 +70,9 @@ var advancedOrdersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "order-id",
-			Required: true,
+			Name:      "order-id",
+			Required:  true,
+			PathParam: "order_id",
 		},
 	},
 	Action:          handleAdvancedOrdersRetrieve,
@@ -93,8 +94,9 @@ var advancedOrdersUpdateRequirementGroup = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "advanced-order-id",
-			Required: true,
+			Name:      "advanced-order-id",
+			Required:  true,
+			PathParam: "advanced-order-id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "area-code",
@@ -149,8 +151,6 @@ func handleAdvancedOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AdvancedOrderNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -161,6 +161,8 @@ func handleAdvancedOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AdvancedOrderNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -274,8 +276,6 @@ func handleAdvancedOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AdvancedOrderUpdateRequirementGroupParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -286,6 +286,8 @@ func handleAdvancedOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.Co
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AdvancedOrderUpdateRequirementGroupParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

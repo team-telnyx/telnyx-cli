@@ -20,8 +20,9 @@ var whatsappPhoneNumbersProfileRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 	},
 	Action:          handleWhatsappPhoneNumbersProfileRetrieve,
@@ -34,8 +35,9 @@ var whatsappPhoneNumbersProfileUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 		&requestflag.Flag[string]{
 			Name:     "about",
@@ -128,8 +130,6 @@ func handleWhatsappPhoneNumbersProfileUpdate(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WhatsappPhoneNumberProfileUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -140,6 +140,8 @@ func handleWhatsappPhoneNumbersProfileUpdate(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.WhatsappPhoneNumberProfileUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

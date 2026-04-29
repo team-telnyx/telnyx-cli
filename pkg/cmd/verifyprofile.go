@@ -178,8 +178,9 @@ var verifyProfilesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "verify-profile-id",
-			Required: true,
+			Name:      "verify-profile-id",
+			Required:  true,
+			PathParam: "verify_profile_id",
 		},
 	},
 	Action:          handleVerifyProfilesRetrieve,
@@ -192,8 +193,9 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "verify-profile-id",
-			Required: true,
+			Name:      "verify-profile-id",
+			Required:  true,
+			PathParam: "verify_profile_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "call",
@@ -366,8 +368,9 @@ var verifyProfilesDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "verify-profile-id",
-			Required: true,
+			Name:      "verify-profile-id",
+			Required:  true,
+			PathParam: "verify_profile_id",
 		},
 	},
 	Action:          handleVerifyProfilesDelete,
@@ -405,8 +408,9 @@ var verifyProfilesUpdateTemplate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "template-id",
-			Required: true,
+			Name:      "template-id",
+			Required:  true,
+			PathParam: "template_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "text",
@@ -427,8 +431,6 @@ func handleVerifyProfilesCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerifyProfileNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -439,6 +441,8 @@ func handleVerifyProfilesCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerifyProfileNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -513,8 +517,6 @@ func handleVerifyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerifyProfileUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -525,6 +527,8 @@ func handleVerifyProfilesUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerifyProfileUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -559,8 +563,6 @@ func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerifyProfileListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -571,6 +573,8 @@ func handleVerifyProfilesList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerifyProfileListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -656,8 +660,6 @@ func handleVerifyProfilesCreateTemplate(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerifyProfileNewTemplateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -668,6 +670,8 @@ func handleVerifyProfilesCreateTemplate(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerifyProfileNewTemplateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -739,8 +743,6 @@ func handleVerifyProfilesUpdateTemplate(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerifyProfileUpdateTemplateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -751,6 +753,8 @@ func handleVerifyProfilesUpdateTemplate(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerifyProfileUpdateTemplateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

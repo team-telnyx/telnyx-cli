@@ -20,16 +20,19 @@ var texmlAccountsCallsSiprecSiprecSidJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid",
-			Required: true,
+			Name:      "call-sid",
+			Required:  true,
+			PathParam: "call_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "siprec-sid",
-			Required: true,
+			Name:      "siprec-sid",
+			Required:  true,
+			PathParam: "siprec_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:     "status",
@@ -52,11 +55,6 @@ func handleTexmlAccountsCallsSiprecSiprecSidJson(ctx context.Context, cmd *cli.C
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallSiprecSiprecSidJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-		CallSid:    cmd.Value("call-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -66,6 +64,11 @@ func handleTexmlAccountsCallsSiprecSiprecSidJson(ctx context.Context, cmd *cli.C
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountCallSiprecSiprecSidJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
+		CallSid:    cmd.Value("call-sid").(string),
 	}
 
 	var res []byte

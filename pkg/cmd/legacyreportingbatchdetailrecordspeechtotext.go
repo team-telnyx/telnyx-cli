@@ -42,8 +42,9 @@ var legacyReportingBatchDetailRecordsSpeechToTextRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleLegacyReportingBatchDetailRecordsSpeechToTextRetrieve,
@@ -65,8 +66,9 @@ var legacyReportingBatchDetailRecordsSpeechToTextDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleLegacyReportingBatchDetailRecordsSpeechToTextDelete,
@@ -81,8 +83,6 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextCreate(ctx context.Conte
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.LegacyReportingBatchDetailRecordSpeechToTextNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -93,6 +93,8 @@ func handleLegacyReportingBatchDetailRecordsSpeechToTextCreate(ctx context.Conte
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.LegacyReportingBatchDetailRecordSpeechToTextNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

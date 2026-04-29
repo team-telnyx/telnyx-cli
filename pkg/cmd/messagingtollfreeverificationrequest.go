@@ -227,8 +227,9 @@ var messagingTollfreeVerificationRequestsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingTollfreeVerificationRequestsRetrieve,
@@ -241,8 +242,9 @@ var messagingTollfreeVerificationRequestsUpdate = requestflag.WithInnerFlags(cli
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "additional-information",
@@ -499,8 +501,9 @@ var messagingTollfreeVerificationRequestsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingTollfreeVerificationRequestsDelete,
@@ -513,8 +516,9 @@ var messagingTollfreeVerificationRequestsRetrieveStatusHistory = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -540,8 +544,6 @@ func handleMessagingTollfreeVerificationRequestsCreate(ctx context.Context, cmd 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingTollfreeVerificationRequestNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -552,6 +554,8 @@ func handleMessagingTollfreeVerificationRequestsCreate(ctx context.Context, cmd 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingTollfreeVerificationRequestNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -626,8 +630,6 @@ func handleMessagingTollfreeVerificationRequestsUpdate(ctx context.Context, cmd 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingTollfreeVerificationRequestUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -638,6 +640,8 @@ func handleMessagingTollfreeVerificationRequestsUpdate(ctx context.Context, cmd 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingTollfreeVerificationRequestUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -672,8 +676,6 @@ func handleMessagingTollfreeVerificationRequestsList(ctx context.Context, cmd *c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingTollfreeVerificationRequestListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -684,6 +686,8 @@ func handleMessagingTollfreeVerificationRequestsList(ctx context.Context, cmd *c
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingTollfreeVerificationRequestListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -755,8 +759,6 @@ func handleMessagingTollfreeVerificationRequestsRetrieveStatusHistory(ctx contex
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingTollfreeVerificationRequestGetStatusHistoryParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -767,6 +769,8 @@ func handleMessagingTollfreeVerificationRequestsRetrieveStatusHistory(ctx contex
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingTollfreeVerificationRequestGetStatusHistoryParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

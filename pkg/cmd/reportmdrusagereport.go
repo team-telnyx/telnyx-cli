@@ -50,8 +50,9 @@ var reportsMdrUsageReportsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleReportsMdrUsageReportsRetrieve,
@@ -86,8 +87,9 @@ var reportsMdrUsageReportsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleReportsMdrUsageReportsDelete,
@@ -130,8 +132,6 @@ func handleReportsMdrUsageReportsCreate(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ReportMdrUsageReportNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -142,6 +142,8 @@ func handleReportsMdrUsageReportsCreate(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ReportMdrUsageReportNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -213,8 +215,6 @@ func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ReportMdrUsageReportListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -225,6 +225,8 @@ func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ReportMdrUsageReportListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -310,8 +312,6 @@ func handleReportsMdrUsageReportsFetchSync(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ReportMdrUsageReportFetchSyncParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -322,6 +322,8 @@ func handleReportsMdrUsageReportsFetchSync(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ReportMdrUsageReportFetchSyncParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

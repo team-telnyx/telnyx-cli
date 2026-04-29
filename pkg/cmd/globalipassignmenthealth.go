@@ -50,8 +50,6 @@ func handleGlobalIPAssignmentHealthRetrieve(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.GlobalIPAssignmentHealthGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -62,6 +60,8 @@ func handleGlobalIPAssignmentHealthRetrieve(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.GlobalIPAssignmentHealthGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

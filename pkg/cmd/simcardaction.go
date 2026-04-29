@@ -20,8 +20,9 @@ var simCardsActionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardsActionsRetrieve,
@@ -129,8 +130,9 @@ var simCardsActionsDisable = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardsActionsDisable,
@@ -143,8 +145,9 @@ var simCardsActionsEnable = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardsActionsEnable,
@@ -157,8 +160,9 @@ var simCardsActionsRemovePublicIP = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardsActionsRemovePublicIP,
@@ -171,8 +175,9 @@ var simCardsActionsSetPublicIP = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "region-code",
@@ -190,8 +195,9 @@ var simCardsActionsSetStandby = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardsActionsSetStandby,
@@ -262,8 +268,6 @@ func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardActionListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -274,6 +278,8 @@ func handleSimCardsActionsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardActionListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -317,8 +323,6 @@ func handleSimCardsActionsBulkDisableVoice(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardActionBulkDisableVoiceParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -329,6 +333,8 @@ func handleSimCardsActionsBulkDisableVoice(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardActionBulkDisableVoiceParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -358,8 +364,6 @@ func handleSimCardsActionsBulkEnableVoice(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardActionBulkEnableVoiceParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -370,6 +374,8 @@ func handleSimCardsActionsBulkEnableVoice(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardActionBulkEnableVoiceParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -399,8 +405,6 @@ func handleSimCardsActionsBulkSetPublicIPs(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardActionBulkSetPublicIPsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -411,6 +415,8 @@ func handleSimCardsActionsBulkSetPublicIPs(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardActionBulkSetPublicIPsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -569,8 +575,6 @@ func handleSimCardsActionsSetPublicIP(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardActionSetPublicIPParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -581,6 +585,8 @@ func handleSimCardsActionsSetPublicIP(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardActionSetPublicIPParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -657,8 +663,6 @@ func handleSimCardsActionsValidateRegistrationCodes(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardActionValidateRegistrationCodesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -669,6 +673,8 @@ func handleSimCardsActionsValidateRegistrationCodes(ctx context.Context, cmd *cl
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardActionValidateRegistrationCodesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

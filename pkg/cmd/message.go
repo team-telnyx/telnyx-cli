@@ -20,8 +20,9 @@ var messagesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagesRetrieve,
@@ -34,8 +35,9 @@ var messagesCancelScheduled = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagesCancelScheduled,
@@ -48,8 +50,9 @@ var messagesRetrieveGroupMessages = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "message-id",
-			Required: true,
+			Name:      "message-id",
+			Required:  true,
+			PathParam: "message_id",
 		},
 	},
 	Action:          handleMessagesRetrieveGroupMessages,
@@ -755,8 +758,6 @@ func handleMessagesSchedule(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageScheduleParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -767,6 +768,8 @@ func handleMessagesSchedule(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageScheduleParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -796,8 +799,6 @@ func handleMessagesSend(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageSendParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -808,6 +809,8 @@ func handleMessagesSend(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageSendParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -837,8 +840,6 @@ func handleMessagesSendGroupMms(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageSendGroupMmsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -849,6 +850,8 @@ func handleMessagesSendGroupMms(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageSendGroupMmsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -878,8 +881,6 @@ func handleMessagesSendLongCode(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageSendLongCodeParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -890,6 +891,8 @@ func handleMessagesSendLongCode(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageSendLongCodeParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -919,8 +922,6 @@ func handleMessagesSendNumberPool(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageSendNumberPoolParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -931,6 +932,8 @@ func handleMessagesSendNumberPool(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageSendNumberPoolParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -960,8 +963,6 @@ func handleMessagesSendShortCode(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageSendShortCodeParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -972,6 +973,8 @@ func handleMessagesSendShortCode(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageSendShortCodeParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -1001,8 +1004,6 @@ func handleMessagesSendWhatsapp(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageSendWhatsappParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -1013,6 +1014,8 @@ func handleMessagesSendWhatsapp(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageSendWhatsappParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -1042,8 +1045,6 @@ func handleMessagesSendWithAlphanumericSender(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageSendWithAlphanumericSenderParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -1054,6 +1055,8 @@ func handleMessagesSendWithAlphanumericSender(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageSendWithAlphanumericSenderParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

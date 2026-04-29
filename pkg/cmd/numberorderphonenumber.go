@@ -20,8 +20,9 @@ var numberOrderPhoneNumbersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "number-order-phone-number-id",
-			Required: true,
+			Name:      "number-order-phone-number-id",
+			Required:  true,
+			PathParam: "number_order_phone_number_id",
 		},
 	},
 	Action:          handleNumberOrderPhoneNumbersRetrieve,
@@ -57,8 +58,9 @@ var numberOrderPhoneNumbersUpdateRequirementGroup = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "requirement-group-id",
@@ -77,8 +79,9 @@ var numberOrderPhoneNumbersUpdateRequirements = requestflag.WithInnerFlags(cli.C
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "number-order-phone-number-id",
-			Required: true,
+			Name:      "number-order-phone-number-id",
+			Required:  true,
+			PathParam: "number_order_phone_number_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "regulatory-requirement",
@@ -152,8 +155,6 @@ func handleNumberOrderPhoneNumbersList(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NumberOrderPhoneNumberListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -164,6 +165,8 @@ func handleNumberOrderPhoneNumbersList(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.NumberOrderPhoneNumberListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -196,8 +199,6 @@ func handleNumberOrderPhoneNumbersUpdateRequirementGroup(ctx context.Context, cm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NumberOrderPhoneNumberUpdateRequirementGroupParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -208,6 +209,8 @@ func handleNumberOrderPhoneNumbersUpdateRequirementGroup(ctx context.Context, cm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.NumberOrderPhoneNumberUpdateRequirementGroupParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -245,8 +248,6 @@ func handleNumberOrderPhoneNumbersUpdateRequirements(ctx context.Context, cmd *c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NumberOrderPhoneNumberUpdateRequirementsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -257,6 +258,8 @@ func handleNumberOrderPhoneNumbersUpdateRequirements(ctx context.Context, cmd *c
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.NumberOrderPhoneNumberUpdateRequirementsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

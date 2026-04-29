@@ -20,12 +20,14 @@ var storageBucketsCreatePresignedURL = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "bucket-name",
-			Required: true,
+			Name:      "bucket-name",
+			Required:  true,
+			PathParam: "bucketName",
 		},
 		&requestflag.Flag[string]{
-			Name:     "object-name",
-			Required: true,
+			Name:      "object-name",
+			Required:  true,
+			PathParam: "objectName",
 		},
 		&requestflag.Flag[int64]{
 			Name:     "ttl",
@@ -48,10 +50,6 @@ func handleStorageBucketsCreatePresignedURL(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.StorageBucketNewPresignedURLParams{
-		BucketName: cmd.Value("bucket-name").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -61,6 +59,10 @@ func handleStorageBucketsCreatePresignedURL(ctx context.Context, cmd *cli.Comman
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.StorageBucketNewPresignedURLParams{
+		BucketName: cmd.Value("bucket-name").(string),
 	}
 
 	var res []byte

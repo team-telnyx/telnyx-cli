@@ -135,8 +135,9 @@ var legacyReportingBatchDetailRecordsVoiceRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleLegacyReportingBatchDetailRecordsVoiceRetrieve,
@@ -158,8 +159,9 @@ var legacyReportingBatchDetailRecordsVoiceDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleLegacyReportingBatchDetailRecordsVoiceDelete,
@@ -183,8 +185,6 @@ func handleLegacyReportingBatchDetailRecordsVoiceCreate(ctx context.Context, cmd
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.LegacyReportingBatchDetailRecordVoiceNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -195,6 +195,8 @@ func handleLegacyReportingBatchDetailRecordsVoiceCreate(ctx context.Context, cmd
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.LegacyReportingBatchDetailRecordVoiceNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

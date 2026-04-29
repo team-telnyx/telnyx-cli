@@ -20,8 +20,9 @@ var phoneNumbersJobsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePhoneNumbersJobsRetrieve,
@@ -319,8 +320,6 @@ func handlePhoneNumbersJobsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberJobListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -331,6 +330,8 @@ func handlePhoneNumbersJobsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberJobListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -374,8 +375,6 @@ func handlePhoneNumbersJobsDeleteBatch(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberJobDeleteBatchParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -386,6 +385,8 @@ func handlePhoneNumbersJobsDeleteBatch(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberJobDeleteBatchParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -415,8 +416,6 @@ func handlePhoneNumbersJobsUpdateBatch(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberJobUpdateBatchParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -427,6 +426,8 @@ func handlePhoneNumbersJobsUpdateBatch(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberJobUpdateBatchParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -456,8 +457,6 @@ func handlePhoneNumbersJobsUpdateEmergencySettingsBatch(ctx context.Context, cmd
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberJobUpdateEmergencySettingsBatchParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -468,6 +467,8 @@ func handlePhoneNumbersJobsUpdateEmergencySettingsBatch(ctx context.Context, cmd
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberJobUpdateEmergencySettingsBatchParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

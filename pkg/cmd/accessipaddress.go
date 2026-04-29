@@ -39,8 +39,9 @@ var accessIPAddressRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "access-ip-address-id",
-			Required: true,
+			Name:      "access-ip-address-id",
+			Required:  true,
+			PathParam: "access_ip_address_id",
 		},
 	},
 	Action:          handleAccessIPAddressRetrieve,
@@ -98,8 +99,9 @@ var accessIPAddressDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "access-ip-address-id",
-			Required: true,
+			Name:      "access-ip-address-id",
+			Required:  true,
+			PathParam: "access_ip_address_id",
 		},
 	},
 	Action:          handleAccessIPAddressDelete,
@@ -114,8 +116,6 @@ func handleAccessIPAddressCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AccessIPAddressNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -126,6 +126,8 @@ func handleAccessIPAddressCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AccessIPAddressNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -197,8 +199,6 @@ func handleAccessIPAddressList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AccessIPAddressListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -209,6 +209,8 @@ func handleAccessIPAddressList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AccessIPAddressListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

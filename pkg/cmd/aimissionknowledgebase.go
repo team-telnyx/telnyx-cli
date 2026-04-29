@@ -20,8 +20,9 @@ var aiMissionsKnowledgeBasesCreateKnowledgeBase = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 	},
 	Action:          handleAIMissionsKnowledgeBasesCreateKnowledgeBase,
@@ -34,12 +35,14 @@ var aiMissionsKnowledgeBasesDeleteKnowledgeBase = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "knowledge-base-id",
-			Required: true,
+			Name:      "knowledge-base-id",
+			Required:  true,
+			PathParam: "knowledge_base_id",
 		},
 	},
 	Action:          handleAIMissionsKnowledgeBasesDeleteKnowledgeBase,
@@ -52,12 +55,14 @@ var aiMissionsKnowledgeBasesGetKnowledgeBase = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "knowledge-base-id",
-			Required: true,
+			Name:      "knowledge-base-id",
+			Required:  true,
+			PathParam: "knowledge_base_id",
 		},
 	},
 	Action:          handleAIMissionsKnowledgeBasesGetKnowledgeBase,
@@ -70,8 +75,9 @@ var aiMissionsKnowledgeBasesListKnowledgeBases = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 	},
 	Action:          handleAIMissionsKnowledgeBasesListKnowledgeBases,
@@ -84,12 +90,14 @@ var aiMissionsKnowledgeBasesUpdateKnowledgeBase = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "knowledge-base-id",
-			Required: true,
+			Name:      "knowledge-base-id",
+			Required:  true,
+			PathParam: "knowledge_base_id",
 		},
 	},
 	Action:          handleAIMissionsKnowledgeBasesUpdateKnowledgeBase,
@@ -149,10 +157,6 @@ func handleAIMissionsKnowledgeBasesDeleteKnowledgeBase(ctx context.Context, cmd 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionKnowledgeBaseDeleteKnowledgeBaseParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -162,6 +166,10 @@ func handleAIMissionsKnowledgeBasesDeleteKnowledgeBase(ctx context.Context, cmd 
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionKnowledgeBaseDeleteKnowledgeBaseParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	return client.AI.Missions.KnowledgeBases.DeleteKnowledgeBase(
@@ -183,10 +191,6 @@ func handleAIMissionsKnowledgeBasesGetKnowledgeBase(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionKnowledgeBaseGetKnowledgeBaseParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -196,6 +200,10 @@ func handleAIMissionsKnowledgeBasesGetKnowledgeBase(ctx context.Context, cmd *cl
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionKnowledgeBaseGetKnowledgeBaseParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -276,10 +284,6 @@ func handleAIMissionsKnowledgeBasesUpdateKnowledgeBase(ctx context.Context, cmd 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionKnowledgeBaseUpdateKnowledgeBaseParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -289,6 +293,10 @@ func handleAIMissionsKnowledgeBasesUpdateKnowledgeBase(ctx context.Context, cmd 
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionKnowledgeBaseUpdateKnowledgeBaseParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte

@@ -50,8 +50,9 @@ var legacyReportingUsageReportsNumberLookupRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleLegacyReportingUsageReportsNumberLookupRetrieve,
@@ -73,8 +74,9 @@ var legacyReportingUsageReportsNumberLookupDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleLegacyReportingUsageReportsNumberLookupDelete,
@@ -89,8 +91,6 @@ func handleLegacyReportingUsageReportsNumberLookupCreate(ctx context.Context, cm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.LegacyReportingUsageReportNumberLookupNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -101,6 +101,8 @@ func handleLegacyReportingUsageReportsNumberLookupCreate(ctx context.Context, cm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.LegacyReportingUsageReportNumberLookupNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

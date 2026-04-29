@@ -60,8 +60,6 @@ func handleAvailablePhoneNumberBlocksList(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AvailablePhoneNumberBlockListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -72,6 +70,8 @@ func handleAvailablePhoneNumberBlocksList(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AvailablePhoneNumberBlockListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

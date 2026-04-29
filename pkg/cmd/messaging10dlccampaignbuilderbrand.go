@@ -20,12 +20,14 @@ var messaging10dlcCampaignBuilderBrandQualifyByUsecase = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 		&requestflag.Flag[string]{
-			Name:     "usecase",
-			Required: true,
+			Name:      "usecase",
+			Required:  true,
+			PathParam: "usecase",
 		},
 	},
 	Action:          handleMessaging10dlcCampaignBuilderBrandQualifyByUsecase,
@@ -43,10 +45,6 @@ func handleMessaging10dlcCampaignBuilderBrandQualifyByUsecase(ctx context.Contex
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcCampaignBuilderBrandQualifyByUsecaseParams{
-		BrandID: cmd.Value("brand-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -56,6 +54,10 @@ func handleMessaging10dlcCampaignBuilderBrandQualifyByUsecase(ctx context.Contex
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.Messaging10dlcCampaignBuilderBrandQualifyByUsecaseParams{
+		BrandID: cmd.Value("brand-id").(string),
 	}
 
 	var res []byte

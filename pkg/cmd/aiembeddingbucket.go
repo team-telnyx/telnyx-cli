@@ -20,8 +20,9 @@ var aiEmbeddingsBucketsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "bucket-name",
-			Required: true,
+			Name:      "bucket-name",
+			Required:  true,
+			PathParam: "bucket_name",
 		},
 	},
 	Action:          handleAIEmbeddingsBucketsRetrieve,
@@ -43,8 +44,9 @@ var aiEmbeddingsBucketsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "bucket-name",
-			Required: true,
+			Name:      "bucket-name",
+			Required:  true,
+			PathParam: "bucket_name",
 		},
 	},
 	Action:          handleAIEmbeddingsBucketsDelete,

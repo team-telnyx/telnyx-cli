@@ -87,8 +87,9 @@ var aiAssistantsTestsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "test-id",
-			Required: true,
+			Name:      "test-id",
+			Required:  true,
+			PathParam: "test_id",
 		},
 	},
 	Action:          handleAIAssistantsTestsRetrieve,
@@ -101,8 +102,9 @@ var aiAssistantsTestsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "test-id",
-			Required: true,
+			Name:      "test-id",
+			Required:  true,
+			PathParam: "test_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "description",
@@ -205,8 +207,9 @@ var aiAssistantsTestsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "test-id",
-			Required: true,
+			Name:      "test-id",
+			Required:  true,
+			PathParam: "test_id",
 		},
 	},
 	Action:          handleAIAssistantsTestsDelete,
@@ -221,8 +224,6 @@ func handleAIAssistantsTestsCreate(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantTestNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -233,6 +234,8 @@ func handleAIAssistantsTestsCreate(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantTestNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -307,8 +310,6 @@ func handleAIAssistantsTestsUpdate(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantTestUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -319,6 +320,8 @@ func handleAIAssistantsTestsUpdate(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantTestUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -353,8 +356,6 @@ func handleAIAssistantsTestsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantTestListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -365,6 +366,8 @@ func handleAIAssistantsTestsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantTestListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

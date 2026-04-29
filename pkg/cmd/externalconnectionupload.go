@@ -20,8 +20,9 @@ var externalConnectionsUploadsCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "number-id",
@@ -58,12 +59,14 @@ var externalConnectionsUploadsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "ticket-id",
-			Required: true,
+			Name:      "ticket-id",
+			Required:  true,
+			PathParam: "ticket_id",
 		},
 	},
 	Action:          handleExternalConnectionsUploadsRetrieve,
@@ -76,8 +79,9 @@ var externalConnectionsUploadsList = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -126,8 +130,9 @@ var externalConnectionsUploadsPendingCount = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleExternalConnectionsUploadsPendingCount,
@@ -140,8 +145,9 @@ var externalConnectionsUploadsRefreshStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleExternalConnectionsUploadsRefreshStatus,
@@ -154,12 +160,14 @@ var externalConnectionsUploadsRetry = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "ticket-id",
-			Required: true,
+			Name:      "ticket-id",
+			Required:  true,
+			PathParam: "ticket_id",
 		},
 	},
 	Action:          handleExternalConnectionsUploadsRetry,
@@ -177,8 +185,6 @@ func handleExternalConnectionsUploadsCreate(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionUploadNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -189,6 +195,8 @@ func handleExternalConnectionsUploadsCreate(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ExternalConnectionUploadNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -226,10 +234,6 @@ func handleExternalConnectionsUploadsRetrieve(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionUploadGetParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -239,6 +243,10 @@ func handleExternalConnectionsUploadsRetrieve(ctx context.Context, cmd *cli.Comm
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.ExternalConnectionUploadGetParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte
@@ -277,8 +285,6 @@ func handleExternalConnectionsUploadsList(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionUploadListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -289,6 +295,8 @@ func handleExternalConnectionsUploadsList(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ExternalConnectionUploadListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -429,10 +437,6 @@ func handleExternalConnectionsUploadsRetry(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionUploadRetryParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -442,6 +446,10 @@ func handleExternalConnectionsUploadsRetry(ctx context.Context, cmd *cli.Command
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.ExternalConnectionUploadRetryParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte

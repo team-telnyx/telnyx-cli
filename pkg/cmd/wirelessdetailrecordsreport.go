@@ -40,8 +40,9 @@ var wirelessDetailRecordsReportsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleWirelessDetailRecordsReportsRetrieve,
@@ -76,8 +77,9 @@ var wirelessDetailRecordsReportsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleWirelessDetailRecordsReportsDelete,
@@ -92,8 +94,6 @@ func handleWirelessDetailRecordsReportsCreate(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WirelessDetailRecordsReportNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -104,6 +104,8 @@ func handleWirelessDetailRecordsReportsCreate(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.WirelessDetailRecordsReportNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -175,8 +177,6 @@ func handleWirelessDetailRecordsReportsList(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WirelessDetailRecordsReportListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -187,6 +187,8 @@ func handleWirelessDetailRecordsReportsList(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.WirelessDetailRecordsReportListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

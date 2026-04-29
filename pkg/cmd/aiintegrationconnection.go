@@ -20,8 +20,9 @@ var aiIntegrationsConnectionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "user-connection-id",
-			Required: true,
+			Name:      "user-connection-id",
+			Required:  true,
+			PathParam: "user_connection_id",
 		},
 	},
 	Action:          handleAIIntegrationsConnectionsRetrieve,
@@ -43,8 +44,9 @@ var aiIntegrationsConnectionsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "user-connection-id",
-			Required: true,
+			Name:      "user-connection-id",
+			Required:  true,
+			PathParam: "user_connection_id",
 		},
 	},
 	Action:          handleAIIntegrationsConnectionsDelete,

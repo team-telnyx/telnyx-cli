@@ -20,8 +20,9 @@ var aiAssistantsScheduledEventsCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[any]{
 			Name:     "scheduled-at-fixed-datetime",
@@ -73,12 +74,14 @@ var aiAssistantsScheduledEventsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "event-id",
-			Required: true,
+			Name:      "event-id",
+			Required:  true,
+			PathParam: "event_id",
 		},
 	},
 	Action:          handleAIAssistantsScheduledEventsRetrieve,
@@ -91,8 +94,9 @@ var aiAssistantsScheduledEventsList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "conversation-channel",
@@ -130,12 +134,14 @@ var aiAssistantsScheduledEventsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "event-id",
-			Required: true,
+			Name:      "event-id",
+			Required:  true,
+			PathParam: "event_id",
 		},
 	},
 	Action:          handleAIAssistantsScheduledEventsDelete,
@@ -153,8 +159,6 @@ func handleAIAssistantsScheduledEventsCreate(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantScheduledEventNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -165,6 +169,8 @@ func handleAIAssistantsScheduledEventsCreate(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantScheduledEventNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -202,10 +208,6 @@ func handleAIAssistantsScheduledEventsRetrieve(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantScheduledEventGetParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -215,6 +217,10 @@ func handleAIAssistantsScheduledEventsRetrieve(ctx context.Context, cmd *cli.Com
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantScheduledEventGetParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte
@@ -253,8 +259,6 @@ func handleAIAssistantsScheduledEventsList(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantScheduledEventListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -265,6 +269,8 @@ func handleAIAssistantsScheduledEventsList(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantScheduledEventListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -321,10 +327,6 @@ func handleAIAssistantsScheduledEventsDelete(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantScheduledEventDeleteParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -334,6 +336,10 @@ func handleAIAssistantsScheduledEventsDelete(ctx context.Context, cmd *cli.Comma
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantScheduledEventDeleteParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	return client.AI.Assistants.ScheduledEvents.Delete(

@@ -57,9 +57,10 @@ var bundlePricingUserBundlesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "user-bundle-id",
-			Usage:    "User bundle's ID, this is used to identify the user bundle in the API.",
-			Required: true,
+			Name:      "user-bundle-id",
+			Usage:     "User bundle's ID, this is used to identify the user bundle in the API.",
+			Required:  true,
+			PathParam: "user_bundle_id",
 		},
 		&requestflag.Flag[string]{
 			Name:       "authorization-bearer",
@@ -122,9 +123,10 @@ var bundlePricingUserBundlesDeactivate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "user-bundle-id",
-			Usage:    "User bundle's ID, this is used to identify the user bundle in the API.",
-			Required: true,
+			Name:      "user-bundle-id",
+			Usage:     "User bundle's ID, this is used to identify the user bundle in the API.",
+			Required:  true,
+			PathParam: "user_bundle_id",
 		},
 		&requestflag.Flag[string]{
 			Name:       "authorization-bearer",
@@ -142,9 +144,10 @@ var bundlePricingUserBundlesListResources = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "user-bundle-id",
-			Usage:    "User bundle's ID, this is used to identify the user bundle in the API.",
-			Required: true,
+			Name:      "user-bundle-id",
+			Usage:     "User bundle's ID, this is used to identify the user bundle in the API.",
+			Required:  true,
+			PathParam: "user_bundle_id",
 		},
 		&requestflag.Flag[string]{
 			Name:       "authorization-bearer",
@@ -197,8 +200,6 @@ func handleBundlePricingUserBundlesCreate(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.BundlePricingUserBundleNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -209,6 +210,8 @@ func handleBundlePricingUserBundlesCreate(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.BundlePricingUserBundleNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -241,8 +244,6 @@ func handleBundlePricingUserBundlesRetrieve(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.BundlePricingUserBundleGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -253,6 +254,8 @@ func handleBundlePricingUserBundlesRetrieve(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.BundlePricingUserBundleGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -287,8 +290,6 @@ func handleBundlePricingUserBundlesList(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.BundlePricingUserBundleListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -299,6 +300,8 @@ func handleBundlePricingUserBundlesList(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.BundlePricingUserBundleListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -345,8 +348,6 @@ func handleBundlePricingUserBundlesDeactivate(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.BundlePricingUserBundleDeactivateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -357,6 +358,8 @@ func handleBundlePricingUserBundlesDeactivate(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.BundlePricingUserBundleDeactivateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -394,8 +397,6 @@ func handleBundlePricingUserBundlesListResources(ctx context.Context, cmd *cli.C
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.BundlePricingUserBundleListResourcesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -406,6 +407,8 @@ func handleBundlePricingUserBundlesListResources(ctx context.Context, cmd *cli.C
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.BundlePricingUserBundleListResourcesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -440,8 +443,6 @@ func handleBundlePricingUserBundlesListUnused(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.BundlePricingUserBundleListUnusedParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -452,6 +453,8 @@ func handleBundlePricingUserBundlesListUnused(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.BundlePricingUserBundleListUnusedParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

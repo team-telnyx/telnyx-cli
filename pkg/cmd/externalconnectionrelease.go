@@ -20,12 +20,14 @@ var externalConnectionsReleasesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "release-id",
-			Required: true,
+			Name:      "release-id",
+			Required:  true,
+			PathParam: "release_id",
 		},
 	},
 	Action:          handleExternalConnectionsReleasesRetrieve,
@@ -38,8 +40,9 @@ var externalConnectionsReleasesList = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -94,10 +97,6 @@ func handleExternalConnectionsReleasesRetrieve(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionReleaseGetParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -107,6 +106,10 @@ func handleExternalConnectionsReleasesRetrieve(ctx context.Context, cmd *cli.Com
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.ExternalConnectionReleaseGetParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte
@@ -145,8 +148,6 @@ func handleExternalConnectionsReleasesList(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionReleaseListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -157,6 +158,8 @@ func handleExternalConnectionsReleasesList(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ExternalConnectionReleaseListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

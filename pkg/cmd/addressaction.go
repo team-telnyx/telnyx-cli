@@ -20,8 +20,9 @@ var addressesActionsAcceptSuggestions = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "address-uuid",
-			Required: true,
+			Name:      "address-uuid",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "id",
@@ -87,8 +88,6 @@ func handleAddressesActionsAcceptSuggestions(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AddressActionAcceptSuggestionsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -99,6 +98,8 @@ func handleAddressesActionsAcceptSuggestions(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AddressActionAcceptSuggestionsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -133,8 +134,6 @@ func handleAddressesActionsValidate(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AddressActionValidateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -145,6 +144,8 @@ func handleAddressesActionsValidate(ctx context.Context, cmd *cli.Command) error
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AddressActionValidateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

@@ -20,8 +20,9 @@ var aiMissionsRunsCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "input",
@@ -42,12 +43,14 @@ var aiMissionsRunsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 	},
 	Action:          handleAIMissionsRunsRetrieve,
@@ -60,12 +63,14 @@ var aiMissionsRunsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "error",
@@ -99,8 +104,9 @@ var aiMissionsRunsList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -133,12 +139,14 @@ var aiMissionsRunsCancelRun = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 	},
 	Action:          handleAIMissionsRunsCancelRun,
@@ -181,12 +189,14 @@ var aiMissionsRunsPauseRun = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 	},
 	Action:          handleAIMissionsRunsPauseRun,
@@ -199,12 +209,14 @@ var aiMissionsRunsResumeRun = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 	},
 	Action:          handleAIMissionsRunsResumeRun,
@@ -222,8 +234,6 @@ func handleAIMissionsRunsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -234,6 +244,8 @@ func handleAIMissionsRunsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMissionRunNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -271,10 +283,6 @@ func handleAIMissionsRunsRetrieve(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunGetParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -284,6 +292,10 @@ func handleAIMissionsRunsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunGetParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -322,10 +334,6 @@ func handleAIMissionsRunsUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunUpdateParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -335,6 +343,10 @@ func handleAIMissionsRunsUpdate(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunUpdateParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -373,8 +385,6 @@ func handleAIMissionsRunsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -385,6 +395,8 @@ func handleAIMissionsRunsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMissionRunListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -441,10 +453,6 @@ func handleAIMissionsRunsCancelRun(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunCancelRunParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -454,6 +462,10 @@ func handleAIMissionsRunsCancelRun(ctx context.Context, cmd *cli.Command) error 
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunCancelRunParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -489,8 +501,6 @@ func handleAIMissionsRunsListRuns(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunListRunsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -501,6 +511,8 @@ func handleAIMissionsRunsListRuns(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMissionRunListRunsParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -547,10 +559,6 @@ func handleAIMissionsRunsPauseRun(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunPauseRunParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -560,6 +568,10 @@ func handleAIMissionsRunsPauseRun(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunPauseRunParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -598,10 +610,6 @@ func handleAIMissionsRunsResumeRun(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunResumeRunParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -611,6 +619,10 @@ func handleAIMissionsRunsResumeRun(ctx context.Context, cmd *cli.Command) error 
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunResumeRunParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte

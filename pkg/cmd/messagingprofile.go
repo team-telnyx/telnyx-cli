@@ -180,8 +180,9 @@ var messagingProfilesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingProfilesRetrieve,
@@ -194,8 +195,9 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "alpha-sender",
@@ -387,8 +389,9 @@ var messagingProfilesDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingProfilesDelete,
@@ -401,8 +404,9 @@ var messagingProfilesListAlphanumericSenderIDs = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -429,8 +433,9 @@ var messagingProfilesListPhoneNumbers = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -455,8 +460,9 @@ var messagingProfilesListShortCodes = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -481,8 +487,9 @@ var messagingProfilesRetrieveMetrics = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "time-frame",
@@ -503,8 +510,6 @@ func handleMessagingProfilesCreate(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -515,6 +520,8 @@ func handleMessagingProfilesCreate(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -589,8 +596,6 @@ func handleMessagingProfilesUpdate(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -601,6 +606,8 @@ func handleMessagingProfilesUpdate(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -635,8 +642,6 @@ func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -647,6 +652,8 @@ func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -735,8 +742,6 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileListAlphanumericSenderIDsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -747,6 +752,8 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileListAlphanumericSenderIDsParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -803,8 +810,6 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileListPhoneNumbersParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -815,6 +820,8 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileListPhoneNumbersParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -871,8 +878,6 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileListShortCodesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -883,6 +888,8 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileListShortCodesParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -939,8 +946,6 @@ func handleMessagingProfilesRetrieveMetrics(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileGetMetricsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -951,6 +956,8 @@ func handleMessagingProfilesRetrieveMetrics(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileGetMetricsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

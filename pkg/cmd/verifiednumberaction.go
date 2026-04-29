@@ -20,9 +20,10 @@ var verifiedNumbersActionsSubmitVerificationCode = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Usage:    "+E164 formatted phone number.",
-			Required: true,
+			Name:      "phone-number",
+			Usage:     "+E164 formatted phone number.",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 		&requestflag.Flag[string]{
 			Name:     "verification-code",
@@ -45,8 +46,6 @@ func handleVerifiedNumbersActionsSubmitVerificationCode(ctx context.Context, cmd
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerifiedNumberActionSubmitVerificationCodeParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -57,6 +56,8 @@ func handleVerifiedNumbersActionsSubmitVerificationCode(ctx context.Context, cmd
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerifiedNumberActionSubmitVerificationCodeParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

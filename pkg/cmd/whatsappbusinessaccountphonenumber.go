@@ -20,8 +20,9 @@ var whatsappBusinessAccountsPhoneNumbersList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -46,8 +47,9 @@ var whatsappBusinessAccountsPhoneNumbersInitializeVerification = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "display-name",
@@ -86,8 +88,6 @@ func handleWhatsappBusinessAccountsPhoneNumbersList(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WhatsappBusinessAccountPhoneNumberListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -98,6 +98,8 @@ func handleWhatsappBusinessAccountsPhoneNumbersList(ctx context.Context, cmd *cl
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.WhatsappBusinessAccountPhoneNumberListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -154,8 +156,6 @@ func handleWhatsappBusinessAccountsPhoneNumbersInitializeVerification(ctx contex
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WhatsappBusinessAccountPhoneNumberInitializeVerificationParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -166,6 +166,8 @@ func handleWhatsappBusinessAccountsPhoneNumbersInitializeVerification(ctx contex
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.WhatsappBusinessAccountPhoneNumberInitializeVerificationParams{}
 
 	return client.Whatsapp.BusinessAccounts.PhoneNumbers.InitializeVerification(
 		ctx,

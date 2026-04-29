@@ -20,12 +20,14 @@ var texmlAccountsConferencesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "conference-sid",
-			Required: true,
+			Name:      "conference-sid",
+			Required:  true,
+			PathParam: "conference_sid",
 		},
 	},
 	Action:          handleTexmlAccountsConferencesRetrieve,
@@ -38,12 +40,14 @@ var texmlAccountsConferencesUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "conference-sid",
-			Required: true,
+			Name:      "conference-sid",
+			Required:  true,
+			PathParam: "conference_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:     "announce-method",
@@ -71,8 +75,9 @@ var texmlAccountsConferencesRetrieveConferences = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:      "date-created",
@@ -120,12 +125,14 @@ var texmlAccountsConferencesRetrieveRecordings = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "conference-sid",
-			Required: true,
+			Name:      "conference-sid",
+			Required:  true,
+			PathParam: "conference_sid",
 		},
 	},
 	Action:          handleTexmlAccountsConferencesRetrieveRecordings,
@@ -138,12 +145,14 @@ var texmlAccountsConferencesRetrieveRecordingsJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "conference-sid",
-			Required: true,
+			Name:      "conference-sid",
+			Required:  true,
+			PathParam: "conference_sid",
 		},
 	},
 	Action:          handleTexmlAccountsConferencesRetrieveRecordingsJson,
@@ -161,10 +170,6 @@ func handleTexmlAccountsConferencesRetrieve(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceGetParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -174,6 +179,10 @@ func handleTexmlAccountsConferencesRetrieve(ctx context.Context, cmd *cli.Comman
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountConferenceGetParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -212,10 +221,6 @@ func handleTexmlAccountsConferencesUpdate(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceUpdateParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -225,6 +230,10 @@ func handleTexmlAccountsConferencesUpdate(ctx context.Context, cmd *cli.Command)
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountConferenceUpdateParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -263,8 +272,6 @@ func handleTexmlAccountsConferencesRetrieveConferences(ctx context.Context, cmd 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceGetConferencesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -275,6 +282,8 @@ func handleTexmlAccountsConferencesRetrieveConferences(ctx context.Context, cmd 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TexmlAccountConferenceGetConferencesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -312,10 +321,6 @@ func handleTexmlAccountsConferencesRetrieveRecordings(ctx context.Context, cmd *
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceGetRecordingsParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -325,6 +330,10 @@ func handleTexmlAccountsConferencesRetrieveRecordings(ctx context.Context, cmd *
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountConferenceGetRecordingsParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -363,10 +372,6 @@ func handleTexmlAccountsConferencesRetrieveRecordingsJson(ctx context.Context, c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceGetRecordingsJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -376,6 +381,10 @@ func handleTexmlAccountsConferencesRetrieveRecordingsJson(ctx context.Context, c
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountConferenceGetRecordingsJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte

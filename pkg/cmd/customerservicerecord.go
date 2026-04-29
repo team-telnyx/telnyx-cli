@@ -98,8 +98,9 @@ var customerServiceRecordsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "customer-service-record-id",
-			Required: true,
+			Name:      "customer-service-record-id",
+			Required:  true,
+			PathParam: "customer_service_record_id",
 		},
 	},
 	Action:          handleCustomerServiceRecordsRetrieve,
@@ -184,8 +185,6 @@ func handleCustomerServiceRecordsCreate(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CustomerServiceRecordNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -196,6 +195,8 @@ func handleCustomerServiceRecordsCreate(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CustomerServiceRecordNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -267,8 +268,6 @@ func handleCustomerServiceRecordsList(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CustomerServiceRecordListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -279,6 +278,8 @@ func handleCustomerServiceRecordsList(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CustomerServiceRecordListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -322,8 +323,6 @@ func handleCustomerServiceRecordsVerifyPhoneNumberCoverage(ctx context.Context, 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CustomerServiceRecordVerifyPhoneNumberCoverageParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -334,6 +333,8 @@ func handleCustomerServiceRecordsVerifyPhoneNumberCoverage(ctx context.Context, 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CustomerServiceRecordVerifyPhoneNumberCoverageParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

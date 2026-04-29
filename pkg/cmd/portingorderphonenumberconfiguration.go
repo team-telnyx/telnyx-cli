@@ -105,8 +105,6 @@ func handlePortingOrdersPhoneNumberConfigurationsCreate(ctx context.Context, cmd
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderPhoneNumberConfigurationNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -117,6 +115,8 @@ func handlePortingOrdersPhoneNumberConfigurationsCreate(ctx context.Context, cmd
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderPhoneNumberConfigurationNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -146,8 +146,6 @@ func handlePortingOrdersPhoneNumberConfigurationsList(ctx context.Context, cmd *
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderPhoneNumberConfigurationListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -158,6 +156,8 @@ func handlePortingOrdersPhoneNumberConfigurationsList(ctx context.Context, cmd *
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderPhoneNumberConfigurationListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

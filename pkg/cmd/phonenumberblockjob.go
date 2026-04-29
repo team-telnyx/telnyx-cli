@@ -20,8 +20,9 @@ var phoneNumberBlocksJobsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePhoneNumberBlocksJobsRetrieve,
@@ -138,8 +139,6 @@ func handlePhoneNumberBlocksJobsList(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberBlockJobListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -150,6 +149,8 @@ func handlePhoneNumberBlocksJobsList(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberBlockJobListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -193,8 +194,6 @@ func handlePhoneNumberBlocksJobsDeletePhoneNumberBlock(ctx context.Context, cmd 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberBlockJobDeletePhoneNumberBlockParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -205,6 +204,8 @@ func handlePhoneNumberBlocksJobsDeletePhoneNumberBlock(ctx context.Context, cmd 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberBlockJobDeletePhoneNumberBlockParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

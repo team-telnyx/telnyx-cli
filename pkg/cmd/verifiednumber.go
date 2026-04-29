@@ -46,9 +46,10 @@ var verifiedNumbersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Usage:    "+E164 formatted phone number.",
-			Required: true,
+			Name:      "phone-number",
+			Usage:     "+E164 formatted phone number.",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 	},
 	Action:          handleVerifiedNumbersRetrieve,
@@ -83,9 +84,10 @@ var verifiedNumbersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Usage:    "+E164 formatted phone number.",
-			Required: true,
+			Name:      "phone-number",
+			Usage:     "+E164 formatted phone number.",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 	},
 	Action:          handleVerifiedNumbersDelete,
@@ -100,8 +102,6 @@ func handleVerifiedNumbersCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerifiedNumberNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -112,6 +112,8 @@ func handleVerifiedNumbersCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerifiedNumberNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -183,8 +185,6 @@ func handleVerifiedNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerifiedNumberListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -195,6 +195,8 @@ func handleVerifiedNumbersList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerifiedNumberListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

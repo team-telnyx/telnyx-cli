@@ -68,8 +68,9 @@ var roomCompositionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-composition-id",
-			Required: true,
+			Name:      "room-composition-id",
+			Required:  true,
+			PathParam: "room_composition_id",
 		},
 	},
 	Action:          handleRoomCompositionsRetrieve,
@@ -126,8 +127,9 @@ var roomCompositionsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-composition-id",
-			Required: true,
+			Name:      "room-composition-id",
+			Required:  true,
+			PathParam: "room_composition_id",
 		},
 	},
 	Action:          handleRoomCompositionsDelete,
@@ -142,8 +144,6 @@ func handleRoomCompositionsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomCompositionNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -154,6 +154,8 @@ func handleRoomCompositionsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomCompositionNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -225,8 +227,6 @@ func handleRoomCompositionsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomCompositionListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -237,6 +237,8 @@ func handleRoomCompositionsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomCompositionListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

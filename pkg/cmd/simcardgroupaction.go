@@ -20,8 +20,9 @@ var simCardGroupsActionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardGroupsActionsRetrieve,
@@ -75,8 +76,9 @@ var simCardGroupsActionsRemovePrivateWirelessGateway = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardGroupsActionsRemovePrivateWirelessGateway,
@@ -89,8 +91,9 @@ var simCardGroupsActionsRemoveWirelessBlocklist = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardGroupsActionsRemoveWirelessBlocklist,
@@ -103,8 +106,9 @@ var simCardGroupsActionsSetPrivateWirelessGateway = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "private-wireless-gateway-id",
@@ -123,8 +127,9 @@ var simCardGroupsActionsSetWirelessBlocklist = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "wireless-blocklist-id",
@@ -187,8 +192,6 @@ func handleSimCardGroupsActionsList(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardGroupActionListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -199,6 +202,8 @@ func handleSimCardGroupsActionsList(ctx context.Context, cmd *cli.Command) error
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardGroupActionListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -329,8 +334,6 @@ func handleSimCardGroupsActionsSetPrivateWirelessGateway(ctx context.Context, cm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardGroupActionSetPrivateWirelessGatewayParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -341,6 +344,8 @@ func handleSimCardGroupsActionsSetPrivateWirelessGateway(ctx context.Context, cm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardGroupActionSetPrivateWirelessGatewayParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -378,8 +383,6 @@ func handleSimCardGroupsActionsSetWirelessBlocklist(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardGroupActionSetWirelessBlocklistParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -390,6 +393,8 @@ func handleSimCardGroupsActionsSetWirelessBlocklist(ctx context.Context, cmd *cl
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardGroupActionSetWirelessBlocklistParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

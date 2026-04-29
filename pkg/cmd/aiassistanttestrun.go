@@ -20,12 +20,14 @@ var aiAssistantsTestsRunsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "test-id",
-			Required: true,
+			Name:      "test-id",
+			Required:  true,
+			PathParam: "test_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 	},
 	Action:          handleAIAssistantsTestsRunsRetrieve,
@@ -38,8 +40,9 @@ var aiAssistantsTestsRunsList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "test-id",
-			Required: true,
+			Name:      "test-id",
+			Required:  true,
+			PathParam: "test_id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -69,8 +72,9 @@ var aiAssistantsTestsRunsTrigger = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "test-id",
-			Required: true,
+			Name:      "test-id",
+			Required:  true,
+			PathParam: "test_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "destination-version-id",
@@ -93,10 +97,6 @@ func handleAIAssistantsTestsRunsRetrieve(ctx context.Context, cmd *cli.Command) 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantTestRunGetParams{
-		TestID: cmd.Value("test-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -106,6 +106,10 @@ func handleAIAssistantsTestsRunsRetrieve(ctx context.Context, cmd *cli.Command) 
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantTestRunGetParams{
+		TestID: cmd.Value("test-id").(string),
 	}
 
 	var res []byte
@@ -144,8 +148,6 @@ func handleAIAssistantsTestsRunsList(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantTestRunListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -156,6 +158,8 @@ func handleAIAssistantsTestsRunsList(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantTestRunListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -212,8 +216,6 @@ func handleAIAssistantsTestsRunsTrigger(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantTestRunTriggerParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -224,6 +226,8 @@ func handleAIAssistantsTestsRunsTrigger(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantTestRunTriggerParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

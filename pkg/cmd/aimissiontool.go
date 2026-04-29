@@ -20,8 +20,9 @@ var aiMissionsToolsCreateTool = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 	},
 	Action:          handleAIMissionsToolsCreateTool,
@@ -34,12 +35,14 @@ var aiMissionsToolsDeleteTool = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "tool-id",
-			Required: true,
+			Name:      "tool-id",
+			Required:  true,
+			PathParam: "tool_id",
 		},
 	},
 	Action:          handleAIMissionsToolsDeleteTool,
@@ -52,12 +55,14 @@ var aiMissionsToolsGetTool = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "tool-id",
-			Required: true,
+			Name:      "tool-id",
+			Required:  true,
+			PathParam: "tool_id",
 		},
 	},
 	Action:          handleAIMissionsToolsGetTool,
@@ -70,8 +75,9 @@ var aiMissionsToolsListTools = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 	},
 	Action:          handleAIMissionsToolsListTools,
@@ -84,12 +90,14 @@ var aiMissionsToolsUpdateTool = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "tool-id",
-			Required: true,
+			Name:      "tool-id",
+			Required:  true,
+			PathParam: "tool_id",
 		},
 	},
 	Action:          handleAIMissionsToolsUpdateTool,
@@ -149,10 +157,6 @@ func handleAIMissionsToolsDeleteTool(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionToolDeleteToolParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -162,6 +166,10 @@ func handleAIMissionsToolsDeleteTool(ctx context.Context, cmd *cli.Command) erro
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionToolDeleteToolParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	return client.AI.Missions.Tools.DeleteTool(
@@ -183,10 +191,6 @@ func handleAIMissionsToolsGetTool(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionToolGetToolParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -196,6 +200,10 @@ func handleAIMissionsToolsGetTool(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionToolGetToolParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -276,10 +284,6 @@ func handleAIMissionsToolsUpdateTool(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionToolUpdateToolParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -289,6 +293,10 @@ func handleAIMissionsToolsUpdateTool(ctx context.Context, cmd *cli.Command) erro
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionToolUpdateToolParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte

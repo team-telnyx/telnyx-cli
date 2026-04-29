@@ -20,12 +20,14 @@ var texmlAccountsCallsRecordingsJsonRecordingsJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid",
-			Required: true,
+			Name:      "call-sid",
+			Required:  true,
+			PathParam: "call_sid",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "play-beep",
@@ -77,12 +79,14 @@ var texmlAccountsCallsRecordingsJsonRetrieveRecordingsJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid",
-			Required: true,
+			Name:      "call-sid",
+			Required:  true,
+			PathParam: "call_sid",
 		},
 	},
 	Action:          handleTexmlAccountsCallsRecordingsJsonRetrieveRecordingsJson,
@@ -100,10 +104,6 @@ func handleTexmlAccountsCallsRecordingsJsonRecordingsJson(ctx context.Context, c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallRecordingsJsonRecordingsJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -113,6 +113,10 @@ func handleTexmlAccountsCallsRecordingsJsonRecordingsJson(ctx context.Context, c
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountCallRecordingsJsonRecordingsJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -151,10 +155,6 @@ func handleTexmlAccountsCallsRecordingsJsonRetrieveRecordingsJson(ctx context.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallRecordingsJsonGetRecordingsJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -164,6 +164,10 @@ func handleTexmlAccountsCallsRecordingsJsonRetrieveRecordingsJson(ctx context.Co
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountCallRecordingsJsonGetRecordingsJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte

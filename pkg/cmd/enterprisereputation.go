@@ -20,8 +20,9 @@ var enterprisesReputationRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 	},
 	Action:          handleEnterprisesReputationRetrieve,
@@ -34,8 +35,9 @@ var enterprisesReputationDisable = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 	},
 	Action:          handleEnterprisesReputationDisable,
@@ -48,8 +50,9 @@ var enterprisesReputationEnable = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "loa-document-id",
@@ -74,8 +77,9 @@ var enterprisesReputationUpdateFrequency = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "check-frequency",
@@ -166,8 +170,6 @@ func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationEnableParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -178,6 +180,8 @@ func handleEnterprisesReputationEnable(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.EnterpriseReputationEnableParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -215,8 +219,6 @@ func handleEnterprisesReputationUpdateFrequency(ctx context.Context, cmd *cli.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationUpdateFrequencyParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -227,6 +229,8 @@ func handleEnterprisesReputationUpdateFrequency(ctx context.Context, cmd *cli.Co
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.EnterpriseReputationUpdateFrequencyParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

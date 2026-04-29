@@ -29,8 +29,9 @@ var sessionAnalysisMetadataRetrieveRecordType = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "record-type",
-			Required: true,
+			Name:      "record-type",
+			Required:  true,
+			PathParam: "record_type",
 		},
 	},
 	Action:          handleSessionAnalysisMetadataRetrieveRecordType,

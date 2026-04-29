@@ -20,12 +20,14 @@ var aiMissionsRunsPlanCreate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "step",
@@ -66,12 +68,14 @@ var aiMissionsRunsPlanRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 	},
 	Action:          handleAIMissionsRunsPlanRetrieve,
@@ -84,12 +88,14 @@ var aiMissionsRunsPlanAddStepsToPlan = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "step",
@@ -130,16 +136,19 @@ var aiMissionsRunsPlanGetStepDetails = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "step-id",
-			Required: true,
+			Name:      "step-id",
+			Required:  true,
+			PathParam: "step_id",
 		},
 	},
 	Action:          handleAIMissionsRunsPlanGetStepDetails,
@@ -152,16 +161,19 @@ var aiMissionsRunsPlanUpdateStep = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "run-id",
-			Required: true,
+			Name:      "run-id",
+			Required:  true,
+			PathParam: "run_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "step-id",
-			Required: true,
+			Name:      "step-id",
+			Required:  true,
+			PathParam: "step_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
@@ -188,10 +200,6 @@ func handleAIMissionsRunsPlanCreate(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunPlanNewParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -201,6 +209,10 @@ func handleAIMissionsRunsPlanCreate(ctx context.Context, cmd *cli.Command) error
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunPlanNewParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -239,10 +251,6 @@ func handleAIMissionsRunsPlanRetrieve(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunPlanGetParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -252,6 +260,10 @@ func handleAIMissionsRunsPlanRetrieve(ctx context.Context, cmd *cli.Command) err
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunPlanGetParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -290,10 +302,6 @@ func handleAIMissionsRunsPlanAddStepsToPlan(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunPlanAddStepsToPlanParams{
-		MissionID: cmd.Value("mission-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -303,6 +311,10 @@ func handleAIMissionsRunsPlanAddStepsToPlan(ctx context.Context, cmd *cli.Comman
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunPlanAddStepsToPlanParams{
+		MissionID: cmd.Value("mission-id").(string),
 	}
 
 	var res []byte
@@ -341,11 +353,6 @@ func handleAIMissionsRunsPlanGetStepDetails(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunPlanGetStepDetailsParams{
-		MissionID: cmd.Value("mission-id").(string),
-		RunID:     cmd.Value("run-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -355,6 +362,11 @@ func handleAIMissionsRunsPlanGetStepDetails(ctx context.Context, cmd *cli.Comman
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunPlanGetStepDetailsParams{
+		MissionID: cmd.Value("mission-id").(string),
+		RunID:     cmd.Value("run-id").(string),
 	}
 
 	var res []byte
@@ -393,11 +405,6 @@ func handleAIMissionsRunsPlanUpdateStep(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionRunPlanUpdateStepParams{
-		MissionID: cmd.Value("mission-id").(string),
-		RunID:     cmd.Value("run-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -407,6 +414,11 @@ func handleAIMissionsRunsPlanUpdateStep(ctx context.Context, cmd *cli.Command) e
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIMissionRunPlanUpdateStepParams{
+		MissionID: cmd.Value("mission-id").(string),
+		RunID:     cmd.Value("run-id").(string),
 	}
 
 	var res []byte

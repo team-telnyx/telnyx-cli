@@ -20,8 +20,9 @@ var texmlInitiateAICall = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "connection-id",
-			Required: true,
+			Name:      "connection-id",
+			Required:  true,
+			PathParam: "connection_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "ai-assistant-id",
@@ -288,8 +289,6 @@ func handleTexmlInitiateAICall(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlInitiateAICallParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -300,6 +299,8 @@ func handleTexmlInitiateAICall(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TexmlInitiateAICallParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -334,8 +335,6 @@ func handleTexmlSecrets(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlSecretsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -346,6 +345,8 @@ func handleTexmlSecrets(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TexmlSecretsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

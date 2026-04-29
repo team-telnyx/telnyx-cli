@@ -21,8 +21,9 @@ var aiClustersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "task-id",
-			Required: true,
+			Name:      "task-id",
+			Required:  true,
+			PathParam: "task_id",
 		},
 		&requestflag.Flag[bool]{
 			Name:      "show-subclusters",
@@ -69,8 +70,9 @@ var aiClustersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "task-id",
-			Required: true,
+			Name:      "task-id",
+			Required:  true,
+			PathParam: "task_id",
 		},
 	},
 	Action:          handleAIClustersDelete,
@@ -121,8 +123,9 @@ var aiClustersFetchGraph = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "task-id",
-			Required: true,
+			Name:      "task-id",
+			Required:  true,
+			PathParam: "task_id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "cluster-id",
@@ -149,8 +152,6 @@ func handleAIClustersRetrieve(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIClusterGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -161,6 +162,8 @@ func handleAIClustersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIClusterGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -195,8 +198,6 @@ func handleAIClustersList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIClusterListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -207,6 +208,8 @@ func handleAIClustersList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIClusterListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -275,8 +278,6 @@ func handleAIClustersCompute(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIClusterComputeParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -287,6 +288,8 @@ func handleAIClustersCompute(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIClusterComputeParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -319,8 +322,6 @@ func handleAIClustersFetchGraph(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIClusterFetchGraphParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -331,6 +332,8 @@ func handleAIClustersFetchGraph(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIClusterFetchGraphParams{}
 
 	response, err := client.AI.Clusters.FetchGraph(
 		ctx,

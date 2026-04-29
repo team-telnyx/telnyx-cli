@@ -20,8 +20,9 @@ var roomsSessionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-session-id",
-			Required: true,
+			Name:      "room-session-id",
+			Required:  true,
+			PathParam: "room_session_id",
 		},
 		&requestflag.Flag[bool]{
 			Name:      "include-participants",
@@ -96,8 +97,9 @@ var roomsSessionsList1 = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-id",
-			Required: true,
+			Name:      "room-id",
+			Required:  true,
+			PathParam: "room_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -152,8 +154,9 @@ var roomsSessionsRetrieveParticipants = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-session-id",
-			Required: true,
+			Name:      "room-session-id",
+			Required:  true,
+			PathParam: "room_session_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -208,8 +211,6 @@ func handleRoomsSessionsRetrieve(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomSessionGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -220,6 +221,8 @@ func handleRoomsSessionsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomSessionGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -254,8 +257,6 @@ func handleRoomsSessionsList0(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomSessionList0Params{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -266,6 +267,8 @@ func handleRoomsSessionsList0(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomSessionList0Params{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -312,8 +315,6 @@ func handleRoomsSessionsList1(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomSessionList1Params{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -324,6 +325,8 @@ func handleRoomsSessionsList1(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomSessionList1Params{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -380,8 +383,6 @@ func handleRoomsSessionsRetrieveParticipants(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomSessionGetParticipantsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -392,6 +393,8 @@ func handleRoomsSessionsRetrieveParticipants(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomSessionGetParticipantsParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

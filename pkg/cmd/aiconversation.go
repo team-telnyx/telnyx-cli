@@ -39,8 +39,9 @@ var aiConversationsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "conversation-id",
-			Required: true,
+			Name:      "conversation-id",
+			Required:  true,
+			PathParam: "conversation_id",
 		},
 	},
 	Action:          handleAIConversationsRetrieve,
@@ -53,8 +54,9 @@ var aiConversationsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "conversation-id",
-			Required: true,
+			Name:      "conversation-id",
+			Required:  true,
+			PathParam: "conversation_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
@@ -142,8 +144,9 @@ var aiConversationsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "conversation-id",
-			Required: true,
+			Name:      "conversation-id",
+			Required:  true,
+			PathParam: "conversation_id",
 		},
 	},
 	Action:          handleAIConversationsDelete,
@@ -156,9 +159,10 @@ var aiConversationsAddMessage = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "conversation-id",
-			Usage:    "The ID of the conversation",
-			Required: true,
+			Name:      "conversation-id",
+			Usage:     "The ID of the conversation",
+			Required:  true,
+			PathParam: "conversation_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "role",
@@ -205,8 +209,9 @@ var aiConversationsRetrieveConversationsInsights = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "conversation-id",
-			Required: true,
+			Name:      "conversation-id",
+			Required:  true,
+			PathParam: "conversation_id",
 		},
 	},
 	Action:          handleAIConversationsRetrieveConversationsInsights,
@@ -221,8 +226,6 @@ func handleAIConversationsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIConversationNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -233,6 +236,8 @@ func handleAIConversationsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIConversationNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -307,8 +312,6 @@ func handleAIConversationsUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIConversationUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -319,6 +322,8 @@ func handleAIConversationsUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIConversationUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -353,8 +358,6 @@ func handleAIConversationsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIConversationListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -365,6 +368,8 @@ func handleAIConversationsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIConversationListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -422,8 +427,6 @@ func handleAIConversationsAddMessage(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIConversationAddMessageParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -434,6 +437,8 @@ func handleAIConversationsAddMessage(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIConversationAddMessageParams{}
 
 	return client.AI.Conversations.AddMessage(
 		ctx,

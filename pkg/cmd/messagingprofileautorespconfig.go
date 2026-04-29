@@ -20,8 +20,9 @@ var messagingProfilesAutorespConfigsCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "profile-id",
-			Required: true,
+			Name:      "profile-id",
+			Required:  true,
+			PathParam: "profile_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "country-code",
@@ -54,12 +55,14 @@ var messagingProfilesAutorespConfigsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "profile-id",
-			Required: true,
+			Name:      "profile-id",
+			Required:  true,
+			PathParam: "profile_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "autoresp-cfg-id",
-			Required: true,
+			Name:      "autoresp-cfg-id",
+			Required:  true,
+			PathParam: "autoresp_cfg_id",
 		},
 	},
 	Action:          handleMessagingProfilesAutorespConfigsRetrieve,
@@ -72,12 +75,14 @@ var messagingProfilesAutorespConfigsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "profile-id",
-			Required: true,
+			Name:      "profile-id",
+			Required:  true,
+			PathParam: "profile_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "autoresp-cfg-id",
-			Required: true,
+			Name:      "autoresp-cfg-id",
+			Required:  true,
+			PathParam: "autoresp_cfg_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "country-code",
@@ -110,8 +115,9 @@ var messagingProfilesAutorespConfigsList = requestflag.WithInnerFlags(cli.Comman
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "profile-id",
-			Required: true,
+			Name:      "profile-id",
+			Required:  true,
+			PathParam: "profile_id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "country-code",
@@ -159,12 +165,14 @@ var messagingProfilesAutorespConfigsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "profile-id",
-			Required: true,
+			Name:      "profile-id",
+			Required:  true,
+			PathParam: "profile_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "autoresp-cfg-id",
-			Required: true,
+			Name:      "autoresp-cfg-id",
+			Required:  true,
+			PathParam: "autoresp_cfg_id",
 		},
 	},
 	Action:          handleMessagingProfilesAutorespConfigsDelete,
@@ -182,8 +190,6 @@ func handleMessagingProfilesAutorespConfigsCreate(ctx context.Context, cmd *cli.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileAutorespConfigNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -194,6 +200,8 @@ func handleMessagingProfilesAutorespConfigsCreate(ctx context.Context, cmd *cli.
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileAutorespConfigNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -231,10 +239,6 @@ func handleMessagingProfilesAutorespConfigsRetrieve(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileAutorespConfigGetParams{
-		ProfileID: cmd.Value("profile-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -244,6 +248,10 @@ func handleMessagingProfilesAutorespConfigsRetrieve(ctx context.Context, cmd *cl
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.MessagingProfileAutorespConfigGetParams{
+		ProfileID: cmd.Value("profile-id").(string),
 	}
 
 	var res []byte
@@ -282,10 +290,6 @@ func handleMessagingProfilesAutorespConfigsUpdate(ctx context.Context, cmd *cli.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileAutorespConfigUpdateParams{
-		ProfileID: cmd.Value("profile-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -295,6 +299,10 @@ func handleMessagingProfilesAutorespConfigsUpdate(ctx context.Context, cmd *cli.
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.MessagingProfileAutorespConfigUpdateParams{
+		ProfileID: cmd.Value("profile-id").(string),
 	}
 
 	var res []byte
@@ -333,8 +341,6 @@ func handleMessagingProfilesAutorespConfigsList(ctx context.Context, cmd *cli.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileAutorespConfigListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -345,6 +351,8 @@ func handleMessagingProfilesAutorespConfigsList(ctx context.Context, cmd *cli.Co
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileAutorespConfigListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -382,10 +390,6 @@ func handleMessagingProfilesAutorespConfigsDelete(ctx context.Context, cmd *cli.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileAutorespConfigDeleteParams{
-		ProfileID: cmd.Value("profile-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -395,6 +399,10 @@ func handleMessagingProfilesAutorespConfigsDelete(ctx context.Context, cmd *cli.
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.MessagingProfileAutorespConfigDeleteParams{
+		ProfileID: cmd.Value("profile-id").(string),
 	}
 
 	var res []byte

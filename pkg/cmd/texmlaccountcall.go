@@ -20,12 +20,14 @@ var texmlAccountsCallsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid",
-			Required: true,
+			Name:      "call-sid",
+			Required:  true,
+			PathParam: "call_sid",
 		},
 	},
 	Action:          handleTexmlAccountsCallsRetrieve,
@@ -38,12 +40,14 @@ var texmlAccountsCallsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid",
-			Required: true,
+			Name:      "call-sid",
+			Required:  true,
+			PathParam: "call_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:     "fallback-method",
@@ -96,8 +100,9 @@ var texmlAccountsCallsCalls = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "params",
@@ -115,8 +120,9 @@ var texmlAccountsCallsRetrieveCalls = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:      "end-time",
@@ -189,12 +195,14 @@ var texmlAccountsCallsSiprecJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid",
-			Required: true,
+			Name:      "call-sid",
+			Required:  true,
+			PathParam: "call_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:     "connector-name",
@@ -254,12 +262,14 @@ var texmlAccountsCallsStreamsJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid",
-			Required: true,
+			Name:      "call-sid",
+			Required:  true,
+			PathParam: "call_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:     "bidirectional-codec",
@@ -316,10 +326,6 @@ func handleTexmlAccountsCallsRetrieve(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallGetParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -329,6 +335,10 @@ func handleTexmlAccountsCallsRetrieve(ctx context.Context, cmd *cli.Command) err
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountCallGetParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -367,10 +377,6 @@ func handleTexmlAccountsCallsUpdate(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallUpdateParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -380,6 +386,10 @@ func handleTexmlAccountsCallsUpdate(ctx context.Context, cmd *cli.Command) error
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountCallUpdateParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -418,8 +428,6 @@ func handleTexmlAccountsCallsCalls(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallCallsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -430,6 +438,8 @@ func handleTexmlAccountsCallsCalls(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TexmlAccountCallCallsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -467,8 +477,6 @@ func handleTexmlAccountsCallsRetrieveCalls(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallGetCallsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -479,6 +487,8 @@ func handleTexmlAccountsCallsRetrieveCalls(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TexmlAccountCallGetCallsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -516,10 +526,6 @@ func handleTexmlAccountsCallsSiprecJson(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallSiprecJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -529,6 +535,10 @@ func handleTexmlAccountsCallsSiprecJson(ctx context.Context, cmd *cli.Command) e
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountCallSiprecJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -567,10 +577,6 @@ func handleTexmlAccountsCallsStreamsJson(ctx context.Context, cmd *cli.Command) 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallStreamsJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -580,6 +586,10 @@ func handleTexmlAccountsCallsStreamsJson(ctx context.Context, cmd *cli.Command) 
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountCallStreamsJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
