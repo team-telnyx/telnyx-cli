@@ -309,6 +309,23 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "host",
 		},
 		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.prompt-label",
+			InnerField: "prompt_label",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.prompt-name",
+			InnerField: "prompt_name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.prompt-sync",
+			Usage:      "Whether to auto-publish the assistant's instructions as a Langfuse prompt.\n\nWhen ENABLED + prompt_name set, every assistant create/update pushes\n`instructions` to Langfuse via create_prompt and stores the returned\nversion in prompt_version.",
+			InnerField: "prompt_sync",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "observability-settings.prompt-version",
+			InnerField: "prompt_version",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "observability-settings.public-key-ref",
 			InnerField: "public_key_ref",
 		},
