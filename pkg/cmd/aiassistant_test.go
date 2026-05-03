@@ -33,7 +33,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--mcp-server", "{id: id, allowed_tools: [string]}",
 			"--messaging-settings", "{conversation_inactivity_minutes: 1, default_messaging_profile_id: default_messaging_profile_id, delivery_status_webhook_url: delivery_status_webhook_url}",
 			"--model", "model",
-			"--observability-settings", "{host: host, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
+			"--observability-settings", "{host: host, prompt_label: prompt_label, prompt_name: prompt_name, prompt_sync: enabled, prompt_version: 1, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
 			"--post-conversation-settings", "{enabled: true}",
 			"--privacy-settings", "{data_retention: true}",
 			"--tag", "string",
@@ -86,6 +86,10 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--messaging-settings.delivery-status-webhook-url", "delivery_status_webhook_url",
 			"--model", "model",
 			"--observability-settings.host", "host",
+			"--observability-settings.prompt-label", "prompt_label",
+			"--observability-settings.prompt-name", "prompt_name",
+			"--observability-settings.prompt-sync", "enabled",
+			"--observability-settings.prompt-version", "1",
 			"--observability-settings.public-key-ref", "public_key_ref",
 			"--observability-settings.secret-key-ref", "secret_key_ref",
 			"--observability-settings.status", "enabled",
@@ -191,6 +195,10 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"model: model\n" +
 			"observability_settings:\n" +
 			"  host: host\n" +
+			"  prompt_label: prompt_label\n" +
+			"  prompt_name: prompt_name\n" +
+			"  prompt_sync: enabled\n" +
+			"  prompt_version: 1\n" +
 			"  public_key_ref: public_key_ref\n" +
 			"  secret_key_ref: secret_key_ref\n" +
 			"  status: enabled\n" +
@@ -350,7 +358,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--messaging-settings", "{conversation_inactivity_minutes: 1, default_messaging_profile_id: default_messaging_profile_id, delivery_status_webhook_url: delivery_status_webhook_url}",
 			"--model", "model",
 			"--name", "name",
-			"--observability-settings", "{host: host, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
+			"--observability-settings", "{host: host, prompt_label: prompt_label, prompt_name: prompt_name, prompt_sync: enabled, prompt_version: 1, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
 			"--post-conversation-settings", "{enabled: true}",
 			"--privacy-settings", "{data_retention: true}",
 			"--promote-to-main=true",
@@ -406,6 +414,10 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--model", "model",
 			"--name", "name",
 			"--observability-settings.host", "host",
+			"--observability-settings.prompt-label", "prompt_label",
+			"--observability-settings.prompt-name", "prompt_name",
+			"--observability-settings.prompt-sync", "enabled",
+			"--observability-settings.prompt-version", "1",
 			"--observability-settings.public-key-ref", "public_key_ref",
 			"--observability-settings.secret-key-ref", "secret_key_ref",
 			"--observability-settings.status", "enabled",
@@ -513,6 +525,10 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"name: name\n" +
 			"observability_settings:\n" +
 			"  host: host\n" +
+			"  prompt_label: prompt_label\n" +
+			"  prompt_name: prompt_name\n" +
+			"  prompt_sync: enabled\n" +
+			"  prompt_version: 1\n" +
 			"  public_key_ref: public_key_ref\n" +
 			"  secret_key_ref: secret_key_ref\n" +
 			"  status: enabled\n" +
