@@ -651,8 +651,9 @@ var callsRetrieveStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 	},
 	Action:          handleCallsRetrieveStatus,
@@ -667,8 +668,6 @@ func handleCallsDial(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallDialParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -679,6 +678,8 @@ func handleCallsDial(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallDialParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

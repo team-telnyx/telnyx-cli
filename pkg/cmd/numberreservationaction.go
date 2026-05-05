@@ -20,8 +20,9 @@ var numberReservationsActionsExtend = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "number-reservation-id",
-			Required: true,
+			Name:      "number-reservation-id",
+			Required:  true,
+			PathParam: "number_reservation_id",
 		},
 	},
 	Action:          handleNumberReservationsActionsExtend,

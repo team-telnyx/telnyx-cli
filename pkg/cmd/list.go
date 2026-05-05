@@ -29,8 +29,9 @@ var listRetrieveByZone = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "channel-zone-id",
-			Required: true,
+			Name:      "channel-zone-id",
+			Required:  true,
+			PathParam: "channel_zone_id",
 		},
 	},
 	Action:          handleListRetrieveByZone,

@@ -76,8 +76,6 @@ func handleNotificationEventConditionsList(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NotificationEventConditionListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -88,6 +86,8 @@ func handleNotificationEventConditionsList(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.NotificationEventConditionListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

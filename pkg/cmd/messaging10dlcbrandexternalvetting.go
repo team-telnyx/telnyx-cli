@@ -20,8 +20,9 @@ var messaging10dlcBrandExternalVettingList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 	},
 	Action:          handleMessaging10dlcBrandExternalVettingList,
@@ -34,8 +35,9 @@ var messaging10dlcBrandExternalVettingImports = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 		&requestflag.Flag[string]{
 			Name:     "evp-id",
@@ -65,8 +67,9 @@ var messaging10dlcBrandExternalVettingOrder = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 		&requestflag.Flag[string]{
 			Name:     "evp-id",
@@ -138,8 +141,6 @@ func handleMessaging10dlcBrandExternalVettingImports(ctx context.Context, cmd *c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcBrandExternalVettingImportsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -150,6 +151,8 @@ func handleMessaging10dlcBrandExternalVettingImports(ctx context.Context, cmd *c
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcBrandExternalVettingImportsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -187,8 +190,6 @@ func handleMessaging10dlcBrandExternalVettingOrder(ctx context.Context, cmd *cli
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcBrandExternalVettingOrderParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -199,6 +200,8 @@ func handleMessaging10dlcBrandExternalVettingOrder(ctx context.Context, cmd *cli
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcBrandExternalVettingOrderParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

@@ -20,8 +20,9 @@ var phoneNumbersActionsChangeBundleStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "bundle-id",
@@ -40,8 +41,9 @@ var phoneNumbersActionsEnableEmergency = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "emergency-address-id",
@@ -87,8 +89,6 @@ func handlePhoneNumbersActionsChangeBundleStatus(ctx context.Context, cmd *cli.C
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberActionChangeBundleStatusParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -99,6 +99,8 @@ func handlePhoneNumbersActionsChangeBundleStatus(ctx context.Context, cmd *cli.C
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberActionChangeBundleStatusParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -136,8 +138,6 @@ func handlePhoneNumbersActionsEnableEmergency(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberActionEnableEmergencyParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -148,6 +148,8 @@ func handlePhoneNumbersActionsEnableEmergency(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberActionEnableEmergencyParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -182,8 +184,6 @@ func handlePhoneNumbersActionsVerifyOwnership(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumberActionVerifyOwnershipParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -194,6 +194,8 @@ func handlePhoneNumbersActionsVerifyOwnership(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberActionVerifyOwnershipParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

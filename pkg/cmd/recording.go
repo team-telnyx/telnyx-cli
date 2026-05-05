@@ -20,8 +20,9 @@ var recordingsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "recording-id",
-			Required: true,
+			Name:      "recording-id",
+			Required:  true,
+			PathParam: "recording_id",
 		},
 	},
 	Action:          handleRecordingsRetrieve,
@@ -121,8 +122,9 @@ var recordingsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "recording-id",
-			Required: true,
+			Name:      "recording-id",
+			Required:  true,
+			PathParam: "recording_id",
 		},
 	},
 	Action:          handleRecordingsDelete,
@@ -179,8 +181,6 @@ func handleRecordingsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RecordingListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -191,6 +191,8 @@ func handleRecordingsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RecordingListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

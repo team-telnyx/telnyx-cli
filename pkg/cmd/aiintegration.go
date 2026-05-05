@@ -20,8 +20,9 @@ var aiIntegrationsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "integration-id",
-			Required: true,
+			Name:      "integration-id",
+			Required:  true,
+			PathParam: "integration_id",
 		},
 	},
 	Action:          handleAIIntegrationsRetrieve,

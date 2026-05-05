@@ -54,8 +54,9 @@ var simCardDataUsageNotificationsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardDataUsageNotificationsRetrieve,
@@ -68,8 +69,9 @@ var simCardDataUsageNotificationsUpdate = requestflag.WithInnerFlags(cli.Command
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "sim-card-data-usage-notification-id",
-			Required: true,
+			Name:      "sim-card-data-usage-notification-id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "sim-card-id",
@@ -135,8 +137,9 @@ var simCardDataUsageNotificationsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleSimCardDataUsageNotificationsDelete,
@@ -151,8 +154,6 @@ func handleSimCardDataUsageNotificationsCreate(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardDataUsageNotificationNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -163,6 +164,8 @@ func handleSimCardDataUsageNotificationsCreate(ctx context.Context, cmd *cli.Com
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardDataUsageNotificationNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -237,8 +240,6 @@ func handleSimCardDataUsageNotificationsUpdate(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardDataUsageNotificationUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -249,6 +250,8 @@ func handleSimCardDataUsageNotificationsUpdate(ctx context.Context, cmd *cli.Com
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardDataUsageNotificationUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -283,8 +286,6 @@ func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardDataUsageNotificationListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -295,6 +296,8 @@ func handleSimCardDataUsageNotificationsList(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardDataUsageNotificationListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

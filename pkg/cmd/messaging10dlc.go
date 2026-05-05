@@ -20,9 +20,10 @@ var messaging10dlcGetEnum = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "endpoint",
-			Usage:    `Allowed values: "mno", "optionalAttributes", "usecase", "vertical", "altBusinessIdType", "brandIdentityStatus", "brandRelationship", "campaignStatus", "entityType", "extVettingProvider", "vettingStatus", "brandStatus", "operationStatus", "approvedPublicCompany", "stockExchange", "vettingClass".`,
-			Required: true,
+			Name:      "endpoint",
+			Usage:     `Allowed values: "mno", "optionalAttributes", "usecase", "vertical", "altBusinessIdType", "brandIdentityStatus", "brandRelationship", "campaignStatus", "entityType", "extVettingProvider", "vettingStatus", "brandStatus", "operationStatus", "approvedPublicCompany", "stockExchange", "vettingClass".`,
+			Required:  true,
+			PathParam: "endpoint",
 		},
 	},
 	Action:          handleMessaging10dlcGetEnum,

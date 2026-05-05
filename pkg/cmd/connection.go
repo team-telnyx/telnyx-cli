@@ -20,8 +20,9 @@ var connectionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleConnectionsRetrieve,
@@ -85,8 +86,9 @@ var connectionsListActiveCalls = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "connection-id",
-			Required: true,
+			Name:      "connection-id",
+			Required:  true,
+			PathParam: "connection_id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -113,7 +115,7 @@ func handleConnectionsRetrieve(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -152,10 +154,8 @@ func handleConnectionsList(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.ConnectionListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -167,6 +167,8 @@ func handleConnectionsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ConnectionListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -210,10 +212,8 @@ func handleConnectionsListActiveCalls(ctx context.Context, cmd *cli.Command) err
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.ConnectionListActiveCallsParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -225,6 +225,8 @@ func handleConnectionsListActiveCalls(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ConnectionListActiveCallsParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

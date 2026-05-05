@@ -20,12 +20,14 @@ var enterprisesReputationNumbersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 		&requestflag.Flag[bool]{
 			Name:      "fresh",
@@ -44,8 +46,9 @@ var enterprisesReputationNumbersList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -79,8 +82,9 @@ var enterprisesReputationNumbersAssociate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "phone-number",
@@ -99,12 +103,14 @@ var enterprisesReputationNumbersDisassociate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 	},
 	Action:          handleEnterprisesReputationNumbersDisassociate,
@@ -122,10 +128,6 @@ func handleEnterprisesReputationNumbersRetrieve(ctx context.Context, cmd *cli.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNumberGetParams{
-		EnterpriseID: cmd.Value("enterprise-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -135,6 +137,10 @@ func handleEnterprisesReputationNumbersRetrieve(ctx context.Context, cmd *cli.Co
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.EnterpriseReputationNumberGetParams{
+		EnterpriseID: cmd.Value("enterprise-id").(string),
 	}
 
 	var res []byte
@@ -173,8 +179,6 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNumberListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -185,6 +189,8 @@ func handleEnterprisesReputationNumbersList(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.EnterpriseReputationNumberListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -241,8 +247,6 @@ func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.C
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNumberAssociateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -253,6 +257,8 @@ func handleEnterprisesReputationNumbersAssociate(ctx context.Context, cmd *cli.C
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.EnterpriseReputationNumberAssociateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -290,10 +296,6 @@ func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseReputationNumberDisassociateParams{
-		EnterpriseID: cmd.Value("enterprise-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -303,6 +305,10 @@ func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cl
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.EnterpriseReputationNumberDisassociateParams{
+		EnterpriseID: cmd.Value("enterprise-id").(string),
 	}
 
 	return client.Enterprises.Reputation.Numbers.Disassociate(

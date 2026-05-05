@@ -20,8 +20,9 @@ var aiAssistantsScheduledEventsCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[any]{
 			Name:     "scheduled-at-fixed-datetime",
@@ -73,12 +74,14 @@ var aiAssistantsScheduledEventsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "event-id",
-			Required: true,
+			Name:      "event-id",
+			Required:  true,
+			PathParam: "event_id",
 		},
 	},
 	Action:          handleAIAssistantsScheduledEventsRetrieve,
@@ -91,8 +94,9 @@ var aiAssistantsScheduledEventsList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "conversation-channel",
@@ -130,12 +134,14 @@ var aiAssistantsScheduledEventsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "event-id",
-			Required: true,
+			Name:      "event-id",
+			Required:  true,
+			PathParam: "event_id",
 		},
 	},
 	Action:          handleAIAssistantsScheduledEventsDelete,
@@ -150,10 +156,8 @@ func handleAIAssistantsScheduledEventsCreate(ctx context.Context, cmd *cli.Comma
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.AIAssistantScheduledEventNewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -165,6 +169,8 @@ func handleAIAssistantsScheduledEventsCreate(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantScheduledEventNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -199,11 +205,7 @@ func handleAIAssistantsScheduledEventsRetrieve(ctx context.Context, cmd *cli.Com
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.AIAssistantScheduledEventGetParams{
-		AssistantID: cmd.Value("assistant-id").(string),
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -215,6 +217,10 @@ func handleAIAssistantsScheduledEventsRetrieve(ctx context.Context, cmd *cli.Com
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantScheduledEventGetParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte
@@ -250,10 +256,8 @@ func handleAIAssistantsScheduledEventsList(ctx context.Context, cmd *cli.Command
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.AIAssistantScheduledEventListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -265,6 +269,8 @@ func handleAIAssistantsScheduledEventsList(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantScheduledEventListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -318,11 +324,7 @@ func handleAIAssistantsScheduledEventsDelete(ctx context.Context, cmd *cli.Comma
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.AIAssistantScheduledEventDeleteParams{
-		AssistantID: cmd.Value("assistant-id").(string),
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -334,6 +336,10 @@ func handleAIAssistantsScheduledEventsDelete(ctx context.Context, cmd *cli.Comma
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantScheduledEventDeleteParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	return client.AI.Assistants.ScheduledEvents.Delete(

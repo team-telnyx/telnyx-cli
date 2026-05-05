@@ -20,16 +20,19 @@ var texmlAccountsConferencesParticipantsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "conference-sid",
-			Required: true,
+			Name:      "conference-sid",
+			Required:  true,
+			PathParam: "conference_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid-or-participant-label",
-			Required: true,
+			Name:      "call-sid-or-participant-label",
+			Required:  true,
+			PathParam: "call_sid_or_participant_label",
 		},
 	},
 	Action:          handleTexmlAccountsConferencesParticipantsRetrieve,
@@ -42,16 +45,19 @@ var texmlAccountsConferencesParticipantsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "conference-sid",
-			Required: true,
+			Name:      "conference-sid",
+			Required:  true,
+			PathParam: "conference_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid-or-participant-label",
-			Required: true,
+			Name:      "call-sid-or-participant-label",
+			Required:  true,
+			PathParam: "call_sid_or_participant_label",
 		},
 		&requestflag.Flag[string]{
 			Name:     "announce-method",
@@ -119,16 +125,19 @@ var texmlAccountsConferencesParticipantsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "conference-sid",
-			Required: true,
+			Name:      "conference-sid",
+			Required:  true,
+			PathParam: "conference_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid-or-participant-label",
-			Required: true,
+			Name:      "call-sid-or-participant-label",
+			Required:  true,
+			PathParam: "call_sid_or_participant_label",
 		},
 	},
 	Action:          handleTexmlAccountsConferencesParticipantsDelete,
@@ -141,12 +150,14 @@ var texmlAccountsConferencesParticipantsParticipants = requestflag.WithInnerFlag
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "conference-sid",
-			Required: true,
+			Name:      "conference-sid",
+			Required:  true,
+			PathParam: "conference_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:     "amd-status-callback",
@@ -419,12 +430,14 @@ var texmlAccountsConferencesParticipantsRetrieveParticipants = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "conference-sid",
-			Required: true,
+			Name:      "conference-sid",
+			Required:  true,
+			PathParam: "conference_sid",
 		},
 	},
 	Action:          handleTexmlAccountsConferencesParticipantsRetrieveParticipants,
@@ -442,11 +455,6 @@ func handleTexmlAccountsConferencesParticipantsRetrieve(ctx context.Context, cmd
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceParticipantGetParams{
-		AccountSid:    cmd.Value("account-sid").(string),
-		ConferenceSid: cmd.Value("conference-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -456,6 +464,11 @@ func handleTexmlAccountsConferencesParticipantsRetrieve(ctx context.Context, cmd
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountConferenceParticipantGetParams{
+		AccountSid:    cmd.Value("account-sid").(string),
+		ConferenceSid: cmd.Value("conference-sid").(string),
 	}
 
 	var res []byte
@@ -494,11 +507,6 @@ func handleTexmlAccountsConferencesParticipantsUpdate(ctx context.Context, cmd *
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceParticipantUpdateParams{
-		AccountSid:    cmd.Value("account-sid").(string),
-		ConferenceSid: cmd.Value("conference-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -508,6 +516,11 @@ func handleTexmlAccountsConferencesParticipantsUpdate(ctx context.Context, cmd *
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountConferenceParticipantUpdateParams{
+		AccountSid:    cmd.Value("account-sid").(string),
+		ConferenceSid: cmd.Value("conference-sid").(string),
 	}
 
 	var res []byte
@@ -546,11 +559,6 @@ func handleTexmlAccountsConferencesParticipantsDelete(ctx context.Context, cmd *
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceParticipantDeleteParams{
-		AccountSid:    cmd.Value("account-sid").(string),
-		ConferenceSid: cmd.Value("conference-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -560,6 +568,11 @@ func handleTexmlAccountsConferencesParticipantsDelete(ctx context.Context, cmd *
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountConferenceParticipantDeleteParams{
+		AccountSid:    cmd.Value("account-sid").(string),
+		ConferenceSid: cmd.Value("conference-sid").(string),
 	}
 
 	return client.Texml.Accounts.Conferences.Participants.Delete(
@@ -581,10 +594,6 @@ func handleTexmlAccountsConferencesParticipantsParticipants(ctx context.Context,
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceParticipantParticipantsParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -594,6 +603,10 @@ func handleTexmlAccountsConferencesParticipantsParticipants(ctx context.Context,
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountConferenceParticipantParticipantsParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -632,10 +645,6 @@ func handleTexmlAccountsConferencesParticipantsRetrieveParticipants(ctx context.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountConferenceParticipantGetParticipantsParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -645,6 +654,10 @@ func handleTexmlAccountsConferencesParticipantsRetrieveParticipants(ctx context.
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountConferenceParticipantGetParticipantsParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte

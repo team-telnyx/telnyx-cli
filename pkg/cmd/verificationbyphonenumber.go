@@ -20,9 +20,10 @@ var verificationsByPhoneNumberList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Usage:    "+E164 formatted phone number.",
-			Required: true,
+			Name:      "phone-number",
+			Usage:     "+E164 formatted phone number.",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 	},
 	Action:          handleVerificationsByPhoneNumberList,

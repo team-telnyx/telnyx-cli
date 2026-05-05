@@ -20,12 +20,14 @@ var texmlAccountsRecordingsJsonDeleteRecordingSidJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "recording-sid",
-			Required: true,
+			Name:      "recording-sid",
+			Required:  true,
+			PathParam: "recording_sid",
 		},
 	},
 	Action:          handleTexmlAccountsRecordingsJsonDeleteRecordingSidJson,
@@ -38,12 +40,14 @@ var texmlAccountsRecordingsJsonRetrieveRecordingSidJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "recording-sid",
-			Required: true,
+			Name:      "recording-sid",
+			Required:  true,
+			PathParam: "recording_sid",
 		},
 	},
 	Action:          handleTexmlAccountsRecordingsJsonRetrieveRecordingSidJson,
@@ -58,11 +62,7 @@ func handleTexmlAccountsRecordingsJsonDeleteRecordingSidJson(ctx context.Context
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.TexmlAccountRecordingJsonDeleteRecordingSidJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -74,6 +74,10 @@ func handleTexmlAccountsRecordingsJsonDeleteRecordingSidJson(ctx context.Context
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountRecordingJsonDeleteRecordingSidJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	return client.Texml.Accounts.Recordings.Json.DeleteRecordingSidJson(
@@ -92,11 +96,7 @@ func handleTexmlAccountsRecordingsJsonRetrieveRecordingSidJson(ctx context.Conte
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.TexmlAccountRecordingJsonGetRecordingSidJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -108,6 +108,10 @@ func handleTexmlAccountsRecordingsJsonRetrieveRecordingSidJson(ctx context.Conte
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountRecordingJsonGetRecordingSidJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte

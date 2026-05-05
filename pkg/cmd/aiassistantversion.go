@@ -20,12 +20,14 @@ var aiAssistantsVersionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "version-id",
-			Required: true,
+			Name:      "version-id",
+			Required:  true,
+			PathParam: "version_id",
 		},
 		&requestflag.Flag[bool]{
 			Name:      "include-mcp-servers",
@@ -42,12 +44,14 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "version-id",
-			Required: true,
+			Name:      "version-id",
+			Required:  true,
+			PathParam: "version_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "description",
@@ -526,8 +530,9 @@ var aiAssistantsVersionsList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 	},
 	Action:          handleAIAssistantsVersionsList,
@@ -540,12 +545,14 @@ var aiAssistantsVersionsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "version-id",
-			Required: true,
+			Name:      "version-id",
+			Required:  true,
+			PathParam: "version_id",
 		},
 	},
 	Action:          handleAIAssistantsVersionsDelete,
@@ -558,12 +565,14 @@ var aiAssistantsVersionsPromote = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "version-id",
-			Required: true,
+			Name:      "version-id",
+			Required:  true,
+			PathParam: "version_id",
 		},
 	},
 	Action:          handleAIAssistantsVersionsPromote,
@@ -581,10 +590,6 @@ func handleAIAssistantsVersionsRetrieve(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantVersionGetParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -594,6 +599,10 @@ func handleAIAssistantsVersionsRetrieve(ctx context.Context, cmd *cli.Command) e
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantVersionGetParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte
@@ -632,10 +641,6 @@ func handleAIAssistantsVersionsUpdate(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantVersionUpdateParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -645,6 +650,10 @@ func handleAIAssistantsVersionsUpdate(ctx context.Context, cmd *cli.Command) err
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantVersionUpdateParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte
@@ -725,10 +734,6 @@ func handleAIAssistantsVersionsDelete(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantVersionDeleteParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -738,6 +743,10 @@ func handleAIAssistantsVersionsDelete(ctx context.Context, cmd *cli.Command) err
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantVersionDeleteParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	return client.AI.Assistants.Versions.Delete(
@@ -759,10 +768,6 @@ func handleAIAssistantsVersionsPromote(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantVersionPromoteParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -772,6 +777,10 @@ func handleAIAssistantsVersionsPromote(ctx context.Context, cmd *cli.Command) er
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantVersionPromoteParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte

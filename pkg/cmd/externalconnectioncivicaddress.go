@@ -20,12 +20,14 @@ var externalConnectionsCivicAddressesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "address-id",
-			Required: true,
+			Name:      "address-id",
+			Required:  true,
+			PathParam: "address_id",
 		},
 	},
 	Action:          handleExternalConnectionsCivicAddressesRetrieve,
@@ -38,8 +40,9 @@ var externalConnectionsCivicAddressesList = requestflag.WithInnerFlags(cli.Comma
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -70,10 +73,6 @@ func handleExternalConnectionsCivicAddressesRetrieve(ctx context.Context, cmd *c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionCivicAddressGetParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -83,6 +82,10 @@ func handleExternalConnectionsCivicAddressesRetrieve(ctx context.Context, cmd *c
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.ExternalConnectionCivicAddressGetParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte
@@ -121,8 +124,6 @@ func handleExternalConnectionsCivicAddressesList(ctx context.Context, cmd *cli.C
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionCivicAddressListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -133,6 +134,8 @@ func handleExternalConnectionsCivicAddressesList(ctx context.Context, cmd *cli.C
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ExternalConnectionCivicAddressListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

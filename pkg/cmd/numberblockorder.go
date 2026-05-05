@@ -57,8 +57,9 @@ var numberBlockOrdersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "number-block-order-id",
-			Required: true,
+			Name:      "number-block-order-id",
+			Required:  true,
+			PathParam: "number_block_order_id",
 		},
 	},
 	Action:          handleNumberBlockOrdersRetrieve,
@@ -118,8 +119,6 @@ func handleNumberBlockOrdersCreate(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NumberBlockOrderNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -130,6 +129,8 @@ func handleNumberBlockOrdersCreate(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.NumberBlockOrderNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -201,8 +202,6 @@ func handleNumberBlockOrdersList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NumberBlockOrderListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -213,6 +212,8 @@ func handleNumberBlockOrdersList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.NumberBlockOrderListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

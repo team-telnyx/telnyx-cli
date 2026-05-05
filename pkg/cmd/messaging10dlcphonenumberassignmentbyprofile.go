@@ -46,8 +46,9 @@ var messaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus = cli.Comm
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "task-id",
-			Required: true,
+			Name:      "task-id",
+			Required:  true,
+			PathParam: "taskId",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page",
@@ -70,8 +71,9 @@ var messaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus = cli.
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "task-id",
-			Required: true,
+			Name:      "task-id",
+			Required:  true,
+			PathParam: "taskId",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page",
@@ -94,8 +96,9 @@ var messaging10dlcPhoneNumberAssignmentByProfileRetrieveStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "task-id",
-			Required: true,
+			Name:      "task-id",
+			Required:  true,
+			PathParam: "taskId",
 		},
 	},
 	Action:          handleMessaging10dlcPhoneNumberAssignmentByProfileRetrieveStatus,
@@ -110,8 +113,6 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileAssign(ctx context.Contex
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcPhoneNumberAssignmentByProfileAssignParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -122,6 +123,8 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileAssign(ctx context.Contex
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcPhoneNumberAssignmentByProfileAssignParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -154,8 +157,6 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(ctx
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatusParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -166,6 +167,8 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus(ctx
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatusParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -203,8 +206,6 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcPhoneNumberAssignmentByProfileGetPhoneNumberStatusParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -215,6 +216,8 @@ func handleMessaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcPhoneNumberAssignmentByProfileGetPhoneNumberStatusParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

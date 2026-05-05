@@ -20,8 +20,9 @@ var subNumberOrdersRetrieve = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "sub-number-order-id",
-			Required: true,
+			Name:      "sub-number-order-id",
+			Required:  true,
+			PathParam: "sub_number_order_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -47,8 +48,9 @@ var subNumberOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "sub-number-order-id",
-			Required: true,
+			Name:      "sub-number-order-id",
+			Required:  true,
+			PathParam: "sub_number_order_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "regulatory-requirement",
@@ -121,8 +123,9 @@ var subNumberOrdersCancel = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "sub-number-order-id",
-			Required: true,
+			Name:      "sub-number-order-id",
+			Required:  true,
+			PathParam: "sub_number_order_id",
 		},
 	},
 	Action:          handleSubNumberOrdersCancel,
@@ -135,8 +138,9 @@ var subNumberOrdersUpdateRequirementGroup = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "requirement-group-id",
@@ -160,8 +164,6 @@ func handleSubNumberOrdersRetrieve(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SubNumberOrderGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -172,6 +174,8 @@ func handleSubNumberOrdersRetrieve(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SubNumberOrderGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -209,8 +213,6 @@ func handleSubNumberOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SubNumberOrderUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -221,6 +223,8 @@ func handleSubNumberOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SubNumberOrderUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -255,8 +259,6 @@ func handleSubNumberOrdersList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SubNumberOrderListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -267,6 +269,8 @@ func handleSubNumberOrdersList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SubNumberOrderListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -341,8 +345,6 @@ func handleSubNumberOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.C
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SubNumberOrderUpdateRequirementGroupParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -353,6 +355,8 @@ func handleSubNumberOrdersUpdateRequirementGroup(ctx context.Context, cmd *cli.C
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SubNumberOrderUpdateRequirementGroupParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

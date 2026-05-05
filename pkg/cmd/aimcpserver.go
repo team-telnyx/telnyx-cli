@@ -53,8 +53,9 @@ var aiMcpServersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mcp-server-id",
-			Required: true,
+			Name:      "mcp-server-id",
+			Required:  true,
+			PathParam: "mcp_server_id",
 		},
 	},
 	Action:          handleAIMcpServersRetrieve,
@@ -67,8 +68,9 @@ var aiMcpServersUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mcp-server-id",
-			Required: true,
+			Name:      "mcp-server-id",
+			Required:  true,
+			PathParam: "mcp_server_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "id",
@@ -141,8 +143,9 @@ var aiMcpServersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mcp-server-id",
-			Required: true,
+			Name:      "mcp-server-id",
+			Required:  true,
+			PathParam: "mcp_server_id",
 		},
 	},
 	Action:          handleAIMcpServersDelete,
@@ -157,8 +160,6 @@ func handleAIMcpServersCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMcpServerNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -169,6 +170,8 @@ func handleAIMcpServersCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMcpServerNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -243,8 +246,6 @@ func handleAIMcpServersUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMcpServerUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -255,6 +256,8 @@ func handleAIMcpServersUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMcpServerUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -289,8 +292,6 @@ func handleAIMcpServersList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMcpServerListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -301,6 +302,8 @@ func handleAIMcpServersList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMcpServerListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

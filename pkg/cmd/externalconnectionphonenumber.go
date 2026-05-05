@@ -20,12 +20,14 @@ var externalConnectionsPhoneNumbersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "phone-number-id",
-			Required: true,
+			Name:      "phone-number-id",
+			Required:  true,
+			PathParam: "phone_number_id",
 		},
 	},
 	Action:          handleExternalConnectionsPhoneNumbersRetrieve,
@@ -38,12 +40,14 @@ var externalConnectionsPhoneNumbersUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "phone-number-id",
-			Required: true,
+			Name:      "phone-number-id",
+			Required:  true,
+			PathParam: "phone_number_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "location-id",
@@ -61,8 +65,9 @@ var externalConnectionsPhoneNumbersList = requestflag.WithInnerFlags(cli.Command
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -112,10 +117,6 @@ func handleExternalConnectionsPhoneNumbersRetrieve(ctx context.Context, cmd *cli
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionPhoneNumberGetParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -125,6 +126,10 @@ func handleExternalConnectionsPhoneNumbersRetrieve(ctx context.Context, cmd *cli
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.ExternalConnectionPhoneNumberGetParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte
@@ -163,10 +168,6 @@ func handleExternalConnectionsPhoneNumbersUpdate(ctx context.Context, cmd *cli.C
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionPhoneNumberUpdateParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -176,6 +177,10 @@ func handleExternalConnectionsPhoneNumbersUpdate(ctx context.Context, cmd *cli.C
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.ExternalConnectionPhoneNumberUpdateParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte
@@ -214,8 +219,6 @@ func handleExternalConnectionsPhoneNumbersList(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ExternalConnectionPhoneNumberListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -226,6 +229,8 @@ func handleExternalConnectionsPhoneNumbersList(ctx context.Context, cmd *cli.Com
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ExternalConnectionPhoneNumberListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

@@ -20,8 +20,9 @@ var storageBucketsUsageGetAPIUsage = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "bucket-name",
-			Required: true,
+			Name:      "bucket-name",
+			Required:  true,
+			PathParam: "bucketName",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -53,8 +54,9 @@ var storageBucketsUsageGetBucketUsage = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "bucket-name",
-			Required: true,
+			Name:      "bucket-name",
+			Required:  true,
+			PathParam: "bucketName",
 		},
 	},
 	Action:          handleStorageBucketsUsageGetBucketUsage,
@@ -72,8 +74,6 @@ func handleStorageBucketsUsageGetAPIUsage(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.StorageBucketUsageGetAPIUsageParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -84,6 +84,8 @@ func handleStorageBucketsUsageGetAPIUsage(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.StorageBucketUsageGetAPIUsageParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

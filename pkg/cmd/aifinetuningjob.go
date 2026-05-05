@@ -60,8 +60,9 @@ var aiFineTuningJobsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "job-id",
-			Required: true,
+			Name:      "job-id",
+			Required:  true,
+			PathParam: "job_id",
 		},
 	},
 	Action:          handleAIFineTuningJobsRetrieve,
@@ -83,8 +84,9 @@ var aiFineTuningJobsCancel = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "job-id",
-			Required: true,
+			Name:      "job-id",
+			Required:  true,
+			PathParam: "job_id",
 		},
 	},
 	Action:          handleAIFineTuningJobsCancel,
@@ -99,8 +101,6 @@ func handleAIFineTuningJobsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIFineTuningJobNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -111,6 +111,8 @@ func handleAIFineTuningJobsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIFineTuningJobNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

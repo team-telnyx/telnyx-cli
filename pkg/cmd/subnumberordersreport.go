@@ -60,8 +60,9 @@ var subNumberOrdersReportRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "report-id",
-			Required: true,
+			Name:      "report-id",
+			Required:  true,
+			PathParam: "report_id",
 		},
 	},
 	Action:          handleSubNumberOrdersReportRetrieve,
@@ -76,8 +77,6 @@ func handleSubNumberOrdersReportCreate(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SubNumberOrdersReportNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -88,6 +87,8 @@ func handleSubNumberOrdersReportCreate(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SubNumberOrdersReportNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

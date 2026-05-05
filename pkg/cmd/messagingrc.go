@@ -20,12 +20,14 @@ var messagingRcsInviteTestNumber = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 	},
 	Action:          handleMessagingRcsInviteTestNumber,
@@ -60,12 +62,14 @@ var messagingRcsRetrieveCapabilities = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "agent-id",
-			Required: true,
+			Name:      "agent-id",
+			Required:  true,
+			PathParam: "agent_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 	},
 	Action:          handleMessagingRcsRetrieveCapabilities,
@@ -83,10 +87,6 @@ func handleMessagingRcsInviteTestNumber(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingRcInviteTestNumberParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -96,6 +96,10 @@ func handleMessagingRcsInviteTestNumber(ctx context.Context, cmd *cli.Command) e
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.MessagingRcInviteTestNumberParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte
@@ -131,8 +135,6 @@ func handleMessagingRcsListBulkCapabilities(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingRcListBulkCapabilitiesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -143,6 +145,8 @@ func handleMessagingRcsListBulkCapabilities(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingRcListBulkCapabilitiesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -175,10 +179,6 @@ func handleMessagingRcsRetrieveCapabilities(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingRcGetCapabilitiesParams{
-		AgentID: cmd.Value("agent-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -188,6 +188,10 @@ func handleMessagingRcsRetrieveCapabilities(ctx context.Context, cmd *cli.Comman
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.MessagingRcGetCapabilitiesParams{
+		AgentID: cmd.Value("agent-id").(string),
 	}
 
 	var res []byte

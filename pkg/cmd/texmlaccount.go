@@ -20,8 +20,9 @@ var texmlAccountsRetrieveRecordingsJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[any]{
 			Name:      "date-created",
@@ -49,8 +50,9 @@ var texmlAccountsRetrieveTranscriptionsJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
@@ -78,8 +80,6 @@ func handleTexmlAccountsRetrieveRecordingsJson(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountGetRecordingsJsonParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -90,6 +90,8 @@ func handleTexmlAccountsRetrieveRecordingsJson(ctx context.Context, cmd *cli.Com
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TexmlAccountGetRecordingsJsonParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -127,8 +129,6 @@ func handleTexmlAccountsRetrieveTranscriptionsJson(ctx context.Context, cmd *cli
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountGetTranscriptionsJsonParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -139,6 +139,8 @@ func handleTexmlAccountsRetrieveTranscriptionsJson(ctx context.Context, cmd *cli
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TexmlAccountGetTranscriptionsJsonParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

@@ -20,8 +20,9 @@ var portingOrdersVerificationCodesList = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -71,8 +72,9 @@ var portingOrdersVerificationCodesSend = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "phone-number",
@@ -94,8 +96,9 @@ var portingOrdersVerificationCodesVerify = requestflag.WithInnerFlags(cli.Comman
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "verification-code",
@@ -128,8 +131,6 @@ func handlePortingOrdersVerificationCodesList(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderVerificationCodeListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -140,6 +141,8 @@ func handlePortingOrdersVerificationCodesList(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderVerificationCodeListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -196,8 +199,6 @@ func handlePortingOrdersVerificationCodesSend(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderVerificationCodeSendParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -208,6 +209,8 @@ func handlePortingOrdersVerificationCodesSend(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderVerificationCodeSendParams{}
 
 	return client.PortingOrders.VerificationCodes.Send(
 		ctx,
@@ -228,8 +231,6 @@ func handlePortingOrdersVerificationCodesVerify(ctx context.Context, cmd *cli.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderVerificationCodeVerifyParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -240,6 +241,8 @@ func handlePortingOrdersVerificationCodesVerify(ctx context.Context, cmd *cli.Co
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderVerificationCodeVerifyParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

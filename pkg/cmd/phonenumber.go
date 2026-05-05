@@ -20,8 +20,9 @@ var phoneNumbersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePhoneNumbersRetrieve,
@@ -34,8 +35,9 @@ var phoneNumbersUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number-id",
-			Required: true,
+			Name:      "phone-number-id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "address-id",
@@ -189,8 +191,9 @@ var phoneNumbersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePhoneNumbersDelete,
@@ -312,7 +315,7 @@ func handlePhoneNumbersRetrieve(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -354,10 +357,8 @@ func handlePhoneNumbersUpdate(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.PhoneNumberUpdateParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -369,6 +370,8 @@ func handlePhoneNumbersUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -400,10 +403,8 @@ func handlePhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.PhoneNumberListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -415,6 +416,8 @@ func handlePhoneNumbersList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -458,7 +461,7 @@ func handlePhoneNumbersDelete(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -497,10 +500,8 @@ func handlePhoneNumbersSlimList(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.PhoneNumberSlimListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -512,6 +513,8 @@ func handlePhoneNumbersSlimList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumberSlimListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

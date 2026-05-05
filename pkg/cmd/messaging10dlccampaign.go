@@ -20,8 +20,9 @@ var messaging10dlcCampaignRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Required: true,
+			Name:      "campaign-id",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 	},
 	Action:          handleMessaging10dlcCampaignRetrieve,
@@ -34,8 +35,9 @@ var messaging10dlcCampaignUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Required: true,
+			Name:      "campaign-id",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "auto-renewal",
@@ -141,9 +143,10 @@ var messaging10dlcCampaignAcceptSharing = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Usage:    "TCR's ID for the campaign to import",
-			Required: true,
+			Name:      "campaign-id",
+			Usage:     "TCR's ID for the campaign to import",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 	},
 	Action:          handleMessaging10dlcCampaignAcceptSharing,
@@ -156,8 +159,9 @@ var messaging10dlcCampaignDeactivate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Required: true,
+			Name:      "campaign-id",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 	},
 	Action:          handleMessaging10dlcCampaignDeactivate,
@@ -170,9 +174,10 @@ var messaging10dlcCampaignGetMnoMetadata = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Usage:    "ID of the campaign in question",
-			Required: true,
+			Name:      "campaign-id",
+			Usage:     "ID of the campaign in question",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 	},
 	Action:          handleMessaging10dlcCampaignGetMnoMetadata,
@@ -185,8 +190,9 @@ var messaging10dlcCampaignGetOperationStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Required: true,
+			Name:      "campaign-id",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 	},
 	Action:          handleMessaging10dlcCampaignGetOperationStatus,
@@ -199,9 +205,10 @@ var messaging10dlcCampaignGetSharingStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Usage:    "ID of the campaign in question",
-			Required: true,
+			Name:      "campaign-id",
+			Usage:     "ID of the campaign in question",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 	},
 	Action:          handleMessaging10dlcCampaignGetSharingStatus,
@@ -214,8 +221,9 @@ var messaging10dlcCampaignSubmitAppeal = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-id",
-			Required: true,
+			Name:      "campaign-id",
+			Required:  true,
+			PathParam: "campaignId",
 		},
 		&requestflag.Flag[string]{
 			Name:     "appeal-reason",
@@ -281,8 +289,6 @@ func handleMessaging10dlcCampaignUpdate(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcCampaignUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -293,6 +299,8 @@ func handleMessaging10dlcCampaignUpdate(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcCampaignUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -327,8 +335,6 @@ func handleMessaging10dlcCampaignList(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcCampaignListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -339,6 +345,8 @@ func handleMessaging10dlcCampaignList(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcCampaignListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -595,8 +603,6 @@ func handleMessaging10dlcCampaignSubmitAppeal(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcCampaignSubmitAppealParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -607,6 +613,8 @@ func handleMessaging10dlcCampaignSubmitAppeal(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcCampaignSubmitAppealParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

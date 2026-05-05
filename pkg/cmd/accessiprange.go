@@ -79,8 +79,9 @@ var accessIPRangesDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "access-ip-range-id",
-			Required: true,
+			Name:      "access-ip-range-id",
+			Required:  true,
+			PathParam: "access_ip_range_id",
 		},
 	},
 	Action:          handleAccessIPRangesDelete,
@@ -92,10 +93,8 @@ func handleAccessIPRangesCreate(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.AccessIPRangeNewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -107,6 +106,8 @@ func handleAccessIPRangesCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AccessIPRangeNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -133,10 +134,8 @@ func handleAccessIPRangesList(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.AccessIPRangeListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -148,6 +147,8 @@ func handleAccessIPRangesList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AccessIPRangeListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -191,7 +192,7 @@ func handleAccessIPRangesDelete(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(

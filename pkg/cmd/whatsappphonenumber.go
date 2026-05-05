@@ -42,8 +42,9 @@ var whatsappPhoneNumbersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 	},
 	Action:          handleWhatsappPhoneNumbersDelete,
@@ -56,8 +57,9 @@ var whatsappPhoneNumbersResendVerification = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 		&requestflag.Flag[string]{
 			Name:     "verification-method",
@@ -76,8 +78,9 @@ var whatsappPhoneNumbersVerify = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 		&requestflag.Flag[string]{
 			Name:     "code",
@@ -97,8 +100,6 @@ func handleWhatsappPhoneNumbersList(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WhatsappPhoneNumberListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -109,6 +110,8 @@ func handleWhatsappPhoneNumbersList(ctx context.Context, cmd *cli.Command) error
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.WhatsappPhoneNumberListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -180,8 +183,6 @@ func handleWhatsappPhoneNumbersResendVerification(ctx context.Context, cmd *cli.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WhatsappPhoneNumberResendVerificationParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -192,6 +193,8 @@ func handleWhatsappPhoneNumbersResendVerification(ctx context.Context, cmd *cli.
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.WhatsappPhoneNumberResendVerificationParams{}
 
 	return client.Whatsapp.PhoneNumbers.ResendVerification(
 		ctx,
@@ -212,8 +215,6 @@ func handleWhatsappPhoneNumbersVerify(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.WhatsappPhoneNumberVerifyParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -224,6 +225,8 @@ func handleWhatsappPhoneNumbersVerify(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.WhatsappPhoneNumberVerifyParams{}
 
 	return client.Whatsapp.PhoneNumbers.Verify(
 		ctx,

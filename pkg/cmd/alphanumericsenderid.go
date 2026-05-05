@@ -47,8 +47,9 @@ var alphanumericSenderIDsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleAlphanumericSenderIDsRetrieve,
@@ -92,8 +93,9 @@ var alphanumericSenderIDsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleAlphanumericSenderIDsDelete,
@@ -105,10 +107,8 @@ func handleAlphanumericSenderIDsCreate(ctx context.Context, cmd *cli.Command) er
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.AlphanumericSenderIDNewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -120,6 +120,8 @@ func handleAlphanumericSenderIDsCreate(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AlphanumericSenderIDNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -149,7 +151,7 @@ func handleAlphanumericSenderIDsRetrieve(ctx context.Context, cmd *cli.Command) 
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -188,10 +190,8 @@ func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) erro
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.AlphanumericSenderIDListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -203,6 +203,8 @@ func handleAlphanumericSenderIDsList(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AlphanumericSenderIDListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -246,7 +248,7 @@ func handleAlphanumericSenderIDsDelete(ctx context.Context, cmd *cli.Command) er
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(

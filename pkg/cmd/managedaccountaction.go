@@ -20,8 +20,9 @@ var managedAccountsActionsDisable = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleManagedAccountsActionsDisable,
@@ -34,8 +35,9 @@ var managedAccountsActionsEnable = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "reenable-all-connections",
@@ -101,8 +103,6 @@ func handleManagedAccountsActionsEnable(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ManagedAccountActionEnableParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -113,6 +113,8 @@ func handleManagedAccountsActionsEnable(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ManagedAccountActionEnableParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

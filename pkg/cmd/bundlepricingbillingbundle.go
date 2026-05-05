@@ -20,9 +20,10 @@ var bundlePricingBillingBundlesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "bundle-id",
-			Usage:    "Billing bundle's ID, this is used to identify the billing bundle in the API.",
-			Required: true,
+			Name:      "bundle-id",
+			Usage:     "Billing bundle's ID, this is used to identify the billing bundle in the API.",
+			Required:  true,
+			PathParam: "bundle_id",
 		},
 		&requestflag.Flag[string]{
 			Name:       "authorization-bearer",
@@ -90,8 +91,6 @@ func handleBundlePricingBillingBundlesRetrieve(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.BundlePricingBillingBundleGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -102,6 +101,8 @@ func handleBundlePricingBillingBundlesRetrieve(ctx context.Context, cmd *cli.Com
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.BundlePricingBillingBundleGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -136,8 +137,6 @@ func handleBundlePricingBillingBundlesList(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.BundlePricingBillingBundleListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -148,6 +147,8 @@ func handleBundlePricingBillingBundlesList(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.BundlePricingBillingBundleListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

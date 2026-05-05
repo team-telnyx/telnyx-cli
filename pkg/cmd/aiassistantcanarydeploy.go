@@ -20,8 +20,9 @@ var aiAssistantsCanaryDeploysCreate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "version",
@@ -53,8 +54,9 @@ var aiAssistantsCanaryDeploysRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 	},
 	Action:          handleAIAssistantsCanaryDeploysRetrieve,
@@ -67,8 +69,9 @@ var aiAssistantsCanaryDeploysUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "version",
@@ -100,8 +103,9 @@ var aiAssistantsCanaryDeploysDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 	},
 	Action:          handleAIAssistantsCanaryDeploysDelete,
@@ -119,8 +123,6 @@ func handleAIAssistantsCanaryDeploysCreate(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantCanaryDeployNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -131,6 +133,8 @@ func handleAIAssistantsCanaryDeploysCreate(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantCanaryDeployNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -210,8 +214,6 @@ func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantCanaryDeployUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -222,6 +224,8 @@ func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantCanaryDeployUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

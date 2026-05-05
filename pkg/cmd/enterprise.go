@@ -250,8 +250,9 @@ var enterprisesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 	},
 	Action:          handleEnterprisesRetrieve,
@@ -264,8 +265,9 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "billing-address",
@@ -500,8 +502,9 @@ var enterprisesDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "enterprise-id",
-			Required: true,
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
 		},
 	},
 	Action:          handleEnterprisesDelete,
@@ -516,8 +519,6 @@ func handleEnterprisesCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -528,6 +529,8 @@ func handleEnterprisesCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.EnterpriseNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -602,8 +605,6 @@ func handleEnterprisesUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -614,6 +615,8 @@ func handleEnterprisesUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.EnterpriseUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -648,8 +651,6 @@ func handleEnterprisesList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.EnterpriseListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -660,6 +661,8 @@ func handleEnterprisesList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.EnterpriseListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

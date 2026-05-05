@@ -20,8 +20,9 @@ var portingOrdersPhoneNumberBlocksCreate = requestflag.WithInnerFlags(cli.Comman
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "porting-order-id",
-			Required: true,
+			Name:      "porting-order-id",
+			Required:  true,
+			PathParam: "porting_order_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "activation-range",
@@ -70,8 +71,9 @@ var portingOrdersPhoneNumberBlocksList = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "porting-order-id",
-			Required: true,
+			Name:      "porting-order-id",
+			Required:  true,
+			PathParam: "porting_order_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -146,12 +148,14 @@ var portingOrdersPhoneNumberBlocksDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "porting-order-id",
-			Required: true,
+			Name:      "porting-order-id",
+			Required:  true,
+			PathParam: "porting_order_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePortingOrdersPhoneNumberBlocksDelete,
@@ -166,10 +170,8 @@ func handlePortingOrdersPhoneNumberBlocksCreate(ctx context.Context, cmd *cli.Co
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.PortingOrderPhoneNumberBlockNewParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -181,6 +183,8 @@ func handlePortingOrdersPhoneNumberBlocksCreate(ctx context.Context, cmd *cli.Co
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderPhoneNumberBlockNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -215,10 +219,8 @@ func handlePortingOrdersPhoneNumberBlocksList(ctx context.Context, cmd *cli.Comm
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := telnyx.PortingOrderPhoneNumberBlockListParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -230,6 +232,8 @@ func handlePortingOrdersPhoneNumberBlocksList(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderPhoneNumberBlockListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -283,11 +287,7 @@ func handlePortingOrdersPhoneNumberBlocksDelete(ctx context.Context, cmd *cli.Co
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	params := telnyx.PortingOrderPhoneNumberBlockDeleteParams{
-		PortingOrderID: cmd.Value("porting-order-id").(string),
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -299,6 +299,10 @@ func handlePortingOrdersPhoneNumberBlocksDelete(ctx context.Context, cmd *cli.Co
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.PortingOrderPhoneNumberBlockDeleteParams{
+		PortingOrderID: cmd.Value("porting-order-id").(string),
 	}
 
 	var res []byte

@@ -53,8 +53,9 @@ var siprecConnectorsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "connector-name",
-			Required: true,
+			Name:      "connector-name",
+			Required:  true,
+			PathParam: "connector_name",
 		},
 	},
 	Action:          handleSiprecConnectorsRetrieve,
@@ -67,8 +68,9 @@ var siprecConnectorsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "connector-name",
-			Required: true,
+			Name:      "connector-name",
+			Required:  true,
+			PathParam: "connector_name",
 		},
 		&requestflag.Flag[string]{
 			Name:     "host",
@@ -104,8 +106,9 @@ var siprecConnectorsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "connector-name",
-			Required: true,
+			Name:      "connector-name",
+			Required:  true,
+			PathParam: "connector_name",
 		},
 	},
 	Action:          handleSiprecConnectorsDelete,
@@ -120,8 +123,6 @@ func handleSiprecConnectorsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SiprecConnectorNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -132,6 +133,8 @@ func handleSiprecConnectorsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SiprecConnectorNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -206,8 +209,6 @@ func handleSiprecConnectorsUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SiprecConnectorUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -218,6 +219,8 @@ func handleSiprecConnectorsUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SiprecConnectorUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

@@ -20,8 +20,9 @@ var portingOrdersAdditionalDocumentsCreate = requestflag.WithInnerFlags(cli.Comm
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "additional-document",
@@ -51,8 +52,9 @@ var portingOrdersAdditionalDocumentsList = requestflag.WithInnerFlags(cli.Comman
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -102,12 +104,14 @@ var portingOrdersAdditionalDocumentsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "additional-document-id",
-			Required: true,
+			Name:      "additional-document-id",
+			Required:  true,
+			PathParam: "additional_document_id",
 		},
 	},
 	Action:          handlePortingOrdersAdditionalDocumentsDelete,
@@ -125,8 +129,6 @@ func handlePortingOrdersAdditionalDocumentsCreate(ctx context.Context, cmd *cli.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderAdditionalDocumentNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -137,6 +139,8 @@ func handlePortingOrdersAdditionalDocumentsCreate(ctx context.Context, cmd *cli.
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderAdditionalDocumentNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -174,8 +178,6 @@ func handlePortingOrdersAdditionalDocumentsList(ctx context.Context, cmd *cli.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderAdditionalDocumentListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -186,6 +188,8 @@ func handlePortingOrdersAdditionalDocumentsList(ctx context.Context, cmd *cli.Co
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderAdditionalDocumentListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -242,10 +246,6 @@ func handlePortingOrdersAdditionalDocumentsDelete(ctx context.Context, cmd *cli.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderAdditionalDocumentDeleteParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -255,6 +255,10 @@ func handlePortingOrdersAdditionalDocumentsDelete(ctx context.Context, cmd *cli.
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.PortingOrderAdditionalDocumentDeleteParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	return client.PortingOrders.AdditionalDocuments.Delete(

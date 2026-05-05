@@ -37,8 +37,6 @@ func handleMessaging10dlcCampaignUsecaseGetCost(ctx context.Context, cmd *cli.Co
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcCampaignUsecaseGetCostParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -49,6 +47,8 @@ func handleMessaging10dlcCampaignUsecaseGetCost(ctx context.Context, cmd *cli.Co
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcCampaignUsecaseGetCostParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
