@@ -25,25 +25,22 @@ var aiAssistantsCanaryDeploysCreate = requestflag.WithInnerFlags(cli.Command{
 			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
-			Name:     "version",
-			Usage:    "List of version configurations",
-			Required: true,
-			BodyPath: "versions",
+			Name:     "rule",
+			BodyPath: "rules",
 		},
 	},
 	Action:          handleAIAssistantsCanaryDeploysCreate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
-	"version": {
-		&requestflag.InnerFlag[float64]{
-			Name:       "version.percentage",
-			Usage:      "Percentage of traffic for this version [1-99]",
-			InnerField: "percentage",
+	"rule": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "rule.serve",
+			Usage:      "What a rule serves when matched.\n\nExactly one of:\n- ``version_id`` — serve a specific version\n- ``rollout`` — weighted random across versions; weights must sum to\n  less than 100, with the leftover routing to the main version",
+			InnerField: "serve",
 		},
-		&requestflag.InnerFlag[string]{
-			Name:       "version.version-id",
-			Usage:      "Version ID string that references assistant_versions.version_id",
-			InnerField: "version_id",
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "rule.match",
+			InnerField: "match",
 		},
 	},
 })
@@ -74,25 +71,22 @@ var aiAssistantsCanaryDeploysUpdate = requestflag.WithInnerFlags(cli.Command{
 			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
-			Name:     "version",
-			Usage:    "List of version configurations",
-			Required: true,
-			BodyPath: "versions",
+			Name:     "rule",
+			BodyPath: "rules",
 		},
 	},
 	Action:          handleAIAssistantsCanaryDeploysUpdate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
-	"version": {
-		&requestflag.InnerFlag[float64]{
-			Name:       "version.percentage",
-			Usage:      "Percentage of traffic for this version [1-99]",
-			InnerField: "percentage",
+	"rule": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "rule.serve",
+			Usage:      "What a rule serves when matched.\n\nExactly one of:\n- ``version_id`` — serve a specific version\n- ``rollout`` — weighted random across versions; weights must sum to\n  less than 100, with the leftover routing to the main version",
+			InnerField: "serve",
 		},
-		&requestflag.InnerFlag[string]{
-			Name:       "version.version-id",
-			Usage:      "Version ID string that references assistant_versions.version_id",
-			InnerField: "version_id",
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "rule.match",
+			InnerField: "match",
 		},
 	},
 })
