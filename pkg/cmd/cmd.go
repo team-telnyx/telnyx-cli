@@ -3196,6 +3196,26 @@ func init() {
 				},
 			},
 			{
+				Name:     "uac-connections",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&uacConnectionsCreate,
+					&uacConnectionsRetrieve,
+					&uacConnectionsUpdate,
+					&uacConnectionsList,
+					&uacConnectionsDelete,
+				},
+			},
+			{
+				Name:     "uac-connections:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&uacConnectionsActionsCheckRegistrationStatus,
+				},
+			},
+			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",
 				UsageText:       "telnyx @manpages [-o telnyx.1] [--gzip]",
