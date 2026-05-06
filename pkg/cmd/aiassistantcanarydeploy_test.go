@@ -17,7 +17,7 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:canary-deploys", "create",
 			"--assistant-id", "assistant_id",
-			"--version", "{percentage: 1, version_id: version_id}",
+			"--rule", "{serve: {rollout: [{version_id: version_id, weight: 0}], version_id: version_id}, match: [{attribute: attribute, operator: in, values: [string]}]}",
 		)
 	})
 
@@ -31,17 +31,25 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:canary-deploys", "create",
 			"--assistant-id", "assistant_id",
-			"--version.percentage", "1",
-			"--version.version-id", "version_id",
+			"--rule.serve", "{rollout: [{version_id: version_id, weight: 0}], version_id: version_id}",
+			"--rule.match", "[{attribute: attribute, operator: in, values: [string]}]",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"versions:\n" +
-			"  - percentage: 1\n" +
-			"    version_id: version_id\n")
+			"rules:\n" +
+			"  - serve:\n" +
+			"      rollout:\n" +
+			"        - version_id: version_id\n" +
+			"          weight: 0\n" +
+			"      version_id: version_id\n" +
+			"    match:\n" +
+			"      - attribute: attribute\n" +
+			"        operator: in\n" +
+			"        values:\n" +
+			"          - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -71,7 +79,7 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:canary-deploys", "update",
 			"--assistant-id", "assistant_id",
-			"--version", "{percentage: 1, version_id: version_id}",
+			"--rule", "{serve: {rollout: [{version_id: version_id, weight: 0}], version_id: version_id}, match: [{attribute: attribute, operator: in, values: [string]}]}",
 		)
 	})
 
@@ -85,17 +93,25 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:canary-deploys", "update",
 			"--assistant-id", "assistant_id",
-			"--version.percentage", "1",
-			"--version.version-id", "version_id",
+			"--rule.serve", "{rollout: [{version_id: version_id, weight: 0}], version_id: version_id}",
+			"--rule.match", "[{attribute: attribute, operator: in, values: [string]}]",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"versions:\n" +
-			"  - percentage: 1\n" +
-			"    version_id: version_id\n")
+			"rules:\n" +
+			"  - serve:\n" +
+			"      rollout:\n" +
+			"        - version_id: version_id\n" +
+			"          weight: 0\n" +
+			"      version_id: version_id\n" +
+			"    match:\n" +
+			"      - attribute: attribute\n" +
+			"        operator: in\n" +
+			"        values:\n" +
+			"          - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
