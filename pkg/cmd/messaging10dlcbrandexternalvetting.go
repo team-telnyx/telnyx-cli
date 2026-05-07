@@ -63,7 +63,7 @@ var messaging10dlcBrandExternalVettingImports = cli.Command{
 
 var messaging10dlcBrandExternalVettingOrder = cli.Command{
 	Name:    "order",
-	Usage:   "Order new external vetting for a brand",
+	Usage:   "Order new external vetting for a brand.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
