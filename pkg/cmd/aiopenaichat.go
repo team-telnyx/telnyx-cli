@@ -14,9 +14,9 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var aiChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
+var aiOpenAIChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create-completion",
-	Usage:   "**Deprecated**: Use `POST /v2/ai/openai/chat/completions` instead. Chat with a\nlanguage model. This endpoint is consistent with the\n[OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat)\nand may be used with the OpenAI JS or Python SDK.",
+	Usage:   "Chat with a language model. This endpoint is consistent with the\n[OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat)\nand may be used with the OpenAI JS or Python SDK by setting the base URL to\n`https://api.telnyx.com/v2/ai/openai`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[[]map[string]any]{
@@ -161,7 +161,7 @@ var aiChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "use_beam_search",
 		},
 	},
-	Action:          handleAIChatCreateCompletion,
+	Action:          handleAIOpenAIChatCreateCompletion,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
 	"message": {
@@ -184,7 +184,7 @@ var aiChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 	},
 })
 
-func handleAIChatCreateCompletion(ctx context.Context, cmd *cli.Command) error {
+func handleAIOpenAIChatCreateCompletion(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -203,11 +203,11 @@ func handleAIChatCreateCompletion(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
-	params := telnyx.AIChatNewCompletionParams{}
+	params := telnyx.AIOpenAIChatNewCompletionParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.Chat.NewCompletion(ctx, params, options...)
+	_, err = client.AI.OpenAI.Chat.NewCompletion(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -220,7 +220,7 @@ func handleAIChatCreateCompletion(ctx context.Context, cmd *cli.Command) error {
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "ai:chat create-completion",
+		Title:          "ai:openai:chat create-completion",
 		Transform:      transform,
 	})
 }

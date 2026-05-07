@@ -639,12 +639,28 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:openai",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiOpenAIListModels,
+				},
+			},
+			{
 				Name:     "ai:openai:embeddings",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&aiOpenAIEmbeddingsCreateEmbeddings,
 					&aiOpenAIEmbeddingsListEmbeddingModels,
+				},
+			},
+			{
+				Name:     "ai:openai:chat",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiOpenAIChatCreateCompletion,
 				},
 			},
 			{

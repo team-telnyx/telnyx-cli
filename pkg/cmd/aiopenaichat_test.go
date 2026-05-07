@@ -9,13 +9,13 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
-func TestAIChatCreateCompletion(t *testing.T) {
+func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"ai:chat", "create-completion",
+			"ai:openai:chat", "create-completion",
 			"--message", "{content: You are a friendly chatbot., role: system}",
 			"--message", "{content: 'Hello, world!', role: user}",
 			"--api-key-ref", "api_key_ref",
@@ -48,13 +48,13 @@ func TestAIChatCreateCompletion(t *testing.T) {
 
 	t.Run("inner flags", func(t *testing.T) {
 		// Check that inner flags have been set up correctly
-		requestflag.CheckInnerFlags(aiChatCreateCompletion)
+		requestflag.CheckInnerFlags(aiOpenAIChatCreateCompletion)
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"ai:chat", "create-completion",
+			"ai:openai:chat", "create-completion",
 			"--message.content", "You are a friendly chatbot.",
 			"--message.role", "system",
 			"--message.content", "Hello, world!",
@@ -132,7 +132,7 @@ func TestAIChatCreateCompletion(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"ai:chat", "create-completion",
+			"ai:openai:chat", "create-completion",
 		)
 	})
 }
