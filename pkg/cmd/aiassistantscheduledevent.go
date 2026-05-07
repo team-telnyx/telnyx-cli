@@ -58,6 +58,16 @@ var aiAssistantsScheduledEventsCreate = cli.Command{
 			Usage:    "A map of dynamic variable names to values. These variables can be referenced in the assistant's instructions and messages using {{variable_name}} syntax.",
 			BodyPath: "dynamic_variables",
 		},
+		&requestflag.Flag[int64]{
+			Name:     "max-retries-client-errors",
+			Usage:    "Configure number of retries on client errors: busy, no-answer, failed, canceled (caller hung up before the callee answered)",
+			Default:  0,
+			BodyPath: "max_retries_client_errors",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "retry-interval-secs",
+			BodyPath: "retry_interval_secs",
+		},
 		&requestflag.Flag[string]{
 			Name:     "text",
 			Usage:    "Required for sms scheduled events. The text to be sent to the end user.",
