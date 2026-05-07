@@ -435,7 +435,7 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 			"--message-history", "{content: 'Hello, I''m John.', role: user}",
 			"--send-message-history-updates=true",
 			"--send-partial-results=true",
-			"--transcription", "{model: distil-whisper/distil-large-v2}",
+			"--transcription", "{language: auto, model: distil-whisper/distil-large-v2}",
 			"--user-response-timeout-ms", "5000",
 			"--voice", "Telnyx.KokoroTTS.af",
 			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
@@ -469,6 +469,7 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 			"--message-history.role", "user",
 			"--send-message-history-updates=true",
 			"--send-partial-results=true",
+			"--transcription.language", "auto",
 			"--transcription.model", "distil-whisper/distil-large-v2",
 			"--user-response-timeout-ms", "5000",
 			"--voice", "Telnyx.KokoroTTS.af",
@@ -509,6 +510,7 @@ func TestCallsActionsGatherUsingAI(t *testing.T) {
 			"send_message_history_updates: true\n" +
 			"send_partial_results: true\n" +
 			"transcription:\n" +
+			"  language: auto\n" +
 			"  model: distil-whisper/distil-large-v2\n" +
 			"user_response_timeout_ms: 5000\n" +
 			"voice: Telnyx.KokoroTTS.af\n" +
@@ -1045,7 +1047,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--message-history", "{content: 'Hello, I would like some help.', role: user, metadata: {foo: bar}}",
 			"--participant", "{id: v3:abc123def456, role: user, name: John Doe, on_hangup: continue_conversation}",
 			"--send-message-history-updates=true",
-			"--transcription", "{model: distil-whisper/distil-large-v2}",
+			"--transcription", "{language: auto, model: distil-whisper/distil-large-v2}",
 			"--voice", "Telnyx.KokoroTTS.af",
 			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
 		)
@@ -1084,6 +1086,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--participant.name", "John Doe",
 			"--participant.on-hangup", "continue_conversation",
 			"--send-message-history-updates=true",
+			"--transcription.language", "auto",
 			"--transcription.model", "distil-whisper/distil-large-v2",
 			"--voice", "Telnyx.KokoroTTS.af",
 			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
@@ -1151,6 +1154,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"    on_hangup: continue_conversation\n" +
 			"send_message_history_updates: true\n" +
 			"transcription:\n" +
+			"  language: auto\n" +
 			"  model: distil-whisper/distil-large-v2\n" +
 			"voice: Telnyx.KokoroTTS.af\n" +
 			"voice_settings:\n" +
