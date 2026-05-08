@@ -1826,7 +1826,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "transfer",
 			"--call-control-id", "call_control_id",
-			"--to", "+18005550100 or sip:username@sip.telnyx.com",
+			"--to", "+18005550100 or sip:username@sip.telnyx.com;secure=srtp",
 			"--answering-machine-detection", "detect",
 			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
@@ -1878,7 +1878,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "transfer",
 			"--call-control-id", "call_control_id",
-			"--to", "+18005550100 or sip:username@sip.telnyx.com",
+			"--to", "+18005550100 or sip:username@sip.telnyx.com;secure=srtp",
 			"--answering-machine-detection", "detect",
 			"--answering-machine-detection-config.after-greeting-silence-millis", "1000",
 			"--answering-machine-detection-config.between-words-silence-millis", "1000",
@@ -1938,7 +1938,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"to: +18005550100 or sip:username@sip.telnyx.com\n" +
+			"to: +18005550100 or sip:username@sip.telnyx.com;secure=srtp\n" +
 			"answering_machine_detection: detect\n" +
 			"answering_machine_detection_config:\n" +
 			"  after_greeting_silence_millis: 1000\n" +
