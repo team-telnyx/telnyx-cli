@@ -28,7 +28,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--greeting", "greeting",
 			"--insight-settings", "{insight_group_id: insight_group_id}",
 			"--integration", "{integration_id: integration_id, allowed_list: [string]}",
-			"--interruption-settings", "{enable: true, start_speaking_plan: {transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}}",
+			"--interruption-settings", "{disable_greeting_interruption: true, enable: true, start_speaking_plan: {transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}}",
 			"--llm-api-key-ref", "llm_api_key_ref",
 			"--mcp-server", "{id: id, allowed_tools: [string]}",
 			"--messaging-settings", "{conversation_inactivity_minutes: 1, default_messaging_profile_id: default_messaging_profile_id, delivery_status_webhook_url: delivery_status_webhook_url}",
@@ -76,6 +76,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--insight-settings.insight-group-id", "insight_group_id",
 			"--integration.integration-id", "integration_id",
 			"--integration.allowed-list", "[string]",
+			"--interruption-settings.disable-greeting-interruption=true",
 			"--interruption-settings.enable=true",
 			"--interruption-settings.start-speaking-plan", "{transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}",
 			"--llm-api-key-ref", "llm_api_key_ref",
@@ -176,6 +177,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"    allowed_list:\n" +
 			"      - string\n" +
 			"interruption_settings:\n" +
+			"  disable_greeting_interruption: true\n" +
 			"  enable: true\n" +
 			"  start_speaking_plan:\n" +
 			"    transcription_endpointing_plan:\n" +
@@ -352,7 +354,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--insight-settings", "{insight_group_id: insight_group_id}",
 			"--instructions", "instructions",
 			"--integration", "{integration_id: integration_id, allowed_list: [string]}",
-			"--interruption-settings", "{enable: true, start_speaking_plan: {transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}}",
+			"--interruption-settings", "{disable_greeting_interruption: true, enable: true, start_speaking_plan: {transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}}",
 			"--llm-api-key-ref", "llm_api_key_ref",
 			"--mcp-server", "{id: id, allowed_tools: [string]}",
 			"--messaging-settings", "{conversation_inactivity_minutes: 1, default_messaging_profile_id: default_messaging_profile_id, delivery_status_webhook_url: delivery_status_webhook_url}",
@@ -403,6 +405,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--instructions", "instructions",
 			"--integration.integration-id", "integration_id",
 			"--integration.allowed-list", "[string]",
+			"--interruption-settings.disable-greeting-interruption=true",
 			"--interruption-settings.enable=true",
 			"--interruption-settings.start-speaking-plan", "{transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}",
 			"--llm-api-key-ref", "llm_api_key_ref",
@@ -505,6 +508,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"    allowed_list:\n" +
 			"      - string\n" +
 			"interruption_settings:\n" +
+			"  disable_greeting_interruption: true\n" +
 			"  enable: true\n" +
 			"  start_speaking_plan:\n" +
 			"    transcription_endpointing_plan:\n" +
