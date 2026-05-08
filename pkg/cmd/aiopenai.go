@@ -15,7 +15,7 @@ import (
 
 var aiOpenAIListModels = cli.Command{
 	Name:            "list-models",
-	Usage:           "This endpoint returns a list of Open Source and OpenAI models that are available\nfor use. <br /><br /> **Note**: Model `id`'s will be in the form\n`{source}/{model_name}`. For example `openai/gpt-4` or\n`mistralai/Mistral-7B-Instruct-v0.1` consistent with HuggingFace naming\nconventions.",
+	Usage:           "Lists every model currently available to your account on Telnyx Inference,\nincluding SOTA open-source LLMs hosted on Telnyx GPUs (for example\n`moonshotai/Kimi-K2.6`, `zai-org/GLM-5.1-FP8`, and `MiniMaxAI/MiniMax-M2.7`),\nembedding models, and any fine-tuned models you have created.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleAIOpenAIListModels,
