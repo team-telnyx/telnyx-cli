@@ -264,6 +264,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	},
 	"interruption-settings": {
 		&requestflag.InnerFlag[bool]{
+			Name:       "interruption-settings.disable-greeting-interruption",
+			Usage:      "When true, disables user interruptions while the assistant greeting is playing.",
+			InnerField: "disable_greeting_interruption",
+		},
+		&requestflag.InnerFlag[bool]{
 			Name:       "interruption-settings.enable",
 			Usage:      "Whether users can interrupt the assistant while it is speaking.",
 			InnerField: "enable",
