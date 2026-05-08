@@ -20,8 +20,9 @@ var texmlAccountsQueuesCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:     "friendly-name",
@@ -44,12 +45,14 @@ var texmlAccountsQueuesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "queue-sid",
-			Required: true,
+			Name:      "queue-sid",
+			Required:  true,
+			PathParam: "queue_sid",
 		},
 	},
 	Action:          handleTexmlAccountsQueuesRetrieve,
@@ -62,12 +65,14 @@ var texmlAccountsQueuesUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "queue-sid",
-			Required: true,
+			Name:      "queue-sid",
+			Required:  true,
+			PathParam: "queue_sid",
 		},
 		&requestflag.Flag[int64]{
 			Name:     "max-size",
@@ -85,8 +90,9 @@ var texmlAccountsQueuesList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:      "date-created",
@@ -128,12 +134,14 @@ var texmlAccountsQueuesDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "queue-sid",
-			Required: true,
+			Name:      "queue-sid",
+			Required:  true,
+			PathParam: "queue_sid",
 		},
 	},
 	Action:          handleTexmlAccountsQueuesDelete,
@@ -151,8 +159,6 @@ func handleTexmlAccountsQueuesCreate(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountQueueNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -163,6 +169,8 @@ func handleTexmlAccountsQueuesCreate(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TexmlAccountQueueNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -200,10 +208,6 @@ func handleTexmlAccountsQueuesRetrieve(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountQueueGetParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -213,6 +217,10 @@ func handleTexmlAccountsQueuesRetrieve(ctx context.Context, cmd *cli.Command) er
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountQueueGetParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -251,10 +259,6 @@ func handleTexmlAccountsQueuesUpdate(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountQueueUpdateParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -264,6 +268,10 @@ func handleTexmlAccountsQueuesUpdate(ctx context.Context, cmd *cli.Command) erro
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountQueueUpdateParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte
@@ -302,8 +310,6 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountQueueListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -314,6 +320,8 @@ func handleTexmlAccountsQueuesList(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TexmlAccountQueueListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -370,10 +378,6 @@ func handleTexmlAccountsQueuesDelete(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountQueueDeleteParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -383,6 +387,10 @@ func handleTexmlAccountsQueuesDelete(ctx context.Context, cmd *cli.Command) erro
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountQueueDeleteParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	return client.Texml.Accounts.Queues.Delete(

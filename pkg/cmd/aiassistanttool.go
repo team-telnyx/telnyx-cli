@@ -20,12 +20,14 @@ var aiAssistantsToolsAdd = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "tool-id",
-			Required: true,
+			Name:      "tool-id",
+			Required:  true,
+			PathParam: "tool_id",
 		},
 	},
 	Action:          handleAIAssistantsToolsAdd,
@@ -38,12 +40,14 @@ var aiAssistantsToolsRemove = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "tool-id",
-			Required: true,
+			Name:      "tool-id",
+			Required:  true,
+			PathParam: "tool_id",
 		},
 	},
 	Action:          handleAIAssistantsToolsRemove,
@@ -56,12 +60,14 @@ var aiAssistantsToolsTest = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "tool-id",
-			Required: true,
+			Name:      "tool-id",
+			Required:  true,
+			PathParam: "tool_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "arguments",
@@ -89,10 +95,6 @@ func handleAIAssistantsToolsAdd(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantToolAddParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -102,6 +104,10 @@ func handleAIAssistantsToolsAdd(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantToolAddParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte
@@ -140,10 +146,6 @@ func handleAIAssistantsToolsRemove(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantToolRemoveParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -153,6 +155,10 @@ func handleAIAssistantsToolsRemove(ctx context.Context, cmd *cli.Command) error 
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantToolRemoveParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte
@@ -191,10 +197,6 @@ func handleAIAssistantsToolsTest(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantToolTestParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -204,6 +206,10 @@ func handleAIAssistantsToolsTest(ctx context.Context, cmd *cli.Command) error {
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantToolTestParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte

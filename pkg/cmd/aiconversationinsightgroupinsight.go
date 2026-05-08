@@ -18,14 +18,16 @@ var aiConversationsInsightGroupsInsightsAssign = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "group-id",
-			Usage:    "The ID of the insight group",
-			Required: true,
+			Name:      "group-id",
+			Usage:     "The ID of the insight group",
+			Required:  true,
+			PathParam: "group_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "insight-id",
-			Usage:    "The ID of the insight",
-			Required: true,
+			Name:      "insight-id",
+			Usage:     "The ID of the insight",
+			Required:  true,
+			PathParam: "insight_id",
 		},
 	},
 	Action:          handleAIConversationsInsightGroupsInsightsAssign,
@@ -38,14 +40,16 @@ var aiConversationsInsightGroupsInsightsDeleteUnassign = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "group-id",
-			Usage:    "The ID of the insight group",
-			Required: true,
+			Name:      "group-id",
+			Usage:     "The ID of the insight group",
+			Required:  true,
+			PathParam: "group_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "insight-id",
-			Usage:    "The ID of the insight",
-			Required: true,
+			Name:      "insight-id",
+			Usage:     "The ID of the insight",
+			Required:  true,
+			PathParam: "insight_id",
 		},
 	},
 	Action:          handleAIConversationsInsightGroupsInsightsDeleteUnassign,
@@ -63,10 +67,6 @@ func handleAIConversationsInsightGroupsInsightsAssign(ctx context.Context, cmd *
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIConversationInsightGroupInsightAssignParams{
-		GroupID: cmd.Value("group-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -76,6 +76,10 @@ func handleAIConversationsInsightGroupsInsightsAssign(ctx context.Context, cmd *
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIConversationInsightGroupInsightAssignParams{
+		GroupID: cmd.Value("group-id").(string),
 	}
 
 	return client.AI.Conversations.InsightGroups.Insights.Assign(
@@ -97,10 +101,6 @@ func handleAIConversationsInsightGroupsInsightsDeleteUnassign(ctx context.Contex
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIConversationInsightGroupInsightDeleteUnassignParams{
-		GroupID: cmd.Value("group-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -110,6 +110,10 @@ func handleAIConversationsInsightGroupsInsightsDeleteUnassign(ctx context.Contex
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIConversationInsightGroupInsightDeleteUnassignParams{
+		GroupID: cmd.Value("group-id").(string),
 	}
 
 	return client.AI.Conversations.InsightGroups.Insights.DeleteUnassign(

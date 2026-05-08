@@ -22,6 +22,8 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 			"--telnyx-end-user-target", "telnyx_end_user_target",
 			"--conversation-metadata", "{foo: string}",
 			"--dynamic-variables", "{foo: string}",
+			"--max-retries-client-errors", "0",
+			"--retry-interval-secs", "60",
 			"--text", "text",
 		)
 	})
@@ -37,6 +39,8 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 			"  foo: string\n" +
 			"dynamic_variables:\n" +
 			"  foo: string\n" +
+			"max_retries_client_errors: 0\n" +
+			"retry_interval_secs: 60\n" +
 			"text: text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

@@ -20,8 +20,9 @@ var roomsActionsGenerateJoinClientToken = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-id",
-			Required: true,
+			Name:      "room-id",
+			Required:  true,
+			PathParam: "room_id",
 		},
 		&requestflag.Flag[int64]{
 			Name:     "refresh-token-ttl-secs",
@@ -46,8 +47,9 @@ var roomsActionsRefreshClientToken = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "room-id",
-			Required: true,
+			Name:      "room-id",
+			Required:  true,
+			PathParam: "room_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "refresh-token",
@@ -76,8 +78,6 @@ func handleRoomsActionsGenerateJoinClientToken(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomActionGenerateJoinClientTokenParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -88,6 +88,8 @@ func handleRoomsActionsGenerateJoinClientToken(ctx context.Context, cmd *cli.Com
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomActionGenerateJoinClientTokenParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -125,8 +127,6 @@ func handleRoomsActionsRefreshClientToken(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.RoomActionRefreshClientTokenParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -137,6 +137,8 @@ func handleRoomsActionsRefreshClientToken(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.RoomActionRefreshClientTokenParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

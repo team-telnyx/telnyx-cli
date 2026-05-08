@@ -20,8 +20,9 @@ var customStorageCredentialsCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "connection-id",
-			Required: true,
+			Name:      "connection-id",
+			Required:  true,
+			PathParam: "connection_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "backend",
@@ -45,8 +46,9 @@ var customStorageCredentialsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "connection-id",
-			Required: true,
+			Name:      "connection-id",
+			Required:  true,
+			PathParam: "connection_id",
 		},
 	},
 	Action:          handleCustomStorageCredentialsRetrieve,
@@ -59,8 +61,9 @@ var customStorageCredentialsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "connection-id",
-			Required: true,
+			Name:      "connection-id",
+			Required:  true,
+			PathParam: "connection_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "backend",
@@ -84,8 +87,9 @@ var customStorageCredentialsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "connection-id",
-			Required: true,
+			Name:      "connection-id",
+			Required:  true,
+			PathParam: "connection_id",
 		},
 	},
 	Action:          handleCustomStorageCredentialsDelete,
@@ -103,8 +107,6 @@ func handleCustomStorageCredentialsCreate(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CustomStorageCredentialNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -115,6 +117,8 @@ func handleCustomStorageCredentialsCreate(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CustomStorageCredentialNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -194,8 +198,6 @@ func handleCustomStorageCredentialsUpdate(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CustomStorageCredentialUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -206,6 +208,8 @@ func handleCustomStorageCredentialsUpdate(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CustomStorageCredentialUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

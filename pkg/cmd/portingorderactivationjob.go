@@ -20,12 +20,14 @@ var portingOrdersActivationJobsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "activation-job-id",
-			Required: true,
+			Name:      "activation-job-id",
+			Required:  true,
+			PathParam: "activationJobId",
 		},
 	},
 	Action:          handlePortingOrdersActivationJobsRetrieve,
@@ -38,12 +40,14 @@ var portingOrdersActivationJobsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "activation-job-id",
-			Required: true,
+			Name:      "activation-job-id",
+			Required:  true,
+			PathParam: "activationJobId",
 		},
 		&requestflag.Flag[any]{
 			Name:     "activate-at",
@@ -61,8 +65,9 @@ var portingOrdersActivationJobsList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -92,10 +97,6 @@ func handlePortingOrdersActivationJobsRetrieve(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderActivationJobGetParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -105,6 +106,10 @@ func handlePortingOrdersActivationJobsRetrieve(ctx context.Context, cmd *cli.Com
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.PortingOrderActivationJobGetParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte
@@ -143,10 +148,6 @@ func handlePortingOrdersActivationJobsUpdate(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderActivationJobUpdateParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -156,6 +157,10 @@ func handlePortingOrdersActivationJobsUpdate(ctx context.Context, cmd *cli.Comma
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.PortingOrderActivationJobUpdateParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte
@@ -194,8 +199,6 @@ func handlePortingOrdersActivationJobsList(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderActivationJobListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -206,6 +209,8 @@ func handlePortingOrdersActivationJobsList(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderActivationJobListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

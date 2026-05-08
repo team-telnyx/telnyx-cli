@@ -20,29 +20,27 @@ var aiAssistantsCanaryDeploysCreate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
-			Name:     "version",
-			Usage:    "List of version configurations",
-			Required: true,
-			BodyPath: "versions",
+			Name:     "rule",
+			BodyPath: "rules",
 		},
 	},
 	Action:          handleAIAssistantsCanaryDeploysCreate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
-	"version": {
-		&requestflag.InnerFlag[float64]{
-			Name:       "version.percentage",
-			Usage:      "Percentage of traffic for this version [1-99]",
-			InnerField: "percentage",
+	"rule": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "rule.serve",
+			Usage:      "What a rule serves when matched.\n\nExactly one of:\n- ``version_id`` — serve a specific version\n- ``rollout`` — weighted random across versions; weights must sum to\n  less than 100, with the leftover routing to the main version",
+			InnerField: "serve",
 		},
-		&requestflag.InnerFlag[string]{
-			Name:       "version.version-id",
-			Usage:      "Version ID string that references assistant_versions.version_id",
-			InnerField: "version_id",
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "rule.match",
+			InnerField: "match",
 		},
 	},
 })
@@ -53,8 +51,9 @@ var aiAssistantsCanaryDeploysRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 	},
 	Action:          handleAIAssistantsCanaryDeploysRetrieve,
@@ -67,29 +66,27 @@ var aiAssistantsCanaryDeploysUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[[]map[string]any]{
-			Name:     "version",
-			Usage:    "List of version configurations",
-			Required: true,
-			BodyPath: "versions",
+			Name:     "rule",
+			BodyPath: "rules",
 		},
 	},
 	Action:          handleAIAssistantsCanaryDeploysUpdate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
-	"version": {
-		&requestflag.InnerFlag[float64]{
-			Name:       "version.percentage",
-			Usage:      "Percentage of traffic for this version [1-99]",
-			InnerField: "percentage",
+	"rule": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "rule.serve",
+			Usage:      "What a rule serves when matched.\n\nExactly one of:\n- ``version_id`` — serve a specific version\n- ``rollout`` — weighted random across versions; weights must sum to\n  less than 100, with the leftover routing to the main version",
+			InnerField: "serve",
 		},
-		&requestflag.InnerFlag[string]{
-			Name:       "version.version-id",
-			Usage:      "Version ID string that references assistant_versions.version_id",
-			InnerField: "version_id",
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "rule.match",
+			InnerField: "match",
 		},
 	},
 })
@@ -100,8 +97,9 @@ var aiAssistantsCanaryDeploysDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 	},
 	Action:          handleAIAssistantsCanaryDeploysDelete,
@@ -119,8 +117,6 @@ func handleAIAssistantsCanaryDeploysCreate(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantCanaryDeployNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -131,6 +127,8 @@ func handleAIAssistantsCanaryDeploysCreate(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantCanaryDeployNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -210,8 +208,6 @@ func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantCanaryDeployUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -222,6 +218,8 @@ func handleAIAssistantsCanaryDeploysUpdate(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantCanaryDeployUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

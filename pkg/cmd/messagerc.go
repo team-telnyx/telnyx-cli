@@ -20,8 +20,9 @@ var messagesRcsGenerateDeeplink = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "agent-id",
-			Required: true,
+			Name:      "agent-id",
+			Required:  true,
+			PathParam: "agent_id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "body",
@@ -156,8 +157,6 @@ func handleMessagesRcsGenerateDeeplink(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageRcGenerateDeeplinkParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -168,6 +167,8 @@ func handleMessagesRcsGenerateDeeplink(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageRcGenerateDeeplinkParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -202,8 +203,6 @@ func handleMessagesRcsSend(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessageRcSendParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -214,6 +213,8 @@ func handleMessagesRcsSend(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessageRcSendParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

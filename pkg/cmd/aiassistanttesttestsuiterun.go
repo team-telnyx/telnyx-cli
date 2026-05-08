@@ -20,8 +20,9 @@ var aiAssistantsTestsTestSuitesRunsList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "suite-name",
-			Required: true,
+			Name:      "suite-name",
+			Required:  true,
+			PathParam: "suite_name",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -56,8 +57,9 @@ var aiAssistantsTestsTestSuitesRunsTrigger = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "suite-name",
-			Required: true,
+			Name:      "suite-name",
+			Required:  true,
+			PathParam: "suite_name",
 		},
 		&requestflag.Flag[string]{
 			Name:     "destination-version-id",
@@ -80,8 +82,6 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantTestTestSuiteRunListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -92,6 +92,8 @@ func handleAIAssistantsTestsTestSuitesRunsList(ctx context.Context, cmd *cli.Com
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantTestTestSuiteRunListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -148,8 +150,6 @@ func handleAIAssistantsTestsTestSuitesRunsTrigger(ctx context.Context, cmd *cli.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantTestTestSuiteRunTriggerParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -160,6 +160,8 @@ func handleAIAssistantsTestsTestSuitesRunsTrigger(ctx context.Context, cmd *cli.
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIAssistantTestTestSuiteRunTriggerParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

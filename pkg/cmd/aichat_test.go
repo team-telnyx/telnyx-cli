@@ -34,6 +34,8 @@ func TestAIChatCreateCompletion(t *testing.T) {
 			"--n", "0",
 			"--presence-penalty", "0",
 			"--response-format", "{type: text}",
+			"--seed", "0",
+			"--stop", "string",
 			"--stream=true",
 			"--temperature", "0",
 			"--tool-choice", "none",
@@ -73,6 +75,8 @@ func TestAIChatCreateCompletion(t *testing.T) {
 			"--n", "0",
 			"--presence-penalty", "0",
 			"--response-format.type", "text",
+			"--seed", "0",
+			"--stop", "string",
 			"--stream=true",
 			"--temperature", "0",
 			"--tool-choice", "none",
@@ -110,6 +114,8 @@ func TestAIChatCreateCompletion(t *testing.T) {
 			"presence_penalty: 0\n" +
 			"response_format:\n" +
 			"  type: text\n" +
+			"seed: 0\n" +
+			"stop: string\n" +
 			"stream: true\n" +
 			"temperature: 0\n" +
 			"tool_choice: none\n" +

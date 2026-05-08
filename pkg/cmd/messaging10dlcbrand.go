@@ -156,8 +156,9 @@ var messaging10dlcBrandRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 	},
 	Action:          handleMessaging10dlcBrandRetrieve,
@@ -170,8 +171,9 @@ var messaging10dlcBrandUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 		&requestflag.Flag[string]{
 			Name:     "country",
@@ -370,8 +372,9 @@ var messaging10dlcBrandDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 	},
 	Action:          handleMessaging10dlcBrandDelete,
@@ -384,8 +387,9 @@ var messaging10dlcBrandGetFeedback = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 	},
 	Action:          handleMessaging10dlcBrandGetFeedback,
@@ -398,8 +402,9 @@ var messaging10dlcBrandGetSMSOtpByReference = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "reference-id",
-			Required: true,
+			Name:      "reference-id",
+			Required:  true,
+			PathParam: "referenceId",
 		},
 		&requestflag.Flag[string]{
 			Name:      "brand-id",
@@ -417,8 +422,9 @@ var messaging10dlcBrandResend2faEmail = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 	},
 	Action:          handleMessaging10dlcBrandResend2faEmail,
@@ -431,8 +437,9 @@ var messaging10dlcBrandRetrieveSMSOtpStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 	},
 	Action:          handleMessaging10dlcBrandRetrieveSMSOtpStatus,
@@ -445,8 +452,9 @@ var messaging10dlcBrandRevet = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 	},
 	Action:          handleMessaging10dlcBrandRevet,
@@ -459,8 +467,9 @@ var messaging10dlcBrandTriggerSMSOtp = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 		&requestflag.Flag[string]{
 			Name:     "pin-sms",
@@ -485,8 +494,9 @@ var messaging10dlcBrandVerifySMSOtp = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "brand-id",
-			Required: true,
+			Name:      "brand-id",
+			Required:  true,
+			PathParam: "brandId",
 		},
 		&requestflag.Flag[string]{
 			Name:     "otp-pin",
@@ -507,8 +517,6 @@ func handleMessaging10dlcBrandCreate(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcBrandNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -519,6 +527,8 @@ func handleMessaging10dlcBrandCreate(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcBrandNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -593,8 +603,6 @@ func handleMessaging10dlcBrandUpdate(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcBrandUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -605,6 +613,8 @@ func handleMessaging10dlcBrandUpdate(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcBrandUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -639,8 +649,6 @@ func handleMessaging10dlcBrandList(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcBrandListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -651,6 +659,8 @@ func handleMessaging10dlcBrandList(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcBrandListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -764,8 +774,6 @@ func handleMessaging10dlcBrandGetSMSOtpByReference(ctx context.Context, cmd *cli
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcBrandGetSMSOtpByReferenceParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -776,6 +784,8 @@ func handleMessaging10dlcBrandGetSMSOtpByReference(ctx context.Context, cmd *cli
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcBrandGetSMSOtpByReferenceParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -922,8 +932,6 @@ func handleMessaging10dlcBrandTriggerSMSOtp(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcBrandTriggerSMSOtpParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -934,6 +942,8 @@ func handleMessaging10dlcBrandTriggerSMSOtp(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcBrandTriggerSMSOtpParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -971,8 +981,6 @@ func handleMessaging10dlcBrandVerifySMSOtp(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcBrandVerifySMSOtpParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -983,6 +991,8 @@ func handleMessaging10dlcBrandVerifySMSOtp(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcBrandVerifySMSOtpParams{}
 
 	return client.Messaging10dlc.Brand.VerifySMSOtp(
 		ctx,

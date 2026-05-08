@@ -20,8 +20,9 @@ var organizationsUsersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[bool]{
 			Name:      "include-groups",
@@ -103,8 +104,6 @@ func handleOrganizationsUsersRetrieve(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.OrganizationUserGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -115,6 +114,8 @@ func handleOrganizationsUsersRetrieve(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.OrganizationUserGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -149,8 +150,6 @@ func handleOrganizationsUsersList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.OrganizationUserListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -161,6 +160,8 @@ func handleOrganizationsUsersList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.OrganizationUserListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -204,8 +205,6 @@ func handleOrganizationsUsersGetGroupsReport(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.OrganizationUserGetGroupsReportParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -216,6 +215,8 @@ func handleOrganizationsUsersGetGroupsReport(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.OrganizationUserGetGroupsReportParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

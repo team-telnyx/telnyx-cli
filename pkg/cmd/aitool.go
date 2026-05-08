@@ -65,8 +65,9 @@ var aiToolsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "tool-id",
-			Required: true,
+			Name:      "tool-id",
+			Required:  true,
+			PathParam: "tool_id",
 		},
 	},
 	Action:          handleAIToolsRetrieve,
@@ -79,8 +80,9 @@ var aiToolsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "tool-id",
-			Required: true,
+			Name:      "tool-id",
+			Required:  true,
+			PathParam: "tool_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "display-name",
@@ -157,8 +159,9 @@ var aiToolsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "tool-id",
-			Required: true,
+			Name:      "tool-id",
+			Required:  true,
+			PathParam: "tool_id",
 		},
 	},
 	Action:          handleAIToolsDelete,
@@ -173,8 +176,6 @@ func handleAIToolsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIToolNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -185,6 +186,8 @@ func handleAIToolsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIToolNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -259,8 +262,6 @@ func handleAIToolsUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIToolUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -271,6 +272,8 @@ func handleAIToolsUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIToolUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -305,8 +308,6 @@ func handleAIToolsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIToolListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -317,6 +318,8 @@ func handleAIToolsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIToolListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

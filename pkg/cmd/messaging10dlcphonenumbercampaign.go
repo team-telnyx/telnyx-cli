@@ -42,8 +42,9 @@ var messaging10dlcPhoneNumberCampaignsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phoneNumber",
 		},
 	},
 	Action:          handleMessaging10dlcPhoneNumberCampaignsRetrieve,
@@ -56,8 +57,9 @@ var messaging10dlcPhoneNumberCampaignsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "campaign-phone-number",
-			Required: true,
+			Name:      "campaign-phone-number",
+			Required:  true,
+			PathParam: "phoneNumber",
 		},
 		&requestflag.Flag[string]{
 			Name:     "campaign-id",
@@ -140,8 +142,9 @@ var messaging10dlcPhoneNumberCampaignsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phoneNumber",
 		},
 	},
 	Action:          handleMessaging10dlcPhoneNumberCampaignsDelete,
@@ -156,8 +159,6 @@ func handleMessaging10dlcPhoneNumberCampaignsCreate(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcPhoneNumberCampaignNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -168,6 +169,8 @@ func handleMessaging10dlcPhoneNumberCampaignsCreate(ctx context.Context, cmd *cl
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcPhoneNumberCampaignNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -242,8 +245,6 @@ func handleMessaging10dlcPhoneNumberCampaignsUpdate(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcPhoneNumberCampaignUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -254,6 +255,8 @@ func handleMessaging10dlcPhoneNumberCampaignsUpdate(ctx context.Context, cmd *cl
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcPhoneNumberCampaignUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -288,8 +291,6 @@ func handleMessaging10dlcPhoneNumberCampaignsList(ctx context.Context, cmd *cli.
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcPhoneNumberCampaignListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -300,6 +301,8 @@ func handleMessaging10dlcPhoneNumberCampaignsList(ctx context.Context, cmd *cli.
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcPhoneNumberCampaignListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

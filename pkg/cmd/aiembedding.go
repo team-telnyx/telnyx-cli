@@ -57,8 +57,9 @@ var aiEmbeddingsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "task-id",
-			Required: true,
+			Name:      "task-id",
+			Required:  true,
+			PathParam: "task_id",
 		},
 	},
 	Action:          handleAIEmbeddingsRetrieve,
@@ -136,8 +137,6 @@ func handleAIEmbeddingsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIEmbeddingNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -148,6 +147,8 @@ func handleAIEmbeddingsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIEmbeddingNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -219,8 +220,6 @@ func handleAIEmbeddingsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIEmbeddingListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -231,6 +230,8 @@ func handleAIEmbeddingsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIEmbeddingListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -260,8 +261,6 @@ func handleAIEmbeddingsSimilaritySearch(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIEmbeddingSimilaritySearchParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -272,6 +271,8 @@ func handleAIEmbeddingsSimilaritySearch(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIEmbeddingSimilaritySearchParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -301,8 +302,6 @@ func handleAIEmbeddingsURL(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIEmbeddingURLParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -313,6 +312,8 @@ func handleAIEmbeddingsURL(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIEmbeddingURLParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

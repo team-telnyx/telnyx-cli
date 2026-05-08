@@ -31,12 +31,12 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Required: true,
 			BodyPath: "whitelisted_destinations",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "ai-assistant-id",
 			Usage:    "The AI assistant ID to associate with this messaging profile.",
 			BodyPath: "ai_assistant_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "alpha-sender",
 			Usage:    "The alphanumeric sender ID to use when sending to destinations that require an alphanumeric sender ID.",
 			BodyPath: "alpha_sender",
@@ -57,7 +57,7 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  true,
 			BodyPath: "enabled",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "health-webhook-url",
 			Usage:    "A URL to receive health check webhooks for numbers in this profile.",
 			BodyPath: "health_webhook_url",
@@ -85,7 +85,7 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Number Pool allows you to send messages from a pool of numbers of different types, assigning\nweights to each type. The pool consists of all the long code and toll free numbers\nassigned to the messaging profile.\n\nTo disable this feature, set the object field to `null`.\n",
 			BodyPath: "number_pool_settings",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "resource-group-id",
 			Usage:    "The resource group ID to associate with this messaging profile.",
 			BodyPath: "resource_group_id",
@@ -107,16 +107,16 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "2",
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-failover-url",
 			Usage:    "The failover URL where webhooks related to this messaging profile will be sent if sending to the primary URL fails.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-url",
 			Usage:    "The URL where webhooks related to this messaging profile will be sent.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_url",
 		},
 	},
@@ -180,8 +180,9 @@ var messagingProfilesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingProfilesRetrieve,
@@ -194,10 +195,11 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "alpha-sender",
 			Usage:    "The alphanumeric sender ID to use when sending to destinations that require an alphanumeric sender ID.",
 			BodyPath: "alpha_sender",
@@ -266,12 +268,12 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Determines which webhook format will be used, Telnyx API v1, v2, or a legacy 2010-04-01 format.",
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-failover-url",
 			Usage:    "The failover URL where webhooks related to this messaging profile will be sent if sending to the primary URL fails.",
 			BodyPath: "webhook_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-url",
 			Usage:    "The URL where webhooks related to this messaging profile will be sent.",
 			BodyPath: "webhook_url",
@@ -387,8 +389,9 @@ var messagingProfilesDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingProfilesDelete,
@@ -401,8 +404,9 @@ var messagingProfilesListAlphanumericSenderIDs = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -429,8 +433,9 @@ var messagingProfilesListPhoneNumbers = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -455,8 +460,9 @@ var messagingProfilesListShortCodes = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "messaging-profile-id",
-			Required: true,
+			Name:      "messaging-profile-id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -481,8 +487,9 @@ var messagingProfilesRetrieveMetrics = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "time-frame",
@@ -503,8 +510,6 @@ func handleMessagingProfilesCreate(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -515,6 +520,8 @@ func handleMessagingProfilesCreate(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -589,8 +596,6 @@ func handleMessagingProfilesUpdate(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -601,6 +606,8 @@ func handleMessagingProfilesUpdate(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -635,8 +642,6 @@ func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -647,6 +652,8 @@ func handleMessagingProfilesList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -735,8 +742,6 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileListAlphanumericSenderIDsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -747,6 +752,8 @@ func handleMessagingProfilesListAlphanumericSenderIDs(ctx context.Context, cmd *
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileListAlphanumericSenderIDsParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -803,8 +810,6 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileListPhoneNumbersParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -815,6 +820,8 @@ func handleMessagingProfilesListPhoneNumbers(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileListPhoneNumbersParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -871,8 +878,6 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileListShortCodesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -883,6 +888,8 @@ func handleMessagingProfilesListShortCodes(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileListShortCodesParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -939,8 +946,6 @@ func handleMessagingProfilesRetrieveMetrics(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingProfileGetMetricsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -951,6 +956,8 @@ func handleMessagingProfilesRetrieveMetrics(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingProfileGetMetricsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

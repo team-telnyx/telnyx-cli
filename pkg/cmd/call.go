@@ -33,7 +33,7 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[any]{
 			Name:     "to",
-			Usage:    "The DID or SIP URI to dial out to. Multiple DID or SIP URIs can be provided using an array of strings",
+			Usage:    "The DID or SIP URI to dial out to. Multiple DID or SIP URIs can be provided using an array of strings. For SIP URI destinations, append `;secure=true` or `;secure=srtp` to enable SRTP media encryption for that endpoint, or `;secure=dtls` to enable DTLS media encryption for that endpoint. If `media_encryption` is set to `SRTP` or `DTLS`, it takes precedence over any per-endpoint `secure` URI parameter.",
 			Required: true,
 			BodyPath: "to",
 		},
@@ -122,7 +122,7 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "media-encryption",
-			Usage:    "Defines whether media should be encrypted on the call.",
+			Usage:    "Defines whether media should be encrypted on the call. For SIP URI destinations, media encryption can also be requested per endpoint with the `secure` URI parameter: `;secure=true` or `;secure=srtp` enables SRTP, and `;secure=dtls` enables DTLS. This parameter, when set to `SRTP` or `DTLS`, takes precedence over the per-endpoint `secure` value.",
 			Default:  "disabled",
 			BodyPath: "media_encryption",
 		},
@@ -651,8 +651,9 @@ var callsRetrieveStatus = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 	},
 	Action:          handleCallsRetrieveStatus,
@@ -667,8 +668,6 @@ func handleCallsDial(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallDialParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -679,6 +678,8 @@ func handleCallsDial(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallDialParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

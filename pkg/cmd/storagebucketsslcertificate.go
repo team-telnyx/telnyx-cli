@@ -20,8 +20,9 @@ var storageBucketsSslCertificateCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "bucket-name",
-			Required: true,
+			Name:      "bucket-name",
+			Required:  true,
+			PathParam: "bucketName",
 		},
 		&requestflag.Flag[string]{
 			Name:      "certificate",
@@ -46,8 +47,9 @@ var storageBucketsSslCertificateRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "bucket-name",
-			Required: true,
+			Name:      "bucket-name",
+			Required:  true,
+			PathParam: "bucketName",
 		},
 	},
 	Action:          handleStorageBucketsSslCertificateRetrieve,
@@ -60,8 +62,9 @@ var storageBucketsSslCertificateDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "bucket-name",
-			Required: true,
+			Name:      "bucket-name",
+			Required:  true,
+			PathParam: "bucketName",
 		},
 	},
 	Action:          handleStorageBucketsSslCertificateDelete,
@@ -79,8 +82,6 @@ func handleStorageBucketsSslCertificateCreate(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.StorageBucketSslCertificateNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -91,6 +92,8 @@ func handleStorageBucketsSslCertificateCreate(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.StorageBucketSslCertificateNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

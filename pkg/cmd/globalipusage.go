@@ -45,8 +45,6 @@ func handleGlobalIPUsageRetrieve(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.GlobalIPUsageGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -57,6 +55,8 @@ func handleGlobalIPUsageRetrieve(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.GlobalIPUsageGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

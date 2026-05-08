@@ -20,9 +20,10 @@ var aiConversationsInsightGroupsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "group-id",
-			Usage:    "The ID of the insight group",
-			Required: true,
+			Name:      "group-id",
+			Usage:     "The ID of the insight group",
+			Required:  true,
+			PathParam: "group_id",
 		},
 	},
 	Action:          handleAIConversationsInsightGroupsRetrieve,
@@ -35,9 +36,10 @@ var aiConversationsInsightGroupsUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "group-id",
-			Usage:    "The ID of the insight group",
-			Required: true,
+			Name:      "group-id",
+			Usage:     "The ID of the insight group",
+			Required:  true,
+			PathParam: "group_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "description",
@@ -62,9 +64,10 @@ var aiConversationsInsightGroupsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "group-id",
-			Usage:    "The ID of the insight group",
-			Required: true,
+			Name:      "group-id",
+			Usage:     "The ID of the insight group",
+			Required:  true,
+			PathParam: "group_id",
 		},
 	},
 	Action:          handleAIConversationsInsightGroupsDelete,
@@ -170,8 +173,6 @@ func handleAIConversationsInsightGroupsUpdate(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIConversationInsightGroupUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -182,6 +183,8 @@ func handleAIConversationsInsightGroupsUpdate(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIConversationInsightGroupUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -241,8 +244,6 @@ func handleAIConversationsInsightGroupsInsightGroups(ctx context.Context, cmd *c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIConversationInsightGroupInsightGroupsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -253,6 +254,8 @@ func handleAIConversationsInsightGroupsInsightGroups(ctx context.Context, cmd *c
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIConversationInsightGroupInsightGroupsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -282,8 +285,6 @@ func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIConversationInsightGroupGetInsightGroupsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -294,6 +295,8 @@ func handleAIConversationsInsightGroupsRetrieveInsightGroups(ctx context.Context
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIConversationInsightGroupGetInsightGroupsParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

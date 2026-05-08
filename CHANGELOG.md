@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.14.0 (2026-05-08)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* Add xAI and AssemblyAI transcription engines to call-control API docs ([83215e7](https://github.com/team-telnyx/telnyx-cli/commit/83215e7be2390a202e5cbcedafa171ca34d3ddec))
+* Add xAI and missing voice providers to Call Control API ([fe4d1b0](https://github.com/team-telnyx/telnyx-cli/commit/fe4d1b0f9e1b13ef8035b3ae27e3a794d9e40191))
+* AI-2289 add disable greeting interruption OpenAPI fields ([f3006d6](https://github.com/team-telnyx/telnyx-cli/commit/f3006d6965d1d7331e0a4f78baeccef8f13ba4af))
+* Ai-assistant: update scheduled events api ([c978be7](https://github.com/team-telnyx/telnyx-cli/commit/c978be7098a77bab5e8115aa8d9a075e86402909))
+* Ai-assistants: support pattern in canary deploy ([43a9db5](https://github.com/team-telnyx/telnyx-cli/commit/43a9db569bc7cd6ad4fc47fa50f4babf7abdd02c))
+* Document assistant CRUD fields ([224cb63](https://github.com/team-telnyx/telnyx-cli/commit/224cb639d0439b89643c253a6402fea644b473bc))
+* Document per-endpoint media encryption for call control ([092af23](https://github.com/team-telnyx/telnyx-cli/commit/092af23edf55b6695fbfc3fdad71d9810df2389a))
+* inference: expose chat completions and models under /ai/openai ([740af72](https://github.com/team-telnyx/telnyx-cli/commit/740af726c3c2df7b55564149754454bdce8e709e))
+* MSG-9000: document duplicate-vetting rejection on order brand external vetting ([2e6e943](https://github.com/team-telnyx/telnyx-cli/commit/2e6e943e87994023e8d6bdb0e1847626debdfe1a))
+* support passing path and query params over stdin ([3b2d292](https://github.com/team-telnyx/telnyx-cli/commit/3b2d2929666258513ed010b993142f1bbd24655e))
+* Update observability ([2547688](https://github.com/team-telnyx/telnyx-cli/commit/2547688a13b3b28917dd8cffecf8577799a46394))
+
+
+### Bug Fixes
+
+* **cli:** correctly load zsh autocompletion ([ad87ef3](https://github.com/team-telnyx/telnyx-cli/commit/ad87ef331c77e2ffbdc491caae732d7abfb678ed))
+* flags for nullable body scalar fields are strictly typed ([be4431e](https://github.com/team-telnyx/telnyx-cli/commit/be4431ef14fdcb659d4e84d599b51a20d70f5244))
+* update UAC internal settings URI examples ([db4dd6b](https://github.com/team-telnyx/telnyx-cli/commit/db4dd6ba485fda96d8d2d722e9f4dd2ec89cd4b8))
+
+
+### Chores
+
+* **internal:** codegen related update ([1dea09d](https://github.com/team-telnyx/telnyx-cli/commit/1dea09ddc16d690b4acc8fc3f1db1f48d9088af0))
+* redact api-key headers in debug logs ([d2d2252](https://github.com/team-telnyx/telnyx-cli/commit/d2d22525c554f93e6efb38ff54ed8b745c826e71))
+* trigger CI ([b7197a3](https://github.com/team-telnyx/telnyx-cli/commit/b7197a3b96e143700f77e4cd9c517d851b137895))
+
+
+### Documentation
+
+* add UAC connection OpenAPI docs ([232f144](https://github.com/team-telnyx/telnyx-cli/commit/232f144e176c2cec597ffbdea89917cc0d48ccc5))
+* update gather_using_ai transcription models ([6ddd7e8](https://github.com/team-telnyx/telnyx-cli/commit/6ddd7e8e0e5c89052df1d5df6e73ffc3cbd7cc9c))
+
 ## 0.13.0 (2026-04-28)
 
 Full Changelog: [v0.12.1...v0.13.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.12.1...v0.13.0)

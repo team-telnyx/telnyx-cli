@@ -45,8 +45,6 @@ func handleSetiRetrieveBlackBoxTestResults(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SetiGetBlackBoxTestResultsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -57,6 +55,8 @@ func handleSetiRetrieveBlackBoxTestResults(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SetiGetBlackBoxTestResultsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

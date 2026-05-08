@@ -210,8 +210,6 @@ func handleMessaging10dlcCampaignBuilderSubmit(ctx context.Context, cmd *cli.Com
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.Messaging10dlcCampaignBuilderSubmitParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -222,6 +220,8 @@ func handleMessaging10dlcCampaignBuilderSubmit(ctx context.Context, cmd *cli.Com
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.Messaging10dlcCampaignBuilderSubmitParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

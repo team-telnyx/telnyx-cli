@@ -20,8 +20,9 @@ var numberLookupRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "phone-number",
-			Required: true,
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
 		},
 		&requestflag.Flag[string]{
 			Name:      "type",
@@ -44,8 +45,6 @@ func handleNumberLookupRetrieve(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.NumberLookupGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -56,6 +55,8 @@ func handleNumberLookupRetrieve(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.NumberLookupGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

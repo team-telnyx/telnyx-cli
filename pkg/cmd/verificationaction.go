@@ -20,8 +20,9 @@ var verificationsActionsVerify = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "verification-id",
-			Required: true,
+			Name:      "verification-id",
+			Required:  true,
+			PathParam: "verification_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "code",
@@ -49,8 +50,6 @@ func handleVerificationsActionsVerify(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerificationActionVerifyParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -61,6 +60,8 @@ func handleVerificationsActionsVerify(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerificationActionVerifyParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

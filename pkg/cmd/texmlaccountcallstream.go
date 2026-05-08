@@ -20,16 +20,19 @@ var texmlAccountsCallsStreamsStreamingSidJson = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "call-sid",
-			Required: true,
+			Name:      "call-sid",
+			Required:  true,
+			PathParam: "call_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "streaming-sid",
-			Required: true,
+			Name:      "streaming-sid",
+			Required:  true,
+			PathParam: "streaming_sid",
 		},
 		&requestflag.Flag[string]{
 			Name:     "status",
@@ -53,11 +56,6 @@ func handleTexmlAccountsCallsStreamsStreamingSidJson(ctx context.Context, cmd *c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountCallStreamStreamingSidJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-		CallSid:    cmd.Value("call-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -67,6 +65,11 @@ func handleTexmlAccountsCallsStreamsStreamingSidJson(ctx context.Context, cmd *c
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountCallStreamStreamingSidJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
+		CallSid:    cmd.Value("call-sid").(string),
 	}
 
 	var res []byte

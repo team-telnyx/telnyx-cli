@@ -40,8 +40,9 @@ var messagingHostedNumberOrdersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingHostedNumberOrdersRetrieve,
@@ -76,8 +77,9 @@ var messagingHostedNumberOrdersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingHostedNumberOrdersDelete,
@@ -106,8 +108,9 @@ var messagingHostedNumberOrdersCreateVerificationCodes = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "phone-number",
@@ -131,8 +134,9 @@ var messagingHostedNumberOrdersValidateCodes = requestflag.WithInnerFlags(cli.Co
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "verification-code",
@@ -163,8 +167,6 @@ func handleMessagingHostedNumberOrdersCreate(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingHostedNumberOrderNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -175,6 +177,8 @@ func handleMessagingHostedNumberOrdersCreate(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingHostedNumberOrderNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -246,8 +250,6 @@ func handleMessagingHostedNumberOrdersList(ctx context.Context, cmd *cli.Command
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingHostedNumberOrderListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -258,6 +260,8 @@ func handleMessagingHostedNumberOrdersList(ctx context.Context, cmd *cli.Command
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingHostedNumberOrderListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -343,8 +347,6 @@ func handleMessagingHostedNumberOrdersCheckEligibility(ctx context.Context, cmd 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingHostedNumberOrderCheckEligibilityParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -355,6 +357,8 @@ func handleMessagingHostedNumberOrdersCheckEligibility(ctx context.Context, cmd 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingHostedNumberOrderCheckEligibilityParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -387,8 +391,6 @@ func handleMessagingHostedNumberOrdersCreateVerificationCodes(ctx context.Contex
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingHostedNumberOrderNewVerificationCodesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -399,6 +401,8 @@ func handleMessagingHostedNumberOrdersCreateVerificationCodes(ctx context.Contex
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingHostedNumberOrderNewVerificationCodesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -436,8 +440,6 @@ func handleMessagingHostedNumberOrdersValidateCodes(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingHostedNumberOrderValidateCodesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -448,6 +450,8 @@ func handleMessagingHostedNumberOrdersValidateCodes(ctx context.Context, cmd *cl
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingHostedNumberOrderValidateCodesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

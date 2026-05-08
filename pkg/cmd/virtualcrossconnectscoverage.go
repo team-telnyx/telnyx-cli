@@ -94,8 +94,6 @@ func handleVirtualCrossConnectsCoverageList(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VirtualCrossConnectsCoverageListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -106,6 +104,8 @@ func handleVirtualCrossConnectsCoverageList(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VirtualCrossConnectsCoverageListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

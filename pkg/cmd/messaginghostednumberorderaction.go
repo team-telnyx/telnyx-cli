@@ -20,8 +20,9 @@ var messagingHostedNumberOrdersActionsUploadFile = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "bill",
@@ -51,8 +52,6 @@ func handleMessagingHostedNumberOrdersActionsUploadFile(ctx context.Context, cmd
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingHostedNumberOrderActionUploadFileParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -63,6 +62,8 @@ func handleMessagingHostedNumberOrdersActionsUploadFile(ctx context.Context, cmd
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingHostedNumberOrderActionUploadFileParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

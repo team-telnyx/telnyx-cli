@@ -16,7 +16,7 @@ import (
 
 var aiRetrieveModels = cli.Command{
 	Name:            "retrieve-models",
-	Usage:           "This endpoint returns a list of Open Source and OpenAI models that are available\nfor use. <br /><br /> **Note**: Model `id`'s will be in the form\n`{source}/{model_name}`. For example `openai/gpt-4` or\n`mistralai/Mistral-7B-Instruct-v0.1` consistent with HuggingFace naming\nconventions.",
+	Usage:           "**Deprecated**: Use `GET /v2/ai/openai/models` instead. This endpoint returns a\nlist of Open Source and OpenAI models that are available for use. <br /><br />\n**Note**: Model `id`'s will be in the form `{source}/{model_name}`. For example\n`openai/gpt-4` or `mistralai/Mistral-7B-Instruct-v0.1` consistent with\nHuggingFace naming conventions.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleAIRetrieveModels,
@@ -97,8 +97,6 @@ func handleAISummarize(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AISummarizeParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -109,6 +107,8 @@ func handleAISummarize(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AISummarizeParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

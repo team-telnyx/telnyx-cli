@@ -20,12 +20,14 @@ var texmlAccountsTranscriptionsJsonDeleteRecordingTranscriptionSidJson = cli.Com
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "recording-transcription-sid",
-			Required: true,
+			Name:      "recording-transcription-sid",
+			Required:  true,
+			PathParam: "recording_transcription_sid",
 		},
 	},
 	Action:          handleTexmlAccountsTranscriptionsJsonDeleteRecordingTranscriptionSidJson,
@@ -38,12 +40,14 @@ var texmlAccountsTranscriptionsJsonRetrieveRecordingTranscriptionSidJson = cli.C
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "account-sid",
-			Required: true,
+			Name:      "account-sid",
+			Required:  true,
+			PathParam: "account_sid",
 		},
 		&requestflag.Flag[string]{
-			Name:     "recording-transcription-sid",
-			Required: true,
+			Name:      "recording-transcription-sid",
+			Required:  true,
+			PathParam: "recording_transcription_sid",
 		},
 	},
 	Action:          handleTexmlAccountsTranscriptionsJsonRetrieveRecordingTranscriptionSidJson,
@@ -61,10 +65,6 @@ func handleTexmlAccountsTranscriptionsJsonDeleteRecordingTranscriptionSidJson(ct
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountTranscriptionJsonDeleteRecordingTranscriptionSidJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -74,6 +74,10 @@ func handleTexmlAccountsTranscriptionsJsonDeleteRecordingTranscriptionSidJson(ct
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountTranscriptionJsonDeleteRecordingTranscriptionSidJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	return client.Texml.Accounts.Transcriptions.Json.DeleteRecordingTranscriptionSidJson(
@@ -95,10 +99,6 @@ func handleTexmlAccountsTranscriptionsJsonRetrieveRecordingTranscriptionSidJson(
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TexmlAccountTranscriptionJsonGetRecordingTranscriptionSidJsonParams{
-		AccountSid: cmd.Value("account-sid").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -108,6 +108,10 @@ func handleTexmlAccountsTranscriptionsJsonRetrieveRecordingTranscriptionSidJson(
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.TexmlAccountTranscriptionJsonGetRecordingTranscriptionSidJsonParams{
+		AccountSid: cmd.Value("account-sid").(string),
 	}
 
 	var res []byte

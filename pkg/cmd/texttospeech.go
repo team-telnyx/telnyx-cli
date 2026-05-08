@@ -341,8 +341,6 @@ func handleTextToSpeechGenerate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TextToSpeechGenerateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -353,6 +351,8 @@ func handleTextToSpeechGenerate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TextToSpeechGenerateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -382,8 +382,6 @@ func handleTextToSpeechListVoices(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.TextToSpeechListVoicesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -394,6 +392,8 @@ func handleTextToSpeechListVoices(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.TextToSpeechListVoicesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

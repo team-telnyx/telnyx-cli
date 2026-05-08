@@ -16,7 +16,7 @@ import (
 
 var aiChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create-completion",
-	Usage:   "Chat with a language model. This endpoint is consistent with the\n[OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat)\nand may be used with the OpenAI JS or Python SDK.",
+	Usage:   "**Deprecated**: Use `POST /v2/ai/openai/chat/completions` instead. Chat with a\nlanguage model. This endpoint is consistent with the\n[OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat)\nand may be used with the OpenAI JS or Python SDK.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[[]map[string]any]{
@@ -112,6 +112,16 @@ var aiChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Use this is you want to guarantee a JSON output without defining a schema. For control over the schema, use `guided_json`.",
 			BodyPath: "response_format",
 		},
+		&requestflag.Flag[int64]{
+			Name:     "seed",
+			Usage:    "If specified, the system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.",
+			BodyPath: "seed",
+		},
+		&requestflag.Flag[any]{
+			Name:     "stop",
+			Usage:    "Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.",
+			BodyPath: "stop",
+		},
 		&requestflag.Flag[bool]{
 			Name:     "stream",
 			Usage:    "Whether or not to stream data-only server-sent events as they become available.",
@@ -182,8 +192,6 @@ func handleAIChatCreateCompletion(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIChatNewCompletionParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -194,6 +202,8 @@ func handleAIChatCreateCompletion(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIChatNewCompletionParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

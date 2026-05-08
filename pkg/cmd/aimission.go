@@ -57,8 +57,9 @@ var aiMissionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 	},
 	Action:          handleAIMissionsRetrieve,
@@ -97,8 +98,9 @@ var aiMissionsCloneMission = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 	},
 	Action:          handleAIMissionsCloneMission,
@@ -111,8 +113,9 @@ var aiMissionsDeleteMission = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 	},
 	Action:          handleAIMissionsDeleteMission,
@@ -155,8 +158,9 @@ var aiMissionsUpdateMission = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "mission-id",
-			Required: true,
+			Name:      "mission-id",
+			Required:  true,
+			PathParam: "mission_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "description",
@@ -196,8 +200,6 @@ func handleAIMissionsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -208,6 +210,8 @@ func handleAIMissionsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMissionNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -279,8 +283,6 @@ func handleAIMissionsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -291,6 +293,8 @@ func handleAIMissionsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMissionListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -401,8 +405,6 @@ func handleAIMissionsListEvents(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionListEventsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -413,6 +415,8 @@ func handleAIMissionsListEvents(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMissionListEventsParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -459,8 +463,6 @@ func handleAIMissionsUpdateMission(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIMissionUpdateMissionParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -471,6 +473,8 @@ func handleAIMissionsUpdateMission(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.AIMissionUpdateMissionParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

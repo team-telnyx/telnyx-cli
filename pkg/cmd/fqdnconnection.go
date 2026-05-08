@@ -37,7 +37,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Latency",
 			BodyPath: "anchorsite_override",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "android-push-credential-id",
 			Usage:    "The uuid of the push credential for Android",
 			Default:  nil,
@@ -67,7 +67,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  false,
 			BodyPath: "encode_contact_header_enabled",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "encrypted-media",
 			Usage:    "Enable use of SRTP for encryption. Cannot be set if the transport_portocol is TLS.",
 			BodyPath: "encrypted_media",
@@ -76,7 +76,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "inbound",
 			BodyPath: "inbound",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "ios-push-credential-id",
 			Usage:    "The uuid of the push credential for Ios",
 			Default:  nil,
@@ -134,10 +134,10 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "1",
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			Usage:    "The failover URL where webhooks related to this connection will be sent if sending to the primary URL fails. Must include a scheme, such as 'https'.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_event_failover_url",
 		},
 		&requestflag.Flag[string]{
@@ -145,7 +145,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "The URL where webhooks related to this connection will be sent. Must include a scheme, such as 'https'.",
 			BodyPath: "webhook_event_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "webhook-timeout-secs",
 			Usage:    "Specifies how many seconds to wait before timing out a webhook.",
 			Default:  nil,
@@ -161,7 +161,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "This setting allows you to set the format with which the caller's number (ANI) is sent for inbound phone calls.",
 			InnerField: "ani_number_format",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*int64]{
 			Name:       "inbound.channel-limit",
 			Usage:      "When set, this will limit the total number of inbound calls to phone numbers associated with this connection.",
 			InnerField: "channel_limit",
@@ -171,22 +171,22 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Defines the list of codecs that Telnyx will send for inbound calls to a specific number on your portal account, in priority order. This only works when the Connection the number is assigned to uses Media Handling mode: default. OPUS and H.264 codecs are available only when using TCP or TLS transport for SIP.",
 			InnerField: "codecs",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.default-primary-fqdn-id",
 			Usage:      "The default primary FQDN to use for the number. Only settable if the connection is\nof FQDN type. Value must be the ID of an FQDN set on the connection.",
 			InnerField: "default_primary_fqdn_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.default-routing-method",
 			Usage:      "Default routing method to be used when a number is associated with the connection. Must be one of the routing method types or null, other values are not allowed.",
 			InnerField: "default_routing_method",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.default-secondary-fqdn-id",
 			Usage:      "The default secondary FQDN to use for the number. Only settable if the connection is\nof FQDN type. Value must be the ID of an FQDN set on the connection.",
 			InnerField: "default_secondary_fqdn_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.default-tertiary-fqdn-id",
 			Usage:      "The default tertiary FQDN to use for the number. Only settable if the connection is\nof FQDN type. Value must be the ID of an FQDN set on the connection.",
 			InnerField: "default_tertiary_fqdn_id",
@@ -226,7 +226,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Selects which `sip_region` to receive inbound calls from. If null, the default region (US) will be used.",
 			InnerField: "sip_region",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.sip-subdomain",
 			Usage:      `Specifies a subdomain that can be used to receive Inbound calls to a Connection, in the same way a phone number is used, from a SIP endpoint. Example: the subdomain "example.sip.telnyx.com" can be called from any SIP endpoint by using the SIP URI "sip:@example.sip.telnyx.com" where the user part can be any alphanumeric value. Please note TLS encrypted calls are not allowed for subdomain calls.`,
 			InnerField: "sip_subdomain",
@@ -287,7 +287,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Specifies when we should apply your ani_override setting. Only applies when ani_override is not blank.",
 			InnerField: "ani_override_type",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*bool]{
 			Name:       "outbound.call-parking-enabled",
 			Usage:      `Forces all SIP calls originated on this connection to be \"parked\" instead of \"bridged\" to the destination specified on the URI. Parked calls will return ringback to the caller and will await for a Call Control command to define which action will be taken next.`,
 			InnerField: "call_parking_enabled",
@@ -297,7 +297,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "When set, this will limit the total number of inbound calls to phone numbers associated with this connection.",
 			InnerField: "channel_limit",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "outbound.encrypted-media",
 			Usage:      "Enable use of SRTP for encryption. Cannot be set if the transport_portocol is TLS.",
 			InnerField: "encrypted_media",
@@ -377,8 +377,9 @@ var fqdnConnectionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleFqdnConnectionsRetrieve,
@@ -391,8 +392,9 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "active",
@@ -405,7 +407,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Latency",
 			BodyPath: "anchorsite_override",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "android-push-credential-id",
 			Usage:    "The uuid of the push credential for Android",
 			Default:  nil,
@@ -440,7 +442,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Default:  false,
 			BodyPath: "encode_contact_header_enabled",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "encrypted-media",
 			Usage:    "Enable use of SRTP for encryption. Cannot be set if the transport_portocol is TLS.",
 			BodyPath: "encrypted_media",
@@ -449,7 +451,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "inbound",
 			BodyPath: "inbound",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "ios-push-credential-id",
 			Usage:    "The uuid of the push credential for Ios",
 			Default:  nil,
@@ -501,10 +503,10 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "1",
 			BodyPath: "webhook_api_version",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			Usage:    "The failover URL where webhooks related to this connection will be sent if sending to the primary URL fails. Must include a scheme, such as 'https'.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_event_failover_url",
 		},
 		&requestflag.Flag[string]{
@@ -512,7 +514,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "The URL where webhooks related to this connection will be sent. Must include a scheme, such as 'https'.",
 			BodyPath: "webhook_event_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "webhook-timeout-secs",
 			Usage:    "Specifies how many seconds to wait before timing out a webhook.",
 			Default:  nil,
@@ -528,7 +530,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "This setting allows you to set the format with which the caller's number (ANI) is sent for inbound phone calls.",
 			InnerField: "ani_number_format",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*int64]{
 			Name:       "inbound.channel-limit",
 			Usage:      "When set, this will limit the total number of inbound calls to phone numbers associated with this connection.",
 			InnerField: "channel_limit",
@@ -538,22 +540,22 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Defines the list of codecs that Telnyx will send for inbound calls to a specific number on your portal account, in priority order. This only works when the Connection the number is assigned to uses Media Handling mode: default. OPUS and H.264 codecs are available only when using TCP or TLS transport for SIP.",
 			InnerField: "codecs",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.default-primary-fqdn-id",
 			Usage:      "The default primary FQDN to use for the number. Only settable if the connection is\nof FQDN type. Value must be the ID of an FQDN set on the connection.",
 			InnerField: "default_primary_fqdn_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.default-routing-method",
 			Usage:      "Default routing method to be used when a number is associated with the connection. Must be one of the routing method types or null, other values are not allowed.",
 			InnerField: "default_routing_method",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.default-secondary-fqdn-id",
 			Usage:      "The default secondary FQDN to use for the number. Only settable if the connection is\nof FQDN type. Value must be the ID of an FQDN set on the connection.",
 			InnerField: "default_secondary_fqdn_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.default-tertiary-fqdn-id",
 			Usage:      "The default tertiary FQDN to use for the number. Only settable if the connection is\nof FQDN type. Value must be the ID of an FQDN set on the connection.",
 			InnerField: "default_tertiary_fqdn_id",
@@ -593,7 +595,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Selects which `sip_region` to receive inbound calls from. If null, the default region (US) will be used.",
 			InnerField: "sip_region",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "inbound.sip-subdomain",
 			Usage:      `Specifies a subdomain that can be used to receive Inbound calls to a Connection, in the same way a phone number is used, from a SIP endpoint. Example: the subdomain "example.sip.telnyx.com" can be called from any SIP endpoint by using the SIP URI "sip:@example.sip.telnyx.com" where the user part can be any alphanumeric value. Please note TLS encrypted calls are not allowed for subdomain calls.`,
 			InnerField: "sip_subdomain",
@@ -654,7 +656,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Specifies when we should apply your ani_override setting. Only applies when ani_override is not blank.",
 			InnerField: "ani_override_type",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*bool]{
 			Name:       "outbound.call-parking-enabled",
 			Usage:      `Forces all SIP calls originated on this connection to be \"parked\" instead of \"bridged\" to the destination specified on the URI. Parked calls will return ringback to the caller and will await for a Call Control command to define which action will be taken next.`,
 			InnerField: "call_parking_enabled",
@@ -664,7 +666,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "When set, this will limit the total number of inbound calls to phone numbers associated with this connection.",
 			InnerField: "channel_limit",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "outbound.encrypted-media",
 			Usage:      "Enable use of SRTP for encryption. Cannot be set if the transport_portocol is TLS.",
 			InnerField: "encrypted_media",
@@ -795,8 +797,9 @@ var fqdnConnectionsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleFqdnConnectionsDelete,
@@ -811,8 +814,6 @@ func handleFqdnConnectionsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.FqdnConnectionNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -823,6 +824,8 @@ func handleFqdnConnectionsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.FqdnConnectionNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -897,8 +900,6 @@ func handleFqdnConnectionsUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.FqdnConnectionUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -909,6 +910,8 @@ func handleFqdnConnectionsUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.FqdnConnectionUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -943,8 +946,6 @@ func handleFqdnConnectionsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.FqdnConnectionListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -955,6 +956,8 @@ func handleFqdnConnectionsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.FqdnConnectionListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

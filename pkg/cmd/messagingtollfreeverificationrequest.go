@@ -138,62 +138,62 @@ var messagingTollfreeVerificationRequestsCreate = requestflag.WithInnerFlags(cli
 			Usage:    "Line 2 of the business address",
 			BodyPath: "businessAddr2",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "business-registration-country",
 			Usage:    "ISO 3166-1 alpha-2 country code of the issuing business authority. Must be exactly 2 letters. Automatically converted to uppercase. Required from January 2026.",
 			BodyPath: "businessRegistrationCountry",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "business-registration-number",
 			Usage:    "Official business registration number (e.g., Employer Identification Number (EIN) in the U.S.). Required from January 2026.",
 			BodyPath: "businessRegistrationNumber",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "business-registration-type",
 			Usage:    "Type of business registration being provided. Required from January 2026.",
 			BodyPath: "businessRegistrationType",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "campaign-verify-authorization-token",
 			Usage:    "Campaign Verify Authorization Token required for Political use case submissions starting February 17, 2026. This token is validated by Zipwhip and must be provided for all Political use case verifications after the deadline.",
 			BodyPath: "campaignVerifyAuthorizationToken",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "doing-business-as",
 			Usage:    "Doing Business As (DBA) name if different from legal name",
 			BodyPath: "doingBusinessAs",
 		},
-		&requestflag.Flag[string]{
+		&requestflag.Flag[*string]{
 			Name:     "entity-type",
 			Usage:    "Business entity classification",
 			BodyPath: "entityType",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "help-message-response",
 			Usage:    "The message returned when users text 'HELP'",
 			BodyPath: "helpMessageResponse",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "isv-reseller",
 			Usage:    "ISV name",
 			BodyPath: "isvReseller",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "opt-in-confirmation-response",
 			Usage:    "Message sent to users confirming their opt-in to receive messages",
 			BodyPath: "optInConfirmationResponse",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "opt-in-keywords",
 			Usage:    "Keywords used to collect and process consumer opt-ins",
 			BodyPath: "optInKeywords",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "privacy-policy-url",
 			Usage:    "URL pointing to the business's privacy policy. Plain string, no URL format validation.",
 			BodyPath: "privacyPolicyURL",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "terms-and-condition-url",
 			Usage:    "URL pointing to the business's terms and conditions. Plain string, no URL format validation.",
 			BodyPath: "termsAndConditionURL",
@@ -227,8 +227,9 @@ var messagingTollfreeVerificationRequestsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingTollfreeVerificationRequestsRetrieve,
@@ -241,8 +242,9 @@ var messagingTollfreeVerificationRequestsUpdate = requestflag.WithInnerFlags(cli
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "additional-information",
@@ -363,62 +365,62 @@ var messagingTollfreeVerificationRequestsUpdate = requestflag.WithInnerFlags(cli
 			Usage:    "Line 2 of the business address",
 			BodyPath: "businessAddr2",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "business-registration-country",
 			Usage:    "ISO 3166-1 alpha-2 country code of the issuing business authority. Must be exactly 2 letters. Automatically converted to uppercase. Required from January 2026.",
 			BodyPath: "businessRegistrationCountry",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "business-registration-number",
 			Usage:    "Official business registration number (e.g., Employer Identification Number (EIN) in the U.S.). Required from January 2026.",
 			BodyPath: "businessRegistrationNumber",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "business-registration-type",
 			Usage:    "Type of business registration being provided. Required from January 2026.",
 			BodyPath: "businessRegistrationType",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "campaign-verify-authorization-token",
 			Usage:    "Campaign Verify Authorization Token required for Political use case submissions starting February 17, 2026. This token is validated by Zipwhip and must be provided for all Political use case verifications after the deadline.",
 			BodyPath: "campaignVerifyAuthorizationToken",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "doing-business-as",
 			Usage:    "Doing Business As (DBA) name if different from legal name",
 			BodyPath: "doingBusinessAs",
 		},
-		&requestflag.Flag[string]{
+		&requestflag.Flag[*string]{
 			Name:     "entity-type",
 			Usage:    "Business entity classification",
 			BodyPath: "entityType",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "help-message-response",
 			Usage:    "The message returned when users text 'HELP'",
 			BodyPath: "helpMessageResponse",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "isv-reseller",
 			Usage:    "ISV name",
 			BodyPath: "isvReseller",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "opt-in-confirmation-response",
 			Usage:    "Message sent to users confirming their opt-in to receive messages",
 			BodyPath: "optInConfirmationResponse",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "opt-in-keywords",
 			Usage:    "Keywords used to collect and process consumer opt-ins",
 			BodyPath: "optInKeywords",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "privacy-policy-url",
 			Usage:    "URL pointing to the business's privacy policy. Plain string, no URL format validation.",
 			BodyPath: "privacyPolicyURL",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "terms-and-condition-url",
 			Usage:    "URL pointing to the business's terms and conditions. Plain string, no URL format validation.",
 			BodyPath: "termsAndConditionURL",
@@ -499,8 +501,9 @@ var messagingTollfreeVerificationRequestsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleMessagingTollfreeVerificationRequestsDelete,
@@ -513,8 +516,9 @@ var messagingTollfreeVerificationRequestsRetrieveStatusHistory = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -540,8 +544,6 @@ func handleMessagingTollfreeVerificationRequestsCreate(ctx context.Context, cmd 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingTollfreeVerificationRequestNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -552,6 +554,8 @@ func handleMessagingTollfreeVerificationRequestsCreate(ctx context.Context, cmd 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingTollfreeVerificationRequestNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -626,8 +630,6 @@ func handleMessagingTollfreeVerificationRequestsUpdate(ctx context.Context, cmd 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingTollfreeVerificationRequestUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -638,6 +640,8 @@ func handleMessagingTollfreeVerificationRequestsUpdate(ctx context.Context, cmd 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingTollfreeVerificationRequestUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -672,8 +676,6 @@ func handleMessagingTollfreeVerificationRequestsList(ctx context.Context, cmd *c
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingTollfreeVerificationRequestListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -684,6 +686,8 @@ func handleMessagingTollfreeVerificationRequestsList(ctx context.Context, cmd *c
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingTollfreeVerificationRequestListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -755,8 +759,6 @@ func handleMessagingTollfreeVerificationRequestsRetrieveStatusHistory(ctx contex
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.MessagingTollfreeVerificationRequestGetStatusHistoryParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -767,6 +769,8 @@ func handleMessagingTollfreeVerificationRequestsRetrieveStatusHistory(ctx contex
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.MessagingTollfreeVerificationRequestGetStatusHistoryParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

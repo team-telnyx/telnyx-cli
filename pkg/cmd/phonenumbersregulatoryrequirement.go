@@ -45,8 +45,6 @@ func handlePhoneNumbersRegulatoryRequirementsRetrieve(ctx context.Context, cmd *
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PhoneNumbersRegulatoryRequirementGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -57,6 +55,8 @@ func handlePhoneNumbersRegulatoryRequirementsRetrieve(ctx context.Context, cmd *
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PhoneNumbersRegulatoryRequirementGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

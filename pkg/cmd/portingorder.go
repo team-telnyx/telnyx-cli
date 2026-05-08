@@ -31,7 +31,7 @@ var portingOrdersCreate = cli.Command{
 			Usage:    "A customer-specified group reference for customer bookkeeping purposes",
 			BodyPath: "customer_group_reference",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "customer-reference",
 			Usage:    "A customer-specified reference number for customer bookkeeping purposes",
 			BodyPath: "customer_reference",
@@ -47,8 +47,9 @@ var portingOrdersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[bool]{
 			Name:      "include-phone-numbers",
@@ -67,8 +68,9 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "activation-settings",
@@ -133,12 +135,12 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"documents": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "documents.invoice",
 			Usage:      "Returned ID of the submitted Invoice via the Documents endpoint",
 			InnerField: "invoice",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "documents.loa",
 			Usage:      "Returned ID of the submitted LOA via the Documents endpoint",
 			InnerField: "loa",
@@ -162,12 +164,12 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"misc": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "misc.new-billing-phone-number",
 			Usage:      "New billing phone number for the remaining numbers. Used in case the current billing phone number is being ported to Telnyx. This will be set on your account with your current service provider and should be one of the numbers remaining on that account.",
 			InnerField: "new_billing_phone_number",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "misc.remaining-numbers-action",
 			Usage:      "Remaining numbers can be either kept with their current service provider or disconnected. 'new_billing_telephone_number' is required when 'remaining_numbers_action' is 'keep'.",
 			InnerField: "remaining_numbers_action",
@@ -179,22 +181,22 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"phone-number-configuration": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "phone-number-configuration.billing-group-id",
 			Usage:      "identifies the billing group to set on the numbers when ported",
 			InnerField: "billing_group_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "phone-number-configuration.connection-id",
 			Usage:      "identifies the connection to set on the numbers when ported",
 			InnerField: "connection_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "phone-number-configuration.emergency-address-id",
 			Usage:      "identifies the emergency address to set on the numbers when ported",
 			InnerField: "emergency_address_id",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "phone-number-configuration.messaging-profile-id",
 			Usage:      "identifies the messaging profile to set on the numbers when ported",
 			InnerField: "messaging_profile_id",
@@ -217,12 +219,12 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"user-feedback": {
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "user-feedback.user-comment",
 			Usage:      "A comment related to the customer rating.",
 			InnerField: "user_comment",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*int64]{
 			Name:       "user-feedback.user-rating",
 			Usage:      "Once an order is ported, cancellation is requested or the request is cancelled, the user may rate their experience",
 			InnerField: "user_rating",
@@ -315,8 +317,9 @@ var portingOrdersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePortingOrdersDelete,
@@ -329,8 +332,9 @@ var portingOrdersRetrieveAllowedFocWindows = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePortingOrdersRetrieveAllowedFocWindows,
@@ -352,8 +356,9 @@ var portingOrdersRetrieveLoaTemplate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "loa-configuration-id",
@@ -376,8 +381,9 @@ var portingOrdersRetrieveRequirements = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
@@ -402,8 +408,9 @@ var portingOrdersRetrieveSubRequest = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handlePortingOrdersRetrieveSubRequest,
@@ -418,8 +425,6 @@ func handlePortingOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -430,6 +435,8 @@ func handlePortingOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -462,8 +469,6 @@ func handlePortingOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -474,6 +479,8 @@ func handlePortingOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -511,8 +518,6 @@ func handlePortingOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -523,6 +528,8 @@ func handlePortingOrdersUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -557,8 +564,6 @@ func handlePortingOrdersList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -569,6 +574,8 @@ func handlePortingOrdersList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -721,8 +728,6 @@ func handlePortingOrdersRetrieveLoaTemplate(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderGetLoaTemplateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -733,6 +738,8 @@ func handlePortingOrdersRetrieveLoaTemplate(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderGetLoaTemplateParams{}
 
 	response, err := client.PortingOrders.GetLoaTemplate(
 		ctx,
@@ -761,8 +768,6 @@ func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.PortingOrderGetRequirementsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -773,6 +778,8 @@ func handlePortingOrdersRetrieveRequirements(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.PortingOrderGetRequirementsParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

@@ -20,8 +20,9 @@ var verificationsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "verification-id",
-			Required: true,
+			Name:      "verification-id",
+			Required:  true,
+			PathParam: "verification_id",
 		},
 	},
 	Action:          handleVerificationsRetrieve,
@@ -45,13 +46,13 @@ var verificationsTriggerCall = cli.Command{
 			Required: true,
 			BodyPath: "verify_profile_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "custom-code",
 			Usage:    "Send a self-generated numeric code to the end-user",
 			Default:  nil,
 			BodyPath: "custom_code",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "extension",
 			Usage:    "Optional extension to dial after call is answered using DTMF digits. Valid digits are 0-9, A-D, *, and #. Pauses can be added using w (0.5s) and W (1s).",
 			Default:  nil,
@@ -111,7 +112,7 @@ var verificationsTriggerSMS = cli.Command{
 			Required: true,
 			BodyPath: "verify_profile_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "custom-code",
 			Usage:    "Send a self-generated numeric code to the end-user",
 			Default:  nil,
@@ -144,7 +145,7 @@ var verificationsTriggerWhatsappVerification = cli.Command{
 			Required: true,
 			BodyPath: "verify_profile_id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "custom-code",
 			Usage:    "Send a self-generated numeric code to the end-user",
 			Default:  nil,
@@ -210,8 +211,6 @@ func handleVerificationsTriggerCall(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerificationTriggerCallParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -222,6 +221,8 @@ func handleVerificationsTriggerCall(ctx context.Context, cmd *cli.Command) error
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerificationTriggerCallParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -251,8 +252,6 @@ func handleVerificationsTriggerFlashcall(ctx context.Context, cmd *cli.Command) 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerificationTriggerFlashcallParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -263,6 +262,8 @@ func handleVerificationsTriggerFlashcall(ctx context.Context, cmd *cli.Command) 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerificationTriggerFlashcallParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -292,8 +293,6 @@ func handleVerificationsTriggerSMS(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerificationTriggerSMSParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -304,6 +303,8 @@ func handleVerificationsTriggerSMS(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerificationTriggerSMSParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -333,8 +334,6 @@ func handleVerificationsTriggerWhatsappVerification(ctx context.Context, cmd *cl
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.VerificationTriggerWhatsappVerificationParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -345,6 +344,8 @@ func handleVerificationsTriggerWhatsappVerification(ctx context.Context, cmd *cl
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.VerificationTriggerWhatsappVerificationParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

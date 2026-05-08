@@ -20,12 +20,14 @@ var aiAssistantsVersionsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "version-id",
-			Required: true,
+			Name:      "version-id",
+			Required:  true,
+			PathParam: "version_id",
 		},
 		&requestflag.Flag[bool]{
 			Name:      "include-mcp-servers",
@@ -42,12 +44,14 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "version-id",
-			Required: true,
+			Name:      "version-id",
+			Required:  true,
+			PathParam: "version_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "description",
@@ -58,9 +62,15 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Map of dynamic variables and their default values",
 			BodyPath: "dynamic_variables",
 		},
+		&requestflag.Flag[int64]{
+			Name:     "dynamic-variables-webhook-timeout-ms",
+			Usage:    "Timeout in milliseconds for the dynamic variables webhook. Must be between 1 and 10000 ms. If the webhook does not respond within this timeout, the call proceeds with default values. See the [dynamic variables guide](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables).",
+			Default:  1500,
+			BodyPath: "dynamic_variables_webhook_timeout_ms",
+		},
 		&requestflag.Flag[string]{
 			Name:     "dynamic-variables-webhook-url",
-			Usage:    "If the dynamic_variables_webhook_url is set for the assistant, we will send a request at the start of the conversation. See our [guide](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables) for more information.",
+			Usage:    "If `dynamic_variables_webhook_url` is set, Telnyx sends a POST request to this URL at the start of the conversation to resolve dynamic variables. **Gotcha:** the webhook response must wrap variables under a top-level `dynamic_variables` object, e.g. `{\"dynamic_variables\": {\"customer_name\": \"Jane\"}}`. Returning a flat object will be ignored and variables will fall back to their defaults. See the [dynamic variables guide](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables) for the full request/response format and timeout behavior.",
 			BodyPath: "dynamic_variables_webhook_url",
 		},
 		&requestflag.Flag[[]string]{
@@ -89,10 +99,27 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "System instructions for the assistant. These may be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables)",
 			BodyPath: "instructions",
 		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "integration",
+			Usage:    "Connected integrations attached to the assistant. The catalog of available integrations is at `/ai/integrations`; the user's connected integrations are at `/ai/integrations/connections`. Each item references a catalog integration by `integration_id`.",
+			Default:  []map[string]any{},
+			BodyPath: "integrations",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "interruption-settings",
+			Usage:    "Settings for interruptions and how the assistant decides the user has finished speaking. These timings are most relevant when using non turn-taking transcription models. For turn-taking models like `deepgram/flux`, end-of-turn behavior is controlled by the transcription end-of-turn settings under `transcription.settings` (`eot_threshold`, `eot_timeout_ms`, `eager_eot_threshold`).",
+			BodyPath: "interruption_settings",
+		},
 		&requestflag.Flag[string]{
 			Name:     "llm-api-key-ref",
-			Usage:    "This is only needed when using third-party inference providers. The `identifier` for an integration secret [/v2/integration_secrets](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) that refers to your LLM provider's API key. Warning: Free plans are unlikely to work with this integration.",
+			Usage:    "This is only needed when using third-party inference providers selected by `model`. The `identifier` for an integration secret [/v2/integration_secrets](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) that refers to your LLM provider's API key. For bring-your-own endpoint authentication, use `external_llm.llm_api_key_ref` instead. Warning: Free plans are unlikely to work with this integration.",
 			BodyPath: "llm_api_key_ref",
+		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "mcp-server",
+			Usage:    "MCP servers attached to the assistant. Create MCP servers with `/ai/mcp_servers`, then reference them by `id` here.",
+			Default:  []map[string]any{},
+			BodyPath: "mcp_servers",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "messaging-settings",
@@ -100,7 +127,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "model",
-			Usage:    "ID of the model to use. You can use the [Get models API](https://developers.telnyx.com/api-reference/chat/get-available-models) to see all of your available models,",
+			Usage:    "ID of the model to use when `external_llm` is not set. You can use the [Get models API](https://developers.telnyx.com/api-reference/chat/get-available-models) to see available models. If `external_llm` is provided, the assistant uses `external_llm` instead of this field. If neither `model` nor `external_llm` is provided, Telnyx applies the default model.",
 			BodyPath: "model",
 		},
 		&requestflag.Flag[string]{
@@ -120,22 +147,35 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "privacy-settings",
 			BodyPath: "privacy_settings",
 		},
+		&requestflag.Flag[[]string]{
+			Name:     "tag",
+			Usage:    "Tags associated with the assistant. Tags can also be managed with the assistant tag endpoints.",
+			Default:  []string{},
+			BodyPath: "tags",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "telephony-settings",
 			BodyPath: "telephony_settings",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "tool-id",
+			Usage:    "IDs of shared tools to attach to the assistant. New integrations should prefer `tool_ids` over inline `tools`.",
 			BodyPath: "tool_ids",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "tool",
-			Usage:    "The tools that the assistant can use. These may be templated with [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables)",
+			Usage:    "Deprecated for new integrations. Inline tool definitions available to the assistant. Prefer `tool_ids` to attach shared tools created with the AI Tools endpoints.",
 			BodyPath: "tools",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "transcription",
 			BodyPath: "transcription",
+		},
+		&requestflag.Flag[string]{
+			Name:     "version-name",
+			Usage:    "Human-readable name for the assistant version.",
+			Default:  "New assistant",
+			BodyPath: "version_name",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "voice-settings",
@@ -173,7 +213,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "external-llm.forward-metadata",
-			Usage:      "When enabled, Telnyx forwards the assistant's dynamic variables to the external LLM endpoint. Defaults to false. The chat completion request includes a top-level `extra_metadata` object when dynamic variables are available. For example: `{\"extra_metadata\":{\"customer_name\":\"Jane\",\"account_id\":\"acct_789\",\"telnyx_agent_target\":\"+13125550100\",\"telnyx_end_user_target\":\"+13125550123\"}}`.",
+			Usage:      "When `true`, Telnyx forwards the assistant's dynamic variables to the external LLM endpoint as a top-level `extra_metadata` object on the chat completion request body. Defaults to `false`. Example payload sent to the external endpoint: `{\"extra_metadata\": {\"customer_name\": \"Jane\", \"account_id\": \"acct_789\", \"telnyx_agent_target\": \"+13125550100\", \"telnyx_end_user_target\": \"+13125550123\"}}`. Distinct from OpenAI's native `metadata` field, which has its own size and type limits.",
 			InnerField: "forward_metadata",
 		},
 		&requestflag.InnerFlag[string]{
@@ -210,6 +250,47 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "insight_group_id",
 		},
 	},
+	"integration": {
+		&requestflag.InnerFlag[string]{
+			Name:       "integration.integration-id",
+			Usage:      "Catalog integration ID to attach. This is the `id` from the integrations catalog at `/ai/integrations` (the same value also appears as `integration_id` on entries returned by `/ai/integrations/connections`). It is **not** the connection-level `id` from `/ai/integrations/connections`.",
+			InnerField: "integration_id",
+		},
+		&requestflag.InnerFlag[[]string]{
+			Name:       "integration.allowed-list",
+			Usage:      "Optional per-assistant allowlist of integration tool names. When omitted or empty, all tools allowed by the connected integration are available to the assistant.",
+			InnerField: "allowed_list",
+		},
+	},
+	"interruption-settings": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "interruption-settings.disable-greeting-interruption",
+			Usage:      "When true, disables user interruptions while the assistant greeting is playing.",
+			InnerField: "disable_greeting_interruption",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "interruption-settings.enable",
+			Usage:      "Whether users can interrupt the assistant while it is speaking.",
+			InnerField: "enable",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "interruption-settings.start-speaking-plan",
+			Usage:      "Controls when the assistant starts speaking after the user stops. These thresholds primarily apply to non turn-taking transcription models. For turn-taking models like `deepgram/flux`, end-of-turn detection is driven by the transcription end-of-turn settings under `transcription.settings` instead.",
+			InnerField: "start_speaking_plan",
+		},
+	},
+	"mcp-server": {
+		&requestflag.InnerFlag[string]{
+			Name:       "mcp-server.id",
+			Usage:      "ID of the MCP server to attach. This must be the `id` of an MCP server returned by the `/ai/mcp_servers` endpoints.",
+			InnerField: "id",
+		},
+		&requestflag.InnerFlag[[]string]{
+			Name:       "mcp-server.allowed-tools",
+			Usage:      "Optional per-assistant allowlist of MCP tool names. When omitted, the assistant uses the MCP server's configured `allowed_tools`.",
+			InnerField: "allowed_tools",
+		},
+	},
 	"messaging-settings": {
 		&requestflag.InnerFlag[int64]{
 			Name:       "messaging-settings.conversation-inactivity-minutes",
@@ -231,6 +312,23 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.InnerFlag[string]{
 			Name:       "observability-settings.host",
 			InnerField: "host",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.prompt-label",
+			InnerField: "prompt_label",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.prompt-name",
+			InnerField: "prompt_name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "observability-settings.prompt-sync",
+			Usage:      "Whether to auto-publish the assistant's instructions as a Langfuse prompt.\n\nWhen ENABLED + prompt_name set, every assistant create/update pushes\n`instructions` to Langfuse via create_prompt and stores the returned\nversion in prompt_version.",
+			InnerField: "prompt_sync",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "observability-settings.prompt-version",
+			InnerField: "prompt_version",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "observability-settings.public-key-ref",
@@ -354,7 +452,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Enables emotionally expressive speech using SSML emotion tags. When enabled, the assistant uses audio tags like angry, excited, content, and sad to add emotional nuance. Only supported for Telnyx Ultra voices.",
 			InnerField: "expressive_mode",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "voice-settings.language-boost",
 			Usage:      "Enhances recognition for specific languages and dialects during MiniMax TTS synthesis. Default is null (no boost). Set to 'auto' for automatic language detection. Only applicable when using MiniMax voices.",
 			InnerField: "language_boost",
@@ -405,12 +503,12 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The default state of the widget.",
 			InnerField: "default_state",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.give-feedback-url",
 			Usage:      "URL for users to give feedback.",
 			InnerField: "give_feedback_url",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.logo-icon-url",
 			Usage:      "URL to a custom logo icon for the widget.",
 			InnerField: "logo_icon_url",
@@ -420,7 +518,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The positioning style for the widget.",
 			InnerField: "position",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.report-issue-url",
 			Usage:      "URL for users to report issues.",
 			InnerField: "report_issue_url",
@@ -440,7 +538,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The visual theme for the widget.",
 			InnerField: "theme",
 		},
-		&requestflag.InnerFlag[any]{
+		&requestflag.InnerFlag[*string]{
 			Name:       "widget-settings.view-history-url",
 			Usage:      "URL to view conversation history.",
 			InnerField: "view_history_url",
@@ -454,8 +552,9 @@ var aiAssistantsVersionsList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 	},
 	Action:          handleAIAssistantsVersionsList,
@@ -468,12 +567,14 @@ var aiAssistantsVersionsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "version-id",
-			Required: true,
+			Name:      "version-id",
+			Required:  true,
+			PathParam: "version_id",
 		},
 	},
 	Action:          handleAIAssistantsVersionsDelete,
@@ -486,12 +587,14 @@ var aiAssistantsVersionsPromote = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "assistant-id",
-			Required: true,
+			Name:      "assistant-id",
+			Required:  true,
+			PathParam: "assistant_id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "version-id",
-			Required: true,
+			Name:      "version-id",
+			Required:  true,
+			PathParam: "version_id",
 		},
 	},
 	Action:          handleAIAssistantsVersionsPromote,
@@ -509,10 +612,6 @@ func handleAIAssistantsVersionsRetrieve(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantVersionGetParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -522,6 +621,10 @@ func handleAIAssistantsVersionsRetrieve(ctx context.Context, cmd *cli.Command) e
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantVersionGetParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte
@@ -560,10 +663,6 @@ func handleAIAssistantsVersionsUpdate(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantVersionUpdateParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -573,6 +672,10 @@ func handleAIAssistantsVersionsUpdate(ctx context.Context, cmd *cli.Command) err
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantVersionUpdateParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte
@@ -653,10 +756,6 @@ func handleAIAssistantsVersionsDelete(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantVersionDeleteParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -666,6 +765,10 @@ func handleAIAssistantsVersionsDelete(ctx context.Context, cmd *cli.Command) err
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantVersionDeleteParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	return client.AI.Assistants.Versions.Delete(
@@ -687,10 +790,6 @@ func handleAIAssistantsVersionsPromote(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.AIAssistantVersionPromoteParams{
-		AssistantID: cmd.Value("assistant-id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -700,6 +799,10 @@ func handleAIAssistantsVersionsPromote(ctx context.Context, cmd *cli.Command) er
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.AIAssistantVersionPromoteParams{
+		AssistantID: cmd.Value("assistant-id").(string),
 	}
 
 	var res []byte

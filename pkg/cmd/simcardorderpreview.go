@@ -44,8 +44,6 @@ func handleSimCardOrderPreviewPreview(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SimCardOrderPreviewPreviewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -56,6 +54,8 @@ func handleSimCardOrderPreviewPreview(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.SimCardOrderPreviewPreviewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

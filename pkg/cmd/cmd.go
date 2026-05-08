@@ -639,12 +639,28 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:openai",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiOpenAIListModels,
+				},
+			},
+			{
 				Name:     "ai:openai:embeddings",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&aiOpenAIEmbeddingsCreateEmbeddings,
 					&aiOpenAIEmbeddingsListEmbeddingModels,
+				},
+			},
+			{
+				Name:     "ai:openai:chat",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiOpenAIChatCreateCompletion,
 				},
 			},
 			{
@@ -3193,6 +3209,26 @@ func init() {
 					&pronunciationDictsUpdate,
 					&pronunciationDictsList,
 					&pronunciationDictsDelete,
+				},
+			},
+			{
+				Name:     "uac-connections",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&uacConnectionsCreate,
+					&uacConnectionsRetrieve,
+					&uacConnectionsUpdate,
+					&uacConnectionsList,
+					&uacConnectionsDelete,
+				},
+			},
+			{
+				Name:     "uac-connections:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&uacConnectionsActionsCheckRegistrationStatus,
 				},
 			},
 			{

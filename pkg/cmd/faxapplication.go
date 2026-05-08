@@ -57,13 +57,13 @@ var faxApplicationsCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  []string{},
 			BodyPath: "tags",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			Usage:    "The failover URL where webhooks related to this connection will be sent if sending to the primary URL fails. Must include a scheme, such as 'https'.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_event_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "webhook-timeout-secs",
 			Usage:    "Specifies how many seconds to wait before timing out a webhook.",
 			Default:  nil,
@@ -110,8 +110,9 @@ var faxApplicationsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleFaxApplicationsRetrieve,
@@ -124,8 +125,9 @@ var faxApplicationsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "application-name",
@@ -151,7 +153,7 @@ var faxApplicationsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Latency",
 			BodyPath: "anchorsite_override",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "fax-email-recipient",
 			Usage:    "Specifies an email address where faxes sent to this application will be forwarded to (as pdf or tiff attachments)",
 			Default:  nil,
@@ -170,13 +172,13 @@ var faxApplicationsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Tags associated with the Fax Application.",
 			BodyPath: "tags",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*string]{
 			Name:     "webhook-event-failover-url",
 			Usage:    "The failover URL where webhooks related to this connection will be sent if sending to the primary URL fails. Must include a scheme, such as 'https'.",
-			Default:  "",
+			Default:  requestflag.Ptr[string](""),
 			BodyPath: "webhook_event_failover_url",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[*int64]{
 			Name:     "webhook-timeout-secs",
 			Usage:    "Specifies how many seconds to wait before timing out a webhook.",
 			Default:  nil,
@@ -269,8 +271,9 @@ var faxApplicationsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 	},
 	Action:          handleFaxApplicationsDelete,
@@ -285,8 +288,6 @@ func handleFaxApplicationsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.FaxApplicationNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -297,6 +298,8 @@ func handleFaxApplicationsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.FaxApplicationNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -371,8 +374,6 @@ func handleFaxApplicationsUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.FaxApplicationUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -383,6 +384,8 @@ func handleFaxApplicationsUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.FaxApplicationUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -417,8 +420,6 @@ func handleFaxApplicationsList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.FaxApplicationListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -429,6 +430,8 @@ func handleFaxApplicationsList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.FaxApplicationListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")

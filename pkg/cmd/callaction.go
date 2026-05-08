@@ -20,8 +20,9 @@ var callsActionsAddAIAssistantMessages = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -49,8 +50,9 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "assistant",
@@ -388,8 +390,9 @@ var callsActionsBridge = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id-to-bridge",
-			Required: true,
+			Name:      "call-control-id-to-bridge",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "call-control-id-to-bridge-with",
@@ -512,8 +515,9 @@ var callsActionsEnqueue = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "queue-name",
@@ -559,8 +563,9 @@ var callsActionsGather = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -630,8 +635,9 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "parameters",
@@ -703,7 +709,7 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.",
+			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.",
 			Default:  "Telnyx.KokoroTTS.af",
 			BodyPath: "voice",
 		},
@@ -759,8 +765,13 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 	},
 	"transcription": {
 		&requestflag.InnerFlag[string]{
+			Name:       "transcription.language",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`.",
+			InnerField: "language",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant.\n\n- `distil-whisper/distil-large-v2` is lower latency but English-only.\n- `openai/whisper-large-v3-turbo` is multi-lingual with automatic language detection but slightly higher latency.\n- `google` is a multi-lingual option, please describe the language in the `language` field.",
+			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-streaming` for live streaming transcription.\n- `xai/grok-stt` for live streaming transcription.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
 			InnerField: "model",
 		},
 	},
@@ -772,8 +783,9 @@ var callsActionsGatherUsingAudio = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "audio-url",
@@ -858,8 +870,9 @@ var callsActionsGatherUsingSpeak = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "payload",
@@ -869,7 +882,7 @@ var callsActionsGatherUsingSpeak = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery). Use `voice_settings` to configure custom deployments, regions, or API keys.\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n- **Telnyx:** Use `Telnyx.<model_id>.<voice_id>` (e.g., `Telnyx.KokoroTTS.af`). Use `voice_settings` to configure voice_speed and other synthesis parameters.\n- **Minimax:** Use `Minimax.<ModelId>.<VoiceId>` (e.g., `Minimax.speech-02-hd.Wise_Woman`). Supported models: `speech-02-turbo`, `speech-02-hd`, `speech-2.6-turbo`, `speech-2.8-turbo`. Use `voice_settings` to configure speed, volume, pitch, and language_boost.\n- **Rime:** Use `Rime.<model_id>.<voice_id>` (e.g., `Rime.Arcana.cove`). Supported model_ids: `Arcana`, `Mist`. Use `voice_settings` to configure voice_speed.\n- **Resemble:** Use `Resemble.Turbo.<voice_id>` (e.g., `Resemble.Turbo.my_voice`). Only `Turbo` model is supported. Use `voice_settings` to configure precision, sample_rate, and format.\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.\n\nFor service_level basic, you may define the gender of the speaker (male or female).",
+			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery). Use `voice_settings` to configure custom deployments, regions, or API keys.\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n- **Telnyx:** Use `Telnyx.<model_id>.<voice_id>` (e.g., `Telnyx.KokoroTTS.af`). Use `voice_settings` to configure voice_speed and other synthesis parameters.\n- **Minimax:** Use `Minimax.<ModelId>.<VoiceId>` (e.g., `Minimax.speech-02-hd.Wise_Woman`). Supported models: `speech-02-turbo`, `speech-02-hd`, `speech-2.6-turbo`, `speech-2.8-turbo`. Use `voice_settings` to configure speed, volume, pitch, and language_boost.\n- **Rime:** Use `Rime.<model_id>.<voice_id>` (e.g., `Rime.Arcana.cove`). Supported model_ids: `Arcana`, `Mist`. Use `voice_settings` to configure voice_speed.\n- **Resemble:** Use `Resemble.Turbo.<voice_id>` (e.g., `Resemble.Turbo.my_voice`). Only `Turbo` model is supported. Use `voice_settings` to configure precision, sample_rate, and format.\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n\nFor service_level basic, you may define the gender of the speaker (male or female).",
 			Required: true,
 			BodyPath: "voice",
 		},
@@ -963,8 +976,9 @@ var callsActionsHangup = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -1005,8 +1019,9 @@ var callsActionsJoinAIAssistant = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "conversation-id",
@@ -1063,8 +1078,9 @@ var callsActionsLeaveQueue = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -1087,8 +1103,9 @@ var callsActionsPauseRecording = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -1116,8 +1133,9 @@ var callsActionsRefer = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "sip-address",
@@ -1191,8 +1209,9 @@ var callsActionsReject = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "cause",
@@ -1221,8 +1240,9 @@ var callsActionsResumeRecording = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -1250,8 +1270,9 @@ var callsActionsSendDtmf = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "digits",
@@ -1286,8 +1307,9 @@ var callsActionsSendSipInfo = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "body",
@@ -1322,8 +1344,9 @@ var callsActionsSpeak = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "payload",
@@ -1333,7 +1356,7 @@ var callsActionsSpeak = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery). Use `voice_settings` to configure custom deployments, regions, or API keys.\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n- **Telnyx:** Use `Telnyx.<model_id>.<voice_id>` (e.g., `Telnyx.KokoroTTS.af`). Use `voice_settings` to configure voice_speed and other synthesis parameters.\n- **Minimax:** Use `Minimax.<ModelId>.<VoiceId>` (e.g., `Minimax.speech-02-hd.Wise_Woman`). Supported models: `speech-02-turbo`, `speech-02-hd`, `speech-2.6-turbo`, `speech-2.8-turbo`. Use `voice_settings` to configure speed, volume, pitch, and language_boost.\n- **Rime:** Use `Rime.<model_id>.<voice_id>` (e.g., `Rime.Arcana.cove`). Supported model_ids: `Arcana`, `Mist`. Use `voice_settings` to configure voice_speed.\n- **Resemble:** Use `Resemble.Turbo.<voice_id>` (e.g., `Resemble.Turbo.my_voice`). Only `Turbo` model is supported. Use `voice_settings` to configure precision, sample_rate, and format.\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.\n\nFor service_level basic, you may define the gender of the speaker (male or female).",
+			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery). Use `voice_settings` to configure custom deployments, regions, or API keys.\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n- **Telnyx:** Use `Telnyx.<model_id>.<voice_id>` (e.g., `Telnyx.KokoroTTS.af`). Use `voice_settings` to configure voice_speed and other synthesis parameters.\n- **Minimax:** Use `Minimax.<ModelId>.<VoiceId>` (e.g., `Minimax.speech-02-hd.Wise_Woman`). Supported models: `speech-02-turbo`, `speech-02-hd`, `speech-2.6-turbo`, `speech-2.8-turbo`. Use `voice_settings` to configure speed, volume, pitch, and language_boost.\n- **Rime:** Use `Rime.<model_id>.<voice_id>` (e.g., `Rime.Arcana.cove`). Supported model_ids: `Arcana`, `Mist`. Use `voice_settings` to configure voice_speed.\n- **Resemble:** Use `Resemble.Turbo.<voice_id>` (e.g., `Resemble.Turbo.my_voice`). Only `Turbo` model is supported. Use `voice_settings` to configure precision, sample_rate, and format.\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n\nFor service_level basic, you may define the gender of the speaker (male or female).",
 			Required: true,
 			BodyPath: "voice",
 		},
@@ -1395,8 +1418,9 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "assistant",
@@ -1448,7 +1472,7 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.",
+			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.",
 			Default:  "Telnyx.KokoroTTS.af",
 			BodyPath: "voice",
 		},
@@ -1559,8 +1583,13 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 	},
 	"transcription": {
 		&requestflag.InnerFlag[string]{
+			Name:       "transcription.language",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`.",
+			InnerField: "language",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant.\n\n- `distil-whisper/distil-large-v2` is lower latency but English-only.\n- `openai/whisper-large-v3-turbo` is multi-lingual with automatic language detection but slightly higher latency.\n- `google` is a multi-lingual option, please describe the language in the `language` field.",
+			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-streaming` for live streaming transcription.\n- `xai/grok-stt` for live streaming transcription.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
 			InnerField: "model",
 		},
 	},
@@ -1572,8 +1601,9 @@ var callsActionsStartForking = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -1612,8 +1642,9 @@ var callsActionsStartNoiseSuppression = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -1696,8 +1727,9 @@ var callsActionsStartPlayback = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "audio-type",
@@ -1768,8 +1800,9 @@ var callsActionsStartRecording = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "channels",
@@ -1879,8 +1912,9 @@ var callsActionsStartSiprec = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -1931,8 +1965,9 @@ var callsActionsStartStreaming = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2041,8 +2076,9 @@ var callsActionsStartTranscription = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2081,8 +2117,9 @@ var callsActionsStopAIAssistant = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2105,8 +2142,9 @@ var callsActionsStopForking = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2135,8 +2173,9 @@ var callsActionsStopGather = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2159,8 +2198,9 @@ var callsActionsStopNoiseSuppression = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2183,8 +2223,9 @@ var callsActionsStopPlayback = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2219,8 +2260,9 @@ var callsActionsStopRecording = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2248,8 +2290,9 @@ var callsActionsStopSiprec = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2272,8 +2315,9 @@ var callsActionsStopStreaming = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2301,8 +2345,9 @@ var callsActionsStopTranscription = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2325,8 +2370,9 @@ var callsActionsSwitchSupervisorRole = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "role",
@@ -2345,12 +2391,13 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "to",
-			Usage:    "The DID or SIP URI to dial out to.",
+			Usage:    "The DID or SIP URI to dial out to. For SIP URI destinations, append `;secure=true` or `;secure=srtp` to enable SRTP media encryption for that endpoint, or `;secure=dtls` to enable DTLS media encryption for that endpoint. If `media_encryption` is set to `SRTP` or `DTLS`, it takes precedence over any per-endpoint `secure` URI parameter.",
 			Required: true,
 			BodyPath: "to",
 		},
@@ -2403,7 +2450,7 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "media-encryption",
-			Usage:    "Defines whether media should be encrypted on the new call leg.",
+			Usage:    "Defines whether media should be encrypted on the new call leg. For SIP URI destinations, media encryption can also be requested per endpoint with the `secure` URI parameter: `;secure=true` or `;secure=srtp` enables SRTP, and `;secure=dtls` enables DTLS. This parameter, when set to `SRTP` or `DTLS`, takes precedence over the per-endpoint `secure` value.",
 			Default:  "disabled",
 			BodyPath: "media_encryption",
 		},
@@ -2664,8 +2711,9 @@ var callsActionsUpdateClientState = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "call-control-id",
-			Required: true,
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "client-state",
@@ -2689,8 +2737,6 @@ func handleCallsActionsAddAIAssistantMessages(ctx context.Context, cmd *cli.Comm
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionAddAIAssistantMessagesParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -2701,6 +2747,8 @@ func handleCallsActionsAddAIAssistantMessages(ctx context.Context, cmd *cli.Comm
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionAddAIAssistantMessagesParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -2738,8 +2786,6 @@ func handleCallsActionsAnswer(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionAnswerParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -2750,6 +2796,8 @@ func handleCallsActionsAnswer(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionAnswerParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -2787,8 +2835,6 @@ func handleCallsActionsBridge(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionBridgeParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -2799,6 +2845,8 @@ func handleCallsActionsBridge(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionBridgeParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -2836,8 +2884,6 @@ func handleCallsActionsEnqueue(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionEnqueueParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -2848,6 +2894,8 @@ func handleCallsActionsEnqueue(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionEnqueueParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -2885,8 +2933,6 @@ func handleCallsActionsGather(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionGatherParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -2897,6 +2943,8 @@ func handleCallsActionsGather(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionGatherParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -2934,8 +2982,6 @@ func handleCallsActionsGatherUsingAI(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionGatherUsingAIParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -2946,6 +2992,8 @@ func handleCallsActionsGatherUsingAI(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionGatherUsingAIParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -2983,8 +3031,6 @@ func handleCallsActionsGatherUsingAudio(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionGatherUsingAudioParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -2995,6 +3041,8 @@ func handleCallsActionsGatherUsingAudio(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionGatherUsingAudioParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3032,8 +3080,6 @@ func handleCallsActionsGatherUsingSpeak(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionGatherUsingSpeakParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3044,6 +3090,8 @@ func handleCallsActionsGatherUsingSpeak(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionGatherUsingSpeakParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3081,8 +3129,6 @@ func handleCallsActionsHangup(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionHangupParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3093,6 +3139,8 @@ func handleCallsActionsHangup(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionHangupParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3130,8 +3178,6 @@ func handleCallsActionsJoinAIAssistant(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionJoinAIAssistantParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3142,6 +3188,8 @@ func handleCallsActionsJoinAIAssistant(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionJoinAIAssistantParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3179,8 +3227,6 @@ func handleCallsActionsLeaveQueue(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionLeaveQueueParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3191,6 +3237,8 @@ func handleCallsActionsLeaveQueue(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionLeaveQueueParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3228,8 +3276,6 @@ func handleCallsActionsPauseRecording(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionPauseRecordingParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3240,6 +3286,8 @@ func handleCallsActionsPauseRecording(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionPauseRecordingParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3277,8 +3325,6 @@ func handleCallsActionsRefer(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionReferParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3289,6 +3335,8 @@ func handleCallsActionsRefer(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionReferParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3326,8 +3374,6 @@ func handleCallsActionsReject(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionRejectParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3338,6 +3384,8 @@ func handleCallsActionsReject(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionRejectParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3375,8 +3423,6 @@ func handleCallsActionsResumeRecording(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionResumeRecordingParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3387,6 +3433,8 @@ func handleCallsActionsResumeRecording(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionResumeRecordingParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3424,8 +3472,6 @@ func handleCallsActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionSendDtmfParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3436,6 +3482,8 @@ func handleCallsActionsSendDtmf(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionSendDtmfParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3473,8 +3521,6 @@ func handleCallsActionsSendSipInfo(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionSendSipInfoParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3485,6 +3531,8 @@ func handleCallsActionsSendSipInfo(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionSendSipInfoParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3522,8 +3570,6 @@ func handleCallsActionsSpeak(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionSpeakParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3534,6 +3580,8 @@ func handleCallsActionsSpeak(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionSpeakParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3571,8 +3619,6 @@ func handleCallsActionsStartAIAssistant(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStartAIAssistantParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3583,6 +3629,8 @@ func handleCallsActionsStartAIAssistant(ctx context.Context, cmd *cli.Command) e
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStartAIAssistantParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3620,8 +3668,6 @@ func handleCallsActionsStartForking(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStartForkingParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3632,6 +3678,8 @@ func handleCallsActionsStartForking(ctx context.Context, cmd *cli.Command) error
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStartForkingParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3669,8 +3717,6 @@ func handleCallsActionsStartNoiseSuppression(ctx context.Context, cmd *cli.Comma
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStartNoiseSuppressionParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3681,6 +3727,8 @@ func handleCallsActionsStartNoiseSuppression(ctx context.Context, cmd *cli.Comma
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStartNoiseSuppressionParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3718,8 +3766,6 @@ func handleCallsActionsStartPlayback(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStartPlaybackParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3730,6 +3776,8 @@ func handleCallsActionsStartPlayback(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStartPlaybackParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3767,8 +3815,6 @@ func handleCallsActionsStartRecording(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStartRecordingParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3779,6 +3825,8 @@ func handleCallsActionsStartRecording(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStartRecordingParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3816,8 +3864,6 @@ func handleCallsActionsStartSiprec(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStartSiprecParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3828,6 +3874,8 @@ func handleCallsActionsStartSiprec(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStartSiprecParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3865,8 +3913,6 @@ func handleCallsActionsStartStreaming(ctx context.Context, cmd *cli.Command) err
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStartStreamingParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3877,6 +3923,8 @@ func handleCallsActionsStartStreaming(ctx context.Context, cmd *cli.Command) err
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStartStreamingParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3914,8 +3962,6 @@ func handleCallsActionsStartTranscription(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStartTranscriptionParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3926,6 +3972,8 @@ func handleCallsActionsStartTranscription(ctx context.Context, cmd *cli.Command)
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStartTranscriptionParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -3963,8 +4011,6 @@ func handleCallsActionsStopAIAssistant(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStopAIAssistantParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -3975,6 +4021,8 @@ func handleCallsActionsStopAIAssistant(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStopAIAssistantParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4012,8 +4060,6 @@ func handleCallsActionsStopForking(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStopForkingParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4024,6 +4070,8 @@ func handleCallsActionsStopForking(ctx context.Context, cmd *cli.Command) error 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStopForkingParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4061,8 +4109,6 @@ func handleCallsActionsStopGather(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStopGatherParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4073,6 +4119,8 @@ func handleCallsActionsStopGather(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStopGatherParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4110,8 +4158,6 @@ func handleCallsActionsStopNoiseSuppression(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStopNoiseSuppressionParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4122,6 +4168,8 @@ func handleCallsActionsStopNoiseSuppression(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStopNoiseSuppressionParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4159,8 +4207,6 @@ func handleCallsActionsStopPlayback(ctx context.Context, cmd *cli.Command) error
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStopPlaybackParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4171,6 +4217,8 @@ func handleCallsActionsStopPlayback(ctx context.Context, cmd *cli.Command) error
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStopPlaybackParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4208,8 +4256,6 @@ func handleCallsActionsStopRecording(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStopRecordingParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4220,6 +4266,8 @@ func handleCallsActionsStopRecording(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStopRecordingParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4257,8 +4305,6 @@ func handleCallsActionsStopSiprec(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStopSiprecParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4269,6 +4315,8 @@ func handleCallsActionsStopSiprec(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStopSiprecParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4306,8 +4354,6 @@ func handleCallsActionsStopStreaming(ctx context.Context, cmd *cli.Command) erro
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStopStreamingParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4318,6 +4364,8 @@ func handleCallsActionsStopStreaming(ctx context.Context, cmd *cli.Command) erro
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStopStreamingParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4355,8 +4403,6 @@ func handleCallsActionsStopTranscription(ctx context.Context, cmd *cli.Command) 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionStopTranscriptionParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4367,6 +4413,8 @@ func handleCallsActionsStopTranscription(ctx context.Context, cmd *cli.Command) 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionStopTranscriptionParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4404,8 +4452,6 @@ func handleCallsActionsSwitchSupervisorRole(ctx context.Context, cmd *cli.Comman
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionSwitchSupervisorRoleParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4416,6 +4462,8 @@ func handleCallsActionsSwitchSupervisorRole(ctx context.Context, cmd *cli.Comman
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionSwitchSupervisorRoleParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4453,8 +4501,6 @@ func handleCallsActionsTransfer(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionTransferParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4465,6 +4511,8 @@ func handleCallsActionsTransfer(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionTransferParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -4502,8 +4550,6 @@ func handleCallsActionsUpdateClientState(ctx context.Context, cmd *cli.Command) 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.CallActionUpdateClientStateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -4514,6 +4560,8 @@ func handleCallsActionsUpdateClientState(ctx context.Context, cmd *cli.Command) 
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.CallActionUpdateClientStateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

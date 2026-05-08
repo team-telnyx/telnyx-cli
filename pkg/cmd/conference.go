@@ -94,8 +94,9 @@ var conferencesRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "region",
@@ -213,8 +214,9 @@ var conferencesListParticipants = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "conference-id",
-			Required: true,
+			Name:      "conference-id",
+			Required:  true,
+			PathParam: "conference_id",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
@@ -267,12 +269,14 @@ var conferencesRetrieveParticipant = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "participant-id",
-			Required: true,
+			Name:      "participant-id",
+			Required:  true,
+			PathParam: "participant_id",
 		},
 	},
 	Action:          handleConferencesRetrieveParticipant,
@@ -285,12 +289,14 @@ var conferencesUpdateParticipant = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "id",
-			Required: true,
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
 		},
 		&requestflag.Flag[string]{
-			Name:     "participant-id",
-			Required: true,
+			Name:      "participant-id",
+			Required:  true,
+			PathParam: "participant_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "beep-enabled",
@@ -320,8 +326,6 @@ func handleConferencesCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ConferenceNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -332,6 +336,8 @@ func handleConferencesCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ConferenceNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -364,8 +370,6 @@ func handleConferencesRetrieve(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ConferenceGetParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -376,6 +380,8 @@ func handleConferencesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ConferenceGetParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -410,8 +416,6 @@ func handleConferencesList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ConferenceListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -422,6 +426,8 @@ func handleConferencesList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ConferenceListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -468,8 +474,6 @@ func handleConferencesListParticipants(ctx context.Context, cmd *cli.Command) er
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ConferenceListParticipantsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -480,6 +484,8 @@ func handleConferencesListParticipants(ctx context.Context, cmd *cli.Command) er
 	if err != nil {
 		return err
 	}
+
+	params := telnyx.ConferenceListParticipantsParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -536,10 +542,6 @@ func handleConferencesRetrieveParticipant(ctx context.Context, cmd *cli.Command)
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ConferenceGetParticipantParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -549,6 +551,10 @@ func handleConferencesRetrieveParticipant(ctx context.Context, cmd *cli.Command)
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.ConferenceGetParticipantParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte
@@ -587,10 +593,6 @@ func handleConferencesUpdateParticipant(ctx context.Context, cmd *cli.Command) e
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.ConferenceUpdateParticipantParams{
-		ID: cmd.Value("id").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -600,6 +602,10 @@ func handleConferencesUpdateParticipant(ctx context.Context, cmd *cli.Command) e
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.ConferenceUpdateParticipantParams{
+		ID: cmd.Value("id").(string),
 	}
 
 	var res []byte

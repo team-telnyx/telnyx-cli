@@ -20,12 +20,14 @@ var sessionAnalysisRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "record-type",
-			Required: true,
+			Name:      "record-type",
+			Required:  true,
+			PathParam: "record_type",
 		},
 		&requestflag.Flag[string]{
-			Name:     "event-id",
-			Required: true,
+			Name:      "event-id",
+			Required:  true,
+			PathParam: "event_id",
 		},
 		&requestflag.Flag[any]{
 			Name:      "date-time",
@@ -66,10 +68,6 @@ func handleSessionAnalysisRetrieve(ctx context.Context, cmd *cli.Command) error 
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := telnyx.SessionAnalysisGetParams{
-		RecordType: cmd.Value("record-type").(string),
-	}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -79,6 +77,10 @@ func handleSessionAnalysisRetrieve(ctx context.Context, cmd *cli.Command) error 
 	)
 	if err != nil {
 		return err
+	}
+
+	params := telnyx.SessionAnalysisGetParams{
+		RecordType: cmd.Value("record-type").(string),
 	}
 
 	var res []byte
