@@ -18,7 +18,7 @@ func TestCallsDial(t *testing.T) {
 			"calls", "dial",
 			"--connection-id", "7267xxxxxxxxxxxxxx",
 			"--from", "+18005550101",
-			"--to", "+18005550100 or sip:username@sip.telnyx.com",
+			"--to", "+18005550100 or sip:username@sip.telnyx.com;secure=srtp",
 			"--answering-machine-detection", "detect",
 			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
 			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
@@ -91,7 +91,7 @@ func TestCallsDial(t *testing.T) {
 			"calls", "dial",
 			"--connection-id", "7267xxxxxxxxxxxxxx",
 			"--from", "+18005550101",
-			"--to", "+18005550100 or sip:username@sip.telnyx.com",
+			"--to", "+18005550100 or sip:username@sip.telnyx.com;secure=srtp",
 			"--answering-machine-detection", "detect",
 			"--answering-machine-detection-config.after-greeting-silence-millis", "1000",
 			"--answering-machine-detection-config.between-words-silence-millis", "1000",
@@ -205,7 +205,7 @@ func TestCallsDial(t *testing.T) {
 		pipeData := []byte("" +
 			"connection_id: 7267xxxxxxxxxxxxxx\n" +
 			"from: '+18005550101'\n" +
-			"to: +18005550100 or sip:username@sip.telnyx.com\n" +
+			"to: +18005550100 or sip:username@sip.telnyx.com;secure=srtp\n" +
 			"answering_machine_detection: detect\n" +
 			"answering_machine_detection_config:\n" +
 			"  after_greeting_silence_millis: 1000\n" +
