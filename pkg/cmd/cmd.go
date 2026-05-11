@@ -280,6 +280,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&aiCreateResponse,
 					&aiRetrieveModels,
 					&aiSummarize,
 				},
@@ -643,6 +644,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&aiOpenAICreateResponse,
 					&aiOpenAIListModels,
 				},
 			},

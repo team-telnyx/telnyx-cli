@@ -8,6 +8,30 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
+func TestAICreateResponse(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai", "create-response",
+			"--body", "{model: bar, input: bar}",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"model: bar\n" +
+			"input: bar\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"ai", "create-response",
+		)
+	})
+}
+
 func TestAIRetrieveModels(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
