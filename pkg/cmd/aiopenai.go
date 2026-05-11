@@ -16,7 +16,7 @@ import (
 
 var aiOpenAICreateResponse = cli.Command{
 	Name:    "create-response",
-	Usage:   "Chat with a language model. This endpoint is consistent with the\n[OpenAI Chat Completions API](https://developers.openai.com/api/reference/resources/responses)\nand may be used with the OpenAI JS or Python SDK. Response id parameter is not\nsupported at the moment. Use 'conversation' parameter to leverage persistent\nconversations feature.",
+	Usage:   "Chat with a language model. This endpoint is consistent with the\n[OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses)\nand may be used with the OpenAI JS or Python SDK. Response id parameter is not\nsupported at the moment. Use 'conversation' parameter to leverage persistent\nconversations feature.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
