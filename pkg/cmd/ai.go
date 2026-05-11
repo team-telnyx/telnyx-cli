@@ -16,7 +16,7 @@ import (
 
 var aiCreateResponse = cli.Command{
 	Name:    "create-response",
-	Usage:   "**Deprecated**: Use `POST /v2/ai/openai/responses` instead. Chat with a language\nmodel. This endpoint is consistent with the\n[OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses)\nand may be used with the OpenAI JS or Python SDK. Response id parameter is not\nsupported at the moment. Use 'conversation' parameter to leverage persistent\nconversations feature.",
+	Usage:   "**Deprecated**: Use `POST /v2/ai/openai/responses` instead. This endpoint is\ncompatible with the\n[OpenAI Responses API](https://developers.openai.com/api/reference/responses/overview)\nand may be used with the OpenAI JS or Python SDK. Response id parameter is not\nsupported at the moment. Use the `conversation` parameter with a Telnyx\nConversation ID to leverage persistent conversations.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

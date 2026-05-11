@@ -16,13 +16,33 @@ import (
 
 var aiOpenAICreateResponse = cli.Command{
 	Name:    "create-response",
-	Usage:   "Chat with a language model. This endpoint is consistent with the\n[OpenAI Responses API](https://platform.openai.com/docs/api-reference/responses)\nand may be used with the OpenAI JS or Python SDK. Response id parameter is not\nsupported at the moment. Use 'conversation' parameter to leverage persistent\nconversations feature.",
+	Usage:   "Create a response using Telnyx's OpenAI-compatible Responses API. This endpoint\nis compatible with the\n[OpenAI Responses API](https://developers.openai.com/api/reference/responses/overview)\nand may be used with the OpenAI JS or Python SDK by setting the base URL to\n`https://api.telnyx.com/v2/ai/openai`.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[map[string]any]{
-			Name:     "body",
-			Required: true,
-			BodyRoot: true,
+		&requestflag.Flag[string]{
+			Name:     "conversation",
+			Usage:    "Optional Telnyx Conversation ID from `POST /ai/conversations`. When provided, Telnyx stores this turn on that conversation and uses the conversation's prior messages as context. Reuse the same ID for subsequent turns and tool-result followups. Omit it for a non-persisted, stateless response.",
+			BodyPath: "conversation",
+		},
+		&requestflag.Flag[any]{
+			Name:     "input",
+			Usage:    "The input items for this turn, using the OpenAI Responses API input format.",
+			BodyPath: "input",
+		},
+		&requestflag.Flag[string]{
+			Name:     "instructions",
+			Usage:    "Optional system/developer instructions for the model. When used with a persisted `conversation`, send these on the first request that creates the thread; subsequent turns can rely on the stored history.",
+			BodyPath: "instructions",
+		},
+		&requestflag.Flag[string]{
+			Name:     "model",
+			Usage:    "Model identifier to use for the response, for example `zai-org/GLM-5.1-FP8` or another model available from the Telnyx OpenAI-compatible models endpoint.",
+			BodyPath: "model",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "stream",
+			Usage:    "Set to `true` to stream Server-Sent Events, matching OpenAI's Responses streaming format.",
+			BodyPath: "stream",
 		},
 	},
 	Action:          handleAIOpenAICreateResponse,
