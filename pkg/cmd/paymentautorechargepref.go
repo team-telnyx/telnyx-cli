@@ -62,7 +62,7 @@ func handlePaymentAutoRechargePrefsUpdate(ctx context.Context, cmd *cli.Command)
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -103,7 +103,7 @@ func handlePaymentAutoRechargePrefsList(ctx context.Context, cmd *cli.Command) e
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
