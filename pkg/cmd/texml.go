@@ -76,18 +76,18 @@ var texmlInitiateAICall = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "conversation-callback",
-			Usage:    "URL destination for Telnyx to send conversation callback events to.",
+			Usage:    "URL destination for Telnyx to send AI conversation callback events for this call. Events include `conversation_created` and `conversation_ended`.",
 			BodyPath: "ConversationCallback",
 		},
 		&requestflag.Flag[string]{
 			Name:     "conversation-callback-method",
-			Usage:    "HTTP request type used for `ConversationCallback`.",
+			Usage:    "HTTP request type used for `ConversationCallback` and `ConversationCallbacks`.",
 			Default:  "POST",
 			BodyPath: "ConversationCallbackMethod",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "conversation-callback",
-			Usage:    "An array of URL destinations for conversation callback events.",
+			Usage:    "Array of URL destinations for AI conversation callback events for this call. Events include `conversation_created` and `conversation_ended`.",
 			BodyPath: "ConversationCallbacks",
 		},
 		&requestflag.Flag[[]map[string]any]{
@@ -201,24 +201,24 @@ var texmlInitiateAICall = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "status-callback",
-			Usage:    "URL destination for Telnyx to send status callback events to for the call.",
+			Usage:    "URL destination for Telnyx to send status callback events for this AI call. When provided, this per-call value overrides the status callback URL configured on the TeXML application/connection.",
 			BodyPath: "StatusCallback",
 		},
 		&requestflag.Flag[string]{
 			Name:     "status-callback-event",
-			Usage:    "The call events for which Telnyx should send a webhook. Multiple events can be defined when separated by a space. Valid values: initiated, ringing, answered, completed.",
+			Usage:    "The status callback events for which Telnyx should send a webhook for this AI call. Multiple events can be defined when separated by a space. Valid values: initiated, ringing, answered, completed, no-answer, busy, canceled, failed, analyzed. When provided, this per-call value overrides the status callback events configured on the TeXML application/connection.",
 			Default:  "completed",
 			BodyPath: "StatusCallbackEvent",
 		},
 		&requestflag.Flag[string]{
 			Name:     "status-callback-method",
-			Usage:    "HTTP request type used for `StatusCallback`.",
+			Usage:    "HTTP request type used for `StatusCallback` and `StatusCallbacks` for this AI call. When provided, this per-call value overrides the status callback method configured on the TeXML application/connection.",
 			Default:  "POST",
 			BodyPath: "StatusCallbackMethod",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "status-callback",
-			Usage:    "An array of URL destinations for Telnyx to send status callback events to for the call.",
+			Usage:    "Array of URL destinations for Telnyx to send status callback events for this AI call. When provided, these per-call values override the status callback URL configured on the TeXML application/connection.",
 			BodyPath: "StatusCallbacks",
 		},
 		&requestflag.Flag[int64]{
