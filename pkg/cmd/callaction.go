@@ -1595,6 +1595,209 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 	},
 })
 
+var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
+	Name:    "start-conversation-relay",
+	Usage:   "Start a Conversation Relay session on an active call. Conversation Relay\nconnects the call audio to your WebSocket so your application can exchange\nrealtime messages with the caller while Telnyx handles speech recognition and\ntext-to-speech. Only one AI Assistant or Conversation Relay session can be\nactive on a call at a time.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
+		},
+		&requestflag.Flag[string]{
+			Name:     "conversation-relay-url",
+			Usage:    "WebSocket URL for your Conversation Relay server. Must start with `ws://` or `wss://`.",
+			Required: true,
+			BodyPath: "conversation_relay_url",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "assistant",
+			Usage:    "Custom parameters for the Conversation Relay session. Pass key-value data as `assistant.dynamic_variables` to make it available to the relay session.",
+			BodyPath: "assistant",
+		},
+		&requestflag.Flag[string]{
+			Name:     "client-state",
+			Usage:    "Use this field to add state to subsequent webhooks. It must be a valid Base-64 encoded string.",
+			BodyPath: "client_state",
+		},
+		&requestflag.Flag[string]{
+			Name:     "command-id",
+			Usage:    "Use this field to avoid duplicate commands. Telnyx will ignore any command with the same `command_id` for the same `call_control_id`.",
+			BodyPath: "command_id",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "conversation-relay-dtmf-detection",
+			Usage:    "Enable DTMF detection for the relay session.",
+			Default:  false,
+			BodyPath: "conversation_relay_dtmf_detection",
+		},
+		&requestflag.Flag[string]{
+			Name:     "greeting",
+			Usage:    "Text played when the relay session starts.",
+			BodyPath: "greeting",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "interruption-settings",
+			Usage:    "Settings for handling caller interruptions during Conversation Relay speech.",
+			BodyPath: "interruption_settings",
+		},
+		&requestflag.Flag[string]{
+			Name:     "language",
+			Usage:    "Default language for the relay session. This value is used for both text-to-speech and speech recognition unless `tts_language` or `transcription_language` are provided.",
+			Default:  "en",
+			BodyPath: "language",
+		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "language",
+			Usage:    "Language-specific TTS and transcription settings. Use this when the relay session needs per-language provider, voice, or speech model configuration.",
+			BodyPath: "languages",
+		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "participant",
+			Usage:    "Participants to add to the conversation.",
+			Default:  []map[string]any{},
+			BodyPath: "participants",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "send-message-history-updates",
+			Usage:    "When true, sends message history update webhooks.",
+			Default:  false,
+			BodyPath: "send_message_history_updates",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "transcription",
+			Usage:    "Speech-to-text settings for Conversation Relay.",
+			BodyPath: "transcription",
+		},
+		&requestflag.Flag[string]{
+			Name:     "transcription-language",
+			Usage:    "Language to use for speech recognition. Overrides `language` for transcription when provided.",
+			BodyPath: "transcription_language",
+		},
+		&requestflag.Flag[string]{
+			Name:     "tts-language",
+			Usage:    "Language to use for text-to-speech. Overrides `language` for TTS when provided.",
+			BodyPath: "tts_language",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "user-response-timeout-ms",
+			Usage:    "Time in milliseconds to wait for caller input before timing out.",
+			Default:  10000,
+			BodyPath: "user_response_timeout_ms",
+		},
+		&requestflag.Flag[string]{
+			Name:     "voice",
+			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.",
+			Default:  "Telnyx.KokoroTTS.af",
+			BodyPath: "voice",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "voice-settings",
+			Usage:    "The settings associated with the voice selected",
+			BodyPath: "voice_settings",
+		},
+	},
+	Action:          handleCallsActionsStartConversationRelay,
+	HideHelpCommand: true,
+}, map[string][]requestflag.HasOuterFlag{
+	"assistant": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.dynamic-variables",
+			Usage:      "Custom key-value parameters forwarded to the Conversation Relay session.",
+			InnerField: "dynamic_variables",
+		},
+	},
+	"interruption-settings": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "interruption-settings.enable",
+			Usage:      "Legacy boolean form. `true` is equivalent to `interruptible=any`; `false` is equivalent to `interruptible=none`.",
+			InnerField: "enable",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "interruption-settings.interruptible",
+			Usage:      "Controls when caller input can interrupt assistant speech. `any` allows speech or DTMF interruptions; `none` disables interruptions; `speech` allows speech only; `dtmf` allows DTMF only.",
+			InnerField: "interruptible",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "interruption-settings.interruptible-greeting",
+			Usage:      "Controls when caller input can interrupt assistant speech. `any` allows speech or DTMF interruptions; `none` disables interruptions; `speech` allows speech only; `dtmf` allows DTMF only.",
+			InnerField: "interruptible_greeting",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "interruption-settings.welcome-greeting-interruptible",
+			Usage:      "Controls when caller input can interrupt assistant speech. `any` allows speech or DTMF interruptions; `none` disables interruptions; `speech` allows speech only; `dtmf` allows DTMF only.",
+			InnerField: "welcome_greeting_interruptible",
+		},
+	},
+	"language": {
+		&requestflag.InnerFlag[string]{
+			Name:       "language.code",
+			Usage:      "BCP 47 language code.",
+			InnerField: "code",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "language.speech-model",
+			Usage:      "Speech recognition model for this language.",
+			InnerField: "speech_model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "language.transcription-provider",
+			Usage:      "Speech-to-text provider for this language.",
+			InnerField: "transcription_provider",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "language.tts-provider",
+			Usage:      "Text-to-speech provider for this language.",
+			InnerField: "tts_provider",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "language.voice",
+			Usage:      "Voice identifier for this language.",
+			InnerField: "voice",
+		},
+	},
+	"participant": {
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.id",
+			Usage:      "The call_control_id of the participant to add to the conversation.",
+			InnerField: "id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.role",
+			Usage:      "The role of the participant in the conversation.",
+			InnerField: "role",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.name",
+			Usage:      "Display name for the participant.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "participant.on-hangup",
+			Usage:      "Determines what happens to the conversation when this participant hangs up.",
+			InnerField: "on_hangup",
+		},
+	},
+	"transcription": {
+		&requestflag.InnerFlag[string]{
+			Name:       "transcription.language",
+			Usage:      "Transcription language.",
+			InnerField: "language",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "transcription.model",
+			Usage:      "Transcription model to use.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "transcription.provider",
+			Usage:      "Transcription provider to use.",
+			InnerField: "provider",
+		},
+	},
+})
+
 var callsActionsStartForking = cli.Command{
 	Name:    "start-forking",
 	Usage:   "Call forking allows you to stream the media from a call to a specific target in\nrealtime. This stream can be used to enable realtime audio analysis to support a\nvariety of use cases, including fraud detection, or the creation of AI-generated\naudio responses. Requests must specify either the `target` attribute or the `rx`\nand `tx` attributes.",
@@ -2133,6 +2336,31 @@ var callsActionsStopAIAssistant = cli.Command{
 		},
 	},
 	Action:          handleCallsActionsStopAIAssistant,
+	HideHelpCommand: true,
+}
+
+var callsActionsStopConversationRelay = cli.Command{
+	Name:    "stop-conversation-relay",
+	Usage:   "Stop the active Conversation Relay session on a call.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
+		},
+		&requestflag.Flag[string]{
+			Name:     "client-state",
+			Usage:    "Use this field to add state to subsequent webhooks. It must be a valid Base-64 encoded string.",
+			BodyPath: "client_state",
+		},
+		&requestflag.Flag[string]{
+			Name:     "command-id",
+			Usage:    "Use this field to avoid duplicate commands. Telnyx will ignore any command with the same `command_id` for the same `call_control_id`.",
+			BodyPath: "command_id",
+		},
+	},
+	Action:          handleCallsActionsStopConversationRelay,
 	HideHelpCommand: true,
 }
 
@@ -3657,6 +3885,55 @@ func handleCallsActionsStartAIAssistant(ctx context.Context, cmd *cli.Command) e
 	})
 }
 
+func handleCallsActionsStartConversationRelay(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("call-control-id") && len(unusedArgs) > 0 {
+		cmd.Set("call-control-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.CallActionStartConversationRelayParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Calls.Actions.StartConversationRelay(
+		ctx,
+		cmd.Value("call-control-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions start-conversation-relay",
+		Transform:      transform,
+	})
+}
+
 func handleCallsActionsStartForking(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -4045,6 +4322,55 @@ func handleCallsActionsStopAIAssistant(ctx context.Context, cmd *cli.Command) er
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions stop-ai-assistant",
+		Transform:      transform,
+	})
+}
+
+func handleCallsActionsStopConversationRelay(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("call-control-id") && len(unusedArgs) > 0 {
+		cmd.Set("call-control-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.CallActionStopConversationRelayParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Calls.Actions.StopConversationRelay(
+		ctx,
+		cmd.Value("call-control-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions stop-conversation-relay",
 		Transform:      transform,
 	})
 }
