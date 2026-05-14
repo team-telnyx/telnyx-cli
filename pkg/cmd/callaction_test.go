@@ -1169,6 +1169,126 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 	})
 }
 
+func TestCallsActionsStartConversationRelay(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "start-conversation-relay",
+			"--call-control-id", "call_control_id",
+			"--conversation-relay-url", "wss://example.com/conversation-relay",
+			"--assistant", "{dynamic_variables: {customer_id: '12345', tier: premium}}",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+			"--conversation-relay-dtmf-detection=true",
+			"--greeting", "Hi! Ask me anything!",
+			"--interruption-settings", "{enable: true, interruptible: speech, interruptible_greeting: speech, welcome_greeting_interruptible: speech}",
+			"--language", "en-US",
+			"--language", "{code: en-US, speech_model: nova-2, transcription_provider: Deepgram, tts_provider: ElevenLabs, voice: alice}",
+			"--participant", "{id: v3:abc123def456, role: user, name: John Doe, on_hangup: continue_conversation}",
+			"--send-message-history-updates=true",
+			"--transcription", "{language: en-US, model: nova-2, provider: deepgram}",
+			"--transcription-language", "en-US",
+			"--tts-language", "es",
+			"--user-response-timeout-ms", "10000",
+			"--voice", "Telnyx.KokoroTTS.af",
+			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(callsActionsStartConversationRelay)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "start-conversation-relay",
+			"--call-control-id", "call_control_id",
+			"--conversation-relay-url", "wss://example.com/conversation-relay",
+			"--assistant.dynamic-variables", "{customer_id: '12345', tier: premium}",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+			"--conversation-relay-dtmf-detection=true",
+			"--greeting", "Hi! Ask me anything!",
+			"--interruption-settings.enable=true",
+			"--interruption-settings.interruptible", "speech",
+			"--interruption-settings.interruptible-greeting", "speech",
+			"--interruption-settings.welcome-greeting-interruptible", "speech",
+			"--language", "en-US",
+			"--language.code", "en-US",
+			"--language.speech-model", "nova-2",
+			"--language.transcription-provider", "Deepgram",
+			"--language.tts-provider", "ElevenLabs",
+			"--language.voice", "alice",
+			"--participant.id", "v3:abc123def456",
+			"--participant.role", "user",
+			"--participant.name", "John Doe",
+			"--participant.on-hangup", "continue_conversation",
+			"--send-message-history-updates=true",
+			"--transcription.language", "en-US",
+			"--transcription.model", "nova-2",
+			"--transcription.provider", "deepgram",
+			"--transcription-language", "en-US",
+			"--tts-language", "es",
+			"--user-response-timeout-ms", "10000",
+			"--voice", "Telnyx.KokoroTTS.af",
+			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"conversation_relay_url: wss://example.com/conversation-relay\n" +
+			"assistant:\n" +
+			"  dynamic_variables:\n" +
+			"    customer_id: '12345'\n" +
+			"    tier: premium\n" +
+			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
+			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
+			"conversation_relay_dtmf_detection: true\n" +
+			"greeting: Hi! Ask me anything!\n" +
+			"interruption_settings:\n" +
+			"  enable: true\n" +
+			"  interruptible: speech\n" +
+			"  interruptible_greeting: speech\n" +
+			"  welcome_greeting_interruptible: speech\n" +
+			"language: en-US\n" +
+			"languages:\n" +
+			"  - code: en-US\n" +
+			"    speech_model: nova-2\n" +
+			"    transcription_provider: Deepgram\n" +
+			"    tts_provider: ElevenLabs\n" +
+			"    voice: alice\n" +
+			"participants:\n" +
+			"  - id: v3:abc123def456\n" +
+			"    role: user\n" +
+			"    name: John Doe\n" +
+			"    on_hangup: continue_conversation\n" +
+			"send_message_history_updates: true\n" +
+			"transcription:\n" +
+			"  language: en-US\n" +
+			"  model: nova-2\n" +
+			"  provider: deepgram\n" +
+			"transcription_language: en-US\n" +
+			"tts_language: es\n" +
+			"user_response_timeout_ms: 10000\n" +
+			"voice: Telnyx.KokoroTTS.af\n" +
+			"voice_settings:\n" +
+			"  type: elevenlabs\n" +
+			"  api_key_ref: my_elevenlabs_api_key\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"calls:actions", "start-conversation-relay",
+			"--call-control-id", "call_control_id",
+		)
+	})
+}
+
 func TestCallsActionsStartForking(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
@@ -1563,6 +1683,33 @@ func TestCallsActionsStopAIAssistant(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"calls:actions", "stop-ai-assistant",
+			"--call-control-id", "call_control_id",
+		)
+	})
+}
+
+func TestCallsActionsStopConversationRelay(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "stop-conversation-relay",
+			"--call-control-id", "call_control_id",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
+			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"calls:actions", "stop-conversation-relay",
 			"--call-control-id", "call_control_id",
 		)
 	})
