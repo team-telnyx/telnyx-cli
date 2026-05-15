@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.15.0 (2026-05-15)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* AI-2294: document /ai/openai/models response and refresh LLM examples ([f3435d4](https://github.com/team-telnyx/telnyx-cli/commit/f3435d4d92b013c28bd18d524eff87ec66561fea))
+* **api:** manual updates ([3dd5ebe](https://github.com/team-telnyx/telnyx-cli/commit/3dd5ebef8618823ddd0583780d0e088021a9dffa))
+* Clean up OpenAI responses API docs ([acf4475](https://github.com/team-telnyx/telnyx-cli/commit/acf4475e89292ad2d840739d6f2acc7540a5ba12))
+* Document AI call status callback overrides ([2a9554e](https://github.com/team-telnyx/telnyx-cli/commit/2a9554ea5e284fb1fa889979a56cd13e4bcea434))
+* Document Conversation Relay ([ecd8d72](https://github.com/team-telnyx/telnyx-cli/commit/ecd8d7295cf273444579406bce7b7c055fa358a7))
+* Document OpenAI responses conversation flow ([c656936](https://github.com/team-telnyx/telnyx-cli/commit/c656936f1445f7266bbd58d47252f28f60c24876))
+* Document PremiumCallScreening detection mode ([0febdb1](https://github.com/team-telnyx/telnyx-cli/commit/0febdb1f96ad65ceabe294db65c77fe4f76f917d))
+* Fix OpenAI chat API reference links ([ee53ac3](https://github.com/team-telnyx/telnyx-cli/commit/ee53ac346872d2d71668d7265acf1e03ba04733c))
+* Responses endpoint ([b39739c](https://github.com/team-telnyx/telnyx-cli/commit/b39739cad8ce3e85ff634180026ccee118c48fc3))
+* Update Conversation Relay start parameters ([77ca78b](https://github.com/team-telnyx/telnyx-cli/commit/77ca78b05973d00bed56f3de3e458d44407c6d2c))
+
+
+### Chores
+
+* empty commit ([8f1fc0d](https://github.com/team-telnyx/telnyx-cli/commit/8f1fc0d0fd2d61b2670083446bb6feedd4c3565b))
+* **internal:** codegen related update ([016ecdb](https://github.com/team-telnyx/telnyx-cli/commit/016ecdbf30a72f888f3d17c4ff440cc03d68ad54))
+
+
+### Documentation
+
+* add supported file formats to Send Fax endpoint ([8573b47](https://github.com/team-telnyx/telnyx-cli/commit/8573b472464d09e1a0718af78374ef5da26c9fc6))
+
 ## 0.14.0 (2026-05-08)
 
 Full Changelog: [v0.13.0...v0.14.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.13.0...v0.14.0)
