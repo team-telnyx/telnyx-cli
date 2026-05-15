@@ -1605,12 +1605,6 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 			Required:  true,
 			PathParam: "call_control_id",
 		},
-		&requestflag.Flag[string]{
-			Name:     "conversation-relay-url",
-			Usage:    "WebSocket URL for your Conversation Relay server. Must start with `ws://` or `wss://`.",
-			Required: true,
-			BodyPath: "conversation_relay_url",
-		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "assistant",
 			Usage:    "Custom parameters for the Conversation Relay session. Pass key-value data as `assistant.dynamic_variables` to make it available to the relay session.",
@@ -1631,6 +1625,16 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Enable DTMF detection for the relay session.",
 			Default:  false,
 			BodyPath: "conversation_relay_dtmf_detection",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "conversation-relay-settings",
+			Usage:    "Conversation Relay connection settings. This object is used by TeXML Call Scripting's `<ConversationRelay>` verb. The `interruptible` and `interruptible_greeting` fields are shorthand for `interruption_settings.interruptible` and `interruption_settings.interruptible_greeting`; use top-level `interruption_settings` for the full interruption settings shape.",
+			BodyPath: "conversation_relay_settings",
+		},
+		&requestflag.Flag[string]{
+			Name:     "conversation-relay-url",
+			Usage:    "WebSocket URL for your Conversation Relay server. Must start with `ws://` or `wss://`.",
+			BodyPath: "conversation_relay_url",
 		},
 		&requestflag.Flag[string]{
 			Name:     "greeting",
@@ -1653,18 +1657,6 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Language-specific TTS and transcription settings. Use this when the relay session needs per-language provider, voice, or speech model configuration.",
 			BodyPath: "languages",
 		},
-		&requestflag.Flag[[]map[string]any]{
-			Name:     "participant",
-			Usage:    "Participants to add to the conversation.",
-			Default:  []map[string]any{},
-			BodyPath: "participants",
-		},
-		&requestflag.Flag[bool]{
-			Name:     "send-message-history-updates",
-			Usage:    "When true, sends message history update webhooks.",
-			Default:  false,
-			BodyPath: "send_message_history_updates",
-		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "transcription",
 			Usage:    "Speech-to-text settings for Conversation Relay.",
@@ -1679,12 +1671,6 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 			Name:     "tts-language",
 			Usage:    "Language to use for text-to-speech. Overrides `language` for TTS when provided.",
 			BodyPath: "tts_language",
-		},
-		&requestflag.Flag[int64]{
-			Name:     "user-response-timeout-ms",
-			Usage:    "Time in milliseconds to wait for caller input before timing out.",
-			Default:  10000,
-			BodyPath: "user_response_timeout_ms",
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
@@ -1706,6 +1692,33 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 			Name:       "assistant.dynamic-variables",
 			Usage:      "Custom key-value parameters forwarded to the Conversation Relay session.",
 			InnerField: "dynamic_variables",
+		},
+	},
+	"conversation-relay-settings": {
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-settings.url",
+			Usage:      "WebSocket URL for your Conversation Relay server. Must start with `ws://` or `wss://`.",
+			InnerField: "url",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "conversation-relay-settings.dtmf-detection",
+			Usage:      "Whether to enable DTMF detection during the relay session.",
+			InnerField: "dtmf_detection",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-settings.interruptible",
+			Usage:      "Controls when caller input can interrupt assistant speech. `any` allows speech or DTMF interruptions; `none` disables interruptions; `speech` allows speech only; `dtmf` allows DTMF only.",
+			InnerField: "interruptible",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-settings.interruptible-greeting",
+			Usage:      "Controls when caller input can interrupt assistant speech. `any` allows speech or DTMF interruptions; `none` disables interruptions; `speech` allows speech only; `dtmf` allows DTMF only.",
+			InnerField: "interruptible_greeting",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "conversation-relay-settings.languages",
+			Usage:      "Language-specific TTS and transcription settings.",
+			InnerField: "languages",
 		},
 	},
 	"interruption-settings": {
@@ -1755,28 +1768,6 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 			Name:       "language.voice",
 			Usage:      "Voice identifier for this language.",
 			InnerField: "voice",
-		},
-	},
-	"participant": {
-		&requestflag.InnerFlag[string]{
-			Name:       "participant.id",
-			Usage:      "The call_control_id of the participant to add to the conversation.",
-			InnerField: "id",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "participant.role",
-			Usage:      "The role of the participant in the conversation.",
-			InnerField: "role",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "participant.name",
-			Usage:      "Display name for the participant.",
-			InnerField: "name",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "participant.on-hangup",
-			Usage:      "Determines what happens to the conversation when this participant hangs up.",
-			InnerField: "on_hangup",
 		},
 	},
 	"transcription": {
