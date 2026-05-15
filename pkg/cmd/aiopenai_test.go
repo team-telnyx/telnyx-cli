@@ -16,7 +16,7 @@ func TestAIOpenAICreateResponse(t *testing.T) {
 			"--api-key", "string",
 			"ai:openai", "create-response",
 			"--conversation", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-			"--input", "[{role: user, content: [{type: input_text, text: 'Hello, world!'}]}]",
+			"--input", "{'0': bar}",
 			"--instructions", "You are a friendly chatbot.",
 			"--model", "zai-org/GLM-5.1-FP8",
 			"--stream=true",
@@ -28,10 +28,7 @@ func TestAIOpenAICreateResponse(t *testing.T) {
 		pipeData := []byte("" +
 			"conversation: 6a09cdc3-8948-47f0-aa62-74ac943d6c58\n" +
 			"input:\n" +
-			"  - role: user\n" +
-			"    content:\n" +
-			"      - type: input_text\n" +
-			"        text: Hello, world!\n" +
+			"  '0': bar\n" +
 			"instructions: You are a friendly chatbot.\n" +
 			"model: zai-org/GLM-5.1-FP8\n" +
 			"stream: true\n")
