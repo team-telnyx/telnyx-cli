@@ -280,6 +280,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&aiCreateResponse,
 					&aiRetrieveModels,
 					&aiSummarize,
 				},
@@ -643,6 +644,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&aiOpenAICreateResponse,
 					&aiOpenAIListModels,
 				},
 			},
@@ -815,6 +817,7 @@ func init() {
 					&callsActionsSendSipInfo,
 					&callsActionsSpeak,
 					&callsActionsStartAIAssistant,
+					&callsActionsStartConversationRelay,
 					&callsActionsStartForking,
 					&callsActionsStartNoiseSuppression,
 					&callsActionsStartPlayback,
@@ -823,6 +826,7 @@ func init() {
 					&callsActionsStartStreaming,
 					&callsActionsStartTranscription,
 					&callsActionsStopAIAssistant,
+					&callsActionsStopConversationRelay,
 					&callsActionsStopForking,
 					&callsActionsStopGather,
 					&callsActionsStopNoiseSuppression,

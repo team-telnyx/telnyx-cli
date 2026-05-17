@@ -1169,6 +1169,126 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 	})
 }
 
+func TestCallsActionsStartConversationRelay(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "start-conversation-relay",
+			"--call-control-id", "call_control_id",
+			"--assistant", "{dynamic_variables: {customer_id: '12345'}}",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+			"--conversation-relay-dtmf-detection=true",
+			"--conversation-relay-settings", "{url: wss://example.com/conversation-relay, dtmf_detection: true, interruptible: speech, interruptible_greeting: any, languages: [{code: en-US, speech_model: nova-2, transcription_provider: Deepgram, tts_provider: ElevenLabs, voice: alice}]}",
+			"--conversation-relay-url", "wss://example.com/conversation-relay",
+			"--greeting", "Hi! Ask me anything!",
+			"--interruption-settings", "{enable: true, interruptible: speech, interruptible_greeting: speech, welcome_greeting_interruptible: speech}",
+			"--language", "en-US",
+			"--language", "{code: en-US, speech_model: nova-2, transcription_provider: Deepgram, tts_provider: ElevenLabs, voice: alice}",
+			"--transcription", "{language: en-US, model: nova-2, provider: deepgram}",
+			"--transcription-language", "en-US",
+			"--tts-language", "es",
+			"--voice", "Telnyx.KokoroTTS.af",
+			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(callsActionsStartConversationRelay)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "start-conversation-relay",
+			"--call-control-id", "call_control_id",
+			"--assistant.dynamic-variables", "{customer_id: '12345'}",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+			"--conversation-relay-dtmf-detection=true",
+			"--conversation-relay-settings.url", "wss://example.com/conversation-relay",
+			"--conversation-relay-settings.dtmf-detection=true",
+			"--conversation-relay-settings.interruptible", "speech",
+			"--conversation-relay-settings.interruptible-greeting", "any",
+			"--conversation-relay-settings.languages", "[{code: en-US, speech_model: nova-2, transcription_provider: Deepgram, tts_provider: ElevenLabs, voice: alice}]",
+			"--conversation-relay-url", "wss://example.com/conversation-relay",
+			"--greeting", "Hi! Ask me anything!",
+			"--interruption-settings.enable=true",
+			"--interruption-settings.interruptible", "speech",
+			"--interruption-settings.interruptible-greeting", "speech",
+			"--interruption-settings.welcome-greeting-interruptible", "speech",
+			"--language", "en-US",
+			"--language.code", "en-US",
+			"--language.speech-model", "nova-2",
+			"--language.transcription-provider", "Deepgram",
+			"--language.tts-provider", "ElevenLabs",
+			"--language.voice", "alice",
+			"--transcription.language", "en-US",
+			"--transcription.model", "nova-2",
+			"--transcription.provider", "deepgram",
+			"--transcription-language", "en-US",
+			"--tts-language", "es",
+			"--voice", "Telnyx.KokoroTTS.af",
+			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"assistant:\n" +
+			"  dynamic_variables:\n" +
+			"    customer_id: '12345'\n" +
+			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
+			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
+			"conversation_relay_dtmf_detection: true\n" +
+			"conversation_relay_settings:\n" +
+			"  url: wss://example.com/conversation-relay\n" +
+			"  dtmf_detection: true\n" +
+			"  interruptible: speech\n" +
+			"  interruptible_greeting: any\n" +
+			"  languages:\n" +
+			"    - code: en-US\n" +
+			"      speech_model: nova-2\n" +
+			"      transcription_provider: Deepgram\n" +
+			"      tts_provider: ElevenLabs\n" +
+			"      voice: alice\n" +
+			"conversation_relay_url: wss://example.com/conversation-relay\n" +
+			"greeting: Hi! Ask me anything!\n" +
+			"interruption_settings:\n" +
+			"  enable: true\n" +
+			"  interruptible: speech\n" +
+			"  interruptible_greeting: speech\n" +
+			"  welcome_greeting_interruptible: speech\n" +
+			"language: en-US\n" +
+			"languages:\n" +
+			"  - code: en-US\n" +
+			"    speech_model: nova-2\n" +
+			"    transcription_provider: Deepgram\n" +
+			"    tts_provider: ElevenLabs\n" +
+			"    voice: alice\n" +
+			"transcription:\n" +
+			"  language: en-US\n" +
+			"  model: nova-2\n" +
+			"  provider: deepgram\n" +
+			"transcription_language: en-US\n" +
+			"tts_language: es\n" +
+			"voice: Telnyx.KokoroTTS.af\n" +
+			"voice_settings:\n" +
+			"  type: elevenlabs\n" +
+			"  api_key_ref: my_elevenlabs_api_key\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"calls:actions", "start-conversation-relay",
+			"--call-control-id", "call_control_id",
+		)
+	})
+}
+
 func TestCallsActionsStartForking(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
@@ -1563,6 +1683,33 @@ func TestCallsActionsStopAIAssistant(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"calls:actions", "stop-ai-assistant",
+			"--call-control-id", "call_control_id",
+		)
+	})
+}
+
+func TestCallsActionsStopConversationRelay(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "stop-conversation-relay",
+			"--call-control-id", "call_control_id",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
+			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"calls:actions", "stop-conversation-relay",
 			"--call-control-id", "call_control_id",
 		)
 	})

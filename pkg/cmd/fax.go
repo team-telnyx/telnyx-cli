@@ -55,12 +55,12 @@ var faxesCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "media-name",
-			Usage:    "The media_name used for the fax's media. Must point to a file previously uploaded to api.telnyx.com/v2/media by the same user/organization. media_name and media_url/contents can't be submitted together.",
+			Usage:    "The media_name used for the fax's media. Must point to a file previously uploaded to api.telnyx.com/v2/media by the same user/organization. Supported formats: PDF, TIFF, JPEG, PNG, DOC, DOCX, RTF, and TXT. media_name and media_url/contents can't be submitted together.",
 			BodyPath: "media_name",
 		},
 		&requestflag.Flag[string]{
 			Name:     "media-url",
-			Usage:    "The URL (or list of URLs) to the PDF used for the fax's media. media_url and media_name/contents can't be submitted together.",
+			Usage:    "The URL (or list of URLs) to the fax document. Supported formats: PDF, TIFF, JPEG, PNG, DOC, DOCX, RTF, and TXT. media_url and media_name/contents can't be submitted together.",
 			BodyPath: "media_url",
 		},
 		&requestflag.Flag[bool]{
