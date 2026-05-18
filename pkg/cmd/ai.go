@@ -20,7 +20,7 @@ var aiCreateResponse = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
-			Name:     "params",
+			Name:     "body",
 			Required: true,
 			BodyRoot: true,
 		},

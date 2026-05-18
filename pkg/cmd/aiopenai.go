@@ -24,7 +24,7 @@ var aiOpenAICreateResponse = cli.Command{
 			Usage:    "Optional Telnyx Conversation ID from `POST /ai/conversations`. When provided, Telnyx stores this turn on that conversation and uses the conversation's prior messages as context. Reuse the same ID for subsequent turns and tool-result followups. Omit it for a non-persisted, stateless response.",
 			BodyPath: "conversation",
 		},
-		&requestflag.Flag[map[string]any]{
+		&requestflag.Flag[any]{
 			Name:     "input",
 			Usage:    "The input items for this turn, using the OpenAI Responses API input format.",
 			BodyPath: "input",
