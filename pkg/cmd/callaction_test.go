@@ -1998,6 +1998,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--record-timeout-secs", "100",
 			"--record-track", "outbound",
 			"--record-trim", "trim-silence",
+			"--send-digits-on-answer", "wwww200",
 			"--sip-auth-password", "password",
 			"--sip-auth-username", "username",
 			"--sip-header", "{name: User-to-User, value: value}",
@@ -2061,6 +2062,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--record-timeout-secs", "100",
 			"--record-track", "outbound",
 			"--record-trim", "trim-silence",
+			"--send-digits-on-answer", "wwww200",
 			"--sip-auth-password", "password",
 			"--sip-auth-username", "username",
 			"--sip-header.name", "User-to-User",
@@ -2123,6 +2125,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"record_timeout_secs: 100\n" +
 			"record_track: outbound\n" +
 			"record_trim: trim-silence\n" +
+			"send_digits_on_answer: wwww200\n" +
 			"sip_auth_password: password\n" +
 			"sip_auth_username: username\n" +
 			"sip_headers:\n" +
