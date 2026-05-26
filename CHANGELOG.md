@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.16.0 (2026-05-18)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* Add assistant background audio volume to OpenAPI spec ([0923cc4](https://github.com/team-telnyx/telnyx-cli/commit/0923cc4e76dd099610190e179c3a30374849db92))
+* Telapps 101 soniox spec ([cd84fe7](https://github.com/team-telnyx/telnyx-cli/commit/cd84fe736db4f98fdb1c3a45a20a087d62b65e0f))
+
 ## 0.15.0 (2026-05-15)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.14.0...v0.15.0)
