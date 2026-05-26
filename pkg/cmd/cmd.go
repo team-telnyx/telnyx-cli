@@ -280,7 +280,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&aiCreateResponse,
+					&aiCreateResponseDeprecated,
 					&aiRetrieveModels,
 					&aiSummarize,
 				},
@@ -3242,6 +3242,15 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&uacConnectionsActionsCheckRegistrationStatus,
+				},
+			},
+			{
+				Name:     "voice-sdk-call-reports",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&voiceSDKCallReportsRetrieve,
+					&voiceSDKCallReportsList,
 				},
 			},
 			{
