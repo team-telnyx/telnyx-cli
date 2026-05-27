@@ -74,6 +74,11 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Use this field to avoid duplicate commands. Telnyx will ignore any command with the same `command_id` for the same `call_control_id`.",
 			BodyPath: "command_id",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "conversation-relay-config",
+			Usage:    "Starts a Conversation Relay session automatically when the answered/dialed call is answered. This embedded shape is supported on `answer` and `dial`. It uses public field names (`url`, `dtmf_detection`, `greeting`, `voice`, `language`, etc.) and maps them to the underlying Conversation Relay action. `client_state`, `tts_language`, and `transcription_language` inside this object are ignored; use the parent command's `client_state` and `command_id` fields instead.",
+			BodyPath: "conversation_relay_config",
+		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "custom-header",
 			Usage:    "Custom headers to be added to the SIP INVITE response.",
@@ -291,6 +296,88 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Name:       "assistant.tools",
 			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
 			InnerField: "tools",
+		},
+	},
+	"conversation-relay-config": {
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-config.url",
+			Usage:      "WebSocket URL for your Conversation Relay server. Must start with `ws://` or `wss://`.",
+			InnerField: "url",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "conversation-relay-config.custom-parameters",
+			Usage:      "Custom key-value parameters forwarded to the relay session as assistant dynamic variables.",
+			InnerField: "custom_parameters",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "conversation-relay-config.dtmf-detection",
+			Usage:      "Enable DTMF detection for the relay session.",
+			InnerField: "dtmf_detection",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-config.greeting",
+			Usage:      "Text played when the relay session starts.",
+			InnerField: "greeting",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-config.interruptible",
+			Usage:      "Controls when caller input can interrupt assistant speech. `any` allows speech or DTMF interruptions; `none` disables interruptions; `speech` allows speech only; `dtmf` allows DTMF only.",
+			InnerField: "interruptible",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-config.interruptible-greeting",
+			Usage:      "Controls when caller input can interrupt assistant speech. `any` allows speech or DTMF interruptions; `none` disables interruptions; `speech` allows speech only; `dtmf` allows DTMF only.",
+			InnerField: "interruptible_greeting",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "conversation-relay-config.interruption-settings",
+			Usage:      "Settings for handling caller interruptions during Conversation Relay speech.",
+			InnerField: "interruption_settings",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-config.language",
+			Usage:      "Default language for both text-to-speech and speech recognition.",
+			InnerField: "language",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "conversation-relay-config.languages",
+			Usage:      "Per-language TTS and transcription settings.",
+			InnerField: "languages",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-config.provider",
+			Usage:      "Structured voice provider. Must be supplied together with `structured_provider`.",
+			InnerField: "provider",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "conversation-relay-config.structured-provider",
+			Usage:      "Provider-specific structured voice settings. Must be supplied together with `provider`; Telnyx sends the value as the nested provider configuration for Conversation Relay.",
+			InnerField: "structured_provider",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-config.transcription-engine",
+			Usage:      "Engine to use for speech recognition. Legacy values `A` - `Google`, `B` - `Telnyx` are supported for backward compatibility. For Conversation Relay, use this field with `transcription_engine_config`; the `transcription` object is not supported.",
+			InnerField: "transcription_engine",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "conversation-relay-config.transcription-engine-config",
+			Usage:      "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object.",
+			InnerField: "transcription_engine_config",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-config.tts-provider",
+			Usage:      "Text-to-speech provider. If omitted, Telnyx derives it from `voice` or `provider`.",
+			InnerField: "tts_provider",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-relay-config.voice",
+			Usage:      "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`). Supported models: `Mini`, `Max`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.",
+			InnerField: "voice",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "conversation-relay-config.voice-settings",
+			Usage:      "The settings associated with the voice selected",
+			InnerField: "voice_settings",
 		},
 	},
 	"custom-header": {
@@ -1628,7 +1715,7 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "conversation-relay-settings",
-			Usage:    "Conversation Relay connection settings. This object is used by TeXML Call Scripting's `<ConversationRelay>` verb. The `interruptible` and `interruptible_greeting` fields are shorthand for `interruption_settings.interruptible` and `interruption_settings.interruptible_greeting`; use top-level `interruption_settings` for the full interruption settings shape.",
+			Usage:    "Conversation Relay connection settings. This object can provide `url`, `dtmf_detection`, `interruptible`, `interruptible_greeting`, and `languages`. Top-level aliases override nested values when both are present.",
 			BodyPath: "conversation_relay_settings",
 		},
 		&requestflag.Flag[string]{
@@ -1636,10 +1723,33 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "WebSocket URL for your Conversation Relay server. Must start with `ws://` or `wss://`.",
 			BodyPath: "conversation_relay_url",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "custom-parameters",
+			Usage:    "Custom key-value parameters forwarded to the relay session as `assistant.dynamic_variables`. If `assistant.dynamic_variables` is also present, these values are merged in.",
+			BodyPath: "custom_parameters",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "dtmf-detection",
+			Usage:    "Public alias for `conversation_relay_dtmf_detection`. If both are present, this value wins.",
+			Default:  false,
+			BodyPath: "dtmf_detection",
+		},
 		&requestflag.Flag[string]{
 			Name:     "greeting",
 			Usage:    "Text played when the relay session starts.",
 			BodyPath: "greeting",
+		},
+		&requestflag.Flag[string]{
+			Name:     "interruptible",
+			Usage:    "Controls when caller input can interrupt assistant speech. `any` allows speech or DTMF interruptions; `none` disables interruptions; `speech` allows speech only; `dtmf` allows DTMF only.",
+			Default:  "any",
+			BodyPath: "interruptible",
+		},
+		&requestflag.Flag[string]{
+			Name:     "interruptible-greeting",
+			Usage:    "Controls when caller input can interrupt assistant speech. `any` allows speech or DTMF interruptions; `none` disables interruptions; `speech` allows speech only; `dtmf` allows DTMF only.",
+			Default:  "any",
+			BodyPath: "interruptible_greeting",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "interruption-settings",
@@ -1648,29 +1758,50 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "language",
-			Usage:    "Default language for the relay session. This value is used for both text-to-speech and speech recognition unless `tts_language` or `transcription_language` are provided.",
+			Usage:    "Default language for the relay session. This value is used for both text-to-speech and speech recognition.",
 			Default:  "en",
 			BodyPath: "language",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "language",
-			Usage:    "Language-specific TTS and transcription settings. Use this when the relay session needs per-language provider, voice, or speech model configuration.",
+			Usage:    "Per-language TTS and transcription settings.",
 			BodyPath: "languages",
+		},
+		&requestflag.Flag[string]{
+			Name:     "provider",
+			Usage:    "Structured voice provider. Must be supplied together with `structured_provider`.",
+			BodyPath: "provider",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "structured-provider",
+			Usage:    "Provider-specific structured voice settings. Must be supplied together with `provider`; Telnyx sends the value as the nested provider configuration for Conversation Relay.",
+			BodyPath: "structured_provider",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "transcription",
-			Usage:    "Speech-to-text settings for Conversation Relay.",
+			Usage:    "Not supported for Conversation Relay start requests. Use `transcription_engine` and `transcription_engine_config` instead.",
 			BodyPath: "transcription",
 		},
 		&requestflag.Flag[string]{
-			Name:     "transcription-language",
-			Usage:    "Language to use for speech recognition. Overrides `language` for transcription when provided.",
-			BodyPath: "transcription_language",
+			Name:     "transcription-engine",
+			Usage:    "Engine to use for speech recognition. Legacy values `A` - `Google`, `B` - `Telnyx` are supported for backward compatibility. For Conversation Relay, use this field with `transcription_engine_config`; the `transcription` object is not supported.",
+			Default:  "Google",
+			BodyPath: "transcription_engine",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "transcription-engine-config",
+			Usage:    "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object.",
+			BodyPath: "transcription_engine_config",
 		},
 		&requestflag.Flag[string]{
-			Name:     "tts-language",
-			Usage:    "Language to use for text-to-speech. Overrides `language` for TTS when provided.",
-			BodyPath: "tts_language",
+			Name:     "tts-provider",
+			Usage:    "Text-to-speech provider. If omitted, Telnyx derives it from `voice` or `provider`.",
+			BodyPath: "tts_provider",
+		},
+		&requestflag.Flag[string]{
+			Name:     "url",
+			Usage:    "Public alias for `conversation_relay_url`. Must start with `ws://` or `wss://`. If both are present, this value wins.",
+			BodyPath: "url",
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
@@ -1745,23 +1876,33 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 	},
 	"language": {
 		&requestflag.InnerFlag[string]{
-			Name:       "language.code",
-			Usage:      "BCP 47 language code.",
-			InnerField: "code",
+			Name:       "language.language",
+			Usage:      "BCP 47 language tag for this language configuration.",
+			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "language.speech-model",
-			Usage:      "Speech recognition model for this language.",
+			Usage:      "Conversation Relay speech model. Prefer `transcription_engine_config.transcription_model` when configuring speech-to-text.",
 			InnerField: "speech_model",
 		},
 		&requestflag.InnerFlag[string]{
+			Name:       "language.transcription-engine",
+			Usage:      "Engine to use for speech recognition. Legacy values `A` - `Google`, `B` - `Telnyx` are supported for backward compatibility. When provided in a Conversation Relay language entry, Telnyx derives `transcription_provider` and `speech_model` for that language.",
+			InnerField: "transcription_engine",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "language.transcription-engine-config",
+			Usage:      "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object.",
+			InnerField: "transcription_engine_config",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "language.transcription-provider",
-			Usage:      "Speech-to-text provider for this language.",
+			Usage:      "Conversation Relay transcription provider name. Prefer `transcription_engine` when configuring speech-to-text.",
 			InnerField: "transcription_provider",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "language.tts-provider",
-			Usage:      "Text-to-speech provider for this language.",
+			Usage:      "Text-to-speech provider for this language. If omitted and `voice` is provided, Telnyx derives the provider from the voice identifier.",
 			InnerField: "tts_provider",
 		},
 		&requestflag.InnerFlag[string]{
@@ -1769,22 +1910,10 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Voice identifier for this language.",
 			InnerField: "voice",
 		},
-	},
-	"transcription": {
-		&requestflag.InnerFlag[string]{
-			Name:       "transcription.language",
-			Usage:      "Transcription language.",
-			InnerField: "language",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "transcription.model",
-			Usage:      "Transcription model to use.",
-			InnerField: "model",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "transcription.provider",
-			Usage:      "Transcription provider to use.",
-			InnerField: "provider",
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "language.voice-settings",
+			Usage:      "The settings associated with the voice selected",
+			InnerField: "voice_settings",
 		},
 	},
 })

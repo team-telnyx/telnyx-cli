@@ -29,6 +29,7 @@ func TestCallsDial(t *testing.T) {
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--conference-config", "{id: 0ccc7b54-4df3-4bca-a65a-3da1ecc777f0, beep_enabled: on_exit, conference_name: telnyx-conference, early_media: false, end_conference_on_exit: true, hold: true, hold_audio_url: http://example.com/message.wav, hold_media_name: my_media_uploaded_to_media_storage_api, mute: true, soft_end_conference_on_exit: true, start_conference_on_create: false, start_conference_on_enter: true, supervisor_role: whisper, whisper_call_control_ids: [v2:Sg1xxxQ_U3ixxxyXT_VDNI3xxxazZdg6Vxxxs4-GNYxxxVaJPOhFMRQ, v2:qqpb0mmvd-ovhhBr0BUQQn0fld5jIboaaX3-De0DkqXHzbf8d75xkw]}",
+			"--conversation-relay-config", "{url: wss://example.com/conversation-relay, custom_parameters: {customer_id: bar}, dtmf_detection: true, greeting: Hi! Ask me anything!, interruptible: speech, interruptible_greeting: dtmf, interruption_settings: {enable: true, interruptible: speech, interruptible_greeting: speech, welcome_greeting_interruptible: speech}, language: en-US, languages: [{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {transcription_model: bar}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.Ultra.alloy, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}], provider: elevenlabs, structured_provider: {voice_id: bar, model_id: bar}, transcription_engine: Google, transcription_engine_config: {transcription_model: bar, interim_results: bar, keywords_boosting: bar}, tts_provider: telnyx, voice: Telnyx.KokoroTTS.af, voice_settings: {type: telnyx, voice_speed: 1}}",
 			"--custom-header", "{name: head_1, value: val_1}",
 			"--custom-header", "{name: head_2, value: val_2}",
 			"--deepfake-detection", "{enabled: true, rtp_timeout: 30, timeout: 15}",
@@ -137,6 +138,22 @@ func TestCallsDial(t *testing.T) {
 			"--conference-config.start-conference-on-enter=true",
 			"--conference-config.supervisor-role", "whisper",
 			"--conference-config.whisper-call-control-ids", "[v2:Sg1xxxQ_U3ixxxyXT_VDNI3xxxazZdg6Vxxxs4-GNYxxxVaJPOhFMRQ, v2:qqpb0mmvd-ovhhBr0BUQQn0fld5jIboaaX3-De0DkqXHzbf8d75xkw]",
+			"--conversation-relay-config.url", "wss://example.com/conversation-relay",
+			"--conversation-relay-config.custom-parameters", "{customer_id: bar}",
+			"--conversation-relay-config.dtmf-detection=true",
+			"--conversation-relay-config.greeting", "Hi! Ask me anything!",
+			"--conversation-relay-config.interruptible", "speech",
+			"--conversation-relay-config.interruptible-greeting", "dtmf",
+			"--conversation-relay-config.interruption-settings", "{enable: true, interruptible: speech, interruptible_greeting: speech, welcome_greeting_interruptible: speech}",
+			"--conversation-relay-config.language", "en-US",
+			"--conversation-relay-config.languages", "[{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {transcription_model: bar}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.Ultra.alloy, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}]",
+			"--conversation-relay-config.provider", "elevenlabs",
+			"--conversation-relay-config.structured-provider", "{voice_id: bar, model_id: bar}",
+			"--conversation-relay-config.transcription-engine", "Google",
+			"--conversation-relay-config.transcription-engine-config", "{transcription_model: bar, interim_results: bar, keywords_boosting: bar}",
+			"--conversation-relay-config.tts-provider", "telnyx",
+			"--conversation-relay-config.voice", "Telnyx.KokoroTTS.af",
+			"--conversation-relay-config.voice-settings", "{type: telnyx, voice_speed: 1}",
 			"--custom-header.name", "head_1",
 			"--custom-header.value", "val_1",
 			"--custom-header.name", "head_2",
@@ -284,6 +301,46 @@ func TestCallsDial(t *testing.T) {
 			"  whisper_call_control_ids:\n" +
 			"    - v2:Sg1xxxQ_U3ixxxyXT_VDNI3xxxazZdg6Vxxxs4-GNYxxxVaJPOhFMRQ\n" +
 			"    - v2:qqpb0mmvd-ovhhBr0BUQQn0fld5jIboaaX3-De0DkqXHzbf8d75xkw\n" +
+			"conversation_relay_config:\n" +
+			"  url: wss://example.com/conversation-relay\n" +
+			"  custom_parameters:\n" +
+			"    customer_id: bar\n" +
+			"  dtmf_detection: true\n" +
+			"  greeting: Hi! Ask me anything!\n" +
+			"  interruptible: speech\n" +
+			"  interruptible_greeting: dtmf\n" +
+			"  interruption_settings:\n" +
+			"    enable: true\n" +
+			"    interruptible: speech\n" +
+			"    interruptible_greeting: speech\n" +
+			"    welcome_greeting_interruptible: speech\n" +
+			"  language: en-US\n" +
+			"  languages:\n" +
+			"    - language: en-US\n" +
+			"      speech_model: nova-3\n" +
+			"      transcription_engine: Deepgram\n" +
+			"      transcription_engine_config:\n" +
+			"        transcription_model: bar\n" +
+			"      transcription_provider: Deepgram\n" +
+			"      tts_provider: telnyx\n" +
+			"      voice: Telnyx.Ultra.alloy\n" +
+			"      voice_settings:\n" +
+			"        type: elevenlabs\n" +
+			"        api_key_ref: my_elevenlabs_api_key\n" +
+			"  provider: elevenlabs\n" +
+			"  structured_provider:\n" +
+			"    voice_id: bar\n" +
+			"    model_id: bar\n" +
+			"  transcription_engine: Google\n" +
+			"  transcription_engine_config:\n" +
+			"    transcription_model: bar\n" +
+			"    interim_results: bar\n" +
+			"    keywords_boosting: bar\n" +
+			"  tts_provider: telnyx\n" +
+			"  voice: Telnyx.KokoroTTS.af\n" +
+			"  voice_settings:\n" +
+			"    type: telnyx\n" +
+			"    voice_speed: 1\n" +
 			"custom_headers:\n" +
 			"  - name: head_1\n" +
 			"    value: val_1\n" +
