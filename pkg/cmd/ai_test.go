@@ -8,13 +8,13 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestAICreateResponseDeprecated(t *testing.T) {
+func TestAICreateResponse(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"ai", "create-response-deprecated",
+			"ai", "create-response",
 			"--body", "{model: bar, input: bar}",
 		)
 	})
@@ -27,7 +27,7 @@ func TestAICreateResponseDeprecated(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"ai", "create-response-deprecated",
+			"ai", "create-response",
 		)
 	})
 }

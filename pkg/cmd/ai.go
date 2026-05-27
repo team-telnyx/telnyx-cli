@@ -14,8 +14,8 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var aiCreateResponseDeprecated = cli.Command{
-	Name:    "create-response-deprecated",
+var aiCreateResponse = cli.Command{
+	Name:    "create-response",
 	Usage:   "**Deprecated**: Use `POST /v2/ai/openai/responses` instead. This endpoint is\ncompatible with the\n[OpenAI Responses API](https://developers.openai.com/api/reference/responses/overview)\nand may be used with the OpenAI JS or Python SDK. Response id parameter is not\nsupported at the moment. Use the `conversation` parameter with a Telnyx\nConversation ID to leverage persistent conversations.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -25,7 +25,7 @@ var aiCreateResponseDeprecated = cli.Command{
 			BodyRoot: true,
 		},
 	},
-	Action:          handleAICreateResponseDeprecated,
+	Action:          handleAICreateResponse,
 	HideHelpCommand: true,
 }
 
@@ -65,7 +65,7 @@ var aiSummarize = cli.Command{
 	HideHelpCommand: true,
 }
 
-func handleAICreateResponseDeprecated(ctx context.Context, cmd *cli.Command) error {
+func handleAICreateResponse(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -84,11 +84,11 @@ func handleAICreateResponseDeprecated(ctx context.Context, cmd *cli.Command) err
 		return err
 	}
 
-	params := telnyx.AINewResponseDeprecatedParams{}
+	params := telnyx.AINewResponseParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.NewResponseDeprecated(ctx, params, options...)
+	_, err = client.AI.NewResponse(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -101,7 +101,7 @@ func handleAICreateResponseDeprecated(ctx context.Context, cmd *cli.Command) err
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "ai create-response-deprecated",
+		Title:          "ai create-response",
 		Transform:      transform,
 	})
 }
