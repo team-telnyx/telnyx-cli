@@ -3245,6 +3245,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "speech-to-text",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&speechToTextListProviders,
+				},
+			},
+			{
 				Name:     "voice-sdk-call-reports",
 				Category: "API RESOURCE",
 				Suggest:  true,
