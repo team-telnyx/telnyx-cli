@@ -2161,6 +2161,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "speech-to-text",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&speechToTextListProviders,
+				},
+			},
+			{
 				Name:     "requirement-groups",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -2613,7 +2621,8 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&textToSpeechGenerate,
+					&textToSpeechCreateSpeech,
+					&textToSpeechGenerateSpeech,
 					&textToSpeechListVoices,
 				},
 			},
@@ -3242,14 +3251,6 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&uacConnectionsActionsCheckRegistrationStatus,
-				},
-			},
-			{
-				Name:     "speech-to-text",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&speechToTextListProviders,
 				},
 			},
 			{
