@@ -55,7 +55,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--tag", "string",
 			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
-			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
 			"--version-name", "version_name",
 			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
@@ -126,7 +126,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--telephony-settings.user-idle-timeout-secs", "10",
 			"--telephony-settings.voicemail-detection", "{on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}",
 			"--tool-id", "string",
-			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription.api-key-ref", "api_key_ref",
 			"--transcription.language", "language",
 			"--transcription.model", "deepgram/flux",
@@ -260,6 +260,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"      name: name\n" +
 			"      url: https://example.com/api/v1/function\n" +
 			"      async: true\n" +
+			"      async_timeout_ms: 1\n" +
 			"      body_parameters:\n" +
 			"        properties:\n" +
 			"          age: bar\n" +
