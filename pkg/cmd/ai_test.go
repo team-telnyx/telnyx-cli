@@ -15,7 +15,7 @@ func TestAICreateResponse(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai", "create-response",
-			"--body", "{model: bar, input: bar}",
+			"--input", "{model: bar, input: bar}",
 		)
 	})
 
