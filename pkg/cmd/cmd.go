@@ -3263,6 +3263,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "sip-registration-status",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&sipRegistrationStatusRetrieve,
+				},
+			},
+			{
 				Name:            "@manpages",
 				Usage:           "Generate documentation for 'man'",
 				UsageText:       "telnyx @manpages [-o telnyx.1] [--gzip]",
