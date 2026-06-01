@@ -16,18 +16,18 @@ import (
 
 var sipRegistrationStatusRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Returns the live SIP registration state of a connection or credential. Supports\nUAC third-party credentials, telephony credentials, and SIP credential\nconnections.",
+	Usage:   "Returns the live SIP registration state of a UAC connection: whether it is\ncurrently registered, when it last registered, and the last response Telnyx\nreceived from the registrar. Only `uac_external_credential` is supported today.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "connection-id",
-			Usage:     "Identifier of the connection or credential to look up.",
+			Usage:     "Identifier of the UAC connection to look up.",
 			Required:  true,
 			QueryPath: "connection_id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "credential-type",
-			Usage:     "The kind of credential to look up.",
+			Usage:     "The kind of credential to look up. Only `uac_external_credential` is supported today.",
 			Required:  true,
 			QueryPath: "credential_type",
 		},
