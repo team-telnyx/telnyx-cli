@@ -31,12 +31,6 @@ var sipRegistrationStatusRetrieve = cli.Command{
 			Required:  true,
 			QueryPath: "credential_type",
 		},
-		&requestflag.Flag[string]{
-			Name:      "user-id",
-			Usage:     "Owner of the connection. Used to authorize the lookup.",
-			Required:  true,
-			QueryPath: "user_id",
-		},
 	},
 	Action:          handleSipRegistrationStatusRetrieve,
 	HideHelpCommand: true,
