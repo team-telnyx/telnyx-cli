@@ -17,7 +17,6 @@ func TestSipRegistrationStatusRetrieve(t *testing.T) {
 			"sip-registration-status", "retrieve",
 			"--connection-id", "connection_id",
 			"--credential-type", "uac_external_credential",
-			"--user-id", "user_id",
 		)
 	})
 }
