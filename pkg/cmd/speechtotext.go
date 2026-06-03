@@ -26,7 +26,7 @@ var speechToTextListProviders = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "service-type",
-			Usage:     "Filter to entries that support the given service type.",
+			Usage:     "Filter to entries that support the given service type. For backward compatibility with the values that briefly shipped before the product-aligned rename, the legacy aliases `file_transcription`, `in_call_transcription`, and `ai_assistant_transcription` are silently accepted and normalized to `file_based`, `in_call`, and `ai_assistant` respectively. The response always emits the canonical (post-rename) values.",
 			QueryPath: "service_type",
 		},
 	},
