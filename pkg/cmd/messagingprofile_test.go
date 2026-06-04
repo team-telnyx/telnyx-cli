@@ -133,6 +133,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"--api-key", "string",
 			"messaging-profiles", "update",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--ai-assistant-id", "ai_assistant-a80a9d4a-728c-4593-852c-2e93ad890000",
 			"--alpha-sender", "sqF",
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
@@ -162,6 +163,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"--api-key", "string",
 			"messaging-profiles", "update",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--ai-assistant-id", "ai_assistant-a80a9d4a-728c-4593-852c-2e93ad890000",
 			"--alpha-sender", "sqF",
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
@@ -191,6 +193,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
+			"ai_assistant_id: ai_assistant-a80a9d4a-728c-4593-852c-2e93ad890000\n" +
 			"alpha_sender: sqF\n" +
 			"daily_spend_limit: '269125115713'\n" +
 			"daily_spend_limit_enabled: true\n" +

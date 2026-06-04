@@ -280,7 +280,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&aiCreateResponse,
+					&aiCreateResponseDeprecated,
 					&aiRetrieveModels,
 					&aiSummarize,
 				},
@@ -3106,6 +3106,15 @@ func init() {
 				},
 			},
 			{
+				Name:     "whatsapp:user-data",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappUserDataRetrieve,
+					&whatsappUserDataUpdate,
+				},
+			},
+			{
 				Name:     "whatsapp-message-templates",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3233,6 +3242,31 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&uacConnectionsActionsCheckRegistrationStatus,
+				},
+			},
+			{
+				Name:     "sip-registration-status",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&sipRegistrationStatusRetrieve,
+				},
+			},
+			{
+				Name:     "speech-to-text",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&speechToTextListProviders,
+				},
+			},
+			{
+				Name:     "voice-sdk-call-reports",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&voiceSDKCallReportsRetrieve,
+					&voiceSDKCallReportsList,
 				},
 			},
 			{

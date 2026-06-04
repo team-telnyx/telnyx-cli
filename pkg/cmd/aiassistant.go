@@ -30,6 +30,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Required: true,
 			BodyPath: "name",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "conversation-flow",
+			Usage:    "Conversation flow as supplied by API clients (create / update).\n\nA directed graph of `FlowNodeReq` connected by `FlowEdge`s. Validation\nenforces unique node/edge IDs, that `start_node_id` references a real\nnode, and that every edge's endpoints reference real nodes.",
+			BodyPath: "conversation_flow",
+		},
 		&requestflag.Flag[string]{
 			Name:     "description",
 			BodyPath: "description",
@@ -152,6 +157,23 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleAIAssistantsCreate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"conversation-flow": {
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "conversation-flow.nodes",
+			Usage:      "All nodes in the flow. Must contain `start_node_id`. Each node is a prompt node (`type: prompt`) or a tool node (`type: tool`).",
+			InnerField: "nodes",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-flow.start-node-id",
+			Usage:      "ID of the node where the conversation begins.",
+			InnerField: "start_node_id",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "conversation-flow.edges",
+			Usage:      "Directed transitions between nodes. May be empty for a single-node flow.",
+			InnerField: "edges",
+		},
+	},
 	"external-llm": {
 		&requestflag.InnerFlag[string]{
 			Name:       "external-llm.base-url",
@@ -550,6 +572,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Required:  true,
 			PathParam: "assistant_id",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "conversation-flow",
+			Usage:    "Conversation flow as supplied by API clients (create / update).\n\nA directed graph of `FlowNodeReq` connected by `FlowEdge`s. Validation\nenforces unique node/edge IDs, that `start_node_id` references a real\nnode, and that every edge's endpoints reference real nodes.",
+			BodyPath: "conversation_flow",
+		},
 		&requestflag.Flag[string]{
 			Name:     "description",
 			BodyPath: "description",
@@ -693,6 +720,23 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleAIAssistantsUpdate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"conversation-flow": {
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "conversation-flow.nodes",
+			Usage:      "All nodes in the flow. Must contain `start_node_id`. Each node is a prompt node (`type: prompt`) or a tool node (`type: tool`).",
+			InnerField: "nodes",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "conversation-flow.start-node-id",
+			Usage:      "ID of the node where the conversation begins.",
+			InnerField: "start_node_id",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "conversation-flow.edges",
+			Usage:      "Directed transitions between nodes. May be empty for a single-node flow.",
+			InnerField: "edges",
+		},
+	},
 	"external-llm": {
 		&requestflag.InnerFlag[string]{
 			Name:       "external-llm.base-url",

@@ -200,6 +200,11 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			PathParam: "id",
 		},
 		&requestflag.Flag[*string]{
+			Name:     "ai-assistant-id",
+			Usage:    "The ID of the AI assistant associated with this messaging profile.",
+			BodyPath: "ai_assistant_id",
+		},
+		&requestflag.Flag[*string]{
 			Name:     "alpha-sender",
 			Usage:    "The alphanumeric sender ID to use when sending to destinations that require an alphanumeric sender ID.",
 			BodyPath: "alpha_sender",
