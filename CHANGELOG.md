@@ -1,5 +1,46 @@
 # Changelog
 
+## 0.17.0 (2026-06-04)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* add assistant_id to MessagingProfile and request schemas ([79b3830](https://github.com/team-telnyx/telnyx-cli/commit/79b383074d5d43aed906b3a90826105517360c29))
+* AI-assistants conversation flow ([70ddf45](https://github.com/team-telnyx/telnyx-cli/commit/70ddf45cdf959741fb767a73e9d93ef53ce55706))
+* **api:** manual updates ([6297c4e](https://github.com/team-telnyx/telnyx-cli/commit/6297c4e9e6f2de2fe4c1421caafc5ccdcb2f4439))
+* **api:** manual updates ([9c9a1d0](https://github.com/team-telnyx/telnyx-cli/commit/9c9a1d096c740b97cc0bc12a3750fbd2d7d64517))
+* MSG-919: documentation for Whatsapp user data ([a35b50b](https://github.com/team-telnyx/telnyx-cli/commit/a35b50b64a0f855f1bfcc852e6c66f5607130f90))
+* **sip-registration-status:** add OpenAPI spec for /v2/sip_registration_status ([38843b2](https://github.com/team-telnyx/telnyx-cli/commit/38843b2bb4970367fb719f911fe0b1eb803846fb))
+* TELAPPS-406: document GET /speech-to-text/providers endpoint ([31301ee](https://github.com/team-telnyx/telnyx-cli/commit/31301ee9e48b33a44699a7a7b4cce1001c8d9da2))
+* TELAPPS-406: nest service_types with per-service languages in STT spec ([5a4c5ae](https://github.com/team-telnyx/telnyx-cli/commit/5a4c5ae840201b82ddc8eb5e9e222493ac94eb55))
+* TELAPPS-483: Add async webhook timeout to OpenAPI ([5948ad3](https://github.com/team-telnyx/telnyx-cli/commit/5948ad3a8b6cf5ad7701d1a20c06a86ab640666a))
+* TELAPPS-523: document stop_on_conversation_end on assistant recording_settings ([91d9fa1](https://github.com/team-telnyx/telnyx-cli/commit/91d9fa15ec18a3296b7498b1b47e84dad1f82910))
+* TELAPPS-531: document Rime ArcanaV3 and Coda voice models ([c8a8a72](https://github.com/team-telnyx/telnyx-cli/commit/c8a8a7201f7e1536d0f6156880d6a8601c25c61c))
+* TELAPPS-5698 document conversation relay API shape ([7a12f63](https://github.com/team-telnyx/telnyx-cli/commit/7a12f63825dc81a76ee6187b4420900a79ede684))
+* TELAPPS-72: document send_digits_on_answer on Dial + Transfer ([70946ee](https://github.com/team-telnyx/telnyx-cli/commit/70946ee4a27087038c0a027690cb9893ccaf1c47))
+* Update conversation flow ([5e3f320](https://github.com/team-telnyx/telnyx-cli/commit/5e3f3207a85adf5031b487ed4b62859a5a34c719))
+
+
+### Bug Fixes
+
+* **sip-registration-status:** drop user_id query param ([e1d7b93](https://github.com/team-telnyx/telnyx-cli/commit/e1d7b93156e486caa0f4cdb88e40c25bd1b1dfc5))
+* **sip-registration-status:** scope to phase 1 uac_third-party_credential ([17e621f](https://github.com/team-telnyx/telnyx-cli/commit/17e621fbd6e357799fcd94ecd11a9a1fdbbfe488))
+* **verify:** correct WhatsApp verification type example ([3f31056](https://github.com/team-telnyx/telnyx-cli/commit/3f31056913c4f8d10f1fe83409f4784a3a2d581f))
+
+
+### Chores
+
+* **internal:** codegen related update ([517eb5d](https://github.com/team-telnyx/telnyx-cli/commit/517eb5da116ae7d41c71444e23262ea2fe40b4d5))
+* **internal:** codegen related update ([b1edd4c](https://github.com/team-telnyx/telnyx-cli/commit/b1edd4c561e9d00f9ac2b53c23afeabbfabeb71d))
+* update example date in audit-logs for pipeline sync ([45e065c](https://github.com/team-telnyx/telnyx-cli/commit/45e065c736a16f2c8c762447960bb88ff2e613d7))
+* update example date in inference embedding ([aacf17c](https://github.com/team-telnyx/telnyx-cli/commit/aacf17c992f12623781fa6c29141fbebd0de0d45))
+
+
+### Documentation
+
+* add voice sdk debug call report spec ([ea40c40](https://github.com/team-telnyx/telnyx-cli/commit/ea40c4071064c05dbdcad23f59a0e70c12dda29e))
+
 ## 0.16.0 (2026-05-18)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.15.0...v0.16.0)
