@@ -15,7 +15,7 @@ func TestEnterprisesReputationRetrieve(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"enterprises:reputation", "retrieve",
-			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
 		)
 	})
 }
@@ -27,7 +27,7 @@ func TestEnterprisesReputationDisable(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"enterprises:reputation", "disable",
-			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
 		)
 	})
 }
@@ -39,8 +39,8 @@ func TestEnterprisesReputationEnable(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"enterprises:reputation", "enable",
-			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-			"--loa-document-id", "doc_01HXYZ1234ABCDEF",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--loa-document-id", "2a7e8337-e803-4057-a4ae-26c40eb0bc6c",
 			"--check-frequency", "business_daily",
 		)
 	})
@@ -48,13 +48,13 @@ func TestEnterprisesReputationEnable(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"loa_document_id: doc_01HXYZ1234ABCDEF\n" +
+			"loa_document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c\n" +
 			"check_frequency: business_daily\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
 			"enterprises:reputation", "enable",
-			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
 		)
 	})
 }
@@ -66,19 +66,19 @@ func TestEnterprisesReputationUpdateFrequency(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"enterprises:reputation", "update-frequency",
-			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-			"--check-frequency", "business_daily",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--check-frequency", "weekly",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("check_frequency: business_daily")
+		pipeData := []byte("check_frequency: weekly")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
 			"enterprises:reputation", "update-frequency",
-			"--enterprise-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
 		)
 	})
 }

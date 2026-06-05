@@ -14,32 +14,47 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var reputationNumbersRetrieve = cli.Command{
-	Name:    "retrieve",
-	Usage:   "Convenience alias for\n`GET /v2/enterprises/{enterprise_id}/reputation/numbers/{phone_number}`.",
+var dirCommentsCreate = cli.Command{
+	Name:    "create",
+	Usage:   "Post a customer comment on a DIR (for example, to respond to reviewer notes).\nSend only `content` (1–5000 chars) and an optional `parent_comment_id`; the\nserver sets the comment type, visibility, and author automatically. The\nenterprise is resolved server-side from the DIR id.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:      "phone-number",
+			Name:      "dir-id",
 			Required:  true,
-			PathParam: "phone_number",
+			PathParam: "dir_id",
 		},
-		&requestflag.Flag[bool]{
-			Name:      "fresh",
-			Usage:     "When true, fetches fresh reputation data (incurs API cost). When false (default), returns cached data.",
-			Default:   false,
-			QueryPath: "fresh",
+		&requestflag.Flag[string]{
+			Name:     "content",
+			Usage:    "Comment body. 1–5000 characters.",
+			Required: true,
+			BodyPath: "content",
+		},
+		&requestflag.Flag[string]{
+			Name:     "parent-comment-id",
+			Usage:    "Optional parent comment id to thread this reply under.",
+			BodyPath: "parent_comment_id",
 		},
 	},
-	Action:          handleReputationNumbersRetrieve,
+	Action:          handleDirCommentsCreate,
 	HideHelpCommand: true,
 }
 
-var reputationNumbersList = cli.Command{
+var dirCommentsList = cli.Command{
 	Name:    "list",
-	Usage:   "Convenience alias for `GET /v2/enterprises/{enterprise_id}/reputation/numbers`\nthat returns numbers across every enterprise you own. Useful when you don't want\nto look up the enterprise id first.",
+	Usage:   "List the comments on a DIR. The enterprise is resolved server-side from the DIR\nid.",
 	Suggest: true,
 	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "dir-id",
+			Required:  true,
+			PathParam: "dir_id",
+		},
+		&requestflag.Flag[string]{
+			Name:      "comment-type",
+			Usage:     "Restrict to comments of this category. Customer-visible categories only: internal-only comments are filtered out regardless of this filter.",
+			QueryPath: "comment_type",
+		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
 			Usage:     "1-based page number. Out-of-range values return an empty page with correct meta.",
@@ -52,40 +67,20 @@ var reputationNumbersList = cli.Command{
 			Default:   20,
 			QueryPath: "page[size]",
 		},
-		&requestflag.Flag[string]{
-			Name:      "phone-number",
-			Usage:     "Filter by specific phone number (E.164 format).",
-			QueryPath: "phone_number",
-		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
-	Action:          handleReputationNumbersList,
+	Action:          handleDirCommentsList,
 	HideHelpCommand: true,
 }
 
-var reputationNumbersDelete = cli.Command{
-	Name:    "delete",
-	Usage:   "Convenience alias for\n`DELETE /v2/enterprises/{enterprise_id}/reputation/numbers/{phone_number}`.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "phone-number",
-			Required:  true,
-			PathParam: "phone_number",
-		},
-	},
-	Action:          handleReputationNumbersDelete,
-	HideHelpCommand: true,
-}
-
-func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handleDirCommentsCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
-		cmd.Set("phone-number", unusedArgs[0])
+	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
+		cmd.Set("dir-id", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
@@ -96,20 +91,20 @@ func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) erro
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
 		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
+		ApplicationJSON,
 		false,
 	)
 	if err != nil {
 		return err
 	}
 
-	params := telnyx.ReputationNumberGetParams{}
+	params := telnyx.DirCommentNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Reputation.Numbers.Get(
+	_, err = client.Dir.Comments.New(
 		ctx,
-		cmd.Value("phone-number").(string),
+		cmd.Value("dir-id").(string),
 		params,
 		options...,
 	)
@@ -125,71 +120,16 @@ func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) erro
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "reputation:numbers retrieve",
+		Title:          "dir:comments create",
 		Transform:      transform,
 	})
 }
 
-func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
+func handleDirCommentsList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	params := telnyx.ReputationNumberListParams{}
-
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	if format == "raw" {
-		var res []byte
-		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.Reputation.Numbers.List(ctx, params, options...)
-		if err != nil {
-			return err
-		}
-		obj := gjson.ParseBytes(res)
-		return ShowJSON(obj, ShowJSONOpts{
-			ExplicitFormat: explicitFormat,
-			Format:         format,
-			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "reputation:numbers list",
-			Transform:      transform,
-		})
-	} else {
-		iter := client.Reputation.Numbers.ListAutoPaging(ctx, params, options...)
-		maxItems := int64(-1)
-		if cmd.IsSet("max-items") {
-			maxItems = cmd.Value("max-items").(int64)
-		}
-		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
-			ExplicitFormat: explicitFormat,
-			Format:         format,
-			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "reputation:numbers list",
-			Transform:      transform,
-		})
-	}
-}
-
-func handleReputationNumbersDelete(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
-		cmd.Set("phone-number", unusedArgs[0])
+	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
+		cmd.Set("dir-id", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
@@ -207,5 +147,48 @@ func handleReputationNumbersDelete(ctx context.Context, cmd *cli.Command) error 
 		return err
 	}
 
-	return client.Reputation.Numbers.Delete(ctx, cmd.Value("phone-number").(string), options...)
+	params := telnyx.DirCommentListParams{}
+
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.Dir.Comments.List(
+			ctx,
+			cmd.Value("dir-id").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "dir:comments list",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.Dir.Comments.ListAutoPaging(
+			ctx,
+			cmd.Value("dir-id").(string),
+			params,
+			options...,
+		)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "dir:comments list",
+			Transform:      transform,
+		})
+	}
 }

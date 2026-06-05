@@ -14,30 +14,24 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var reputationNumbersRetrieve = cli.Command{
+var termsOfServiceAgreementsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Convenience alias for\n`GET /v2/enterprises/{enterprise_id}/reputation/numbers/{phone_number}`.",
+	Usage:   "Retrieve a single ToS agreement record. Returns `404` if the agreement does not\nexist or does not belong to the authenticated user.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:      "phone-number",
+			Name:      "agreement-id",
 			Required:  true,
-			PathParam: "phone_number",
-		},
-		&requestflag.Flag[bool]{
-			Name:      "fresh",
-			Usage:     "When true, fetches fresh reputation data (incurs API cost). When false (default), returns cached data.",
-			Default:   false,
-			QueryPath: "fresh",
+			PathParam: "agreement_id",
 		},
 	},
-	Action:          handleReputationNumbersRetrieve,
+	Action:          handleTermsOfServiceAgreementsRetrieve,
 	HideHelpCommand: true,
 }
 
-var reputationNumbersList = cli.Command{
+var termsOfServiceAgreementsList = cli.Command{
 	Name:    "list",
-	Usage:   "Convenience alias for `GET /v2/enterprises/{enterprise_id}/reputation/numbers`\nthat returns numbers across every enterprise you own. Useful when you don't want\nto look up the enterprise id first.",
+	Usage:   "Returns the Terms of Service agreements the authenticated user has on file. Each\nentry records the version agreed to and when. Most users only have one agreement\nper product, but if the ToS is updated and the user re-agrees a new entry is\nadded.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -53,39 +47,24 @@ var reputationNumbersList = cli.Command{
 			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[string]{
-			Name:      "phone-number",
-			Usage:     "Filter by specific phone number (E.164 format).",
-			QueryPath: "phone_number",
+			Name:      "product-type",
+			Usage:     "Optional filter. Omit to list the user's agreements for **every** product (branded_calling and number_reputation); pass a value to return only that product's agreements.",
+			QueryPath: "product_type",
 		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
-	Action:          handleReputationNumbersList,
+	Action:          handleTermsOfServiceAgreementsList,
 	HideHelpCommand: true,
 }
 
-var reputationNumbersDelete = cli.Command{
-	Name:    "delete",
-	Usage:   "Convenience alias for\n`DELETE /v2/enterprises/{enterprise_id}/reputation/numbers/{phone_number}`.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "phone-number",
-			Required:  true,
-			PathParam: "phone_number",
-		},
-	},
-	Action:          handleReputationNumbersDelete,
-	HideHelpCommand: true,
-}
-
-func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handleTermsOfServiceAgreementsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
-		cmd.Set("phone-number", unusedArgs[0])
+	if !cmd.IsSet("agreement-id") && len(unusedArgs) > 0 {
+		cmd.Set("agreement-id", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
@@ -103,16 +82,9 @@ func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) erro
 		return err
 	}
 
-	params := telnyx.ReputationNumberGetParams{}
-
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Reputation.Numbers.Get(
-		ctx,
-		cmd.Value("phone-number").(string),
-		params,
-		options...,
-	)
+	_, err = client.TermsOfService.Agreements.Get(ctx, cmd.Value("agreement-id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -125,12 +97,12 @@ func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) erro
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "reputation:numbers retrieve",
+		Title:          "terms-of-service:agreements retrieve",
 		Transform:      transform,
 	})
 }
 
-func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
+func handleTermsOfServiceAgreementsList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -149,7 +121,7 @@ func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
-	params := telnyx.ReputationNumberListParams{}
+	params := telnyx.TermsOfServiceAgreementListParams{}
 
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
@@ -157,7 +129,7 @@ func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
 	if format == "raw" {
 		var res []byte
 		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.Reputation.Numbers.List(ctx, params, options...)
+		_, err = client.TermsOfService.Agreements.List(ctx, params, options...)
 		if err != nil {
 			return err
 		}
@@ -166,11 +138,11 @@ func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
 			ExplicitFormat: explicitFormat,
 			Format:         format,
 			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "reputation:numbers list",
+			Title:          "terms-of-service:agreements list",
 			Transform:      transform,
 		})
 	} else {
-		iter := client.Reputation.Numbers.ListAutoPaging(ctx, params, options...)
+		iter := client.TermsOfService.Agreements.ListAutoPaging(ctx, params, options...)
 		maxItems := int64(-1)
 		if cmd.IsSet("max-items") {
 			maxItems = cmd.Value("max-items").(int64)
@@ -179,33 +151,8 @@ func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
 			ExplicitFormat: explicitFormat,
 			Format:         format,
 			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "reputation:numbers list",
+			Title:          "terms-of-service:agreements list",
 			Transform:      transform,
 		})
 	}
-}
-
-func handleReputationNumbersDelete(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
-		cmd.Set("phone-number", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	return client.Reputation.Numbers.Delete(ctx, cmd.Value("phone-number").(string), options...)
 }

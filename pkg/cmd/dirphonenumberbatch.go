@@ -14,32 +14,41 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var reputationNumbersRetrieve = cli.Command{
+var dirPhoneNumberBatchesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Convenience alias for\n`GET /v2/enterprises/{enterprise_id}/reputation/numbers/{phone_number}`.",
+	Usage:   "Get a single phone-number batch by id. The enterprise is resolved server-side\nfrom the DIR id.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:      "phone-number",
+			Name:      "dir-id",
 			Required:  true,
-			PathParam: "phone_number",
+			PathParam: "dir_id",
 		},
-		&requestflag.Flag[bool]{
-			Name:      "fresh",
-			Usage:     "When true, fetches fresh reputation data (incurs API cost). When false (default), returns cached data.",
-			Default:   false,
-			QueryPath: "fresh",
+		&requestflag.Flag[string]{
+			Name:      "batch-id",
+			Required:  true,
+			PathParam: "batch_id",
 		},
 	},
-	Action:          handleReputationNumbersRetrieve,
+	Action:          handleDirPhoneNumberBatchesRetrieve,
 	HideHelpCommand: true,
 }
 
-var reputationNumbersList = cli.Command{
+var dirPhoneNumberBatchesList = cli.Command{
 	Name:    "list",
-	Usage:   "Convenience alias for `GET /v2/enterprises/{enterprise_id}/reputation/numbers`\nthat returns numbers across every enterprise you own. Useful when you don't want\nto look up the enterprise id first.",
+	Usage:   "List the phone-number batches submitted under a DIR. The enterprise is resolved\nserver-side from the DIR id.",
 	Suggest: true,
 	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "dir-id",
+			Required:  true,
+			PathParam: "dir_id",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-status",
+			Usage:     "Restrict to batches whose aggregate status equals this value.",
+			QueryPath: "filter[status]",
+		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
 			Usage:     "1-based page number. Out-of-range values return an empty page with correct meta.",
@@ -52,40 +61,20 @@ var reputationNumbersList = cli.Command{
 			Default:   20,
 			QueryPath: "page[size]",
 		},
-		&requestflag.Flag[string]{
-			Name:      "phone-number",
-			Usage:     "Filter by specific phone number (E.164 format).",
-			QueryPath: "phone_number",
-		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
-	Action:          handleReputationNumbersList,
+	Action:          handleDirPhoneNumberBatchesList,
 	HideHelpCommand: true,
 }
 
-var reputationNumbersDelete = cli.Command{
-	Name:    "delete",
-	Usage:   "Convenience alias for\n`DELETE /v2/enterprises/{enterprise_id}/reputation/numbers/{phone_number}`.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "phone-number",
-			Required:  true,
-			PathParam: "phone_number",
-		},
-	},
-	Action:          handleReputationNumbersDelete,
-	HideHelpCommand: true,
-}
-
-func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handleDirPhoneNumberBatchesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
-		cmd.Set("phone-number", unusedArgs[0])
+	if !cmd.IsSet("batch-id") && len(unusedArgs) > 0 {
+		cmd.Set("batch-id", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
@@ -103,13 +92,15 @@ func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) erro
 		return err
 	}
 
-	params := telnyx.ReputationNumberGetParams{}
+	params := telnyx.DirPhoneNumberBatchGetParams{
+		DirID: cmd.Value("dir-id").(string),
+	}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Reputation.Numbers.Get(
+	_, err = client.Dir.PhoneNumberBatches.Get(
 		ctx,
-		cmd.Value("phone-number").(string),
+		cmd.Value("batch-id").(string),
 		params,
 		options...,
 	)
@@ -125,71 +116,16 @@ func handleReputationNumbersRetrieve(ctx context.Context, cmd *cli.Command) erro
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "reputation:numbers retrieve",
+		Title:          "dir:phone-number-batches retrieve",
 		Transform:      transform,
 	})
 }
 
-func handleReputationNumbersList(ctx context.Context, cmd *cli.Command) error {
+func handleDirPhoneNumberBatchesList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	params := telnyx.ReputationNumberListParams{}
-
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	if format == "raw" {
-		var res []byte
-		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.Reputation.Numbers.List(ctx, params, options...)
-		if err != nil {
-			return err
-		}
-		obj := gjson.ParseBytes(res)
-		return ShowJSON(obj, ShowJSONOpts{
-			ExplicitFormat: explicitFormat,
-			Format:         format,
-			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "reputation:numbers list",
-			Transform:      transform,
-		})
-	} else {
-		iter := client.Reputation.Numbers.ListAutoPaging(ctx, params, options...)
-		maxItems := int64(-1)
-		if cmd.IsSet("max-items") {
-			maxItems = cmd.Value("max-items").(int64)
-		}
-		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
-			ExplicitFormat: explicitFormat,
-			Format:         format,
-			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "reputation:numbers list",
-			Transform:      transform,
-		})
-	}
-}
-
-func handleReputationNumbersDelete(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
-		cmd.Set("phone-number", unusedArgs[0])
+	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
+		cmd.Set("dir-id", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
@@ -207,5 +143,48 @@ func handleReputationNumbersDelete(ctx context.Context, cmd *cli.Command) error 
 		return err
 	}
 
-	return client.Reputation.Numbers.Delete(ctx, cmd.Value("phone-number").(string), options...)
+	params := telnyx.DirPhoneNumberBatchListParams{}
+
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.Dir.PhoneNumberBatches.List(
+			ctx,
+			cmd.Value("dir-id").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "dir:phone-number-batches list",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.Dir.PhoneNumberBatches.ListAutoPaging(
+			ctx,
+			cmd.Value("dir-id").(string),
+			params,
+			options...,
+		)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "dir:phone-number-batches list",
+			Transform:      transform,
+		})
+	}
 }

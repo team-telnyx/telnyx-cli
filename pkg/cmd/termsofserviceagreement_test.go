@@ -8,42 +8,29 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestReputationNumbersRetrieve(t *testing.T) {
+func TestTermsOfServiceAgreementsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"reputation:numbers", "retrieve",
-			"--phone-number", "+19493253498",
-			"--fresh=true",
+			"terms-of-service:agreements", "retrieve",
+			"--agreement-id", "550e8400-e29b-41d4-a716-446655440000",
 		)
 	})
 }
 
-func TestReputationNumbersList(t *testing.T) {
+func TestTermsOfServiceAgreementsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"reputation:numbers", "list",
+			"terms-of-service:agreements", "list",
 			"--max-items", "10",
 			"--page-number", "1",
 			"--page-size", "20",
-			"--phone-number", "+16035551234",
-		)
-	})
-}
-
-func TestReputationNumbersDelete(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"reputation:numbers", "delete",
-			"--phone-number", "+19493253498",
+			"--product-type", "branded_calling",
 		)
 	})
 }

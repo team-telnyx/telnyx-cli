@@ -8,42 +8,31 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestReputationNumbersRetrieve(t *testing.T) {
+func TestDirPhoneNumberBatchesRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"reputation:numbers", "retrieve",
-			"--phone-number", "+19493253498",
-			"--fresh=true",
+			"dir:phone-number-batches", "retrieve",
+			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
+			"--batch-id", "0a4b1f5e-2f12-4c0c-9a98-9b3a7d8b8e62",
 		)
 	})
 }
 
-func TestReputationNumbersList(t *testing.T) {
+func TestDirPhoneNumberBatchesList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"reputation:numbers", "list",
+			"dir:phone-number-batches", "list",
 			"--max-items", "10",
+			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
+			"--filter-status", "submitted",
 			"--page-number", "1",
 			"--page-size", "20",
-			"--phone-number", "+16035551234",
-		)
-	})
-}
-
-func TestReputationNumbersDelete(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"reputation:numbers", "delete",
-			"--phone-number", "+19493253498",
 		)
 	})
 }

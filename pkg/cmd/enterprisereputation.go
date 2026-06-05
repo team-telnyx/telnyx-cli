@@ -16,7 +16,7 @@ import (
 
 var enterprisesReputationRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve the current Number Reputation settings for an enterprise.",
+	Usage:   "Phone Number Reputation tracks how your outbound caller-IDs are perceived (spam\nrisk, engagement, etc.) across the call-screening ecosystem. This endpoint reads\nthe enterprise-level settings: whether the product is enabled, the refresh\ncadence, and the stored Letter of Authorization document id.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var enterprisesReputationRetrieve = cli.Command{
 
 var enterprisesReputationDisable = cli.Command{
 	Name:    "disable",
-	Usage:   "Disable Number Reputation for an enterprise.",
+	Usage:   "Disable Phone Number Reputation. All registered numbers are de-registered as a\ncascade. The enterprise itself is unaffected. Returns `204` on success, `404` if\nreputation is not enabled for this enterprise.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -46,7 +46,7 @@ var enterprisesReputationDisable = cli.Command{
 
 var enterprisesReputationEnable = cli.Command{
 	Name:    "enable",
-	Usage:   "Enable Number Reputation service for an enterprise.",
+	Usage:   "Activate Phone Number Reputation for the given enterprise. Requires an uploaded\nLetter of Authorization document (the `loa_document_id` references the Telnyx\nDocuments API) and a refresh-frequency selection. After activation, individual\nphone numbers can be registered via `POST .../reputation/numbers`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,13 +56,13 @@ var enterprisesReputationEnable = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "loa-document-id",
-			Usage:    "ID of the signed Letter of Authorization (LOA) document uploaded to the document service",
+			Usage:    "Id of the signed Letter of Authorization document, returned by the Telnyx Documents API after upload (upload via `POST /v2/documents`; see https://developers.telnyx.com/api/documents).",
 			Required: true,
 			BodyPath: "loa_document_id",
 		},
 		&requestflag.Flag[string]{
 			Name:     "check-frequency",
-			Usage:    "Frequency for automatically refreshing reputation data",
+			Usage:    "How often Telnyx refreshes the stored reputation data for this enterprise's registered numbers.",
 			Default:  "business_daily",
 			BodyPath: "check_frequency",
 		},
@@ -73,7 +73,7 @@ var enterprisesReputationEnable = cli.Command{
 
 var enterprisesReputationUpdateFrequency = cli.Command{
 	Name:    "update-frequency",
-	Usage:   "Update how often reputation data is automatically refreshed.",
+	Usage:   "Update how often Telnyx refreshes the reputation data for this enterprise's\nregistered numbers. The new frequency takes effect on the next scheduled\nrefresh.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -83,7 +83,7 @@ var enterprisesReputationUpdateFrequency = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "check-frequency",
-			Usage:    "New frequency for refreshing reputation data",
+			Usage:    "How often Telnyx refreshes the stored reputation data for this enterprise's registered numbers.",
 			Required: true,
 			BodyPath: "check_frequency",
 		},
