@@ -16,7 +16,7 @@ import (
 
 var enterprisesReputationNumbersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get detailed reputation data for a specific phone number associated with an\nenterprise.",
+	Usage:   "Retrieve one registered number with its latest reputation snapshot. The\n`phone_number` path parameter is in E.164 format and must be URL-encoded (e.g.\n`%2B19493253498`).",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var enterprisesReputationNumbersRetrieve = cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:      "fresh",
-			Usage:     "When true, fetches fresh reputation data (incurs API cost). When false, returns cached data.",
+			Usage:     "When true, fetches fresh reputation data (incurs API cost). When false (default), returns cached data.",
 			Default:   false,
 			QueryPath: "fresh",
 		},
@@ -42,7 +42,7 @@ var enterprisesReputationNumbersRetrieve = cli.Command{
 
 var enterprisesReputationNumbersList = cli.Command{
 	Name:    "list",
-	Usage:   "List all phone numbers associated with an enterprise for Number Reputation\nmonitoring.",
+	Usage:   "Paginated list of phone numbers registered for reputation monitoring under this\nenterprise. The response includes the latest reputation snapshot per number\nwhere one has been collected.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -52,19 +52,19 @@ var enterprisesReputationNumbersList = cli.Command{
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
-			Usage:     "Page number (1-indexed)",
+			Usage:     "1-based page number. Out-of-range values return an empty page with correct meta.",
 			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
-			Usage:     "Number of items per page",
+			Usage:     "Items per page. Default 10. Maximum 250; values above are clamped to 250.",
 			Default:   10,
 			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[string]{
 			Name:      "phone-number",
-			Usage:     "Filter by specific phone number (E.164 format)",
+			Usage:     "Filter by specific phone number (E.164 format).",
 			QueryPath: "phone_number",
 		},
 		&requestflag.Flag[int64]{
@@ -78,7 +78,7 @@ var enterprisesReputationNumbersList = cli.Command{
 
 var enterprisesReputationNumbersAssociate = cli.Command{
 	Name:    "associate",
-	Usage:   "Associate one or more phone numbers with an enterprise for Number Reputation\nmonitoring.",
+	Usage:   "Add up to 100 phone numbers to reputation monitoring on this enterprise. Each\nmust be in E.164 format (`+1NPANXXXXXX` for US/CA) and belong to your Telnyx\nphone-number inventory.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -88,7 +88,7 @@ var enterprisesReputationNumbersAssociate = cli.Command{
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "phone-number",
-			Usage:    "List of phone numbers to associate for reputation monitoring (max 100)",
+			Usage:    "1–100 phone numbers in E.164 format with a leading `+`.",
 			Required: true,
 			BodyPath: "phone_numbers",
 		},
@@ -99,7 +99,7 @@ var enterprisesReputationNumbersAssociate = cli.Command{
 
 var enterprisesReputationNumbersDisassociate = cli.Command{
 	Name:    "disassociate",
-	Usage:   "Remove a phone number from Number Reputation monitoring for an enterprise.",
+	Usage:   "Stop tracking the reputation of this phone number. The number itself remains in\nyour inventory; only the reputation registration is removed.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -114,6 +114,27 @@ var enterprisesReputationNumbersDisassociate = cli.Command{
 		},
 	},
 	Action:          handleEnterprisesReputationNumbersDisassociate,
+	HideHelpCommand: true,
+}
+
+var enterprisesReputationNumbersRefresh = cli.Command{
+	Name:    "refresh",
+	Usage:   "Immediately refresh the stored reputation data for the listed numbers. This is\nin addition to the periodic refresh determined by `check_frequency`. Up to 100\nnumbers per call. The response carries the kicked-off jobs; the actual refresh\nruns asynchronously.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "phone-number",
+			Usage:    "Phone numbers to refresh reputation data for. 1–100 numbers per request, each in E.164 format. Reputation refreshes are subject to per-enterprise rate limits.",
+			Required: true,
+			BodyPath: "phone_numbers",
+		},
+	},
+	Action:          handleEnterprisesReputationNumbersRefresh,
 	HideHelpCommand: true,
 }
 
@@ -317,4 +338,53 @@ func handleEnterprisesReputationNumbersDisassociate(ctx context.Context, cmd *cl
 		params,
 		options...,
 	)
+}
+
+func handleEnterprisesReputationNumbersRefresh(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
+		cmd.Set("enterprise-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.EnterpriseReputationNumberRefreshParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Enterprises.Reputation.Numbers.Refresh(
+		ctx,
+		cmd.Value("enterprise-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "enterprises:reputation:numbers refresh",
+		Transform:      transform,
+	})
 }

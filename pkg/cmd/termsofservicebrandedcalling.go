@@ -13,16 +13,16 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var termsOfServiceNumberReputationAgree = cli.Command{
+var termsOfServiceBrandedCallingAgree = cli.Command{
 	Name:            "agree",
-	Usage:           "Records the authenticated user's agreement to the current Phone Number\nReputation ToS. No body required. Idempotent.",
+	Usage:           "Records the authenticated user's agreement to the current Branded Calling ToS.\nNo body required. Idempotent — re-calling after agreement is a no-op and returns\nthe existing agreement.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
-	Action:          handleTermsOfServiceNumberReputationAgree,
+	Action:          handleTermsOfServiceBrandedCallingAgree,
 	HideHelpCommand: true,
 }
 
-func handleTermsOfServiceNumberReputationAgree(ctx context.Context, cmd *cli.Command) error {
+func handleTermsOfServiceBrandedCallingAgree(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -43,7 +43,7 @@ func handleTermsOfServiceNumberReputationAgree(ctx context.Context, cmd *cli.Com
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.TermsOfService.NumberReputation.Agree(ctx, options...)
+	_, err = client.TermsOfService.BrandedCalling.Agree(ctx, options...)
 	if err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func handleTermsOfServiceNumberReputationAgree(ctx context.Context, cmd *cli.Com
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "terms-of-service:number-reputation agree",
+		Title:          "terms-of-service:branded-calling agree",
 		Transform:      transform,
 	})
 }

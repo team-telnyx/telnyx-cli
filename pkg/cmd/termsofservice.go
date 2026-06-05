@@ -7,22 +7,29 @@ import (
 	"fmt"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
 
-var termsOfServiceNumberReputationAgree = cli.Command{
-	Name:            "agree",
-	Usage:           "Records the authenticated user's agreement to the current Phone Number\nReputation ToS. No body required. Idempotent.",
-	Suggest:         true,
-	Flags:           []cli.Flag{},
-	Action:          handleTermsOfServiceNumberReputationAgree,
+var termsOfServiceStatus = cli.Command{
+	Name:    "status",
+	Usage:   "Returns whether the authenticated user has agreed to the current Number\nReputation Terms of Service. Used during onboarding to decide whether to prompt\nthe user with the ToS dialog before continuing.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "product-type",
+			Usage:     "Which product's ToS to check. Defaults to `branded_calling`; pass `number_reputation` to check the Number Reputation Terms of Service.",
+			QueryPath: "product_type",
+		},
+	},
+	Action:          handleTermsOfServiceStatus,
 	HideHelpCommand: true,
 }
 
-func handleTermsOfServiceNumberReputationAgree(ctx context.Context, cmd *cli.Command) error {
+func handleTermsOfServiceStatus(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -41,9 +48,11 @@ func handleTermsOfServiceNumberReputationAgree(ctx context.Context, cmd *cli.Com
 		return err
 	}
 
+	params := telnyx.TermsOfServiceStatusParams{}
+
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.TermsOfService.NumberReputation.Agree(ctx, options...)
+	_, err = client.TermsOfService.Status(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -56,7 +65,7 @@ func handleTermsOfServiceNumberReputationAgree(ctx context.Context, cmd *cli.Com
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "terms-of-service:number-reputation agree",
+		Title:          "terms-of-service status",
 		Transform:      transform,
 	})
 }
