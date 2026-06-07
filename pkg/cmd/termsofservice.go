@@ -31,12 +31,12 @@ var termsOfServiceRetrieveInfo = cli.Command{
 
 var termsOfServiceStatus = cli.Command{
 	Name:    "status",
-	Usage:   "Returns whether the authenticated user has agreed to the current Number\nReputation Terms of Service. Used during onboarding to decide whether to prompt\nthe user with the ToS dialog before continuing.",
+	Usage:   "Returns whether the authenticated user has agreed to the current Terms of\nService for the product given by `product_type`. Used during onboarding to\ndecide whether to prompt the user with the ToS dialog before continuing.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "product-type",
-			Usage:     "Which product's ToS to check. Defaults to `branded_calling`; pass `number_reputation` to check the Number Reputation Terms of Service.",
+			Usage:     "Which product's ToS to check. Defaults to `branded_calling`.",
 			QueryPath: "product_type",
 		},
 	},

@@ -16,7 +16,7 @@ import (
 
 var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create the legal entity that owns your Number Reputation registrations.",
+	Usage:   "Create the legal entity (enterprise) that represents your business on the Telnyx\nplatform.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -464,7 +464,7 @@ var enterprisesList = cli.Command{
 
 var enterprisesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete an enterprise. Fails with `400` if the enterprise still has dependent\nresources (e.g. active reputation settings or registered numbers); remove those\nfirst. Returns `404` if the enterprise does not exist or does not belong to your\naccount.",
+	Usage:   "Soft-delete an enterprise.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
