@@ -80,11 +80,6 @@ var dirList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:      "enterprise-id",
-			Usage:     "Restrict results to a single enterprise.",
-			QueryPath: "enterprise_id",
-		},
-		&requestflag.Flag[string]{
 			Name:      "filter-call-reason-contains",
 			Usage:     "Case-insensitive partial match on call reason.",
 			QueryPath: "filter[call_reason][contains]",
@@ -127,20 +122,10 @@ var dirList = cli.Command{
 			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[string]{
-			Name:      "search",
-			Usage:     "Case-insensitive partial match on `display_name` or call reason.",
-			QueryPath: "search",
-		},
-		&requestflag.Flag[string]{
 			Name:      "sort",
 			Usage:     "Sort field. Allowed values: `created_at`, `updated_at`, `display_name`, `status`. Prefix with `-` for descending. Default `-created_at`.",
 			Default:   "-created_at",
 			QueryPath: "sort",
-		},
-		&requestflag.Flag[string]{
-			Name:      "status",
-			Usage:     "Filter by DIR status.",
-			QueryPath: "status",
 		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",

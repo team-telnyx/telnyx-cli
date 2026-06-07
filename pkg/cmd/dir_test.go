@@ -69,7 +69,6 @@ func TestDirList(t *testing.T) {
 			"--api-key", "string",
 			"dir", "list",
 			"--max-items", "10",
-			"--enterprise-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter-call-reason-contains", "filter[call_reason][contains]",
 			"--filter-display-name-contains", "filter[display_name][contains]",
 			"--filter-enterprise-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -78,9 +77,7 @@ func TestDirList(t *testing.T) {
 			"--filter-status", "draft",
 			"--page-number", "1",
 			"--page-size", "20",
-			"--search", "search",
 			"--sort", "created_at",
-			"--status", "draft",
 		)
 	})
 }
