@@ -72,11 +72,6 @@ var enterprisesReputationNumbersList = cli.Command{
 			Default:   10,
 			QueryPath: "page[size]",
 		},
-		&requestflag.Flag[string]{
-			Name:      "phone-number",
-			Usage:     "Filter by specific phone number (E.164 format).",
-			QueryPath: "phone_number",
-		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",
 			Usage: "The maximum number of items to return (use -1 for unlimited).",

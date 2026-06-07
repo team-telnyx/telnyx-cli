@@ -156,20 +156,10 @@ var enterprisesDirList = cli.Command{
 			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[string]{
-			Name:      "search",
-			Usage:     "Case-insensitive partial match on `display_name`.",
-			QueryPath: "search",
-		},
-		&requestflag.Flag[string]{
 			Name:      "sort",
 			Usage:     "Sort field. Allowed: `created_at`, `updated_at`, `display_name`, `status`, `submitted_at`, `verified_at`, `expiring_at`. Prefix with `-` for descending. Default `-created_at`.",
 			Default:   "-created_at",
 			QueryPath: "sort",
-		},
-		&requestflag.Flag[string]{
-			Name:      "status",
-			Usage:     "Filter by DIR status.",
-			QueryPath: "status",
 		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",

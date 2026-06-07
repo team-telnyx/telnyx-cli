@@ -35,7 +35,6 @@ func TestEnterprisesReputationNumbersList(t *testing.T) {
 			"--filter-phone-number-eq", "+16035551234",
 			"--page-number", "1",
 			"--page-size", "10",
-			"--phone-number", "+16035551234",
 		)
 	})
 }

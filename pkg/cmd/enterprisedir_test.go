@@ -101,9 +101,7 @@ func TestEnterprisesDirList(t *testing.T) {
 			"--filter-status", "draft",
 			"--page-number", "1",
 			"--page-size", "20",
-			"--search", "search",
 			"--sort", "created_at",
-			"--status", "draft",
 		)
 	})
 }
