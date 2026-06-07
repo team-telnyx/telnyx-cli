@@ -8,6 +8,18 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
+func TestTermsOfServiceRetrieveInfo(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"terms-of-service", "retrieve-info",
+			"--product-type", "branded_calling",
+		)
+	})
+}
+
 func TestTermsOfServiceStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
