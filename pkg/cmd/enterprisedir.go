@@ -105,13 +105,23 @@ var enterprisesDirCreate = requestflag.WithInnerFlags(cli.Command{
 
 var enterprisesDirList = cli.Command{
 	Name:    "list",
-	Usage:   "Return the DIRs (Display Identity Records) belonging to a single enterprise.\nPagination is JSON:API style (`page[number]`, `page[size]`, max 250). Filterable\nby `status`. Searchable by case-insensitive partial match on `display_name`\n(`search=`). Sortable by any of `created_at`, `updated_at`, `display_name`,\n`status`, `submitted_at`, `verified_at`, `expiring_at` (prefix `-` for\ndescending; default `-created_at`). Supports the renewal-window filters\n`filter[expiring_at][gte]` / `filter[expiring_at][lte]` and the convenience\n`filter[expiring_within_days]` (mutually exclusive with the explicit gte/lte\nform).",
+	Usage:   "Return the DIRs (Display Identity Records) belonging to a single enterprise.\nPagination is JSON:API style (`page[number]`, `page[size]`, max 250). Supports\n`filter[]` query params: `filter[status]`, `filter[display_name][contains]`,\n`filter[call_reason][contains]`, plus the renewal-window filters\n`filter[expiring_at][gte]` / `filter[expiring_at][lte]` and the convenience\n`filter[expiring_within_days]` (mutually exclusive with the explicit gte/lte\nform). Sortable by `created_at`, `updated_at`, `display_name`, `status`,\n`submitted_at`, `verified_at`, `expiring_at` (prefix `-` for descending; default\n`-created_at`).",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "enterprise-id",
 			Required:  true,
 			PathParam: "enterprise_id",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-call-reason-contains",
+			Usage:     "Case-insensitive partial match on call reason.",
+			QueryPath: "filter[call_reason][contains]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-display-name-contains",
+			Usage:     "Case-insensitive partial match on display name.",
+			QueryPath: "filter[display_name][contains]",
 		},
 		&requestflag.Flag[any]{
 			Name:      "filter-expiring-at-gte",
@@ -127,6 +137,11 @@ var enterprisesDirList = cli.Command{
 			Name:      "filter-expiring-within-days",
 			Usage:     "Convenience: returns DIRs whose `expiring_at` falls within the next N days (1–365). Equivalent to setting `filter[expiring_at][gte]=<now>` + `filter[expiring_at][lte]=<now+N>`. Mutually exclusive with the explicit `[gte]`/`[lte]` filters — combining returns 400.",
 			QueryPath: "filter[expiring_within_days]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-status",
+			Usage:     "Filter by DIR status.",
+			QueryPath: "filter[status]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",

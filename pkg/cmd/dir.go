@@ -76,13 +76,28 @@ var dirUpdate = cli.Command{
 
 var dirList = cli.Command{
 	Name:    "list",
-	Usage:   "Convenience endpoint that returns every DIR you own without scoping to a\nspecific enterprise. Equivalent to calling\n`GET /v2/enterprises/{enterprise_id}/dir` for each enterprise and concatenating\nthe results, but server-side and paginated as a single list.",
+	Usage:   "Returns every DIR (Display Identity Record) you own, across all of your\nenterprises, as a single list. Pagination is JSON:API style (`page[number]`,\n`page[size]`, max 250). Supports `filter[]` query params:\n`filter[enterprise_id]`, `filter[status]`, `filter[display_name][contains]`,\n`filter[call_reason][contains]`, plus the renewal-window filters\n`filter[expiring_at][gte]` / `filter[expiring_at][lte]`. Sortable by\n`created_at`, `updated_at`, `display_name`, `status` (prefix `-` for descending;\ndefault `-created_at`).",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "enterprise-id",
 			Usage:     "Restrict results to a single enterprise.",
 			QueryPath: "enterprise_id",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-call-reason-contains",
+			Usage:     "Case-insensitive partial match on call reason.",
+			QueryPath: "filter[call_reason][contains]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-display-name-contains",
+			Usage:     "Case-insensitive partial match on display name.",
+			QueryPath: "filter[display_name][contains]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-enterprise-id",
+			Usage:     "Filter by enterprise ID.",
+			QueryPath: "filter[enterprise_id]",
 		},
 		&requestflag.Flag[any]{
 			Name:      "filter-expiring-at-gte",
@@ -93,6 +108,11 @@ var dirList = cli.Command{
 			Name:      "filter-expiring-at-lte",
 			Usage:     "Return only DIRs whose `expiring_at` is at or before this ISO-8601 timestamp.",
 			QueryPath: "filter[expiring_at][lte]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-status",
+			Usage:     "Filter by DIR status.",
+			QueryPath: "filter[status]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",

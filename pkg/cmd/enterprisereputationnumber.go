@@ -50,6 +50,16 @@ var enterprisesReputationNumbersList = cli.Command{
 			Required:  true,
 			PathParam: "enterprise_id",
 		},
+		&requestflag.Flag[string]{
+			Name:      "filter-phone-number-contains",
+			Usage:     "Partial match on phone number. Must contain at least 5 digits.",
+			QueryPath: "filter[phone_number][contains]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-phone-number-eq",
+			Usage:     "Exact phone-number match (E.164).",
+			QueryPath: "filter[phone_number][eq]",
+		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
 			Usage:     "1-based page number. Out-of-range values return an empty page with correct meta.",

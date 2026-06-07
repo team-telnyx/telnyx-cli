@@ -31,6 +31,8 @@ func TestEnterprisesReputationNumbersList(t *testing.T) {
 			"enterprises:reputation:numbers", "list",
 			"--max-items", "10",
 			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--filter-phone-number-contains", "+16035551234",
+			"--filter-phone-number-eq", "+16035551234",
 			"--page-number", "1",
 			"--page-size", "10",
 			"--phone-number", "+16035551234",
