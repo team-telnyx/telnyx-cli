@@ -40,6 +40,21 @@ var reputationNumbersList = cli.Command{
 	Usage:   "Convenience alias for `GET /v2/enterprises/{enterprise_id}/reputation/numbers`\nthat returns numbers across every enterprise you own. Useful when you don't want\nto look up the enterprise id first.",
 	Suggest: true,
 	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "filter-enterprise-id",
+			Usage:     "Filter by enterprise ID.",
+			QueryPath: "filter[enterprise_id]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-phone-number-contains",
+			Usage:     "Partial match on phone number. Must contain at least 5 digits.",
+			QueryPath: "filter[phone_number][contains]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-phone-number-eq",
+			Usage:     "Exact phone-number match (E.164).",
+			QueryPath: "filter[phone_number][eq]",
+		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
 			Usage:     "1-based page number. Out-of-range values return an empty page with correct meta.",

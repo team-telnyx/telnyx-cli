@@ -437,6 +437,11 @@ var enterprisesList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
+			Name:      "filter-legal-name-contains",
+			Usage:     "Case-insensitive partial match on legal name.",
+			QueryPath: "filter[legal_name][contains]",
+		},
+		&requestflag.Flag[string]{
 			Name:      "legal-name",
 			Usage:     "Filter by legal name (partial match).",
 			QueryPath: "legal_name",

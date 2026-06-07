@@ -285,6 +285,7 @@ func TestEnterprisesList(t *testing.T) {
 			"--api-key", "string",
 			"enterprises", "list",
 			"--max-items", "10",
+			"--filter-legal-name-contains", "Acme",
 			"--legal-name", "Acme",
 			"--page-number", "1",
 			"--page-size", "10",
