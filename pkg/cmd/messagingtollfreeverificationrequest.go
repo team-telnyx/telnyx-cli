@@ -455,6 +455,7 @@ var messagingTollfreeVerificationRequestsList = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
 			Name:      "page",
+			Usage:     "Page number to retrieve (1-based).",
 			Required:  true,
 			QueryPath: "page",
 		},
@@ -471,14 +472,17 @@ var messagingTollfreeVerificationRequestsList = cli.Command{
 		},
 		&requestflag.Flag[any]{
 			Name:      "date-end",
+			Usage:     "End of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "date_end",
 		},
 		&requestflag.Flag[any]{
 			Name:      "date-start",
+			Usage:     "Start of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "date_start",
 		},
 		&requestflag.Flag[string]{
 			Name:      "phone-number",
+			Usage:     "Filter results by phone number.",
 			QueryPath: "phone_number",
 		},
 		&requestflag.Flag[string]{
@@ -522,12 +526,13 @@ var messagingTollfreeVerificationRequestsRetrieveStatusHistory = cli.Command{
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
+			Usage:     "Page number to retrieve (1-based).",
 			Required:  true,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
-			Usage:     "Request this many records per page. This value is automatically clamped if the provided value is too large.",
+			Usage:     "Number of items to return per page.",
 			Required:  true,
 			QueryPath: "page[size]",
 		},

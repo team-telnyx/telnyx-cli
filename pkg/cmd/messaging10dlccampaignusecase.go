@@ -21,6 +21,7 @@ var messaging10dlcCampaignUsecaseGetCost = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "usecase",
+			Usage:     "Filter results by usecase.",
 			Required:  true,
 			QueryPath: "usecase",
 		},

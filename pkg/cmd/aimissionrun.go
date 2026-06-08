@@ -122,6 +122,7 @@ var aiMissionsRunsList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "status",
+			Usage:     "Filter results by status.",
 			QueryPath: "status",
 		},
 		&requestflag.Flag[int64]{
@@ -172,6 +173,7 @@ var aiMissionsRunsListRuns = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "status",
+			Usage:     "Filter results by status.",
 			QueryPath: "status",
 		},
 		&requestflag.Flag[int64]{

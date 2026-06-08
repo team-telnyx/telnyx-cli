@@ -52,11 +52,13 @@ var messaging10dlcPhoneNumberAssignmentByProfileListPhoneNumberStatus = cli.Comm
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page",
+			Usage:     "Page number to retrieve (1-based).",
 			Default:   1,
 			QueryPath: "page",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "records-per-page",
+			Usage:     "Number of records to return per page.",
 			Default:   20,
 			QueryPath: "recordsPerPage",
 		},
@@ -77,11 +79,13 @@ var messaging10dlcPhoneNumberAssignmentByProfileRetrievePhoneNumberStatus = cli.
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page",
+			Usage:     "Page number to retrieve (1-based).",
 			Default:   1,
 			QueryPath: "page",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "records-per-page",
+			Usage:     "Number of records to return per page.",
 			Default:   20,
 			QueryPath: "recordsPerPage",
 		},

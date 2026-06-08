@@ -103,20 +103,23 @@ var reportsMdrUsageReportsFetchSync = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "aggregation-type",
-			Usage:     `Allowed values: "NO_AGGREGATION", "PROFILE", "TAGS".`,
+			Usage:     "Type of aggregation to apply to the results.",
 			Required:  true,
 			QueryPath: "aggregation_type",
 		},
 		&requestflag.Flag[any]{
 			Name:      "end-date",
+			Usage:     "End of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "end_date",
 		},
 		&requestflag.Flag[[]string]{
 			Name:      "profile",
+			Usage:     "Filter results by profile.",
 			QueryPath: "profiles",
 		},
 		&requestflag.Flag[any]{
 			Name:      "start-date",
+			Usage:     "Start of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "start_date",
 		},
 	},

@@ -141,6 +141,7 @@ var aiMissionsListEvents = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "type",
+			Usage:     "Filter results by type.",
 			QueryPath: "type",
 		},
 		&requestflag.Flag[int64]{

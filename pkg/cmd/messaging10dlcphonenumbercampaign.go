@@ -90,11 +90,13 @@ var messaging10dlcPhoneNumberCampaignsList = requestflag.WithInnerFlags(cli.Comm
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page",
+			Usage:     "Page number to retrieve (1-based).",
 			Default:   1,
 			QueryPath: "page",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "records-per-page",
+			Usage:     "Number of records to return per page.",
 			Default:   20,
 			QueryPath: "recordsPerPage",
 		},

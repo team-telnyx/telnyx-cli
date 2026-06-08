@@ -21,10 +21,12 @@ var legacyReportingUsageReportsRetrieveSpeechToText = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[any]{
 			Name:      "end-date",
+			Usage:     "End of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "end_date",
 		},
 		&requestflag.Flag[any]{
 			Name:      "start-date",
+			Usage:     "Start of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "start_date",
 		},
 	},

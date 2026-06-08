@@ -115,6 +115,7 @@ var aiAssistantsScheduledEventsList = cli.Command{
 		},
 		&requestflag.Flag[any]{
 			Name:      "from-date",
+			Usage:     "Start of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "from_date",
 		},
 		&requestflag.Flag[int64]{
@@ -127,6 +128,7 @@ var aiAssistantsScheduledEventsList = cli.Command{
 		},
 		&requestflag.Flag[any]{
 			Name:      "to-date",
+			Usage:     "End of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "to_date",
 		},
 		&requestflag.Flag[int64]{

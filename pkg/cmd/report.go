@@ -21,22 +21,22 @@ var reportsListMdrs = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "id",
-			Usage:     "Message uuid",
+			Usage:     "Filter results by identifier.",
 			QueryPath: "id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "cld",
-			Usage:     "Destination number",
+			Usage:     "Filter results by cld.",
 			QueryPath: "cld",
 		},
 		&requestflag.Flag[string]{
 			Name:      "cli",
-			Usage:     "Origination number",
+			Usage:     "Filter results by cli.",
 			QueryPath: "cli",
 		},
 		&requestflag.Flag[string]{
 			Name:      "direction",
-			Usage:     "Direction (inbound or outbound)",
+			Usage:     "Filter results by direction.",
 			QueryPath: "direction",
 		},
 		&requestflag.Flag[string]{
@@ -46,12 +46,12 @@ var reportsListMdrs = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "message-type",
-			Usage:     "Type of message",
+			Usage:     "Filter results by message type.",
 			QueryPath: "message_type",
 		},
 		&requestflag.Flag[string]{
 			Name:      "profile",
-			Usage:     "Name of the profile",
+			Usage:     "Filter results by profile.",
 			QueryPath: "profile",
 		},
 		&requestflag.Flag[string]{
@@ -61,7 +61,7 @@ var reportsListMdrs = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "status",
-			Usage:     "Message status",
+			Usage:     "Filter results by status.",
 			QueryPath: "status",
 		},
 	},
@@ -76,7 +76,7 @@ var reportsListWdrs = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "id",
-			Usage:     "WDR uuid",
+			Usage:     "Filter results by identifier.",
 			QueryPath: "id",
 		},
 		&requestflag.Flag[string]{
@@ -86,17 +86,17 @@ var reportsListWdrs = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "imsi",
-			Usage:     "International mobile subscriber identity",
+			Usage:     "Filter results by imsi.",
 			QueryPath: "imsi",
 		},
 		&requestflag.Flag[string]{
 			Name:      "mcc",
-			Usage:     "Mobile country code",
+			Usage:     "Filter results by mcc.",
 			QueryPath: "mcc",
 		},
 		&requestflag.Flag[string]{
 			Name:      "mnc",
-			Usage:     "Mobile network code",
+			Usage:     "Filter results by mnc.",
 			QueryPath: "mnc",
 		},
 		&requestflag.Flag[int64]{
@@ -109,27 +109,27 @@ var reportsListWdrs = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "phone-number",
-			Usage:     "Phone number",
+			Usage:     "Filter results by phone number.",
 			QueryPath: "phone_number",
 		},
 		&requestflag.Flag[string]{
 			Name:      "sim-card-id",
-			Usage:     "Sim card unique identifier",
+			Usage:     "Filter results by sim card id.",
 			QueryPath: "sim_card_id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "sim-group-id",
-			Usage:     "Sim group unique identifier",
+			Usage:     "Filter results by sim group id.",
 			QueryPath: "sim_group_id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "sim-group-name",
-			Usage:     "Sim group name",
+			Usage:     "Filter results by sim group name.",
 			QueryPath: "sim_group_name",
 		},
 		&requestflag.Flag[[]string]{
 			Name:      "sort",
-			Usage:     "Field used to order the data. If no field is specified, default value is 'created_at'",
+			Usage:     "Field and direction to sort the results by.",
 			Default:   []string{"created_at"},
 			QueryPath: "sort",
 		},

@@ -128,19 +128,23 @@ var aiToolsList = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "filter-name",
+			Usage:     "Filter results by filter name.",
 			QueryPath: "filter[name]",
 		},
 		&requestflag.Flag[string]{
 			Name:      "filter-type",
+			Usage:     "Filter results by filter type.",
 			QueryPath: "filter[type]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
+			Usage:     "Page number to retrieve (1-based).",
 			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
+			Usage:     "Number of items to return per page.",
 			Default:   20,
 			QueryPath: "page[size]",
 		},

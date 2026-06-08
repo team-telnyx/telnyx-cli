@@ -81,11 +81,13 @@ var messagingHostedNumbersList = cli.Command{
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
+			Usage:     "Page number to retrieve (1-based).",
 			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
+			Usage:     "Number of items to return per page.",
 			Default:   20,
 			QueryPath: "page[size]",
 		},

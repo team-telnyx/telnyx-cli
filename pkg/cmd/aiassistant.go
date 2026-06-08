@@ -542,19 +542,23 @@ var aiAssistantsRetrieve = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "call-control-id",
+			Usage:     "Filter results by call control id.",
 			QueryPath: "call_control_id",
 		},
 		&requestflag.Flag[bool]{
 			Name:      "fetch-dynamic-variables-from-webhook",
+			Usage:     "Whether to fetch dynamic variables from the configured webhook.",
 			Default:   false,
 			QueryPath: "fetch_dynamic_variables_from_webhook",
 		},
 		&requestflag.Flag[string]{
 			Name:      "from",
+			Usage:     "Start of the filter range.",
 			QueryPath: "from",
 		},
 		&requestflag.Flag[string]{
 			Name:      "to",
+			Usage:     "End of the filter range.",
 			QueryPath: "to",
 		},
 	},
