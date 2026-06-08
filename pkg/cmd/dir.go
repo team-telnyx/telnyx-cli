@@ -5,6 +5,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -31,7 +32,7 @@ var dirRetrieve = cli.Command{
 
 var dirUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Edit a DIR. Only DIRs in `draft`, `rejected`, `unsuccessful`, or `suspended` are\neditable. PATCH is a pure edit — `status` is never changed by this endpoint. To\nre-vet after editing, call `POST /v2/dir/{dir_id}/submit` explicitly.",
+	Usage:   "Edit a DIR. Only DIRs in `draft`, `rejected`, `unsuccessful`, or `suspended` are\neditable. PATCH is a pure edit - `status` is never changed by this endpoint. To\nre-vet after editing, call `POST /v2/dir/{dir_id}/submit` explicitly.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -150,6 +151,105 @@ var dirDelete = cli.Command{
 	Action:          handleDirDelete,
 	HideHelpCommand: true,
 }
+
+var dirCreateLoa = requestflag.WithInnerFlags(cli.Command{
+	Name:    "create-loa",
+	Usage:   "Generate a pre-filled Letter of Authorization (LOA) PDF for a DIR. Enterprise\nidentity (legal name, DBA, address, contact, website, tax id) and the DIR\ndisplay name are read server-side; the caller supplies the telephone numbers to\nauthorize, an optional Authorized Agent block, and an optional drawn signature.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "dir-id",
+			Required:  true,
+			PathParam: "dir_id",
+		},
+		&requestflag.Flag[[]string]{
+			Name:     "phone-number",
+			Usage:    "Telephone numbers to authorize on the DIR, in `+E164` format (`+` followed by 10-15 digits). Max 15 per request.",
+			Required: true,
+			BodyPath: "phone_numbers",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "agent",
+			Usage:    "Third-party reseller / partner managing the enterprise's phone numbers. Omit when the enterprise works directly with Telnyx.",
+			BodyPath: "agent",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "signature",
+			Usage:    "Optional. When provided the rendered PDF embeds the signature image, printed name, and signed-at date. When absent the PDF is returned unsigned so the customer can sign externally and upload it via the Documents API.",
+			BodyPath: "signature",
+		},
+		&requestflag.Flag[string]{
+			Name:    "output",
+			Aliases: []string{"o"},
+			Usage:   "The file where the response contents will be stored. Use the value '-' to force output to stdout.",
+		},
+	},
+	Action:          handleDirCreateLoa,
+	HideHelpCommand: true,
+}, map[string][]requestflag.HasOuterFlag{
+	"agent": {
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.administrative-area",
+			InnerField: "administrative_area",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.city",
+			InnerField: "city",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.contact-email",
+			InnerField: "contact_email",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.contact-name",
+			InnerField: "contact_name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.contact-phone",
+			InnerField: "contact_phone",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.contact-title",
+			InnerField: "contact_title",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.country",
+			InnerField: "country",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.legal-name",
+			InnerField: "legal_name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.postal-code",
+			InnerField: "postal_code",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "agent.street-address",
+			InnerField: "street_address",
+		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "agent.dba",
+			InnerField: "dba",
+		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "agent.extended-address",
+			InnerField: "extended_address",
+		},
+	},
+	"signature": {
+		&requestflag.InnerFlag[string]{
+			Name:       "signature.image-base64",
+			Usage:      "PNG image, base64-encoded.",
+			InnerField: "image_base64",
+		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "signature.signer-name",
+			Usage:      "Optional. When absent the rendered PDF falls back to the enterprise contact's legal name.",
+			InnerField: "signer_name",
+		},
+	},
+})
 
 var dirListDocumentTypes = cli.Command{
 	Name:            "list-document-types",
@@ -458,6 +558,46 @@ func handleDirDelete(ctx context.Context, cmd *cli.Command) error {
 	}
 
 	return client.Dir.Delete(ctx, cmd.Value("dir-id").(string), options...)
+}
+
+func handleDirCreateLoa(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
+		cmd.Set("dir-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.DirNewLoaParams{}
+
+	response, err := client.Dir.NewLoa(
+		ctx,
+		cmd.Value("dir-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
+	if message != "" {
+		fmt.Println(message)
+	}
+	return err
 }
 
 func handleDirListDocumentTypes(ctx context.Context, cmd *cli.Command) error {

@@ -135,7 +135,7 @@ var enterprisesDirList = cli.Command{
 		},
 		&requestflag.Flag[int64]{
 			Name:      "filter-expiring-within-days",
-			Usage:     "Convenience: returns DIRs whose `expiring_at` falls within the next N days (1–365). Equivalent to setting `filter[expiring_at][gte]=<now>` + `filter[expiring_at][lte]=<now+N>`. Mutually exclusive with the explicit `[gte]`/`[lte]` filters — combining returns 400.",
+			Usage:     "Convenience: returns DIRs whose `expiring_at` falls within the next N days (1–365). Equivalent to setting `filter[expiring_at][gte]=<now>` + `filter[expiring_at][lte]=<now+N>`. Mutually exclusive with the explicit `[gte]`/`[lte]` filters - combining returns 400.",
 			QueryPath: "filter[expiring_within_days]",
 		},
 		&requestflag.Flag[string]{

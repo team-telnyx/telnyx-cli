@@ -15,7 +15,7 @@ import (
 
 var termsOfServiceBrandedCallingAgree = cli.Command{
 	Name:            "agree",
-	Usage:           "Records the authenticated user's agreement to the current Branded Calling ToS.\nNo body required. Idempotent — re-calling after agreement is a no-op and returns\nthe existing agreement.",
+	Usage:           "Records the authenticated user's agreement to the current Branded Calling ToS.\nNo body required. Idempotent - re-calling after agreement is a no-op and returns\nthe existing agreement.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleTermsOfServiceBrandedCallingAgree,

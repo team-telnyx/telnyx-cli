@@ -76,7 +76,7 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "organization-legal-type",
-			Usage:    "Legal-entity form. Pick the form that matches your incorporation documents:\n- `corporation` — C-corp or S-corp.\n- `llc` — limited liability company.\n- `partnership` — general/limited partnership.\n- `nonprofit` — non-profit corporation, charitable trust, or 501(c)(3)/equivalent.\n- `other` — anything else (sole proprietorships, government bodies, DBAs, etc.). You may be asked for additional documents during vetting.",
+			Usage:    "Legal-entity form. Pick the form that matches your incorporation documents:\n- `corporation` - C-corp or S-corp.\n- `llc` - limited liability company.\n- `partnership` - general/limited partnership.\n- `nonprofit` - non-profit corporation, charitable trust, or 501(c)(3)/equivalent.\n- `other` - anything else (sole proprietorships, government bodies, DBAs, etc.). You may be asked for additional documents during vetting.",
 			Required: true,
 			BodyPath: "organization_legal_type",
 		},
@@ -87,7 +87,7 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "organization-type",
-			Usage:    "Organization category for vetting purposes:\n- `commercial` — for-profit business entities (LLC, corp, partnership, sole proprietorship). Most callers fall here.\n- `government` — federal/state/local government bodies.\n- `non_profit` — registered 501(c)(3)/equivalent (incl. educational institutions, charities, religious organisations).",
+			Usage:    "Organization category for vetting purposes:\n- `commercial` - for-profit business entities (LLC, corp, partnership, sole proprietorship). Most callers fall here.\n- `government` - federal/state/local government bodies.\n- `non_profit` - registered 501(c)(3)/equivalent (incl. educational institutions, charities, religious organisations).",
 			Required: true,
 			BodyPath: "organization_type",
 		},

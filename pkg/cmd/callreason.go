@@ -47,7 +47,7 @@ var callReasonsValidate = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[[]string]{
 			Name:     "body",
-			Usage:    "**Bare JSON array** of candidate call-reason strings (NOT an object — there is no top-level `call_reasons` key on this endpoint). 1–10 strings, each ≤64 characters.",
+			Usage:    "**Bare JSON array** of candidate call-reason strings (NOT an object - there is no top-level `call_reasons` key on this endpoint). 1–10 strings, each ≤64 characters.",
 			Required: true,
 			BodyRoot: true,
 		},
