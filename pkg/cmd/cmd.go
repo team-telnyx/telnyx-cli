@@ -3206,6 +3206,16 @@ func init() {
 				},
 			},
 			{
+				Name:     "enterprises:reputation:remediation",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesReputationRemediationCreate,
+					&enterprisesReputationRemediationRetrieve,
+					&enterprisesReputationRemediationList,
+				},
+			},
+			{
 				Name:     "enterprises:dir",
 				Category: "API RESOURCE",
 				Suggest:  true,
