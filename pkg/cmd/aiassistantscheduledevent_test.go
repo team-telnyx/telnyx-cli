@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
@@ -20,6 +21,30 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 			"--telnyx-agent-target", "telnyx_agent_target",
 			"--telnyx-conversation-channel", "phone_call",
 			"--telnyx-end-user-target", "telnyx_end_user_target",
+			"--call-settings", "{sip_region: US}",
+			"--conversation-metadata", "{foo: string}",
+			"--dynamic-variables", "{foo: string}",
+			"--max-retries-client-errors", "0",
+			"--retry-interval-secs", "60",
+			"--text", "text",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(aiAssistantsScheduledEventsCreate)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai:assistants:scheduled-events", "create",
+			"--assistant-id", "assistant_id",
+			"--scheduled-at-fixed-datetime", "'2025-04-15T13:07:28.764Z'",
+			"--telnyx-agent-target", "telnyx_agent_target",
+			"--telnyx-conversation-channel", "phone_call",
+			"--telnyx-end-user-target", "telnyx_end_user_target",
+			"--call-settings.sip-region", "US",
 			"--conversation-metadata", "{foo: string}",
 			"--dynamic-variables", "{foo: string}",
 			"--max-retries-client-errors", "0",
@@ -35,6 +60,8 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 			"telnyx_agent_target: telnyx_agent_target\n" +
 			"telnyx_conversation_channel: phone_call\n" +
 			"telnyx_end_user_target: telnyx_end_user_target\n" +
+			"call_settings:\n" +
+			"  sip_region: US\n" +
 			"conversation_metadata:\n" +
 			"  foo: string\n" +
 			"dynamic_variables:\n" +
