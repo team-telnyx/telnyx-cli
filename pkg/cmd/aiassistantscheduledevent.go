@@ -14,7 +14,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var aiAssistantsScheduledEventsCreate = cli.Command{
+var aiAssistantsScheduledEventsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
 	Usage:   "Create a scheduled event for an assistant",
 	Suggest: true,
@@ -49,6 +49,11 @@ var aiAssistantsScheduledEventsCreate = cli.Command{
 			BodyPath: "telnyx_end_user_target",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "call-settings",
+			Usage:    "Per-call telephony overrides applied when a scheduled phone-call event\ndispatches. Phone-call events only. New per-call dispatch options should be\nadded here rather than as top-level event fields.",
+			BodyPath: "call_settings",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "conversation-metadata",
 			Usage:    "Metadata associated with the conversation. Telnyx provides several pieces of metadata, but customers can also add their own.",
 			BodyPath: "conversation_metadata",
@@ -76,7 +81,15 @@ var aiAssistantsScheduledEventsCreate = cli.Command{
 	},
 	Action:          handleAIAssistantsScheduledEventsCreate,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"call-settings": {
+		&requestflag.InnerFlag[string]{
+			Name:       "call-settings.sip-region",
+			Usage:      "SIP region passed to Telnyx when initiating an outbound call. Values\nmatch the Telnyx TeXML `SipRegion` parameter exactly. Telnyx defaults to\n`US` when omitted.",
+			InnerField: "sip_region",
+		},
+	},
+})
 
 var aiAssistantsScheduledEventsRetrieve = cli.Command{
 	Name:    "retrieve",
