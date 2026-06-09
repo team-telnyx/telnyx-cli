@@ -30,17 +30,16 @@ var enterprisesReputationRemediationCreate = cli.Command{
 			Required: true,
 			BodyPath: "call_purpose",
 		},
-		&requestflag.Flag[string]{
-			Name:     "contact-email",
-			Usage:    "Contact email for tracking this request.",
-			Required: true,
-			BodyPath: "contact_email",
-		},
 		&requestflag.Flag[[]string]{
 			Name:     "phone-number",
 			Usage:    "Phone numbers in E.164 format. Each must belong to this enterprise. Maximum 2,000 per request.",
 			Required: true,
 			BodyPath: "phone_numbers",
+		},
+		&requestflag.Flag[string]{
+			Name:     "contact-email",
+			Usage:    "Optional contact email for this remediation request.",
+			BodyPath: "contact_email",
 		},
 		&requestflag.Flag[string]{
 			Name:     "webhook-url",

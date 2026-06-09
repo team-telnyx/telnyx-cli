@@ -17,9 +17,9 @@ func TestEnterprisesReputationRemediationCreate(t *testing.T) {
 			"enterprises:reputation:remediation", "create",
 			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
 			"--call-purpose", "Appointment reminders for our dental clinic.",
-			"--contact-email", "ops@example.com",
 			"--phone-number", "+19493253498",
 			"--phone-number", "+12134445566",
+			"--contact-email", "ops@example.com",
 			"--webhook-url", "https://example.com/webhooks/remediation",
 		)
 	})
@@ -28,10 +28,10 @@ func TestEnterprisesReputationRemediationCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"call_purpose: Appointment reminders for our dental clinic.\n" +
-			"contact_email: ops@example.com\n" +
 			"phone_numbers:\n" +
 			"  - '+19493253498'\n" +
 			"  - '+12134445566'\n" +
+			"contact_email: ops@example.com\n" +
 			"webhook_url: https://example.com/webhooks/remediation\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
