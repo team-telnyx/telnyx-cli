@@ -30,9 +30,9 @@ var dirRetrieve = cli.Command{
 	HideHelpCommand: true,
 }
 
-var dirUpdate = cli.Command{
+var dirUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Edit a DIR. Only DIRs in `draft`, `rejected`, `unsuccessful`, or `suspended` are\neditable. PATCH is a pure edit - `status` is never changed by this endpoint. To\nre-vet after editing, call `POST /v2/dir/{dir_id}/submit` explicitly.",
+	Usage:   "Edit a DIR. DIRs in `draft`, `rejected`, `unsuccessful`, or `suspended` can be\nedited freely: PATCH is a pure edit, `status` is never changed, and you re-vet\nby calling `POST /v2/dir/{dir_id}/submit` explicitly. A `verified` DIR can also\nbe edited in place: a PATCH that changes any value returns the DIR to `draft`\nand branded delivery stops until you re-submit and the DIR is approved again,\nwhile a PATCH that changes nothing (an empty body or values identical to the\ncurrent ones) leaves the DIR `verified`, so idempotent retries are safe. DIRs in\nany other status (`submitted`, `in_review`, `expired`, `infringement_claimed`,\n`permanently_rejected`) cannot be edited.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -55,10 +55,30 @@ var dirUpdate = cli.Command{
 			Usage:    "1–10 reasons your business calls customers. Validate phrasing against `POST /call_reasons/validate`.",
 			BodyPath: "call_reasons",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "certify-brand-is-accurate",
+			Usage:    "Certification that the DIR information is accurate. Must be `true` for the DIR to be submitted for vetting.",
+			BodyPath: "certify_brand_is_accurate",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "certify-ip-ownership",
+			Usage:    "Certification of ownership of any logos/trademarks shown. Must be `true` for the DIR to be submitted for vetting.",
+			BodyPath: "certify_ip_ownership",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "certify-no-shaft-content",
+			Usage:    "Certification that this DIR is not used for SHAFT content (Sex, Hate, Alcohol, Firearms, Tobacco) where prohibited. Must be `true` for the DIR to be submitted for vetting.",
+			BodyPath: "certify_no_shaft_content",
+		},
 		&requestflag.Flag[string]{
 			Name:     "display-name",
 			Usage:    "Name shown to call recipients. 1–35 characters, no emoji, not whitespace-only.",
 			BodyPath: "display_name",
+		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "document",
+			Usage:    "Additional supporting documents to attach. Append-only: existing documents are never removed or replaced, and an empty or omitted list is a no-op. Each `document_id` may appear at most once on a DIR.",
+			BodyPath: "documents",
 		},
 		&requestflag.Flag[string]{
 			Name:     "logo-url",
@@ -73,7 +93,24 @@ var dirUpdate = cli.Command{
 	},
 	Action:          handleDirUpdate,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"document": {
+		&requestflag.InnerFlag[string]{
+			Name:       "document.document-id",
+			Usage:      "Id returned by the Telnyx Documents API after you upload the file (upload via `POST /v2/documents`; see https://developers.telnyx.com/api/documents).",
+			InnerField: "document_id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "document.document-type",
+			Usage:      "Type of supporting document. Pick the closest match to what the file actually contains; `other` triggers manual vetting and may slow approval. The matching short_name reference list is at `GET /v2/dir/document_types`.",
+			InnerField: "document_type",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "document.description",
+			InnerField: "description",
+		},
+	},
+})
 
 var dirList = cli.Command{
 	Name:    "list",

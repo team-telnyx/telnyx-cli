@@ -34,7 +34,38 @@ func TestDirUpdate(t *testing.T) {
 			"--call-reason", "Appointment reminders",
 			"--call-reason", "Billing inquiries",
 			"--call-reason", "Lab results",
+			"--certify-brand-is-accurate=true",
+			"--certify-ip-ownership=true",
+			"--certify-no-shaft-content=true",
 			"--display-name", "Acme Plumbing & Wellness",
+			"--document", "{document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c, document_type: business_registration, description: Certificate of incorporation.}",
+			"--logo-url", "https://acmeplumbing.example.com/logo-v2-256.bmp",
+			"--reselling=true",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(dirUpdate)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"dir", "update",
+			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
+			"--authorizer-email", "dev@stainless.com",
+			"--authorizer-name", "authorizer_name",
+			"--call-reason", "Appointment reminders",
+			"--call-reason", "Billing inquiries",
+			"--call-reason", "Lab results",
+			"--certify-brand-is-accurate=true",
+			"--certify-ip-ownership=true",
+			"--certify-no-shaft-content=true",
+			"--display-name", "Acme Plumbing & Wellness",
+			"--document.document-id", "2a7e8337-e803-4057-a4ae-26c40eb0bc6c",
+			"--document.document-type", "business_registration",
+			"--document.description", "Certificate of incorporation.",
 			"--logo-url", "https://acmeplumbing.example.com/logo-v2-256.bmp",
 			"--reselling=true",
 		)
@@ -49,7 +80,14 @@ func TestDirUpdate(t *testing.T) {
 			"  - Appointment reminders\n" +
 			"  - Billing inquiries\n" +
 			"  - Lab results\n" +
+			"certify_brand_is_accurate: true\n" +
+			"certify_ip_ownership: true\n" +
+			"certify_no_shaft_content: true\n" +
 			"display_name: Acme Plumbing & Wellness\n" +
+			"documents:\n" +
+			"  - document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c\n" +
+			"    document_type: business_registration\n" +
+			"    description: Certificate of incorporation.\n" +
 			"logo_url: https://acmeplumbing.example.com/logo-v2-256.bmp\n" +
 			"reselling: true\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
