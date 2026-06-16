@@ -14,8 +14,8 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var termsOfServiceRetrieveInfo = cli.Command{
-	Name:    "retrieve-info",
+var termsOfServiceInfo = cli.Command{
+	Name:    "info",
 	Usage:   "Returns the available Terms of Service agreements (product, current version,\nterms URL, effective date). Omit `product_type` to return all products; pass it\nto scope to one.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -25,7 +25,7 @@ var termsOfServiceRetrieveInfo = cli.Command{
 			QueryPath: "product_type",
 		},
 	},
-	Action:          handleTermsOfServiceRetrieveInfo,
+	Action:          handleTermsOfServiceInfo,
 	HideHelpCommand: true,
 }
 
@@ -44,7 +44,7 @@ var termsOfServiceStatus = cli.Command{
 	HideHelpCommand: true,
 }
 
-func handleTermsOfServiceRetrieveInfo(ctx context.Context, cmd *cli.Command) error {
+func handleTermsOfServiceInfo(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -63,11 +63,11 @@ func handleTermsOfServiceRetrieveInfo(ctx context.Context, cmd *cli.Command) err
 		return err
 	}
 
-	params := telnyx.TermsOfServiceGetInfoParams{}
+	params := telnyx.TermsOfServiceInfoParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.TermsOfService.GetInfo(ctx, params, options...)
+	_, err = client.TermsOfService.Info(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -80,7 +80,7 @@ func handleTermsOfServiceRetrieveInfo(ctx context.Context, cmd *cli.Command) err
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "terms-of-service retrieve-info",
+		Title:          "terms-of-service info",
 		Transform:      transform,
 	})
 }
