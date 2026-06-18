@@ -282,6 +282,7 @@ func init() {
 				Commands: []*cli.Command{
 					&aiCreateResponseDeprecated,
 					&aiRetrieveModels,
+					&aiSearchConversationHistories,
 					&aiSummarize,
 				},
 			},
