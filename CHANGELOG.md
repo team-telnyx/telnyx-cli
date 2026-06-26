@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.23.2](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.1...v0.23.2) (2026-06-26)
+
+
+### Chores
+
+* add promote-to-prod workflow for STLC cutover ([eeb1233](https://github.com/team-telnyx/telnyx-cli-staging/commit/eeb123339ba78e449e0f6593e89e246f99407d0c))
+* add promote-to-prod workflow for STLC cutover ([b8c2c9c](https://github.com/team-telnyx/telnyx-cli-staging/commit/b8c2c9cd5edc486ff8a26bf86606c2c3219c8c3c))
+
 ## [0.23.1](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.0...v0.23.1) (2026-06-17)
 
 
