@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.3](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.2...v0.23.3) (2026-06-26)
+
+
+### Chores
+
+* remove staging release-please.yml ([229cf3a](https://github.com/team-telnyx/telnyx-cli-staging/commit/229cf3a2732a7809219fddf45d593782bfe97436))
+
 ## [0.23.2](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.1...v0.23.2) (2026-06-26)
 
 
