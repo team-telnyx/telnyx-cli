@@ -51,8 +51,6 @@ func TestAISearchConversationHistories(t *testing.T) {
 			"--api-key", "string",
 			"ai", "search-conversation-histories",
 			"--q", "customer called about billing issue",
-			"--record-type", "voice",
-			"--filter-document-id", "doc-789",
 			"--filter-ingested-at-gte", "'2026-01-01T00:00:00Z'",
 			"--filter-ingested-at-lte", "'2026-12-31T23:59:59Z'",
 			"--filter-record-created-at-gte", "'2026-01-01T00:00:00Z'",
@@ -62,8 +60,9 @@ func TestAISearchConversationHistories(t *testing.T) {
 			"--filter-retention", "filter[retention]",
 			"--filter-user-id", "user-123",
 			"--min-score", "0.5",
+			"--page-number", "1",
+			"--page-size", "10",
 			"--region", "USA",
-			"--top-k", "10",
 		)
 	})
 }
