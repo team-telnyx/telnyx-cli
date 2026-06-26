@@ -45,20 +45,9 @@ var aiSearchConversationHistories = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "q",
-			Usage:     "Natural language search query. The text is embedded into a 1024-dimensional vector and compared against indexed record chunks using kNN cosine similarity.",
+			Usage:     "Natural language search query. The text is embedded into a 1024-dimensional vector and compared against indexed record chunks using semantic similarity.",
 			Required:  true,
 			QueryPath: "q",
-		},
-		&requestflag.Flag[string]{
-			Name:      "record-type",
-			Usage:     "The type of records to search. Each record type is stored in a separate vector index.",
-			Required:  true,
-			QueryPath: "record_type",
-		},
-		&requestflag.Flag[string]{
-			Name:      "filter-document-id",
-			Usage:     "Filter by document identifier (exact match). Populated for knowledge_base records.",
-			QueryPath: "filter[document_id]",
 		},
 		&requestflag.Flag[any]{
 			Name:      "filter-ingested-at-gte",
@@ -106,16 +95,22 @@ var aiSearchConversationHistories = cli.Command{
 			Default:   0,
 			QueryPath: "min_score",
 		},
-		&requestflag.Flag[string]{
-			Name:      "region",
-			Usage:     "Restrict search to a specific region's OpenSearch cluster. When omitted, all regions are queried in parallel (fan-out) and results are merged by cosine similarity score.",
-			QueryPath: "region",
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			Usage:     "Page number to return (1-based). Defaults to 1.",
+			Default:   1,
+			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
-			Name:      "top-k",
-			Usage:     "Maximum number of results to return. Defaults to 20, maximum 100.",
+			Name:      "page-size",
+			Usage:     "Number of results per page. Defaults to 20, maximum 100.",
 			Default:   20,
-			QueryPath: "top_k",
+			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "region",
+			Usage:     "Restrict search to a specific region. When omitted, all regions are queried in parallel (fan-out) and results are merged by similarity score.",
+			QueryPath: "region",
 		},
 	},
 	Action:          handleAISearchConversationHistories,
