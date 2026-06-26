@@ -282,7 +282,6 @@ func init() {
 				Commands: []*cli.Command{
 					&aiCreateResponseDeprecated,
 					&aiRetrieveModels,
-					&aiSearchConversationHistories,
 					&aiSummarize,
 				},
 			},
@@ -1868,6 +1867,7 @@ func init() {
 					&portingLoaConfigurationsList,
 					&portingLoaConfigurationsDelete,
 					&portingLoaConfigurationsPreview,
+					&portingLoaConfigurationsPreview0,
 					&portingLoaConfigurationsPreview1,
 				},
 			},
@@ -2159,6 +2159,15 @@ func init() {
 					&reportsMdrUsageReportsList,
 					&reportsMdrUsageReportsDelete,
 					&reportsMdrUsageReportsFetchSync,
+				},
+			},
+			{
+				Name:     "speech-to-text",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&speechToTextListProviders,
+					&speechToTextRetrieveTranscription,
 				},
 			},
 			{
@@ -2485,6 +2494,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&texmlInitiateAICall,
 					&texmlSecrets,
 				},
 			},
@@ -2614,8 +2624,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&textToSpeechGenerate,
+					&textToSpeechGenerateSpeech,
 					&textToSpeechListVoices,
+					&textToSpeechRetrieveSpeech,
 				},
 			},
 			{
@@ -3162,6 +3173,19 @@ func init() {
 				},
 			},
 			{
+				Name:     "traffic-policy-profiles",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&trafficPolicyProfilesCreate,
+					&trafficPolicyProfilesRetrieve,
+					&trafficPolicyProfilesUpdate,
+					&trafficPolicyProfilesList,
+					&trafficPolicyProfilesDelete,
+					&trafficPolicyProfilesListServices,
+				},
+			},
+			{
 				Name:     "enterprises",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3171,7 +3195,7 @@ func init() {
 					&enterprisesUpdate,
 					&enterprisesList,
 					&enterprisesDelete,
-					&enterprisesActivateBrandedCalling,
+					&enterprisesBrandedCalling,
 				},
 			},
 			{
@@ -3211,9 +3235,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&enterprisesReputationRemediationCreate,
 					&enterprisesReputationRemediationRetrieve,
 					&enterprisesReputationRemediationList,
-					&enterprisesReputationRemediationSubmit,
 				},
 			},
 			{
@@ -3240,8 +3264,8 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&termsOfServiceInfo,
-					&termsOfServiceStatus,
+					&termsOfServiceRetrieveInfo,
+					&termsOfServiceRetrieveStatus,
 				},
 			},
 			{
@@ -3282,6 +3306,43 @@ func init() {
 				},
 			},
 			{
+				Name:     "uac-connections",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&uacConnectionsCreate,
+					&uacConnectionsRetrieve,
+					&uacConnectionsUpdate,
+					&uacConnectionsList,
+					&uacConnectionsDelete,
+				},
+			},
+			{
+				Name:     "uac-connections:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&uacConnectionsActionsCheckRegistrationStatus,
+				},
+			},
+			{
+				Name:     "voice-sdk-call-reports",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&voiceSDKCallReportsRetrieve,
+					&voiceSDKCallReportsList,
+				},
+			},
+			{
+				Name:     "sip-registration-status",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&sipRegistrationStatusRetrieve,
+				},
+			},
+			{
 				Name:     "call-reasons",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3299,9 +3360,9 @@ func init() {
 					&dirUpdate,
 					&dirList,
 					&dirDelete,
-					&dirCreateLoa,
 					&dirListDocumentTypes,
 					&dirListInfringementClaims,
+					&dirNewLoa,
 					&dirSubmit,
 					&dirUpdateInfringement,
 				},
@@ -3341,51 +3402,6 @@ func init() {
 				Commands: []*cli.Command{
 					&infringementClaimsRetrieve,
 					&infringementClaimsContest,
-				},
-			},
-			{
-				Name:     "sip-registration-status",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&sipRegistrationStatusRetrieve,
-				},
-			},
-			{
-				Name:     "speech-to-text",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&speechToTextListProviders,
-				},
-			},
-			{
-				Name:     "uac-connections",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&uacConnectionsCreate,
-					&uacConnectionsRetrieve,
-					&uacConnectionsUpdate,
-					&uacConnectionsList,
-					&uacConnectionsDelete,
-				},
-			},
-			{
-				Name:     "uac-connections:actions",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&uacConnectionsActionsCheckRegistrationStatus,
-				},
-			},
-			{
-				Name:     "voice-sdk-call-reports",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&voiceSDKCallReportsRetrieve,
-					&voiceSDKCallReportsList,
 				},
 			},
 			{

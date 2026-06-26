@@ -19,11 +19,10 @@ var networksCreate = cli.Command{
 	Usage:   "Create a new Network.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "A user specified name for the network.",
+		&requestflag.Flag[any]{
+			Name:     "network-create",
 			Required: true,
-			BodyPath: "name",
+			BodyRoot: true,
 		},
 	},
 	Action:          handleNetworksCreate,
@@ -55,11 +54,10 @@ var networksUpdate = cli.Command{
 			Required:  true,
 			PathParam: "id",
 		},
-		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "A user specified name for the network.",
+		&requestflag.Flag[any]{
+			Name:     "network-create",
 			Required: true,
-			BodyPath: "name",
+			BodyRoot: true,
 		},
 	},
 	Action:          handleNetworksUpdate,

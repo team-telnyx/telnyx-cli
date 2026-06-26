@@ -1252,7 +1252,7 @@ func handleAIAssistantsCreate(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -1296,7 +1296,7 @@ func handleAIAssistantsRetrieve(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -1345,7 +1345,7 @@ func handleAIAssistantsUpdate(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -1391,7 +1391,7 @@ func handleAIAssistantsList(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -1433,7 +1433,7 @@ func handleAIAssistantsDelete(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -1475,7 +1475,7 @@ func handleAIAssistantsChat(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -1524,7 +1524,7 @@ func handleAIAssistantsClone(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -1566,7 +1566,7 @@ func handleAIAssistantsGetTexml(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -1605,7 +1605,7 @@ func handleAIAssistantsImports(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -1649,7 +1649,7 @@ func handleAIAssistantsSendSMS(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(

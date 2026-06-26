@@ -20,20 +20,16 @@ var sipRegistrationStatusRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:      "credential-type",
-			Usage:     "The kind of credential to look up. `uac_external_credential` is keyed by `connection_id`; `telephony_credential` is keyed by `username`.",
-			Required:  true,
-			QueryPath: "credential_type",
-		},
-		&requestflag.Flag[string]{
 			Name:      "connection-id",
-			Usage:     "Identifier of the UAC connection to look up. Required when `credential_type` is `uac_external_credential`.",
+			Usage:     "Identifier of the UAC connection to look up.",
+			Required:  true,
 			QueryPath: "connection_id",
 		},
 		&requestflag.Flag[string]{
-			Name:      "username",
-			Usage:     "SIP username of the telephony credential to look up. Required when `credential_type` is `telephony_credential`.",
-			QueryPath: "username",
+			Name:      "credential-type",
+			Usage:     "The kind of credential to look up. Only `uac_external_credential` is supported today.",
+			Required:  true,
+			QueryPath: "credential_type",
 		},
 	},
 	Action:          handleSipRegistrationStatusRetrieve,

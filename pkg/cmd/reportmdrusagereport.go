@@ -132,7 +132,7 @@ func handleReportsMdrUsageReportsCreate(ctx context.Context, cmd *cli.Command) e
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -176,7 +176,7 @@ func handleReportsMdrUsageReportsRetrieve(ctx context.Context, cmd *cli.Command)
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -215,7 +215,7 @@ func handleReportsMdrUsageReportsList(ctx context.Context, cmd *cli.Command) err
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -273,7 +273,7 @@ func handleReportsMdrUsageReportsDelete(ctx context.Context, cmd *cli.Command) e
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -312,7 +312,7 @@ func handleReportsMdrUsageReportsFetchSync(ctx context.Context, cmd *cli.Command
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(

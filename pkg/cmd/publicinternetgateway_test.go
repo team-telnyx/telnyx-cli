@@ -16,9 +16,7 @@ func TestPublicInternetGatewaysCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"public-internet-gateways", "create",
-			"--name", "test interface",
-			"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-			"--region-code", "ashburn-va",
+			"--body", "{name: test interface, network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58, region_code: ashburn-va}",
 		)
 	})
 

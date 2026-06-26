@@ -482,8 +482,8 @@ var enterprisesDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
-var enterprisesActivateBrandedCalling = cli.Command{
-	Name:    "activate-branded-calling",
+var enterprisesBrandedCalling = cli.Command{
+	Name:    "branded-calling",
 	Usage:   "Branded Calling is a paid product that must be activated on each enterprise.\nActivation is idempotent:",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -493,7 +493,7 @@ var enterprisesActivateBrandedCalling = cli.Command{
 			PathParam: "enterprise_id",
 		},
 	},
-	Action:          handleEnterprisesActivateBrandedCalling,
+	Action:          handleEnterprisesBrandedCalling,
 	HideHelpCommand: true,
 }
 
@@ -709,7 +709,7 @@ func handleEnterprisesDelete(ctx context.Context, cmd *cli.Command) error {
 	return client.Enterprises.Delete(ctx, cmd.Value("enterprise-id").(string), options...)
 }
 
-func handleEnterprisesActivateBrandedCalling(ctx context.Context, cmd *cli.Command) error {
+func handleEnterprisesBrandedCalling(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
@@ -733,7 +733,7 @@ func handleEnterprisesActivateBrandedCalling(ctx context.Context, cmd *cli.Comma
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Enterprises.ActivateBrandedCalling(ctx, cmd.Value("enterprise-id").(string), options...)
+	_, err = client.Enterprises.BrandedCalling(ctx, cmd.Value("enterprise-id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -746,7 +746,7 @@ func handleEnterprisesActivateBrandedCalling(ctx context.Context, cmd *cli.Comma
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "enterprises activate-branded-calling",
+		Title:          "enterprises branded-calling",
 		Transform:      transform,
 	})
 }

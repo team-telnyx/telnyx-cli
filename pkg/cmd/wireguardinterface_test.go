@@ -16,20 +16,17 @@ func TestWireguardInterfacesCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"wireguard-interfaces", "create",
-			"--region-code", "ashburn-va",
-			"--enable-sip-trunking=false",
-			"--name", "test interface",
-			"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+			"--body", "{name: test interface, network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58, enable_sip_trunking: false, region_code: ashburn-va}",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"region_code: ashburn-va\n" +
-			"enable_sip_trunking: false\n" +
 			"name: test interface\n" +
-			"network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58\n")
+			"network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58\n" +
+			"enable_sip_trunking: false\n" +
+			"region_code: ashburn-va\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

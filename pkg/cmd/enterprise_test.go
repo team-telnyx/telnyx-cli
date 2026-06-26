@@ -305,13 +305,13 @@ func TestEnterprisesDelete(t *testing.T) {
 	})
 }
 
-func TestEnterprisesActivateBrandedCalling(t *testing.T) {
+func TestEnterprisesBrandedCalling(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"enterprises", "activate-branded-calling",
+			"enterprises", "branded-calling",
 			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
 		)
 	})

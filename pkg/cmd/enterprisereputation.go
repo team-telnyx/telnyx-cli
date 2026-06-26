@@ -63,7 +63,6 @@ var enterprisesReputationEnable = cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "check-frequency",
 			Usage:    "How often Telnyx refreshes the stored reputation data for this enterprise's registered numbers.",
-			Default:  "business_daily",
 			BodyPath: "check_frequency",
 		},
 	},

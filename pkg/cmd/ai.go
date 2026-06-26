@@ -20,7 +20,7 @@ var aiCreateResponseDeprecated = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
-			Name:     "body",
+			Name:     "response-request",
 			Required: true,
 			BodyRoot: true,
 		},
@@ -35,85 +35,6 @@ var aiRetrieveModels = cli.Command{
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleAIRetrieveModels,
-	HideHelpCommand: true,
-}
-
-var aiSearchConversationHistories = cli.Command{
-	Name:    "search-conversation-histories",
-	Usage:   "Performs semantic vector search across conversation history records.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "q",
-			Usage:     "Natural language search query. The text is embedded into a 1024-dimensional vector and compared against indexed record chunks using semantic similarity.",
-			Required:  true,
-			QueryPath: "q",
-		},
-		&requestflag.Flag[any]{
-			Name:      "filter-ingested-at-gte",
-			Usage:     "Only include records ingested (chunked, embedded, and indexed) on or after this ISO 8601 timestamp.",
-			QueryPath: "filter[ingested_at][gte]",
-		},
-		&requestflag.Flag[any]{
-			Name:      "filter-ingested-at-lte",
-			Usage:     "Only include records ingested (chunked, embedded, and indexed) on or before this ISO 8601 timestamp.",
-			QueryPath: "filter[ingested_at][lte]",
-		},
-		&requestflag.Flag[any]{
-			Name:      "filter-record-created-at-gte",
-			Usage:     "Only include records whose original creation time is on or after this ISO 8601 timestamp.",
-			QueryPath: "filter[record_created_at][gte]",
-		},
-		&requestflag.Flag[any]{
-			Name:      "filter-record-created-at-lte",
-			Usage:     "Only include records whose original creation time is on or before this ISO 8601 timestamp.",
-			QueryPath: "filter[record_created_at][lte]",
-		},
-		&requestflag.Flag[string]{
-			Name:      "filter-record-id",
-			Usage:     "Filter to chunks belonging to a specific parent record (exact match).",
-			QueryPath: "filter[record_id]",
-		},
-		&requestflag.Flag[string]{
-			Name:      "filter-region-in",
-			Usage:     "Filter by the region stored on the record. Comma-separated to match multiple regions (USA, DEU, AUS, UAE). Distinct from the `region` parameter, which selects which cluster(s) are queried.",
-			QueryPath: "filter[region][in]",
-		},
-		&requestflag.Flag[string]{
-			Name:      "filter-retention",
-			Usage:     "Filter by retention policy (exact match). Filter-only: not returned in the response body.",
-			QueryPath: "filter[retention]",
-		},
-		&requestflag.Flag[string]{
-			Name:      "filter-user-id",
-			Usage:     "Filter to records owned by a specific user (exact match).",
-			QueryPath: "filter[user_id]",
-		},
-		&requestflag.Flag[float64]{
-			Name:      "min-score",
-			Usage:     "Minimum cosine similarity score threshold (0.0 to 1.0). Results below this threshold are excluded.",
-			Default:   0,
-			QueryPath: "min_score",
-		},
-		&requestflag.Flag[int64]{
-			Name:      "page-number",
-			Usage:     "Page number to return (1-based). Defaults to 1.",
-			Default:   1,
-			QueryPath: "page[number]",
-		},
-		&requestflag.Flag[int64]{
-			Name:      "page-size",
-			Usage:     "Number of results per page. Defaults to 20, maximum 100.",
-			Default:   20,
-			QueryPath: "page[size]",
-		},
-		&requestflag.Flag[string]{
-			Name:      "region",
-			Usage:     "Restrict search to a specific region. When omitted, all regions are queried in parallel (fan-out) and results are merged by similarity score.",
-			QueryPath: "region",
-		},
-	},
-	Action:          handleAISearchConversationHistories,
 	HideHelpCommand: true,
 }
 
@@ -220,47 +141,6 @@ func handleAIRetrieveModels(ctx context.Context, cmd *cli.Command) error {
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai retrieve-models",
-		Transform:      transform,
-	})
-}
-
-func handleAISearchConversationHistories(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	params := telnyx.AISearchConversationHistoriesParams{}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.SearchConversationHistories(ctx, params, options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "ai search-conversation-histories",
 		Transform:      transform,
 	})
 }

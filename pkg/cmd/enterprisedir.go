@@ -140,7 +140,7 @@ var enterprisesDirList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "filter-status",
-			Usage:     "Filter by DIR status.",
+			Usage:     "DIR lifecycle status.\n- `draft` - newly created; editable; not yet submitted.\n- `submitted` / `in_review` - Telnyx is reviewing.\n- `verified` - approved; phone numbers may be attached.\n- `rejected` - Telnyx rejected this submission; `rejection_reasons` is populated; customer can edit and resubmit.\n- `unsuccessful` - system-side error during processing; customer can edit and resubmit.\n- `suspended` - temporarily disabled (e.g. by an active infringement claim).\n- `expired` - verification expired; customer must resubmit.\n- `infringement_claimed` - a trademark/impersonation claim is open against this DIR.\n- `permanently_rejected` - terminal; cannot be resubmitted.",
 			QueryPath: "filter[status]",
 		},
 		&requestflag.Flag[int64]{

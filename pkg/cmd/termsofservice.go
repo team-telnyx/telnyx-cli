@@ -14,37 +14,37 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var termsOfServiceInfo = cli.Command{
-	Name:    "info",
+var termsOfServiceRetrieveInfo = cli.Command{
+	Name:    "retrieve-info",
 	Usage:   "Returns the available Terms of Service agreements (product, current version,\nterms URL, effective date). Omit `product_type` to return all products; pass it\nto scope to one.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "product-type",
-			Usage:     "Optional product filter. Omit to return info for all products.",
+			Usage:     "Telnyx product the Terms of Service apply to.",
 			QueryPath: "product_type",
 		},
 	},
-	Action:          handleTermsOfServiceInfo,
+	Action:          handleTermsOfServiceRetrieveInfo,
 	HideHelpCommand: true,
 }
 
-var termsOfServiceStatus = cli.Command{
-	Name:    "status",
+var termsOfServiceRetrieveStatus = cli.Command{
+	Name:    "retrieve-status",
 	Usage:   "Returns whether the authenticated user has agreed to the current Terms of\nService for the product given by `product_type`. Used during onboarding to\ndecide whether to prompt the user with the ToS dialog before continuing.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "product-type",
-			Usage:     "Which product's ToS to check. Defaults to `branded_calling`.",
+			Usage:     "Telnyx product the Terms of Service apply to.",
 			QueryPath: "product_type",
 		},
 	},
-	Action:          handleTermsOfServiceStatus,
+	Action:          handleTermsOfServiceRetrieveStatus,
 	HideHelpCommand: true,
 }
 
-func handleTermsOfServiceInfo(ctx context.Context, cmd *cli.Command) error {
+func handleTermsOfServiceRetrieveInfo(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -63,11 +63,11 @@ func handleTermsOfServiceInfo(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
-	params := telnyx.TermsOfServiceInfoParams{}
+	params := telnyx.TermsOfServiceGetInfoParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.TermsOfService.Info(ctx, params, options...)
+	_, err = client.TermsOfService.GetInfo(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -80,12 +80,12 @@ func handleTermsOfServiceInfo(ctx context.Context, cmd *cli.Command) error {
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "terms-of-service info",
+		Title:          "terms-of-service retrieve-info",
 		Transform:      transform,
 	})
 }
 
-func handleTermsOfServiceStatus(ctx context.Context, cmd *cli.Command) error {
+func handleTermsOfServiceRetrieveStatus(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -104,11 +104,11 @@ func handleTermsOfServiceStatus(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
-	params := telnyx.TermsOfServiceStatusParams{}
+	params := telnyx.TermsOfServiceGetStatusParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.TermsOfService.Status(ctx, params, options...)
+	_, err = client.TermsOfService.GetStatus(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -121,7 +121,7 @@ func handleTermsOfServiceStatus(ctx context.Context, cmd *cli.Command) error {
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "terms-of-service status",
+		Title:          "terms-of-service retrieve-status",
 		Transform:      transform,
 	})
 }

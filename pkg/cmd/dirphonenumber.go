@@ -38,7 +38,7 @@ var dirPhoneNumbersList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "status",
-			Usage:     "Filter by phone-number status.",
+			Usage:     "Phone-number lifecycle status.\n- `submitted` / `in_review` - Telnyx is reviewing the batch this number belongs to.\n- `verified` - approved; the DIR's display identity will be shown on outbound calls from this number.\n- `unsuccessful` - Telnyx rejected this submission; the customer may re-add to retry.\n- `suspended` - temporarily disabled (e.g. by an active infringement claim on the DIR).\n- `expired` - verification expired; re-add to renew.\n- `permanently_rejected` - terminal; cannot be re-added on this or any other DIR you own.",
 			QueryPath: "status",
 		},
 		&requestflag.Flag[int64]{

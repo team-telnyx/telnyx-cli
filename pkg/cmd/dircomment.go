@@ -52,7 +52,7 @@ var dirCommentsList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "comment-type",
-			Usage:     "Restrict to comments of this category. Customer-visible categories only: internal-only comments are filtered out regardless of this filter.",
+			Usage:     "Comment categorisation. Customers post `customer_inquiry`. The Telnyx team posts `vetting_comment`, `rejection_reason`, `notification`, `status_update`, or `admin_response`. `internal_note` is filtered out of customer-visible responses.",
 			QueryPath: "comment_type",
 		},
 		&requestflag.Flag[int64]{

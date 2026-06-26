@@ -15,7 +15,7 @@ func TestVoiceClonesCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"voice-clones", "create",
-			"--params", "{gender: male, language: en, name: clone-narrator, voice_design_id: 550e8400-e29b-41d4-a716-446655440000, provider: telnyx}",
+			"--voice-clone-request", "{gender: male, language: en, name: clone-narrator, voice_design_id: 550e8400-e29b-41d4-a716-446655440000, provider: telnyx}",
 		)
 	})
 
@@ -100,7 +100,7 @@ func TestVoiceClonesCreateFromUpload(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"voice-clones", "create-from-upload",
-			"--params", "{audio_file: Example data, gender: male, language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf, name: name, provider: telnyx, label: label, model_id: Qwen3TTS, ref_text: ref_text}",
+			"--voice-clone-upload-request", "{audio_file: Example data, gender: male, language: lkf-Lz1vLbBu-9uDh-9AHaOS2D-Cbf, name: name, provider: telnyx, label: label, model_id: Qwen3TTS, ref_text: ref_text}",
 		)
 	})
 

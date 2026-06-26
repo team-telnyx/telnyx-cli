@@ -144,7 +144,7 @@ var dirList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "filter-status",
-			Usage:     "Filter by DIR status.",
+			Usage:     "DIR lifecycle status.\n- `draft` - newly created; editable; not yet submitted.\n- `submitted` / `in_review` - Telnyx is reviewing.\n- `verified` - approved; phone numbers may be attached.\n- `rejected` - Telnyx rejected this submission; `rejection_reasons` is populated; customer can edit and resubmit.\n- `unsuccessful` - system-side error during processing; customer can edit and resubmit.\n- `suspended` - temporarily disabled (e.g. by an active infringement claim).\n- `expired` - verification expired; customer must resubmit.\n- `infringement_claimed` - a trademark/impersonation claim is open against this DIR.\n- `permanently_rejected` - terminal; cannot be resubmitted.",
 			QueryPath: "filter[status]",
 		},
 		&requestflag.Flag[int64]{
@@ -189,8 +189,48 @@ var dirDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
-var dirCreateLoa = requestflag.WithInnerFlags(cli.Command{
-	Name:    "create-loa",
+var dirListDocumentTypes = cli.Command{
+	Name:            "list-document-types",
+	Usage:           "Reference list of `document_type` values accepted by\n`DirCreateRequest.documents[].document_type` and the infringement-contest\nendpoint. Each entry has a stable `short_name` (used in API calls) and a\ncustomer-facing description.",
+	Suggest:         true,
+	Flags:           []cli.Flag{},
+	Action:          handleDirListDocumentTypes,
+	HideHelpCommand: true,
+}
+
+var dirListInfringementClaims = cli.Command{
+	Name:    "list-infringement-claims",
+	Usage:   "Return the trademark or copyright claims filed against this DIR. Each claim's\n`status` is `pending` (newly filed; DIR auto-suspended), `contested` (you have\nsubmitted contest evidence; awaiting resolution), or `resolved` (final).\nResolution outcomes: `upheld` (claim accepted; DIR stays\nsuspended/permanently_rejected), `rejected` (claim dismissed; DIR restored to\n`verified`), `modified` (partial outcome).",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "dir-id",
+			Required:  true,
+			PathParam: "dir_id",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			Usage:     "1-based page number. Out-of-range values return an empty page with correct meta.",
+			Default:   1,
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			Usage:     "Items per page. Maximum 250; values above are clamped to 250.",
+			Default:   20,
+			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
+	},
+	Action:          handleDirListInfringementClaims,
+	HideHelpCommand: true,
+}
+
+var dirNewLoa = requestflag.WithInnerFlags(cli.Command{
+	Name:    "new-loa",
 	Usage:   "Generate a pre-filled Letter of Authorization (LOA) PDF for a DIR. Enterprise\nidentity (legal name, DBA, address, contact, website, tax id) and the DIR\ndisplay name are read server-side; the caller supplies the telephone numbers to\nauthorize, an optional Authorized Agent block, and an optional drawn signature.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -221,7 +261,7 @@ var dirCreateLoa = requestflag.WithInnerFlags(cli.Command{
 			Usage:   "The file where the response contents will be stored. Use the value '-' to force output to stdout.",
 		},
 	},
-	Action:          handleDirCreateLoa,
+	Action:          handleDirNewLoa,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
 	"agent": {
@@ -287,46 +327,6 @@ var dirCreateLoa = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 })
-
-var dirListDocumentTypes = cli.Command{
-	Name:            "list-document-types",
-	Usage:           "Reference list of `document_type` values accepted by\n`DirCreateRequest.documents[].document_type` and the infringement-contest\nendpoint. Each entry has a stable `short_name` (used in API calls) and a\ncustomer-facing description.",
-	Suggest:         true,
-	Flags:           []cli.Flag{},
-	Action:          handleDirListDocumentTypes,
-	HideHelpCommand: true,
-}
-
-var dirListInfringementClaims = cli.Command{
-	Name:    "list-infringement-claims",
-	Usage:   "Return the trademark or copyright claims filed against this DIR. Each claim's\n`status` is `pending` (newly filed; DIR auto-suspended), `contested` (you have\nsubmitted contest evidence; awaiting resolution), or `resolved` (final).\nResolution outcomes: `upheld` (claim accepted; DIR stays\nsuspended/permanently_rejected), `rejected` (claim dismissed; DIR restored to\n`verified`), `modified` (partial outcome).",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "dir-id",
-			Required:  true,
-			PathParam: "dir_id",
-		},
-		&requestflag.Flag[int64]{
-			Name:      "page-number",
-			Usage:     "1-based page number. Out-of-range values return an empty page with correct meta.",
-			Default:   1,
-			QueryPath: "page[number]",
-		},
-		&requestflag.Flag[int64]{
-			Name:      "page-size",
-			Usage:     "Items per page. Maximum 250; values above are clamped to 250.",
-			Default:   20,
-			QueryPath: "page[size]",
-		},
-		&requestflag.Flag[int64]{
-			Name:  "max-items",
-			Usage: "The maximum number of items to return (use -1 for unlimited).",
-		},
-	},
-	Action:          handleDirListInfringementClaims,
-	HideHelpCommand: true,
-}
 
 var dirSubmit = cli.Command{
 	Name:    "submit",
@@ -597,46 +597,6 @@ func handleDirDelete(ctx context.Context, cmd *cli.Command) error {
 	return client.Dir.Delete(ctx, cmd.Value("dir-id").(string), options...)
 }
 
-func handleDirCreateLoa(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
-		cmd.Set("dir-id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	params := telnyx.DirNewLoaParams{}
-
-	response, err := client.Dir.NewLoa(
-		ctx,
-		cmd.Value("dir-id").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
-	if message != "" {
-		fmt.Println(message)
-	}
-	return err
-}
-
 func handleDirListDocumentTypes(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -742,6 +702,46 @@ func handleDirListInfringementClaims(ctx context.Context, cmd *cli.Command) erro
 			Transform:      transform,
 		})
 	}
+}
+
+func handleDirNewLoa(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
+		cmd.Set("dir-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.DirNewLoaParams{}
+
+	response, err := client.Dir.NewLoa(
+		ctx,
+		cmd.Value("dir-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
+	if message != "" {
+		fmt.Println(message)
+	}
+	return err
 }
 
 func handleDirSubmit(ctx context.Context, cmd *cli.Command) error {

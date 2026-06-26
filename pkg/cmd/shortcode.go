@@ -97,7 +97,7 @@ func handleShortCodesRetrieve(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -139,7 +139,7 @@ func handleShortCodesUpdate(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -185,7 +185,7 @@ func handleShortCodesList(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(

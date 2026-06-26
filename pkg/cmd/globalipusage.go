@@ -42,7 +42,7 @@ func handleGlobalIPUsageRetrieve(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(

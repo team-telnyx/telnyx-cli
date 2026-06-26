@@ -21,7 +21,7 @@ var voiceClonesCreate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
-			Name:     "params",
+			Name:     "voice-clone-request",
 			Usage:    "Request body for creating a voice clone from an existing voice design.",
 			Required: true,
 			BodyRoot: true,
@@ -125,7 +125,7 @@ var voiceClonesCreateFromUpload = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
-			Name:     "params",
+			Name:     "voice-clone-upload-request",
 			Usage:    "Multipart form data for creating a voice clone from a direct audio upload. Maximum file size: 5MB for Telnyx, 20MB for Minimax.",
 			Required: true,
 			BodyRoot: true,

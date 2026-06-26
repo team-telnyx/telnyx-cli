@@ -93,7 +93,7 @@ func handleAccessIPRangesCreate(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -134,7 +134,7 @@ func handleAccessIPRangesList(ctx context.Context, cmd *cli.Command) error {
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -192,7 +192,7 @@ func handleAccessIPRangesDelete(ctx context.Context, cmd *cli.Command) error {
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(

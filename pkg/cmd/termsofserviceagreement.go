@@ -48,7 +48,7 @@ var termsOfServiceAgreementsList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "product-type",
-			Usage:     "Optional filter. Omit to list the user's agreements for **every** product (branded_calling and number_reputation); pass a value to return only that product's agreements.",
+			Usage:     "Telnyx product the Terms of Service apply to.",
 			QueryPath: "product_type",
 		},
 		&requestflag.Flag[int64]{

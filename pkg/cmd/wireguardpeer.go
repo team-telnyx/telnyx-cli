@@ -19,11 +19,10 @@ var wireguardPeersCreate = cli.Command{
 	Usage:   "Create a new WireGuard Peer. Current limitation of 5 peers per interface can be\ncreated.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "wireguard-interface-id",
-			Usage:    "The id of the wireguard interface associated with the peer.",
+		&requestflag.Flag[any]{
+			Name:     "body",
 			Required: true,
-			BodyPath: "wireguard_interface_id",
+			BodyRoot: true,
 		},
 	},
 	Action:          handleWireguardPeersCreate,

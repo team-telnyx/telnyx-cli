@@ -132,13 +132,39 @@ func TestDirDelete(t *testing.T) {
 	})
 }
 
-func TestDirCreateLoa(t *testing.T) {
+func TestDirListDocumentTypes(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"dir", "create-loa",
+			"dir", "list-document-types",
+		)
+	})
+}
+
+func TestDirListInfringementClaims(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"dir", "list-infringement-claims",
+			"--max-items", "10",
+			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
+			"--page-number", "1",
+			"--page-size", "20",
+		)
+	})
+}
+
+func TestDirNewLoa(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"dir", "new-loa",
 			"--dir-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--phone-number", "+13125550000",
 			"--agent", "{administrative_area: administrative_area, city: city, contact_email: dev@stainless.com, contact_name: contact_name, contact_phone: '+13125550000', contact_title: contact_title, country: US, legal_name: legal_name, postal_code: postal_code, street_address: street_address, dba: dba, extended_address: extended_address}",
@@ -149,13 +175,13 @@ func TestDirCreateLoa(t *testing.T) {
 
 	t.Run("inner flags", func(t *testing.T) {
 		// Check that inner flags have been set up correctly
-		requestflag.CheckInnerFlags(dirCreateLoa)
+		requestflag.CheckInnerFlags(dirNewLoa)
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"dir", "create-loa",
+			"dir", "new-loa",
 			"--dir-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--phone-number", "+13125550000",
 			"--agent.administrative-area", "administrative_area",
@@ -200,35 +226,9 @@ func TestDirCreateLoa(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"dir", "create-loa",
+			"dir", "new-loa",
 			"--dir-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--output", "/dev/null",
-		)
-	})
-}
-
-func TestDirListDocumentTypes(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"dir", "list-document-types",
-		)
-	})
-}
-
-func TestDirListInfringementClaims(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"dir", "list-infringement-claims",
-			"--max-items", "10",
-			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
-			"--page-number", "1",
-			"--page-size", "20",
 		)
 	})
 }
