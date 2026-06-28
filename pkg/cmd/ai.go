@@ -29,6 +29,90 @@ var aiCreateResponseDeprecated = cli.Command{
 	HideHelpCommand: true,
 }
 
+var aiRetrieveConversationHistories = cli.Command{
+	Name:    "retrieve-conversation-histories",
+	Usage:   "Performs semantic vector search across conversation history records.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "q",
+			Usage:     "Natural language search query. The text is embedded into a 1024-dimensional vector and compared against indexed record chunks using kNN cosine similarity.",
+			Required:  true,
+			QueryPath: "q",
+		},
+		&requestflag.Flag[string]{
+			Name:      "record-type",
+			Usage:     "The type of records to search. Each record type is stored in a separate vector index.",
+			Required:  true,
+			QueryPath: "record_type",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-document-id",
+			Usage:     "Filter by document identifier (exact match). Populated for knowledge_base records.",
+			QueryPath: "filter[document_id]",
+		},
+		&requestflag.Flag[any]{
+			Name:      "filter-ingested-at-gte",
+			Usage:     "Only include records ingested (chunked, embedded, and indexed) on or after this ISO 8601 timestamp.",
+			QueryPath: "filter[ingested_at][gte]",
+		},
+		&requestflag.Flag[any]{
+			Name:      "filter-ingested-at-lte",
+			Usage:     "Only include records ingested (chunked, embedded, and indexed) on or before this ISO 8601 timestamp.",
+			QueryPath: "filter[ingested_at][lte]",
+		},
+		&requestflag.Flag[any]{
+			Name:      "filter-record-created-at-gte",
+			Usage:     "Only include records whose original creation time is on or after this ISO 8601 timestamp.",
+			QueryPath: "filter[record_created_at][gte]",
+		},
+		&requestflag.Flag[any]{
+			Name:      "filter-record-created-at-lte",
+			Usage:     "Only include records whose original creation time is on or before this ISO 8601 timestamp.",
+			QueryPath: "filter[record_created_at][lte]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-record-id",
+			Usage:     "Filter to chunks belonging to a specific parent record (exact match).",
+			QueryPath: "filter[record_id]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-region-in",
+			Usage:     "Filter by the region stored on the record. Comma-separated to match multiple regions (USA, DEU, AUS, UAE). Distinct from the `region` parameter, which selects which cluster(s) are queried.",
+			QueryPath: "filter[region][in]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-retention",
+			Usage:     "Filter by retention policy (exact match). Filter-only: not returned in the response body.",
+			QueryPath: "filter[retention]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-user-id",
+			Usage:     "Filter to records owned by a specific user (exact match).",
+			QueryPath: "filter[user_id]",
+		},
+		&requestflag.Flag[float64]{
+			Name:      "min-score",
+			Usage:     "Minimum cosine similarity score threshold (0.0 to 1.0). Results below this threshold are excluded.",
+			Default:   0,
+			QueryPath: "min_score",
+		},
+		&requestflag.Flag[string]{
+			Name:      "region",
+			Usage:     "Restrict search to a specific region's OpenSearch cluster. When omitted, all regions are queried in parallel (fan-out) and results are merged by cosine similarity score.",
+			QueryPath: "region",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "top-k",
+			Usage:     "Maximum number of results to return. Defaults to 20, maximum 100.",
+			Default:   20,
+			QueryPath: "top_k",
+		},
+	},
+	Action:          handleAIRetrieveConversationHistories,
+	HideHelpCommand: true,
+}
+
 var aiRetrieveModels = cli.Command{
 	Name:            "retrieve-models",
 	Usage:           "**Deprecated**: Use `GET /v2/ai/openai/models` instead.",
@@ -102,6 +186,47 @@ func handleAICreateResponseDeprecated(ctx context.Context, cmd *cli.Command) err
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai create-response-deprecated",
+		Transform:      transform,
+	})
+}
+
+func handleAIRetrieveConversationHistories(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.AIGetConversationHistoriesParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.AI.GetConversationHistories(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai retrieve-conversation-histories",
 		Transform:      transform,
 	})
 }
