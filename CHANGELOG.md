@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.17.0...v0.18.0) (2026-06-28)
+
+
+### Chores
+
+* add release-please workflow + fix config for STLC cutover ([#29](https://github.com/team-telnyx/telnyx-cli/issues/29)) ([a50a4e2](https://github.com/team-telnyx/telnyx-cli/commit/a50a4e27bfb7a5b7d3fc23082820aeb608c742d1))
+
 ## 0.17.0 (2026-06-04)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.16.0...v0.17.0)
