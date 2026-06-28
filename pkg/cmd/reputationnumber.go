@@ -16,7 +16,7 @@ import (
 
 var reputationNumbersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get reputation data for a specific phone number without requiring an\n`enterprise_id`.",
+	Usage:   "Convenience alias for\n`GET /v2/enterprises/{enterprise_id}/reputation/numbers/{phone_number}`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -26,7 +26,7 @@ var reputationNumbersRetrieve = cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:      "fresh",
-			Usage:     "When true, fetches fresh reputation data (incurs API cost). When false, returns cached data.",
+			Usage:     "When true, fetches fresh reputation data (incurs API cost). When false (default), returns cached data.",
 			Default:   false,
 			QueryPath: "fresh",
 		},
@@ -37,25 +37,35 @@ var reputationNumbersRetrieve = cli.Command{
 
 var reputationNumbersList = cli.Command{
 	Name:    "list",
-	Usage:   "List all phone numbers enrolled in Number Reputation monitoring for your\naccount. This is a simplified endpoint that does not require an `enterprise_id`\n— it returns numbers across all your enterprises.",
+	Usage:   "Convenience alias for `GET /v2/enterprises/{enterprise_id}/reputation/numbers`\nthat returns numbers across every enterprise you own. Useful when you don't want\nto look up the enterprise id first.",
 	Suggest: true,
 	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "filter-enterprise-id",
+			Usage:     "Filter by enterprise ID.",
+			QueryPath: "filter[enterprise_id]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-phone-number-contains",
+			Usage:     "Partial match on phone number. Must contain at least 5 digits.",
+			QueryPath: "filter[phone_number][contains]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-phone-number-eq",
+			Usage:     "Exact phone-number match (E.164).",
+			QueryPath: "filter[phone_number][eq]",
+		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
-			Usage:     "Page number (1-indexed)",
+			Usage:     "1-based page number. Out-of-range values return an empty page with correct meta.",
 			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
-			Usage:     "Number of items per page",
-			Default:   10,
+			Usage:     "Items per page. Maximum 250; values above are clamped to 250.",
+			Default:   20,
 			QueryPath: "page[size]",
-		},
-		&requestflag.Flag[string]{
-			Name:      "phone-number",
-			Usage:     "Filter by specific phone number (E.164 format)",
-			QueryPath: "phone_number",
 		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",
@@ -68,7 +78,7 @@ var reputationNumbersList = cli.Command{
 
 var reputationNumbersDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Remove a phone number from Number Reputation monitoring without requiring an\n`enterprise_id`.",
+	Usage:   "Convenience alias for\n`DELETE /v2/enterprises/{enterprise_id}/reputation/numbers/{phone_number}`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

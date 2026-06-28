@@ -19,26 +19,10 @@ var wireguardInterfacesCreate = cli.Command{
 	Usage:   "Create a new WireGuard Interface. Current limitation of 10 interfaces per user\ncan be created.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "region-code",
-			Usage:    "The region the interface should be deployed to.",
+		&requestflag.Flag[any]{
+			Name:     "body",
 			Required: true,
-			BodyPath: "region_code",
-		},
-		&requestflag.Flag[bool]{
-			Name:     "enable-sip-trunking",
-			Usage:    "Enable SIP traffic forwarding over VPN interface.",
-			BodyPath: "enable_sip_trunking",
-		},
-		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "A user specified name for the interface.",
-			BodyPath: "name",
-		},
-		&requestflag.Flag[string]{
-			Name:     "network-id",
-			Usage:    "The id of the network associated with the interface.",
-			BodyPath: "network_id",
+			BodyRoot: true,
 		},
 	},
 	Action:          handleWireguardInterfacesCreate,

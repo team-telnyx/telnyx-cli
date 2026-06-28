@@ -31,7 +31,6 @@ var aiMissionsCreate = cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "execution-mode",
 			Usage:    `Allowed values: "external", "managed".`,
-			Default:  "external",
 			BodyPath: "execution_mode",
 		},
 		&requestflag.Flag[string]{
@@ -141,6 +140,7 @@ var aiMissionsListEvents = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "type",
+			Usage:     "Filter results by type.",
 			QueryPath: "type",
 		},
 		&requestflag.Flag[int64]{

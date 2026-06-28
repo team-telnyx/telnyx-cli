@@ -20,3 +20,15 @@ if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ] && [ "${SKIP_BREW:-}" != "1
 fi
 echo "==> Installing Go dependencies…"
 go mod tidy -e || true
+
+# When STLC_LINK_GO_SDK is set, replace the Go SDK dependency with the
+# given path or module path. Used by automated regen workflows where the
+# CLI's pinned Go SDK release lags the spec — pointing at the freshly
+# generated Go SDK clone (e.g. ../telnyx-go-staging) lets the build see
+# new symbols immediately rather than waiting for a release tag.
+#
+# Local dev is unaffected when the env var is unset.
+if [ -n "${STLC_LINK_GO_SDK:-}" ]; then
+  echo "==> STLC_LINK_GO_SDK set; linking to $STLC_LINK_GO_SDK"
+  ./scripts/link "$STLC_LINK_GO_SDK"
+fi

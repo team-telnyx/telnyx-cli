@@ -31,6 +31,7 @@ var aiMissionsRunsEventsList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "agent-id",
+			Usage:     "Filter results by agent id.",
 			QueryPath: "agent_id",
 		},
 		&requestflag.Flag[int64]{
@@ -47,10 +48,12 @@ var aiMissionsRunsEventsList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "step-id",
+			Usage:     "Filter results by step id.",
 			QueryPath: "step_id",
 		},
 		&requestflag.Flag[string]{
 			Name:      "type",
+			Usage:     "Filter results by type.",
 			QueryPath: "type",
 		},
 		&requestflag.Flag[int64]{

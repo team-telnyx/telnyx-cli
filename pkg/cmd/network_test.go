@@ -16,7 +16,7 @@ func TestNetworksCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"networks", "create",
-			"--name", "test network",
+			"--network-create", "{name: test network}",
 		)
 	})
 
@@ -51,7 +51,7 @@ func TestNetworksUpdate(t *testing.T) {
 			"--api-key", "string",
 			"networks", "update",
 			"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
-			"--name", "test network",
+			"--network-create", "{name: test network}",
 		)
 	})
 

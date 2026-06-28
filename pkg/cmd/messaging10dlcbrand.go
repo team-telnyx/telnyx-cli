@@ -321,18 +321,22 @@ var messaging10dlcBrandList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "country",
+			Usage:     "Filter results by country.",
 			QueryPath: "country",
 		},
 		&requestflag.Flag[string]{
 			Name:      "display-name",
+			Usage:     "Filter results by display name.",
 			QueryPath: "displayName",
 		},
 		&requestflag.Flag[string]{
 			Name:      "entity-type",
+			Usage:     "Filter results by entity type.",
 			QueryPath: "entityType",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page",
+			Usage:     "Page number to retrieve (1-based).",
 			Default:   1,
 			QueryPath: "page",
 		},
@@ -350,6 +354,7 @@ var messaging10dlcBrandList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "state",
+			Usage:     "Filter results by state.",
 			QueryPath: "state",
 		},
 		&requestflag.Flag[string]{

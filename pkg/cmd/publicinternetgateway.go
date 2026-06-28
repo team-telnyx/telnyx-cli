@@ -19,20 +19,10 @@ var publicInternetGatewaysCreate = cli.Command{
 	Usage:   "Create a new Public Internet Gateway.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:     "name",
-			Usage:    "A user specified name for the interface.",
-			BodyPath: "name",
-		},
-		&requestflag.Flag[string]{
-			Name:     "network-id",
-			Usage:    "The id of the network associated with the interface.",
-			BodyPath: "network_id",
-		},
-		&requestflag.Flag[string]{
-			Name:     "region-code",
-			Usage:    "The region interface is deployed to.",
-			BodyPath: "region_code",
+		&requestflag.Flag[any]{
+			Name:     "body",
+			Required: true,
+			BodyRoot: true,
 		},
 	},
 	Action:          handlePublicInternetGatewaysCreate,

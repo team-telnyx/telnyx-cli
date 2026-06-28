@@ -260,6 +260,7 @@ func TestPortingLoaConfigurationsPreview0(t *testing.T) {
 
 	t.Run("inner flags", func(t *testing.T) {
 		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(portingLoaConfigurationsPreview0)
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(

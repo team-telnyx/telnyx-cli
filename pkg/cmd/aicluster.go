@@ -129,6 +129,7 @@ var aiClustersFetchGraph = cli.Command{
 		},
 		&requestflag.Flag[int64]{
 			Name:      "cluster-id",
+			Usage:     "Filter results by cluster id.",
 			QueryPath: "cluster_id",
 		},
 		&requestflag.Flag[string]{

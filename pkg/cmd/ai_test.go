@@ -15,7 +15,7 @@ func TestAICreateResponseDeprecated(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai", "create-response-deprecated",
-			"--body", "{model: bar, input: bar}",
+			"--response-request", "{model: bar, input: bar}",
 		)
 	})
 

@@ -104,7 +104,7 @@ var portingOrdersPhoneNumberBlocksList = requestflag.WithInnerFlags(cli.Command{
 	"filter": {
 		&requestflag.InnerFlag[string]{
 			Name:       "filter.activation-status",
-			Usage:      "Filter results by activation status",
+			Usage:      "Activation status",
 			InnerField: "activation_status",
 		},
 		&requestflag.InnerFlag[[]string]{
@@ -170,7 +170,7 @@ func handlePortingOrdersPhoneNumberBlocksCreate(ctx context.Context, cmd *cli.Co
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -219,7 +219,7 @@ func handlePortingOrdersPhoneNumberBlocksList(ctx context.Context, cmd *cli.Comm
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -287,7 +287,7 @@ func handlePortingOrdersPhoneNumberBlocksDelete(ctx context.Context, cmd *cli.Co
 		unusedArgs = unusedArgs[1:]
 	}
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(

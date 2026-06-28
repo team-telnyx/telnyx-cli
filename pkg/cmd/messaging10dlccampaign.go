@@ -107,6 +107,7 @@ var messaging10dlcCampaignList = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "brand-id",
+			Usage:     "Filter results by brand id.",
 			Required:  true,
 			QueryPath: "brandId",
 		},

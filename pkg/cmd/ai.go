@@ -20,7 +20,7 @@ var aiCreateResponseDeprecated = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
-			Name:     "body",
+			Name:     "response-request",
 			Required: true,
 			BodyRoot: true,
 		},

@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestTexmlAccountsCallsRetrieve(t *testing.T) {
@@ -70,15 +71,118 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--api-key", "string",
 			"texml:accounts:calls", "calls",
 			"--account-sid", "account_sid",
-			"--params", "{Url: https://www.example.com/texml.xml, ApplicationSid: example-app-sid, AsyncAmd: true, AsyncAmdStatusCallback: https://www.example.com/callback, AsyncAmdStatusCallbackMethod: GET, CallerId: Info, CancelPlaybackOnDetectMessageEnd: false, CancelPlaybackOnMachineDetection: false, CustomHeaders: [{name: X-Custom-Header, value: custom-value}], DeepfakeDetection: Enable, DeepfakeDetectionCallbackMethod: GET, DeepfakeDetectionCallbackUrl: https://www.example.com/deepfake-callback, DetectionMode: Premium, FallbackUrl: https://www.example.com/instructions-fallback.xml, From: '+13120001234', MachineDetection: Enable, MachineDetectionPromptEndTimeout: 5000, MachineDetectionSilenceTimeout: 2000, MachineDetectionSpeechEndThreshold: 2000, MachineDetectionSpeechThreshold: 2000, MachineDetectionTimeout: 5000, MediaEncryption: disabled, PreferredCodecs: 'PCMA,PCMU', Record: false, RecordingChannels: dual, RecordingStatusCallback: https://example.com/recording_status_callback, RecordingStatusCallbackEvent: in-progress completed absent, RecordingStatusCallbackMethod: GET, RecordingTimeout: 5, RecordingTrack: inbound, SendRecordingUrl: false, SipAuthPassword: '1234', SipAuthUsername: user, SipRegion: Canada, StatusCallback: https://www.example.com/statuscallback-listener, StatusCallbackEvent: initiated, StatusCallbackMethod: GET, SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg, SupervisingRole: monitor, Texml: Texml, TimeLimit: 3600, Timeout: 60, To: '+13121230000', Trim: trim-silence, UrlMethod: GET}",
+			"--url", "https://www.example.com/instructions.xml",
+			"--application-sid", "ApplicationSid",
+			"--async-amd=true",
+			"--async-amd-status-callback", "https://www.example.com/callback",
+			"--async-amd-status-callback-method", "GET",
+			"--caller-id", "Info",
+			"--cancel-playback-on-detect-message-end=false",
+			"--cancel-playback-on-machine-detection=false",
+			"--custom-header", "{name: X-Custom-Header, value: custom-value}",
+			"--deepfake-detection", "Enable",
+			"--deepfake-detection-callback-method", "GET",
+			"--deepfake-detection-callback-url", "https://www.example.com/deepfake-callback",
+			"--detection-mode", "Premium",
+			"--fallback-url", "https://www.example.com/instructions-fallback.xml",
+			"--from", "+16175551212",
+			"--machine-detection", "Enable",
+			"--machine-detection-prompt-end-timeout", "5000",
+			"--machine-detection-silence-timeout", "2000",
+			"--machine-detection-speech-end-threshold", "2000",
+			"--machine-detection-speech-threshold", "2000",
+			"--machine-detection-timeout", "5000",
+			"--media-encryption", "disabled",
+			"--preferred-codecs", "PCMA,PCMU",
+			"--record=false",
+			"--recording-channels", "dual",
+			"--recording-status-callback", "https://example.com/recording_status_callback",
+			"--recording-status-callback-event", "in-progress completed absent",
+			"--recording-status-callback-method", "GET",
+			"--recording-timeout", "5",
+			"--recording-track", "inbound",
+			"--send-recording-url=false",
+			"--sip-auth-password", "1234",
+			"--sip-auth-username", "user",
+			"--sip-region", "Canada",
+			"--status-callback", "https://www.example.com/callback",
+			"--status-callback-event", "initiated",
+			"--status-callback-method", "GET",
+			"--supervise-call-sid", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
+			"--supervising-role", "monitor",
+			"--texml", "Texml",
+			"--time-limit", "3600",
+			"--timeout-seconds", "60",
+			"--to", "+16175551212",
+			"--trim", "trim-silence",
+			"--url-method", "GET",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(texmlAccountsCallsCalls)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"texml:accounts:calls", "calls",
+			"--account-sid", "account_sid",
+			"--url", "https://www.example.com/instructions.xml",
+			"--application-sid", "ApplicationSid",
+			"--async-amd=true",
+			"--async-amd-status-callback", "https://www.example.com/callback",
+			"--async-amd-status-callback-method", "GET",
+			"--caller-id", "Info",
+			"--cancel-playback-on-detect-message-end=false",
+			"--cancel-playback-on-machine-detection=false",
+			"--custom-header.name", "X-Custom-Header",
+			"--custom-header.value", "custom-value",
+			"--deepfake-detection", "Enable",
+			"--deepfake-detection-callback-method", "GET",
+			"--deepfake-detection-callback-url", "https://www.example.com/deepfake-callback",
+			"--detection-mode", "Premium",
+			"--fallback-url", "https://www.example.com/instructions-fallback.xml",
+			"--from", "+16175551212",
+			"--machine-detection", "Enable",
+			"--machine-detection-prompt-end-timeout", "5000",
+			"--machine-detection-silence-timeout", "2000",
+			"--machine-detection-speech-end-threshold", "2000",
+			"--machine-detection-speech-threshold", "2000",
+			"--machine-detection-timeout", "5000",
+			"--media-encryption", "disabled",
+			"--preferred-codecs", "PCMA,PCMU",
+			"--record=false",
+			"--recording-channels", "dual",
+			"--recording-status-callback", "https://example.com/recording_status_callback",
+			"--recording-status-callback-event", "in-progress completed absent",
+			"--recording-status-callback-method", "GET",
+			"--recording-timeout", "5",
+			"--recording-track", "inbound",
+			"--send-recording-url=false",
+			"--sip-auth-password", "1234",
+			"--sip-auth-username", "user",
+			"--sip-region", "Canada",
+			"--status-callback", "https://www.example.com/callback",
+			"--status-callback-event", "initiated",
+			"--status-callback-method", "GET",
+			"--supervise-call-sid", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
+			"--supervising-role", "monitor",
+			"--texml", "Texml",
+			"--time-limit", "3600",
+			"--timeout-seconds", "60",
+			"--to", "+16175551212",
+			"--trim", "trim-silence",
+			"--url-method", "GET",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"Url: https://www.example.com/texml.xml\n" +
-			"ApplicationSid: example-app-sid\n" +
+			"Url: https://www.example.com/instructions.xml\n" +
+			"ApplicationSid: ApplicationSid\n" +
 			"AsyncAmd: true\n" +
 			"AsyncAmdStatusCallback: https://www.example.com/callback\n" +
 			"AsyncAmdStatusCallbackMethod: GET\n" +
@@ -93,7 +197,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"DeepfakeDetectionCallbackUrl: https://www.example.com/deepfake-callback\n" +
 			"DetectionMode: Premium\n" +
 			"FallbackUrl: https://www.example.com/instructions-fallback.xml\n" +
-			"From: '+13120001234'\n" +
+			"From: '+16175551212'\n" +
 			"MachineDetection: Enable\n" +
 			"MachineDetectionPromptEndTimeout: 5000\n" +
 			"MachineDetectionSilenceTimeout: 2000\n" +
@@ -113,7 +217,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"SipAuthPassword: '1234'\n" +
 			"SipAuthUsername: user\n" +
 			"SipRegion: Canada\n" +
-			"StatusCallback: https://www.example.com/statuscallback-listener\n" +
+			"StatusCallback: https://www.example.com/callback\n" +
 			"StatusCallbackEvent: initiated\n" +
 			"StatusCallbackMethod: GET\n" +
 			"SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg\n" +
@@ -121,7 +225,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"Texml: Texml\n" +
 			"TimeLimit: 3600\n" +
 			"Timeout: 60\n" +
-			"To: '+13121230000'\n" +
+			"To: '+16175551212'\n" +
 			"Trim: trim-silence\n" +
 			"UrlMethod: GET\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(

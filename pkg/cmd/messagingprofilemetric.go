@@ -21,7 +21,7 @@ var messagingProfileMetricsList = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "time-frame",
-			Usage:     "The time frame for metrics.",
+			Usage:     "The time frame for metrics aggregation.",
 			Default:   "24h",
 			QueryPath: "time_frame",
 		},

@@ -1867,6 +1867,7 @@ func init() {
 					&portingLoaConfigurationsList,
 					&portingLoaConfigurationsDelete,
 					&portingLoaConfigurationsPreview,
+					&portingLoaConfigurationsPreview0,
 					&portingLoaConfigurationsPreview1,
 				},
 			},
@@ -2158,6 +2159,15 @@ func init() {
 					&reportsMdrUsageReportsList,
 					&reportsMdrUsageReportsDelete,
 					&reportsMdrUsageReportsFetchSync,
+				},
+			},
+			{
+				Name:     "speech-to-text",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&speechToTextListProviders,
+					&speechToTextRetrieveTranscription,
 				},
 			},
 			{
@@ -2484,6 +2494,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&texmlInitiateAICall,
 					&texmlSecrets,
 				},
 			},
@@ -2613,8 +2624,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&textToSpeechGenerate,
+					&textToSpeechGenerateSpeech,
 					&textToSpeechListVoices,
+					&textToSpeechRetrieveSpeech,
 				},
 			},
 			{
@@ -3161,6 +3173,19 @@ func init() {
 				},
 			},
 			{
+				Name:     "traffic-policy-profiles",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&trafficPolicyProfilesCreate,
+					&trafficPolicyProfilesRetrieve,
+					&trafficPolicyProfilesUpdate,
+					&trafficPolicyProfilesList,
+					&trafficPolicyProfilesDelete,
+					&trafficPolicyProfilesListServices,
+				},
+			},
+			{
 				Name:     "enterprises",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3170,6 +3195,7 @@ func init() {
 					&enterprisesUpdate,
 					&enterprisesList,
 					&enterprisesDelete,
+					&enterprisesBrandedCalling,
 				},
 			},
 			{
@@ -3192,6 +3218,35 @@ func init() {
 					&enterprisesReputationNumbersList,
 					&enterprisesReputationNumbersAssociate,
 					&enterprisesReputationNumbersDisassociate,
+					&enterprisesReputationNumbersRefresh,
+				},
+			},
+			{
+				Name:     "enterprises:reputation:loa",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesReputationLoaUpdate,
+					&enterprisesReputationLoaRender,
+				},
+			},
+			{
+				Name:     "enterprises:reputation:remediation",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesReputationRemediationCreate,
+					&enterprisesReputationRemediationRetrieve,
+					&enterprisesReputationRemediationList,
+				},
+			},
+			{
+				Name:     "enterprises:dir",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesDirCreate,
+					&enterprisesDirList,
 				},
 			},
 			{
@@ -3205,11 +3260,37 @@ func init() {
 				},
 			},
 			{
+				Name:     "terms-of-service",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&termsOfServiceRetrieveInfo,
+					&termsOfServiceRetrieveStatus,
+				},
+			},
+			{
 				Name:     "terms-of-service:number-reputation",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&termsOfServiceNumberReputationAgree,
+				},
+			},
+			{
+				Name:     "terms-of-service:agreements",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&termsOfServiceAgreementsRetrieve,
+					&termsOfServiceAgreementsList,
+				},
+			},
+			{
+				Name:     "terms-of-service:branded-calling",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&termsOfServiceBrandedCallingAgree,
 				},
 			},
 			{
@@ -3245,6 +3326,15 @@ func init() {
 				},
 			},
 			{
+				Name:     "voice-sdk-call-reports",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&voiceSDKCallReportsRetrieve,
+					&voiceSDKCallReportsList,
+				},
+			},
+			{
 				Name:     "sip-registration-status",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3253,20 +3343,65 @@ func init() {
 				},
 			},
 			{
-				Name:     "speech-to-text",
+				Name:     "call-reasons",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&speechToTextListProviders,
+					&callReasonsList,
+					&callReasonsValidate,
 				},
 			},
 			{
-				Name:     "voice-sdk-call-reports",
+				Name:     "dir",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&voiceSDKCallReportsRetrieve,
-					&voiceSDKCallReportsList,
+					&dirRetrieve,
+					&dirUpdate,
+					&dirList,
+					&dirDelete,
+					&dirListDocumentTypes,
+					&dirListInfringementClaims,
+					&dirNewLoa,
+					&dirSubmit,
+					&dirUpdateInfringement,
+				},
+			},
+			{
+				Name:     "dir:comments",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&dirCommentsCreate,
+					&dirCommentsList,
+				},
+			},
+			{
+				Name:     "dir:phone-number-batches",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&dirPhoneNumberBatchesRetrieve,
+					&dirPhoneNumberBatchesList,
+				},
+			},
+			{
+				Name:     "dir:phone-numbers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&dirPhoneNumbersList,
+					&dirPhoneNumbersAdd,
+					&dirPhoneNumbersRemove,
+				},
+			},
+			{
+				Name:     "infringement-claims",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&infringementClaimsRetrieve,
+					&infringementClaimsContest,
 				},
 			},
 			{

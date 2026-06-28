@@ -8,12 +8,14 @@ import (
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-go/v4"
+	"github.com/team-telnyx/telnyx-go/v4/option"
+	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
 
 var termsOfServiceNumberReputationAgree = cli.Command{
 	Name:            "agree",
-	Usage:           "Accept the Terms of Service for the Number Reputation product. Must be called\nbefore using Number Reputation endpoints.",
+	Usage:           "Records the authenticated user's agreement to the current Phone Number\nReputation ToS. No body required. Idempotent.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleTermsOfServiceNumberReputationAgree,
@@ -25,7 +27,7 @@ func handleTermsOfServiceNumberReputationAgree(ctx context.Context, cmd *cli.Com
 	unusedArgs := cmd.Args().Slice()
 
 	if len(unusedArgs) > 0 {
-		return fmt.Errorf("unexpected extra arguments: %v", unusedArgs)
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
 	options, err := flagOptions(
@@ -39,5 +41,22 @@ func handleTermsOfServiceNumberReputationAgree(ctx context.Context, cmd *cli.Com
 		return err
 	}
 
-	return client.TermsOfService.NumberReputation.Agree(ctx, options...)
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.TermsOfService.NumberReputation.Agree(ctx, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "terms-of-service:number-reputation agree",
+		Transform:      transform,
+	})
 }

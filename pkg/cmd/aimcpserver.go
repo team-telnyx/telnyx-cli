@@ -112,20 +112,24 @@ var aiMcpServersList = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
+			Usage:     "Page number to retrieve (1-based).",
 			Default:   1,
 			QueryPath: "page[number]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
+			Usage:     "Number of items to return per page.",
 			Default:   20,
 			QueryPath: "page[size]",
 		},
 		&requestflag.Flag[string]{
 			Name:      "type",
+			Usage:     "Filter results by type.",
 			QueryPath: "type",
 		},
 		&requestflag.Flag[string]{
 			Name:      "url",
+			Usage:     "Filter results by url.",
 			QueryPath: "url",
 		},
 		&requestflag.Flag[int64]{

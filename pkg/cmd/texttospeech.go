@@ -14,8 +14,8 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
-	Name:    "generate",
+var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
+	Name:    "generate-speech",
 	Usage:   "Generate synthesized speech audio from text input. Returns audio in the\nrequested format (binary audio stream, base64-encoded JSON, or an audio URL for\nlater retrieval).",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -102,7 +102,7 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "xai",
 		},
 	},
-	Action:          handleTextToSpeechGenerate,
+	Action:          handleTextToSpeechGenerateSpeech,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
 	"aws": {
@@ -333,7 +333,54 @@ var textToSpeechListVoices = cli.Command{
 	HideHelpCommand: true,
 }
 
-func handleTextToSpeechGenerate(ctx context.Context, cmd *cli.Command) error {
+var textToSpeechRetrieveSpeech = cli.Command{
+	Name:    "retrieve-speech",
+	Usage:   "Open a WebSocket connection to stream text and receive synthesized audio in real\ntime. Authentication is provided via the standard\n`Authorization: Bearer <API_KEY>` header. Send JSON frames with text to\nsynthesize; receive JSON frames containing base64-encoded audio chunks.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "audio-format",
+			Usage:     "Audio output format override. Supported for Telnyx models. `pcm` and `wav` are available for `Natural`/`NaturalHD` models. The `Ultra` model outputs PCM at 24kHz s16le or MP3 at 128kbps 24kHz.",
+			QueryPath: "audio_format",
+		},
+		&requestflag.Flag[bool]{
+			Name:      "disable-cache",
+			Usage:     "When `true`, bypass the audio cache and generate fresh audio.",
+			Default:   false,
+			QueryPath: "disable_cache",
+		},
+		&requestflag.Flag[string]{
+			Name:      "model-id",
+			Usage:     "Model identifier for the chosen provider. Examples: `Natural`, `NaturalHD`, `Ultra` (Telnyx); `Polly.Generative` (AWS).",
+			QueryPath: "model_id",
+		},
+		&requestflag.Flag[string]{
+			Name:      "provider",
+			Usage:     "TTS provider. Defaults to `telnyx` if not specified. Ignored when `voice` is provided.",
+			Default:   "telnyx",
+			QueryPath: "provider",
+		},
+		&requestflag.Flag[string]{
+			Name:      "socket-id",
+			Usage:     "Client-provided socket identifier for tracking. If not provided, one is generated server-side.",
+			QueryPath: "socket_id",
+		},
+		&requestflag.Flag[string]{
+			Name:      "voice",
+			Usage:     "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id` (e.g. `telnyx.NaturalHD.Telnyx_Alloy`, `Telnyx.Ultra.<voice_id>`, or `azure.en-US-AvaMultilingualNeural`). When provided, the `provider`, `model_id`, and `voice_id` are extracted automatically. Takes precedence over individual `provider`/`model_id`/`voice_id` parameters.",
+			QueryPath: "voice",
+		},
+		&requestflag.Flag[string]{
+			Name:      "voice-id",
+			Usage:     "Voice identifier for the chosen provider.",
+			QueryPath: "voice_id",
+		},
+	},
+	Action:          handleTextToSpeechRetrieveSpeech,
+	HideHelpCommand: true,
+}
+
+func handleTextToSpeechGenerateSpeech(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -352,11 +399,11 @@ func handleTextToSpeechGenerate(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
-	params := telnyx.TextToSpeechGenerateParams{}
+	params := telnyx.TextToSpeechGenerateSpeechParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.TextToSpeech.Generate(ctx, params, options...)
+	_, err = client.TextToSpeech.GenerateSpeech(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -369,7 +416,7 @@ func handleTextToSpeechGenerate(ctx context.Context, cmd *cli.Command) error {
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "text-to-speech generate",
+		Title:          "text-to-speech generate-speech",
 		Transform:      transform,
 	})
 }
@@ -413,4 +460,28 @@ func handleTextToSpeechListVoices(ctx context.Context, cmd *cli.Command) error {
 		Title:          "text-to-speech list-voices",
 		Transform:      transform,
 	})
+}
+
+func handleTextToSpeechRetrieveSpeech(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.TextToSpeechGetSpeechParams{}
+
+	return client.TextToSpeech.GetSpeech(ctx, params, options...)
 }

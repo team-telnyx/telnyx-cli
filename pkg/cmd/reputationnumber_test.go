@@ -15,7 +15,7 @@ func TestReputationNumbersRetrieve(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"reputation:numbers", "retrieve",
-			"--phone-number", "+16035551234",
+			"--phone-number", "+19493253498",
 			"--fresh=true",
 		)
 	})
@@ -29,9 +29,11 @@ func TestReputationNumbersList(t *testing.T) {
 			"--api-key", "string",
 			"reputation:numbers", "list",
 			"--max-items", "10",
+			"--filter-enterprise-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--filter-phone-number-contains", "+16035551234",
+			"--filter-phone-number-eq", "+16035551234",
 			"--page-number", "1",
-			"--page-size", "1",
-			"--phone-number", "+16035551234",
+			"--page-size", "20",
 		)
 	})
 }
@@ -43,7 +45,7 @@ func TestReputationNumbersDelete(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"reputation:numbers", "delete",
-			"--phone-number", "+16035551234",
+			"--phone-number", "+19493253498",
 		)
 	})
 }

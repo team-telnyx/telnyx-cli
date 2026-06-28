@@ -21,26 +21,29 @@ var reportsCdrUsageReportsFetchSync = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "aggregation-type",
-			Usage:     `Allowed values: "NO_AGGREGATION", "CONNECTION", "TAG", "BILLING_GROUP".`,
+			Usage:     "Type of aggregation to apply to the results.",
 			Required:  true,
 			QueryPath: "aggregation_type",
 		},
 		&requestflag.Flag[string]{
 			Name:      "product-breakdown",
-			Usage:     `Allowed values: "NO_BREAKDOWN", "DID_VS_TOLL_FREE", "COUNTRY", "DID_VS_TOLL_FREE_PER_COUNTRY".`,
+			Usage:     "Filter results by product breakdown.",
 			Required:  true,
 			QueryPath: "product_breakdown",
 		},
 		&requestflag.Flag[[]float64]{
 			Name:      "connection",
+			Usage:     "Filter results by connection.",
 			QueryPath: "connections",
 		},
 		&requestflag.Flag[any]{
 			Name:      "end-date",
+			Usage:     "End of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "end_date",
 		},
 		&requestflag.Flag[any]{
 			Name:      "start-date",
+			Usage:     "Start of the date range filter (inclusive, ISO 8601).",
 			QueryPath: "start_date",
 		},
 	},

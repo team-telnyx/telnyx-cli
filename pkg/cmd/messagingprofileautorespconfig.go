@@ -121,6 +121,7 @@ var messagingProfilesAutorespConfigsList = requestflag.WithInnerFlags(cli.Comman
 		},
 		&requestflag.Flag[string]{
 			Name:      "country-code",
+			Usage:     "Filter results by country code.",
 			QueryPath: "country_code",
 		},
 		&requestflag.Flag[map[string]any]{

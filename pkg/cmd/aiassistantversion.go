@@ -31,6 +31,7 @@ var aiAssistantsVersionsRetrieve = cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:      "include-mcp-servers",
+			Usage:     "Whether to include MCP servers in the response.",
 			QueryPath: "include_mcp_servers",
 		},
 	},
