@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.18.0...v0.18.0) (2026-06-28)
+
+
+### Bug Fixes
+
+* remove staging replace directive from go.mod + fix Release-As parsing ([#32](https://github.com/team-telnyx/telnyx-cli/issues/32)) ([aa6e489](https://github.com/team-telnyx/telnyx-cli/commit/aa6e4896e3de77b2fb2a056e4f97fa68f7133b96))
+
 ## [0.18.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.17.0...v0.18.0) (2026-06-28)
 
 
