@@ -3087,6 +3087,7 @@ func init() {
 					&whatsappPhoneNumbersList,
 					&whatsappPhoneNumbersDelete,
 					&whatsappPhoneNumbersResendVerification,
+					&whatsappPhoneNumbersRetrieveConversationWindow,
 					&whatsappPhoneNumbersVerify,
 				},
 			},
