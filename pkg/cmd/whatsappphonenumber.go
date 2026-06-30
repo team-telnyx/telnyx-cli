@@ -51,6 +51,27 @@ var whatsappPhoneNumbersDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
+var whatsappPhoneNumbersGetConversationWindow = cli.Command{
+	Name:    "get-conversation-window",
+	Usage:   "Returns whether the 24-hour conversation window is currently open for a given\nsource/destination pair. If window_active is false, only template messages may\nbe sent.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
+		},
+		&requestflag.Flag[string]{
+			Name:      "destination-number",
+			Usage:     "Destination phone number in E.164 format",
+			Required:  true,
+			QueryPath: "destination_number",
+		},
+	},
+	Action:          handleWhatsappPhoneNumbersGetConversationWindow,
+	HideHelpCommand: true,
+}
+
 var whatsappPhoneNumbersResendVerification = cli.Command{
 	Name:    "resend-verification",
 	Usage:   "Resend verification code",
@@ -170,6 +191,55 @@ func handleWhatsappPhoneNumbersDelete(ctx context.Context, cmd *cli.Command) err
 	}
 
 	return client.Whatsapp.PhoneNumbers.Delete(ctx, cmd.Value("phone-number").(string), options...)
+}
+
+func handleWhatsappPhoneNumbersGetConversationWindow(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
+		cmd.Set("phone-number", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.WhatsappPhoneNumberGetConversationWindowParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Whatsapp.PhoneNumbers.GetConversationWindow(
+		ctx,
+		cmd.Value("phone-number").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "whatsapp:phone-numbers get-conversation-window",
+		Transform:      transform,
+	})
 }
 
 func handleWhatsappPhoneNumbersResendVerification(ctx context.Context, cmd *cli.Command) error {

@@ -3076,6 +3076,7 @@ func init() {
 				Commands: []*cli.Command{
 					&whatsappPhoneNumbersList,
 					&whatsappPhoneNumbersDelete,
+					&whatsappPhoneNumbersGetConversationWindow,
 					&whatsappPhoneNumbersResendVerification,
 					&whatsappPhoneNumbersVerify,
 				},
