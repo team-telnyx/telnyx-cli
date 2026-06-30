@@ -14,23 +14,32 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var aiCreateResponse = cli.Command{
-	Name:    "create-response",
+var aiCreateResponseDeprecated = cli.Command{
+	Name:    "create-response-deprecated",
 	Usage:   "**Deprecated**: Use `POST /v2/ai/openai/responses` instead. This endpoint is\ncompatible with the\n[OpenAI Responses API](https://developers.openai.com/api/reference/responses/overview)\nand may be used with the OpenAI JS or Python SDK. Response id parameter is not\nsupported at the moment. Use the `conversation` parameter with a Telnyx\nConversation ID to leverage persistent conversations.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
-			Name:     "input",
+			Name:     "body",
 			Required: true,
 			BodyRoot: true,
 		},
 	},
-	Action:          handleAICreateResponse,
+	Action:          handleAICreateResponseDeprecated,
 	HideHelpCommand: true,
 }
 
-var aiListConversationHistories = cli.Command{
-	Name:    "list-conversation-histories",
+var aiRetrieveModels = cli.Command{
+	Name:            "retrieve-models",
+	Usage:           "**Deprecated**: Use `GET /v2/ai/openai/models` instead.",
+	Suggest:         true,
+	Flags:           []cli.Flag{},
+	Action:          handleAIRetrieveModels,
+	HideHelpCommand: true,
+}
+
+var aiSearchConversationHistories = cli.Command{
+	Name:    "search-conversation-histories",
 	Usage:   "Performs semantic vector search across conversation history records.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -103,21 +112,8 @@ var aiListConversationHistories = cli.Command{
 			Usage:     "Restrict search to a specific region. When omitted, all regions are queried in parallel (fan-out) and results are merged by similarity score.",
 			QueryPath: "region",
 		},
-		&requestflag.Flag[int64]{
-			Name:  "max-items",
-			Usage: "The maximum number of items to return (use -1 for unlimited).",
-		},
 	},
-	Action:          handleAIListConversationHistories,
-	HideHelpCommand: true,
-}
-
-var aiRetrieveModels = cli.Command{
-	Name:            "retrieve-models",
-	Usage:           "**Deprecated**: Use `GET /v2/ai/openai/models` instead.",
-	Suggest:         true,
-	Flags:           []cli.Flag{},
-	Action:          handleAIRetrieveModels,
+	Action:          handleAISearchConversationHistories,
 	HideHelpCommand: true,
 }
 
@@ -148,7 +144,7 @@ var aiSummarize = cli.Command{
 	HideHelpCommand: true,
 }
 
-func handleAICreateResponse(ctx context.Context, cmd *cli.Command) error {
+func handleAICreateResponseDeprecated(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -167,11 +163,11 @@ func handleAICreateResponse(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
-	params := telnyx.AINewResponseParams{}
+	params := telnyx.AINewResponseDeprecatedParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.NewResponse(ctx, params, options...)
+	_, err = client.AI.NewResponseDeprecated(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -184,64 +180,9 @@ func handleAICreateResponse(ctx context.Context, cmd *cli.Command) error {
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "ai create-response",
+		Title:          "ai create-response-deprecated",
 		Transform:      transform,
 	})
-}
-
-func handleAIListConversationHistories(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	params := telnyx.AIListConversationHistoriesParams{}
-
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	if format == "raw" {
-		var res []byte
-		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.AI.ListConversationHistories(ctx, params, options...)
-		if err != nil {
-			return err
-		}
-		obj := gjson.ParseBytes(res)
-		return ShowJSON(obj, ShowJSONOpts{
-			ExplicitFormat: explicitFormat,
-			Format:         format,
-			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "ai list-conversation-histories",
-			Transform:      transform,
-		})
-	} else {
-		iter := client.AI.ListConversationHistoriesAutoPaging(ctx, params, options...)
-		maxItems := int64(-1)
-		if cmd.IsSet("max-items") {
-			maxItems = cmd.Value("max-items").(int64)
-		}
-		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
-			ExplicitFormat: explicitFormat,
-			Format:         format,
-			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "ai list-conversation-histories",
-			Transform:      transform,
-		})
-	}
 }
 
 func handleAIRetrieveModels(ctx context.Context, cmd *cli.Command) error {
@@ -279,6 +220,47 @@ func handleAIRetrieveModels(ctx context.Context, cmd *cli.Command) error {
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai retrieve-models",
+		Transform:      transform,
+	})
+}
+
+func handleAISearchConversationHistories(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.AISearchConversationHistoriesParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.AI.SearchConversationHistories(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "ai search-conversation-histories",
 		Transform:      transform,
 	})
 }

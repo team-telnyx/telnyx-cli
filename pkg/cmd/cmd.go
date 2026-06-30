@@ -280,9 +280,9 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&aiCreateResponse,
-					&aiListConversationHistories,
+					&aiCreateResponseDeprecated,
 					&aiRetrieveModels,
+					&aiSearchConversationHistories,
 					&aiSummarize,
 				},
 			},
@@ -2163,14 +2163,6 @@ func init() {
 				},
 			},
 			{
-				Name:     "speech-to-text",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&speechToTextListProviders,
-				},
-			},
-			{
 				Name:     "requirement-groups",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -2624,8 +2616,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&textToSpeechCreateSpeech,
-					&textToSpeechGenerateSpeech,
+					&textToSpeechGenerate,
 					&textToSpeechListVoices,
 				},
 			},
@@ -3307,43 +3298,6 @@ func init() {
 				},
 			},
 			{
-				Name:     "uac-connections",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&uacConnectionsCreate,
-					&uacConnectionsRetrieve,
-					&uacConnectionsUpdate,
-					&uacConnectionsList,
-					&uacConnectionsDelete,
-				},
-			},
-			{
-				Name:     "uac-connections:actions",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&uacConnectionsActionsCheckRegistrationStatus,
-				},
-			},
-			{
-				Name:     "voice-sdk-call-reports",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&voiceSDKCallReportsRetrieve,
-					&voiceSDKCallReportsList,
-				},
-			},
-			{
-				Name:     "sip-registration-status",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&sipRegistrationStatusRetrieve,
-				},
-			},
-			{
 				Name:     "call-reasons",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3411,8 +3365,8 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&dirVerifyEmailConfirm,
-					&dirVerifyEmailSend,
+					&dirVerifyEmailConfirmCode,
+					&dirVerifyEmailSendCode,
 					&dirVerifyEmailStatus,
 				},
 			},
@@ -3423,6 +3377,51 @@ func init() {
 				Commands: []*cli.Command{
 					&infringementClaimsRetrieve,
 					&infringementClaimsContest,
+				},
+			},
+			{
+				Name:     "sip-registration-status",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&sipRegistrationStatusRetrieve,
+				},
+			},
+			{
+				Name:     "speech-to-text",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&speechToTextListProviders,
+				},
+			},
+			{
+				Name:     "uac-connections",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&uacConnectionsCreate,
+					&uacConnectionsRetrieve,
+					&uacConnectionsUpdate,
+					&uacConnectionsList,
+					&uacConnectionsDelete,
+				},
+			},
+			{
+				Name:     "uac-connections:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&uacConnectionsActionsCheckRegistrationStatus,
+				},
+			},
+			{
+				Name:     "voice-sdk-call-reports",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&voiceSDKCallReportsRetrieve,
+					&voiceSDKCallReportsList,
 				},
 			},
 			{

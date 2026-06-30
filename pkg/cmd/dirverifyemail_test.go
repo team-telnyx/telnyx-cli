@@ -8,13 +8,13 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestDirVerifyEmailConfirm(t *testing.T) {
+func TestDirVerifyEmailConfirmCode(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"dir:verify-email", "confirm",
+			"dir:verify-email", "confirm-code",
 			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
 			"--code", "482915",
 		)
@@ -26,19 +26,19 @@ func TestDirVerifyEmailConfirm(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"dir:verify-email", "confirm",
+			"dir:verify-email", "confirm-code",
 			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
 		)
 	})
 }
 
-func TestDirVerifyEmailSend(t *testing.T) {
+func TestDirVerifyEmailSendCode(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"dir:verify-email", "send",
+			"dir:verify-email", "send-code",
 			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
 		)
 	})

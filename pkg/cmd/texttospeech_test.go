@@ -9,13 +9,13 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
-func TestTextToSpeechCreateSpeech(t *testing.T) {
+func TestTextToSpeechGenerate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"text-to-speech", "create-speech",
+			"text-to-speech", "generate",
 			"--aws", "{language_code: language_code, lexicon_names: [string], output_format: output_format, sample_rate: sample_rate, text_type: text}",
 			"--azure", "{api_key: api_key, deployment_id: deployment_id, effect: effect, gender: gender, language_code: language_code, output_format: output_format, region: region, text_type: text}",
 			"--disable-cache=true",
@@ -37,13 +37,13 @@ func TestTextToSpeechCreateSpeech(t *testing.T) {
 
 	t.Run("inner flags", func(t *testing.T) {
 		// Check that inner flags have been set up correctly
-		requestflag.CheckInnerFlags(textToSpeechCreateSpeech)
+		requestflag.CheckInnerFlags(textToSpeechGenerate)
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"text-to-speech", "create-speech",
+			"text-to-speech", "generate",
 			"--aws.language-code", "language_code",
 			"--aws.lexicon-names", "[string]",
 			"--aws.output-format", "output_format",
@@ -156,25 +156,7 @@ func TestTextToSpeechCreateSpeech(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"text-to-speech", "create-speech",
-		)
-	})
-}
-
-func TestTextToSpeechGenerateSpeech(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"text-to-speech", "generate-speech",
-			"--audio-format", "pcm",
-			"--disable-cache=true",
-			"--model-id", "model_id",
-			"--provider", "aws",
-			"--socket-id", "socket_id",
-			"--voice", "voice",
-			"--voice-id", "voice_id",
+			"text-to-speech", "generate",
 		)
 	})
 }

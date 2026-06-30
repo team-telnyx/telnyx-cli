@@ -14,8 +14,8 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var dirVerifyEmailConfirm = cli.Command{
-	Name:    "confirm",
+var dirVerifyEmailConfirmCode = cli.Command{
+	Name:    "confirm-code",
 	Usage:   "Submit the 6-digit code that was emailed to the DIR's authorizer email. On\nsuccess the authorizer email is marked verified.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -31,12 +31,12 @@ var dirVerifyEmailConfirm = cli.Command{
 			BodyPath: "code",
 		},
 	},
-	Action:          handleDirVerifyEmailConfirm,
+	Action:          handleDirVerifyEmailConfirmCode,
 	HideHelpCommand: true,
 }
 
-var dirVerifyEmailSend = cli.Command{
-	Name:    "send",
+var dirVerifyEmailSendCode = cli.Command{
+	Name:    "send-code",
 	Usage:   "Email a 6-digit code to the DIR's authorizer email to confirm ownership of that\naddress.",
 	Suggest: true,
 	Flags: []cli.Flag{
@@ -46,7 +46,7 @@ var dirVerifyEmailSend = cli.Command{
 			PathParam: "dir_id",
 		},
 	},
-	Action:          handleDirVerifyEmailSend,
+	Action:          handleDirVerifyEmailSendCode,
 	HideHelpCommand: true,
 }
 
@@ -65,7 +65,7 @@ var dirVerifyEmailStatus = cli.Command{
 	HideHelpCommand: true,
 }
 
-func handleDirVerifyEmailConfirm(ctx context.Context, cmd *cli.Command) error {
+func handleDirVerifyEmailConfirmCode(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
@@ -87,11 +87,11 @@ func handleDirVerifyEmailConfirm(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
-	params := telnyx.DirVerifyEmailConfirmParams{}
+	params := telnyx.DirVerifyEmailConfirmCodeParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Dir.VerifyEmail.Confirm(
+	_, err = client.Dir.VerifyEmail.ConfirmCode(
 		ctx,
 		cmd.Value("dir-id").(string),
 		params,
@@ -109,12 +109,12 @@ func handleDirVerifyEmailConfirm(ctx context.Context, cmd *cli.Command) error {
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "dir:verify-email confirm",
+		Title:          "dir:verify-email confirm-code",
 		Transform:      transform,
 	})
 }
 
-func handleDirVerifyEmailSend(ctx context.Context, cmd *cli.Command) error {
+func handleDirVerifyEmailSendCode(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
@@ -138,7 +138,7 @@ func handleDirVerifyEmailSend(ctx context.Context, cmd *cli.Command) error {
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Dir.VerifyEmail.Send(ctx, cmd.Value("dir-id").(string), options...)
+	_, err = client.Dir.VerifyEmail.SendCode(ctx, cmd.Value("dir-id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -151,7 +151,7 @@ func handleDirVerifyEmailSend(ctx context.Context, cmd *cli.Command) error {
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "dir:verify-email send",
+		Title:          "dir:verify-email send-code",
 		Transform:      transform,
 	})
 }
