@@ -3397,6 +3397,26 @@ func init() {
 				},
 			},
 			{
+				Name:     "dir:references",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&dirReferencesCreate,
+					&dirReferencesUpdate,
+					&dirReferencesList,
+				},
+			},
+			{
+				Name:     "dir:verify-email",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&dirVerifyEmailCreate,
+					&dirVerifyEmailList,
+					&dirVerifyEmailConfirm,
+				},
+			},
+			{
 				Name:     "infringement-claims",
 				Category: "API RESOURCE",
 				Suggest:  true,
