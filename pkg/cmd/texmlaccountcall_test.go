@@ -106,7 +106,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--sip-auth-username", "user",
 			"--sip-region", "Canada",
 			"--status-callback", "https://www.example.com/callback",
-			"--status-callback-event", "initiated",
+			"--status-callback-event", "initiated answered",
 			"--status-callback-method", "GET",
 			"--supervise-call-sid", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 			"--supervising-role", "monitor",
@@ -165,7 +165,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--sip-auth-username", "user",
 			"--sip-region", "Canada",
 			"--status-callback", "https://www.example.com/callback",
-			"--status-callback-event", "initiated",
+			"--status-callback-event", "initiated answered",
 			"--status-callback-method", "GET",
 			"--supervise-call-sid", "v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg",
 			"--supervising-role", "monitor",
@@ -218,7 +218,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"SipAuthUsername: user\n" +
 			"SipRegion: Canada\n" +
 			"StatusCallback: https://www.example.com/callback\n" +
-			"StatusCallbackEvent: initiated\n" +
+			"StatusCallbackEvent: initiated answered\n" +
 			"StatusCallbackMethod: GET\n" +
 			"SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg\n" +
 			"SupervisingRole: monitor\n" +
