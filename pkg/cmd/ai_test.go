@@ -8,14 +8,14 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestAICreateResponseDeprecated(t *testing.T) {
+func TestAICreateResponse(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"ai", "create-response-deprecated",
-			"--body", "{model: bar, input: bar}",
+			"ai", "create-response",
+			"--input", "{model: bar, input: bar}",
 		)
 	})
 
@@ -27,29 +27,19 @@ func TestAICreateResponseDeprecated(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"ai", "create-response-deprecated",
+			"ai", "create-response",
 		)
 	})
 }
 
-func TestAIRetrieveModels(t *testing.T) {
+func TestAIListConversationHistories(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"ai", "retrieve-models",
-		)
-	})
-}
-
-func TestAISearchConversationHistories(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"ai", "search-conversation-histories",
+			"ai", "list-conversation-histories",
+			"--max-items", "10",
 			"--q", "customer called about billing issue",
 			"--filter-ingested-at-gte", "'2026-01-01T00:00:00Z'",
 			"--filter-ingested-at-lte", "'2026-12-31T23:59:59Z'",
@@ -63,6 +53,17 @@ func TestAISearchConversationHistories(t *testing.T) {
 			"--page-number", "1",
 			"--page-size", "10",
 			"--region", "USA",
+		)
+	})
+}
+
+func TestAIRetrieveModels(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai", "retrieve-models",
 		)
 	})
 }
