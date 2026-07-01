@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.19.0 (2026-07-01)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.18.0...v0.19.0)
+
+### Bug Fixes
+
+* bump Go SDK from v4.79.0 to v4.82.0 ([bf10423](https://github.com/team-telnyx/telnyx-cli/commit/bf104234af38d111d8fb60c13c91062a836b2e70))
+
+
+### Chores
+
+* promote from staging 12ad1fe ([e3ac0a7](https://github.com/team-telnyx/telnyx-cli/commit/e3ac0a71f4d0859b70fce1d4b6d7f0c56806a1c2))
+* promote from staging 2ab11b0 ([eb3706a](https://github.com/team-telnyx/telnyx-cli/commit/eb3706a52b0512d67aa9431c64d28fcae1306be3))
+* promote from staging 4401268 ([aad3df4](https://github.com/team-telnyx/telnyx-cli/commit/aad3df40ef335db1e66416644328d6a3868ffe87))
+* promote from staging 67a2286 ([2a62b45](https://github.com/team-telnyx/telnyx-cli/commit/2a62b45df9d31540cedd8edf6e1ced249ead7d0b))
+* promote from staging 9e7a743 ([06b3421](https://github.com/team-telnyx/telnyx-cli/commit/06b3421f67684f873de7e8004cac3399d2c10205))
+* promote from staging d80a51b ([3f47c2d](https://github.com/team-telnyx/telnyx-cli/commit/3f47c2d22d835dc88968d934062f460d521bd413))
+
 ## [0.23.3](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.2...v0.23.3) (2026-06-26)
 
 
