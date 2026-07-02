@@ -76,7 +76,7 @@ jobs:
           OUTPUT=$(npx release-please "${ARGS[@]}" 2>&1) || true
           echo "$OUTPUT"
 
-          PR_URL=$(echo "$OUTPUT" | grep -oP 'https://github\.com/[^/]+/[^/]+/pull/\d+' | head -1)
+          PR_URL=$(echo "$OUTPUT" | grep -oP 'https://(?:api\.)?github\.com/(?:repos/[^/]+/[^/]+/)?pulls?/\d+' | head -1)
           if [ -n "$PR_URL" ]; then
             PR_NUM=$(echo "$PR_URL" | grep -oP '\d+$')
             echo "pr_number=$PR_NUM" >> "$GITHUB_OUTPUT"
@@ -145,10 +145,8 @@ jobs:
           # Replace entire working tree from next (exact tree, no merge)
           # git rm handles deletions (files removed in next but still in this branch)
           # git clean removes untracked files (node_modules created by npx release-please)
-          git rm -rf . 2>/dev/null || true
-          git checkout origin/next -- .
+          git reset --hard origin/next
           git clean -fdx
-          git add -A
 
           # Restore version-bump files from the release PR branch
           for f in CHANGELOG.md pkg/cmd/version.go README.md .release-please-manifest.json; do
@@ -165,7 +163,7 @@ jobs:
             echo "No changes after syncing next code"
           else
             git commit -m "chore: sync code from next into release PR"
-            git push origin "$PR_BRANCH"
+            git push --force origin "$PR_BRANCH"
             echo "Successfully synced next code into release PR branch (tree replacement)"
           fi
       - name: Run release-please (github-release)
