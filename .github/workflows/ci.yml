@@ -15,7 +15,7 @@ on:
       - 'stl-preview-base/**'
 
 env:
-  GOPRIVATE: github.com/team-telnyx/telnyx-go/v4,github.com/stainless-sdks/telnyx-go/v4
+  GOPRIVATE: github.com/stainless-sdks/telnyx-go/v4
 
 jobs:
   lint:

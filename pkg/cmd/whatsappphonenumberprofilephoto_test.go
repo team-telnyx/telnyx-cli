@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
 )
 
 func TestWhatsappPhoneNumbersProfilePhotoRetrieve(t *testing.T) {

@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
-	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
+	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
+	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
 )
 
 func TestWireguardInterfacesCreate(t *testing.T) {

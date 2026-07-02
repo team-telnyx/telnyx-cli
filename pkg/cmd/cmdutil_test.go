@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/tidwall/gjson"
 
-	"github.com/team-telnyx/telnyx-cli/internal/jsonview"
+	"github.com/stainless-sdks/telnyx-cli/internal/jsonview"
 )
 
 func TestStreamOutput(t *testing.T) {

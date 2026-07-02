@@ -12,8 +12,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/team-telnyx/telnyx-cli/internal/autocomplete"
-	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
+	"github.com/stainless-sdks/telnyx-cli/internal/autocomplete"
+	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
 	docs "github.com/urfave/cli-docs/v3"
 	"github.com/urfave/cli/v3"
 )

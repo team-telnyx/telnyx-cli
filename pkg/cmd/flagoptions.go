@@ -16,11 +16,11 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/team-telnyx/telnyx-cli/internal/apiform"
-	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
-	"github.com/team-telnyx/telnyx-cli/internal/debugmiddleware"
-	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
-	"github.com/team-telnyx/telnyx-go/v4/option"
+	"github.com/stainless-sdks/telnyx-cli/internal/apiform"
+	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
+	"github.com/stainless-sdks/telnyx-cli/internal/debugmiddleware"
+	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
+	"github.com/stainless-sdks/telnyx-go/v4/option"
 
 	"github.com/goccy/go-yaml"
 	"github.com/urfave/cli/v3"
