@@ -5,7 +5,7 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
 func TestTexmlAccountsCallsStreamsStreamingSidJson(t *testing.T) {

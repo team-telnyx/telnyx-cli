@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
-	"github.com/stainless-sdks/telnyx-go/v4"
-	"github.com/stainless-sdks/telnyx-go/v4/option"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-go/v4"
+	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
@@ -393,7 +393,7 @@ var dirUpdateInfringement = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[any]{
 			Name:     "document",
-			Usage:    "Append-only supporting documents.",
+			Usage:    "Append-only supporting documents to attach while resolving the claim (e.g. authorization or licensing proof).",
 			BodyPath: "documents",
 		},
 		&requestflag.Flag[*string]{

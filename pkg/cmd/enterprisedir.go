@@ -6,10 +6,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/stainless-sdks/telnyx-cli/internal/apiquery"
-	"github.com/stainless-sdks/telnyx-cli/internal/requestflag"
-	"github.com/stainless-sdks/telnyx-go/v4"
-	"github.com/stainless-sdks/telnyx-go/v4/option"
+	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
+	"github.com/team-telnyx/telnyx-go/v4"
+	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
@@ -36,6 +36,12 @@ var enterprisesDirCreate = requestflag.WithInnerFlags(cli.Command{
 			Required: true,
 			BodyPath: "authorizer_name",
 		},
+		&requestflag.Flag[[]string]{
+			Name:     "call-reason",
+			Usage:    "1–10 reasons your business calls customers. Validate phrasing against `POST /call_reasons/validate`.",
+			Required: true,
+			BodyPath: "call_reasons",
+		},
 		&requestflag.Flag[bool]{
 			Name:     "certify-brand-is-accurate",
 			Usage:    "Must be `true`.",
@@ -59,11 +65,6 @@ var enterprisesDirCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Name shown to call recipients. No emoji; not whitespace-only.",
 			Required: true,
 			BodyPath: "display_name",
-		},
-		&requestflag.Flag[[]string]{
-			Name:     "call-reason",
-			Usage:    "1–10 reasons your business calls customers. Validate phrasing against `POST /call_reasons/validate`.",
-			BodyPath: "call_reasons",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "document",
