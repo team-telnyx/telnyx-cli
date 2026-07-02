@@ -19,12 +19,12 @@ func TestEnterprisesDirCreate(t *testing.T) {
 			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
 			"--authorizer-email", "sam@acmeplumbing.example.com",
 			"--authorizer-name", "Sam Owner",
+			"--call-reason", "Appointment reminders",
+			"--call-reason", "Billing inquiries",
 			"--certify-brand-is-accurate=true",
 			"--certify-ip-ownership=true",
 			"--certify-no-shaft-content=true",
 			"--display-name", "Acme Plumbing",
-			"--call-reason", "Appointment reminders",
-			"--call-reason", "Billing inquiries",
 			"--document", "{document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c, document_type: business_registration, description: Certificate of incorporation.}",
 			"--logo-url", "https://acmeplumbing.example.com/logo-256.bmp",
 			"--reselling=false",
@@ -43,12 +43,12 @@ func TestEnterprisesDirCreate(t *testing.T) {
 			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
 			"--authorizer-email", "sam@acmeplumbing.example.com",
 			"--authorizer-name", "Sam Owner",
+			"--call-reason", "Appointment reminders",
+			"--call-reason", "Billing inquiries",
 			"--certify-brand-is-accurate=true",
 			"--certify-ip-ownership=true",
 			"--certify-no-shaft-content=true",
 			"--display-name", "Acme Plumbing",
-			"--call-reason", "Appointment reminders",
-			"--call-reason", "Billing inquiries",
 			"--document.document-id", "2a7e8337-e803-4057-a4ae-26c40eb0bc6c",
 			"--document.document-type", "business_registration",
 			"--document.description", "Certificate of incorporation.",
@@ -62,13 +62,13 @@ func TestEnterprisesDirCreate(t *testing.T) {
 		pipeData := []byte("" +
 			"authorizer_email: sam@acmeplumbing.example.com\n" +
 			"authorizer_name: Sam Owner\n" +
+			"call_reasons:\n" +
+			"  - Appointment reminders\n" +
+			"  - Billing inquiries\n" +
 			"certify_brand_is_accurate: true\n" +
 			"certify_ip_ownership: true\n" +
 			"certify_no_shaft_content: true\n" +
 			"display_name: Acme Plumbing\n" +
-			"call_reasons:\n" +
-			"  - Appointment reminders\n" +
-			"  - Billing inquiries\n" +
 			"documents:\n" +
 			"  - document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c\n" +
 			"    document_type: business_registration\n" +

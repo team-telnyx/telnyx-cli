@@ -2458,6 +2458,28 @@ func init() {
 				},
 			},
 			{
+				Name:     "storage:kvs",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&storageKvsCreate,
+					&storageKvsRetrieve,
+					&storageKvsList,
+					&storageKvsDelete,
+				},
+			},
+			{
+				Name:     "storage:kvs:keys",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&storageKvsKeysRetrieve,
+					&storageKvsKeysUpdate,
+					&storageKvsKeysList,
+					&storageKvsKeysDelete,
+				},
+			},
+			{
 				Name:     "sub-number-orders",
 				Category: "API RESOURCE",
 				Suggest:  true,

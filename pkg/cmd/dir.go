@@ -393,7 +393,7 @@ var dirUpdateInfringement = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[any]{
 			Name:     "document",
-			Usage:    "Append-only supporting documents.",
+			Usage:    "Append-only supporting documents to attach while resolving the claim (e.g. authorization or licensing proof).",
 			BodyPath: "documents",
 		},
 		&requestflag.Flag[*string]{
