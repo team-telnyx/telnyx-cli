@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.22.0 (2026-07-03)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.21.0...v0.22.0)
+
+### Bug Fixes
+
+* **release:** scan next's commits in release-pr (stop depending on master hotfixes) ([#58](https://github.com/team-telnyx/telnyx-cli/issues/58)) ([e112e9c](https://github.com/team-telnyx/telnyx-cli/commit/e112e9c0043cc4dd2b8d0f9bacc5ad02ff303b79))
+
+
+### Chores
+
+* promote from staging 4860bd4 ([fc29c85](https://github.com/team-telnyx/telnyx-cli/commit/fc29c85abf26281983fe1fa45dc582f63ec80a93))
+* promote from staging c759f54 ([44e9716](https://github.com/team-telnyx/telnyx-cli/commit/44e97164f7e1e0d3b5f59b139abf3f4a67504362))
+
 ## [0.23.3](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.2...v0.23.3) (2026-06-26)
 
 
