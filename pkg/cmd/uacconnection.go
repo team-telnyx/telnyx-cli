@@ -266,6 +266,11 @@ var uacConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Defaults to true.",
 			InnerField: "sip_compact_headers_enabled",
 		},
+		&requestflag.InnerFlag[string]{
+			Name:       "inbound.sip-region",
+			Usage:      "Selects which `sip_region` to receive inbound calls from. If null, the default region (US) will be used.",
+			InnerField: "sip_region",
+		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "inbound.timeout-1xx-secs",
 			Usage:      "Time(sec) before aborting if connection is not made.",
@@ -649,6 +654,11 @@ var uacConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "inbound.sip-compact-headers-enabled",
 			Usage:      "Defaults to true.",
 			InnerField: "sip_compact_headers_enabled",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "inbound.sip-region",
+			Usage:      "Selects which `sip_region` to receive inbound calls from. If null, the default region (US) will be used.",
+			InnerField: "sip_region",
 		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "inbound.timeout-1xx-secs",
