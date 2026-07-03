@@ -26,7 +26,7 @@ func TestUacConnectionsCreate(t *testing.T) {
 			"--encode-contact-header-enabled=true",
 			"--encrypted-media", "SRTP",
 			"--external-uac-settings", "{auth_username: auth8492, expiration_sec: 600, from_user: '8492', outbound_proxy: outbound.sip-pbx.acme.example:5061, password: testtesttest, proxy: sip-pbx.acme.example, transport: TLS, username: ext8492}",
-			"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_routing_method: sequential, dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, simultaneous_ringing: disabled, sip_compact_headers_enabled: true, timeout_1xx_secs: 10, timeout_2xx_secs: 20}",
+			"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_routing_method: sequential, dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, simultaneous_ringing: disabled, sip_compact_headers_enabled: true, sip_region: US, timeout_1xx_secs: 10, timeout_2xx_secs: 20}",
 			"--internal-uac-settings", "{destination_uri: 14155550123@acme.sip.telnyx.com}",
 			"--ios-push-credential-id", "ec0c8e5d-439e-4620-a0c1-9d9c8d02a836",
 			"--jitter-buffer", "{enable_jitter_buffer: true, jitterbuffer_msec_max: 200, jitterbuffer_msec_min: 60}",
@@ -84,6 +84,7 @@ func TestUacConnectionsCreate(t *testing.T) {
 			"--inbound.shaken-stir-enabled=true",
 			"--inbound.simultaneous-ringing", "disabled",
 			"--inbound.sip-compact-headers-enabled=true",
+			"--inbound.sip-region", "US",
 			"--inbound.timeout-1xx-secs", "10",
 			"--inbound.timeout-2xx-secs", "20",
 			"--internal-uac-settings.destination-uri", "14155550123@acme.sip.telnyx.com",
@@ -153,6 +154,7 @@ func TestUacConnectionsCreate(t *testing.T) {
 			"  shaken_stir_enabled: true\n" +
 			"  simultaneous_ringing: disabled\n" +
 			"  sip_compact_headers_enabled: true\n" +
+			"  sip_region: US\n" +
 			"  timeout_1xx_secs: 10\n" +
 			"  timeout_2xx_secs: 20\n" +
 			"internal_uac_settings:\n" +
@@ -229,7 +231,7 @@ func TestUacConnectionsUpdate(t *testing.T) {
 			"--encode-contact-header-enabled=true",
 			"--encrypted-media", "SRTP",
 			"--external-uac-settings", "{auth_username: auth8492, expiration_sec: 600, from_user: '8492', outbound_proxy: outbound.sip-pbx.acme.example:5061, password: testtesttest, proxy: sip-pbx.acme.example, transport: TLS, username: ext8492}",
-			"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_routing_method: sequential, dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, simultaneous_ringing: disabled, sip_compact_headers_enabled: true, timeout_1xx_secs: 10, timeout_2xx_secs: 20}",
+			"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_routing_method: sequential, dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, simultaneous_ringing: disabled, sip_compact_headers_enabled: true, sip_region: US, timeout_1xx_secs: 10, timeout_2xx_secs: 20}",
 			"--internal-uac-settings", "{destination_uri: 14155550123@acme.sip.telnyx.com}",
 			"--ios-push-credential-id", "ec0c8e5d-439e-4620-a0c1-9d9c8d02a836",
 			"--jitter-buffer", "{enable_jitter_buffer: true, jitterbuffer_msec_max: 200, jitterbuffer_msec_min: 60}",
@@ -288,6 +290,7 @@ func TestUacConnectionsUpdate(t *testing.T) {
 			"--inbound.shaken-stir-enabled=true",
 			"--inbound.simultaneous-ringing", "disabled",
 			"--inbound.sip-compact-headers-enabled=true",
+			"--inbound.sip-region", "US",
 			"--inbound.timeout-1xx-secs", "10",
 			"--inbound.timeout-2xx-secs", "20",
 			"--internal-uac-settings.destination-uri", "14155550123@acme.sip.telnyx.com",
@@ -357,6 +360,7 @@ func TestUacConnectionsUpdate(t *testing.T) {
 			"  shaken_stir_enabled: true\n" +
 			"  simultaneous_ringing: disabled\n" +
 			"  sip_compact_headers_enabled: true\n" +
+			"  sip_region: US\n" +
 			"  timeout_1xx_secs: 10\n" +
 			"  timeout_2xx_secs: 20\n" +
 			"internal_uac_settings:\n" +

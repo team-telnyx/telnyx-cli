@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/binaryparam"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
@@ -98,6 +99,10 @@ var storageKvsKeysList = cli.Command{
 			Usage:     "Return only keys that start with this prefix.",
 			QueryPath: "prefix",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleStorageKvsKeysList,
 	HideHelpCommand: true,
@@ -172,16 +177,26 @@ func handleStorageKvsKeysUpdate(ctx context.Context, cmd *cli.Command) error {
 		cmd.Set("key", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
+	if !cmd.IsSet("body") && len(unusedArgs) > 0 {
+		cmd.Set("body", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
+
+	bodyReader, stdinInUse, err := binaryparam.FileOrStdin(os.Stdin, cmd.Value("body").(string))
+	if err != nil {
+		return fmt.Errorf("Failed on param '%s': %w", "body", err)
+	}
+	defer bodyReader.Close()
 
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
 		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
-		false,
+		ApplicationOctetStream,
+		stdinInUse,
 	)
 	if err != nil {
 		return err
@@ -194,6 +209,7 @@ func handleStorageKvsKeysUpdate(ctx context.Context, cmd *cli.Command) error {
 	return client.Storage.Kvs.Keys.Update(
 		ctx,
 		cmd.Value("key").(string),
+		bodyReader,
 		params,
 		options...,
 	)
@@ -223,29 +239,48 @@ func handleStorageKvsKeysList(ctx context.Context, cmd *cli.Command) error {
 
 	params := telnyx.StorageKvKeyListParams{}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Storage.Kvs.Keys.List(
-		ctx,
-		cmd.Value("id").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "storage:kvs:keys list",
-		Transform:      transform,
-	})
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.Storage.Kvs.Keys.List(
+			ctx,
+			cmd.Value("id").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "storage:kvs:keys list",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.Storage.Kvs.Keys.ListAutoPaging(
+			ctx,
+			cmd.Value("id").(string),
+			params,
+			options...,
+		)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "storage:kvs:keys list",
+			Transform:      transform,
+		})
+	}
 }
 
 func handleStorageKvsKeysDelete(ctx context.Context, cmd *cli.Command) error {
