@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.21.0 (2026-07-03)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.20.0...v0.21.0)
+
+### Bug Fixes
+
+* **release:** take first Release-As match (multiline output broke GITHUB_OUTPUT) ([#54](https://github.com/team-telnyx/telnyx-cli/issues/54)) ([1ba5160](https://github.com/team-telnyx/telnyx-cli/commit/1ba5160a07092c4c5ad4b120e7aefdbc579aa383))
+
+
+### Chores
+
+* promote from staging 32b8601 ([69851ac](https://github.com/team-telnyx/telnyx-cli/commit/69851aca90610261364d450597a2027ab7fdf1e2))
+
 ## [0.23.3](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.2...v0.23.3) (2026-06-26)
 
 
