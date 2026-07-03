@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
+	"github.com/team-telnyx/telnyx-cli/internal/binaryparam"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
@@ -255,16 +256,26 @@ func handleStorageKvsKeysSet(ctx context.Context, cmd *cli.Command) error {
 		cmd.Set("key", unusedArgs[0])
 		unusedArgs = unusedArgs[1:]
 	}
+	if !cmd.IsSet("body") && len(unusedArgs) > 0 {
+		cmd.Set("body", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
+
+	bodyReader, stdinInUse, err := binaryparam.FileOrStdin(os.Stdin, cmd.Value("body").(string))
+	if err != nil {
+		return fmt.Errorf("Failed on param '%s': %w", "body", err)
+	}
+	defer bodyReader.Close()
 
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
 		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
-		false,
+		ApplicationOctetStream,
+		stdinInUse,
 	)
 	if err != nil {
 		return err
@@ -277,6 +288,7 @@ func handleStorageKvsKeysSet(ctx context.Context, cmd *cli.Command) error {
 	return client.Storage.Kvs.Keys.Set(
 		ctx,
 		cmd.Value("key").(string),
+		bodyReader,
 		params,
 		options...,
 	)
