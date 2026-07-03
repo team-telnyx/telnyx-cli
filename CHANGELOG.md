@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.20.0 (2026-07-03)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.19.0...v0.20.0)
+
+### Bug Fixes
+
+* add git clean -fdx to tree replacement step in release-please.yml ([#43](https://github.com/team-telnyx/telnyx-cli/issues/43)) ([231caef](https://github.com/team-telnyx/telnyx-cli/commit/231caeff705c30b524d52f60e4b118ce8fb46e9d))
+* replace git merge with tree replacement in release-please.yml ([#41](https://github.com/team-telnyx/telnyx-cli/issues/41)) ([099b9e9](https://github.com/team-telnyx/telnyx-cli/commit/099b9e9150b83fc427b04bea83686656c40893af))
+* use git reset --hard for tree replacement, force-push, and fix PR URL regex in release-please.yml ([#45](https://github.com/team-telnyx/telnyx-cli/issues/45)) ([2e00750](https://github.com/team-telnyx/telnyx-cli/commit/2e007504bc269837c0fa6992379d0a12b73573e8))
+
+
+### Chores
+
+* promote from staging 5d40eb4 ([6333302](https://github.com/team-telnyx/telnyx-cli/commit/63333020b55cec3557c6e60f83eedac12cb9568e))
+* promote from staging 6fa4bc0 ([e53699f](https://github.com/team-telnyx/telnyx-cli/commit/e53699f4fc6f3c2e8f1aebcc1e7a628ae3a884dc))
+* sync repo ([e8f082a](https://github.com/team-telnyx/telnyx-cli/commit/e8f082a04d07050984cb6a173661a99b44de6d39))
+
 ## [0.23.3](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.2...v0.23.3) (2026-06-26)
 
 
