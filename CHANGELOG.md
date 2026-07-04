@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.22.0 (2026-07-04)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.21.0...v0.22.0)
+
+### Bug Fixes
+
+* **release:** ghost guard also verifies the GitHub Release exists ([#60](https://github.com/team-telnyx/telnyx-cli/issues/60)) ([da8cf61](https://github.com/team-telnyx/telnyx-cli/commit/da8cf61a3291d19c89c4ec97fc3013bdba2ed0cc))
+* **release:** scan next's commits in release-pr (stop depending on master hotfixes) ([#58](https://github.com/team-telnyx/telnyx-cli/issues/58)) ([e112e9c](https://github.com/team-telnyx/telnyx-cli/commit/e112e9c0043cc4dd2b8d0f9bacc5ad02ff303b79))
+
+
+### Chores
+
+* promote from staging 4860bd4 ([f3fe4b3](https://github.com/team-telnyx/telnyx-cli/commit/f3fe4b337b3a9eb105a4558e36a55325c3d8ff86))
+* promote from staging 88850ef ([72acdc0](https://github.com/team-telnyx/telnyx-cli/commit/72acdc045ff34915b3a2f1306a8f24599cfcf7e7))
+* promote from staging c759f54 ([a4556ed](https://github.com/team-telnyx/telnyx-cli/commit/a4556edce2a6a9c58cfee615a63cc3e93de3ce64))
+
 ## [0.23.3](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.2...v0.23.3) (2026-06-26)
 
 
