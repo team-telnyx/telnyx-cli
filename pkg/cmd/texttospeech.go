@@ -73,7 +73,7 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "telnyx",
-			Usage:    "Telnyx provider-specific parameters. Use `voice_speed` and `temperature` for `Natural` and `NaturalHD` models. For the `Ultra` model, use `voice_speed`, `volume`, and `emotion`.",
+			Usage:    "Telnyx provider-specific parameters. Use `voice_speed` and `temperature` for `Natural` and `NaturalHD` models. For the `Ultra` model, use `voice_speed`, `volume`, and `emotion`. `Bayan` and `Sukhan` don't use `temperature`, `volume`, or `emotion`, and don't support `voice_speed`. `Sukhan`'s `response_format` is restricted to `mp3` or `pcm` (no `wav`).",
 			BodyPath: "telnyx",
 		},
 		&requestflag.Flag[string]{
@@ -88,7 +88,7 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id`. Examples: `telnyx.NaturalHD.Alloy`, `Telnyx.Ultra.<voice_id>`, `azure.en-US-AvaMultilingualNeural`, `aws.Polly.Generative.Lucia`. When provided, `provider`, `model_id`, and `voice_id` are extracted automatically and take precedence over individual parameters.",
+			Usage:    "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id`. Examples: `telnyx.NaturalHD.Alloy`, `Telnyx.Ultra.<voice_id>`, `Telnyx.Bayan.Ahmed`, `Telnyx.Sukhan.urdu-professor`, `azure.en-US-AvaMultilingualNeural`, `aws.Polly.Generative.Lucia`. When provided, `provider`, `model_id`, and `voice_id` are extracted automatically and take precedence over individual parameters.",
 			BodyPath: "voice",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -280,7 +280,7 @@ var textToSpeechGenerate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "telnyx.voice-speed",
-			Usage:      "Voice speed multiplier. Applies to all models. Range: 0.5 to 2.0.",
+			Usage:      "Voice speed multiplier. Applies to all models except `Bayan` and `Sukhan`, which don't support it. Range: 0.5 to 2.0.",
 			InnerField: "voice_speed",
 		},
 		&requestflag.InnerFlag[float64]{
