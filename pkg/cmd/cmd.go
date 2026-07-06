@@ -280,9 +280,7 @@ func init() {
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&aiCreateResponseDeprecated,
 					&aiRetrieveConversationHistories,
-					&aiRetrieveModels,
 					&aiSummarize,
 				},
 			},
@@ -402,14 +400,6 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&aiAudioTranscribe,
-				},
-			},
-			{
-				Name:     "ai:chat",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&aiChatCreateCompletion,
 				},
 			},
 			{
@@ -1376,7 +1366,6 @@ func init() {
 					&messagesSendLongCode,
 					&messagesSendNumberPool,
 					&messagesSendShortCode,
-					&messagesSendWhatsapp,
 					&messagesSendWithAlphanumericSender,
 				},
 			},

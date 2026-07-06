@@ -14,21 +14,6 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var aiCreateResponseDeprecated = cli.Command{
-	Name:    "create-response-deprecated",
-	Usage:   "**Deprecated**: Use `POST /v2/ai/openai/responses` instead. This endpoint is\ncompatible with the\n[OpenAI Responses API](https://developers.openai.com/api/reference/responses/overview)\nand may be used with the OpenAI JS or Python SDK. Response id parameter is not\nsupported at the moment. Use the `conversation` parameter with a Telnyx\nConversation ID to leverage persistent conversations.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[map[string]any]{
-			Name:     "response-request",
-			Required: true,
-			BodyRoot: true,
-		},
-	},
-	Action:          handleAICreateResponseDeprecated,
-	HideHelpCommand: true,
-}
-
 var aiRetrieveConversationHistories = cli.Command{
 	Name:    "retrieve-conversation-histories",
 	Usage:   "Performs semantic vector search across conversation history records.",
@@ -108,15 +93,6 @@ var aiRetrieveConversationHistories = cli.Command{
 	HideHelpCommand: true,
 }
 
-var aiRetrieveModels = cli.Command{
-	Name:            "retrieve-models",
-	Usage:           "**Deprecated**: Use `GET /v2/ai/openai/models` instead.",
-	Suggest:         true,
-	Flags:           []cli.Flag{},
-	Action:          handleAIRetrieveModels,
-	HideHelpCommand: true,
-}
-
 var aiSummarize = cli.Command{
 	Name:    "summarize",
 	Usage:   "Generate a summary of a file's contents.",
@@ -142,47 +118,6 @@ var aiSummarize = cli.Command{
 	},
 	Action:          handleAISummarize,
 	HideHelpCommand: true,
-}
-
-func handleAICreateResponseDeprecated(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		ApplicationJSON,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	params := telnyx.AINewResponseDeprecatedParams{}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.NewResponseDeprecated(ctx, params, options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "ai create-response-deprecated",
-		Transform:      transform,
-	})
 }
 
 func handleAIRetrieveConversationHistories(ctx context.Context, cmd *cli.Command) error {
@@ -222,45 +157,6 @@ func handleAIRetrieveConversationHistories(ctx context.Context, cmd *cli.Command
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "ai retrieve-conversation-histories",
-		Transform:      transform,
-	})
-}
-
-func handleAIRetrieveModels(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.GetModels(ctx, options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "ai retrieve-models",
 		Transform:      transform,
 	})
 }
