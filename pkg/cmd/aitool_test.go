@@ -17,6 +17,7 @@ func TestAIToolsCreate(t *testing.T) {
 			"ai:tools", "create",
 			"--display-name", "display_name",
 			"--type", "type",
+			"--client-side-tool", "{foo: bar}",
 			"--function", "{foo: bar}",
 			"--handoff", "{foo: bar}",
 			"--invite", "{foo: bar}",
@@ -31,6 +32,8 @@ func TestAIToolsCreate(t *testing.T) {
 		pipeData := []byte("" +
 			"display_name: display_name\n" +
 			"type: type\n" +
+			"client_side_tool:\n" +
+			"  foo: bar\n" +
 			"function:\n" +
 			"  foo: bar\n" +
 			"handoff:\n" +
@@ -70,6 +73,7 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:tools", "update",
 			"--tool-id", "tool_id",
+			"--client-side-tool", "{foo: bar}",
 			"--display-name", "display_name",
 			"--function", "{foo: bar}",
 			"--handoff", "{foo: bar}",
@@ -84,6 +88,8 @@ func TestAIToolsUpdate(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
+			"client_side_tool:\n" +
+			"  foo: bar\n" +
 			"display_name: display_name\n" +
 			"function:\n" +
 			"  foo: bar\n" +

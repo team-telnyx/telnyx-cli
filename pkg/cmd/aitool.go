@@ -30,6 +30,10 @@ var aiToolsCreate = cli.Command{
 			BodyPath: "type",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "client-side-tool",
+			BodyPath: "client_side_tool",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "function",
 			BodyPath: "function",
 		},
@@ -83,6 +87,10 @@ var aiToolsUpdate = cli.Command{
 			Name:      "tool-id",
 			Required:  true,
 			PathParam: "tool_id",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "client-side-tool",
+			BodyPath: "client_side_tool",
 		},
 		&requestflag.Flag[string]{
 			Name:     "display-name",
