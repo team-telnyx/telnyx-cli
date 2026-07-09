@@ -156,7 +156,7 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "whatsapp.template-id",
-			Usage:      "Customer pre-approved authentication template name registered on Meta",
+			Usage:      "Customer pre-approved authentication template ID registered on Meta",
 			InnerField: "template_id",
 		},
 		&requestflag.InnerFlag[*string]{
@@ -311,7 +311,7 @@ var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "whatsapp.template-id",
-			Usage:      "Customer pre-approved authentication template name registered on Meta",
+			Usage:      "Customer pre-approved authentication template ID registered on Meta",
 			InnerField: "template_id",
 		},
 		&requestflag.InnerFlag[*string]{

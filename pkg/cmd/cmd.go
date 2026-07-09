@@ -470,6 +470,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:conversations:conversation-insights",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiConversationsConversationInsightsRetrieveAggregates,
+				},
+			},
+			{
 				Name:     "ai:embeddings",
 				Category: "API RESOURCE",
 				Suggest:  true,
