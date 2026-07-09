@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.22.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.21.0...v0.22.0) (2026-07-09)
+
+
+### Bug Fixes
+
+* **release:** ghost guard also verifies the GitHub Release exists ([#60](https://github.com/team-telnyx/telnyx-cli/issues/60)) ([da8cf61](https://github.com/team-telnyx/telnyx-cli/commit/da8cf61a3291d19c89c4ec97fc3013bdba2ed0cc))
+* **release:** scan next's commits in release-pr (stop depending on master hotfixes) ([#58](https://github.com/team-telnyx/telnyx-cli/issues/58)) ([e112e9c](https://github.com/team-telnyx/telnyx-cli/commit/e112e9c0043cc4dd2b8d0f9bacc5ad02ff303b79))
+
+## [0.21.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.20.0...v0.21.0) (2026-07-03)
+
+
+### Bug Fixes
+
+* **release:** take first Release-As match (multiline output broke GITHUB_OUTPUT) ([#54](https://github.com/team-telnyx/telnyx-cli/issues/54)) ([1ba5160](https://github.com/team-telnyx/telnyx-cli/commit/1ba5160a07092c4c5ad4b120e7aefdbc579aa383))
+
+## [0.20.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.19.0...v0.20.0) (2026-07-03)
+
+
+### Bug Fixes
+
+* add git clean -fdx to tree replacement step in release-please.yml ([#43](https://github.com/team-telnyx/telnyx-cli/issues/43)) ([231caef](https://github.com/team-telnyx/telnyx-cli/commit/231caeff705c30b524d52f60e4b118ce8fb46e9d))
+* replace git merge with tree replacement in release-please.yml ([#41](https://github.com/team-telnyx/telnyx-cli/issues/41)) ([099b9e9](https://github.com/team-telnyx/telnyx-cli/commit/099b9e9150b83fc427b04bea83686656c40893af))
+* use git reset --hard for tree replacement, force-push, and fix PR URL regex in release-please.yml ([#45](https://github.com/team-telnyx/telnyx-cli/issues/45)) ([2e00750](https://github.com/team-telnyx/telnyx-cli/commit/2e007504bc269837c0fa6992379d0a12b73573e8))
+
 ## [0.23.3](https://github.com/team-telnyx/telnyx-cli-staging/compare/v0.23.2...v0.23.3) (2026-06-26)
 
 
