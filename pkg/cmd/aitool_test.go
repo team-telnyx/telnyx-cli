@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestAIToolsCreate(t *testing.T) {
@@ -21,6 +22,32 @@ func TestAIToolsCreate(t *testing.T) {
 			"--function", "{foo: bar}",
 			"--handoff", "{foo: bar}",
 			"--invite", "{foo: bar}",
+			"--pay", "{connector_name: connector_name, currency: currency, description: description, payment_method: payment_method}",
+			"--retrieval", "{foo: bar}",
+			"--timeout-ms", "0",
+			"--webhook", "{foo: bar}",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(aiToolsCreate)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai:tools", "create",
+			"--display-name", "display_name",
+			"--type", "type",
+			"--client-side-tool", "{foo: bar}",
+			"--function", "{foo: bar}",
+			"--handoff", "{foo: bar}",
+			"--invite", "{foo: bar}",
+			"--pay.connector-name", "connector_name",
+			"--pay.currency", "currency",
+			"--pay.description", "description",
+			"--pay.payment-method", "payment_method",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--webhook", "{foo: bar}",
@@ -40,6 +67,11 @@ func TestAIToolsCreate(t *testing.T) {
 			"  foo: bar\n" +
 			"invite:\n" +
 			"  foo: bar\n" +
+			"pay:\n" +
+			"  connector_name: connector_name\n" +
+			"  currency: currency\n" +
+			"  description: description\n" +
+			"  payment_method: payment_method\n" +
 			"retrieval:\n" +
 			"  foo: bar\n" +
 			"timeout_ms: 0\n" +
@@ -78,6 +110,33 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--function", "{foo: bar}",
 			"--handoff", "{foo: bar}",
 			"--invite", "{foo: bar}",
+			"--pay", "{connector_name: connector_name, currency: currency, description: description, payment_method: payment_method}",
+			"--retrieval", "{foo: bar}",
+			"--timeout-ms", "0",
+			"--type", "type",
+			"--webhook", "{foo: bar}",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(aiToolsUpdate)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai:tools", "update",
+			"--tool-id", "tool_id",
+			"--client-side-tool", "{foo: bar}",
+			"--display-name", "display_name",
+			"--function", "{foo: bar}",
+			"--handoff", "{foo: bar}",
+			"--invite", "{foo: bar}",
+			"--pay.connector-name", "connector_name",
+			"--pay.currency", "currency",
+			"--pay.description", "description",
+			"--pay.payment-method", "payment_method",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--type", "type",
@@ -97,6 +156,11 @@ func TestAIToolsUpdate(t *testing.T) {
 			"  foo: bar\n" +
 			"invite:\n" +
 			"  foo: bar\n" +
+			"pay:\n" +
+			"  connector_name: connector_name\n" +
+			"  currency: currency\n" +
+			"  description: description\n" +
+			"  payment_method: payment_method\n" +
 			"retrieval:\n" +
 			"  foo: bar\n" +
 			"timeout_ms: 0\n" +

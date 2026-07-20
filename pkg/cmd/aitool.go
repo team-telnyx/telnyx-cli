@@ -14,7 +14,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var aiToolsCreate = cli.Command{
+var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
 	Usage:   "Create Tool",
 	Suggest: true,
@@ -46,6 +46,10 @@ var aiToolsCreate = cli.Command{
 			BodyPath: "invite",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "pay",
+			BodyPath: "pay",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "retrieval",
 			BodyPath: "retrieval",
 		},
@@ -61,7 +65,30 @@ var aiToolsCreate = cli.Command{
 	},
 	Action:          handleAIToolsCreate,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"pay": {
+		&requestflag.InnerFlag[string]{
+			Name:       "pay.connector-name",
+			Usage:      "The name of the pay connector configured in the Telnyx API. Must reference an existing pay connector for this organization.",
+			InnerField: "connector_name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "pay.currency",
+			Usage:      "Default currency for payments processed by this tool.",
+			InnerField: "currency",
+		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "pay.description",
+			Usage:      "Optional description of the pay tool that will be passed to the assistant.",
+			InnerField: "description",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "pay.payment-method",
+			Usage:      "Default payment method for payments processed by this tool.",
+			InnerField: "payment_method",
+		},
+	},
+})
 
 var aiToolsRetrieve = cli.Command{
 	Name:    "retrieve",
@@ -78,7 +105,7 @@ var aiToolsRetrieve = cli.Command{
 	HideHelpCommand: true,
 }
 
-var aiToolsUpdate = cli.Command{
+var aiToolsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
 	Usage:   "Update Tool",
 	Suggest: true,
@@ -109,6 +136,10 @@ var aiToolsUpdate = cli.Command{
 			BodyPath: "invite",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "pay",
+			BodyPath: "pay",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "retrieval",
 			BodyPath: "retrieval",
 		},
@@ -127,7 +158,30 @@ var aiToolsUpdate = cli.Command{
 	},
 	Action:          handleAIToolsUpdate,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"pay": {
+		&requestflag.InnerFlag[string]{
+			Name:       "pay.connector-name",
+			Usage:      "The name of the pay connector configured in the Telnyx API. Must reference an existing pay connector for this organization.",
+			InnerField: "connector_name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "pay.currency",
+			Usage:      "Default currency for payments processed by this tool.",
+			InnerField: "currency",
+		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "pay.description",
+			Usage:      "Optional description of the pay tool that will be passed to the assistant.",
+			InnerField: "description",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "pay.payment-method",
+			Usage:      "Default payment method for payments processed by this tool.",
+			InnerField: "payment_method",
+		},
+	},
+})
 
 var aiToolsList = cli.Command{
 	Name:    "list",

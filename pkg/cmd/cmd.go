@@ -677,6 +677,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:anthropic:v1",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiAnthropicV1Messages,
+				},
+			},
+			{
 				Name:     "audit-events",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -2474,6 +2482,26 @@ func init() {
 					&storageKvsKeysUpdate,
 					&storageKvsKeysList,
 					&storageKvsKeysDelete,
+				},
+			},
+			{
+				Name:     "storage:cloudfs",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&storageCloudfsCreate,
+					&storageCloudfsRetrieve,
+					&storageCloudfsUpdate,
+					&storageCloudfsList,
+					&storageCloudfsDelete,
+				},
+			},
+			{
+				Name:     "storage:cloudfs:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&storageCloudfsActionsRotateMetaToken,
 				},
 			},
 			{
