@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.23.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.22.0...v0.23.0) (2026-07-20)
+
+
+### Bug Fixes
+
+* **release:** assert a release PR exists for unreleased commits ([#68](https://github.com/team-telnyx/telnyx-cli/issues/68)) ([a11fc73](https://github.com/team-telnyx/telnyx-cli/commit/a11fc739bdc3bb0899b3f634fe1731c688a7ae5f))
+* **release:** make the --local scan clone see the repointed release branch ([#66](https://github.com/team-telnyx/telnyx-cli/issues/66)) ([cfffba5](https://github.com/team-telnyx/telnyx-cli/commit/cfffba549ef1d131d77a9b5b7d78317985c4cd0d))
+
 ## [0.22.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.21.0...v0.22.0) (2026-07-09)
 
 

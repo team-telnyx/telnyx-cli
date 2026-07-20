@@ -470,6 +470,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:conversations:conversation-insights",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiConversationsConversationInsightsRetrieveAggregates,
+				},
+			},
+			{
 				Name:     "ai:embeddings",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -666,6 +674,14 @@ func init() {
 					&aiToolsUpdate,
 					&aiToolsList,
 					&aiToolsDelete,
+				},
+			},
+			{
+				Name:     "ai:anthropic:v1",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiAnthropicV1Messages,
 				},
 			},
 			{
@@ -2466,6 +2482,26 @@ func init() {
 					&storageKvsKeysUpdate,
 					&storageKvsKeysList,
 					&storageKvsKeysDelete,
+				},
+			},
+			{
+				Name:     "storage:cloudfs",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&storageCloudfsCreate,
+					&storageCloudfsRetrieve,
+					&storageCloudfsUpdate,
+					&storageCloudfsList,
+					&storageCloudfsDelete,
+				},
+			},
+			{
+				Name:     "storage:cloudfs:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&storageCloudfsActionsRotateMetaToken,
 				},
 			},
 			{

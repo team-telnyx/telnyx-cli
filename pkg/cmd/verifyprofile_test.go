@@ -25,7 +25,7 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"--sms", "{alpha_sender: sqF, app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 			"--webhook-failover-url", "http://example.com/webhook/failover",
 			"--webhook-url", "http://example.com/webhook",
-			"--whatsapp", "{default_verification_timeout_secs: 300, sender_phone_number: '+13035551234', template_id: authentication_template_name, waba_id: '1234567890', whitelisted_destinations: [US, CA]}",
+			"--whatsapp", "{default_verification_timeout_secs: 300, sender_phone_number: '+13035551234', template_id: authentication_template_id, waba_id: '1234567890', whitelisted_destinations: [US, CA]}",
 		)
 	})
 
@@ -60,7 +60,7 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"--webhook-url", "http://example.com/webhook",
 			"--whatsapp.default-verification-timeout-secs", "300",
 			"--whatsapp.sender-phone-number", "+13035551234",
-			"--whatsapp.template-id", "authentication_template_name",
+			"--whatsapp.template-id", "authentication_template_id",
 			"--whatsapp.waba-id", "1234567890",
 			"--whatsapp.whitelisted-destinations", "[US, CA]",
 		)
@@ -101,7 +101,7 @@ func TestVerifyProfilesCreate(t *testing.T) {
 			"whatsapp:\n" +
 			"  default_verification_timeout_secs: 300\n" +
 			"  sender_phone_number: '+13035551234'\n" +
-			"  template_id: authentication_template_name\n" +
+			"  template_id: authentication_template_id\n" +
 			"  waba_id: '1234567890'\n" +
 			"  whitelisted_destinations:\n" +
 			"    - US\n" +
@@ -142,7 +142,7 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"--sms", "{alpha_sender: sqF, app_name: Example Secure App, code_length: 6, default_verification_timeout_secs: 300, messaging_template_id: 0abb5b4f-459f-445a-bfcd-488998b7572d, whitelisted_destinations: [US, CA]}",
 			"--webhook-failover-url", "http://example.com/webhook/failover",
 			"--webhook-url", "http://example.com/webhook",
-			"--whatsapp", "{default_verification_timeout_secs: 300, sender_phone_number: '+13035551234', template_id: authentication_template_name, waba_id: '1234567890', whitelisted_destinations: [US, CA]}",
+			"--whatsapp", "{default_verification_timeout_secs: 300, sender_phone_number: '+13035551234', template_id: authentication_template_id, waba_id: '1234567890', whitelisted_destinations: [US, CA]}",
 		)
 	})
 
@@ -175,7 +175,7 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"--webhook-url", "http://example.com/webhook",
 			"--whatsapp.default-verification-timeout-secs", "300",
 			"--whatsapp.sender-phone-number", "+13035551234",
-			"--whatsapp.template-id", "authentication_template_name",
+			"--whatsapp.template-id", "authentication_template_id",
 			"--whatsapp.waba-id", "1234567890",
 			"--whatsapp.whitelisted-destinations", "[US, CA]",
 		)
@@ -210,7 +210,7 @@ func TestVerifyProfilesUpdate(t *testing.T) {
 			"whatsapp:\n" +
 			"  default_verification_timeout_secs: 300\n" +
 			"  sender_phone_number: '+13035551234'\n" +
-			"  template_id: authentication_template_name\n" +
+			"  template_id: authentication_template_id\n" +
 			"  waba_id: '1234567890'\n" +
 			"  whitelisted_destinations:\n" +
 			"    - US\n" +

@@ -17,6 +17,7 @@ func TestRequirementsRetrieve(t *testing.T) {
 			"--api-key", "string",
 			"requirements", "retrieve",
 			"--id", "a9dad8d5-fdbd-49d7-aa23-39bb08a5ebaa",
+			"--version", "0",
 		)
 	})
 }
@@ -33,6 +34,7 @@ func TestRequirementsList(t *testing.T) {
 			"--page-number", "0",
 			"--page-size", "0",
 			"--sort", "country_code",
+			"--version", "0",
 		)
 	})
 
@@ -52,6 +54,7 @@ func TestRequirementsList(t *testing.T) {
 			"--page-number", "0",
 			"--page-size", "0",
 			"--sort", "country_code",
+			"--version", "0",
 		)
 	})
 }

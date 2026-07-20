@@ -24,6 +24,11 @@ var requirementsRetrieve = cli.Command{
 			Required:  true,
 			PathParam: "id",
 		},
+		&requestflag.Flag[int64]{
+			Name:      "version",
+			Usage:     "Filter by requirement version number. When omitted, returns the currently-active version.",
+			QueryPath: "version",
+		},
 	},
 	Action:          handleRequirementsRetrieve,
 	HideHelpCommand: true,
@@ -51,6 +56,11 @@ var requirementsList = requestflag.WithInnerFlags(cli.Command{
 			Name:      "sort",
 			Usage:     "Consolidated sort parameter for requirements (deepObject style). Originally: sort[]",
 			QueryPath: "sort",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "version",
+			Usage:     "Filter by requirement version number. When omitted, returns the currently-active version.",
+			QueryPath: "version",
 		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",
@@ -101,9 +111,16 @@ func handleRequirementsRetrieve(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
+	params := telnyx.RequirementGetParams{}
+
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Requirements.Get(ctx, cmd.Value("id").(string), options...)
+	_, err = client.Requirements.Get(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
 	if err != nil {
 		return err
 	}

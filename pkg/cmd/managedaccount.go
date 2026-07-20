@@ -92,7 +92,7 @@ var managedAccountsList = requestflag.WithInnerFlags(cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
-			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[email][contains], filter[email][eq], filter[organization_name][contains], filter[organization_name][eq]",
+			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[email][contains], filter[email][eq], filter[organization_name][contains], filter[organization_name][eq], filter[status][eq]",
 			QueryPath: "filter",
 		},
 		&requestflag.Flag[bool]{
@@ -131,6 +131,10 @@ var managedAccountsList = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "filter.organization-name",
 			InnerField: "organization_name",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "filter.status",
+			InnerField: "status",
 		},
 	},
 })

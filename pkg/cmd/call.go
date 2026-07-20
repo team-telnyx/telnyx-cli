@@ -202,6 +202,12 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "When set to `trim-silence`, silence will be removed from the beginning and end of the recording.",
 			BodyPath: "record_trim",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "retry-on-timeout",
+			Usage:    "Whether to keep trying the remaining routing paths (e.g. alternate providers/gateways) for the same destination after `timeout_secs` is reached for the current attempt. When set to `false`, reaching `timeout_secs` aborts the entire dial attempt and the `call.hangup` webhook reports a `hangup_cause` of `no_answer` instead of `timeout`.",
+			Default:  true,
+			BodyPath: "retry_on_timeout",
+		},
 		&requestflag.Flag[string]{
 			Name:     "send-digits-on-answer",
 			Usage:    "DTMF digits to send automatically after the called party answers. Useful for reaching an extension behind an IVR (e.g. `\"200\"` to dial extension 200 once the called party picks up). Allowed characters: `0-9`, `A-D`, `w` (0.5s pause), `W` (1s pause), `*`, `#`. Maximum 64 characters. When omitted, no automatic DTMF is sent. May also be supplied inline by appending `,<digits>` to `to` (e.g. `to=+18004247767,200`); if both forms are present, this explicit field takes precedence.",
