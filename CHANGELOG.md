@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.24.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.23.0...v0.24.0) (2026-07-21)
+
+
+### Features
+
+* promote from staging 93ffe8c ([102d51a](https://github.com/team-telnyx/telnyx-cli/commit/102d51a6a537509ebd9494f9a61f5badb47dc04f))
+
+
+### Bug Fixes
+
+* scan next commits when creating release PR ([#69](https://github.com/team-telnyx/telnyx-cli/issues/69)) ([260f422](https://github.com/team-telnyx/telnyx-cli/commit/260f422d1270b0935a4ef32407f497b9ffd6fe9e))
+
 ## [0.23.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.22.0...v0.23.0) (2026-07-20)
 
 
