@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.24.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.23.0...v0.24.0) (2026-07-21)
+
+
+### Features
+
+* promote from staging 93ffe8c ([d06df7c](https://github.com/team-telnyx/telnyx-cli/commit/d06df7c3388bb5cf71affc3b7114ee339ba5bbeb))
+
+
+### Bug Fixes
+
+* **release:** configure identity before synthetic commit ([#73](https://github.com/team-telnyx/telnyx-cli/issues/73)) ([8df1a74](https://github.com/team-telnyx/telnyx-cli/commit/8df1a747dd22bb3b7e48bae70e3c12c578978b72))
+* **release:** handle dirty local release checkout ([#75](https://github.com/team-telnyx/telnyx-cli/issues/75)) ([f76870d](https://github.com/team-telnyx/telnyx-cli/commit/f76870d2ddbeaf93e182553e119db85402e48e3a))
+* **release:** keep release PR history on production base ([#71](https://github.com/team-telnyx/telnyx-cli/issues/71)) ([56bac83](https://github.com/team-telnyx/telnyx-cli/commit/56bac831e02ed65ff333f828fabc4a3056522c3b))
+* scan next commits when creating release PR ([#69](https://github.com/team-telnyx/telnyx-cli/issues/69)) ([260f422](https://github.com/team-telnyx/telnyx-cli/commit/260f422d1270b0935a4ef32407f497b9ffd6fe9e))
+
 ## [0.23.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.22.0...v0.23.0) (2026-07-20)
 
 
