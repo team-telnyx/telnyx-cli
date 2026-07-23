@@ -52,6 +52,7 @@ func TestCallsDial(t *testing.T) {
 			"--record-track", "outbound",
 			"--record-trim", "trim-silence",
 			"--retry-on-timeout=true",
+			"--route-to-mobile=true",
 			"--send-digits-on-answer", "wwww200",
 			"--send-silence-when-idle=true",
 			"--sip-auth-password", "password",
@@ -182,6 +183,7 @@ func TestCallsDial(t *testing.T) {
 			"--record-track", "outbound",
 			"--record-trim", "trim-silence",
 			"--retry-on-timeout=true",
+			"--route-to-mobile=true",
 			"--send-digits-on-answer", "wwww200",
 			"--send-silence-when-idle=true",
 			"--sip-auth-password", "password",
@@ -373,6 +375,7 @@ func TestCallsDial(t *testing.T) {
 			"record_track: outbound\n" +
 			"record_trim: trim-silence\n" +
 			"retry_on_timeout: true\n" +
+			"route_to_mobile: true\n" +
 			"send_digits_on_answer: wwww200\n" +
 			"send_silence_when_idle: true\n" +
 			"sip_auth_password: password\n" +

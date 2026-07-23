@@ -208,6 +208,12 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Default:  true,
 			BodyPath: "retry_on_timeout",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "route-to-mobile",
+			Usage:    "When set to true, routes the call directly to the mobile device associated with the destination Telnyx Mobile number, bypassing Inbound Calls Interception configured in the Telnyx Portal under Mobile Numbers → select the number → Voice → Call Interception. Use this when transferring an intercepted call to the mobile device to prevent the call from being intercepted again. Defaults to false.",
+			Default:  false,
+			BodyPath: "route_to_mobile",
+		},
 		&requestflag.Flag[string]{
 			Name:     "send-digits-on-answer",
 			Usage:    "DTMF digits to send automatically after the called party answers. Useful for reaching an extension behind an IVR (e.g. `\"200\"` to dial extension 200 once the called party picks up). Allowed characters: `0-9`, `A-D`, `w` (0.5s pause), `W` (1s pause), `*`, `#`. Maximum 64 characters. When omitted, no automatic DTMF is sent. May also be supplied inline by appending `,<digits>` to `to` (e.g. `to=+18004247767,200`); if both forms are present, this explicit field takes precedence.",
