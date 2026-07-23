@@ -40,6 +40,11 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "ElevenLabs provider-specific parameters.",
 			BodyPath: "elevenlabs",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "humain",
+			Usage:    "Humain provider-specific parameters. Unlike other providers, Humain has no format/sample-rate negotiation (output is always PCM16 24kHz mono) and no language parameter — language is fixed per voice.",
+			BodyPath: "humain",
+		},
 		&requestflag.Flag[string]{
 			Name:     "language",
 			Usage:    "Language code (e.g. `en-US`). Usage varies by provider.",
@@ -189,6 +194,18 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 			Name:       "elevenlabs.voice-settings",
 			Usage:      "ElevenLabs voice settings (stability, similarity_boost, etc.).",
 			InnerField: "voice_settings",
+		},
+	},
+	"humain": {
+		&requestflag.InnerFlag[string]{
+			Name:       "humain.voice-id",
+			Usage:      "Humain voice identifier.",
+			InnerField: "voice_id",
+		},
+		&requestflag.InnerFlag[float64]{
+			Name:       "humain.ttfb-eagerness",
+			Usage:      "Time-to-first-byte eagerness, trading synthesis latency for quality.",
+			InnerField: "ttfb_eagerness",
 		},
 	},
 	"minimax": {
