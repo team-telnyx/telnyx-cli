@@ -47,6 +47,7 @@ var shortCodesUpdate = cli.Command{
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "tag",
+			Usage:    "Tags associated with the resource.",
 			BodyPath: "tags",
 		},
 	},

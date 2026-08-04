@@ -59,6 +59,9 @@ func TestLegacyReportingUsageReportsNumberLookupList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"legacy:reporting:usage-reports:number-lookup", "list",
+			"--max-items", "10",
+			"--page", "0",
+			"--per-page", "0",
 		)
 	})
 }

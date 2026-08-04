@@ -39,6 +39,12 @@ var callsActionsAddAIAssistantMessages = cli.Command{
 			Usage:    "The messages to add to the conversation.",
 			BodyPath: "messages",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "trigger-response",
+			Usage:    "When `true`, the injected messages immediately trigger an assistant response/turn instead of waiting for the next natural turn or idle timeout. This may interrupt a user who is still speaking.",
+			Default:  false,
+			BodyPath: "trigger_response",
+		},
 	},
 	Action:          handleCallsActionsAddAIAssistantMessages,
 	HideHelpCommand: true,
@@ -296,6 +302,10 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			Name:       "assistant.tools",
 			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
 			InnerField: "tools",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.voice-settings",
+			InnerField: "voice_settings",
 		},
 	},
 	"conversation-relay-config": {
@@ -853,12 +863,12 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 	"transcription": {
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `assemblyai/universal-streaming`, `auto` (or unset) enables native multilingual code-switching; ISO 639-1 codes (`en`, `es`, `de`, `fr`, `pt`, `it`, `tr`, `nl`, `sv`, `no`, `da`, `fi`, `hi`, `vi`, `ar`, `he`, `ja`, `zh`) bias the session to that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `assemblyai/universal-streaming`, `auto` (or unset) enables native multilingual code-switching; ISO 639-1 codes (`en`, `es`, `de`, `fr`, `pt`, `it`, `tr`, `nl`, `sv`, `no`, `da`, `fi`, `hi`, `vi`, `ar`, `he`, `ja`, `zh`) bias the session to that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-streaming` for live streaming transcription.\n- `xai/grok-stt` for live streaming transcription.\n- `soniox/stt-rt-v4` for live streaming multilingual transcription with automatic language detection.\n- `nvidia/parakeet-v3` for multilingual transcription with automatic language detection.\n- `humain/realtime` for live streaming transcription with native Arabic and Arabic/English code-switching support.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
+			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-streaming` for live streaming transcription.\n- `xai/grok-stt` for live streaming transcription.\n- `soniox/stt-rt-v4` for live streaming multilingual transcription with automatic language detection.\n- `nvidia/parakeet-v3` for multilingual transcription with automatic language detection.\n- `humain/realtime` for live streaming transcription with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` for live streaming turn-based transcription of 10 European languages with automatic language detection.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
 			InnerField: "model",
 		},
 	},
@@ -1214,6 +1224,153 @@ var callsActionsPauseRecording = cli.Command{
 	HideHelpCommand: true,
 }
 
+var callsActionsPay = requestflag.WithInnerFlags(cli.Command{
+	Name:    "pay",
+	Usage:   "Collect payment details from the caller using DTMF and either charge or tokenize\nthe payment method through a configured Pay connector. Pay pauses active call\nrecordings while sensitive payment details are collected.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "call-control-id",
+			Required:  true,
+			PathParam: "call_control_id",
+		},
+		&requestflag.Flag[float64]{
+			Name:     "amount",
+			Usage:    "Amount to charge. Required when `transaction_type` is `charge`.",
+			BodyPath: "amount",
+		},
+		&requestflag.Flag[string]{
+			Name:     "client-state",
+			Usage:    "Base64-encoded state included in subsequent webhooks.",
+			BodyPath: "client_state",
+		},
+		&requestflag.Flag[string]{
+			Name:     "command-id",
+			Usage:    "Idempotency key for the command. Telnyx ignores a duplicate command with the same `command_id` for the same `call_control_id`.",
+			BodyPath: "command_id",
+		},
+		&requestflag.Flag[string]{
+			Name:     "connector-name",
+			Usage:    "Name of the Pay connector used to process the transaction.",
+			Default:  "Default",
+			BodyPath: "connector_name",
+		},
+		&requestflag.Flag[string]{
+			Name:     "currency",
+			Usage:    "Currency used for the transaction. Pay currently supports USD only.",
+			Default:  "USD",
+			BodyPath: "currency",
+		},
+		&requestflag.Flag[string]{
+			Name:     "description",
+			Usage:    "Optional description forwarded with the payment transaction.",
+			BodyPath: "description",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "inter-digit-timeout-millis",
+			Usage:    "Time in milliseconds to wait between consecutive DTMF digits.",
+			Default:  5000,
+			BodyPath: "inter_digit_timeout_millis",
+		},
+		&requestflag.Flag[string]{
+			Name:     "language",
+			Usage:    "Language used for payment prompts.",
+			Default:  "en-US",
+			BodyPath: "language",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "max-attempts",
+			Usage:    "Maximum number of attempts for each payment collection step.",
+			Default:  3,
+			BodyPath: "max_attempts",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "metadata",
+			Usage:    "Metadata forwarded to the Pay connector.",
+			BodyPath: "metadata",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "parameters",
+			Usage:    "Additional parameters forwarded to the Pay connector.",
+			BodyPath: "parameters",
+		},
+		&requestflag.Flag[string]{
+			Name:     "payment-method",
+			Usage:    "Payment method to collect.",
+			Default:  "credit-card",
+			BodyPath: "payment_method",
+		},
+		&requestflag.Flag[string]{
+			Name:     "payment-token",
+			Usage:    "Existing payment token. When supplied, payment-detail collection is skipped.",
+			BodyPath: "payment_token",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "prompts",
+			Usage:    "Custom text-to-speech prompts keyed by payment collection step.",
+			BodyPath: "prompts",
+		},
+		&requestflag.Flag[string]{
+			Name:     "service-level",
+			Usage:    "Speech synthesis service level used for payment prompts. Pay defaults to `premium`.",
+			Default:  "premium",
+			BodyPath: "service_level",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "timeout-millis",
+			Usage:    "Time in milliseconds to wait for DTMF input for each collection step.",
+			Default:  5000,
+			BodyPath: "timeout_millis",
+		},
+		&requestflag.Flag[string]{
+			Name:     "transaction-type",
+			Usage:    "Transaction to perform. If omitted, Pay infers `tokenize` when `amount` is absent or zero and `charge` when `amount` is positive.",
+			BodyPath: "transaction_type",
+		},
+		&requestflag.Flag[string]{
+			Name:     "voice",
+			Usage:    "Voice used for payment prompts. Accepts `male`, `female`, or a provider voice in `<Provider>.<Model>.<VoiceId>` format, for example `AWS.Polly.Joanna` or `Telnyx.KokoroTTS.af`.",
+			Default:  "female",
+			BodyPath: "voice",
+		},
+	},
+	Action:          handleCallsActionsPay,
+	HideHelpCommand: true,
+}, map[string][]requestflag.HasOuterFlag{
+	"prompts": {
+		&requestflag.InnerFlag[any]{
+			Name:       "prompts.bank-account-number",
+			Usage:      "A default prompt string or an ordered list of qualified prompts.",
+			InnerField: "bank-account-number",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "prompts.bank-routing-number",
+			Usage:      "A default prompt string or an ordered list of qualified prompts.",
+			InnerField: "bank-routing-number",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "prompts.expiration-date",
+			Usage:      "A default prompt string or an ordered list of qualified prompts.",
+			InnerField: "expiration-date",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "prompts.payment-card-number",
+			Usage:      "A default prompt string or an ordered list of qualified prompts.",
+			InnerField: "payment-card-number",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "prompts.postal-code",
+			Usage:      "A default prompt string or an ordered list of qualified prompts.",
+			InnerField: "postal-code",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "prompts.security-code",
+			Usage:      "A default prompt string or an ordered list of qualified prompts.",
+			InnerField: "security-code",
+		},
+	},
+})
+
 var callsActionsRefer = requestflag.WithInnerFlags(cli.Command{
 	Name:    "refer",
 	Usage:   "Initiate a SIP Refer on a Call Control call. You can initiate a SIP Refer at any\npoint in the duration of a call.",
@@ -1557,17 +1714,6 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "The settings associated with speech to text for the voice assistant. This is only relevant if the assistant uses a text-to-text language model. Any assistant using a model with native audio support (e.g. `fixie-ai/ultravox-v0_4`) will ignore this field.",
 			BodyPath: "transcription",
 		},
-		&requestflag.Flag[string]{
-			Name:     "voice",
-			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.",
-			Default:  "Telnyx.KokoroTTS.af",
-			BodyPath: "voice",
-		},
-		&requestflag.Flag[map[string]any]{
-			Name:     "voice-settings",
-			Usage:    "The settings associated with the voice selected",
-			BodyPath: "voice_settings",
-		},
 	},
 	Action:          handleCallsActionsStartAIAssistant,
 	HideHelpCommand: true,
@@ -1638,6 +1784,10 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
 			InnerField: "tools",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.voice-settings",
+			InnerField: "voice_settings",
+		},
 	},
 	"interruption-settings": {
 		&requestflag.InnerFlag[bool]{
@@ -1671,12 +1821,12 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 	"transcription": {
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `assemblyai/universal-streaming`, `auto` (or unset) enables native multilingual code-switching; ISO 639-1 codes (`en`, `es`, `de`, `fr`, `pt`, `it`, `tr`, `nl`, `sv`, `no`, `da`, `fi`, `hi`, `vi`, `ar`, `he`, `ja`, `zh`) bias the session to that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `assemblyai/universal-streaming`, `auto` (or unset) enables native multilingual code-switching; ISO 639-1 codes (`en`, `es`, `de`, `fr`, `pt`, `it`, `tr`, `nl`, `sv`, `no`, `da`, `fi`, `hi`, `vi`, `ar`, `he`, `ja`, `zh`) bias the session to that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-streaming` for live streaming transcription.\n- `xai/grok-stt` for live streaming transcription.\n- `soniox/stt-rt-v4` for live streaming multilingual transcription with automatic language detection.\n- `nvidia/parakeet-v3` for multilingual transcription with automatic language detection.\n- `humain/realtime` for live streaming transcription with native Arabic and Arabic/English code-switching support.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
+			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-streaming` for live streaming transcription.\n- `xai/grok-stt` for live streaming transcription.\n- `soniox/stt-rt-v4` for live streaming multilingual transcription with automatic language detection.\n- `nvidia/parakeet-v3` for multilingual transcription with automatic language detection.\n- `humain/realtime` for live streaming transcription with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` for live streaming turn-based transcription of 10 European languages with automatic language detection.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
 			InnerField: "model",
 		},
 	},
@@ -3669,6 +3819,55 @@ func handleCallsActionsPauseRecording(ctx context.Context, cmd *cli.Command) err
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "calls:actions pause-recording",
+		Transform:      transform,
+	})
+}
+
+func handleCallsActionsPay(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("call-control-id") && len(unusedArgs) > 0 {
+		cmd.Set("call-control-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.CallActionPayParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Calls.Actions.Pay(
+		ctx,
+		cmd.Value("call-control-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "calls:actions pay",
 		Transform:      transform,
 	})
 }

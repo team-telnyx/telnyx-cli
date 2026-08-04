@@ -20,6 +20,7 @@ func TestCallsActionsAddAIAssistantMessages(t *testing.T) {
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--message", "{content: Get the user's favorite color, role: system, metadata: {foo: bar}}",
+			"--trigger-response=false",
 		)
 	})
 
@@ -32,7 +33,8 @@ func TestCallsActionsAddAIAssistantMessages(t *testing.T) {
 			"  - content: Get the user's favorite color\n" +
 			"    role: system\n" +
 			"    metadata:\n" +
-			"      foo: bar\n")
+			"      foo: bar\n" +
+			"trigger_response: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -50,7 +52,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "answer",
 			"--call-control-id", "call_control_id",
-			"--assistant", "{id: asst_123, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: 'Hi, I''m your assistant. How can I help?', instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{hangup: {description: description}, type: hangup}]}",
+			"--assistant", "{id: asst_123, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: 'Hi, I''m your assistant. How can I help?', instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{hangup: {description: description}, type: hangup}], voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -109,6 +111,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--assistant.observability-settings", "{foo: bar}",
 			"--assistant.openai-api-key-ref", "my_openai_api_key",
 			"--assistant.tools", "[{hangup: {description: description}, type: hangup}]",
+			"--assistant.voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -212,6 +215,21 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"    - hangup:\n" +
 			"        description: description\n" +
 			"      type: hangup\n" +
+			"  voice_settings:\n" +
+			"    voice: voice\n" +
+			"    api_key_ref: api_key_ref\n" +
+			"    background_audio:\n" +
+			"      type: predefined_media\n" +
+			"      value: silence\n" +
+			"      volume: 0.1\n" +
+			"    expressive_mode: true\n" +
+			"    language_boost: auto\n" +
+			"    similarity_boost: 0\n" +
+			"    speed: 0\n" +
+			"    style: 0\n" +
+			"    temperature: 0\n" +
+			"    use_speaker_boost: true\n" +
+			"    voice_speed: 0\n" +
 			"billing_group_id: f5586561-8ff0-4291-a0ac-84fe544797bd\n" +
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
@@ -853,6 +871,117 @@ func TestCallsActionsPauseRecording(t *testing.T) {
 	})
 }
 
+func TestCallsActionsPay(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "pay",
+			"--call-control-id", "call_control_id",
+			"--amount", "10.5",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+			"--connector-name", "Default",
+			"--currency", "USD",
+			"--description", "Order 12345",
+			"--inter-digit-timeout-millis", "5000",
+			"--language", "en-US",
+			"--max-attempts", "3",
+			"--metadata", "{order_id: bar}",
+			"--parameters", "{customer_id: bar}",
+			"--payment-method", "credit-card",
+			"--payment-token", "tok_abc123",
+			"--prompts", "{bank-account-number: x, bank-routing-number: x, expiration-date: x, payment-card-number: [{text: Please enter your card number., attempt: 2 3, card_type: amex, error_type: invalid-card-number}, {text: That card number was not accepted. Please try again., attempt: 2 3, card_type: amex, error_type: invalid-card-number}], postal-code: x, security-code: x}",
+			"--service-level", "service_level",
+			"--timeout-millis", "5000",
+			"--transaction-type", "charge",
+			"--voice", "female",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(callsActionsPay)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"calls:actions", "pay",
+			"--call-control-id", "call_control_id",
+			"--amount", "10.5",
+			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
+			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
+			"--connector-name", "Default",
+			"--currency", "USD",
+			"--description", "Order 12345",
+			"--inter-digit-timeout-millis", "5000",
+			"--language", "en-US",
+			"--max-attempts", "3",
+			"--metadata", "{order_id: bar}",
+			"--parameters", "{customer_id: bar}",
+			"--payment-method", "credit-card",
+			"--payment-token", "tok_abc123",
+			"--prompts.bank-account-number", "x",
+			"--prompts.bank-routing-number", "x",
+			"--prompts.expiration-date", "x",
+			"--prompts.payment-card-number", "[{text: Please enter your card number., attempt: 2 3, card_type: amex, error_type: invalid-card-number}, {text: That card number was not accepted. Please try again., attempt: 2 3, card_type: amex, error_type: invalid-card-number}]",
+			"--prompts.postal-code", "x",
+			"--prompts.security-code", "x",
+			"--service-level", "service_level",
+			"--timeout-millis", "5000",
+			"--transaction-type", "charge",
+			"--voice", "female",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"amount: 10.5\n" +
+			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
+			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
+			"connector_name: Default\n" +
+			"currency: USD\n" +
+			"description: Order 12345\n" +
+			"inter_digit_timeout_millis: 5000\n" +
+			"language: en-US\n" +
+			"max_attempts: 3\n" +
+			"metadata:\n" +
+			"  order_id: bar\n" +
+			"parameters:\n" +
+			"  customer_id: bar\n" +
+			"payment_method: credit-card\n" +
+			"payment_token: tok_abc123\n" +
+			"prompts:\n" +
+			"  bank-account-number: x\n" +
+			"  bank-routing-number: x\n" +
+			"  expiration-date: x\n" +
+			"  payment-card-number:\n" +
+			"    - text: Please enter your card number.\n" +
+			"      attempt: 2 3\n" +
+			"      card_type: amex\n" +
+			"      error_type: invalid-card-number\n" +
+			"    - text: That card number was not accepted. Please try again.\n" +
+			"      attempt: 2 3\n" +
+			"      card_type: amex\n" +
+			"      error_type: invalid-card-number\n" +
+			"  postal-code: x\n" +
+			"  security-code: x\n" +
+			"service_level: service_level\n" +
+			"timeout_millis: 5000\n" +
+			"transaction_type: charge\n" +
+			"voice: female\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"calls:actions", "pay",
+			"--call-control-id", "call_control_id",
+		)
+	})
+}
+
 func TestCallsActionsRefer(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
@@ -1096,7 +1225,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "start-ai-assistant",
 			"--call-control-id", "call_control_id",
-			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]}",
+			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}], voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--greeting", "Hello, can you tell me your age and where you live?",
@@ -1105,8 +1234,6 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--participant", "{id: v3:abc123def456, role: user, name: John Doe, on_hangup: continue_conversation}",
 			"--send-message-history-updates=true",
 			"--transcription", "{language: auto, model: distil-whisper/distil-large-v2}",
-			"--voice", "Telnyx.KokoroTTS.af",
-			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
 		)
 	})
 
@@ -1133,6 +1260,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--assistant.observability-settings", "{foo: bar}",
 			"--assistant.openai-api-key-ref", "my_openai_api_key",
 			"--assistant.tools", "[{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]",
+			"--assistant.voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--greeting", "Hello, can you tell me your age and where you live?",
@@ -1145,8 +1273,6 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--send-message-history-updates=true",
 			"--transcription.language", "auto",
 			"--transcription.model", "distil-whisper/distil-large-v2",
-			"--voice", "Telnyx.KokoroTTS.af",
-			"--voice-settings", "{type: elevenlabs, api_key_ref: my_elevenlabs_api_key}",
 		)
 	})
 
@@ -1194,6 +1320,21 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"        attendee_name: attendee_name\n" +
 			"        attendee_timezone: attendee_timezone\n" +
 			"      type: book_appointment\n" +
+			"  voice_settings:\n" +
+			"    voice: voice\n" +
+			"    api_key_ref: api_key_ref\n" +
+			"    background_audio:\n" +
+			"      type: predefined_media\n" +
+			"      value: silence\n" +
+			"      volume: 0.1\n" +
+			"    expressive_mode: true\n" +
+			"    language_boost: auto\n" +
+			"    similarity_boost: 0\n" +
+			"    speed: 0\n" +
+			"    style: 0\n" +
+			"    temperature: 0\n" +
+			"    use_speaker_boost: true\n" +
+			"    voice_speed: 0\n" +
 			"client_state: aGF2ZSBhIG5pY2UgZGF5ID1d\n" +
 			"command_id: 891510ac-f3e4-11e8-af5b-de00688a4901\n" +
 			"greeting: Hello, can you tell me your age and where you live?\n" +
@@ -1212,11 +1353,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"send_message_history_updates: true\n" +
 			"transcription:\n" +
 			"  language: auto\n" +
-			"  model: distil-whisper/distil-large-v2\n" +
-			"voice: Telnyx.KokoroTTS.af\n" +
-			"voice_settings:\n" +
-			"  type: elevenlabs\n" +
-			"  api_key_ref: my_elevenlabs_api_key\n")
+			"  model: distil-whisper/distil-large-v2\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

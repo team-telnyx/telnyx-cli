@@ -101,7 +101,7 @@ func TestDirReferencesUpdate(t *testing.T) {
 			"dir:references", "update",
 			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
 			"--ref-type", "business",
-			"--slot", "0",
+			"--slot", "1",
 			"--email", "dana.reyes@example.com",
 			"--full-name", "Dana Reyes",
 			"--job-title", "VP of Operations",
@@ -128,7 +128,7 @@ func TestDirReferencesUpdate(t *testing.T) {
 			"dir:references", "update",
 			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
 			"--ref-type", "business",
-			"--slot", "0",
+			"--slot", "1",
 		)
 	})
 }

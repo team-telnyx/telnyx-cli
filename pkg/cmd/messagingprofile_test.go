@@ -18,7 +18,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"messaging-profiles", "create",
 			"--name", "My name",
 			"--whitelisted-destination", "US",
-			"--ai-assistant-id", "ai_assistant_id",
+			"--ai-assistant-id", "ai_assistant-a80a9d4a-728c-4593-852c-2e93ad890000",
 			"--alpha-sender", "sqF",
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
@@ -48,7 +48,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"messaging-profiles", "create",
 			"--name", "My name",
 			"--whitelisted-destination", "US",
-			"--ai-assistant-id", "ai_assistant_id",
+			"--ai-assistant-id", "ai_assistant-a80a9d4a-728c-4593-852c-2e93ad890000",
 			"--alpha-sender", "sqF",
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
@@ -80,7 +80,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"name: My name\n" +
 			"whitelisted_destinations:\n" +
 			"  - US\n" +
-			"ai_assistant_id: ai_assistant_id\n" +
+			"ai_assistant_id: ai_assistant-a80a9d4a-728c-4593-852c-2e93ad890000\n" +
 			"alpha_sender: sqF\n" +
 			"daily_spend_limit: '269125115713'\n" +
 			"daily_spend_limit_enabled: true\n" +

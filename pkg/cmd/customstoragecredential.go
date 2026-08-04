@@ -26,7 +26,7 @@ var customStorageCredentialsCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "backend",
-			Usage:    `Allowed values: "gcs", "s3", "azure".`,
+			Usage:    `Allowed values: "gcs", "s3", "s3-generic", "azure".`,
 			Required: true,
 			BodyPath: "backend",
 		},
@@ -67,7 +67,7 @@ var customStorageCredentialsUpdate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "backend",
-			Usage:    `Allowed values: "gcs", "s3", "azure".`,
+			Usage:    `Allowed values: "gcs", "s3", "s3-generic", "azure".`,
 			Required: true,
 			BodyPath: "backend",
 		},
