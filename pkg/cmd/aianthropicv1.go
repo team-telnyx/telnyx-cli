@@ -69,7 +69,7 @@ var aiAnthropicV1Messages = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "service-tier",
-			Usage:    "Service tier for the request.",
+			Usage:    "The service tier to use for this request. Supported values vary by model; use the Telnyx models endpoint and inspect the model's `service_tiers` field. If omitted, Telnyx-hosted models use `default`.",
 			BodyPath: "service_tier",
 		},
 		&requestflag.Flag[[]string]{

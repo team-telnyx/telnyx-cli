@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.25.0...v0.26.0) (2026-08-04)
+
+
+### Features
+
+* promote from staging 9800024 ([6a7a0ea](https://github.com/team-telnyx/telnyx-cli/commit/6a7a0ead3ddf883b6c5f1d40d9c62e047ac54980))
+
 ## [0.25.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.24.0...v0.25.0) (2026-07-23)
 
 

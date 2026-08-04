@@ -60,10 +60,25 @@ var legacyReportingUsageReportsNumberLookupRetrieve = cli.Command{
 }
 
 var legacyReportingUsageReportsNumberLookupList = cli.Command{
-	Name:            "list",
-	Usage:           "Retrieve a paginated list of telco data usage reports",
-	Suggest:         true,
-	Flags:           []cli.Flag{},
+	Name:    "list",
+	Usage:   "Retrieve a paginated list of telco data usage reports",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[int64]{
+			Name:      "page",
+			Usage:     "Page number to retrieve (1-based).",
+			QueryPath: "page",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "per-page",
+			Usage:     "Filter results by per page.",
+			QueryPath: "per_page",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
+	},
 	Action:          handleLegacyReportingUsageReportsNumberLookupList,
 	HideHelpCommand: true,
 }
@@ -185,24 +200,40 @@ func handleLegacyReportingUsageReportsNumberLookupList(ctx context.Context, cmd 
 		return err
 	}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Legacy.Reporting.UsageReports.NumberLookup.List(ctx, options...)
-	if err != nil {
-		return err
-	}
+	params := telnyx.LegacyReportingUsageReportNumberLookupListParams{}
 
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "legacy:reporting:usage-reports:number-lookup list",
-		Transform:      transform,
-	})
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.Legacy.Reporting.UsageReports.NumberLookup.List(ctx, params, options...)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "legacy:reporting:usage-reports:number-lookup list",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.Legacy.Reporting.UsageReports.NumberLookup.ListAutoPaging(ctx, params, options...)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "legacy:reporting:usage-reports:number-lookup list",
+			Transform:      transform,
+		})
+	}
 }
 
 func handleLegacyReportingUsageReportsNumberLookupDelete(ctx context.Context, cmd *cli.Command) error {

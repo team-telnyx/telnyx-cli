@@ -35,6 +35,7 @@ func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 			"--presence-penalty", "0",
 			"--response-format", "{type: text}",
 			"--seed", "0",
+			"--service-tier", "service_tier",
 			"--stop", "string",
 			"--stream=true",
 			"--temperature", "0",
@@ -76,6 +77,7 @@ func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 			"--presence-penalty", "0",
 			"--response-format.type", "text",
 			"--seed", "0",
+			"--service-tier", "service_tier",
 			"--stop", "string",
 			"--stream=true",
 			"--temperature", "0",
@@ -115,6 +117,7 @@ func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 			"response_format:\n" +
 			"  type: text\n" +
 			"seed: 0\n" +
+			"service_tier: service_tier\n" +
 			"stop: string\n" +
 			"stream: true\n" +
 			"temperature: 0\n" +

@@ -976,6 +976,7 @@ func TestAIAssistantsChat(t *testing.T) {
 			"--content", "Tell me a joke about cats",
 			"--conversation-id", "42b20469-1215-4a9a-8964-c36f66b406f4",
 			"--name", "Charlie",
+			"--stream=true",
 		)
 	})
 
@@ -984,7 +985,8 @@ func TestAIAssistantsChat(t *testing.T) {
 		pipeData := []byte("" +
 			"content: Tell me a joke about cats\n" +
 			"conversation_id: 42b20469-1215-4a9a-8964-c36f66b406f4\n" +
-			"name: Charlie\n")
+			"name: Charlie\n" +
+			"stream: true\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

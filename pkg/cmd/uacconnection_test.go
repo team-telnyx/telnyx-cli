@@ -25,7 +25,7 @@ func TestUacConnectionsCreate(t *testing.T) {
 			"--dtmf-type", "RFC 2833",
 			"--encode-contact-header-enabled=true",
 			"--encrypted-media", "SRTP",
-			"--external-uac-settings", "{auth_username: auth8492, expiration_sec: 600, from_user: '8492', outbound_proxy: outbound.sip-pbx.acme.example:5061, password: testtesttest, proxy: sip-pbx.acme.example, transport: TLS, username: ext8492}",
+			"--external-uac-settings", "{auth_username: auth8492, expiration_sec: 600, from_user: '8492', outbound_proxy: outbound.sip-pbx.acme.example:5061, password: testtesttest, proxy: sip-pbx.acme.example, transport: TLS, user_agent: Telnyx-Usage-Voice-Trunk/1.0, username: ext8492}",
 			"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_routing_method: sequential, dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, simultaneous_ringing: disabled, sip_compact_headers_enabled: true, sip_region: US, timeout_1xx_secs: 10, timeout_2xx_secs: 20}",
 			"--internal-uac-settings", "{destination_uri: 14155550123@acme.sip.telnyx.com}",
 			"--ios-push-credential-id", "ec0c8e5d-439e-4620-a0c1-9d9c8d02a836",
@@ -72,6 +72,7 @@ func TestUacConnectionsCreate(t *testing.T) {
 			"--external-uac-settings.password", "testtesttest",
 			"--external-uac-settings.proxy", "sip-pbx.acme.example",
 			"--external-uac-settings.transport", "TLS",
+			"--external-uac-settings.user-agent", "Telnyx-Usage-Voice-Trunk/1.0",
 			"--external-uac-settings.username", "ext8492",
 			"--inbound.ani-number-format", "+E.164",
 			"--inbound.channel-limit", "10",
@@ -140,6 +141,7 @@ func TestUacConnectionsCreate(t *testing.T) {
 			"  password: testtesttest\n" +
 			"  proxy: sip-pbx.acme.example\n" +
 			"  transport: TLS\n" +
+			"  user_agent: Telnyx-Usage-Voice-Trunk/1.0\n" +
 			"  username: ext8492\n" +
 			"inbound:\n" +
 			"  ani_number_format: +E.164\n" +
@@ -230,7 +232,7 @@ func TestUacConnectionsUpdate(t *testing.T) {
 			"--dtmf-type", "RFC 2833",
 			"--encode-contact-header-enabled=true",
 			"--encrypted-media", "SRTP",
-			"--external-uac-settings", "{auth_username: auth8492, expiration_sec: 600, from_user: '8492', outbound_proxy: outbound.sip-pbx.acme.example:5061, password: testtesttest, proxy: sip-pbx.acme.example, transport: TLS, username: ext8492}",
+			"--external-uac-settings", "{auth_username: auth8492, expiration_sec: 600, from_user: '8492', outbound_proxy: outbound.sip-pbx.acme.example:5061, password: testtesttest, proxy: sip-pbx.acme.example, transport: TLS, user_agent: null, username: ext8492}",
 			"--inbound", "{ani_number_format: +E.164, channel_limit: 10, codecs: [G722], default_routing_method: sequential, dnis_number_format: +e164, generate_ringback_tone: true, isup_headers_enabled: true, prack_enabled: true, shaken_stir_enabled: true, simultaneous_ringing: disabled, sip_compact_headers_enabled: true, sip_region: US, timeout_1xx_secs: 10, timeout_2xx_secs: 20}",
 			"--internal-uac-settings", "{destination_uri: 14155550123@acme.sip.telnyx.com}",
 			"--ios-push-credential-id", "ec0c8e5d-439e-4620-a0c1-9d9c8d02a836",
@@ -278,6 +280,7 @@ func TestUacConnectionsUpdate(t *testing.T) {
 			"--external-uac-settings.password", "testtesttest",
 			"--external-uac-settings.proxy", "sip-pbx.acme.example",
 			"--external-uac-settings.transport", "TLS",
+			"--external-uac-settings.user-agent", "null",
 			"--external-uac-settings.username", "ext8492",
 			"--inbound.ani-number-format", "+E.164",
 			"--inbound.channel-limit", "10",
@@ -346,6 +349,7 @@ func TestUacConnectionsUpdate(t *testing.T) {
 			"  password: testtesttest\n" +
 			"  proxy: sip-pbx.acme.example\n" +
 			"  transport: TLS\n" +
+			"  user_agent: null\n" +
 			"  username: ext8492\n" +
 			"inbound:\n" +
 			"  ani_number_format: +E.164\n" +

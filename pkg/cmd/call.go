@@ -491,6 +491,10 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
 			InnerField: "tools",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.voice-settings",
+			InnerField: "voice_settings",
+		},
 	},
 	"conference-config": {
 		&requestflag.InnerFlag[string]{
