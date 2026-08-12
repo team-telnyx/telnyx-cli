@@ -16,7 +16,7 @@ import (
 
 var verifiedNumbersActionsSubmitVerificationCode = cli.Command{
 	Name:    "submit-verification-code",
-	Usage:   "Submit verification code",
+	Usage:   "Submit the verification code received via the selected verification method to\nverify a phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

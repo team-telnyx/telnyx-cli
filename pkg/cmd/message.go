@@ -213,7 +213,7 @@ var messagesSend = cli.Command{
 
 var messagesSendGroupMms = cli.Command{
 	Name:    "send-group-mms",
-	Usage:   "Send a group MMS message",
+	Usage:   "Queues an MMS addressed to multiple recipients as a group conversation. Delivery\nevents are reported asynchronously through messaging webhooks.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -266,7 +266,7 @@ var messagesSendGroupMms = cli.Command{
 
 var messagesSendLongCode = cli.Command{
 	Name:    "send-long-code",
-	Usage:   "Send a long code message",
+	Usage:   "Queues an outbound SMS or MMS using a long-code sender. Delivery progress and\nfinal disposition are reported asynchronously through messaging webhooks.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -336,7 +336,7 @@ var messagesSendLongCode = cli.Command{
 
 var messagesSendNumberPool = cli.Command{
 	Name:    "send-number-pool",
-	Usage:   "Send a message using number pool",
+	Usage:   "Queues an outbound message using a number pool. Telnyx selects an eligible\nsender from the pool according to its messaging profile configuration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -406,7 +406,7 @@ var messagesSendNumberPool = cli.Command{
 
 var messagesSendShortCode = cli.Command{
 	Name:    "send-short-code",
-	Usage:   "Send a short code message",
+	Usage:   "Queues an outbound SMS or MMS using a short-code sender. Delivery progress and\nfinal disposition are reported asynchronously through messaging webhooks.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -522,6 +522,107 @@ var messagesSendWithAlphanumericSender = cli.Command{
 	Action:          handleMessagesSendWithAlphanumericSender,
 	HideHelpCommand: true,
 }
+
+var messagesWhatsapp = requestflag.WithInnerFlags(cli.Command{
+	Name:    "whatsapp",
+	Usage:   "Sends a WhatsApp message using a Telnyx WhatsApp-enabled number. The message\nbody, interactive elements, media, location, and reaction content are specified\nin the `whatsapp_message` field. Delivery progress and final disposition are\nreported asynchronously through messaging webhooks.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:     "from",
+			Usage:    "Phone number in +E.164 format associated with Whatsapp account",
+			Required: true,
+			BodyPath: "from",
+		},
+		&requestflag.Flag[string]{
+			Name:     "to",
+			Usage:    "Phone number in +E.164 format",
+			Required: true,
+			BodyPath: "to",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "whatsapp-message",
+			Required: true,
+			BodyPath: "whatsapp_message",
+		},
+		&requestflag.Flag[string]{
+			Name:     "messaging-profile-id",
+			Usage:    "Messaging profile ID - required if the 'from' number is not SMS-enabled",
+			BodyPath: "messaging_profile_id",
+		},
+		&requestflag.Flag[string]{
+			Name:     "type",
+			Usage:    `Message type - must be set to "WHATSAPP"`,
+			BodyPath: "type",
+		},
+		&requestflag.Flag[string]{
+			Name:     "webhook-url",
+			Usage:    "The URL where webhooks related to this message will be sent.",
+			BodyPath: "webhook_url",
+		},
+	},
+	Action:          handleMessagesWhatsapp,
+	HideHelpCommand: true,
+}, map[string][]requestflag.HasOuterFlag{
+	"whatsapp-message": {
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.audio",
+			InnerField: "audio",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "whatsapp-message.biz-opaque-callback-data",
+			Usage:      "custom data to return with status update",
+			InnerField: "biz_opaque_callback_data",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "whatsapp-message.contacts",
+			InnerField: "contacts",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.document",
+			InnerField: "document",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.image",
+			InnerField: "image",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.interactive",
+			InnerField: "interactive",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.location",
+			InnerField: "location",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.reaction",
+			InnerField: "reaction",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.sticker",
+			InnerField: "sticker",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.template",
+			Usage:      "Template message object. Provide either template_id or name + language to identify the template.",
+			InnerField: "template",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.text",
+			Usage:      "Text message content. Can only be sent within a 24-hour customer service window.",
+			InnerField: "text",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "whatsapp-message.type",
+			Usage:      `Allowed values: "audio", "document", "image", "sticker", "video", "interactive", "location", "template", "reaction", "contacts", "text".`,
+			InnerField: "type",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "whatsapp-message.video",
+			InnerField: "video",
+		},
+	},
+})
 
 func handleMessagesRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
@@ -932,6 +1033,47 @@ func handleMessagesSendWithAlphanumericSender(ctx context.Context, cmd *cli.Comm
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "messages send-with-alphanumeric-sender",
+		Transform:      transform,
+	})
+}
+
+func handleMessagesWhatsapp(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.MessageWhatsappParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Messages.Whatsapp(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "messages whatsapp",
 		Transform:      transform,
 	})
 }

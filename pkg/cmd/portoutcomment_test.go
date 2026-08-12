@@ -16,13 +16,13 @@ func TestPortoutsCommentsCreate(t *testing.T) {
 			"--api-key", "string",
 			"portouts:comments", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--body", "body",
+			"--body", "string",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("body: body")
+		pipeData := []byte("body: string")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

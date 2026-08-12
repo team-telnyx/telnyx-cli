@@ -107,7 +107,7 @@ var messagingHostedNumbersList = cli.Command{
 
 var messagingHostedNumbersDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a messaging hosted number",
+	Usage:   "Removes the specified hosted number from Telnyx messaging management.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

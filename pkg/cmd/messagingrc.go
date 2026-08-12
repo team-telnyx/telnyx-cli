@@ -36,7 +36,7 @@ var messagingRcsInviteTestNumber = cli.Command{
 
 var messagingRcsListBulkCapabilities = cli.Command{
 	Name:    "list-bulk-capabilities",
-	Usage:   "Check RCS capabilities (batch)",
+	Usage:   "Returns RCS capability information for multiple recipients in one request.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -58,7 +58,7 @@ var messagingRcsListBulkCapabilities = cli.Command{
 
 var messagingRcsRetrieveCapabilities = cli.Command{
 	Name:    "retrieve-capabilities",
-	Usage:   "Check RCS capabilities",
+	Usage:   "Returns the RCS features supported by the specified recipient for the selected\nagent.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

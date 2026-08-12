@@ -49,7 +49,7 @@ var storageMigrationsCreate = cli.Command{
 
 var storageMigrationsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a Migration",
+	Usage:   "Retrieve the details and status of a specific storage migration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -64,7 +64,7 @@ var storageMigrationsRetrieve = cli.Command{
 
 var storageMigrationsList = cli.Command{
 	Name:            "list",
-	Usage:           "List all Migrations",
+	Usage:           "Retrieve a list of the storage migrations on your account.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleStorageMigrationsList,

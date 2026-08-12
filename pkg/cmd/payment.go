@@ -16,7 +16,7 @@ import (
 
 var paymentCreateStoredPaymentTransaction = cli.Command{
 	Name:    "create-stored-payment-transaction",
-	Usage:   "Create a stored payment transaction",
+	Usage:   "Create a transaction that charges a stored payment method on the account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -251,7 +251,7 @@ var externalConnectionsDelete = cli.Command{
 
 var externalConnectionsUpdateLocation = cli.Command{
 	Name:    "update-location",
-	Usage:   "Update a location's static emergency address",
+	Usage:   "Update the static emergency address assigned to a specific location of an\nexternal connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

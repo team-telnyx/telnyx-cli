@@ -31,7 +31,7 @@ var otaUpdatesRetrieve = cli.Command{
 
 var otaUpdatesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List OTA updates",
+	Usage:   "Retrieve a paginated list of over-the-air (OTA) update operations for your SIM\ncards.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

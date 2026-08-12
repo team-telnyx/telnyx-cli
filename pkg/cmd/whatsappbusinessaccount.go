@@ -16,7 +16,7 @@ import (
 
 var whatsappBusinessAccountsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a single Whatsapp Business Account",
+	Usage:   "Returns the configuration and status of the specified WhatsApp Business Account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var whatsappBusinessAccountsRetrieve = cli.Command{
 
 var whatsappBusinessAccountsList = cli.Command{
 	Name:    "list",
-	Usage:   "List Whatsapp Business Accounts",
+	Usage:   "Returns WhatsApp Business Accounts linked to the authenticated Telnyx account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -53,7 +53,7 @@ var whatsappBusinessAccountsList = cli.Command{
 
 var whatsappBusinessAccountsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Whatsapp Business Account",
+	Usage:   "Unlinks and deletes the specified WhatsApp Business Account resource from\nTelnyx.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

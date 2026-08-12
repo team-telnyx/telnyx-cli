@@ -16,7 +16,7 @@ import (
 
 var globalIPLatencyRetrieve = requestflag.WithInnerFlags(cli.Command{
 	Name:    "retrieve",
-	Usage:   "Global IP Latency Metrics",
+	Usage:   "Retrieve latency metrics measured for your Global IPs.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

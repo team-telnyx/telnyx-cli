@@ -16,7 +16,7 @@ import (
 
 var roomParticipantsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "View a room participant.",
+	Usage:   "Returns the participant identified by `room_participant_id`, including its\nsession, context, and join, update, and leave timestamps.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var roomParticipantsRetrieve = cli.Command{
 
 var roomParticipantsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "View a list of room participants.",
+	Usage:   "Returns a paginated list of room participants across sessions. Filter\nparticipants by session, join, update, or leave date and by participant context.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

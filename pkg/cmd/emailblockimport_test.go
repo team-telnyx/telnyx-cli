@@ -17,7 +17,7 @@ func TestEmailBlocksImportCreate(t *testing.T) {
 			"--api-key", "string",
 			"email-blocks:import", "create",
 			"--file", mocktest.TestFile(t, "Example data"),
-			"--block-ttl-days", "1",
+			"--block-ttl-days", "30",
 		)
 	})
 
@@ -26,7 +26,7 @@ func TestEmailBlocksImportCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeDataStr := "" +
 			"file: Example data\n" +
-			"block_ttl_days: 1\n"
+			"block_ttl_days: 30\n"
 		pipeDataStr = strings.ReplaceAll(pipeDataStr, "Example data", testFile)
 		pipeData := []byte(pipeDataStr)
 		mocktest.TestRunMockTestWithPipeAndFlags(

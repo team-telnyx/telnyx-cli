@@ -202,7 +202,7 @@ var messaging10dlcCampaignGetOperationStatus = cli.Command{
 
 var messaging10dlcCampaignGetSharingStatus = cli.Command{
 	Name:    "get-sharing-status",
-	Usage:   "Get Sharing Status",
+	Usage:   "Returns whether the campaign is configured for partner sharing and the current\nsharing state.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

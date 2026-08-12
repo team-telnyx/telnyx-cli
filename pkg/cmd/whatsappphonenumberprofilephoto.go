@@ -16,7 +16,7 @@ import (
 
 var whatsappPhoneNumbersProfilePhotoRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get Whatsapp profile photo",
+	Usage:   "Returns the current business-profile photo for the specified WhatsApp phone\nnumber.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var whatsappPhoneNumbersProfilePhotoRetrieve = cli.Command{
 
 var whatsappPhoneNumbersProfilePhotoDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete Whatsapp profile photo",
+	Usage:   "Removes the business-profile photo from the specified WhatsApp phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -46,7 +46,7 @@ var whatsappPhoneNumbersProfilePhotoDelete = cli.Command{
 
 var whatsappPhoneNumbersProfilePhotoUpload = cli.Command{
 	Name:    "upload",
-	Usage:   "Upload Whatsapp profile photo",
+	Usage:   "Uploads and assigns a business-profile photo to the specified WhatsApp phone\nnumber.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -27,16 +27,16 @@ func TestOAuthGrants(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"oauth", "grants",
-			"--allowed=true",
-			"--consent-token", "consent_token",
+			"--allowed=false",
+			"--consent-token", "string",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"allowed: true\n" +
-			"consent_token: consent_token\n")
+			"allowed: false\n" +
+			"consent_token: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -54,13 +54,13 @@ func TestOAuthIntrospect(t *testing.T) {
 			"--client-id", "string",
 			"--client-secret", "string",
 			"oauth", "introspect",
-			"--token", "token",
+			"--token", "string",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("token: token")
+		pipeData := []byte("token: string")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

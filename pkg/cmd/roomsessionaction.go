@@ -31,7 +31,7 @@ var roomsSessionsActionsEnd = cli.Command{
 
 var roomsSessionsActionsKick = cli.Command{
 	Name:    "kick",
-	Usage:   "Kick participants from a room session.",
+	Usage:   "Removes the selected participants from the specified room session. Apply the\naction to a list of participant IDs or to `all`, with optional participant IDs\nexcluded from the action.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,7 +56,7 @@ var roomsSessionsActionsKick = cli.Command{
 
 var roomsSessionsActionsMute = cli.Command{
 	Name:    "mute",
-	Usage:   "Mute participants in room session.",
+	Usage:   "Mutes the selected participants in the specified room session. Apply the action\nto a list of participant IDs or to `all`, with optional participant IDs excluded\nfrom the action.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -81,7 +81,7 @@ var roomsSessionsActionsMute = cli.Command{
 
 var roomsSessionsActionsUnmute = cli.Command{
 	Name:    "unmute",
-	Usage:   "Unmute participants in room session.",
+	Usage:   "Unmutes the selected participants in the specified room session. Apply the\naction to a list of participant IDs or to `all`, with optional participant IDs\nexcluded from the action.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -16,7 +16,7 @@ import (
 
 var globalIPAssignmentHealthRetrieve = requestflag.WithInnerFlags(cli.Command{
 	Name:    "retrieve",
-	Usage:   "Global IP Assignment Health Check Metrics",
+	Usage:   "Retrieve health check metrics for your Global IP assignments.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

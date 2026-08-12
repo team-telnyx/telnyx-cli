@@ -54,7 +54,7 @@ var numberOrderPhoneNumbersList = requestflag.WithInnerFlags(cli.Command{
 
 var numberOrderPhoneNumbersUpdateRequirementGroup = cli.Command{
 	Name:    "update-requirement-group",
-	Usage:   "Update requirement group for a phone number order",
+	Usage:   "Associates an existing requirement group with a phone number in a number order.\nThe response contains the updated number-order phone-number details.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

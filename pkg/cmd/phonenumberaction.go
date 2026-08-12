@@ -16,7 +16,7 @@ import (
 
 var phoneNumbersActionsChangeBundleStatus = cli.Command{
 	Name:    "change-bundle-status",
-	Usage:   "Change the bundle status for a phone number (set to being in a bundle or remove\nfrom a bundle)",
+	Usage:   "Adds the specified phone number to a bundle or removes it from a bundle\naccording to the requested status change. The response contains the phone number\nwith its updated bundle state.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -37,7 +37,7 @@ var phoneNumbersActionsChangeBundleStatus = cli.Command{
 
 var phoneNumbersActionsEnableEmergency = cli.Command{
 	Name:    "enable-emergency",
-	Usage:   "Enable emergency for a phone number",
+	Usage:   "Associates emergency-service settings with the specified phone number. The\noperation returns the updated phone-number configuration when completed\nimmediately or an accepted state when processing continues asynchronously.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

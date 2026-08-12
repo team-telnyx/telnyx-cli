@@ -38,7 +38,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--post-conversation-settings", "{enabled: true}",
 			"--privacy-settings", "{data_retention: true}",
 			"--tag", "string",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
@@ -102,6 +102,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--privacy-settings.data-retention=true",
 			"--tag", "string",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
+			"--telephony-settings.disable-dtmf=true",
 			"--telephony-settings.noise-suppression", "krisp",
 			"--telephony-settings.noise-suppression-config", "{attenuation_limit: 0, mode: advanced}",
 			"--telephony-settings.recording-settings", "{channels: single, enabled: true, format: wav, stop_on_conversation_end: true}",
@@ -350,6 +351,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"  - string\n" +
 			"telephony_settings:\n" +
 			"  default_texml_app_id: default_texml_app_id\n" +
+			"  disable_dtmf: true\n" +
 			"  noise_suppression: krisp\n" +
 			"  noise_suppression_config:\n" +
 			"    attenuation_limit: 0\n" +
@@ -510,7 +512,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--privacy-settings", "{data_retention: true}",
 			"--promote-to-main=true",
 			"--tag", "string",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
 			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
@@ -577,6 +579,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--promote-to-main=true",
 			"--tag", "string",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
+			"--telephony-settings.disable-dtmf=true",
 			"--telephony-settings.noise-suppression", "krisp",
 			"--telephony-settings.noise-suppression-config", "{attenuation_limit: 0, mode: advanced}",
 			"--telephony-settings.recording-settings", "{channels: single, enabled: true, format: wav, stop_on_conversation_end: true}",
@@ -827,6 +830,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"  - string\n" +
 			"telephony_settings:\n" +
 			"  default_texml_app_id: default_texml_app_id\n" +
+			"  disable_dtmf: true\n" +
 			"  noise_suppression: krisp\n" +
 			"  noise_suppression_config:\n" +
 			"    attenuation_limit: 0\n" +
@@ -1027,7 +1031,7 @@ func TestAIAssistantsImports(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:assistants", "imports",
-			"--api-key-ref", "api_key_ref",
+			"--api-key-ref", "string",
 			"--provider", "elevenlabs",
 			"--import-id", "string",
 		)
@@ -1036,7 +1040,7 @@ func TestAIAssistantsImports(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"api_key_ref: api_key_ref\n" +
+			"api_key_ref: string\n" +
 			"provider: elevenlabs\n" +
 			"import_ids:\n" +
 			"  - string\n")
@@ -1056,23 +1060,23 @@ func TestAIAssistantsSendSMS(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants", "send-sms",
 			"--assistant-id", "assistant_id",
-			"--from", "from",
-			"--to", "to",
+			"--from", "From",
+			"--to", "To",
 			"--conversation-metadata", "{foo: string}",
-			"--should-create-conversation=true",
-			"--text", "text",
+			"--should-create-conversation=false",
+			"--text", "Text",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"from: from\n" +
-			"to: to\n" +
+			"from: From\n" +
+			"to: To\n" +
 			"conversation_metadata:\n" +
 			"  foo: string\n" +
-			"should_create_conversation: true\n" +
-			"text: text\n")
+			"should_create_conversation: false\n" +
+			"text: Text\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

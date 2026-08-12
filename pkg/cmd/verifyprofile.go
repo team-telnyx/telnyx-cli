@@ -189,7 +189,7 @@ var verifyProfilesRetrieve = cli.Command{
 
 var verifyProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update Verify profile",
+	Usage:   "Updates the specified Verify profile's name, webhook destinations, language,\ndaily spend limits, or channel-specific settings. Returns the updated profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -364,7 +364,7 @@ var verifyProfilesList = requestflag.WithInnerFlags(cli.Command{
 
 var verifyProfilesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete Verify profile",
+	Usage:   "Deletes the specified Verify profile and returns the deleted profile record.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -425,6 +425,11 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "connection_name",
 		},
 		&requestflag.Flag[bool]{
+			Name:     "conversation-persistence",
+			Usage:    "Whether conversation persistence is enabled for this connection. When enabled, calls handled by the connection are transcribed, stored, and indexed. Defaults to false.",
+			BodyPath: "conversation_persistence",
+		},
+		&requestflag.Flag[bool]{
 			Name:     "default-on-hold-comfort-noise-enabled",
 			Usage:    "When enabled, Telnyx will generate comfort noise when you place the call on hold. If disabled, you will need to generate comfort noise or on hold music to avoid RTP timeout.",
 			Default:  true,

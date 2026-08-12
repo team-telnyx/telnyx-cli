@@ -16,7 +16,7 @@ import (
 
 var mobilePhoneNumbersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a Mobile Phone Number",
+	Usage:   "Retrieve the details of a specific mobile phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var mobilePhoneNumbersRetrieve = cli.Command{
 
 var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update a Mobile Phone Number",
+	Usage:   "Update the settings of a specific mobile phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -147,7 +147,7 @@ var mobilePhoneNumbersUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var mobilePhoneNumbersList = cli.Command{
 	Name:    "list",
-	Usage:   "List Mobile Phone Numbers",
+	Usage:   "Retrieve a paginated list of mobile phone numbers on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{

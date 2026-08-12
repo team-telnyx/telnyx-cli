@@ -16,7 +16,7 @@ import (
 
 var shortCodesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a short code",
+	Usage:   "Returns the messaging configuration and assignment details for the specified\nshort code.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -57,7 +57,7 @@ var shortCodesUpdate = cli.Command{
 
 var shortCodesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List short codes",
+	Usage:   "Returns short codes owned by the authenticated account. Apply the documented\nfilters and pagination parameters to narrow the result set.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

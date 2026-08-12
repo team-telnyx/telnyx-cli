@@ -16,7 +16,7 @@ import (
 
 var advancedOrdersCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create Advanced Order",
+	Usage:   "Creates an advanced number order from the requested order configuration. The\nresponse contains the resulting advanced order and its initial state.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -66,7 +66,7 @@ var advancedOrdersCreate = cli.Command{
 
 var advancedOrdersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get Advanced Order",
+	Usage:   "Returns the advanced number order identified by `order_id`, including its\nconfiguration and current state.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -81,7 +81,7 @@ var advancedOrdersRetrieve = cli.Command{
 
 var advancedOrdersList = cli.Command{
 	Name:            "list",
-	Usage:           "List Advanced Orders",
+	Usage:           "Returns the advanced number orders associated with the account. Each result\nincludes the order configuration and its current state.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleAdvancedOrdersList,
@@ -90,7 +90,7 @@ var advancedOrdersList = cli.Command{
 
 var advancedOrdersUpdateRequirementGroup = cli.Command{
 	Name:    "update-requirement-group",
-	Usage:   "Update Advanced Order",
+	Usage:   "Updates the requirement-group configuration for the specified advanced number\norder. The response contains the updated advanced order.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

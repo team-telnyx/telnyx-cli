@@ -29,16 +29,16 @@ func TestMessaging10dlcCampaignUpdate(t *testing.T) {
 			"messaging-10dlc:campaign", "update",
 			"--campaign-id", "campaignId",
 			"--auto-renewal=true",
-			"--help-message", "helpMessage",
-			"--message-flow", "messageFlow",
-			"--reseller-id", "resellerId",
-			"--sample1", "sample1",
-			"--sample2", "sample2",
-			"--sample3", "sample3",
-			"--sample4", "sample4",
-			"--sample5", "sample5",
-			"--webhook-failover-url", "webhookFailoverURL",
-			"--webhook-url", "webhookURL",
+			"--help-message", "Helpmessage",
+			"--message-flow", "Messageflow",
+			"--reseller-id", "RESELLER",
+			"--sample1", "Sample1",
+			"--sample2", "Sample2",
+			"--sample3", "Sample3",
+			"--sample4", "Sample4",
+			"--sample5", "Sample5",
+			"--webhook-failover-url", "WebhookURL",
+			"--webhook-url", "WebhookURL",
 		)
 	})
 
@@ -46,16 +46,16 @@ func TestMessaging10dlcCampaignUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"autoRenewal: true\n" +
-			"helpMessage: helpMessage\n" +
-			"messageFlow: messageFlow\n" +
-			"resellerId: resellerId\n" +
-			"sample1: sample1\n" +
-			"sample2: sample2\n" +
-			"sample3: sample3\n" +
-			"sample4: sample4\n" +
-			"sample5: sample5\n" +
-			"webhookFailoverURL: webhookFailoverURL\n" +
-			"webhookURL: webhookURL\n")
+			"helpMessage: Helpmessage\n" +
+			"messageFlow: Messageflow\n" +
+			"resellerId: RESELLER\n" +
+			"sample1: Sample1\n" +
+			"sample2: Sample2\n" +
+			"sample3: Sample3\n" +
+			"sample4: Sample4\n" +
+			"sample5: Sample5\n" +
+			"webhookFailoverURL: WebhookURL\n" +
+			"webhookURL: WebhookURL\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

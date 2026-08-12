@@ -16,10 +16,10 @@ func TestStorageMigrationSourcesCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"storage:migration-sources", "create",
-			"--bucket-name", "bucket_name",
+			"--bucket-name", "string",
 			"--provider", "aws",
-			"--provider-auth", "{access_key: access_key, secret_access_key: secret_access_key}",
-			"--source-region", "source_region",
+			"--provider-auth", "{access_key: string, secret_access_key: string}",
+			"--source-region", "string",
 		)
 	})
 
@@ -32,23 +32,23 @@ func TestStorageMigrationSourcesCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"storage:migration-sources", "create",
-			"--bucket-name", "bucket_name",
+			"--bucket-name", "string",
 			"--provider", "aws",
-			"--provider-auth.access-key", "access_key",
-			"--provider-auth.secret-access-key", "secret_access_key",
-			"--source-region", "source_region",
+			"--provider-auth.access-key", "string",
+			"--provider-auth.secret-access-key", "string",
+			"--source-region", "string",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"bucket_name: bucket_name\n" +
+			"bucket_name: string\n" +
 			"provider: aws\n" +
 			"provider_auth:\n" +
-			"  access_key: access_key\n" +
-			"  secret_access_key: secret_access_key\n" +
-			"source_region: source_region\n")
+			"  access_key: string\n" +
+			"  secret_access_key: string\n" +
+			"source_region: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

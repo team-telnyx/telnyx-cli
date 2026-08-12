@@ -16,7 +16,7 @@ import (
 
 var messagingProfilesAutorespConfigsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create auto-response setting",
+	Usage:   "Creates an auto-response rule on the specified messaging profile. Matching\ninbound messages trigger the configured response.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -51,7 +51,7 @@ var messagingProfilesAutorespConfigsCreate = cli.Command{
 
 var messagingProfilesAutorespConfigsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get Auto-Response Setting",
+	Usage:   "Returns the matching criteria and response content for the specified\nauto-response rule.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -71,7 +71,7 @@ var messagingProfilesAutorespConfigsRetrieve = cli.Command{
 
 var messagingProfilesAutorespConfigsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update Auto-Response Setting",
+	Usage:   "Replaces the configuration of the specified auto-response rule.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -111,7 +111,7 @@ var messagingProfilesAutorespConfigsUpdate = cli.Command{
 
 var messagingProfilesAutorespConfigsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List Auto-Response Settings",
+	Usage:   "Returns the auto-response rules configured for the specified messaging profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -162,7 +162,7 @@ var messagingProfilesAutorespConfigsList = requestflag.WithInnerFlags(cli.Comman
 
 var messagingProfilesAutorespConfigsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete Auto-Response Setting",
+	Usage:   "Deletes the specified auto-response rule from the messaging profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

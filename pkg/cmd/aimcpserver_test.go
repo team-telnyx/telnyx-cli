@@ -15,9 +15,9 @@ func TestAIMcpServersCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:mcp-servers", "create",
-			"--name", "name",
-			"--type", "type",
-			"--url", "url",
+			"--name", "Name",
+			"--type", "Type",
+			"--url", "Url",
 			"--allowed-tool", "[string]",
 			"--api-key-ref", "api_key_ref",
 		)
@@ -26,9 +26,9 @@ func TestAIMcpServersCreate(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"name: name\n" +
-			"type: type\n" +
-			"url: url\n" +
+			"name: Name\n" +
+			"type: Type\n" +
+			"url: Url\n" +
 			"allowed_tools:\n" +
 			"  - string\n" +
 			"api_key_ref: api_key_ref\n")
@@ -60,27 +60,27 @@ func TestAIMcpServersUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:mcp-servers", "update",
 			"--mcp-server-id", "mcp_server_id",
-			"--id", "id",
+			"--id", "Id",
 			"--allowed-tool", "[string]",
 			"--api-key-ref", "api_key_ref",
-			"--created-at", "'2019-12-27T18:11:19.117Z'",
-			"--name", "name",
-			"--type", "type",
-			"--url", "url",
+			"--created-at", "'2024-01-23T18:10:02.574Z'",
+			"--name", "Name",
+			"--type", "Type",
+			"--url", "Url",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"id: id\n" +
+			"id: Id\n" +
 			"allowed_tools:\n" +
 			"  - string\n" +
 			"api_key_ref: api_key_ref\n" +
-			"created_at: '2019-12-27T18:11:19.117Z'\n" +
-			"name: name\n" +
-			"type: type\n" +
-			"url: url\n")
+			"created_at: '2024-01-23T18:10:02.574Z'\n" +
+			"name: Name\n" +
+			"type: Type\n" +
+			"url: Url\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

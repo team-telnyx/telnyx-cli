@@ -16,7 +16,7 @@ import (
 
 var verificationsByPhoneNumberList = cli.Command{
 	Name:    "list",
-	Usage:   "List verifications by phone number",
+	Usage:   "Returns a paginated list of verifications associated with the specified phone\nnumber.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

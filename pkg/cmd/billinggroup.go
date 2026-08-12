@@ -16,7 +16,7 @@ import (
 
 var billingGroupsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a billing group",
+	Usage:   "Create a new billing group, which can be used to organize resources for billing\npurposes.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var billingGroupsCreate = cli.Command{
 
 var billingGroupsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a billing group",
+	Usage:   "Retrieve the details of a specific billing group.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -46,7 +46,7 @@ var billingGroupsRetrieve = cli.Command{
 
 var billingGroupsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a billing group",
+	Usage:   "Update the properties of an existing billing group.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -66,7 +66,7 @@ var billingGroupsUpdate = cli.Command{
 
 var billingGroupsList = cli.Command{
 	Name:    "list",
-	Usage:   "List all billing groups",
+	Usage:   "Retrieve a paginated list of billing groups on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -88,7 +88,7 @@ var billingGroupsList = cli.Command{
 
 var billingGroupsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a billing group",
+	Usage:   "Delete a billing group from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

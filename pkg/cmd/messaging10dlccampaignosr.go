@@ -16,7 +16,7 @@ import (
 
 var messaging10dlcCampaignOsrGetAttributes = cli.Command{
 	Name:    "get-attributes",
-	Usage:   "Get OSR campaign attributes",
+	Usage:   "Returns the optional shared-responsibility attributes recorded for the campaign.\nUse these values to inspect the campaign configuration submitted to the\nregistry.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

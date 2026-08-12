@@ -415,6 +415,41 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:collections",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiCollectionsCreate,
+					&aiCollectionsRetrieve,
+					&aiCollectionsUpdate,
+					&aiCollectionsList,
+					&aiCollectionsDelete,
+					&aiCollectionsRetrieveByID,
+					&aiCollectionsRetrieveDocuments,
+				},
+			},
+			{
+				Name:     "ai:collections:settings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiCollectionsSettingsCreate,
+					&aiCollectionsSettingsList,
+					&aiCollectionsSettingsPatchAll,
+				},
+			},
+			{
+				Name:     "ai:collections:sources",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiCollectionsSourcesCreate,
+					&aiCollectionsSourcesList,
+					&aiCollectionsSourcesDelete,
+					&aiCollectionsSourcesReplace,
+				},
+			},
+			{
 				Name:     "ai:conversations",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -1155,6 +1190,15 @@ func init() {
 				},
 			},
 			{
+				Name:     "fqdn-connections:fqdn-authentication",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&fqdnConnectionsFqdnAuthenticationList,
+					&fqdnConnectionsFqdnAuthenticationPatchAll,
+				},
+			},
+			{
 				Name:     "fqdns",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -1384,6 +1428,7 @@ func init() {
 					&messagesSendNumberPool,
 					&messagesSendShortCode,
 					&messagesSendWithAlphanumericSender,
+					&messagesWhatsapp,
 				},
 			},
 			{
@@ -2093,6 +2138,42 @@ func init() {
 					&queuesCallsUpdate,
 					&queuesCallsList,
 					&queuesCallsRemove,
+				},
+			},
+			{
+				Name:     "rcs:agents",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&rcsAgentsCreate,
+					&rcsAgentsRetrieve,
+					&rcsAgentsUpdate,
+					&rcsAgentsList,
+					&rcsAgentsLaunch,
+					&rcsAgentsRetrieveCarrierApprovals,
+					&rcsAgentsSubmit,
+				},
+			},
+			{
+				Name:     "rcs:agents:test-devices",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&rcsAgentsTestDevicesCreate,
+					&rcsAgentsTestDevicesList,
+					&rcsAgentsTestDevicesDelete,
+				},
+			},
+			{
+				Name:     "rcs:brands",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&rcsBrandsCreate,
+					&rcsBrandsRetrieve,
+					&rcsBrandsUpdate,
+					&rcsBrandsList,
+					&rcsBrandsSubmit,
 				},
 			},
 			{
@@ -3134,6 +3215,7 @@ func init() {
 				Commands: []*cli.Command{
 					&whatsappPhoneNumbersList,
 					&whatsappPhoneNumbersDelete,
+					&whatsappPhoneNumbersGet,
 					&whatsappPhoneNumbersResendVerification,
 					&whatsappPhoneNumbersRetrieveConversationWindow,
 					&whatsappPhoneNumbersVerify,

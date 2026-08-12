@@ -16,7 +16,7 @@ import (
 
 var roomsSessionsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "View a room session.",
+	Usage:   "Returns the room session identified by `room_session_id`, including its room,\nactive status, and lifecycle timestamps. Use `include_participants` to include\nits participant records.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -36,7 +36,7 @@ var roomsSessionsRetrieve = cli.Command{
 
 var roomsSessionsList0 = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list-0",
-	Usage:   "View a list of room sessions.",
+	Usage:   "Returns a paginated list of room sessions across the account. Filter sessions by\nroom, creation, update, or end date and active status, and use\n`include_participants` to include participant records.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -93,7 +93,7 @@ var roomsSessionsList0 = requestflag.WithInnerFlags(cli.Command{
 
 var roomsSessionsList1 = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list-1",
-	Usage:   "View a list of room sessions.",
+	Usage:   "Returns a paginated list of sessions for the specified room. Filter sessions by\ncreation, update, or end date and active status, and use `include_participants`\nto include participant records.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -150,7 +150,7 @@ var roomsSessionsList1 = requestflag.WithInnerFlags(cli.Command{
 
 var roomsSessionsRetrieveParticipants = requestflag.WithInnerFlags(cli.Command{
 	Name:    "retrieve-participants",
-	Usage:   "View a list of room participants.",
+	Usage:   "Returns a paginated list of participants for the specified room session. Filter\nparticipants by join, update, or leave date and by participant context.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

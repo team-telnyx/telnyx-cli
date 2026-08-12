@@ -135,7 +135,7 @@ func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
 			"--api-key", "string",
 			"messaging-hosted-number-orders", "validate-codes",
 			"--id", "id",
-			"--verification-code", "{code: code, phone_number: phone_number}",
+			"--verification-code", "{code: string, phone_number: string}",
 		)
 	})
 
@@ -149,8 +149,8 @@ func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
 			"--api-key", "string",
 			"messaging-hosted-number-orders", "validate-codes",
 			"--id", "id",
-			"--verification-code.code", "code",
-			"--verification-code.phone-number", "phone_number",
+			"--verification-code.code", "string",
+			"--verification-code.phone-number", "string",
 		)
 	})
 
@@ -158,8 +158,8 @@ func TestMessagingHostedNumberOrdersValidateCodes(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"verification_codes:\n" +
-			"  - code: code\n" +
-			"    phone_number: phone_number\n")
+			"  - code: string\n" +
+			"    phone_number: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

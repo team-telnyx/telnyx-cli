@@ -28,28 +28,28 @@ func TestWhatsappPhoneNumbersProfileUpdate(t *testing.T) {
 			"--api-key", "string",
 			"whatsapp:phone-numbers:profile", "update",
 			"--phone-number", "phone_number",
-			"--about", "about",
-			"--address", "address",
-			"--category", "category",
-			"--description", "description",
-			"--display-name", "display_name",
-			"--email", "email",
-			"--profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--website", "website",
+			"--about", "string",
+			"--address", "string",
+			"--category", "string",
+			"--description", "string",
+			"--display-name", "string",
+			"--email", "string",
+			"--profile-id", "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+			"--website", "string",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"about: about\n" +
-			"address: address\n" +
-			"category: category\n" +
-			"description: description\n" +
-			"display_name: display_name\n" +
-			"email: email\n" +
-			"profile_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\n" +
-			"website: website\n")
+			"about: string\n" +
+			"address: string\n" +
+			"category: string\n" +
+			"description: string\n" +
+			"display_name: string\n" +
+			"email: string\n" +
+			"profile_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6\n" +
+			"website: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

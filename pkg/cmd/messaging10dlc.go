@@ -16,7 +16,7 @@ import (
 
 var messaging10dlcGetEnum = cli.Command{
 	Name:    "get-enum",
-	Usage:   "Get Enum",
+	Usage:   "Returns the accepted values for the selected 10DLC enumeration endpoint. Use\nthese values when constructing brand and campaign requests.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -27,13 +27,13 @@ func TestAIAssistantsTagsAdd(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:tags", "add",
 			"--assistant-id", "assistant_id",
-			"--tag", "tag",
+			"--tag", "Tag",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("tag: tag")
+		pipeData := []byte("tag: Tag")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

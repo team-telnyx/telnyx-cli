@@ -16,7 +16,7 @@ import (
 
 var messaging10dlcCampaignUsecaseGetCost = cli.Command{
 	Name:    "get-cost",
-	Usage:   "Get Campaign Cost",
+	Usage:   "Returns the upfront and monthly cost associated with the selected 10DLC campaign\nuse case.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

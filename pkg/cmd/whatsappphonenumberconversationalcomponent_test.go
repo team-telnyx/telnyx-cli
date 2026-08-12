@@ -29,7 +29,7 @@ func TestWhatsappPhoneNumbersConversationalComponentsPatchAll(t *testing.T) {
 			"--api-key", "string",
 			"whatsapp:phone-numbers:conversational-components", "patch-all",
 			"--phone-number", "phone_number",
-			"--command", "{command: command, description: description}",
+			"--command", "{command: string, description: string}",
 			"--ice-breaker", "string",
 		)
 	})
@@ -44,8 +44,8 @@ func TestWhatsappPhoneNumbersConversationalComponentsPatchAll(t *testing.T) {
 			"--api-key", "string",
 			"whatsapp:phone-numbers:conversational-components", "patch-all",
 			"--phone-number", "phone_number",
-			"--command.command", "command",
-			"--command.description", "description",
+			"--command.command", "string",
+			"--command.description", "string",
 			"--ice-breaker", "string",
 		)
 	})
@@ -54,8 +54,8 @@ func TestWhatsappPhoneNumbersConversationalComponentsPatchAll(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"commands:\n" +
-			"  - command: command\n" +
-			"    description: description\n" +
+			"  - command: string\n" +
+			"    description: string\n" +
 			"ice_breakers:\n" +
 			"  - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(

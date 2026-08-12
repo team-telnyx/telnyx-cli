@@ -15,9 +15,9 @@ func TestEmailBlocksCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-blocks", "create",
-			"--to", "to",
+			"--to", "spammer@bad.tld",
 			"--domain-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--expires-at", "'2019-12-27T18:11:19.117Z'",
+			"--expires-at", "'2026-12-31T23:59:59Z'",
 			"--from", "from",
 		)
 	})
@@ -25,9 +25,9 @@ func TestEmailBlocksCreate(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"to: to\n" +
+			"to: spammer@bad.tld\n" +
 			"domain_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\n" +
-			"expires_at: '2019-12-27T18:11:19.117Z'\n" +
+			"expires_at: '2026-12-31T23:59:59Z'\n" +
 			"from: from\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

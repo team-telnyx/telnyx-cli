@@ -61,7 +61,7 @@ var storageMigrationSourcesCreate = requestflag.WithInnerFlags(cli.Command{
 
 var storageMigrationSourcesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a Migration Source",
+	Usage:   "Retrieve the details of a specific migration source.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -76,7 +76,7 @@ var storageMigrationSourcesRetrieve = cli.Command{
 
 var storageMigrationSourcesList = cli.Command{
 	Name:            "list",
-	Usage:           "List all Migration Sources",
+	Usage:           "List the migration sources configured on your account. A migration source is an\nexternal storage bucket from which data can be migrated into Telnyx Cloud\nStorage.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleStorageMigrationSourcesList,
@@ -85,7 +85,7 @@ var storageMigrationSourcesList = cli.Command{
 
 var storageMigrationSourcesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Migration Source",
+	Usage:   "Delete a migration source configuration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

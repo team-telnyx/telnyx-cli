@@ -39,18 +39,18 @@ func TestAISummarize(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai", "summarize",
-			"--bucket", "bucket",
-			"--filename", "filename",
-			"--system-prompt", "system_prompt",
+			"--bucket", "string",
+			"--filename", "string",
+			"--system-prompt", "string",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"bucket: bucket\n" +
-			"filename: filename\n" +
-			"system_prompt: system_prompt\n")
+			"bucket: string\n" +
+			"filename: string\n" +
+			"system_prompt: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

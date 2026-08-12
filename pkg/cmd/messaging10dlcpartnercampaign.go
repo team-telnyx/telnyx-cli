@@ -114,7 +114,7 @@ var messaging10dlcPartnerCampaignsListSharedByMe = cli.Command{
 
 var messaging10dlcPartnerCampaignsRetrieveSharingStatus = cli.Command{
 	Name:    "retrieve-sharing-status",
-	Usage:   "Get Sharing Status",
+	Usage:   "Returns the partner-sharing state for the specified campaign.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

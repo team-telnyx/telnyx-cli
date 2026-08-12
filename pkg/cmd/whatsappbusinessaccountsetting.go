@@ -16,7 +16,7 @@ import (
 
 var whatsappBusinessAccountsSettingsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get WABA settings",
+	Usage:   "Returns account-level settings for the specified WhatsApp Business Account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var whatsappBusinessAccountsSettingsRetrieve = cli.Command{
 
 var whatsappBusinessAccountsSettingsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update WABA settings",
+	Usage:   "Updates the supplied account-level settings for the specified WhatsApp Business\nAccount.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

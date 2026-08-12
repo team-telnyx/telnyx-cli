@@ -41,7 +41,7 @@ var messagesRcsGenerateDeeplink = cli.Command{
 
 var messagesRcsSend = requestflag.WithInnerFlags(cli.Command{
 	Name:    "send",
-	Usage:   "Send an RCS message",
+	Usage:   "Queues an outbound RCS message through the selected RCS agent. Check recipient\ncapabilities before sending features that require RCS support.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

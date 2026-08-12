@@ -46,7 +46,7 @@ var emailBlocksCreate = cli.Command{
 
 var emailBlocksRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a suppression",
+	Usage:   "Returns the account-owned suppression identified by ID. Cross-account lookups\nand malformed IDs return `404` without exposing another account’s data.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

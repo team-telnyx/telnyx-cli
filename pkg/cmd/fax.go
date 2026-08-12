@@ -111,7 +111,7 @@ var faxesCreate = cli.Command{
 
 var faxesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "View a fax",
+	Usage:   "Retrieve the details of a single fax.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -126,7 +126,7 @@ var faxesRetrieve = cli.Command{
 
 var faxesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "View a list of faxes",
+	Usage:   "Retrieve a paginated list of faxes sent or received on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -176,7 +176,7 @@ var faxesList = requestflag.WithInnerFlags(cli.Command{
 
 var faxesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a fax",
+	Usage:   "Delete a fax resource from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

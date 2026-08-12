@@ -16,7 +16,7 @@ import (
 
 var verificationsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve verification",
+	Usage:   "Returns the verification identified by ID, including its channel, phone number,\nVerify profile, timeout, and current status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var verificationsRetrieve = cli.Command{
 
 var verificationsTriggerCall = cli.Command{
 	Name:    "trigger-call",
-	Usage:   "Trigger Call verification",
+	Usage:   "Starts a verification for the specified phone number and delivers its code in a\nvoice call using the selected Verify profile. Returns the pending verification\nrecord.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -70,7 +70,7 @@ var verificationsTriggerCall = cli.Command{
 
 var verificationsTriggerFlashcall = cli.Command{
 	Name:    "trigger-flashcall",
-	Usage:   "Trigger Flash call verification",
+	Usage:   "Starts a verification for the specified phone number and places a brief call\nwith the code embedded in the caller ID. Returns the pending verification\nrecord.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -97,7 +97,7 @@ var verificationsTriggerFlashcall = cli.Command{
 
 var verificationsTriggerSMS = cli.Command{
 	Name:    "trigger-sms",
-	Usage:   "Trigger SMS verification",
+	Usage:   "Starts a verification for the specified phone number and sends its code by SMS\nusing the selected Verify profile. Returns the pending verification record.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -130,7 +130,7 @@ var verificationsTriggerSMS = cli.Command{
 
 var verificationsTriggerWhatsappVerification = cli.Command{
 	Name:    "trigger-whatsapp-verification",
-	Usage:   "Trigger WhatsApp verification",
+	Usage:   "Starts a verification for the specified phone number and sends its code over\nWhatsApp using the selected Verify profile. Returns the pending verification\nrecord.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

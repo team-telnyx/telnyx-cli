@@ -16,7 +16,7 @@ import (
 
 var emailUnsubscribeGroupsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create an unsubscribe group",
+	Usage:   "Creates an account-owned unsubscribe group for associating email categories with\nseparate recipient suppression lists.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -35,7 +35,7 @@ var emailUnsubscribeGroupsCreate = cli.Command{
 
 var emailUnsubscribeGroupsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve an unsubscribe group",
+	Usage:   "Returns the account-owned unsubscribe group identified by ID.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

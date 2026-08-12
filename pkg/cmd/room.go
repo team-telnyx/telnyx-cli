@@ -59,7 +59,7 @@ var roomsCreate = cli.Command{
 
 var roomsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "View a room.",
+	Usage:   "Returns the room identified by `room_id`, including its participant limit,\nrecording and webhook configuration, and active session identifier. Use\n`include_sessions` to include its sessions.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -127,7 +127,7 @@ var roomsUpdate = cli.Command{
 
 var roomsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "View a list of rooms.",
+	Usage:   "Returns a paginated list of rooms. Filter the results by creation or update date\nand unique name, and use `include_sessions` to include each room’s sessions.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

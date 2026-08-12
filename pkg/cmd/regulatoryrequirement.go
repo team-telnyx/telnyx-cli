@@ -16,7 +16,7 @@ import (
 
 var regulatoryRequirementsRetrieve = requestflag.WithInnerFlags(cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve regulatory requirements",
+	Usage:   "Returns regulatory requirements for number ordering, porting, or other supported\nactions. Results can be filtered by phone number, requirement group, country,\nnumber type, and action.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

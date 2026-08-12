@@ -26,16 +26,16 @@ func TestWhatsappUserDataUpdate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"whatsapp:user-data", "update",
-			"--webhook-failover-url", "webhook_failover_url",
-			"--webhook-url", "webhook_url",
+			"--webhook-failover-url", "https://example.com",
+			"--webhook-url", "https://example.com",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"webhook_failover_url: webhook_failover_url\n" +
-			"webhook_url: webhook_url\n")
+			"webhook_failover_url: https://example.com\n" +
+			"webhook_url: https://example.com\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

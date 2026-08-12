@@ -2111,7 +2111,7 @@ var callsActionsStartForking = cli.Command{
 
 var callsActionsStartNoiseSuppression = requestflag.WithInnerFlags(cli.Command{
 	Name:    "start-noise-suppression",
-	Usage:   "Noise Suppression Start (BETA)",
+	Usage:   "Start noise suppression on an active call to reduce background noise. This\nfeature is currently in beta.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -2692,7 +2692,7 @@ var callsActionsStopGather = cli.Command{
 
 var callsActionsStopNoiseSuppression = cli.Command{
 	Name:    "stop-noise-suppression",
-	Usage:   "Noise Suppression Stop (BETA)",
+	Usage:   "Stop noise suppression previously started on an active call. This feature is\ncurrently in beta.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

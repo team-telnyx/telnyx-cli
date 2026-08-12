@@ -16,13 +16,13 @@ func TestEmailUnsubscribeGroupsSuppressionsCreate(t *testing.T) {
 			"--api-key", "string",
 			"email-unsubscribe-groups:suppressions", "create",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--to", "to",
+			"--to", "user@example.com",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("to: to")
+		pipeData := []byte("to: user@example.com")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

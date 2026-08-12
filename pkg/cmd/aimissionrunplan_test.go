@@ -18,7 +18,7 @@ func TestAIMissionsRunsPlanCreate(t *testing.T) {
 			"ai:missions:runs:plan", "create",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--step", "{description: description, sequence: 0, step_id: step_id, metadata: {foo: bar}, parent_step_id: parent_step_id}",
+			"--step", "{description: Description, sequence: 0, step_id: Step Id, metadata: {foo: bar}, parent_step_id: Parent Step Id}",
 		)
 	})
 
@@ -33,11 +33,11 @@ func TestAIMissionsRunsPlanCreate(t *testing.T) {
 			"ai:missions:runs:plan", "create",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--step.description", "description",
+			"--step.description", "Description",
 			"--step.sequence", "0",
-			"--step.step-id", "step_id",
+			"--step.step-id", "Step Id",
 			"--step.metadata", "{foo: bar}",
-			"--step.parent-step-id", "parent_step_id",
+			"--step.parent-step-id", "Parent Step Id",
 		)
 	})
 
@@ -45,12 +45,12 @@ func TestAIMissionsRunsPlanCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"steps:\n" +
-			"  - description: description\n" +
+			"  - description: Description\n" +
 			"    sequence: 0\n" +
-			"    step_id: step_id\n" +
+			"    step_id: Step Id\n" +
 			"    metadata:\n" +
 			"      foo: bar\n" +
-			"    parent_step_id: parent_step_id\n")
+			"    parent_step_id: Parent Step Id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -83,7 +83,7 @@ func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
 			"ai:missions:runs:plan", "add-steps-to-plan",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--step", "{description: description, sequence: 0, step_id: step_id, metadata: {foo: bar}, parent_step_id: parent_step_id}",
+			"--step", "{description: Description, sequence: 0, step_id: Step Id, metadata: {foo: bar}, parent_step_id: Parent Step Id}",
 		)
 	})
 
@@ -98,11 +98,11 @@ func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
 			"ai:missions:runs:plan", "add-steps-to-plan",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--step.description", "description",
+			"--step.description", "Description",
 			"--step.sequence", "0",
-			"--step.step-id", "step_id",
+			"--step.step-id", "Step Id",
 			"--step.metadata", "{foo: bar}",
-			"--step.parent-step-id", "parent_step_id",
+			"--step.parent-step-id", "Parent Step Id",
 		)
 	})
 
@@ -110,12 +110,12 @@ func TestAIMissionsRunsPlanAddStepsToPlan(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"steps:\n" +
-			"  - description: description\n" +
+			"  - description: Description\n" +
 			"    sequence: 0\n" +
-			"    step_id: step_id\n" +
+			"    step_id: Step Id\n" +
 			"    metadata:\n" +
 			"      foo: bar\n" +
-			"    parent_step_id: parent_step_id\n")
+			"    parent_step_id: Parent Step Id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

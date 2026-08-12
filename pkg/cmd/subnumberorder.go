@@ -134,7 +134,7 @@ var subNumberOrdersCancel = cli.Command{
 
 var subNumberOrdersUpdateRequirementGroup = cli.Command{
 	Name:    "update-requirement-group",
-	Usage:   "Update requirement group for a sub number order",
+	Usage:   "Associates an existing requirement group with the specified sub number order.\nThe response contains the updated sub number order requirement-group\nrelationship.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

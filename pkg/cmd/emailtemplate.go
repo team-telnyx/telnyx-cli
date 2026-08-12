@@ -56,7 +56,7 @@ var emailTemplatesCreate = cli.Command{
 
 var emailTemplatesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get an email template",
+	Usage:   "Returns the account-owned template identified by ID, including its Liquid\nsubject and bodies, declared variables, and timestamps.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -130,7 +130,7 @@ var emailTemplatesList = cli.Command{
 
 var emailTemplatesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete an email template",
+	Usage:   "Deletes the account-owned template. The operation returns `204` with no body and\nprevents future sends or renders from using the deleted template ID.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

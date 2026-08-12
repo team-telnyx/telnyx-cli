@@ -16,7 +16,7 @@ import (
 
 var accessIPAddressCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create new Access IP Address",
+	Usage:   "Create a new access IP address entry on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -35,7 +35,7 @@ var accessIPAddressCreate = cli.Command{
 
 var accessIPAddressRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve an access IP address",
+	Usage:   "Retrieve the details of a specific access IP address.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -50,7 +50,7 @@ var accessIPAddressRetrieve = cli.Command{
 
 var accessIPAddressList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List all Access IP Addresses",
+	Usage:   "Retrieve a paginated list of access IP addresses configured on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -95,7 +95,7 @@ var accessIPAddressList = requestflag.WithInnerFlags(cli.Command{
 
 var accessIPAddressDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete access IP address",
+	Usage:   "Delete an access IP address entry from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

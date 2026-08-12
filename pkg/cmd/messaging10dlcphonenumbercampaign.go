@@ -16,7 +16,7 @@ import (
 
 var messaging10dlcPhoneNumberCampaignsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create New Phone Number Campaign",
+	Usage:   "Assigns a phone number to a 10DLC campaign. The assignment controls which\nregistered campaign is used for traffic from that number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -53,7 +53,7 @@ var messaging10dlcPhoneNumberCampaignsRetrieve = cli.Command{
 
 var messaging10dlcPhoneNumberCampaignsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Create New Phone Number Campaign",
+	Usage:   "Replaces the 10DLC campaign assignment for the specified phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -80,7 +80,7 @@ var messaging10dlcPhoneNumberCampaignsUpdate = cli.Command{
 
 var messaging10dlcPhoneNumberCampaignsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List phone number campaigns",
+	Usage:   "Returns phone-number-to-campaign assignments for the authenticated account.\nApply the documented filters and pagination parameters to narrow the result set.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

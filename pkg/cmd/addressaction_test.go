@@ -16,13 +16,13 @@ func TestAddressesActionsAcceptSuggestions(t *testing.T) {
 			"--api-key", "string",
 			"addresses:actions", "accept-suggestions",
 			"--address-uuid", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--id", "id",
+			"--id", "string",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("id: id")
+		pipeData := []byte("id: string")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

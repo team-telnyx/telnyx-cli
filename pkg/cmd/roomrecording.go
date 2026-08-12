@@ -16,7 +16,7 @@ import (
 
 var roomRecordingsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "View a room recording.",
+	Usage:   "Returns the recording identified by `room_recording_id`, including its room,\nsession, participant, status, media details, lifecycle timestamps, and download\nURL.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var roomRecordingsRetrieve = cli.Command{
 
 var roomRecordingsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "View a list of room recordings.",
+	Usage:   "Returns a paginated list of room recordings. Filter recordings by room, session,\nparticipant, recording type, status, duration, or start and end dates.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -114,7 +114,7 @@ var roomRecordingsDelete = cli.Command{
 
 var roomRecordingsDeleteBulk = requestflag.WithInnerFlags(cli.Command{
 	Name:    "delete-bulk",
-	Usage:   "Delete several room recordings in a bulk.",
+	Usage:   "Deletes the room recordings that match the supplied filters and returns the\nnumber of recordings affected. Filters support room, session, participant,\nrecording type, status, duration, and start or end dates.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

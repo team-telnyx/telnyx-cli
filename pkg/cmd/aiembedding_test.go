@@ -15,9 +15,9 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:embeddings", "create",
-			"--bucket-name", "bucket_name",
-			"--document-chunk-overlap-size", "0",
-			"--document-chunk-size", "0",
+			"--bucket-name", "Bucket Name",
+			"--document-chunk-overlap-size", "512",
+			"--document-chunk-size", "1024",
 			"--embedding-model", "thenlper/gte-large",
 			"--loader", "default",
 		)
@@ -26,9 +26,9 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"bucket_name: bucket_name\n" +
-			"document_chunk_overlap_size: 0\n" +
-			"document_chunk_size: 0\n" +
+			"bucket_name: Bucket Name\n" +
+			"document_chunk_overlap_size: 512\n" +
+			"document_chunk_size: 1024\n" +
 			"embedding_model: thenlper/gte-large\n" +
 			"loader: default\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
@@ -70,18 +70,18 @@ func TestAIEmbeddingsSimilaritySearch(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:embeddings", "similarity-search",
-			"--bucket-name", "bucket_name",
-			"--query", "query",
-			"--num-of-docs", "0",
+			"--bucket-name", "Bucket Name",
+			"--query", "Query",
+			"--num-of-docs", "3",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"bucket_name: bucket_name\n" +
-			"query: query\n" +
-			"num_of_docs: 0\n")
+			"bucket_name: Bucket Name\n" +
+			"query: Query\n" +
+			"num_of_docs: 3\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -97,16 +97,16 @@ func TestAIEmbeddingsURL(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:embeddings", "url",
-			"--bucket-name", "bucket_name",
-			"--url", "url",
+			"--bucket-name", "Bucket Name",
+			"--url", "URL",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"bucket_name: bucket_name\n" +
-			"url: url\n")
+			"bucket_name: Bucket Name\n" +
+			"url: URL\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

@@ -50,25 +50,25 @@ func TestAIMissionsRunsEventsLog(t *testing.T) {
 			"ai:missions:runs:events", "log",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--summary", "summary",
+			"--summary", "Summary",
 			"--type", "status_change",
-			"--agent-id", "agent_id",
-			"--idempotency-key", "idempotency_key",
+			"--agent-id", "Agent Id",
+			"--idempotency-key", "Idempotency Key",
 			"--payload", "{foo: bar}",
-			"--step-id", "step_id",
+			"--step-id", "Step Id",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"summary: summary\n" +
+			"summary: Summary\n" +
 			"type: status_change\n" +
-			"agent_id: agent_id\n" +
-			"idempotency_key: idempotency_key\n" +
+			"agent_id: Agent Id\n" +
+			"idempotency_key: Idempotency Key\n" +
 			"payload:\n" +
 			"  foo: bar\n" +
-			"step_id: step_id\n")
+			"step_id: Step Id\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

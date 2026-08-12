@@ -16,12 +16,12 @@ import (
 
 var sipRegistrationStatusRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Returns the live SIP registration state of a UAC connection: whether it is\ncurrently registered, when it last registered, and the last response Telnyx\nreceived from the registrar. Only `uac_external_credential` is supported today.",
+	Usage:   "Returns the live SIP registration status for a Telnyx endpoint: whether it is\ncurrently registered, when the current registration expires, and the last\nresponse Telnyx received from the registrar.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "credential-type",
-			Usage:     "The kind of credential to look up. `uac_external_credential` is keyed by `connection_id`; `telephony_credential` is keyed by `username`.",
+			Usage:     "The kind of credential to look up. `uac_external_credential` is keyed by `connection_id`; `telephony_credential` and `sip_credential_connection` are keyed by `username`.",
 			Required:  true,
 			QueryPath: "credential_type",
 		},
@@ -32,7 +32,7 @@ var sipRegistrationStatusRetrieve = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "username",
-			Usage:     "SIP username of the telephony credential to look up. Required when `credential_type` is `telephony_credential`.",
+			Usage:     "SIP username to look up. Required when `credential_type` is `telephony_credential` or `sip_credential_connection`.",
 			QueryPath: "username",
 		},
 	},

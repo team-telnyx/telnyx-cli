@@ -16,16 +16,16 @@ func TestAccessIPRangesCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"access-ip-ranges", "create",
-			"--cidr-block", "cidr_block",
-			"--description", "description",
+			"--cidr-block", "Cidr Block",
+			"--description", "Description",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"cidr_block: cidr_block\n" +
-			"description: description\n")
+			"cidr_block: Cidr Block\n" +
+			"description: Description\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

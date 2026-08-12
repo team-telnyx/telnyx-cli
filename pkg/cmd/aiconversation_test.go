@@ -16,7 +16,7 @@ func TestAIConversationsCreate(t *testing.T) {
 			"--api-key", "string",
 			"ai:conversations", "create",
 			"--metadata", "{foo: string}",
-			"--name", "name",
+			"--name", "string",
 		)
 	})
 
@@ -25,7 +25,7 @@ func TestAIConversationsCreate(t *testing.T) {
 		pipeData := []byte("" +
 			"metadata:\n" +
 			"  foo: string\n" +
-			"name: name\n")
+			"name: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -54,7 +54,7 @@ func TestAIConversationsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:conversations", "update",
 			"--conversation-id", "conversation_id",
-			"--metadata", "{foo: string}",
+			"--metadata", "{ai_disabled: 'true'}",
 		)
 	})
 
@@ -62,7 +62,7 @@ func TestAIConversationsUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"metadata:\n" +
-			"  foo: string\n")
+			"  ai_disabled: 'true'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -115,12 +115,12 @@ func TestAIConversationsAddMessage(t *testing.T) {
 			"--api-key", "string",
 			"ai:conversations", "add-message",
 			"--conversation-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--role", "role",
-			"--content", "content",
+			"--role", "Role",
+			"--content", "",
 			"--metadata", "{foo: string}",
-			"--name", "name",
-			"--sent-at", "'2019-12-27T18:11:19.117Z'",
-			"--tool-call-id", "tool_call_id",
+			"--name", "Name",
+			"--sent-at", "'2024-01-23T18:10:02.574Z'",
+			"--tool-call-id", "Tool Call Id",
 			"--tool-call", "{foo: bar}",
 			"--tool-choice", "string",
 		)
@@ -129,13 +129,13 @@ func TestAIConversationsAddMessage(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"role: role\n" +
-			"content: content\n" +
+			"role: Role\n" +
+			"content: ''\n" +
 			"metadata:\n" +
 			"  foo: string\n" +
-			"name: name\n" +
-			"sent_at: '2019-12-27T18:11:19.117Z'\n" +
-			"tool_call_id: tool_call_id\n" +
+			"name: Name\n" +
+			"sent_at: '2024-01-23T18:10:02.574Z'\n" +
+			"tool_call_id: Tool Call Id\n" +
 			"tool_calls:\n" +
 			"  - foo: bar\n" +
 			"tool_choice: string\n")

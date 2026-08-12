@@ -15,7 +15,7 @@ import (
 
 var storageListMigrationSourceCoverage = cli.Command{
 	Name:            "list-migration-source-coverage",
-	Usage:           "List Migration Source coverage",
+	Usage:           "List the external storage providers and regions supported as migration sources.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleStorageListMigrationSourceCoverage,

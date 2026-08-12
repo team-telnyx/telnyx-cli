@@ -17,11 +17,11 @@ func TestMobileVoiceConnectionsCreate(t *testing.T) {
 			"--api-key", "string",
 			"mobile-voice-connections", "create",
 			"--active=true",
-			"--connection-name", "connection_name",
+			"--connection-name", "Telnyx Mobile Voice IMS",
 			"--inbound", "{channel_limit: 0}",
-			"--outbound", "{channel_limit: 0, outbound_voice_profile_id: outbound_voice_profile_id}",
+			"--outbound", "{channel_limit: 0, outbound_voice_profile_id: string}",
 			"--tag", "string",
-			"--webhook-api-version", "1",
+			"--webhook-api-version", "2",
 			"--webhook-event-failover-url", "webhook_event_failover_url",
 			"--webhook-event-url", "webhook_event_url",
 			"--webhook-timeout-secs", "0",
@@ -38,12 +38,12 @@ func TestMobileVoiceConnectionsCreate(t *testing.T) {
 			"--api-key", "string",
 			"mobile-voice-connections", "create",
 			"--active=true",
-			"--connection-name", "connection_name",
+			"--connection-name", "Telnyx Mobile Voice IMS",
 			"--inbound.channel-limit", "0",
 			"--outbound.channel-limit", "0",
-			"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+			"--outbound.outbound-voice-profile-id", "string",
 			"--tag", "string",
-			"--webhook-api-version", "1",
+			"--webhook-api-version", "2",
 			"--webhook-event-failover-url", "webhook_event_failover_url",
 			"--webhook-event-url", "webhook_event_url",
 			"--webhook-timeout-secs", "0",
@@ -54,15 +54,15 @@ func TestMobileVoiceConnectionsCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"active: true\n" +
-			"connection_name: connection_name\n" +
+			"connection_name: Telnyx Mobile Voice IMS\n" +
 			"inbound:\n" +
 			"  channel_limit: 0\n" +
 			"outbound:\n" +
 			"  channel_limit: 0\n" +
-			"  outbound_voice_profile_id: outbound_voice_profile_id\n" +
+			"  outbound_voice_profile_id: string\n" +
 			"tags:\n" +
 			"  - string\n" +
-			"webhook_api_version: '1'\n" +
+			"webhook_api_version: '2'\n" +
 			"webhook_event_failover_url: webhook_event_failover_url\n" +
 			"webhook_event_url: webhook_event_url\n" +
 			"webhook_timeout_secs: 0\n")
@@ -94,10 +94,10 @@ func TestMobileVoiceConnectionsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"mobile-voice-connections", "update",
 			"--id", "id",
-			"--active=true",
-			"--connection-name", "connection_name",
+			"--active=false",
+			"--connection-name", "string",
 			"--inbound", "{channel_limit: 0}",
-			"--outbound", "{channel_limit: 0, outbound_voice_profile_id: outbound_voice_profile_id}",
+			"--outbound", "{channel_limit: 0, outbound_voice_profile_id: string}",
 			"--tag", "string",
 			"--webhook-api-version", "1",
 			"--webhook-event-failover-url", "webhook_event_failover_url",
@@ -116,11 +116,11 @@ func TestMobileVoiceConnectionsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"mobile-voice-connections", "update",
 			"--id", "id",
-			"--active=true",
-			"--connection-name", "connection_name",
+			"--active=false",
+			"--connection-name", "string",
 			"--inbound.channel-limit", "0",
 			"--outbound.channel-limit", "0",
-			"--outbound.outbound-voice-profile-id", "outbound_voice_profile_id",
+			"--outbound.outbound-voice-profile-id", "string",
 			"--tag", "string",
 			"--webhook-api-version", "1",
 			"--webhook-event-failover-url", "webhook_event_failover_url",
@@ -132,13 +132,13 @@ func TestMobileVoiceConnectionsUpdate(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"active: true\n" +
-			"connection_name: connection_name\n" +
+			"active: false\n" +
+			"connection_name: string\n" +
 			"inbound:\n" +
 			"  channel_limit: 0\n" +
 			"outbound:\n" +
 			"  channel_limit: 0\n" +
-			"  outbound_voice_profile_id: outbound_voice_profile_id\n" +
+			"  outbound_voice_profile_id: string\n" +
 			"tags:\n" +
 			"  - string\n" +
 			"webhook_api_version: '1'\n" +

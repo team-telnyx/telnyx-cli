@@ -16,7 +16,7 @@ import (
 
 var whatsappPhoneNumbersCallingSettingsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get calling settings for a phone number",
+	Usage:   "Returns the WhatsApp calling configuration for the specified phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var whatsappPhoneNumbersCallingSettingsRetrieve = cli.Command{
 
 var whatsappPhoneNumbersCallingSettingsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Enable or disable Whatsapp calling for a phone number",
+	Usage:   "Enables or disables WhatsApp calling for the specified phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

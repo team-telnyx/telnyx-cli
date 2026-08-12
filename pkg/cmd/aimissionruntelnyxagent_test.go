@@ -30,13 +30,13 @@ func TestAIMissionsRunsTelnyxAgentsLink(t *testing.T) {
 			"ai:missions:runs:telnyx-agents", "link",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--run-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--telnyx-agent-id", "telnyx_agent_id",
+			"--telnyx-agent-id", "Telnyx Agent Id",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("telnyx_agent_id: telnyx_agent_id")
+		pipeData := []byte("telnyx_agent_id: Telnyx Agent Id")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

@@ -43,7 +43,7 @@ var emailDomainsWebhooksCreate = cli.Command{
 
 var emailDomainsWebhooksRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a webhook",
+	Usage:   "Returns the webhook subscription identified by ID within the specified email\ndomain.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -91,7 +91,7 @@ var emailDomainsWebhooksUpdate = cli.Command{
 
 var emailDomainsWebhooksList = cli.Command{
 	Name:    "list",
-	Usage:   "List webhooks for an email domain",
+	Usage:   "Returns a paginated list of webhook subscriptions scoped to the email domain.\nResults can be sorted by creation time.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -127,7 +127,7 @@ var emailDomainsWebhooksList = cli.Command{
 
 var emailDomainsWebhooksDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a webhook",
+	Usage:   "Deletes the webhook subscription identified by ID within the specified email\ndomain and returns the deleted subscription.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

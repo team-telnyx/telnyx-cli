@@ -16,7 +16,7 @@ import (
 
 var whatsappPhoneNumbersList = cli.Command{
 	Name:    "list",
-	Usage:   "List Whatsapp phone numbers",
+	Usage:   "Returns WhatsApp phone numbers linked to the authenticated Telnyx account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -38,7 +38,7 @@ var whatsappPhoneNumbersList = cli.Command{
 
 var whatsappPhoneNumbersDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Whatsapp phone number",
+	Usage:   "Removes the specified phone number from Telnyx WhatsApp management.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -51,9 +51,27 @@ var whatsappPhoneNumbersDelete = cli.Command{
 	HideHelpCommand: true,
 }
 
+var whatsappPhoneNumbersGet = cli.Command{
+	Name:    "get",
+	Usage:   "Retrieve a list of the phone numbers registered for WhatsApp on your account.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			QueryPath: "page[size]",
+		},
+	},
+	Action:          handleWhatsappPhoneNumbersGet,
+	HideHelpCommand: true,
+}
+
 var whatsappPhoneNumbersResendVerification = cli.Command{
 	Name:    "resend-verification",
-	Usage:   "Resend verification code",
+	Usage:   "Requests a new verification code for the specified WhatsApp phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -95,7 +113,7 @@ var whatsappPhoneNumbersRetrieveConversationWindow = cli.Command{
 
 var whatsappPhoneNumbersVerify = cli.Command{
 	Name:    "verify",
-	Usage:   "Submit verification code for a phone number",
+	Usage:   "Submits the verification code received for the specified WhatsApp phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -191,6 +209,47 @@ func handleWhatsappPhoneNumbersDelete(ctx context.Context, cmd *cli.Command) err
 	}
 
 	return client.Whatsapp.PhoneNumbers.Delete(ctx, cmd.Value("phone-number").(string), options...)
+}
+
+func handleWhatsappPhoneNumbersGet(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.WhatsappPhoneNumberGetParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Whatsapp.PhoneNumbers.Get(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "whatsapp:phone-numbers get",
+		Transform:      transform,
+	})
 }
 
 func handleWhatsappPhoneNumbersResendVerification(ctx context.Context, cmd *cli.Command) error {

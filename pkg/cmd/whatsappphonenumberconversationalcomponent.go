@@ -16,7 +16,7 @@ import (
 
 var whatsappPhoneNumbersConversationalComponentsList = cli.Command{
 	Name:    "list",
-	Usage:   "Get phone number conversational components",
+	Usage:   "Returns the conversational components configured for the specified WhatsApp\nphone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var whatsappPhoneNumbersConversationalComponentsList = cli.Command{
 
 var whatsappPhoneNumbersConversationalComponentsPatchAll = requestflag.WithInnerFlags(cli.Command{
 	Name:    "patch-all",
-	Usage:   "Update phone number conversational components",
+	Usage:   "Updates the conversational components configured for the specified WhatsApp\nphone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

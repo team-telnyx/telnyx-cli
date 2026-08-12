@@ -16,7 +16,7 @@ import (
 
 var phoneNumbersVoiceRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a phone number with voice settings",
+	Usage:   "Returns the specified phone number together with its current voice\nconfiguration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var phoneNumbersVoiceRetrieve = cli.Command{
 
 var phoneNumbersVoiceUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update a phone number with voice settings",
+	Usage:   "Updates the voice configuration for the specified phone number. The response\ncontains the phone number with its updated voice settings.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -159,7 +159,7 @@ var phoneNumbersVoiceUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var phoneNumbersVoiceList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List phone numbers with voice settings",
+	Usage:   "Returns account phone numbers together with their voice settings. Results\nsupport pagination, sorting, and filters for number, connection name, customer\nreference, and voice usage payment method.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

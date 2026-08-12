@@ -16,7 +16,7 @@ import (
 
 var mobileVoiceConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a Mobile Voice Connection",
+	Usage:   "Create a new mobile voice connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[bool]{
@@ -83,7 +83,7 @@ var mobileVoiceConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var mobileVoiceConnectionsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a Mobile Voice Connection",
+	Usage:   "Retrieve the details of a specific mobile voice connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -98,7 +98,7 @@ var mobileVoiceConnectionsRetrieve = cli.Command{
 
 var mobileVoiceConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update a Mobile Voice Connection",
+	Usage:   "Update the settings of a specific mobile voice connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -167,7 +167,7 @@ var mobileVoiceConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var mobileVoiceConnectionsList = cli.Command{
 	Name:    "list",
-	Usage:   "List Mobile Voice Connections",
+	Usage:   "Retrieve a paginated list of mobile voice connections on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -201,7 +201,7 @@ var mobileVoiceConnectionsList = cli.Command{
 
 var mobileVoiceConnectionsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Mobile Voice Connection",
+	Usage:   "Delete a mobile voice connection from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

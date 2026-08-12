@@ -16,7 +16,7 @@ import (
 
 var phoneNumberBlocksJobsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieves a phone number blocks job",
+	Usage:   "Returns the status and details of the phone-number-block background job\nidentified by `id`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var phoneNumberBlocksJobsRetrieve = cli.Command{
 
 var phoneNumberBlocksJobsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Lists the phone number blocks jobs",
+	Usage:   "Returns background jobs that operate on phone-number blocks. Results can be\nfiltered by job type and status, sorted by creation time, and include pagination\nmetadata.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
