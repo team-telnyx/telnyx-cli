@@ -104,6 +104,11 @@ var simCardsActionsBulkEnableVoice = cli.Command{
 			Required: true,
 			BodyPath: "sim_card_group_id",
 		},
+		&requestflag.Flag[string]{
+			Name:     "connection-id",
+			Usage:    "The identifier of the Mobile Voice Connection to associate with the SIM cards. The connection must be owned by the same user and of type <code>mobile_voice</code>. If omitted, voice is enabled without a connection association.",
+			BodyPath: "connection_id",
+		},
 	},
 	Action:          handleSimCardsActionsBulkEnableVoice,
 	HideHelpCommand: true,
@@ -139,6 +144,21 @@ var simCardsActionsDisable = cli.Command{
 	HideHelpCommand: true,
 }
 
+var simCardsActionsDisableVoice = cli.Command{
+	Name:    "disable-voice",
+	Usage:   "This API disables voice calling on a SIM card. The SIM card will no longer be\nable to make or receive calls.<br/> The API will trigger an asynchronous\noperation called a SIM Card Action. The status of the SIM Card Action can be\nfollowed through the\n[List SIM Card Action](https://developers.telnyx.com/api-reference/sim-card-actions/list-sim-card-actions)\nAPI.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
+		},
+	},
+	Action:          handleSimCardsActionsDisableVoice,
+	HideHelpCommand: true,
+}
+
 var simCardsActionsEnable = cli.Command{
 	Name:    "enable",
 	Usage:   "This API enables a SIM card, connecting it to the network and making it possible\nto consume data.<br/> To enable a SIM card, it must be associated with a SIM\ncard group.<br/> The API will trigger an asynchronous operation called a SIM\nCard Action. Transitioning to the enabled state may take a period of time. The\nstatus of the SIM Card Action can be followed through the\n[List SIM Card Action](https://developers.telnyx.com/api-reference/sim-card-actions/list-sim-card-actions)\nAPI.",
@@ -151,6 +171,26 @@ var simCardsActionsEnable = cli.Command{
 		},
 	},
 	Action:          handleSimCardsActionsEnable,
+	HideHelpCommand: true,
+}
+
+var simCardsActionsEnableVoice = cli.Command{
+	Name:    "enable-voice",
+	Usage:   "This API enables voice calling on a SIM card. When a <code>connection_id</code>\nis provided, the SIM is associated with the specified Mobile Voice Connection.\nThe connection must be owned by the same user and of type\n<code>mobile_voice</code>.<br/> The API will trigger an asynchronous operation\ncalled a SIM Card Action. The status of the SIM Card Action can be followed\nthrough the\n[List SIM Card Action](https://developers.telnyx.com/api-reference/sim-card-actions/list-sim-card-actions)\nAPI.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
+		},
+		&requestflag.Flag[string]{
+			Name:     "connection-id",
+			Usage:    "The identifier of the Mobile Voice Connection to associate with this SIM card. The connection must be owned by the same user and of type <code>mobile_voice</code>. If omitted, voice is enabled without a connection association.",
+			BodyPath: "connection_id",
+		},
+	},
+	Action:          handleSimCardsActionsEnableVoice,
 	HideHelpCommand: true,
 }
 
@@ -480,6 +520,48 @@ func handleSimCardsActionsDisable(ctx context.Context, cmd *cli.Command) error {
 	})
 }
 
+func handleSimCardsActionsDisableVoice(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.SimCards.Actions.DisableVoice(ctx, cmd.Value("id").(string), options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sim-cards:actions disable-voice",
+		Transform:      transform,
+	})
+}
+
 func handleSimCardsActionsEnable(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -518,6 +600,55 @@ func handleSimCardsActionsEnable(ctx context.Context, cmd *cli.Command) error {
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "sim-cards:actions enable",
+		Transform:      transform,
+	})
+}
+
+func handleSimCardsActionsEnableVoice(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.SimCardActionEnableVoiceParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.SimCards.Actions.EnableVoice(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "sim-cards:actions enable-voice",
 		Transform:      transform,
 	})
 }

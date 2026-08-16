@@ -85,12 +85,15 @@ func TestSimCardsActionsBulkEnableVoice(t *testing.T) {
 			"--api-key", "string",
 			"sim-cards:actions", "bulk-enable-voice",
 			"--sim-card-group-id", "6b14e151-8493-4fa1-8664-1cc4e6d14158",
+			"--connection-id", "123456789",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("sim_card_group_id: 6b14e151-8493-4fa1-8664-1cc4e6d14158")
+		pipeData := []byte("" +
+			"sim_card_group_id: 6b14e151-8493-4fa1-8664-1cc4e6d14158\n" +
+			"connection_id: '123456789'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -135,6 +138,18 @@ func TestSimCardsActionsDisable(t *testing.T) {
 	})
 }
 
+func TestSimCardsActionsDisableVoice(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"sim-cards:actions", "disable-voice",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
+}
+
 func TestSimCardsActionsEnable(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
@@ -142,6 +157,30 @@ func TestSimCardsActionsEnable(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"sim-cards:actions", "enable",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
+}
+
+func TestSimCardsActionsEnableVoice(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"sim-cards:actions", "enable-voice",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+			"--connection-id", "123456789",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("connection_id: '123456789'")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"sim-cards:actions", "enable-voice",
 			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
