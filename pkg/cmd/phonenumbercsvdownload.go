@@ -16,7 +16,7 @@ import (
 
 var phoneNumbersCsvDownloadsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a CSV download",
+	Usage:   "Starts generation of a CSV export for phone numbers matching the supplied\nfilters. The `csv_format` parameter selects the output format, and the response\ncontains the resulting download record.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -90,7 +90,7 @@ var phoneNumbersCsvDownloadsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var phoneNumbersCsvDownloadsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a CSV download",
+	Usage:   "Returns the current status and download details for the CSV export identified by\n`id`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -105,7 +105,7 @@ var phoneNumbersCsvDownloadsRetrieve = cli.Command{
 
 var phoneNumbersCsvDownloadsList = cli.Command{
 	Name:    "list",
-	Usage:   "List CSV downloads",
+	Usage:   "Returns CSV export jobs created for account phone numbers, including each\nexport's current status and pagination metadata.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{

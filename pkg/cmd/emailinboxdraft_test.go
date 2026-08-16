@@ -196,10 +196,10 @@ func TestEmailInboxesDraftsPatch(t *testing.T) {
 			"--label", "string",
 			"--metadata", "{}",
 			"--reply-to", "reply_to",
-			"--subject", "subject",
+			"--subject", "Quarterly update (revised)",
 			"--tag", "string",
 			"--text", "text",
-			"--text-body", "text_body",
+			"--text-body", "Updated body.",
 			"--to", "string",
 		)
 	})
@@ -223,11 +223,11 @@ func TestEmailInboxesDraftsPatch(t *testing.T) {
 			"  - string\n" +
 			"metadata: {}\n" +
 			"reply_to: reply_to\n" +
-			"subject: subject\n" +
+			"subject: Quarterly update (revised)\n" +
 			"tags:\n" +
 			"  - string\n" +
 			"text: text\n" +
-			"text_body: text_body\n" +
+			"text_body: Updated body.\n" +
 			"to:\n" +
 			"  - string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(

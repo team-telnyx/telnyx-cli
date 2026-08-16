@@ -16,7 +16,7 @@ import (
 
 var availablePhoneNumbersList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List available phone numbers",
+	Usage:   "Searches the Telnyx inventory for available phone numbers. Filters support\nnumber patterns, location, number type, features, reservability, and other\ninventory constraints; the response includes matching numbers and search\nmetadata.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

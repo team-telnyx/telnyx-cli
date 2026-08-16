@@ -31,13 +31,13 @@ func TestExternalConnectionsPhoneNumbersUpdate(t *testing.T) {
 			"external-connections:phone-numbers", "update",
 			"--id", "1293384261075731499",
 			"--phone-number-id", "1234567889",
-			"--location-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--location-id", "3fa85f64-5717-4562-b3fc-2c963f66afa6",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("location_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+		pipeData := []byte("location_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

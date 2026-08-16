@@ -16,7 +16,7 @@ import (
 
 var verificationsByPhoneNumberActionsVerify = cli.Command{
 	Name:    "verify",
-	Usage:   "Verify verification code by phone number",
+	Usage:   "Submits a verification code for the specified phone number and Verify profile.\nThe response indicates whether the code was accepted or rejected.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

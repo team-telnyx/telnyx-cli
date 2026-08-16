@@ -423,7 +423,7 @@ var messaging10dlcBrandGetSMSOtpByReference = cli.Command{
 
 var messaging10dlcBrandResend2faEmail = cli.Command{
 	Name:    "resend-2fa-email",
-	Usage:   "Resend brand 2FA email",
+	Usage:   "Requests a new two-factor authentication email for the specified 10DLC brand.\nComplete verification through the link delivered to the brand contact before\ncontinuing registration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

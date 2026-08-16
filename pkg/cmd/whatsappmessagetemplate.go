@@ -16,7 +16,7 @@ import (
 
 var whatsappMessageTemplatesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a Whatsapp message template by ID",
+	Usage:   "Returns the content, components, language, and current review state of the\nspecified WhatsApp message template.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var whatsappMessageTemplatesRetrieve = cli.Command{
 
 var whatsappMessageTemplatesUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a Whatsapp message template",
+	Usage:   "Updates the editable fields of the specified WhatsApp message template.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,7 +56,7 @@ var whatsappMessageTemplatesUpdate = cli.Command{
 
 var whatsappMessageTemplatesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Whatsapp message template",
+	Usage:   "Deletes the specified WhatsApp message template.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

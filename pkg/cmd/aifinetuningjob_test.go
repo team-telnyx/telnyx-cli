@@ -16,10 +16,10 @@ func TestAIFineTuningJobsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:fine-tuning:jobs", "create",
-			"--model", "model",
-			"--training-file", "training_file",
-			"--hyperparameters", "{n_epochs: 1}",
-			"--suffix", "suffix",
+			"--model", "string",
+			"--training-file", "string",
+			"--hyperparameters", "{n_epochs: 3}",
+			"--suffix", "string",
 		)
 	})
 
@@ -32,21 +32,21 @@ func TestAIFineTuningJobsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:fine-tuning:jobs", "create",
-			"--model", "model",
-			"--training-file", "training_file",
-			"--hyperparameters.n-epochs", "1",
-			"--suffix", "suffix",
+			"--model", "string",
+			"--training-file", "string",
+			"--hyperparameters.n-epochs", "3",
+			"--suffix", "string",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"model: model\n" +
-			"training_file: training_file\n" +
+			"model: string\n" +
+			"training_file: string\n" +
 			"hyperparameters:\n" +
-			"  n_epochs: 1\n" +
-			"suffix: suffix\n")
+			"  n_epochs: 3\n" +
+			"suffix: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

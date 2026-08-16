@@ -16,7 +16,7 @@ import (
 
 var messagingURLDomainsList = cli.Command{
 	Name:    "list",
-	Usage:   "List messaging URL domains",
+	Usage:   "Returns the URL domains available to the authenticated account for message URL\nshortening.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{

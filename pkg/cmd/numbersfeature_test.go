@@ -15,7 +15,7 @@ func TestNumbersFeaturesCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"numbers-features", "create",
-			"--phone-number", "string",
+			"--phone-number", "+19705555098",
 		)
 	})
 
@@ -23,7 +23,7 @@ func TestNumbersFeaturesCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"phone_numbers:\n" +
-			"  - string\n")
+			"  - '+19705555098'\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

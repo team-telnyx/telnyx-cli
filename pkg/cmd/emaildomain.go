@@ -16,7 +16,7 @@ import (
 
 var emailDomainsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create an email domain",
+	Usage:   "Registers a domain for email sending and optional inbound delivery. The response\nincludes the domain configuration and current verification state.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -101,7 +101,7 @@ var emailDomainsRetrieve = cli.Command{
 
 var emailDomainsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update an email domain",
+	Usage:   "Updates mutable settings for an existing email domain, including inbound\ndelivery and tracking configuration. Shared domains are read-only for non-owner\naccounts.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -239,7 +239,7 @@ var emailDomainsList = cli.Command{
 
 var emailDomainsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete an email domain",
+	Usage:   "Deletes an email domain configuration. Verified domains require `force=true`,\nand shared domains are read-only for non-owner accounts.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -260,7 +260,7 @@ var emailDomainsDelete = cli.Command{
 
 var emailDomainsRetrieveDNSRecords = cli.Command{
 	Name:    "retrieve-dns-records",
-	Usage:   "List DNS records for an email domain",
+	Usage:   "Returns the DNS records Telnyx generated for domain ownership and DKIM\nverification, plus MX records when inbound delivery is enabled.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -290,7 +290,7 @@ var emailDomainsRetrieveHealth = cli.Command{
 
 var emailDomainsVerify = cli.Command{
 	Name:    "verify",
-	Usage:   "Verify DNS records for an email domain",
+	Usage:   "Checks the published DNS records against the records required for the email\ndomain and returns the latest verification results.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

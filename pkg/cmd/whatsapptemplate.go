@@ -16,7 +16,7 @@ import (
 
 var whatsappTemplatesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a Whatsapp message template",
+	Usage:   "Creates a WhatsApp message template for review and subsequent use in template\nmessages.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,7 +56,7 @@ var whatsappTemplatesCreate = cli.Command{
 
 var whatsappTemplatesList = cli.Command{
 	Name:    "list",
-	Usage:   "List Whatsapp message templates",
+	Usage:   "Returns WhatsApp message templates owned by the authenticated account, including\ntheir current review state.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

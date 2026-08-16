@@ -29,15 +29,15 @@ func TestMobilePhoneNumbersUpdate(t *testing.T) {
 			"--api-key", "string",
 			"mobile-phone-numbers", "update",
 			"--id", "id",
-			"--call-forwarding", "{call_forwarding_enabled: true, forwarding_type: always, forwards_to: forwards_to}",
-			"--call-recording", "{inbound_call_recording_channels: single, inbound_call_recording_enabled: true, inbound_call_recording_format: wav}",
-			"--caller-id-name-enabled=true",
-			"--cnam-listing", "{cnam_listing_details: cnam_listing_details, cnam_listing_enabled: true}",
+			"--call-forwarding", "{call_forwarding_enabled: false, forwarding_type: always, forwards_to: forwards_to}",
+			"--call-recording", "{inbound_call_recording_channels: single, inbound_call_recording_enabled: false, inbound_call_recording_format: wav}",
+			"--caller-id-name-enabled=false",
+			"--cnam-listing", "{cnam_listing_details: cnam_listing_details, cnam_listing_enabled: false}",
 			"--connection-id", "connection_id",
 			"--customer-reference", "customer_reference",
 			"--inbound", "{interception_app_id: interception_app_id}",
 			"--inbound-call-screening", "disabled",
-			"--noise-suppression=true",
+			"--noise-suppression=false",
 			"--outbound", "{interception_app_id: interception_app_id}",
 			"--tag", "string",
 		)
@@ -53,20 +53,20 @@ func TestMobilePhoneNumbersUpdate(t *testing.T) {
 			"--api-key", "string",
 			"mobile-phone-numbers", "update",
 			"--id", "id",
-			"--call-forwarding.call-forwarding-enabled=true",
+			"--call-forwarding.call-forwarding-enabled=false",
 			"--call-forwarding.forwarding-type", "always",
 			"--call-forwarding.forwards-to", "forwards_to",
 			"--call-recording.inbound-call-recording-channels", "single",
-			"--call-recording.inbound-call-recording-enabled=true",
+			"--call-recording.inbound-call-recording-enabled=false",
 			"--call-recording.inbound-call-recording-format", "wav",
-			"--caller-id-name-enabled=true",
+			"--caller-id-name-enabled=false",
 			"--cnam-listing.cnam-listing-details", "cnam_listing_details",
-			"--cnam-listing.cnam-listing-enabled=true",
+			"--cnam-listing.cnam-listing-enabled=false",
 			"--connection-id", "connection_id",
 			"--customer-reference", "customer_reference",
 			"--inbound.interception-app-id", "interception_app_id",
 			"--inbound-call-screening", "disabled",
-			"--noise-suppression=true",
+			"--noise-suppression=false",
 			"--outbound.interception-app-id", "interception_app_id",
 			"--tag", "string",
 		)
@@ -76,23 +76,23 @@ func TestMobilePhoneNumbersUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"call_forwarding:\n" +
-			"  call_forwarding_enabled: true\n" +
+			"  call_forwarding_enabled: false\n" +
 			"  forwarding_type: always\n" +
 			"  forwards_to: forwards_to\n" +
 			"call_recording:\n" +
 			"  inbound_call_recording_channels: single\n" +
-			"  inbound_call_recording_enabled: true\n" +
+			"  inbound_call_recording_enabled: false\n" +
 			"  inbound_call_recording_format: wav\n" +
-			"caller_id_name_enabled: true\n" +
+			"caller_id_name_enabled: false\n" +
 			"cnam_listing:\n" +
 			"  cnam_listing_details: cnam_listing_details\n" +
-			"  cnam_listing_enabled: true\n" +
+			"  cnam_listing_enabled: false\n" +
 			"connection_id: connection_id\n" +
 			"customer_reference: customer_reference\n" +
 			"inbound:\n" +
 			"  interception_app_id: interception_app_id\n" +
 			"inbound_call_screening: disabled\n" +
-			"noise_suppression: true\n" +
+			"noise_suppression: false\n" +
 			"outbound:\n" +
 			"  interception_app_id: interception_app_id\n" +
 			"tags:\n" +

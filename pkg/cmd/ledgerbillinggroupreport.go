@@ -16,7 +16,7 @@ import (
 
 var ledgerBillingGroupReportsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a ledger billing group report",
+	Usage:   "Create a ledger billing group report, which aggregates ledger activity by\nbilling group.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -36,7 +36,7 @@ var ledgerBillingGroupReportsCreate = cli.Command{
 
 var ledgerBillingGroupReportsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a ledger billing group report",
+	Usage:   "Retrieve the details and status of a previously created ledger billing group\nreport.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

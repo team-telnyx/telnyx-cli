@@ -16,8 +16,8 @@ func TestAIMissionsRunsCreate(t *testing.T) {
 			"--api-key", "string",
 			"ai:missions:runs", "create",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--input", "{foo: bar}",
-			"--metadata", "{foo: bar}",
+			"--input", "{objective: bar}",
+			"--metadata", "{requested_by: bar}",
 		)
 	})
 
@@ -25,9 +25,9 @@ func TestAIMissionsRunsCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"input:\n" +
-			"  foo: bar\n" +
+			"  objective: bar\n" +
 			"metadata:\n" +
-			"  foo: bar\n")
+			"  requested_by: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -62,8 +62,8 @@ func TestAIMissionsRunsUpdate(t *testing.T) {
 			"--error", "error",
 			"--metadata", "{foo: bar}",
 			"--result-payload", "{foo: bar}",
-			"--result-summary", "result_summary",
-			"--status", "pending",
+			"--result-summary", "Processed 24 customer records successfully.",
+			"--status", "succeeded",
 		)
 	})
 
@@ -75,8 +75,8 @@ func TestAIMissionsRunsUpdate(t *testing.T) {
 			"  foo: bar\n" +
 			"result_payload:\n" +
 			"  foo: bar\n" +
-			"result_summary: result_summary\n" +
-			"status: pending\n")
+			"result_summary: Processed 24 customer records successfully.\n" +
+			"status: succeeded\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

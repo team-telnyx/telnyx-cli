@@ -16,7 +16,7 @@ import (
 
 var messagingHostedNumberOrdersCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a messaging hosted number order",
+	Usage:   "Creates an order to enable Telnyx messaging on phone numbers whose voice service\nremains with another carrier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -36,7 +36,7 @@ var messagingHostedNumberOrdersCreate = cli.Command{
 
 var messagingHostedNumberOrdersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a messaging hosted number order",
+	Usage:   "Returns the current state, phone numbers, and required actions for the specified\nhosted-messaging order.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -51,7 +51,7 @@ var messagingHostedNumberOrdersRetrieve = cli.Command{
 
 var messagingHostedNumberOrdersList = cli.Command{
 	Name:    "list",
-	Usage:   "List messaging hosted number orders",
+	Usage:   "Returns hosted-messaging orders for the authenticated account. Apply the\ndocumented filters and pagination parameters to narrow the result set.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -88,7 +88,7 @@ var messagingHostedNumberOrdersDelete = cli.Command{
 
 var messagingHostedNumberOrdersCheckEligibility = cli.Command{
 	Name:    "check-eligibility",
-	Usage:   "Check hosted messaging eligibility",
+	Usage:   "Checks whether the supplied phone numbers are eligible for hosted messaging\nbefore an order is created.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[[]string]{

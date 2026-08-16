@@ -16,7 +16,7 @@ import (
 
 var whatsappBusinessAccountsPhoneNumbersList = cli.Command{
 	Name:    "list",
-	Usage:   "List phone numbers for a WABA",
+	Usage:   "Returns phone numbers registered under the specified WhatsApp Business Account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -43,7 +43,7 @@ var whatsappBusinessAccountsPhoneNumbersList = cli.Command{
 
 var whatsappBusinessAccountsPhoneNumbersInitializeVerification = cli.Command{
 	Name:    "initialize-verification",
-	Usage:   "Initialize Whatsapp phone number verification",
+	Usage:   "Starts verification of a phone number for the specified WhatsApp Business\nAccount using the requested verification method.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

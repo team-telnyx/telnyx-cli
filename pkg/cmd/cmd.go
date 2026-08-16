@@ -415,6 +415,41 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:collections",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiCollectionsCreate,
+					&aiCollectionsRetrieve,
+					&aiCollectionsUpdate,
+					&aiCollectionsList,
+					&aiCollectionsDelete,
+					&aiCollectionsRetrieveByID,
+					&aiCollectionsRetrieveDocuments,
+				},
+			},
+			{
+				Name:     "ai:collections:settings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiCollectionsSettingsCreate,
+					&aiCollectionsSettingsList,
+					&aiCollectionsSettingsPatchAll,
+				},
+			},
+			{
+				Name:     "ai:collections:sources",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiCollectionsSourcesCreate,
+					&aiCollectionsSourcesList,
+					&aiCollectionsSourcesDelete,
+					&aiCollectionsSourcesReplace,
+				},
+			},
+			{
 				Name:     "ai:conversations",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -1155,6 +1190,15 @@ func init() {
 				},
 			},
 			{
+				Name:     "fqdn-connections:fqdn-authentication",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&fqdnConnectionsFqdnAuthenticationList,
+					&fqdnConnectionsFqdnAuthenticationPatchAll,
+				},
+			},
+			{
 				Name:     "fqdns",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -1384,6 +1428,7 @@ func init() {
 					&messagesSendNumberPool,
 					&messagesSendShortCode,
 					&messagesSendWithAlphanumericSender,
+					&messagesWhatsapp,
 				},
 			},
 			{
@@ -2096,6 +2141,42 @@ func init() {
 				},
 			},
 			{
+				Name:     "rcs:agents",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&rcsAgentsCreate,
+					&rcsAgentsRetrieve,
+					&rcsAgentsUpdate,
+					&rcsAgentsList,
+					&rcsAgentsLaunch,
+					&rcsAgentsRetrieveCarrierApprovals,
+					&rcsAgentsSubmit,
+				},
+			},
+			{
+				Name:     "rcs:agents:test-devices",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&rcsAgentsTestDevicesCreate,
+					&rcsAgentsTestDevicesList,
+					&rcsAgentsTestDevicesDelete,
+				},
+			},
+			{
+				Name:     "rcs:brands",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&rcsBrandsCreate,
+					&rcsBrandsRetrieve,
+					&rcsBrandsUpdate,
+					&rcsBrandsList,
+					&rcsBrandsSubmit,
+				},
+			},
+			{
 				Name:     "recording-transcriptions",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -2381,7 +2462,9 @@ func init() {
 					&simCardsActionsBulkEnableVoice,
 					&simCardsActionsBulkSetPublicIPs,
 					&simCardsActionsDisable,
+					&simCardsActionsDisableVoice,
 					&simCardsActionsEnable,
+					&simCardsActionsEnableVoice,
 					&simCardsActionsRemovePublicIP,
 					&simCardsActionsSetPublicIP,
 					&simCardsActionsSetStandby,
@@ -2503,6 +2586,25 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&storageCloudfsActionsRotateMetaToken,
+				},
+			},
+			{
+				Name:     "storage:sqldbs",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&storageSqldbsCreate,
+					&storageSqldbsRetrieve,
+					&storageSqldbsList,
+					&storageSqldbsDelete,
+				},
+			},
+			{
+				Name:     "storage:sqldbs:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&storageSqldbsActionsQuery,
 				},
 			},
 			{
@@ -3134,6 +3236,7 @@ func init() {
 				Commands: []*cli.Command{
 					&whatsappPhoneNumbersList,
 					&whatsappPhoneNumbersDelete,
+					&whatsappPhoneNumbersGet,
 					&whatsappPhoneNumbersResendVerification,
 					&whatsappPhoneNumbersRetrieveConversationWindow,
 					&whatsappPhoneNumbersVerify,
@@ -3716,6 +3819,60 @@ func init() {
 				Commands: []*cli.Command{
 					&pricingProductsRetrieve,
 					&pricingProductsList,
+				},
+			},
+			{
+				Name:     "web-search",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&webSearchCreate,
+					&webSearchContents,
+				},
+			},
+			{
+				Name:     "web-search:research",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&webSearchResearchCreate,
+					&webSearchResearchRetrieve,
+				},
+			},
+			{
+				Name:     "meeting-sessions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&meetingSessionsCreate,
+					&meetingSessionsRetrieve,
+					&meetingSessionsUpdate,
+					&meetingSessionsList,
+					&meetingSessionsDelete,
+					&meetingSessionsDeleteRecordingMedia,
+					&meetingSessionsRetrieveEvents,
+					&meetingSessionsRetrieveRecordings,
+					&meetingSessionsRetrieveTranscript,
+				},
+			},
+			{
+				Name:     "meeting-sessions:actions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&meetingSessionsActionsSendChat,
+					&meetingSessionsActionsSpeak,
+					&meetingSessionsActionsStopSpeaking,
+				},
+			},
+			{
+				Name:     "meeting-sessions:artifacts",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&meetingSessionsArtifactsCreate,
+					&meetingSessionsArtifactsRetrieve,
+					&meetingSessionsArtifactsList,
 				},
 			},
 			{

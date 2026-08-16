@@ -16,7 +16,7 @@ import (
 
 var verificationsActionsVerify = cli.Command{
 	Name:    "verify",
-	Usage:   "Verify verification code by ID",
+	Usage:   "Checks the supplied code, or the supplied status for a custom-code verification,\nagainst the verification identified by ID. The response indicates whether the\nverification was accepted or rejected.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

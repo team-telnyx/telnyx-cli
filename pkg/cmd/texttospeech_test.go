@@ -16,23 +16,23 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"text-to-speech", "generate-speech",
-			"--aws", "{language_code: language_code, lexicon_names: [string], output_format: output_format, sample_rate: sample_rate, text_type: text}",
-			"--azure", "{api_key: api_key, deployment_id: deployment_id, effect: effect, gender: gender, language_code: language_code, output_format: output_format, region: region, text_type: text}",
-			"--disable-cache=true",
-			"--elevenlabs", "{api_key: api_key, language_code: language_code, voice_settings: {foo: bar}}",
+			"--aws", "{language_code: string, lexicon_names: [string], output_format: string, sample_rate: string, text_type: text}",
+			"--azure", "{api_key: string, deployment_id: string, effect: string, gender: string, language_code: en-US, output_format: audio-24khz-160kbitrate-mono-mp3, region: string, text_type: text}",
+			"--disable-cache=false",
+			"--elevenlabs", "{api_key: string, language_code: string, voice_settings: {foo: bar}}",
 			"--humain", "{voice_id: sara-en, ttfb_eagerness: 0}",
-			"--language", "language",
-			"--minimax", "{language_boost: language_boost, pitch: 0, response_format: response_format, speed: 0, vol: 0}",
+			"--language", "string",
+			"--minimax", "{language_boost: string, pitch: 0, response_format: string, speed: 0, vol: 0}",
 			"--output-type", "binary_output",
 			"--provider", "aws",
-			"--resemble", "{api_key: api_key, format: format, precision: precision, sample_rate: sample_rate}",
-			"--rime", "{response_format: response_format, sampling_rate: 0, voice_speed: 0}",
-			"--telnyx", "{emotion: neutral, response_format: response_format, sampling_rate: 0, temperature: 0, voice_speed: 0.5, volume: 0}",
-			"--text", "text",
+			"--resemble", "{api_key: string, format: string, precision: string, sample_rate: string}",
+			"--rime", "{response_format: string, sampling_rate: 0, voice_speed: 0}",
+			"--telnyx", "{emotion: neutral, response_format: mp3, sampling_rate: 24000, temperature: 0.5, voice_speed: 1, volume: 1}",
+			"--text", "string",
 			"--text-type", "text",
-			"--voice", "voice",
+			"--voice", "string",
 			"--voice-settings", "{foo: bar}",
-			"--xai", "{voice_id: eve, language: language, output_format: mp3, sample_rate: 8000}",
+			"--xai", "{voice_id: eve, language: auto, output_format: mp3, sample_rate: 24000}",
 		)
 	})
 
@@ -45,54 +45,54 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"text-to-speech", "generate-speech",
-			"--aws.language-code", "language_code",
+			"--aws.language-code", "string",
 			"--aws.lexicon-names", "[string]",
-			"--aws.output-format", "output_format",
-			"--aws.sample-rate", "sample_rate",
+			"--aws.output-format", "string",
+			"--aws.sample-rate", "string",
 			"--aws.text-type", "text",
-			"--azure.api-key", "api_key",
-			"--azure.deployment-id", "deployment_id",
-			"--azure.effect", "effect",
-			"--azure.gender", "gender",
-			"--azure.language-code", "language_code",
-			"--azure.output-format", "output_format",
-			"--azure.region", "region",
+			"--azure.api-key", "string",
+			"--azure.deployment-id", "string",
+			"--azure.effect", "string",
+			"--azure.gender", "string",
+			"--azure.language-code", "en-US",
+			"--azure.output-format", "audio-24khz-160kbitrate-mono-mp3",
+			"--azure.region", "string",
 			"--azure.text-type", "text",
-			"--disable-cache=true",
-			"--elevenlabs.api-key", "api_key",
-			"--elevenlabs.language-code", "language_code",
+			"--disable-cache=false",
+			"--elevenlabs.api-key", "string",
+			"--elevenlabs.language-code", "string",
 			"--elevenlabs.voice-settings", "{foo: bar}",
 			"--humain.voice-id", "sara-en",
 			"--humain.ttfb-eagerness", "0",
-			"--language", "language",
-			"--minimax.language-boost", "language_boost",
+			"--language", "string",
+			"--minimax.language-boost", "string",
 			"--minimax.pitch", "0",
-			"--minimax.response-format", "response_format",
+			"--minimax.response-format", "string",
 			"--minimax.speed", "0",
 			"--minimax.vol", "0",
 			"--output-type", "binary_output",
 			"--provider", "aws",
-			"--resemble.api-key", "api_key",
-			"--resemble.format", "format",
-			"--resemble.precision", "precision",
-			"--resemble.sample-rate", "sample_rate",
-			"--rime.response-format", "response_format",
+			"--resemble.api-key", "string",
+			"--resemble.format", "string",
+			"--resemble.precision", "string",
+			"--resemble.sample-rate", "string",
+			"--rime.response-format", "string",
 			"--rime.sampling-rate", "0",
 			"--rime.voice-speed", "0",
 			"--telnyx.emotion", "neutral",
-			"--telnyx.response-format", "response_format",
-			"--telnyx.sampling-rate", "0",
-			"--telnyx.temperature", "0",
-			"--telnyx.voice-speed", "0.5",
-			"--telnyx.volume", "0",
-			"--text", "text",
+			"--telnyx.response-format", "mp3",
+			"--telnyx.sampling-rate", "24000",
+			"--telnyx.temperature", "0.5",
+			"--telnyx.voice-speed", "1",
+			"--telnyx.volume", "1",
+			"--text", "string",
 			"--text-type", "text",
-			"--voice", "voice",
+			"--voice", "string",
 			"--voice-settings", "{foo: bar}",
 			"--xai.voice-id", "eve",
-			"--xai.language", "language",
+			"--xai.language", "auto",
 			"--xai.output-format", "mp3",
-			"--xai.sample-rate", "8000",
+			"--xai.sample-rate", "24000",
 		)
 	})
 
@@ -100,65 +100,65 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"aws:\n" +
-			"  language_code: language_code\n" +
+			"  language_code: string\n" +
 			"  lexicon_names:\n" +
 			"    - string\n" +
-			"  output_format: output_format\n" +
-			"  sample_rate: sample_rate\n" +
+			"  output_format: string\n" +
+			"  sample_rate: string\n" +
 			"  text_type: text\n" +
 			"azure:\n" +
-			"  api_key: api_key\n" +
-			"  deployment_id: deployment_id\n" +
-			"  effect: effect\n" +
-			"  gender: gender\n" +
-			"  language_code: language_code\n" +
-			"  output_format: output_format\n" +
-			"  region: region\n" +
+			"  api_key: string\n" +
+			"  deployment_id: string\n" +
+			"  effect: string\n" +
+			"  gender: string\n" +
+			"  language_code: en-US\n" +
+			"  output_format: audio-24khz-160kbitrate-mono-mp3\n" +
+			"  region: string\n" +
 			"  text_type: text\n" +
-			"disable_cache: true\n" +
+			"disable_cache: false\n" +
 			"elevenlabs:\n" +
-			"  api_key: api_key\n" +
-			"  language_code: language_code\n" +
+			"  api_key: string\n" +
+			"  language_code: string\n" +
 			"  voice_settings:\n" +
 			"    foo: bar\n" +
 			"humain:\n" +
 			"  voice_id: sara-en\n" +
 			"  ttfb_eagerness: 0\n" +
-			"language: language\n" +
+			"language: string\n" +
 			"minimax:\n" +
-			"  language_boost: language_boost\n" +
+			"  language_boost: string\n" +
 			"  pitch: 0\n" +
-			"  response_format: response_format\n" +
+			"  response_format: string\n" +
 			"  speed: 0\n" +
 			"  vol: 0\n" +
 			"output_type: binary_output\n" +
 			"provider: aws\n" +
 			"resemble:\n" +
-			"  api_key: api_key\n" +
-			"  format: format\n" +
-			"  precision: precision\n" +
-			"  sample_rate: sample_rate\n" +
+			"  api_key: string\n" +
+			"  format: string\n" +
+			"  precision: string\n" +
+			"  sample_rate: string\n" +
 			"rime:\n" +
-			"  response_format: response_format\n" +
+			"  response_format: string\n" +
 			"  sampling_rate: 0\n" +
 			"  voice_speed: 0\n" +
 			"telnyx:\n" +
 			"  emotion: neutral\n" +
-			"  response_format: response_format\n" +
-			"  sampling_rate: 0\n" +
-			"  temperature: 0\n" +
-			"  voice_speed: 0.5\n" +
-			"  volume: 0\n" +
-			"text: text\n" +
+			"  response_format: mp3\n" +
+			"  sampling_rate: 24000\n" +
+			"  temperature: 0.5\n" +
+			"  voice_speed: 1\n" +
+			"  volume: 1\n" +
+			"text: string\n" +
 			"text_type: text\n" +
-			"voice: voice\n" +
+			"voice: string\n" +
 			"voice_settings:\n" +
 			"  foo: bar\n" +
 			"xai:\n" +
 			"  voice_id: eve\n" +
-			"  language: language\n" +
+			"  language: auto\n" +
 			"  output_format: mp3\n" +
-			"  sample_rate: 8000\n")
+			"  sample_rate: 24000\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

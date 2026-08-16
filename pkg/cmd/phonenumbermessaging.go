@@ -16,7 +16,7 @@ import (
 
 var phoneNumbersMessagingRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a phone number with messaging settings",
+	Usage:   "Returns the messaging product and messaging-profile assignment for the specified\nphone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var phoneNumbersMessagingRetrieve = cli.Command{
 
 var phoneNumbersMessagingUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update the messaging profile and/or messaging product of a phone number",
+	Usage:   "Updates the messaging product, messaging profile, or both for the specified\nphone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -61,7 +61,7 @@ var phoneNumbersMessagingUpdate = cli.Command{
 
 var phoneNumbersMessagingList = cli.Command{
 	Name:    "list",
-	Usage:   "List phone numbers with messaging settings",
+	Usage:   "Returns phone numbers with their current messaging product and messaging-profile\nassignments.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

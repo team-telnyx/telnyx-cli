@@ -79,7 +79,7 @@ func TestCallsDial(t *testing.T) {
 			"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
-			"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+			"--webhook-urls", "{call.hangup: [https://www.example.com/webhooks/hangup], call.bridge: [https://www.example.com/webhooks/bridge]}",
 			"--webhook-urls-method", "POST",
 		)
 	})
@@ -219,7 +219,7 @@ func TestCallsDial(t *testing.T) {
 			"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
-			"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+			"--webhook-urls", "{call.hangup: [https://www.example.com/webhooks/hangup], call.bridge: [https://www.example.com/webhooks/bridge]}",
 			"--webhook-urls-method", "POST",
 		)
 	})
@@ -450,8 +450,10 @@ func TestCallsDial(t *testing.T) {
 			"webhook_url: https://www.example.com/server-b/\n" +
 			"webhook_url_method: POST\n" +
 			"webhook_urls:\n" +
-			"  call.hangup: https://www.example.com/webhooks/hangup\n" +
-			"  call.bridge: https://www.example.com/webhooks/bridge\n" +
+			"  call.hangup:\n" +
+			"    - https://www.example.com/webhooks/hangup\n" +
+			"  call.bridge:\n" +
+			"    - https://www.example.com/webhooks/bridge\n" +
 			"webhook_urls_method: POST\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

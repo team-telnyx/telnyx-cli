@@ -16,7 +16,7 @@ import (
 
 var aiAssistantsToolsAdd = cli.Command{
 	Name:    "add",
-	Usage:   "Add Assistant Tool",
+	Usage:   "Attach an existing tool to an AI assistant.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -36,7 +36,7 @@ var aiAssistantsToolsAdd = cli.Command{
 
 var aiAssistantsToolsRemove = cli.Command{
 	Name:    "remove",
-	Usage:   "Remove Assistant Tool",
+	Usage:   "Detach a tool from an AI assistant.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -28,18 +28,18 @@ func TestMessaging10dlcBrandExternalVettingImports(t *testing.T) {
 			"--api-key", "string",
 			"messaging-10dlc:brand:external-vetting", "imports",
 			"--brand-id", "brandId",
-			"--evp-id", "evpId",
-			"--vetting-id", "vettingId",
-			"--vetting-token", "vettingToken",
+			"--evp-id", "Evpid",
+			"--vetting-id", "Vettingid",
+			"--vetting-token", "Vettingtoken",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"evpId: evpId\n" +
-			"vettingId: vettingId\n" +
-			"vettingToken: vettingToken\n")
+			"evpId: Evpid\n" +
+			"vettingId: Vettingid\n" +
+			"vettingToken: Vettingtoken\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -57,16 +57,16 @@ func TestMessaging10dlcBrandExternalVettingOrder(t *testing.T) {
 			"--api-key", "string",
 			"messaging-10dlc:brand:external-vetting", "order",
 			"--brand-id", "brandId",
-			"--evp-id", "evpId",
-			"--vetting-class", "vettingClass",
+			"--evp-id", "Evpid",
+			"--vetting-class", "Vettingclass",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"evpId: evpId\n" +
-			"vettingClass: vettingClass\n")
+			"evpId: Evpid\n" +
+			"vettingClass: Vettingclass\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

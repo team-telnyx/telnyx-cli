@@ -16,7 +16,7 @@ import (
 
 var globalIPUsageRetrieve = requestflag.WithInnerFlags(cli.Command{
 	Name:    "retrieve",
-	Usage:   "Global IP Usage Metrics",
+	Usage:   "Retrieve usage metrics for your Global IPs.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

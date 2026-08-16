@@ -16,7 +16,7 @@ import (
 
 var messagingHostedNumberOrdersActionsUploadFile = cli.Command{
 	Name:    "upload-file",
-	Usage:   "Upload hosted number document",
+	Usage:   "Uploads a supporting document to the specified hosted-messaging order.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

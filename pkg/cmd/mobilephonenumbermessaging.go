@@ -16,7 +16,7 @@ import (
 
 var mobilePhoneNumbersMessagingRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a mobile phone number with messaging settings",
+	Usage:   "Returns the messaging configuration for the specified mobile phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var mobilePhoneNumbersMessagingRetrieve = cli.Command{
 
 var mobilePhoneNumbersMessagingList = cli.Command{
 	Name:    "list",
-	Usage:   "List mobile phone numbers with messaging settings",
+	Usage:   "Returns mobile phone numbers with their current messaging configuration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{

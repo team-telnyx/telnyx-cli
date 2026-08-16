@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.27.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.26.0...v0.27.0) (2026-08-16)
+
+
+### Features
+
+* promote from staging 152ac0d ([5257c97](https://github.com/team-telnyx/telnyx-cli/commit/5257c97930234f151835923c2ab4c1eff8a756fa))
+
+
+### Bug Fixes
+
+* **ci:** attest private release provenance ([#82](https://github.com/team-telnyx/telnyx-cli/issues/82)) ([4c3cb35](https://github.com/team-telnyx/telnyx-cli/commit/4c3cb35ddd321f5c03b576d205116be6a8682cbc))
+* **ci:** ignore closed release PR events ([#83](https://github.com/team-telnyx/telnyx-cli/issues/83)) ([524012c](https://github.com/team-telnyx/telnyx-cli/commit/524012c93af9b402f24c57b4260035d9b833a5bb))
+* **ci:** isolate release policy validation context ([#84](https://github.com/team-telnyx/telnyx-cli/issues/84)) ([a4cd81f](https://github.com/team-telnyx/telnyx-cli/commit/a4cd81f12c7400fe069abf2e2e9a741886322f3a))
+
 ## [0.26.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.25.0...v0.26.0) (2026-08-04)
 
 

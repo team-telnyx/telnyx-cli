@@ -15,20 +15,20 @@ func TestAIConversationsInsightsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:conversations:insights", "create",
-			"--instructions", "instructions",
-			"--name", "name",
+			"--instructions", "Instructions",
+			"--name", "Name",
 			"--json-schema", "string",
-			"--webhook", "webhook",
+			"--webhook", "",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"instructions: instructions\n" +
-			"name: name\n" +
+			"instructions: Instructions\n" +
+			"name: Name\n" +
 			"json_schema: string\n" +
-			"webhook: webhook\n")
+			"webhook: ''\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -57,20 +57,20 @@ func TestAIConversationsInsightsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:conversations:insights", "update",
 			"--insight-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--instructions", "instructions",
+			"--instructions", "Instructions",
 			"--json-schema", "string",
-			"--name", "name",
-			"--webhook", "webhook",
+			"--name", "Name",
+			"--webhook", "Webhook",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"instructions: instructions\n" +
+			"instructions: Instructions\n" +
 			"json_schema: string\n" +
-			"name: name\n" +
-			"webhook: webhook\n")
+			"name: Name\n" +
+			"webhook: Webhook\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

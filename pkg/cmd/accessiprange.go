@@ -16,7 +16,7 @@ import (
 
 var accessIPRangesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create new Access IP Range",
+	Usage:   "Create a new access IP range on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -35,7 +35,7 @@ var accessIPRangesCreate = cli.Command{
 
 var accessIPRangesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List all Access IP Ranges",
+	Usage:   "Retrieve a paginated list of access IP ranges configured on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -75,7 +75,7 @@ var accessIPRangesList = requestflag.WithInnerFlags(cli.Command{
 
 var accessIPRangesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete access IP ranges",
+	Usage:   "Delete an access IP range from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

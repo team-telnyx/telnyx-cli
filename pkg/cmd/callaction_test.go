@@ -83,7 +83,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
-			"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+			"--webhook-urls", "{call.hangup: [https://www.example.com/webhooks/hangup], call.bridge: [https://www.example.com/webhooks/bridge]}",
 			"--webhook-urls-method", "POST",
 		)
 	})
@@ -169,7 +169,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--webhook-retries-policies", "{call.hangup: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
-			"--webhook-urls", "{call.hangup: https://www.example.com/webhooks/hangup, call.bridge: https://www.example.com/webhooks/bridge}",
+			"--webhook-urls", "{call.hangup: [https://www.example.com/webhooks/hangup], call.bridge: [https://www.example.com/webhooks/bridge]}",
 			"--webhook-urls-method", "POST",
 		)
 	})
@@ -337,8 +337,10 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"webhook_url: https://www.example.com/server-b/\n" +
 			"webhook_url_method: POST\n" +
 			"webhook_urls:\n" +
-			"  call.hangup: https://www.example.com/webhooks/hangup\n" +
-			"  call.bridge: https://www.example.com/webhooks/bridge\n" +
+			"  call.hangup:\n" +
+			"    - https://www.example.com/webhooks/hangup\n" +
+			"  call.bridge:\n" +
+			"    - https://www.example.com/webhooks/bridge\n" +
 			"webhook_urls_method: POST\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
@@ -2248,7 +2250,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--webhook-retries-policies", "{call.answered: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
-			"--webhook-urls", "{call.answered: https://www.example.com/webhooks/answered, call.hangup: https://www.example.com/webhooks/hangup}",
+			"--webhook-urls", "{call.answered: [https://www.example.com/webhooks/answered], call.hangup: [https://www.example.com/webhooks/hangup]}",
 			"--webhook-urls-method", "POST",
 		)
 	})
@@ -2317,7 +2319,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--webhook-retries-policies", "{call.answered: {retries_ms: [1000, 2000, 5000]}}",
 			"--webhook-url", "https://www.example.com/server-b/",
 			"--webhook-url-method", "POST",
-			"--webhook-urls", "{call.answered: https://www.example.com/webhooks/answered, call.hangup: https://www.example.com/webhooks/hangup}",
+			"--webhook-urls", "{call.answered: [https://www.example.com/webhooks/answered], call.hangup: [https://www.example.com/webhooks/hangup]}",
 			"--webhook-urls-method", "POST",
 		)
 	})
@@ -2389,8 +2391,10 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"webhook_url: https://www.example.com/server-b/\n" +
 			"webhook_url_method: POST\n" +
 			"webhook_urls:\n" +
-			"  call.answered: https://www.example.com/webhooks/answered\n" +
-			"  call.hangup: https://www.example.com/webhooks/hangup\n" +
+			"  call.answered:\n" +
+			"    - https://www.example.com/webhooks/answered\n" +
+			"  call.hangup:\n" +
+			"    - https://www.example.com/webhooks/hangup\n" +
 			"webhook_urls_method: POST\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

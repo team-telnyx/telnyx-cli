@@ -64,7 +64,7 @@ func TestEmailTemplatesUpdate(t *testing.T) {
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--html-body", "html_body",
 			"--name", "name",
-			"--subject", "subject",
+			"--subject", "Welcome aboard, {{first_name}}!",
 			"--text-body", "text_body",
 			"--variable", "string",
 		)
@@ -75,7 +75,7 @@ func TestEmailTemplatesUpdate(t *testing.T) {
 		pipeData := []byte("" +
 			"html_body: html_body\n" +
 			"name: name\n" +
-			"subject: subject\n" +
+			"subject: Welcome aboard, {{first_name}}!\n" +
 			"text_body: text_body\n" +
 			"variables:\n" +
 			"  - string\n")
@@ -149,7 +149,7 @@ func TestEmailTemplatesReplace(t *testing.T) {
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--html-body", "html_body",
 			"--name", "name",
-			"--subject", "subject",
+			"--subject", "Welcome aboard, {{first_name}}!",
 			"--text-body", "text_body",
 			"--variable", "string",
 		)
@@ -160,7 +160,7 @@ func TestEmailTemplatesReplace(t *testing.T) {
 		pipeData := []byte("" +
 			"html_body: html_body\n" +
 			"name: name\n" +
-			"subject: subject\n" +
+			"subject: Welcome aboard, {{first_name}}!\n" +
 			"text_body: text_body\n" +
 			"variables:\n" +
 			"  - string\n")

@@ -55,23 +55,23 @@ func TestAIClustersCompute(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:clusters", "compute",
-			"--bucket", "bucket",
+			"--bucket", "string",
 			"--file", "string",
-			"--min-cluster-size", "0",
-			"--min-subcluster-size", "0",
-			"--prefix", "prefix",
+			"--min-cluster-size", "25",
+			"--min-subcluster-size", "5",
+			"--prefix", "string",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"bucket: bucket\n" +
+			"bucket: string\n" +
 			"files:\n" +
 			"  - string\n" +
-			"min_cluster_size: 0\n" +
-			"min_subcluster_size: 0\n" +
-			"prefix: prefix\n")
+			"min_cluster_size: 25\n" +
+			"min_subcluster_size: 5\n" +
+			"prefix: string\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

@@ -17,7 +17,7 @@ import (
 
 var aiClustersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Fetch a cluster",
+	Usage:   "Fetch the results of a clustering task, including the discovered clusters.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -44,7 +44,7 @@ var aiClustersRetrieve = cli.Command{
 
 var aiClustersList = cli.Command{
 	Name:    "list",
-	Usage:   "List all clusters",
+	Usage:   "Retrieve a paginated list of clustering tasks and their statuses.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -66,7 +66,7 @@ var aiClustersList = cli.Command{
 
 var aiClustersDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a cluster",
+	Usage:   "Delete a clustering task and its computed results.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -119,7 +119,7 @@ var aiClustersCompute = cli.Command{
 
 var aiClustersFetchGraph = cli.Command{
 	Name:    "fetch-graph",
-	Usage:   "Fetch a cluster visualization",
+	Usage:   "Fetch a visualization image of the clusters computed by a clustering task.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

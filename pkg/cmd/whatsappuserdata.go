@@ -16,7 +16,7 @@ import (
 
 var whatsappUserDataRetrieve = cli.Command{
 	Name:            "retrieve",
-	Usage:           "Fetch Whatsapp user data",
+	Usage:           "Returns the WhatsApp user-data settings associated with the authenticated Telnyx\naccount.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleWhatsappUserDataRetrieve,
@@ -25,7 +25,7 @@ var whatsappUserDataRetrieve = cli.Command{
 
 var whatsappUserDataUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update Whatsapp user data",
+	Usage:   "Updates the supplied WhatsApp user-data settings for the authenticated Telnyx\naccount.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

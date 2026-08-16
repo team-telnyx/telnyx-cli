@@ -16,7 +16,7 @@ import (
 
 var commentsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a comment",
+	Usage:   "Creates a comment associated with a supported number-order record. The response\ncontains the created comment.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -39,7 +39,7 @@ var commentsCreate = cli.Command{
 
 var commentsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a comment",
+	Usage:   "Returns the comment identified by `id`, including its associated record and\ncomment metadata.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -54,7 +54,7 @@ var commentsRetrieve = cli.Command{
 
 var commentsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Retrieve all comments",
+	Usage:   "Returns comments associated with number-order records. Results can be filtered\nby record type and record ID and include pagination metadata.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -82,7 +82,7 @@ var commentsList = requestflag.WithInnerFlags(cli.Command{
 
 var commentsMarkAsRead = cli.Command{
 	Name:    "mark-as-read",
-	Usage:   "Mark a comment as read",
+	Usage:   "Marks the specified comment as read. The response contains the updated read\nstate for the comment.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -54,13 +54,13 @@ func TestNumberOrderPhoneNumbersUpdateRequirementGroup(t *testing.T) {
 			"--api-key", "string",
 			"number-order-phone-numbers", "update-requirement-group",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--requirement-group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--requirement-group-id", "a4b201f9-8646-4e54-a7d2-b2e403eeaf8c",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("requirement_group_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+		pipeData := []byte("requirement_group_id: a4b201f9-8646-4e54-a7d2-b2e403eeaf8c")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

@@ -16,7 +16,7 @@ import (
 
 var messagingRcsAgentsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve an RCS agent",
+	Usage:   "Returns the configuration and current state of the specified RCS agent.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var messagingRcsAgentsRetrieve = cli.Command{
 
 var messagingRcsAgentsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Modify an RCS agent",
+	Usage:   "Updates the supplied configuration fields on the specified RCS agent.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -61,7 +61,7 @@ var messagingRcsAgentsUpdate = cli.Command{
 
 var messagingRcsAgentsList = cli.Command{
 	Name:    "list",
-	Usage:   "List all RCS agents",
+	Usage:   "Returns RCS agents available to the authenticated account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{

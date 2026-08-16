@@ -42,7 +42,7 @@ var verifiedNumbersCreate = cli.Command{
 
 var verifiedNumbersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a verified number",
+	Usage:   "Retrieve the details of a verified number on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -80,7 +80,7 @@ var verifiedNumbersList = cli.Command{
 
 var verifiedNumbersDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a verified number",
+	Usage:   "Remove a verified number from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

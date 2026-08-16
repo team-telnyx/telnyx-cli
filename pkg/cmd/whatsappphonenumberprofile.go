@@ -16,7 +16,7 @@ import (
 
 var whatsappPhoneNumbersProfileRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get phone number business profile",
+	Usage:   "Returns the business profile displayed for the specified WhatsApp phone number.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var whatsappPhoneNumbersProfileRetrieve = cli.Command{
 
 var whatsappPhoneNumbersProfileUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update phone number business profile",
+	Usage:   "Updates the supplied business-profile fields for the specified WhatsApp phone\nnumber.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

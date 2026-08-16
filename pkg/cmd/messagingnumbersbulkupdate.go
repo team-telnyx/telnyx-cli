@@ -16,7 +16,7 @@ import (
 
 var messagingNumbersBulkUpdatesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Bulk update phone number profiles",
+	Usage:   "Starts a bulk update of messaging-profile assignments for the supplied phone\nnumbers. The response identifies the order used to monitor processing.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -44,7 +44,7 @@ var messagingNumbersBulkUpdatesCreate = cli.Command{
 
 var messagingNumbersBulkUpdatesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve bulk update status",
+	Usage:   "Returns processing status and results for a bulk messaging-settings update\norder.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

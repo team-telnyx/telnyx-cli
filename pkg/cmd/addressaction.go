@@ -16,7 +16,7 @@ import (
 
 var addressesActionsAcceptSuggestions = cli.Command{
 	Name:    "accept-suggestions",
-	Usage:   "Accepts this address suggestion as a new emergency address for Operator Connect\nand finishes the uploads of the numbers associated with it to Microsoft.",
+	Usage:   "Accept the validated address suggestion for this address, replacing the original\nvalues, and finish uploading the numbers associated with it to Microsoft for\nOperator Connect.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

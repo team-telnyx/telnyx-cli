@@ -16,7 +16,7 @@ import (
 
 var phoneNumbersRegulatoryRequirementsRetrieve = requestflag.WithInnerFlags(cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve regulatory requirements for a list of phone numbers",
+	Usage:   "Returns the regulatory requirements that apply to the supplied comma-separated\nphone numbers. The response includes the matching requirement records and\npagination metadata.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

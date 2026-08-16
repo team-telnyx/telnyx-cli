@@ -16,7 +16,7 @@ import (
 
 var aiAssistantsTagsList = cli.Command{
 	Name:            "list",
-	Usage:           "Get All Tags",
+	Usage:           "Retrieve all tags that have been applied to your AI assistants.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleAIAssistantsTagsList,
@@ -25,7 +25,7 @@ var aiAssistantsTagsList = cli.Command{
 
 var aiAssistantsTagsAdd = cli.Command{
 	Name:    "add",
-	Usage:   "Add Assistant Tag",
+	Usage:   "Add a tag to an AI assistant. Tags help you organize and filter your assistants.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -45,7 +45,7 @@ var aiAssistantsTagsAdd = cli.Command{
 
 var aiAssistantsTagsRemove = cli.Command{
 	Name:    "remove",
-	Usage:   "Remove Assistant Tag",
+	Usage:   "Remove a tag from an AI assistant.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

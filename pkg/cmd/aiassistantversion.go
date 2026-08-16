@@ -387,6 +387,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Default Texml App used for voice calls with your assistant. This will be created automatically on assistant creation.",
 			InnerField: "default_texml_app_id",
 		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "telephony-settings.disable-dtmf",
+			Usage:      "Disable inbound DTMF for the entire call. Must be set to true if a 'pay' tool is configured anywhere on the assistant — on the main tool array or on any workflow node — enforced at write time.",
+			InnerField: "disable_dtmf",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "telephony-settings.noise-suppression",
 			Usage:      "The noise suppression engine to use. Use 'disabled' to turn off noise suppression.",

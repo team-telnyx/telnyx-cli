@@ -16,16 +16,16 @@ func TestAccessIPAddressCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"access-ip-address", "create",
-			"--ip-address", "ip_address",
-			"--description", "description",
+			"--ip-address", "Ip Address",
+			"--description", "Description",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"ip_address: ip_address\n" +
-			"description: description\n")
+			"ip_address: Ip Address\n" +
+			"description: Description\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

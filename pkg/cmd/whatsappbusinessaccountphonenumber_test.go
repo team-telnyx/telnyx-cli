@@ -31,9 +31,9 @@ func TestWhatsappBusinessAccountsPhoneNumbersInitializeVerification(t *testing.T
 			"--api-key", "string",
 			"whatsapp:business-accounts:phone-numbers", "initialize-verification",
 			"--id", "id",
-			"--display-name", "display_name",
-			"--phone-number", "phone_number",
-			"--language", "language",
+			"--display-name", "string",
+			"--phone-number", "string",
+			"--language", "en_US",
 			"--verification-method", "sms",
 		)
 	})
@@ -41,9 +41,9 @@ func TestWhatsappBusinessAccountsPhoneNumbersInitializeVerification(t *testing.T
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"display_name: display_name\n" +
-			"phone_number: phone_number\n" +
-			"language: language\n" +
+			"display_name: string\n" +
+			"phone_number: string\n" +
+			"language: en_US\n" +
 			"verification_method: sms\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

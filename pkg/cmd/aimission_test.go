@@ -15,25 +15,25 @@ func TestAIMissionsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:missions", "create",
-			"--name", "name",
-			"--description", "description",
+			"--name", "Name",
+			"--description", "Description",
 			"--execution-mode", "external",
-			"--instructions", "instructions",
+			"--instructions", "Instructions",
 			"--metadata", "{foo: bar}",
-			"--model", "model",
+			"--model", "Model",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"name: name\n" +
-			"description: description\n" +
+			"name: Name\n" +
+			"description: Description\n" +
 			"execution_mode: external\n" +
-			"instructions: instructions\n" +
+			"instructions: Instructions\n" +
 			"metadata:\n" +
 			"  foo: bar\n" +
-			"model: model\n")
+			"model: Model\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -115,25 +115,25 @@ func TestAIMissionsUpdateMission(t *testing.T) {
 			"--api-key", "string",
 			"ai:missions", "update-mission",
 			"--mission-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--description", "description",
+			"--description", "Description",
 			"--execution-mode", "external",
-			"--instructions", "instructions",
+			"--instructions", "Instructions",
 			"--metadata", "{foo: bar}",
-			"--model", "model",
-			"--name", "name",
+			"--model", "Model",
+			"--name", "Name",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"description: description\n" +
+			"description: Description\n" +
 			"execution_mode: external\n" +
-			"instructions: instructions\n" +
+			"instructions: Instructions\n" +
 			"metadata:\n" +
 			"  foo: bar\n" +
-			"model: model\n" +
-			"name: name\n")
+			"model: Model\n" +
+			"name: Name\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

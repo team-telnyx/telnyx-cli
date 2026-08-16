@@ -28,13 +28,13 @@ func TestWhatsappPhoneNumbersCallingSettingsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"whatsapp:phone-numbers:calling-settings", "update",
 			"--phone-number", "phone_number",
-			"--enabled=true",
+			"--enabled=false",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
-		pipeData := []byte("enabled: true")
+		pipeData := []byte("enabled: false")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

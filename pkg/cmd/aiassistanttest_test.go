@@ -96,14 +96,14 @@ func TestAIAssistantsTestsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:tests", "update",
 			"--test-id", "test_id",
-			"--description", "description",
-			"--destination", "x",
-			"--instructions", "x",
-			"--max-duration-seconds", "1",
-			"--name", "x",
-			"--rubric", "{criteria: criteria, name: name}",
+			"--description", "Description",
+			"--destination", "Destination",
+			"--instructions", "Instructions",
+			"--max-duration-seconds", "30",
+			"--name", "Name",
+			"--rubric", "{criteria: string, name: string}",
 			"--telnyx-conversation-channel", "phone_call",
-			"--test-suite", "test_suite",
+			"--test-suite", "Test Suite",
 		)
 	})
 
@@ -117,31 +117,31 @@ func TestAIAssistantsTestsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:tests", "update",
 			"--test-id", "test_id",
-			"--description", "description",
-			"--destination", "x",
-			"--instructions", "x",
-			"--max-duration-seconds", "1",
-			"--name", "x",
-			"--rubric.criteria", "criteria",
-			"--rubric.name", "name",
+			"--description", "Description",
+			"--destination", "Destination",
+			"--instructions", "Instructions",
+			"--max-duration-seconds", "30",
+			"--name", "Name",
+			"--rubric.criteria", "string",
+			"--rubric.name", "string",
 			"--telnyx-conversation-channel", "phone_call",
-			"--test-suite", "test_suite",
+			"--test-suite", "Test Suite",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"description: description\n" +
-			"destination: x\n" +
-			"instructions: x\n" +
-			"max_duration_seconds: 1\n" +
-			"name: x\n" +
+			"description: Description\n" +
+			"destination: Destination\n" +
+			"instructions: Instructions\n" +
+			"max_duration_seconds: 30\n" +
+			"name: Name\n" +
 			"rubric:\n" +
-			"  - criteria: criteria\n" +
-			"    name: name\n" +
+			"  - criteria: string\n" +
+			"    name: string\n" +
 			"telnyx_conversation_channel: phone_call\n" +
-			"test_suite: test_suite\n")
+			"test_suite: Test Suite\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

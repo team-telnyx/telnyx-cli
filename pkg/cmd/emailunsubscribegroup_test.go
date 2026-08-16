@@ -15,16 +15,16 @@ func TestEmailUnsubscribeGroupsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-unsubscribe-groups", "create",
-			"--name", "x",
-			"--description", "description",
+			"--name", "Marketing Newsletter",
+			"--description", "Weekly product updates and promotions",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"name: x\n" +
-			"description: description\n")
+			"name: Marketing Newsletter\n" +
+			"description: Weekly product updates and promotions\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -53,7 +53,7 @@ func TestEmailUnsubscribeGroupsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"email-unsubscribe-groups", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--description", "description",
+			"--description", "Weekly product updates and promotions",
 			"--name", "x",
 		)
 	})
@@ -61,7 +61,7 @@ func TestEmailUnsubscribeGroupsUpdate(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
-			"description: description\n" +
+			"description: Weekly product updates and promotions\n" +
 			"name: x\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

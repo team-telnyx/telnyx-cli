@@ -16,7 +16,7 @@ import (
 
 var requirementGroupsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a new requirement group",
+	Usage:   "Creates a regulatory requirement group for a country, number type, and ordering\nor porting action. Optional customer-reference and requirement values are\nretained on the created group.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -63,7 +63,7 @@ var requirementGroupsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var requirementGroupsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a single requirement group by ID",
+	Usage:   "Returns the regulatory requirement group identified by `id`, including its\nrequirement values and current approval status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -78,7 +78,7 @@ var requirementGroupsRetrieve = cli.Command{
 
 var requirementGroupsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update requirement values in requirement group",
+	Usage:   "Updates the customer reference or regulatory requirement values on the specified\nrequirement group. The response contains the updated group.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -115,7 +115,7 @@ var requirementGroupsUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var requirementGroupsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List requirement groups",
+	Usage:   "Returns regulatory requirement groups for the account. Results can be filtered\nby country, number type, action, approval status, and customer reference.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -158,7 +158,7 @@ var requirementGroupsList = requestflag.WithInnerFlags(cli.Command{
 
 var requirementGroupsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a requirement group by ID",
+	Usage:   "Deletes the regulatory requirement group identified by `id`. The response\ncontains the deleted requirement-group representation.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -173,7 +173,7 @@ var requirementGroupsDelete = cli.Command{
 
 var requirementGroupsSubmitForApproval = cli.Command{
 	Name:    "submit-for-approval",
-	Usage:   "Submit a Requirement Group for Approval",
+	Usage:   "Submits the specified regulatory requirement group for approval. The response\ncontains the requirement group with its resulting approval status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

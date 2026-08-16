@@ -17,7 +17,7 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:canary-deploys", "create",
 			"--assistant-id", "assistant_id",
-			"--rule", "{serve: {rollout: [{version_id: version_id, weight: 0}], version_id: version_id}, match: [{attribute: attribute, operator: in, values: [string]}]}",
+			"--rule", "{serve: {rollout: [{version_id: Version Id, weight: 0}], version_id: Version Id}, match: [{attribute: Attribute, operator: in, values: [string]}]}",
 		)
 	})
 
@@ -31,8 +31,8 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:canary-deploys", "create",
 			"--assistant-id", "assistant_id",
-			"--rule.serve", "{rollout: [{version_id: version_id, weight: 0}], version_id: version_id}",
-			"--rule.match", "[{attribute: attribute, operator: in, values: [string]}]",
+			"--rule.serve", "{rollout: [{version_id: Version Id, weight: 0}], version_id: Version Id}",
+			"--rule.match", "[{attribute: Attribute, operator: in, values: [string]}]",
 		)
 	})
 
@@ -42,11 +42,11 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 			"rules:\n" +
 			"  - serve:\n" +
 			"      rollout:\n" +
-			"        - version_id: version_id\n" +
+			"        - version_id: Version Id\n" +
 			"          weight: 0\n" +
-			"      version_id: version_id\n" +
+			"      version_id: Version Id\n" +
 			"    match:\n" +
-			"      - attribute: attribute\n" +
+			"      - attribute: Attribute\n" +
 			"        operator: in\n" +
 			"        values:\n" +
 			"          - string\n")
@@ -79,7 +79,7 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:canary-deploys", "update",
 			"--assistant-id", "assistant_id",
-			"--rule", "{serve: {rollout: [{version_id: version_id, weight: 0}], version_id: version_id}, match: [{attribute: attribute, operator: in, values: [string]}]}",
+			"--rule", "{serve: {rollout: [{version_id: Version Id, weight: 0}], version_id: Version Id}, match: [{attribute: Attribute, operator: in, values: [string]}]}",
 		)
 	})
 
@@ -93,8 +93,8 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:canary-deploys", "update",
 			"--assistant-id", "assistant_id",
-			"--rule.serve", "{rollout: [{version_id: version_id, weight: 0}], version_id: version_id}",
-			"--rule.match", "[{attribute: attribute, operator: in, values: [string]}]",
+			"--rule.serve", "{rollout: [{version_id: Version Id, weight: 0}], version_id: Version Id}",
+			"--rule.match", "[{attribute: Attribute, operator: in, values: [string]}]",
 		)
 	})
 
@@ -104,11 +104,11 @@ func TestAIAssistantsCanaryDeploysUpdate(t *testing.T) {
 			"rules:\n" +
 			"  - serve:\n" +
 			"      rollout:\n" +
-			"        - version_id: version_id\n" +
+			"        - version_id: Version Id\n" +
 			"          weight: 0\n" +
-			"      version_id: version_id\n" +
+			"      version_id: Version Id\n" +
 			"    match:\n" +
-			"      - attribute: attribute\n" +
+			"      - attribute: Attribute\n" +
 			"        operator: in\n" +
 			"        values:\n" +
 			"          - string\n")

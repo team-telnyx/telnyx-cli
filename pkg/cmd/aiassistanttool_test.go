@@ -43,8 +43,8 @@ func TestAIAssistantsToolsTest(t *testing.T) {
 			"ai:assistants:tools", "test",
 			"--assistant-id", "assistant_id",
 			"--tool-id", "tool_id",
-			"--arguments", "{foo: bar}",
-			"--dynamic-variables", "{foo: bar}",
+			"--arguments", "{order_id: bar}",
+			"--dynamic-variables", "{customer_name: bar}",
 		)
 	})
 
@@ -52,9 +52,9 @@ func TestAIAssistantsToolsTest(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"arguments:\n" +
-			"  foo: bar\n" +
+			"  order_id: bar\n" +
 			"dynamic_variables:\n" +
-			"  foo: bar\n")
+			"  customer_name: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

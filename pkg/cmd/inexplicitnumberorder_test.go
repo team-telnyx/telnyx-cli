@@ -16,7 +16,7 @@ func TestInexplicitNumberOrdersCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"inexplicit-number-orders", "create",
-			"--ordering-group", "{count_requested: count_requested, country_iso: US, phone_number_type: phone_number_type, administrative_area: administrative_area, exclude_held_numbers: true, features: [string], locality: locality, national_destination_code: national_destination_code, phone_number: {contains: contains, ends_with: ends_with, starts_with: starts_with}, quickship: true, strategy: always}",
+			"--ordering-group", "{count_requested: '5', country_iso: US, phone_number_type: local, administrative_area: CA, exclude_held_numbers: true, features: [voice], locality: locality, national_destination_code: national_destination_code, phone_number: {contains: contains, ends_with: ends_with, starts_with: starts_with}, quickship: true, strategy: always}",
 			"--billing-group-id", "billing_group_id",
 			"--connection-id", "connection_id",
 			"--customer-reference", "customer_reference",
@@ -33,12 +33,12 @@ func TestInexplicitNumberOrdersCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"inexplicit-number-orders", "create",
-			"--ordering-group.count-requested", "count_requested",
+			"--ordering-group.count-requested", "5",
 			"--ordering-group.country-iso", "US",
-			"--ordering-group.phone-number-type", "phone_number_type",
-			"--ordering-group.administrative-area", "administrative_area",
+			"--ordering-group.phone-number-type", "local",
+			"--ordering-group.administrative-area", "CA",
 			"--ordering-group.exclude-held-numbers=true",
-			"--ordering-group.features", "[string]",
+			"--ordering-group.features", "[voice]",
 			"--ordering-group.locality", "locality",
 			"--ordering-group.national-destination-code", "national_destination_code",
 			"--ordering-group.phone-number", "{contains: contains, ends_with: ends_with, starts_with: starts_with}",
@@ -55,13 +55,13 @@ func TestInexplicitNumberOrdersCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"ordering_groups:\n" +
-			"  - count_requested: count_requested\n" +
+			"  - count_requested: '5'\n" +
 			"    country_iso: US\n" +
-			"    phone_number_type: phone_number_type\n" +
-			"    administrative_area: administrative_area\n" +
+			"    phone_number_type: local\n" +
+			"    administrative_area: CA\n" +
 			"    exclude_held_numbers: true\n" +
 			"    features:\n" +
-			"      - string\n" +
+			"      - voice\n" +
 			"    locality: locality\n" +
 			"    national_destination_code: national_destination_code\n" +
 			"    phone_number:\n" +

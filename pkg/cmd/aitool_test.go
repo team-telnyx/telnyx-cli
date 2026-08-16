@@ -25,6 +25,7 @@ func TestAIToolsCreate(t *testing.T) {
 			"--pay", "{connector_name: connector_name, currency: currency, description: description, payment_method: payment_method}",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
+			"--update-dynamic-variables", "{description: Collect caller details into conversation variables., name: collect_details, updatable_variables: [{name: customer_name, description: The caller's full name., type: string}]}",
 			"--webhook", "{foo: bar}",
 		)
 	})
@@ -50,6 +51,9 @@ func TestAIToolsCreate(t *testing.T) {
 			"--pay.payment-method", "payment_method",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
+			"--update-dynamic-variables.description", "Collect caller details into conversation variables.",
+			"--update-dynamic-variables.name", "collect_details",
+			"--update-dynamic-variables.updatable-variables", "[{name: customer_name, description: The caller's full name., type: string}]",
 			"--webhook", "{foo: bar}",
 		)
 	})
@@ -75,6 +79,13 @@ func TestAIToolsCreate(t *testing.T) {
 			"retrieval:\n" +
 			"  foo: bar\n" +
 			"timeout_ms: 0\n" +
+			"update_dynamic_variables:\n" +
+			"  description: Collect caller details into conversation variables.\n" +
+			"  name: collect_details\n" +
+			"  updatable_variables:\n" +
+			"    - name: customer_name\n" +
+			"      description: The caller's full name.\n" +
+			"      type: string\n" +
 			"webhook:\n" +
 			"  foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
@@ -114,6 +125,7 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--type", "type",
+			"--update-dynamic-variables", "{description: Collect caller details into conversation variables., name: collect_details, updatable_variables: [{name: customer_name, description: The caller's full name., type: string}]}",
 			"--webhook", "{foo: bar}",
 		)
 	})
@@ -140,6 +152,9 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--type", "type",
+			"--update-dynamic-variables.description", "Collect caller details into conversation variables.",
+			"--update-dynamic-variables.name", "collect_details",
+			"--update-dynamic-variables.updatable-variables", "[{name: customer_name, description: The caller's full name., type: string}]",
 			"--webhook", "{foo: bar}",
 		)
 	})
@@ -165,6 +180,13 @@ func TestAIToolsUpdate(t *testing.T) {
 			"  foo: bar\n" +
 			"timeout_ms: 0\n" +
 			"type: type\n" +
+			"update_dynamic_variables:\n" +
+			"  description: Collect caller details into conversation variables.\n" +
+			"  name: collect_details\n" +
+			"  updatable_variables:\n" +
+			"    - name: customer_name\n" +
+			"      description: The caller's full name.\n" +
+			"      type: string\n" +
 			"webhook:\n" +
 			"  foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(

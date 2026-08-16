@@ -20,7 +20,7 @@ func TestAIOpenAICreateResponse(t *testing.T) {
 			"--instructions", "You are a friendly chatbot.",
 			"--model", "zai-org/GLM-5.1-FP8",
 			"--service-tier", "service_tier",
-			"--stream=true",
+			"--stream=false",
 		)
 	})
 
@@ -33,7 +33,7 @@ func TestAIOpenAICreateResponse(t *testing.T) {
 			"instructions: You are a friendly chatbot.\n" +
 			"model: zai-org/GLM-5.1-FP8\n" +
 			"service_tier: service_tier\n" +
-			"stream: true\n")
+			"stream: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

@@ -16,6 +16,7 @@ func TestPricingProductsRetrieve(t *testing.T) {
 			"--api-key", "string",
 			"pricing:products", "retrieve",
 			"--slug", "slug",
+			"--filter-country-iso", "SE",
 			"--page-number", "1",
 			"--page-size", "1",
 		)

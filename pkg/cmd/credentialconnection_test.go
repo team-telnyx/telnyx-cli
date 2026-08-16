@@ -202,6 +202,7 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
 			"--call-cost-in-webhooks=false",
 			"--connection-name", "my name",
+			"--conversation-persistence=true",
 			"--default-on-hold-comfort-noise-enabled=false",
 			"--dtmf-type", "RFC 2833",
 			"--encode-contact-header-enabled=true",
@@ -241,6 +242,7 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
 			"--call-cost-in-webhooks=false",
 			"--connection-name", "my name",
+			"--conversation-persistence=true",
 			"--default-on-hold-comfort-noise-enabled=false",
 			"--dtmf-type", "RFC 2833",
 			"--encode-contact-header-enabled=true",
@@ -298,6 +300,7 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 			"android_push_credential_id: 06b09dfd-7154-4980-8b75-cebf7a9d4f8e\n" +
 			"call_cost_in_webhooks: false\n" +
 			"connection_name: my name\n" +
+			"conversation_persistence: true\n" +
 			"default_on_hold_comfort_noise_enabled: false\n" +
 			"dtmf_type: RFC 2833\n" +
 			"encode_contact_header_enabled: true\n" +

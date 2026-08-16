@@ -224,7 +224,7 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "webhook-urls",
-			Usage:    "A map of event types to webhook URLs. When an event of the specified type occurs, the webhook URL associated with that event type will be called instead of `webhook_url`. Events not mapped here will use the default `webhook_url`.",
+			Usage:    "A map of event types to arrays of webhook URLs. When an event of the specified type occurs, the webhook URLs associated with that event type will be called instead of `webhook_url`. Events not mapped here will use the default `webhook_url`.",
 			BodyPath: "webhook_urls",
 		},
 		&requestflag.Flag[string]{
@@ -2111,7 +2111,7 @@ var callsActionsStartForking = cli.Command{
 
 var callsActionsStartNoiseSuppression = requestflag.WithInnerFlags(cli.Command{
 	Name:    "start-noise-suppression",
-	Usage:   "Noise Suppression Start (BETA)",
+	Usage:   "Start noise suppression on an active call to reduce background noise. This\nfeature is currently in beta.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -2692,7 +2692,7 @@ var callsActionsStopGather = cli.Command{
 
 var callsActionsStopNoiseSuppression = cli.Command{
 	Name:    "stop-noise-suppression",
-	Usage:   "Noise Suppression Stop (BETA)",
+	Usage:   "Stop noise suppression previously started on an active call. This feature is\ncurrently in beta.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -3101,7 +3101,7 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "webhook-urls",
-			Usage:    "A map of event types to webhook URLs. When an event of the specified type occurs, the webhook URL associated with that event type will be called instead of `webhook_url`. Events not mapped here will use the default `webhook_url`.",
+			Usage:    "A map of event types to arrays of webhook URLs. When an event of the specified type occurs, the webhook URLs associated with that event type will be called instead of `webhook_url`. Events not mapped here will use the default `webhook_url`.",
 			BodyPath: "webhook_urls",
 		},
 		&requestflag.Flag[string]{

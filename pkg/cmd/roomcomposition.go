@@ -64,7 +64,7 @@ var roomCompositionsCreate = cli.Command{
 
 var roomCompositionsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "View a room composition.",
+	Usage:   "Returns the composition identified by `room_composition_id`, including its room\nand session, processing status, media details, video layout, lifecycle\ntimestamps, and download URL.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -79,7 +79,7 @@ var roomCompositionsRetrieve = cli.Command{
 
 var roomCompositionsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "View a list of room compositions.",
+	Usage:   "Returns a paginated list of room compositions. Filter compositions by creation\ndate, room session, or processing status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

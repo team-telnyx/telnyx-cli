@@ -16,7 +16,7 @@ import (
 
 var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a messaging profile",
+	Usage:   "Creates a messaging profile that controls outbound sender selection, webhook\ndelivery, and inbound message handling for associated numbers and short codes.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -176,7 +176,7 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 
 var messagingProfilesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a messaging profile",
+	Usage:   "Returns the complete configuration of the specified messaging profile, including\nwebhook and sender-selection settings.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -191,7 +191,7 @@ var messagingProfilesRetrieve = cli.Command{
 
 var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update a messaging profile",
+	Usage:   "Updates the supplied settings on the specified messaging profile. Settings\nomitted from the request remain unchanged.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -345,7 +345,7 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var messagingProfilesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List messaging profiles",
+	Usage:   "Returns messaging profiles owned by the authenticated account. Apply the\ndocumented filters and pagination parameters to narrow the result set.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -390,7 +390,7 @@ var messagingProfilesList = requestflag.WithInnerFlags(cli.Command{
 
 var messagingProfilesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a messaging profile",
+	Usage:   "Deletes the specified messaging profile and returns the profile's final\nconfiguration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -436,7 +436,7 @@ var messagingProfilesListAlphanumericSenderIDs = cli.Command{
 
 var messagingProfilesListPhoneNumbers = cli.Command{
 	Name:    "list-phone-numbers",
-	Usage:   "List phone numbers associated with a messaging profile",
+	Usage:   "Returns the phone numbers currently associated with the specified messaging\nprofile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -463,7 +463,7 @@ var messagingProfilesListPhoneNumbers = cli.Command{
 
 var messagingProfilesListShortCodes = cli.Command{
 	Name:    "list-short-codes",
-	Usage:   "List short codes associated with a messaging profile",
+	Usage:   "Returns the short codes currently associated with the specified messaging\nprofile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -15,7 +15,7 @@ import (
 
 var balanceRetrieve = cli.Command{
 	Name:            "retrieve",
-	Usage:           "Get user balance details",
+	Usage:           "Retrieve the current balance, available credit, and credit limit for your\naccount.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleBalanceRetrieve,

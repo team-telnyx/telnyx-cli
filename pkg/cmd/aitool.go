@@ -16,7 +16,7 @@ import (
 
 var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create Tool",
+	Usage:   "Create a new custom AI tool that can be attached to AI assistants.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -59,6 +59,11 @@ var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "timeout_ms",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "update-dynamic-variables",
+			Usage:    "Configuration for an update_dynamic_variables tool.",
+			BodyPath: "update_dynamic_variables",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "webhook",
 			BodyPath: "webhook",
 		},
@@ -88,11 +93,28 @@ var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "payment_method",
 		},
 	},
+	"update-dynamic-variables": {
+		&requestflag.InnerFlag[string]{
+			Name:       "update-dynamic-variables.description",
+			Usage:      "Description of the tool passed to the assistant, guiding when to call it and which variables to update.",
+			InnerField: "description",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "update-dynamic-variables.name",
+			Usage:      "The function name surfaced to the LLM. Must match the OpenAI function-name pattern `^[a-zA-Z0-9_-]+$` and be unique across the assistant's function, webhook, and client_side tools.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "update-dynamic-variables.updatable-variables",
+			Usage:      "The dynamic variables the assistant is allowed to write. At least one is required.",
+			InnerField: "updatable_variables",
+		},
+	},
 })
 
 var aiToolsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get Tool",
+	Usage:   "Retrieve the details of a specific AI tool.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -107,7 +129,7 @@ var aiToolsRetrieve = cli.Command{
 
 var aiToolsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update Tool",
+	Usage:   "Update the configuration of an existing AI tool.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -152,6 +174,11 @@ var aiToolsUpdate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "type",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "update-dynamic-variables",
+			Usage:    "Configuration for an update_dynamic_variables tool.",
+			BodyPath: "update_dynamic_variables",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "webhook",
 			BodyPath: "webhook",
 		},
@@ -181,11 +208,28 @@ var aiToolsUpdate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "payment_method",
 		},
 	},
+	"update-dynamic-variables": {
+		&requestflag.InnerFlag[string]{
+			Name:       "update-dynamic-variables.description",
+			Usage:      "Description of the tool passed to the assistant, guiding when to call it and which variables to update.",
+			InnerField: "description",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "update-dynamic-variables.name",
+			Usage:      "The function name surfaced to the LLM. Must match the OpenAI function-name pattern `^[a-zA-Z0-9_-]+$` and be unique across the assistant's function, webhook, and client_side tools.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "update-dynamic-variables.updatable-variables",
+			Usage:      "The dynamic variables the assistant is allowed to write. At least one is required.",
+			InnerField: "updatable_variables",
+		},
+	},
 })
 
 var aiToolsList = cli.Command{
 	Name:    "list",
-	Usage:   "List Tools",
+	Usage:   "Retrieve a list of the custom AI tools configured on your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -221,7 +265,7 @@ var aiToolsList = cli.Command{
 
 var aiToolsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete Tool",
+	Usage:   "Delete a custom AI tool.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

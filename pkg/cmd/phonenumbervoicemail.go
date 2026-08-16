@@ -14,9 +14,9 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var phoneNumbersVoicemailCreate = cli.Command{
+var phoneNumbersVoicemailCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create voicemail settings for a phone number",
+	Usage:   "Create voicemail settings for a phone number. You can also configure a custom\ngreeting by setting the `greeting` object: use `mode` `custom_greeting` together\nwith a `media_name` that points to an audio file uploaded through the Media\nStorage API, or `mode` `default` to use the standard system greeting.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -29,6 +29,11 @@ var phoneNumbersVoicemailCreate = cli.Command{
 			Usage:    "Whether voicemail is enabled.",
 			BodyPath: "enabled",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "greeting",
+			Usage:    "Controls the greeting a caller hears before leaving a voicemail. Set `mode` to `default` to play the standard system greeting, or to `custom_greeting` to play your own audio. When `mode` is `custom_greeting`, `media_name` is required and must reference an audio file already uploaded to your account through the Media Storage API.",
+			BodyPath: "greeting",
+		},
 		&requestflag.Flag[string]{
 			Name:     "pin",
 			Usage:    "The pin used for voicemail",
@@ -37,7 +42,20 @@ var phoneNumbersVoicemailCreate = cli.Command{
 	},
 	Action:          handlePhoneNumbersVoicemailCreate,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"greeting": {
+		&requestflag.InnerFlag[*string]{
+			Name:       "greeting.media-name",
+			Usage:      "The name of the media file to play as the greeting. Required when `mode` is `custom_greeting`; ignored when `mode` is `default`. The value must match the `media_name` of a file you previously uploaded with the Media Storage API (`POST /v2/media`).",
+			InnerField: "media_name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "greeting.mode",
+			Usage:      "The greeting mode. `default` plays the standard system greeting. `custom_greeting` plays the audio referenced by `media_name`.",
+			InnerField: "mode",
+		},
+	},
+})
 
 var phoneNumbersVoicemailRetrieve = cli.Command{
 	Name:    "retrieve",
@@ -54,9 +72,9 @@ var phoneNumbersVoicemailRetrieve = cli.Command{
 	HideHelpCommand: true,
 }
 
-var phoneNumbersVoicemailUpdate = cli.Command{
+var phoneNumbersVoicemailUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update voicemail settings for a phone number",
+	Usage:   "Update voicemail settings for a phone number. You can also configure a custom\ngreeting by setting the `greeting` object: use `mode` `custom_greeting` together\nwith a `media_name` that points to an audio file uploaded through the Media\nStorage API, or `mode` `default` to use the standard system greeting.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -69,6 +87,11 @@ var phoneNumbersVoicemailUpdate = cli.Command{
 			Usage:    "Whether voicemail is enabled.",
 			BodyPath: "enabled",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "greeting",
+			Usage:    "Controls the greeting a caller hears before leaving a voicemail. Set `mode` to `default` to play the standard system greeting, or to `custom_greeting` to play your own audio. When `mode` is `custom_greeting`, `media_name` is required and must reference an audio file already uploaded to your account through the Media Storage API.",
+			BodyPath: "greeting",
+		},
 		&requestflag.Flag[string]{
 			Name:     "pin",
 			Usage:    "The pin used for voicemail",
@@ -77,7 +100,20 @@ var phoneNumbersVoicemailUpdate = cli.Command{
 	},
 	Action:          handlePhoneNumbersVoicemailUpdate,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"greeting": {
+		&requestflag.InnerFlag[*string]{
+			Name:       "greeting.media-name",
+			Usage:      "The name of the media file to play as the greeting. Required when `mode` is `custom_greeting`; ignored when `mode` is `default`. The value must match the `media_name` of a file you previously uploaded with the Media Storage API (`POST /v2/media`).",
+			InnerField: "media_name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "greeting.mode",
+			Usage:      "The greeting mode. `default` plays the standard system greeting. `custom_greeting` plays the audio referenced by `media_name`.",
+			InnerField: "mode",
+		},
+	},
+})
 
 func handlePhoneNumbersVoicemailCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)

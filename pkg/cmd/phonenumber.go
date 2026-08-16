@@ -16,7 +16,7 @@ import (
 
 var phoneNumbersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a phone number",
+	Usage:   "Returns the detailed configuration and current state of the phone number\nidentified by `id`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var phoneNumbersRetrieve = cli.Command{
 
 var phoneNumbersUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a phone number",
+	Usage:   "Updates the configurable settings of the specified phone number. The response\ncontains the complete updated phone-number representation.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -81,7 +81,7 @@ var phoneNumbersUpdate = cli.Command{
 
 var phoneNumbersList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List phone numbers",
+	Usage:   "Returns phone numbers associated with the account. Results support pagination,\nsorting, and filters for number attributes, status, source, connections, billing\ngroups, emergency addresses, tags, and customer references.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -187,7 +187,7 @@ var phoneNumbersList = requestflag.WithInnerFlags(cli.Command{
 
 var phoneNumbersDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a phone number",
+	Usage:   "Deletes the specified phone number from the account. The response contains the\nphone number's final deleted representation.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
