@@ -27,6 +27,11 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
+      - name: Validate release gate policy
+        run: |
+          python3 .github/scripts/test_release_pr_auto_merge.py -v
+          python3 .github/scripts/test_release_pr_ci_gate.py -v
+
       - uses: ./.github/actions/setup-go
         with:
           stainless-api-key: ${{ secrets.STAINLESS_API_KEY }}

@@ -13,6 +13,8 @@ class ReleasePRGateWorkflowTests(unittest.TestCase):
         self.assertEqual(ci.count(predicate), 3)
         for name in ("name: lint", "name: build", "name: test"):
             self.assertIn(name, ci)
+        self.assertIn("python3 .github/scripts/test_release_pr_auto_merge.py -v", ci)
+        self.assertIn("python3 .github/scripts/test_release_pr_ci_gate.py -v", ci)
 
     def test_readiness_uses_trusted_policy_and_never_merges(self):
         workflow = (ROOT / ".github/workflows/release-pr-readiness.yml").read_text()
