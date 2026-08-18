@@ -18,11 +18,32 @@ env:
   GOPRIVATE: github.com/team-telnyx/telnyx-go/v4,github.com/stainless-sdks/telnyx-go/v4
 
 jobs:
+  classify-production-ci:
+    name: classify production CI
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: read
+      pull-requests: read
+      statuses: read
+    outputs:
+      run_full: ${{ steps.classify.outputs.run_full }}
+      mode: ${{ steps.classify.outputs.mode }}
+      reason: ${{ steps.classify.outputs.reason }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: classify
+        name: Classify immutable CI surface
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/classify_production_ci.py --event-path "$GITHUB_EVENT_PATH"
+
   lint:
     timeout-minutes: 10
     name: lint
     runs-on: ${{ github.repository == 'stainless-sdks/telnyx-cli' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
-    if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork || startsWith(github.head_ref, 'release-please--')) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
+    needs: classify-production-ci
+    if: needs.classify-production-ci.outputs.run_full == 'true'
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -31,6 +52,9 @@ jobs:
         run: |
           python3 .github/scripts/test_release_pr_auto_merge.py -v
           python3 .github/scripts/test_release_pr_ci_gate.py -v
+          python3 .github/scripts/test_classify_production_ci.py -v
+          python3 .github/scripts/test_validate_next_provenance.py -v
+          python3 .github/scripts/test_verify_cli_release.py -v
 
       - uses: ./.github/actions/setup-go
         with:
@@ -54,7 +78,8 @@ jobs:
       contents: read
       id-token: write
     runs-on: ${{ github.repository == 'stainless-sdks/telnyx-cli' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
-    if: (github.event_name == 'push' || github.event.pull_request.head.repo.fork || startsWith(github.head_ref, 'release-please--')) && (github.event_name != 'push' || github.event.head_commit.message != 'codegen metadata')
+    needs: classify-production-ci
+    if: needs.classify-production-ci.outputs.run_full == 'true'
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -104,7 +129,8 @@ jobs:
     timeout-minutes: 10
     name: test
     runs-on: ${{ github.repository == 'stainless-sdks/telnyx-cli' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork || startsWith(github.head_ref, 'release-please--')
+    needs: classify-production-ci
+    if: needs.classify-production-ci.outputs.run_full == 'true'
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
