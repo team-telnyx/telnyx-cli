@@ -107,6 +107,12 @@ var texmlInitiateAICall = requestflag.WithInnerFlags(cli.Command{
 			Default:  "Disable",
 			BodyPath: "MachineDetection",
 		},
+		&requestflag.Flag[string]{
+			Name:     "machine-detection-beep-profile",
+			Usage:    "Selects which detectors must validate a beep. `both` requires the amplitude and frequency detectors to agree. `freq_only` uses the frequency detector alone, for beeps whose volume is too unsteady for the default profile. Only used when MachineDetection is enabled.",
+			Default:  "both",
+			BodyPath: "MachineDetectionBeepProfile",
+		},
 		&requestflag.Flag[int64]{
 			Name:     "machine-detection-prompt-end-timeout",
 			Usage:    "Silence duration threshold after a call screening prompt before ending prompt detection, in milliseconds. Used when `DetectionMode` is `PremiumCallScreening`.",
