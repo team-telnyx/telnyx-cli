@@ -33,6 +33,7 @@ func TestTexmlInitiateAICall(t *testing.T) {
 			"--custom-header", "{name: X-Custom-Header, value: custom-value}",
 			"--detection-mode", "Premium",
 			"--machine-detection", "Enable",
+			"--machine-detection-beep-profile", "freq_only",
 			"--machine-detection-prompt-end-timeout", "5000",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
@@ -89,6 +90,7 @@ func TestTexmlInitiateAICall(t *testing.T) {
 			"--custom-header.value", "custom-value",
 			"--detection-mode", "Premium",
 			"--machine-detection", "Enable",
+			"--machine-detection-beep-profile", "freq_only",
 			"--machine-detection-prompt-end-timeout", "5000",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
@@ -142,6 +144,7 @@ func TestTexmlInitiateAICall(t *testing.T) {
 			"    value: custom-value\n" +
 			"DetectionMode: Premium\n" +
 			"MachineDetection: Enable\n" +
+			"MachineDetectionBeepProfile: freq_only\n" +
 			"MachineDetectionPromptEndTimeout: 5000\n" +
 			"MachineDetectionSilenceTimeout: 2000\n" +
 			"MachineDetectionSpeechEndThreshold: 2000\n" +

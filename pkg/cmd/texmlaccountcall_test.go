@@ -87,6 +87,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--fallback-url", "https://www.example.com/instructions-fallback.xml",
 			"--from", "+16175551212",
 			"--machine-detection", "Enable",
+			"--machine-detection-beep-profile", "freq_only",
 			"--machine-detection-prompt-end-timeout", "5000",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
@@ -146,6 +147,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--fallback-url", "https://www.example.com/instructions-fallback.xml",
 			"--from", "+16175551212",
 			"--machine-detection", "Enable",
+			"--machine-detection-beep-profile", "freq_only",
 			"--machine-detection-prompt-end-timeout", "5000",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
@@ -199,6 +201,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"FallbackUrl: https://www.example.com/instructions-fallback.xml\n" +
 			"From: '+16175551212'\n" +
 			"MachineDetection: Enable\n" +
+			"MachineDetectionBeepProfile: freq_only\n" +
 			"MachineDetectionPromptEndTimeout: 5000\n" +
 			"MachineDetectionSilenceTimeout: 2000\n" +
 			"MachineDetectionSpeechEndThreshold: 2000\n" +

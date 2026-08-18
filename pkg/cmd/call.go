@@ -379,6 +379,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Silence duration threshold after a greeting message or voice for it be considered human.",
 			InnerField: "after_greeting_silence_millis",
 		},
+		&requestflag.InnerFlag[string]{
+			Name:       "answering-machine-detection-config.beep-detection-profile",
+			Usage:      "Selects which detectors must validate a beep. `both` requires the amplitude and frequency detectors to agree. `freq_only` uses the frequency detector alone, for beeps whose volume is too unsteady for the default profile.",
+			InnerField: "beep_detection_profile",
+		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "answering-machine-detection-config.between-words-silence-millis",
 			Usage:      "Maximum threshold for silence between words.",

@@ -345,7 +345,7 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var messagingProfilesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns messaging profiles owned by the authenticated account. Apply the\ndocumented filters and pagination parameters to narrow the result set.",
+	Usage:   "Lists messaging profiles owned by the authenticated account. Apply the\ndocumented filters and pagination parameters to narrow the result set.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

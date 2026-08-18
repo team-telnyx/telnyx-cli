@@ -283,6 +283,12 @@ var texmlAccountsConferencesParticipantsParticipants = requestflag.WithInnerFlag
 			Usage:    "Whether to detect if a human or an answering machine picked up the call. Use `Enable` if you would like to ne notified as soon as the called party is identified. Use `DetectMessageEnd`, if you would like to leave a message on an answering machine.",
 			BodyPath: "MachineDetection",
 		},
+		&requestflag.Flag[string]{
+			Name:     "machine-detection-beep-profile",
+			Usage:    "Selects which detectors must validate a beep. `both` requires the amplitude and frequency detectors to agree. `freq_only` uses the frequency detector alone, for beeps whose volume is too unsteady for the default profile. Only used when MachineDetection is enabled.",
+			Default:  "both",
+			BodyPath: "MachineDetectionBeepProfile",
+		},
 		&requestflag.Flag[int64]{
 			Name:     "machine-detection-silence-timeout",
 			Usage:    "If initial silence duration is greater than this value, consider it a machine. Ignored when `premium` detection is used.",

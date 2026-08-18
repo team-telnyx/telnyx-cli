@@ -119,6 +119,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 			"--from", "+12065550200",
 			"--label", "customer",
 			"--machine-detection", "Enable",
+			"--machine-detection-beep-profile", "freq_only",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
 			"--machine-detection-speech-threshold", "2000",
@@ -182,6 +183,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 			"--from", "+12065550200",
 			"--label", "customer",
 			"--machine-detection", "Enable",
+			"--machine-detection-beep-profile", "freq_only",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
 			"--machine-detection-speech-threshold", "2000",
@@ -238,6 +240,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 			"From: '+12065550200'\n" +
 			"Label: customer\n" +
 			"MachineDetection: Enable\n" +
+			"MachineDetectionBeepProfile: freq_only\n" +
 			"MachineDetectionSilenceTimeout: 2000\n" +
 			"MachineDetectionSpeechEndThreshold: 2000\n" +
 			"MachineDetectionSpeechThreshold: 2000\n" +
