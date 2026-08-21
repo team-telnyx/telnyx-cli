@@ -222,6 +222,10 @@ var emailMessagesList = cli.Command{
 			Default:   25,
 			QueryPath: "page_size",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleEmailMessagesList,
 	HideHelpCommand: true,
@@ -423,6 +427,10 @@ var emailMessagesRetrieveEvents = cli.Command{
 			Default:   25,
 			QueryPath: "page_size",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleEmailMessagesRetrieveEvents,
 	HideHelpCommand: true,
@@ -532,24 +540,38 @@ func handleEmailMessagesList(ctx context.Context, cmd *cli.Command) error {
 
 	params := telnyx.EmailMessageListParams{}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.EmailMessages.List(ctx, params, options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "email-messages list",
-		Transform:      transform,
-	})
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.EmailMessages.List(ctx, params, options...)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-messages list",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.EmailMessages.ListAutoPaging(ctx, params, options...)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-messages list",
+			Transform:      transform,
+		})
+	}
 }
 
 func handleEmailMessagesDelete(ctx context.Context, cmd *cli.Command) error {
@@ -708,27 +730,46 @@ func handleEmailMessagesRetrieveEvents(ctx context.Context, cmd *cli.Command) er
 
 	params := telnyx.EmailMessageGetEventsParams{}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.EmailMessages.GetEvents(
-		ctx,
-		cmd.Value("email-id").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "email-messages retrieve-events",
-		Transform:      transform,
-	})
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.EmailMessages.GetEvents(
+			ctx,
+			cmd.Value("email-id").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-messages retrieve-events",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.EmailMessages.GetEventsAutoPaging(
+			ctx,
+			cmd.Value("email-id").(string),
+			params,
+			options...,
+		)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-messages retrieve-events",
+			Transform:      transform,
+		})
+	}
 }

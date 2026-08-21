@@ -195,10 +195,12 @@ var emailDomainsList = cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:      "filter-usable-for-inbound",
+			Usage:     "Filter domains by whether they can currently receive inbound email.",
 			QueryPath: "filter[usable_for_inbound]",
 		},
 		&requestflag.Flag[bool]{
 			Name:      "filter-usable-for-sending",
+			Usage:     "Filter domains by whether they can currently be used to send email.",
 			QueryPath: "filter[usable_for_sending]",
 		},
 		&requestflag.Flag[string]{

@@ -16,7 +16,7 @@ import (
 
 var portingEventsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Show a specific porting event.",
+	Usage:   "Returns the details of a single porting event, including its type and payload.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var portingEventsRetrieve = cli.Command{
 
 var portingEventsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns a list of all porting events.",
+	Usage:   "Returns a paginated list of porting-related events on your account, such as\nstatus changes on porting orders. Supports filtering and is useful for auditing\nor reconciling webhook deliveries.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -76,7 +76,7 @@ var portingEventsList = requestflag.WithInnerFlags(cli.Command{
 
 var portingEventsRepublish = cli.Command{
 	Name:    "republish",
-	Usage:   "Republish a specific porting event.",
+	Usage:   "Republishes the specified porting event, triggering re-delivery of the\ncorresponding webhook to your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

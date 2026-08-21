@@ -16,7 +16,7 @@ import (
 
 var aiIntegrationsConnectionsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get user setup integrations",
+	Usage:   "Returns the details of a single integration connection by its ID.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var aiIntegrationsConnectionsRetrieve = cli.Command{
 
 var aiIntegrationsConnectionsList = cli.Command{
 	Name:            "list",
-	Usage:           "List user setup integrations",
+	Usage:           "Returns the list of integration connections you have set up, linking your\naccount to third-party services.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleAIIntegrationsConnectionsList,

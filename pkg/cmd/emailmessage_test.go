@@ -158,6 +158,7 @@ func TestEmailMessagesList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-messages", "list",
+			"--max-items", "10",
 			"--page-cursor", "page_cursor",
 			"--page-size", "1",
 		)
@@ -365,6 +366,7 @@ func TestEmailMessagesRetrieveEvents(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-messages", "retrieve-events",
+			"--max-items", "10",
 			"--email-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-cursor", "page_cursor",
 			"--page-size", "1",

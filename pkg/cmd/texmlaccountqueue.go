@@ -16,7 +16,7 @@ import (
 
 var texmlAccountsQueuesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new queue resource.",
+	Usage:   "Creates a new queue resource for the account with the provided settings and\nreturns it.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -41,7 +41,7 @@ var texmlAccountsQueuesCreate = cli.Command{
 
 var texmlAccountsQueuesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Returns a queue resource.",
+	Usage:   "Returns a single queue resource for the account by its QueueSid.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -61,7 +61,7 @@ var texmlAccountsQueuesRetrieve = cli.Command{
 
 var texmlAccountsQueuesUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Updates a queue resource.",
+	Usage:   "Updates the specified queue resource's settings and returns the updated queue.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -86,7 +86,7 @@ var texmlAccountsQueuesUpdate = cli.Command{
 
 var texmlAccountsQueuesList = cli.Command{
 	Name:    "list",
-	Usage:   "Lists queue resources.",
+	Usage:   "Returns a paginated list of queue resources for the account, with support for\nfiltering by creation or update dates.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -130,7 +130,7 @@ var texmlAccountsQueuesList = cli.Command{
 
 var texmlAccountsQueuesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a queue resource.",
+	Usage:   "Permanently deletes the specified queue resource from the account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

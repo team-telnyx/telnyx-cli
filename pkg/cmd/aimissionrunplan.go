@@ -16,7 +16,7 @@ import (
 
 var aiMissionsRunsPlanCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create the initial plan for a run",
+	Usage:   "Creates the initial plan for the specified run from the provided steps and\nreturns the created plan steps. Progress is subsequently reported by updating\nindividual steps.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -64,7 +64,7 @@ var aiMissionsRunsPlanCreate = requestflag.WithInnerFlags(cli.Command{
 
 var aiMissionsRunsPlanRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get the plan (all steps) for a run",
+	Usage:   "Returns the plan for the specified run, including all plan steps and their\nstatuses, so you can see how the mission was decomposed and how far execution\nhas progressed.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -132,7 +132,7 @@ var aiMissionsRunsPlanAddStepsToPlan = requestflag.WithInnerFlags(cli.Command{
 
 var aiMissionsRunsPlanGetStepDetails = cli.Command{
 	Name:    "get-step-details",
-	Usage:   "Get details of a specific plan step",
+	Usage:   "Returns the details of a single plan step within a run's plan, including its\nstatus.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -157,7 +157,7 @@ var aiMissionsRunsPlanGetStepDetails = cli.Command{
 
 var aiMissionsRunsPlanUpdateStep = cli.Command{
 	Name:    "update-step",
-	Usage:   "Update the status of a plan step",
+	Usage:   "Updates the status of a single plan step and returns the updated step. Typically\ncalled by the executing agent as it works through the plan.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

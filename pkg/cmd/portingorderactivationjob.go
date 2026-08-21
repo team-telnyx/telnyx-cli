@@ -16,7 +16,7 @@ import (
 
 var portingOrdersActivationJobsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Returns a porting activation job.",
+	Usage:   "Returns the details of a single activation job for the porting order, including\nits current status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -16,7 +16,7 @@ import (
 
 var globalIPAssignmentsCreate = cli.Command{
 	Name:            "create",
-	Usage:           "Create a Global IP assignment.",
+	Usage:           "Assigns a Global IP to a WireGuard peer so traffic destined for the IP is\ndelivered over that peer's tunnel. Assignment is asynchronous, so the request is\naccepted and completes in the background.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleGlobalIPAssignmentsCreate,
@@ -25,7 +25,7 @@ var globalIPAssignmentsCreate = cli.Command{
 
 var globalIPAssignmentsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a Global IP assignment.",
+	Usage:   "Returns the details of a single Global IP assignment, including the Global IP\nand WireGuard peer it links.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -40,7 +40,7 @@ var globalIPAssignmentsRetrieve = cli.Command{
 
 var globalIPAssignmentsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a Global IP assignment.",
+	Usage:   "Updates the specified Global IP assignment with the provided fields and returns\nthe updated assignment.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -60,7 +60,7 @@ var globalIPAssignmentsUpdate = cli.Command{
 
 var globalIPAssignmentsList = cli.Command{
 	Name:    "list",
-	Usage:   "List all Global IP assignments.",
+	Usage:   "Returns a paginated list of your Global IP assignments, the links between Global\nIPs and the WireGuard peers that receive their traffic.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -82,7 +82,7 @@ var globalIPAssignmentsList = cli.Command{
 
 var globalIPAssignmentsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Global IP assignment.",
+	Usage:   "Deletes the specified Global IP assignment, detaching the Global IP from its\nWireGuard peer.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

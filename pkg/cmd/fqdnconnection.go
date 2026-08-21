@@ -16,7 +16,7 @@ import (
 
 var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates a FQDN connection.",
+	Usage:   "Creates a new FQDN-based SIP connection. FQDN connections authenticate by your\nregistered domain names rather than static IP addresses.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -798,7 +798,7 @@ var fqdnConnectionsList = requestflag.WithInnerFlags(cli.Command{
 
 var fqdnConnectionsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes an FQDN connection.",
+	Usage:   "Permanently deletes the specified FQDN connection from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

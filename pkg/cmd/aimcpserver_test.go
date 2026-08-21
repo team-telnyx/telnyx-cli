@@ -20,6 +20,7 @@ func TestAIMcpServersCreate(t *testing.T) {
 			"--url", "Url",
 			"--allowed-tool", "[string]",
 			"--api-key-ref", "api_key_ref",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -36,6 +37,7 @@ func TestAIMcpServersCreate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai:mcp-servers", "create",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

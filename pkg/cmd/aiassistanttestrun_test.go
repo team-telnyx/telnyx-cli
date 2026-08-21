@@ -46,6 +46,7 @@ func TestAIAssistantsTestsRunsTrigger(t *testing.T) {
 			"ai:assistants:tests:runs", "trigger",
 			"--test-id", "test_id",
 			"--destination-version-id", "123e4567-e89b-12d3-a456-426614174000",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -57,6 +58,7 @@ func TestAIAssistantsTestsRunsTrigger(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:tests:runs", "trigger",
 			"--test-id", "test_id",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

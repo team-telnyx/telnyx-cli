@@ -395,6 +395,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:assistants:instructions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiAssistantsInstructionsEnhance,
+				},
+			},
+			{
 				Name:     "ai:audio",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -2626,6 +2634,7 @@ func init() {
 				Commands: []*cli.Command{
 					&subNumberOrdersReportCreate,
 					&subNumberOrdersReportRetrieve,
+					&subNumberOrdersReportDownload,
 				},
 			},
 			{
@@ -2638,6 +2647,7 @@ func init() {
 					&telephonyCredentialsUpdate,
 					&telephonyCredentialsList,
 					&telephonyCredentialsDelete,
+					&telephonyCredentialsCreateToken,
 				},
 			},
 			{
@@ -2927,6 +2937,7 @@ func init() {
 					&wireguardPeersUpdate,
 					&wireguardPeersList,
 					&wireguardPeersDelete,
+					&wireguardPeersRetrieveConfig,
 				},
 			},
 			{
@@ -3596,15 +3607,16 @@ func init() {
 					&emailBlocksList,
 					&emailBlocksDelete,
 					&emailBlocksRetrieveEvents,
+					&emailBlocksRetrieveExport,
 				},
 			},
 			{
-				Name:     "email-blocks:import",
+				Name:     "email-blocks:imports",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
-					&emailBlocksImportCreate,
-					&emailBlocksImportRetrieve,
+					&emailBlocksImportsCreate,
+					&emailBlocksImportsRetrieve,
 				},
 			},
 			{

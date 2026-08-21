@@ -16,7 +16,7 @@ import (
 
 var aiMissionsRunsTelnyxAgentsList = cli.Command{
 	Name:    "list",
-	Usage:   "List all Telnyx agents linked to a run",
+	Usage:   "Returns the Telnyx agents currently linked to the specified run. Linked agents\nparticipate in executing the run's plan.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -62,7 +62,7 @@ var aiMissionsRunsTelnyxAgentsLink = cli.Command{
 
 var aiMissionsRunsTelnyxAgentsUnlink = cli.Command{
 	Name:    "unlink",
-	Usage:   "Unlink a Telnyx agent from a run",
+	Usage:   "Unlinks the specified Telnyx agent from the run so it no longer participates in\nexecution. The run itself and its history are unaffected.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -898,6 +898,8 @@ func TestCallsActionsPay(t *testing.T) {
 			"--service-level", "service_level",
 			"--timeout-millis", "5000",
 			"--transaction-type", "charge",
+			"--valid-card-type", "visa",
+			"--valid-card-type", "mastercard",
 			"--voice", "female",
 		)
 	})
@@ -934,6 +936,8 @@ func TestCallsActionsPay(t *testing.T) {
 			"--service-level", "service_level",
 			"--timeout-millis", "5000",
 			"--transaction-type", "charge",
+			"--valid-card-type", "visa",
+			"--valid-card-type", "mastercard",
 			"--voice", "female",
 		)
 	})
@@ -974,6 +978,9 @@ func TestCallsActionsPay(t *testing.T) {
 			"service_level: service_level\n" +
 			"timeout_millis: 5000\n" +
 			"transaction_type: charge\n" +
+			"valid_card_types:\n" +
+			"  - visa\n" +
+			"  - mastercard\n" +
 			"voice: female\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

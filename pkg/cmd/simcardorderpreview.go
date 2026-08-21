@@ -16,7 +16,7 @@ import (
 
 var simCardOrderPreviewPreview = cli.Command{
 	Name:    "preview",
-	Usage:   "Preview SIM card order purchases.",
+	Usage:   "Previews a SIM card order purchase, returning estimated costs and details before\nyou place the order. The preview is processed asynchronously.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

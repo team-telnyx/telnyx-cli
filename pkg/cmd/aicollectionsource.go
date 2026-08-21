@@ -16,7 +16,7 @@ import (
 
 var aiCollectionsSourcesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Attaches a new source to a collection.",
+	Usage:   "Attaches a new content source to the specified collection and returns the\ncreated source. The source's content is ingested and embedded so it becomes\nsearchable within the collection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

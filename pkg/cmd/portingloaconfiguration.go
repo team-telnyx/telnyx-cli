@@ -17,7 +17,7 @@ import (
 
 var portingLoaConfigurationsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a LOA configuration.",
+	Usage:   "Creates a new LOA configuration with your company details and branding for use\nwhen generating LOA documents for porting orders.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -109,7 +109,7 @@ var portingLoaConfigurationsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var portingLoaConfigurationsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a specific LOA configuration.",
+	Usage:   "Returns the details of a single LOA (Letter of Authorization) configuration by\nits identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -124,7 +124,7 @@ var portingLoaConfigurationsRetrieve = cli.Command{
 
 var portingLoaConfigurationsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update a specific LOA configuration.",
+	Usage:   "Updates the specified LOA configuration with the provided fields and returns the\nupdated configuration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -221,7 +221,7 @@ var portingLoaConfigurationsUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var portingLoaConfigurationsList = cli.Command{
 	Name:    "list",
-	Usage:   "List the LOA configurations.",
+	Usage:   "Returns a paginated list of your LOA (Letter of Authorization) configurations.\nLOA configurations customize the company details and branding used on generated\nLOA documents.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -243,7 +243,7 @@ var portingLoaConfigurationsList = cli.Command{
 
 var portingLoaConfigurationsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a specific LOA configuration.",
+	Usage:   "Permanently deletes the specified LOA configuration so it can no longer be used\nwhen generating LOA documents.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -452,7 +452,7 @@ var portingLoaConfigurationsPreview0 = requestflag.WithInnerFlags(cli.Command{
 
 var portingLoaConfigurationsPreview1 = cli.Command{
 	Name:    "preview-1",
-	Usage:   "Preview a specific LOA configuration.",
+	Usage:   "Renders a preview of the LOA document produced by this configuration so you can\nverify company details and branding before using it on porting orders.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

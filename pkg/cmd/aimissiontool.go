@@ -16,7 +16,7 @@ import (
 
 var aiMissionsToolsCreateTool = cli.Command{
 	Name:    "create-tool",
-	Usage:   "Create a new tool for a mission",
+	Usage:   "Adds a new tool to the specified mission, defining an action agents can invoke\nduring runs of this mission.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var aiMissionsToolsCreateTool = cli.Command{
 
 var aiMissionsToolsDeleteTool = cli.Command{
 	Name:    "delete-tool",
-	Usage:   "Delete a tool from a mission",
+	Usage:   "Removes the specified tool from the mission so agents can no longer invoke it in\nsubsequent runs.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -51,7 +51,7 @@ var aiMissionsToolsDeleteTool = cli.Command{
 
 var aiMissionsToolsGetTool = cli.Command{
 	Name:    "get-tool",
-	Usage:   "Get a specific tool by ID",
+	Usage:   "Returns the definition of a single tool configured on the specified mission.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -71,7 +71,7 @@ var aiMissionsToolsGetTool = cli.Command{
 
 var aiMissionsToolsListTools = cli.Command{
 	Name:    "list-tools",
-	Usage:   "List all tools for a mission",
+	Usage:   "Returns the tools configured on the specified mission. Tools define the actions\nagents may invoke while executing the mission's runs.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -86,7 +86,7 @@ var aiMissionsToolsListTools = cli.Command{
 
 var aiMissionsToolsUpdateTool = cli.Command{
 	Name:    "update-tool",
-	Usage:   "Update a tool definition",
+	Usage:   "Replaces the definition of the specified tool on this mission.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

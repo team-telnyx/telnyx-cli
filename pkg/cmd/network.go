@@ -16,10 +16,10 @@ import (
 
 var networksCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new Network.",
+	Usage:   "Creates a new private network, the container that links your WireGuard\ninterfaces, gateways, and cross connects.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "network-create",
 			Required: true,
 			BodyRoot: true,
@@ -31,7 +31,7 @@ var networksCreate = cli.Command{
 
 var networksRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a Network.",
+	Usage:   "Returns the details of a single network by its identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -46,7 +46,7 @@ var networksRetrieve = cli.Command{
 
 var networksUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a Network.",
+	Usage:   "Updates the specified network's attributes and returns the updated network.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -54,7 +54,7 @@ var networksUpdate = cli.Command{
 			Required:  true,
 			PathParam: "id",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "network-create",
 			Required: true,
 			BodyRoot: true,
@@ -66,7 +66,7 @@ var networksUpdate = cli.Command{
 
 var networksList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List all Networks.",
+	Usage:   "Returns a paginated list of the private networks on your account, with support\nfor filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -101,7 +101,7 @@ var networksList = requestflag.WithInnerFlags(cli.Command{
 
 var networksDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Network.",
+	Usage:   "Permanently deletes the specified network from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -116,7 +116,7 @@ var networksDelete = cli.Command{
 
 var networksListInterfaces = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list-interfaces",
-	Usage:   "List all Interfaces for a Network.",
+	Usage:   "Returns a paginated list of the interfaces attached to the specified network,\nwith support for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

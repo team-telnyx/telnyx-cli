@@ -16,7 +16,7 @@ import (
 
 var subNumberOrdersRetrieve = requestflag.WithInnerFlags(cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get an existing sub number order.",
+	Usage:   "Returns the details of an existing sub number order, with support for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -44,7 +44,7 @@ var subNumberOrdersRetrieve = requestflag.WithInnerFlags(cli.Command{
 
 var subNumberOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Updates a sub number order.",
+	Usage:   "Updates the requirements of an existing sub number order and returns the updated\norder.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -81,7 +81,7 @@ var subNumberOrdersList = requestflag.WithInnerFlags(cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
-			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[status], filter[order_request_id], filter[country_code], filter[phone_number_type], filter[phone_numbers_count]",
+			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[status], filter[order_request_id], filter[country_code], filter[phone_number_type], filter[phone_numbers_count], filter[include_phone_numbers]",
 			QueryPath: "filter",
 		},
 	},
@@ -93,6 +93,11 @@ var subNumberOrdersList = requestflag.WithInnerFlags(cli.Command{
 			Name:       "filter.country-code",
 			Usage:      "ISO alpha-2 country code.",
 			InnerField: "country_code",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "filter.include-phone-numbers",
+			Usage:      "Include the first 50 phone number objects in the results, including their per-number regulatory requirement statuses",
+			InnerField: "include_phone_numbers",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "filter.order-request-id",

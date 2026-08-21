@@ -16,7 +16,7 @@ import (
 
 var bundlePricingBillingBundlesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a single bundle by ID.",
+	Usage:   "Returns the details of a single billing bundle by its ID, so you can inspect its\ncontents before purchasing a user bundle.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -37,7 +37,7 @@ var bundlePricingBillingBundlesRetrieve = cli.Command{
 
 var bundlePricingBillingBundlesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Get all allowed bundles.",
+	Usage:   "Returns a paginated list of the billing bundles available to your account, with\nsupport for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

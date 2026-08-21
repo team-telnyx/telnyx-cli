@@ -16,7 +16,7 @@ import (
 
 var ipsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new IP object.",
+	Usage:   "Creates a new IP record for use with IP-based connections, associating an IP\naddress with the specified connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -58,7 +58,7 @@ var ipsRetrieve = cli.Command{
 
 var ipsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update the details of a specific IP.",
+	Usage:   "Updates the details of the specified IP record and returns the updated IP.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -135,7 +135,7 @@ var ipsList = requestflag.WithInnerFlags(cli.Command{
 
 var ipsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete an IP.",
+	Usage:   "Permanently deletes the specified IP record from its connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

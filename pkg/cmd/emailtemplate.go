@@ -71,7 +71,7 @@ var emailTemplatesRetrieve = cli.Command{
 
 var emailTemplatesUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Updates one or more template fields.",
+	Usage:   "Updates one or more fields of the specified email template and returns the\nupdated template.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -122,6 +122,10 @@ var emailTemplatesList = cli.Command{
 			Usage:     "Number of results to return. Defaults to 25; maximum is 100. Invalid values are clamped to the valid range.",
 			Default:   25,
 			QueryPath: "page_size",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
 	Action:          handleEmailTemplatesList,
@@ -355,24 +359,38 @@ func handleEmailTemplatesList(ctx context.Context, cmd *cli.Command) error {
 
 	params := telnyx.EmailTemplateListParams{}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.EmailTemplates.List(ctx, params, options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "email-templates list",
-		Transform:      transform,
-	})
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.EmailTemplates.List(ctx, params, options...)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-templates list",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.EmailTemplates.ListAutoPaging(ctx, params, options...)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-templates list",
+			Transform:      transform,
+		})
+	}
 }
 
 func handleEmailTemplatesDelete(ctx context.Context, cmd *cli.Command) error {

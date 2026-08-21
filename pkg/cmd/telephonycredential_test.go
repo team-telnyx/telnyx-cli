@@ -127,3 +127,15 @@ func TestTelephonyCredentialsDelete(t *testing.T) {
 		)
 	})
 }
+
+func TestTelephonyCredentialsCreateToken(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"telephony-credentials", "create-token",
+			"--id", "id",
+		)
+	})
+}

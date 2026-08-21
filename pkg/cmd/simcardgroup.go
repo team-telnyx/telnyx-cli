@@ -16,7 +16,7 @@ import (
 
 var simCardGroupsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new SIM card group object",
+	Usage:   "Creates a new SIM card group and returns it. Groups let you apply shared\nsettings to a set of SIM cards.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -69,7 +69,7 @@ var simCardGroupsRetrieve = cli.Command{
 
 var simCardGroupsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Updates a SIM card group",
+	Usage:   "Updates the specified SIM card group's attributes and returns the updated group.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -146,7 +146,7 @@ var simCardGroupsList = cli.Command{
 
 var simCardGroupsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Permanently deletes a SIM card group",
+	Usage:   "Permanently deletes the specified SIM card group from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

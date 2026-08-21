@@ -17,7 +17,7 @@ import (
 
 var portingOrdersCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new porting order object.",
+	Usage:   "Creates a new porting order to bring phone numbers from another carrier to\nTelnyx. Complete the order's requirements and then confirm it to submit the\nport.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[[]string]{
@@ -234,7 +234,7 @@ var portingOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var portingOrdersList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns a list of your porting order.",
+	Usage:   "Returns a paginated list of your porting orders. Supports filtering and sorting,\nand can optionally include the phone numbers attached to each order.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -352,7 +352,7 @@ var portingOrdersRetrieveExceptionTypes = cli.Command{
 
 var portingOrdersRetrieveLoaTemplate = cli.Command{
 	Name:    "retrieve-loa-template",
-	Usage:   "Download a porting order loa template",
+	Usage:   "Downloads the Letter of Authorization (LOA) template document for this porting\norder, optionally rendered with a specific LOA configuration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

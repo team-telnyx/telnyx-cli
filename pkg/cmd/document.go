@@ -17,7 +17,7 @@ import (
 
 var documentsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a document.",
+	Usage:   "Returns the details of a single document on your account, including its\nmetadata.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -32,7 +32,7 @@ var documentsRetrieve = cli.Command{
 
 var documentsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a document.",
+	Usage:   "Updates the specified document's attributes and returns the updated document.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -119,7 +119,7 @@ var documentsDelete = cli.Command{
 
 var documentsDownload = cli.Command{
 	Name:    "download",
-	Usage:   "Download a document.",
+	Usage:   "Downloads the raw file content of the specified document as originally uploaded.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

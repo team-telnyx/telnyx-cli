@@ -16,7 +16,7 @@ import (
 
 var portoutsCommentsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a comment on a portout request.",
+	Usage:   "Creates a comment on the specified port-out request and returns the created\ncomment.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

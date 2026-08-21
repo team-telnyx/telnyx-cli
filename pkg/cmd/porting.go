@@ -15,7 +15,7 @@ import (
 
 var portingListUkCarriers = cli.Command{
 	Name:            "list-uk-carriers",
-	Usage:           "List available carriers in the UK.",
+	Usage:           "Returns the list of UK carriers available for porting, for use when preparing\nporting orders for UK numbers.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handlePortingListUkCarriers,

@@ -16,7 +16,7 @@ import (
 
 var aiMissionsRunsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Start a new run for a mission",
+	Usage:   "Starts a new run of the specified mission and returns the created run object.\nTrack its progress through the run detail, plan, and events endpoints.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -39,7 +39,7 @@ var aiMissionsRunsCreate = cli.Command{
 
 var aiMissionsRunsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get details of a specific run",
+	Usage:   "Returns the full details of a single run, including its current status. Use this\nto poll an in-flight run or inspect the outcome of a completed one.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -59,7 +59,7 @@ var aiMissionsRunsRetrieve = cli.Command{
 
 var aiMissionsRunsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update run status and/or result",
+	Usage:   "Updates a run's status and/or result and returns the updated run object.\nTypically used by executing agents to report progress or record the final\noutcome.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -100,7 +100,7 @@ var aiMissionsRunsUpdate = cli.Command{
 
 var aiMissionsRunsList = cli.Command{
 	Name:    "list",
-	Usage:   "List all runs for a specific mission",
+	Usage:   "Returns a paginated list of runs for the specified mission, optionally filtered\nby run status, so you can track the mission's execution history over time.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -136,7 +136,7 @@ var aiMissionsRunsList = cli.Command{
 
 var aiMissionsRunsCancelRun = cli.Command{
 	Name:    "cancel-run",
-	Usage:   "Cancel a running or paused run",
+	Usage:   "Cancels a running or paused run and returns the updated run object. A cancelled\nrun stops executing; start a new run to execute the mission again.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -156,7 +156,7 @@ var aiMissionsRunsCancelRun = cli.Command{
 
 var aiMissionsRunsListRuns = cli.Command{
 	Name:    "list-runs",
-	Usage:   "List recent runs across all missions",
+	Usage:   "Returns a paginated list of recent runs across every mission in your\norganization, optionally filtered by run status. Useful for monitoring overall\nmission activity without querying each mission individually.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -187,7 +187,7 @@ var aiMissionsRunsListRuns = cli.Command{
 
 var aiMissionsRunsPauseRun = cli.Command{
 	Name:    "pause-run",
-	Usage:   "Pause a running run",
+	Usage:   "Pauses a currently running run and returns the updated run object. Execution\nhalts until the run is resumed.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -207,7 +207,7 @@ var aiMissionsRunsPauseRun = cli.Command{
 
 var aiMissionsRunsResumeRun = cli.Command{
 	Name:    "resume-run",
-	Usage:   "Resume a paused run",
+	Usage:   "Resumes a previously paused run and returns the updated run object, letting\nexecution continue from where it was paused.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

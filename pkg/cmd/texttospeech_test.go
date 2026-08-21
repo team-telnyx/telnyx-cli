@@ -26,8 +26,7 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			"--output-type", "binary_output",
 			"--provider", "aws",
 			"--resemble", "{api_key: string, format: string, precision: string, sample_rate: string}",
-			"--rime", "{response_format: string, sampling_rate: 0, voice_speed: 0}",
-			"--telnyx", "{emotion: neutral, response_format: mp3, sampling_rate: 24000, temperature: 0.5, voice_speed: 1, volume: 1}",
+			"--telnyx", "{emotion: neutral, response_format: mp3, sampling_rate: 24000, voice_speed: 1, volume: 1}",
 			"--text", "string",
 			"--text-type", "text",
 			"--voice", "string",
@@ -76,13 +75,9 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			"--resemble.format", "string",
 			"--resemble.precision", "string",
 			"--resemble.sample-rate", "string",
-			"--rime.response-format", "string",
-			"--rime.sampling-rate", "0",
-			"--rime.voice-speed", "0",
 			"--telnyx.emotion", "neutral",
 			"--telnyx.response-format", "mp3",
 			"--telnyx.sampling-rate", "24000",
-			"--telnyx.temperature", "0.5",
 			"--telnyx.voice-speed", "1",
 			"--telnyx.volume", "1",
 			"--text", "string",
@@ -138,15 +133,10 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			"  format: string\n" +
 			"  precision: string\n" +
 			"  sample_rate: string\n" +
-			"rime:\n" +
-			"  response_format: string\n" +
-			"  sampling_rate: 0\n" +
-			"  voice_speed: 0\n" +
 			"telnyx:\n" +
 			"  emotion: neutral\n" +
 			"  response_format: mp3\n" +
 			"  sampling_rate: 24000\n" +
-			"  temperature: 0.5\n" +
 			"  voice_speed: 1\n" +
 			"  volume: 1\n" +
 			"text: string\n" +

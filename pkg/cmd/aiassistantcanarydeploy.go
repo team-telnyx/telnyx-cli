@@ -28,6 +28,10 @@ var aiAssistantsCanaryDeploysCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "rule",
 			BodyPath: "rules",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIAssistantsCanaryDeploysCreate,
 	HideHelpCommand: true,

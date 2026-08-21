@@ -9,13 +9,13 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestEmailBlocksImportCreate(t *testing.T) {
+func TestEmailBlocksImportsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"email-blocks:import", "create",
+			"email-blocks:imports", "create",
 			"--file", mocktest.TestFile(t, "Example data"),
 			"--block-ttl-days", "30",
 		)
@@ -32,18 +32,18 @@ func TestEmailBlocksImportCreate(t *testing.T) {
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
-			"email-blocks:import", "create",
+			"email-blocks:imports", "create",
 		)
 	})
 }
 
-func TestEmailBlocksImportRetrieve(t *testing.T) {
+func TestEmailBlocksImportsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"email-blocks:import", "retrieve",
+			"email-blocks:imports", "retrieve",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})

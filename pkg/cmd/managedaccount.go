@@ -67,7 +67,7 @@ var managedAccountsRetrieve = cli.Command{
 
 var managedAccountsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a single managed account.",
+	Usage:   "Updates the specified managed account's attributes and returns the updated\naccount.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

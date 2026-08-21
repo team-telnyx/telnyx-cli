@@ -16,7 +16,7 @@ import (
 
 var oauthClientsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new OAuth client",
+	Usage:   "Creates a new OAuth client on your account for authenticating third-party\nintegrations, and returns the created client.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[[]string]{
@@ -77,7 +77,7 @@ var oauthClientsCreate = cli.Command{
 
 var oauthClientsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a single OAuth client by ID",
+	Usage:   "Returns the details of a single OAuth client on your account by its ID.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -92,7 +92,7 @@ var oauthClientsRetrieve = cli.Command{
 
 var oauthClientsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update an existing OAuth client",
+	Usage:   "Updates the specified OAuth client's configuration and returns the updated\nclient.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -203,7 +203,7 @@ var oauthClientsList = cli.Command{
 
 var oauthClientsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete an OAuth client",
+	Usage:   "Permanently deletes the specified OAuth client from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

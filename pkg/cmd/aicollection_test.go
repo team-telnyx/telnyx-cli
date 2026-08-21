@@ -147,6 +147,7 @@ func TestAICollectionsRetrieveDocuments(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai:collections", "retrieve-documents",
+			"--max-items", "10",
 			"--slug", "support-transcripts",
 			"--filter", "{foo: bar}",
 			"--page-number", "1",

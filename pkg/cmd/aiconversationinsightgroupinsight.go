@@ -14,7 +14,7 @@ import (
 
 var aiConversationsInsightGroupsInsightsAssign = cli.Command{
 	Name:    "assign",
-	Usage:   "Assign an insight to a group",
+	Usage:   "Assigns the specified insight template to the specified insight template group.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -36,7 +36,7 @@ var aiConversationsInsightGroupsInsightsAssign = cli.Command{
 
 var aiConversationsInsightGroupsInsightsDeleteUnassign = cli.Command{
 	Name:    "delete-unassign",
-	Usage:   "Remove an insight from a group",
+	Usage:   "Removes the specified insight template from the specified group. The insight\ntemplate itself is not deleted.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

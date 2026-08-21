@@ -16,7 +16,7 @@ import (
 
 var roomsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Synchronously create a Room.",
+	Usage:   "Synchronously creates a new video room with the provided configuration and\nreturns the created room.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[bool]{
@@ -79,7 +79,7 @@ var roomsRetrieve = cli.Command{
 
 var roomsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Synchronously update a Room.",
+	Usage:   "Synchronously updates the specified video room's configuration and returns the\nupdated room.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

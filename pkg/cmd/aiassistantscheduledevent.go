@@ -78,6 +78,10 @@ var aiAssistantsScheduledEventsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Required for sms scheduled events. The text to be sent to the end user.",
 			BodyPath: "text",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIAssistantsScheduledEventsCreate,
 	HideHelpCommand: true,
@@ -93,7 +97,7 @@ var aiAssistantsScheduledEventsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var aiAssistantsScheduledEventsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a scheduled event by event ID",
+	Usage:   "Returns the details of a single scheduled event configured for the specified\nassistant.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

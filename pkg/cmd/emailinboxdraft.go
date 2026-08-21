@@ -24,7 +24,7 @@ var emailInboxesDraftsCreate = cli.Command{
 			Required:  true,
 			PathParam: "inbox_id",
 		},
-		&requestflag.Flag[[]any]{
+		&requestflag.Flag[[]map[string]any]{
 			Name:     "attachment",
 			BodyPath: "attachments",
 		},
@@ -61,7 +61,7 @@ var emailInboxesDraftsCreate = cli.Command{
 			Name:     "label",
 			BodyPath: "labels",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
 			BodyPath: "metadata",
 		},
@@ -130,7 +130,7 @@ var emailInboxesDraftsUpdate = cli.Command{
 			Required:  true,
 			PathParam: "draft_id",
 		},
-		&requestflag.Flag[[]any]{
+		&requestflag.Flag[[]map[string]any]{
 			Name:     "attachment",
 			BodyPath: "attachments",
 		},
@@ -167,7 +167,7 @@ var emailInboxesDraftsUpdate = cli.Command{
 			Name:     "label",
 			BodyPath: "labels",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
 			BodyPath: "metadata",
 		},
@@ -227,6 +227,10 @@ var emailInboxesDraftsList = cli.Command{
 			Default:   25,
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleEmailInboxesDraftsList,
 	HideHelpCommand: true,
@@ -267,7 +271,7 @@ var emailInboxesDraftsPatch = cli.Command{
 			Required:  true,
 			PathParam: "draft_id",
 		},
-		&requestflag.Flag[[]any]{
+		&requestflag.Flag[[]map[string]any]{
 			Name:     "attachment",
 			BodyPath: "attachments",
 		},
@@ -304,7 +308,7 @@ var emailInboxesDraftsPatch = cli.Command{
 			Name:     "label",
 			BodyPath: "labels",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
 			BodyPath: "metadata",
 		},
@@ -533,29 +537,48 @@ func handleEmailInboxesDraftsList(ctx context.Context, cmd *cli.Command) error {
 
 	params := telnyx.EmailInboxDraftListParams{}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.EmailInboxes.Drafts.List(
-		ctx,
-		cmd.Value("inbox-id").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "email-inboxes:drafts list",
-		Transform:      transform,
-	})
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.EmailInboxes.Drafts.List(
+			ctx,
+			cmd.Value("inbox-id").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-inboxes:drafts list",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.EmailInboxes.Drafts.ListAutoPaging(
+			ctx,
+			cmd.Value("inbox-id").(string),
+			params,
+			options...,
+		)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-inboxes:drafts list",
+			Transform:      transform,
+		})
+	}
 }
 
 func handleEmailInboxesDraftsDelete(ctx context.Context, cmd *cli.Command) error {

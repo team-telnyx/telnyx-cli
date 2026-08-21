@@ -73,7 +73,7 @@ var dialogflowConnectionsRetrieve = cli.Command{
 
 var dialogflowConnectionsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Updates a stored Dialogflow Connection.",
+	Usage:   "Updates the stored Dialogflow connection for the specified connection and\nreturns the updated configuration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -115,7 +115,7 @@ var dialogflowConnectionsUpdate = cli.Command{
 
 var dialogflowConnectionsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes a stored Dialogflow Connection.",
+	Usage:   "Deletes the stored Dialogflow connection for the specified connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

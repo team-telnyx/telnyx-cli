@@ -16,7 +16,7 @@ import (
 
 var dynamicEmergencyEndpointsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a dynamic emergency endpoints.",
+	Usage:   "Creates a dynamic emergency endpoint, associating a callback number and location\nwith a device for emergency calling.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

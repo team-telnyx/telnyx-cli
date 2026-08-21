@@ -16,7 +16,7 @@ import (
 
 var fqdnsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new FQDN object.",
+	Usage:   "Creates a new FQDN record and attaches it to the specified connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -65,7 +65,7 @@ var fqdnsRetrieve = cli.Command{
 
 var fqdnsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update the details of a specific FQDN.",
+	Usage:   "Updates the details of the specified FQDN record and returns the updated FQDN.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -151,7 +151,7 @@ var fqdnsList = requestflag.WithInnerFlags(cli.Command{
 
 var fqdnsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete an FQDN.",
+	Usage:   "Permanently deletes the specified FQDN record from its connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -16,7 +16,7 @@ import (
 
 var credentialConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates a credential connection.",
+	Usage:   "Creates a new credential-based SIP connection. Credential connections\nauthenticate with a username and password rather than by IP address.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

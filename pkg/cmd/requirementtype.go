@@ -16,7 +16,7 @@ import (
 
 var requirementTypesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a requirement type by id",
+	Usage:   "Returns the details of a single requirement type by its identifier, describing a\nkind of documentation needed for regulatory purposes.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

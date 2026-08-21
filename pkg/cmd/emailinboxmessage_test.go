@@ -41,6 +41,7 @@ func TestEmailInboxesMessagesList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-inboxes:messages", "list",
+			"--max-items", "10",
 			"--inbox-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter-from", "filter[from]",
 			"--filter-label", "filter[label]",
@@ -65,7 +66,7 @@ func TestEmailInboxesMessagesDrafts(t *testing.T) {
 			"email-inboxes:messages", "drafts",
 			"--inbox-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--message-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--attachment", "{}",
+			"--attachment", "{foo: bar}",
 			"--bcc", "string",
 			"--cc", "string",
 			"--from-email", "from_email",
@@ -74,7 +75,7 @@ func TestEmailInboxesMessagesDrafts(t *testing.T) {
 			"--html", "html",
 			"--html-body", "html_body",
 			"--label", "string",
-			"--metadata", "{}",
+			"--metadata", "{foo: bar}",
 			"--reply-to", "reply_to",
 			"--subject", "subject",
 			"--tag", "string",
@@ -88,7 +89,7 @@ func TestEmailInboxesMessagesDrafts(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"attachments:\n" +
-			"  - {}\n" +
+			"  - foo: bar\n" +
 			"bcc:\n" +
 			"  - string\n" +
 			"cc:\n" +
@@ -101,7 +102,8 @@ func TestEmailInboxesMessagesDrafts(t *testing.T) {
 			"html_body: html_body\n" +
 			"labels:\n" +
 			"  - string\n" +
-			"metadata: {}\n" +
+			"metadata:\n" +
+			"  foo: bar\n" +
 			"reply_to: reply_to\n" +
 			"subject: subject\n" +
 			"tags:\n" +

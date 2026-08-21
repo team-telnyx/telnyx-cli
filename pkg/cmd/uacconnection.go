@@ -836,7 +836,7 @@ var uacConnectionsList = requestflag.WithInnerFlags(cli.Command{
 
 var uacConnectionsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes an existing UAC connection.",
+	Usage:   "Permanently deletes the specified UAC connection from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

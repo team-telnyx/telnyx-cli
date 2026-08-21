@@ -16,7 +16,7 @@ import (
 
 var userAddressesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a user address.",
+	Usage:   "Creates a new user address from the provided details and returns the created\naddress.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -118,7 +118,7 @@ var userAddressesRetrieve = cli.Command{
 
 var userAddressesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns a list of your user addresses.",
+	Usage:   "Returns a paginated list of your user addresses, with support for filtering and\nsorting.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

@@ -54,7 +54,7 @@ var legacyReportingUsageReportsMessagingCreate = cli.Command{
 
 var legacyReportingUsageReportsMessagingRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Fetch single MDR usage report by id.",
+	Usage:   "Returns a single MDR (Message Detail Record) usage report by its identifier,\nincluding its parameters and current status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

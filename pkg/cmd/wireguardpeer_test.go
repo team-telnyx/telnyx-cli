@@ -109,3 +109,15 @@ func TestWireguardPeersDelete(t *testing.T) {
 		)
 	})
 }
+
+func TestWireguardPeersRetrieveConfig(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"wireguard-peers", "retrieve-config",
+			"--id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+		)
+	})
+}

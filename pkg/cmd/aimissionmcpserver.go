@@ -16,7 +16,7 @@ import (
 
 var aiMissionsMcpServersCreateMcpServer = cli.Command{
 	Name:    "create-mcp-server",
-	Usage:   "Create a new MCP server for a mission",
+	Usage:   "Adds an MCP server to the specified mission, making the server's tools available\nto agents during runs of this mission.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var aiMissionsMcpServersCreateMcpServer = cli.Command{
 
 var aiMissionsMcpServersDeleteMcpServer = cli.Command{
 	Name:    "delete-mcp-server",
-	Usage:   "Delete an MCP server from a mission",
+	Usage:   "Removes the specified MCP server from the mission, revoking agent access to its\ntools in subsequent runs.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -51,7 +51,7 @@ var aiMissionsMcpServersDeleteMcpServer = cli.Command{
 
 var aiMissionsMcpServersGetMcpServer = cli.Command{
 	Name:    "get-mcp-server",
-	Usage:   "Get a specific MCP server by ID",
+	Usage:   "Returns the configuration of a single MCP server attached to the specified\nmission.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -71,7 +71,7 @@ var aiMissionsMcpServersGetMcpServer = cli.Command{
 
 var aiMissionsMcpServersListMcpServers = cli.Command{
 	Name:    "list-mcp-servers",
-	Usage:   "List all MCP servers for a mission",
+	Usage:   "Returns the MCP servers configured on the specified mission. MCP servers expose\nexternal tools and data sources agents can use during runs.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -86,7 +86,7 @@ var aiMissionsMcpServersListMcpServers = cli.Command{
 
 var aiMissionsMcpServersUpdateMcpServer = cli.Command{
 	Name:    "update-mcp-server",
-	Usage:   "Update an MCP server definition",
+	Usage:   "Replaces the configuration of the specified MCP server on this mission.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

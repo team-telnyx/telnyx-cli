@@ -46,7 +46,7 @@ var portingReportsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var portingReportsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a specific report generated.",
+	Usage:   "Returns the details of a previously requested porting report, including its\nstatus and parameters.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

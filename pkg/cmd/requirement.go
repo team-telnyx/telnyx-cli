@@ -16,7 +16,7 @@ import (
 
 var requirementsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a document requirement record",
+	Usage:   "Returns a single document requirement record by its identifier, describing the\ndocumentation needed for number-related actions. A specific requirement version\ncan be requested.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

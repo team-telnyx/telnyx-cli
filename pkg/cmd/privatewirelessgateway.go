@@ -109,7 +109,7 @@ var privateWirelessGatewaysList = cli.Command{
 
 var privateWirelessGatewaysDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes the Private Wireless Gateway.",
+	Usage:   "Permanently deletes the specified Private Wireless Gateway from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

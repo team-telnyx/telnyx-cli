@@ -71,6 +71,7 @@ func TestAIConversationsInsightGroupsInsightGroups(t *testing.T) {
 			"--name", "Name",
 			"--description", "Description",
 			"--webhook", "",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -84,6 +85,7 @@ func TestAIConversationsInsightGroupsInsightGroups(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai:conversations:insight-groups", "insight-groups",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

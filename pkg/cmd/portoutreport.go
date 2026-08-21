@@ -46,7 +46,7 @@ var portoutsReportsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var portoutsReportsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a specific report generated.",
+	Usage:   "Returns the details of a previously requested port-out report, including its\nstatus and parameters.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

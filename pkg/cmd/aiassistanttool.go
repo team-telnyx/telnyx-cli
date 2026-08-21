@@ -36,7 +36,7 @@ var aiAssistantsToolsAdd = cli.Command{
 
 var aiAssistantsToolsRemove = cli.Command{
 	Name:    "remove",
-	Usage:   "Detach a tool from an AI assistant.",
+	Usage:   "Detaches the specified tool from the AI assistant so the assistant can no longer\ninvoke it.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,7 +56,7 @@ var aiAssistantsToolsRemove = cli.Command{
 
 var aiAssistantsToolsTest = cli.Command{
 	Name:    "test",
-	Usage:   "Test a webhook tool for an assistant",
+	Usage:   "Executes a test invocation of the specified webhook tool for the assistant and\nreturns the outcome, so you can verify the webhook's behavior before relying on\nit in conversations.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

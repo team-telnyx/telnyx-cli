@@ -99,7 +99,7 @@ var roomRecordingsList = requestflag.WithInnerFlags(cli.Command{
 
 var roomRecordingsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Synchronously delete a Room Recording.",
+	Usage:   "Synchronously deletes the specified video room recording. The recording's media\nis removed permanently.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

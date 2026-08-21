@@ -16,10 +16,10 @@ import (
 
 var publicInternetGatewaysCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new Public Internet Gateway.",
+	Usage:   "Requests creation of a public internet gateway on the specified network, giving\nthe network internet egress. Creation is asynchronous, so the request is\naccepted and completes in the background.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "body",
 			Required: true,
 			BodyRoot: true,
@@ -31,7 +31,7 @@ var publicInternetGatewaysCreate = cli.Command{
 
 var publicInternetGatewaysRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a Public Internet Gateway.",
+	Usage:   "Returns the details of a single public internet gateway by its identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -46,7 +46,7 @@ var publicInternetGatewaysRetrieve = cli.Command{
 
 var publicInternetGatewaysList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List all Public Internet Gateways.",
+	Usage:   "Returns a paginated list of the public internet gateways on your account, with\nsupport for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -81,7 +81,7 @@ var publicInternetGatewaysList = requestflag.WithInnerFlags(cli.Command{
 
 var publicInternetGatewaysDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Public Internet Gateway.",
+	Usage:   "Deletes the specified public internet gateway, removing internet egress through\nit.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

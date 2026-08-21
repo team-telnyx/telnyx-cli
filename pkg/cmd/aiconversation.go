@@ -16,7 +16,7 @@ import (
 
 var aiConversationsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new AI Conversation.",
+	Usage:   "Creates a new AI conversation, the container for messages exchanged with an\nassistant, and returns the created conversation.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -27,6 +27,10 @@ var aiConversationsCreate = cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "name",
 			BodyPath: "name",
+		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
 		},
 	},
 	Action:          handleAIConversationsCreate,
@@ -197,6 +201,10 @@ var aiConversationsAddMessage = cli.Command{
 		&requestflag.Flag[any]{
 			Name:     "tool-choice",
 			BodyPath: "tool_choice",
+		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
 		},
 	},
 	Action:          handleAIConversationsAddMessage,

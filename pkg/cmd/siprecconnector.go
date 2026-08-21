@@ -102,7 +102,7 @@ var siprecConnectorsUpdate = cli.Command{
 
 var siprecConnectorsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes a stored SIPREC connector.",
+	Usage:   "Deletes the stored SIPREC connector with the specified connector name.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

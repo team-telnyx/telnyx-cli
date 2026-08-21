@@ -14,7 +14,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var storageBucketsCreatePresignedURL = cli.Command{
+var storageBucketsCreatePresignedURL = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create-presigned-url",
 	Usage:   "Returns a timed and authenticated URL to download (GET) or upload (PUT) an\nobject. This is the equivalent to AWS S3’s “presigned” URL. Please note that\nTelnyx performs authentication differently from AWS S3 and you MUST NOT use the\npresign method of AWS s3api CLI or SDK to generate the presigned URL.",
 	Suggest: true,
@@ -29,15 +29,22 @@ var storageBucketsCreatePresignedURL = cli.Command{
 			Required:  true,
 			PathParam: "objectName",
 		},
-		&requestflag.Flag[int64]{
-			Name:     "ttl",
-			Usage:    "The time to live of the token in seconds",
-			BodyPath: "ttl",
+		&requestflag.Flag[map[string]any]{
+			Name:     "body",
+			BodyRoot: true,
 		},
 	},
 	Action:          handleStorageBucketsCreatePresignedURL,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"body": {
+		&requestflag.InnerFlag[int64]{
+			Name:       "body.ttl",
+			Usage:      "The time to live of the token in seconds",
+			InnerField: "ttl",
+		},
+	},
+})
 
 func handleStorageBucketsCreatePresignedURL(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)

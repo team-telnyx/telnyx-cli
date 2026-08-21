@@ -16,7 +16,7 @@ import (
 
 var networksDefaultGatewayCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create Default Gateway.",
+	Usage:   "Creates a default gateway on the specified network, directing the network's\noutbound traffic through the chosen gateway.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -36,7 +36,7 @@ var networksDefaultGatewayCreate = cli.Command{
 
 var networksDefaultGatewayRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get Default Gateway status.",
+	Usage:   "Returns the status of the default gateway configured on the specified network.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -51,7 +51,7 @@ var networksDefaultGatewayRetrieve = cli.Command{
 
 var networksDefaultGatewayDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete Default Gateway.",
+	Usage:   "Removes the default gateway from the specified network.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

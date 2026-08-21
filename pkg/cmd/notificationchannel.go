@@ -16,7 +16,7 @@ import (
 
 var notificationChannelsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a notification channel.",
+	Usage:   "Creates a new notification channel defining where notifications are delivered,\nand returns the created channel.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -41,7 +41,7 @@ var notificationChannelsCreate = cli.Command{
 
 var notificationChannelsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a notification channel.",
+	Usage:   "Returns the details of a single notification channel by its identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,7 +56,7 @@ var notificationChannelsRetrieve = cli.Command{
 
 var notificationChannelsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a notification channel.",
+	Usage:   "Updates the specified notification channel and returns the updated channel.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -86,7 +86,7 @@ var notificationChannelsUpdate = cli.Command{
 
 var notificationChannelsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List notification channels.",
+	Usage:   "Returns a paginated list of your notification channels, the destinations that\nreceive notifications.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -140,7 +140,7 @@ var notificationChannelsList = requestflag.WithInnerFlags(cli.Command{
 
 var notificationChannelsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a notification channel.",
+	Usage:   "Deletes the specified notification channel so notifications are no longer\ndelivered to it.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -45,7 +45,7 @@ var aiAssistantsTagsAdd = cli.Command{
 
 var aiAssistantsTagsRemove = cli.Command{
 	Name:    "remove",
-	Usage:   "Remove a tag from an AI assistant.",
+	Usage:   "Removes the specified tag from the AI assistant and returns the assistant's\nupdated tag list.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

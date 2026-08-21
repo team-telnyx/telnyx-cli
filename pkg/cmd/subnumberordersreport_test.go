@@ -52,3 +52,15 @@ func TestSubNumberOrdersReportRetrieve(t *testing.T) {
 		)
 	})
 }
+
+func TestSubNumberOrdersReportDownload(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"sub-number-orders-report", "download",
+			"--report-id", "12ade33a-21c0-473b-b055-b3c836e1c293",
+		)
+	})
+}

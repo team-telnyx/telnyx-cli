@@ -16,7 +16,7 @@ import (
 
 var messagingOptoutsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Retrieve a list of opt-out blocks.",
+	Usage:   "Returns a paginated list of opt-out blocks created when message recipients opt\nout. Supports filtering and optional redaction of recipient numbers.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

@@ -111,7 +111,7 @@ var faxesCreate = cli.Command{
 
 var faxesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve the details of a single fax.",
+	Usage:   "Returns the details of a single fax, including its current status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

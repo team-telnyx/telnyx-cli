@@ -17,6 +17,7 @@ func TestAIConversationsCreate(t *testing.T) {
 			"ai:conversations", "create",
 			"--metadata", "{foo: string}",
 			"--name", "string",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -30,6 +31,7 @@ func TestAIConversationsCreate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai:conversations", "create",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }
@@ -123,6 +125,7 @@ func TestAIConversationsAddMessage(t *testing.T) {
 			"--tool-call-id", "Tool Call Id",
 			"--tool-call", "{foo: bar}",
 			"--tool-choice", "string",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -144,6 +147,7 @@ func TestAIConversationsAddMessage(t *testing.T) {
 			"--api-key", "string",
 			"ai:conversations", "add-message",
 			"--conversation-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

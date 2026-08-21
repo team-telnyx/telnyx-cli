@@ -16,7 +16,7 @@ import (
 
 var organizationsUsersActionsRemove = cli.Command{
 	Name:    "remove",
-	Usage:   "Deletes a user in your organization.",
+	Usage:   "Removes the specified user from your organization and returns the result of the\nremoval.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

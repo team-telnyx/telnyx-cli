@@ -72,13 +72,8 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "resemble",
 		},
 		&requestflag.Flag[map[string]any]{
-			Name:     "rime",
-			Usage:    "Rime provider-specific parameters.",
-			BodyPath: "rime",
-		},
-		&requestflag.Flag[map[string]any]{
 			Name:     "telnyx",
-			Usage:    "Telnyx provider-specific parameters. Use `voice_speed` and `temperature` for `Natural` and `NaturalHD` models. For the `Ultra` model, use `voice_speed`, `volume`, and `emotion`. `Bayan` and `Sukhan` don't use `temperature`, `volume`, or `emotion`, and don't support `voice_speed`. `Sukhan`'s `response_format` is restricted to `mp3` or `pcm` (no `wav`).",
+			Usage:    "Telnyx provider-specific parameters. For the `Ultra` model, use `voice_speed`, `volume`, and `emotion`. `Bayan` and `Sukhan` don't use `temperature`, `volume`, or `emotion`, and don't support `voice_speed`. `Sukhan`'s `response_format` is restricted to `mp3` or `pcm` (no `wav`).",
 			BodyPath: "telnyx",
 		},
 		&requestflag.Flag[string]{
@@ -93,7 +88,7 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id`. Examples: `telnyx.NaturalHD.Alloy`, `Telnyx.Ultra.<voice_id>`, `Telnyx.Bayan.Ahmed`, `Telnyx.Sukhan.urdu-professor`, `azure.en-US-AvaMultilingualNeural`, `aws.Polly.Generative.Lucia`. When provided, `provider`, `model_id`, and `voice_id` are extracted automatically and take precedence over individual parameters.",
+			Usage:    "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id`. Examples: `Telnyx.Ultra.<voice_id>`, `Telnyx.Bayan.Ahmed`, `Telnyx.Sukhan.urdu-professor`, `azure.en-US-AvaMultilingualNeural`, `aws.Polly.Generative.Lucia`. When provided, `provider`, `model_id`, and `voice_id` are extracted automatically and take precedence over individual parameters.",
 			BodyPath: "voice",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -257,23 +252,6 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "sample_rate",
 		},
 	},
-	"rime": {
-		&requestflag.InnerFlag[string]{
-			Name:       "rime.response-format",
-			Usage:      "Audio output format.",
-			InnerField: "response_format",
-		},
-		&requestflag.InnerFlag[int64]{
-			Name:       "rime.sampling-rate",
-			Usage:      "Audio sampling rate in Hz.",
-			InnerField: "sampling_rate",
-		},
-		&requestflag.InnerFlag[float64]{
-			Name:       "rime.voice-speed",
-			Usage:      "Voice speed multiplier.",
-			InnerField: "voice_speed",
-		},
-	},
 	"telnyx": {
 		&requestflag.InnerFlag[string]{
 			Name:       "telnyx.emotion",
@@ -289,11 +267,6 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 			Name:       "telnyx.sampling-rate",
 			Usage:      "Audio sampling rate in Hz.",
 			InnerField: "sampling_rate",
-		},
-		&requestflag.InnerFlag[float64]{
-			Name:       "telnyx.temperature",
-			Usage:      "Sampling temperature. Applies to `Natural` and `NaturalHD` models only.",
-			InnerField: "temperature",
 		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "telnyx.voice-speed",
@@ -357,7 +330,7 @@ var textToSpeechRetrieveSpeech = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:      "audio-format",
-			Usage:     "Audio output format override. Supported for Telnyx models. `pcm` and `wav` are available for `Natural`/`NaturalHD` models. The `Ultra` model outputs PCM at 24kHz s16le or MP3 at 128kbps 24kHz.",
+			Usage:     "Audio output format override. Supported for Telnyx models. The `Ultra` model outputs PCM at 24kHz s16le or MP3 at 128kbps 24kHz.",
 			QueryPath: "audio_format",
 		},
 		&requestflag.Flag[bool]{
@@ -368,7 +341,7 @@ var textToSpeechRetrieveSpeech = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "model-id",
-			Usage:     "Model identifier for the chosen provider. Examples: `Natural`, `NaturalHD`, `Ultra` (Telnyx); `Polly.Generative` (AWS).",
+			Usage:     "Model identifier for the chosen provider. Examples: `Ultra`, `KokoroTTS` (Telnyx); `Polly.Generative` (AWS).",
 			QueryPath: "model_id",
 		},
 		&requestflag.Flag[string]{
@@ -384,7 +357,7 @@ var textToSpeechRetrieveSpeech = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "voice",
-			Usage:     "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id` (e.g. `telnyx.NaturalHD.Telnyx_Alloy`, `Telnyx.Ultra.<voice_id>`, `Telnyx.Bayan.Ahmed`, `Telnyx.Sukhan.urdu-professor`, or `azure.en-US-AvaMultilingualNeural`). When provided, the `provider`, `model_id`, and `voice_id` are extracted automatically. Takes precedence over individual `provider`/`model_id`/`voice_id` parameters.",
+			Usage:     "Voice identifier in the format `provider.model_id.voice_id` or `provider.voice_id` (e.g. `Telnyx.Ultra.<voice_id>`, `Telnyx.Bayan.Ahmed`, `Telnyx.Sukhan.urdu-professor`, or `azure.en-US-AvaMultilingualNeural`). When provided, the `provider`, `model_id`, and `voice_id` are extracted automatically. Takes precedence over individual `provider`/`model_id`/`voice_id` parameters.",
 			QueryPath: "voice",
 		},
 		&requestflag.Flag[string]{

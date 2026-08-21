@@ -16,7 +16,7 @@ import (
 
 var countryCoverageRetrieve = cli.Command{
 	Name:            "retrieve",
-	Usage:           "Get country coverage",
+	Usage:           "Returns Telnyx service coverage information for every country, including which\nnumber types and features are available in each.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleCountryCoverageRetrieve,
@@ -25,7 +25,7 @@ var countryCoverageRetrieve = cli.Command{
 
 var countryCoverageRetrieveCountry = cli.Command{
 	Name:    "retrieve-country",
-	Usage:   "Get coverage for a specific country",
+	Usage:   "Returns Telnyx service coverage information for the specified country, including\navailable number types and features.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

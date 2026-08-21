@@ -20,6 +20,7 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 			"--document-chunk-size", "1024",
 			"--embedding-model", "thenlper/gte-large",
 			"--loader", "default",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -35,6 +36,7 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai:embeddings", "create",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }
@@ -99,6 +101,7 @@ func TestAIEmbeddingsURL(t *testing.T) {
 			"ai:embeddings", "url",
 			"--bucket-name", "Bucket Name",
 			"--url", "URL",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -111,6 +114,7 @@ func TestAIEmbeddingsURL(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai:embeddings", "url",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

@@ -31,7 +31,7 @@ var aiEmbeddingsBucketsRetrieve = cli.Command{
 
 var aiEmbeddingsBucketsList = cli.Command{
 	Name:            "list",
-	Usage:           "Get all embedding buckets for a user.",
+	Usage:           "Returns the list of storage buckets that have been embedded for your account,\nfor use with similarity search.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleAIEmbeddingsBucketsList,

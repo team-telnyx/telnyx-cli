@@ -90,7 +90,7 @@ var conferencesCreate = cli.Command{
 
 var conferencesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve an existing conference",
+	Usage:   "Returns the details of an existing conference, including its current status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -210,7 +210,7 @@ var conferencesList = requestflag.WithInnerFlags(cli.Command{
 
 var conferencesListParticipants = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list-participants",
-	Usage:   "Lists conference participants",
+	Usage:   "Returns a paginated list of participants in the specified conference, with\nsupport for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

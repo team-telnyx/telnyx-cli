@@ -75,7 +75,7 @@ var numberReservationsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var numberReservationsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Gets a single phone number reservation.",
+	Usage:   "Returns the details of a single phone number reservation, including its status\nand the reserved numbers.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

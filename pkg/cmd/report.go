@@ -16,7 +16,7 @@ import (
 
 var reportsListMdrs = cli.Command{
 	Name:    "list-mdrs",
-	Usage:   "Fetch all Mdr records",
+	Usage:   "Returns message detail records (MDRs) matching the provided criteria, such as\ndate range, direction, status, and message type.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -71,7 +71,7 @@ var reportsListMdrs = cli.Command{
 
 var reportsListWdrs = cli.Command{
 	Name:    "list-wdrs",
-	Usage:   "Fetch all Wdr records",
+	Usage:   "Returns wireless detail records (WDRs) matching the provided criteria, such as\ndate range, SIM card, IMSI, or phone number, with pagination and sorting.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
