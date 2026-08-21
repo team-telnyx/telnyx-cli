@@ -16,7 +16,7 @@ import (
 
 var aiConversationsInsightsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new insight",
+	Usage:   "Creates a new insight template defining an analysis to run over conversations,\nand returns the created template.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -39,6 +39,10 @@ var aiConversationsInsightsCreate = cli.Command{
 			Default:  "",
 			BodyPath: "webhook",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIConversationsInsightsCreate,
 	HideHelpCommand: true,
@@ -46,7 +50,7 @@ var aiConversationsInsightsCreate = cli.Command{
 
 var aiConversationsInsightsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get insight by ID",
+	Usage:   "Returns the details of a single insight template by its ID, including its\nconfiguration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -62,7 +66,7 @@ var aiConversationsInsightsRetrieve = cli.Command{
 
 var aiConversationsInsightsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update an insight template",
+	Usage:   "Updates the specified insight template and returns the updated template.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -94,7 +98,7 @@ var aiConversationsInsightsUpdate = cli.Command{
 
 var aiConversationsInsightsList = cli.Command{
 	Name:    "list",
-	Usage:   "Get all insights",
+	Usage:   "Returns a paginated list of your insight templates. Insight templates define\nanalyses that run over AI conversations to extract structured findings.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -116,7 +120,7 @@ var aiConversationsInsightsList = cli.Command{
 
 var aiConversationsInsightsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete insight by ID",
+	Usage:   "Permanently deletes the specified insight template by its ID.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

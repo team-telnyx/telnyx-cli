@@ -16,7 +16,7 @@ import (
 
 var globalIPHealthChecksCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a Global IP health check.",
+	Usage:   "Creates a health check for a Global IP to monitor the health of its assignments.\nCreation is asynchronous, so the request is accepted and the health check\nbecomes active once provisioning completes.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -41,7 +41,7 @@ var globalIPHealthChecksCreate = cli.Command{
 
 var globalIPHealthChecksRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a Global IP health check.",
+	Usage:   "Returns the details of a single Global IP health check, including its type and\nconfiguration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,7 +56,7 @@ var globalIPHealthChecksRetrieve = cli.Command{
 
 var globalIPHealthChecksList = cli.Command{
 	Name:    "list",
-	Usage:   "List all Global IP health checks.",
+	Usage:   "Returns a paginated list of the Global IP health checks configured on your\naccount.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -78,7 +78,7 @@ var globalIPHealthChecksList = cli.Command{
 
 var globalIPHealthChecksDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Global IP health check.",
+	Usage:   "Deletes the specified Global IP health check so it no longer monitors the Global\nIP's assignments.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

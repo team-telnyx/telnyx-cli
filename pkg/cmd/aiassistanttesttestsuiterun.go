@@ -66,6 +66,10 @@ var aiAssistantsTestsTestSuitesRunsTrigger = cli.Command{
 			Usage:    "Optional assistant version ID to use for all test runs in this suite. If provided, the version must exist or a 400 error will be returned. If not provided, test will run on main version",
 			BodyPath: "destination_version_id",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIAssistantsTestsTestSuitesRunsTrigger,
 	HideHelpCommand: true,

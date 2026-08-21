@@ -46,6 +46,10 @@ var aiEmbeddingsCreate = cli.Command{
 			Default:  "default",
 			BodyPath: "loader",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIEmbeddingsCreate,
 	HideHelpCommand: true,
@@ -123,6 +127,10 @@ var aiEmbeddingsURL = cli.Command{
 			Usage:    "The URL of the webpage to embed",
 			Required: true,
 			BodyPath: "url",
+		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
 		},
 	},
 	Action:          handleAIEmbeddingsURL,

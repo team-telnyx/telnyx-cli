@@ -36,7 +36,7 @@ var invoicesRetrieve = cli.Command{
 
 var invoicesList = cli.Command{
 	Name:    "list",
-	Usage:   "Retrieve a paginated list of invoices.",
+	Usage:   "Returns a paginated list of your invoices, with support for sorting.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{

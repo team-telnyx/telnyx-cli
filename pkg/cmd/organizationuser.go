@@ -16,7 +16,7 @@ import (
 
 var organizationsUsersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Returns a user in your organization.",
+	Usage:   "Returns the details of a user in your organization, optionally including the\ngroups the user belongs to.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

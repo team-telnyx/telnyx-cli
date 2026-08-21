@@ -16,7 +16,7 @@ import (
 
 var aiMissionsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new mission definition",
+	Usage:   "Creates a new mission definition from the provided configuration and returns the\ncreated mission. Execute the mission by starting runs against it.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -67,7 +67,7 @@ var aiMissionsRetrieve = cli.Command{
 
 var aiMissionsList = cli.Command{
 	Name:    "list",
-	Usage:   "List all missions for the organization",
+	Usage:   "Returns a paginated list of all mission definitions in your organization.\nMissions describe a goal and the tools, knowledge bases, and MCP servers agents\nmay use to accomplish it.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -93,7 +93,7 @@ var aiMissionsList = cli.Command{
 
 var aiMissionsCloneMission = cli.Command{
 	Name:    "clone-mission",
-	Usage:   "Clone an existing mission",
+	Usage:   "Creates a copy of the specified mission as a new mission definition, so you can\niterate on its configuration without modifying the original.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -108,7 +108,7 @@ var aiMissionsCloneMission = cli.Command{
 
 var aiMissionsDeleteMission = cli.Command{
 	Name:    "delete-mission",
-	Usage:   "Delete a mission",
+	Usage:   "Permanently deletes the specified mission definition and returns no content on\nsuccess.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -123,7 +123,7 @@ var aiMissionsDeleteMission = cli.Command{
 
 var aiMissionsListEvents = cli.Command{
 	Name:    "list-events",
-	Usage:   "List recent events across all missions",
+	Usage:   "Returns a paginated list of recent events across every mission in your\norganization, optionally filtered by event type. Useful for building activity\nfeeds or monitoring dashboards.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -154,7 +154,7 @@ var aiMissionsListEvents = cli.Command{
 
 var aiMissionsUpdateMission = cli.Command{
 	Name:    "update-mission",
-	Usage:   "Update a mission definition",
+	Usage:   "Replaces the specified mission's definition with the provided configuration and\nreturns the updated mission.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -16,7 +16,7 @@ import (
 
 var aiMcpServersCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new MCP server.",
+	Usage:   "Creates a new MCP server configuration on your account and returns the created\nserver.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -42,6 +42,10 @@ var aiMcpServersCreate = cli.Command{
 			Name:     "api-key-ref",
 			BodyPath: "api_key_ref",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIMcpServersCreate,
 	HideHelpCommand: true,
@@ -64,7 +68,7 @@ var aiMcpServersRetrieve = cli.Command{
 
 var aiMcpServersUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update an existing MCP server.",
+	Usage:   "Updates the specified MCP server's configuration and returns the updated server.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -107,7 +111,7 @@ var aiMcpServersUpdate = cli.Command{
 
 var aiMcpServersList = cli.Command{
 	Name:    "list",
-	Usage:   "Retrieve a list of MCP servers.",
+	Usage:   "Returns a paginated list of the MCP servers configured on your account, with\noptional filtering by type or URL.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -143,7 +147,7 @@ var aiMcpServersList = cli.Command{
 
 var aiMcpServersDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a specific MCP server.",
+	Usage:   "Permanently deletes the specified MCP server configuration from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -16,7 +16,7 @@ import (
 
 var mobilePushCredentialsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new mobile push credential",
+	Usage:   "Creates a new mobile push credential for delivering push notifications to iOS or\nAndroid apps, and returns the created credential.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -46,7 +46,7 @@ var mobilePushCredentialsRetrieve = cli.Command{
 
 var mobilePushCredentialsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List mobile push credentials",
+	Usage:   "Returns a paginated list of the mobile push credentials on your account, with\nsupport for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

@@ -95,6 +95,7 @@ func TestEmailTemplatesList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-templates", "list",
+			"--max-items", "10",
 			"--page-cursor", "page_cursor",
 			"--page-size", "1",
 		)

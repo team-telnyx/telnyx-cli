@@ -16,7 +16,7 @@ import (
 
 var texmlAccountsConferencesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Returns a conference resource.",
+	Usage:   "Returns a single conference resource for the account by its ConferenceSid.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -36,7 +36,7 @@ var texmlAccountsConferencesRetrieve = cli.Command{
 
 var texmlAccountsConferencesUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Updates a conference resource.",
+	Usage:   "Updates the specified conference resource, for example to modify its status, and\nreturns the updated conference.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -71,7 +71,7 @@ var texmlAccountsConferencesUpdate = cli.Command{
 
 var texmlAccountsConferencesRetrieveConferences = cli.Command{
 	Name:    "retrieve-conferences",
-	Usage:   "Lists conference resources.",
+	Usage:   "Returns a paginated list of conference resources for the account, with support\nfor filtering by friendly name, status, and creation or update dates.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -121,7 +121,7 @@ var texmlAccountsConferencesRetrieveConferences = cli.Command{
 
 var texmlAccountsConferencesRetrieveRecordings = cli.Command{
 	Name:    "retrieve-recordings",
-	Usage:   "Lists conference recordings",
+	Usage:   "Returns the list of recordings made for the specified conference.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

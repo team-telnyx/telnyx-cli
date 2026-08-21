@@ -14,7 +14,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var emailBlocksImportCreate = cli.Command{
+var emailBlocksImportsCreate = cli.Command{
 	Name:    "create",
 	Usage:   "Accepts `multipart/form-data` with a `file` field (the CSV) and an optional\n`block_ttl_days` (integer >0, default 30). Validates:",
 	Suggest: true,
@@ -33,11 +33,11 @@ var emailBlocksImportCreate = cli.Command{
 			BodyPath: "block_ttl_days",
 		},
 	},
-	Action:          handleEmailBlocksImportCreate,
+	Action:          handleEmailBlocksImportsCreate,
 	HideHelpCommand: true,
 }
 
-var emailBlocksImportRetrieve = cli.Command{
+var emailBlocksImportsRetrieve = cli.Command{
 	Name:    "retrieve",
 	Usage:   "Account-scoped fetch (cross-account → 404; malformed UUID → 404). Nullable\nfields are omitted until terminal: `provider`/`completed_at` when nil;\n`processed_rows`/`created_count`/`existing_count`/ `skipped_count`/`error_count`\nonly when `status == completed`; `errors` only when non-empty; `failure_reason`\nonly on terminal failure.",
 	Suggest: true,
@@ -48,11 +48,11 @@ var emailBlocksImportRetrieve = cli.Command{
 			PathParam: "id",
 		},
 	},
-	Action:          handleEmailBlocksImportRetrieve,
+	Action:          handleEmailBlocksImportsRetrieve,
 	HideHelpCommand: true,
 }
 
-func handleEmailBlocksImportCreate(ctx context.Context, cmd *cli.Command) error {
+func handleEmailBlocksImportsCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -75,7 +75,7 @@ func handleEmailBlocksImportCreate(ctx context.Context, cmd *cli.Command) error 
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.EmailBlocks.Import.New(ctx, params, options...)
+	_, err = client.EmailBlocks.Imports.New(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -88,12 +88,12 @@ func handleEmailBlocksImportCreate(ctx context.Context, cmd *cli.Command) error 
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "email-blocks:import create",
+		Title:          "email-blocks:imports create",
 		Transform:      transform,
 	})
 }
 
-func handleEmailBlocksImportRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handleEmailBlocksImportsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
@@ -117,7 +117,7 @@ func handleEmailBlocksImportRetrieve(ctx context.Context, cmd *cli.Command) erro
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.EmailBlocks.Import.Get(ctx, cmd.Value("id").(string), options...)
+	_, err = client.EmailBlocks.Imports.Get(ctx, cmd.Value("id").(string), options...)
 	if err != nil {
 		return err
 	}
@@ -130,7 +130,7 @@ func handleEmailBlocksImportRetrieve(ctx context.Context, cmd *cli.Command) erro
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "email-blocks:import retrieve",
+		Title:          "email-blocks:imports retrieve",
 		Transform:      transform,
 	})
 }

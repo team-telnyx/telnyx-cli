@@ -16,7 +16,7 @@ import (
 
 var mobileVoiceConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a new mobile voice connection.",
+	Usage:   "Creates a new mobile voice connection with the provided configuration and\nreturns the created connection.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[bool]{

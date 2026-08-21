@@ -32,7 +32,7 @@ var mediaRetrieve = cli.Command{
 
 var mediaUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Updates a stored media file.",
+	Usage:   "Updates the specified stored media file and returns the updated resource.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -57,7 +57,7 @@ var mediaUpdate = cli.Command{
 
 var mediaList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns a list of stored media files.",
+	Usage:   "Returns a list of the media files stored on your account, with support for\nfiltering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -80,7 +80,7 @@ var mediaList = requestflag.WithInnerFlags(cli.Command{
 
 var mediaDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes a stored media file.",
+	Usage:   "Permanently deletes the specified media file from storage.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -95,7 +95,7 @@ var mediaDelete = cli.Command{
 
 var mediaDownload = cli.Command{
 	Name:    "download",
-	Usage:   "Downloads a stored media file.",
+	Usage:   "Downloads the raw content of the specified stored media file.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

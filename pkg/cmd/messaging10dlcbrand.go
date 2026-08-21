@@ -152,7 +152,7 @@ var messaging10dlcBrandCreate = cli.Command{
 
 var messaging10dlcBrandRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a brand by `brandId`.",
+	Usage:   "Returns the details of a 10DLC brand by its brandId, including the count of\ncampaigns associated with the brand.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

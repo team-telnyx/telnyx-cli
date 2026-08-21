@@ -16,7 +16,7 @@ import (
 
 var aiMissionsRunsEventsList = cli.Command{
 	Name:    "list",
-	Usage:   "List events for a run (paginated)",
+	Usage:   "Returns a paginated list of events logged for the specified run, filterable by\nevent type, plan step, and agent, so you can reconstruct exactly what happened\nduring execution.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -67,7 +67,7 @@ var aiMissionsRunsEventsList = cli.Command{
 
 var aiMissionsRunsEventsGetEventDetails = cli.Command{
 	Name:    "get-event-details",
-	Usage:   "Get details of a specific event",
+	Usage:   "Returns the details of a single event logged for the specified run, including\nits type and payload.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -92,7 +92,7 @@ var aiMissionsRunsEventsGetEventDetails = cli.Command{
 
 var aiMissionsRunsEventsLog = cli.Command{
 	Name:    "log",
-	Usage:   "Log an event for a run",
+	Usage:   "Logs a new event against the specified run and returns the created event. Events\nform the run's audit trail and can reference a plan step or agent.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

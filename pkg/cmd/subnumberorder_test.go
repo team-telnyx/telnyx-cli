@@ -85,7 +85,7 @@ func TestSubNumberOrdersList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"sub-number-orders", "list",
-			"--filter", "{country_code: US, order_request_id: 12ade33a-21c0-473b-b055-b3c836e1c293, phone_number_type: local, phone_numbers_count: 1, status: status}",
+			"--filter", "{country_code: US, include_phone_numbers: true, order_request_id: 12ade33a-21c0-473b-b055-b3c836e1c293, phone_number_type: local, phone_numbers_count: 1, status: status}",
 		)
 	})
 
@@ -99,6 +99,7 @@ func TestSubNumberOrdersList(t *testing.T) {
 			"--api-key", "string",
 			"sub-number-orders", "list",
 			"--filter.country-code", "US",
+			"--filter.include-phone-numbers=true",
 			"--filter.order-request-id", "12ade33a-21c0-473b-b055-b3c836e1c293",
 			"--filter.phone-number-type", "local",
 			"--filter.phone-numbers-count", "1",

@@ -43,7 +43,7 @@ var simCardsRetrieve = cli.Command{
 
 var simCardsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Updates SIM card data",
+	Usage:   "Updates the specified SIM card's attributes and returns the updated SIM card.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

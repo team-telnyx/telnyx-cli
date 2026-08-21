@@ -16,7 +16,7 @@ import (
 
 var numberBlockOrdersCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a phone number block order.",
+	Usage:   "Creates an order for a block of consecutive phone numbers and returns the\ncreated order. Track fulfillment through the order's status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{

@@ -15,7 +15,7 @@ import (
 
 var globalIPProtocolsList = cli.Command{
 	Name:            "list",
-	Usage:           "List all Global IP Protocols",
+	Usage:           "Returns the network protocols supported for Global IP traffic, for use when\nconfiguring Global IP resources.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleGlobalIPProtocolsList,

@@ -16,7 +16,7 @@ import (
 
 var legacyReportingUsageReportsNumberLookupCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Submit a new telco data usage report",
+	Usage:   "Submits a new telco data (number lookup) usage report request. The report is\ngenerated asynchronously; retrieve it by its identifier once ready.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

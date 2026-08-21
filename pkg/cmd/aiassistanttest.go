@@ -63,6 +63,10 @@ var aiAssistantsTestsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Optional test suite name to group related tests together. Useful for organizing tests by feature, team, or release cycle.",
 			BodyPath: "test_suite",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIAssistantsTestsCreate,
 	HideHelpCommand: true,

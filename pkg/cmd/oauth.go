@@ -5,6 +5,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -31,7 +32,7 @@ var oauthRetrieve = cli.Command{
 
 var oauthGrants = cli.Command{
 	Name:    "grants",
-	Usage:   "Create an OAuth authorization grant",
+	Usage:   "Creates an OAuth authorization grant and returns the grant response for\ncompleting the authorization flow.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[bool]{
@@ -419,7 +420,14 @@ func handleOAuthRetrieveAuthorize(ctx context.Context, cmd *cli.Command) error {
 
 	params := telnyx.OAuthGetAuthorizeParams{}
 
-	return client.OAuth.GetAuthorize(ctx, params, options...)
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.OAuth.GetAuthorize(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+	_, err = os.Stdout.Write(res)
+	return err
 }
 
 func handleOAuthRetrieveJwks(ctx context.Context, cmd *cli.Command) error {

@@ -63,7 +63,7 @@ var legacyReportingUsageReportsVoiceCreate = cli.Command{
 
 var legacyReportingUsageReportsVoiceRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Fetch single cdr usage report by id.",
+	Usage:   "Returns a single CDR (Call Detail Record) usage report by its identifier,\nincluding its parameters and current status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

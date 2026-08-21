@@ -16,7 +16,7 @@ import (
 
 var ipConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates an IP connection.",
+	Usage:   "Creates a new IP-based SIP connection, which authenticates traffic by source IP\naddress.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[bool]{
@@ -692,7 +692,7 @@ var ipConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var ipConnectionsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns a list of your IP connections.",
+	Usage:   "Returns a paginated list of your IP-based SIP connections, with support for\nfiltering and sorting.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -743,7 +743,7 @@ var ipConnectionsList = requestflag.WithInnerFlags(cli.Command{
 
 var ipConnectionsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes an existing IP connection.",
+	Usage:   "Permanently deletes the specified IP connection from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
+	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 )
 
 func TestStorageBucketsCreatePresignedURL(t *testing.T) {
@@ -17,7 +18,22 @@ func TestStorageBucketsCreatePresignedURL(t *testing.T) {
 			"storage:buckets", "create-presigned-url",
 			"--bucket-name", "",
 			"--object-name", "",
-			"--ttl", "60",
+			"--body", "{ttl: 60}",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(storageBucketsCreatePresignedURL)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"storage:buckets", "create-presigned-url",
+			"--bucket-name", "",
+			"--object-name", "",
+			"--body.ttl", "60",
 		)
 	})
 

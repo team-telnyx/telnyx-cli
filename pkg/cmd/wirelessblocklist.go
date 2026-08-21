@@ -59,7 +59,7 @@ var wirelessBlocklistsRetrieve = cli.Command{
 
 var wirelessBlocklistsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a Wireless Blocklist.",
+	Usage:   "Updates the specified wireless blocklist. The update is processed\nasynchronously, so the request is accepted and completes in the background.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -125,7 +125,7 @@ var wirelessBlocklistsList = cli.Command{
 
 var wirelessBlocklistsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes the Wireless Blocklist.",
+	Usage:   "Permanently deletes the specified wireless blocklist from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

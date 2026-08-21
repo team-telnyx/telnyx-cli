@@ -16,7 +16,7 @@ import (
 
 var simCardOrdersCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new order for SIM cards.",
+	Usage:   "Creates a new order for physical SIM cards, including quantity and shipping\ndetails, and returns the created order.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -38,7 +38,7 @@ var simCardOrdersCreate = cli.Command{
 
 var simCardOrdersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a single SIM card order by its ID.",
+	Usage:   "Returns the details of a single SIM card order by its ID, including its status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

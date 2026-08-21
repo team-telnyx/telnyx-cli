@@ -78,6 +78,7 @@ func TestStorageCloudfsList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"storage:cloudfs", "list",
+			"--max-items", "10",
 			"--filter-name", "filter[name]",
 			"--filter-region", "us-east-1",
 			"--filter-status", "provisioning",

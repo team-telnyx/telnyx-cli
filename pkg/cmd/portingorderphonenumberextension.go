@@ -16,7 +16,7 @@ import (
 
 var portingOrdersPhoneNumberExtensionsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new phone number extension.",
+	Usage:   "Creates a phone number extension on the porting order, mapping extension ranges\nto one of the order's phone numbers.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -125,7 +125,7 @@ var portingOrdersPhoneNumberExtensionsList = requestflag.WithInnerFlags(cli.Comm
 
 var portingOrdersPhoneNumberExtensionsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes a phone number extension.",
+	Usage:   "Deletes the specified phone number extension from the porting order.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

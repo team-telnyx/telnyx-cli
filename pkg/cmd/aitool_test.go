@@ -27,6 +27,7 @@ func TestAIToolsCreate(t *testing.T) {
 			"--timeout-ms", "0",
 			"--update-dynamic-variables", "{description: Collect caller details into conversation variables., name: collect_details, updatable_variables: [{name: customer_name, description: The caller's full name., type: string}]}",
 			"--webhook", "{foo: bar}",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -55,6 +56,7 @@ func TestAIToolsCreate(t *testing.T) {
 			"--update-dynamic-variables.name", "collect_details",
 			"--update-dynamic-variables.updatable-variables", "[{name: customer_name, description: The caller's full name., type: string}]",
 			"--webhook", "{foo: bar}",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -92,6 +94,7 @@ func TestAIToolsCreate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai:tools", "create",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

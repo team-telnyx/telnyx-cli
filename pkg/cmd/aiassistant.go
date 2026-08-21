@@ -16,7 +16,7 @@ import (
 
 var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a new AI Assistant.",
+	Usage:   "Creates a new AI assistant from the provided configuration, including its model,\ninstructions, and attached tools, and returns the created assistant.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -152,6 +152,10 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "widget-settings",
 			Usage:    "Configuration settings for the assistant's web widget.",
 			BodyPath: "widget_settings",
+		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
 		},
 	},
 	Action:          handleAIAssistantsCreate,
@@ -573,7 +577,7 @@ var aiAssistantsRetrieve = cli.Command{
 
 var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Update an AI Assistant's attributes.",
+	Usage:   "Updates the specified AI assistant's attributes and returns the updated\nassistant. The request can also control how the change is promoted across\nassistant versions.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -1179,6 +1183,10 @@ var aiAssistantsClone = cli.Command{
 			Required:  true,
 			PathParam: "assistant_id",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIAssistantsClone,
 	HideHelpCommand: true,
@@ -1221,6 +1229,10 @@ var aiAssistantsImports = cli.Command{
 			Usage:    "Optional list of assistant IDs to import from the external provider. If not provided, all assistants will be imported.",
 			BodyPath: "import_ids",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIAssistantsImports,
 	HideHelpCommand: true,
@@ -1257,6 +1269,10 @@ var aiAssistantsSendSMS = cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "text",
 			BodyPath: "text",
+		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
 		},
 	},
 	Action:          handleAIAssistantsSendSMS,
@@ -1554,9 +1570,16 @@ func handleAIAssistantsClone(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
+	params := telnyx.AIAssistantCloneParams{}
+
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.Assistants.Clone(ctx, cmd.Value("assistant-id").(string), options...)
+	_, err = client.AI.Assistants.Clone(
+		ctx,
+		cmd.Value("assistant-id").(string),
+		params,
+		options...,
+	)
 	if err != nil {
 		return err
 	}

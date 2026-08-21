@@ -16,7 +16,7 @@ import (
 
 var globalIPsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a Global IP.",
+	Usage:   "Requests creation of a new Global IP, a static IP address announced from the\nTelnyx network. Provisioning is asynchronous, so the request is accepted and the\nGlobal IP becomes available once provisioning completes.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -41,7 +41,7 @@ var globalIPsCreate = cli.Command{
 
 var globalIPsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a Global IP.",
+	Usage:   "Returns the details of a single Global IP, including its address and current\nconfiguration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,7 +56,7 @@ var globalIPsRetrieve = cli.Command{
 
 var globalIPsList = cli.Command{
 	Name:    "list",
-	Usage:   "List all Global IPs.",
+	Usage:   "Returns a paginated list of the Global IPs on your account, including each IP's\naddress and configuration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
@@ -78,7 +78,7 @@ var globalIPsList = cli.Command{
 
 var globalIPsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Global IP.",
+	Usage:   "Deletes the specified Global IP and releases its address back to Telnyx.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

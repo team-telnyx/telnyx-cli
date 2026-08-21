@@ -36,7 +36,7 @@ var wirelessDetailRecordsReportsCreate = cli.Command{
 
 var wirelessDetailRecordsReportsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Returns one specific WDR report",
+	Usage:   "Returns a single Wireless Detail Record (WDR) report by its identifier,\nincluding its parameters and current status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -73,7 +73,7 @@ var wirelessDetailRecordsReportsList = cli.Command{
 
 var wirelessDetailRecordsReportsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes one specific WDR report.",
+	Usage:   "Permanently deletes the specified Wireless Detail Record (WDR) report.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -16,7 +16,7 @@ import (
 
 var callControlApplicationsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a call control application.",
+	Usage:   "Creates a call control application, which defines the webhook endpoints and\nsettings used to control calls on associated connections.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -392,7 +392,7 @@ var callControlApplicationsList = requestflag.WithInnerFlags(cli.Command{
 
 var callControlApplicationsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes a call control application.",
+	Usage:   "Permanently deletes the specified call control application and its webhook\nconfiguration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

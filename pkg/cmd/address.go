@@ -16,7 +16,7 @@ import (
 
 var addressesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates an address.",
+	Usage:   "Creates a new address on your account from the provided details, for use with\nservices that require a physical address such as emergency calling and\nregulatory compliance.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -124,7 +124,7 @@ var addressesRetrieve = cli.Command{
 
 var addressesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns a list of your addresses.",
+	Usage:   "Returns a paginated list of the addresses on your account, with support for\nfiltering and sorting.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -178,7 +178,7 @@ var addressesList = requestflag.WithInnerFlags(cli.Command{
 
 var addressesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes an existing address.",
+	Usage:   "Permanently deletes the specified address from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

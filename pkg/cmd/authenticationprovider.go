@@ -16,7 +16,7 @@ import (
 
 var authenticationProvidersCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates an authentication provider.",
+	Usage:   "Creates a new authentication provider for single sign-on, configured from the\nprovided identity provider details, and returns the created resource.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

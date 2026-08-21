@@ -5,6 +5,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -66,6 +67,21 @@ var subNumberOrdersReportRetrieve = cli.Command{
 		},
 	},
 	Action:          handleSubNumberOrdersReportRetrieve,
+	HideHelpCommand: true,
+}
+
+var subNumberOrdersReportDownload = cli.Command{
+	Name:    "download",
+	Usage:   "Download the CSV file for a completed sub number orders report. The report\nstatus must be 'success' before the file can be downloaded.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "report-id",
+			Required:  true,
+			PathParam: "report_id",
+		},
+	},
+	Action:          handleSubNumberOrdersReportDownload,
 	HideHelpCommand: true,
 }
 
@@ -150,4 +166,36 @@ func handleSubNumberOrdersReportRetrieve(ctx context.Context, cmd *cli.Command) 
 		Title:          "sub-number-orders-report retrieve",
 		Transform:      transform,
 	})
+}
+
+func handleSubNumberOrdersReportDownload(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("report-id") && len(unusedArgs) > 0 {
+		cmd.Set("report-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.SubNumberOrdersReport.Download(ctx, cmd.Value("report-id").(string), options...)
+	if err != nil {
+		return err
+	}
+	_, err = os.Stdout.Write(res)
+	return err
 }

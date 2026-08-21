@@ -16,7 +16,7 @@ import (
 
 var dynamicEmergencyAddressesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Creates a dynamic emergency address.",
+	Usage:   "Creates a dynamic emergency address, the validated physical location used when\nprovisioning dynamic emergency endpoints.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

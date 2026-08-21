@@ -53,7 +53,7 @@ var bundlePricingUserBundlesCreate = requestflag.WithInnerFlags(cli.Command{
 
 var bundlePricingUserBundlesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieves a user bundle by its ID.",
+	Usage:   "Returns the details of a single user bundle on your account by its ID.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -74,7 +74,7 @@ var bundlePricingUserBundlesRetrieve = cli.Command{
 
 var bundlePricingUserBundlesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Get a paginated list of user bundles.",
+	Usage:   "Returns a paginated list of the bundles active on your account, with support for\nfiltering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -119,7 +119,7 @@ var bundlePricingUserBundlesList = requestflag.WithInnerFlags(cli.Command{
 
 var bundlePricingUserBundlesDeactivate = cli.Command{
 	Name:    "deactivate",
-	Usage:   "Deactivates a user bundle by its ID.",
+	Usage:   "Deactivates the specified user bundle on your account and returns the\ndeactivated bundle.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

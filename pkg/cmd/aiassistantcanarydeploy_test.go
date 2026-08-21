@@ -18,6 +18,7 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 			"ai:assistants:canary-deploys", "create",
 			"--assistant-id", "assistant_id",
 			"--rule", "{serve: {rollout: [{version_id: Version Id, weight: 0}], version_id: Version Id}, match: [{attribute: Attribute, operator: in, values: [string]}]}",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -33,6 +34,7 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 			"--assistant-id", "assistant_id",
 			"--rule.serve", "{rollout: [{version_id: Version Id, weight: 0}], version_id: Version Id}",
 			"--rule.match", "[{attribute: Attribute, operator: in, values: [string]}]",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -55,6 +57,7 @@ func TestAIAssistantsCanaryDeploysCreate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:canary-deploys", "create",
 			"--assistant-id", "assistant_id",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

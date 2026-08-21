@@ -16,7 +16,7 @@ import (
 
 var aiConversationsInsightGroupsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get insight group by ID",
+	Usage:   "Returns the details of a single insight template group, including the insight\ntemplates assigned to it.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -32,7 +32,7 @@ var aiConversationsInsightGroupsRetrieve = cli.Command{
 
 var aiConversationsInsightGroupsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update an insight template group",
+	Usage:   "Updates the specified insight template group and returns the updated group.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -60,7 +60,7 @@ var aiConversationsInsightGroupsUpdate = cli.Command{
 
 var aiConversationsInsightGroupsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete insight group by ID",
+	Usage:   "Permanently deletes the specified insight template group by its ID.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -76,7 +76,7 @@ var aiConversationsInsightGroupsDelete = cli.Command{
 
 var aiConversationsInsightGroupsInsightGroups = cli.Command{
 	Name:    "insight-groups",
-	Usage:   "Create a new insight group",
+	Usage:   "Creates a new insight template group for organizing related insight templates,\nand returns the created group.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -93,6 +93,10 @@ var aiConversationsInsightGroupsInsightGroups = cli.Command{
 			Default:  "",
 			BodyPath: "webhook",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIConversationsInsightGroupsInsightGroups,
 	HideHelpCommand: true,
@@ -100,7 +104,7 @@ var aiConversationsInsightGroupsInsightGroups = cli.Command{
 
 var aiConversationsInsightGroupsRetrieveInsightGroups = cli.Command{
 	Name:    "retrieve-insight-groups",
-	Usage:   "Get all insight groups",
+	Usage:   "Returns a paginated list of your insight template groups. Groups organize\nrelated insight templates that are applied together when analyzing\nconversations.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{

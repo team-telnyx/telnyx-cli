@@ -16,7 +16,7 @@ import (
 
 var portingOrdersPhoneNumberBlocksCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new phone number block.",
+	Usage:   "Creates a phone number block on the porting order, representing a contiguous\nrange of phone numbers to be ported together.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -144,7 +144,7 @@ var portingOrdersPhoneNumberBlocksList = requestflag.WithInnerFlags(cli.Command{
 
 var portingOrdersPhoneNumberBlocksDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes a phone number block.",
+	Usage:   "Deletes the specified phone number block from the porting order.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

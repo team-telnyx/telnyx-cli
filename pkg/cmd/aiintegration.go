@@ -16,7 +16,7 @@ import (
 
 var aiIntegrationsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve integration details",
+	Usage:   "Returns the details of a single available integration, including its\nconfiguration details.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var aiIntegrationsRetrieve = cli.Command{
 
 var aiIntegrationsList = cli.Command{
 	Name:            "list",
-	Usage:           "List all available integrations.",
+	Usage:           "Returns the list of third-party integrations available to connect to your AI\nassistants and workflows.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleAIIntegrationsList,

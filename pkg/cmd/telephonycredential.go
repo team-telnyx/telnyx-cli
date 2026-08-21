@@ -5,6 +5,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -16,7 +17,7 @@ import (
 
 var telephonyCredentialsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a credential.",
+	Usage:   "Creates a new on-demand telephony credential for the specified connection. The\ncredential can then be used to generate access tokens for SIP or WebRTC clients.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -61,7 +62,7 @@ var telephonyCredentialsRetrieve = cli.Command{
 
 var telephonyCredentialsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update an existing credential.",
+	Usage:   "Updates the specified telephony credential and returns the updated credential.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -95,7 +96,7 @@ var telephonyCredentialsUpdate = cli.Command{
 
 var telephonyCredentialsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List all On-demand Credentials.",
+	Usage:   "Returns a paginated list of the on-demand telephony credentials on your account,\nwith support for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -150,7 +151,7 @@ var telephonyCredentialsList = requestflag.WithInnerFlags(cli.Command{
 
 var telephonyCredentialsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete an existing credential.",
+	Usage:   "Permanently deletes the specified telephony credential, revoking any access it\nprovided.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -160,6 +161,21 @@ var telephonyCredentialsDelete = cli.Command{
 		},
 	},
 	Action:          handleTelephonyCredentialsDelete,
+	HideHelpCommand: true,
+}
+
+var telephonyCredentialsCreateToken = cli.Command{
+	Name:    "create-token",
+	Usage:   "Create an Access Token (JWT) for the credential.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
+		},
+	},
+	Action:          handleTelephonyCredentialsCreateToken,
 	HideHelpCommand: true,
 }
 
@@ -390,4 +406,36 @@ func handleTelephonyCredentialsDelete(ctx context.Context, cmd *cli.Command) err
 		Title:          "telephony-credentials delete",
 		Transform:      transform,
 	})
+}
+
+func handleTelephonyCredentialsCreateToken(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.TelephonyCredentials.NewToken(ctx, cmd.Value("id").(string), options...)
+	if err != nil {
+		return err
+	}
+	_, err = os.Stdout.Write(res)
+	return err
 }

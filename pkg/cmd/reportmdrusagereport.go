@@ -83,7 +83,7 @@ var reportsMdrUsageReportsList = cli.Command{
 
 var reportsMdrUsageReportsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete messaging usage report by id",
+	Usage:   "Permanently deletes the specified messaging usage report by its identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

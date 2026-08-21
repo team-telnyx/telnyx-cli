@@ -89,9 +89,28 @@ func TestEmailBlocksRetrieveEvents(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-blocks", "retrieve-events",
+			"--max-items", "10",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-number", "1",
 			"--page-size", "1",
+		)
+	})
+}
+
+func TestEmailBlocksRetrieveExport(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"email-blocks", "retrieve-export",
+			"--filter-created-after", "'2019-12-27T18:11:19.117Z'",
+			"--filter-created-before", "'2019-12-27T18:11:19.117Z'",
+			"--filter-domain-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--filter-reason", "hard_bounce",
+			"--page-number", "1",
+			"--page-size", "1",
+			"--sort", "created_at",
 		)
 	})
 }

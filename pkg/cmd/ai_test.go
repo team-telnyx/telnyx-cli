@@ -15,6 +15,7 @@ func TestAIRetrieveConversationHistories(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"ai", "retrieve-conversation-histories",
+			"--max-items", "10",
 			"--q", "customer called about billing issue",
 			"--filter-ingested-at-gte", "'2026-01-01T00:00:00Z'",
 			"--filter-ingested-at-lte", "'2026-12-31T23:59:59Z'",
@@ -42,6 +43,7 @@ func TestAISummarize(t *testing.T) {
 			"--bucket", "string",
 			"--filename", "string",
 			"--system-prompt", "string",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -55,6 +57,7 @@ func TestAISummarize(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai", "summarize",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

@@ -19,7 +19,7 @@ var wireguardInterfacesCreate = cli.Command{
 	Usage:   "Create a new WireGuard Interface. Current limitation of 10 interfaces per user\ncan be created.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "body",
 			Required: true,
 			BodyRoot: true,
@@ -31,7 +31,7 @@ var wireguardInterfacesCreate = cli.Command{
 
 var wireguardInterfacesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a WireGuard Interfaces.",
+	Usage:   "Returns the details of a single WireGuard interface by its identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -46,7 +46,7 @@ var wireguardInterfacesRetrieve = cli.Command{
 
 var wireguardInterfacesList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List all WireGuard Interfaces.",
+	Usage:   "Returns a paginated list of the WireGuard interfaces on your account, with\nsupport for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -81,7 +81,7 @@ var wireguardInterfacesList = requestflag.WithInnerFlags(cli.Command{
 
 var wireguardInterfacesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a WireGuard Interface.",
+	Usage:   "Deletes the specified WireGuard interface from its network.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

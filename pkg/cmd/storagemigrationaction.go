@@ -16,7 +16,7 @@ import (
 
 var storageMigrationsActionsStop = cli.Command{
 	Name:    "stop",
-	Usage:   "Stop an in-progress storage migration.",
+	Usage:   "Stops the specified in-progress storage migration and returns the updated\nmigration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

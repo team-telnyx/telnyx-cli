@@ -31,7 +31,7 @@ var portingOrdersActionsActivate = cli.Command{
 
 var portingOrdersActionsCancel = cli.Command{
 	Name:    "cancel",
-	Usage:   "Cancel a porting order",
+	Usage:   "Requests cancellation of the porting order and returns the updated order.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -46,7 +46,7 @@ var portingOrdersActionsCancel = cli.Command{
 
 var portingOrdersActionsConfirm = cli.Command{
 	Name:    "confirm",
-	Usage:   "Confirm and submit your porting order.",
+	Usage:   "Confirms the porting order and submits it for processing. Make sure all required\ninformation and documents are attached before confirming.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

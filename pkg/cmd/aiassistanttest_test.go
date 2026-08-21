@@ -25,6 +25,7 @@ func TestAIAssistantsTestsCreate(t *testing.T) {
 			"--max-duration-seconds", "1",
 			"--telnyx-conversation-channel", "web_chat",
 			"--test-suite", "test_suite",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -48,6 +49,7 @@ func TestAIAssistantsTestsCreate(t *testing.T) {
 			"--max-duration-seconds", "1",
 			"--telnyx-conversation-channel", "web_chat",
 			"--test-suite", "test_suite",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -72,6 +74,7 @@ func TestAIAssistantsTestsCreate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai:assistants:tests", "create",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

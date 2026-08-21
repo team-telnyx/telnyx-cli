@@ -16,7 +16,7 @@ import (
 
 var aiFineTuningJobsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create a new fine tuning job.",
+	Usage:   "Creates a new fine-tuning job that trains a model on the provided dataset, and\nreturns the created job.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,7 +56,7 @@ var aiFineTuningJobsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var aiFineTuningJobsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a fine tuning job by `job_id`.",
+	Usage:   "Returns the details of a single fine-tuning job by its job_id, including its\ncurrent status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -80,7 +80,7 @@ var aiFineTuningJobsList = cli.Command{
 
 var aiFineTuningJobsCancel = cli.Command{
 	Name:    "cancel",
-	Usage:   "Cancel a fine tuning job.",
+	Usage:   "Cancels the specified in-progress fine-tuning job and returns the updated job.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

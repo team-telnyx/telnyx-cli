@@ -16,7 +16,7 @@ import (
 
 var texmlAccountsConferencesParticipantsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Gets conference participant resource",
+	Usage:   "Returns a single conference participant resource by call SID or participant\nlabel.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -41,7 +41,7 @@ var texmlAccountsConferencesParticipantsRetrieve = cli.Command{
 
 var texmlAccountsConferencesParticipantsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Updates a conference participant",
+	Usage:   "Updates the specified conference participant, for example muting or holding\nthem, and returns the updated participant.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -121,7 +121,7 @@ var texmlAccountsConferencesParticipantsUpdate = cli.Command{
 
 var texmlAccountsConferencesParticipantsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes a conference participant",
+	Usage:   "Removes the specified participant from the conference, ending their leg of the\ncall.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -146,7 +146,7 @@ var texmlAccountsConferencesParticipantsDelete = cli.Command{
 
 var texmlAccountsConferencesParticipantsParticipants = requestflag.WithInnerFlags(cli.Command{
 	Name:    "participants",
-	Usage:   "Dials a new conference participant",
+	Usage:   "Dials a new participant into the specified conference and returns the created\nparticipant resource.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -432,7 +432,7 @@ var texmlAccountsConferencesParticipantsParticipants = requestflag.WithInnerFlag
 
 var texmlAccountsConferencesParticipantsRetrieveParticipants = cli.Command{
 	Name:    "retrieve-participants",
-	Usage:   "Lists conference participants",
+	Usage:   "Returns the list of participants currently in the specified conference.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

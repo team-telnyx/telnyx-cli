@@ -67,6 +67,10 @@ var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "webhook",
 			BodyPath: "webhook",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleAIToolsCreate,
 	HideHelpCommand: true,
@@ -265,7 +269,7 @@ var aiToolsList = cli.Command{
 
 var aiToolsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a custom AI tool.",
+	Usage:   "Permanently deletes the specified custom AI tool from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

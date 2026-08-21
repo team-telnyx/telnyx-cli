@@ -16,7 +16,7 @@ import (
 
 var queuesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a new call queue.",
+	Usage:   "Creates a new call queue with the provided configuration and returns the created\nqueue.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -38,7 +38,7 @@ var queuesCreate = cli.Command{
 
 var queuesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve an existing call queue",
+	Usage:   "Returns the details of an existing call queue, including its current\nconfiguration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -100,7 +100,7 @@ var queuesList = cli.Command{
 
 var queuesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete an existing call queue.",
+	Usage:   "Permanently deletes the specified call queue from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -26,6 +26,7 @@ var pricingProductsRetrieve = cli.Command{
 		},
 		&requestflag.Flag[*string]{
 			Name:      "filter-country-iso",
+			Usage:     "Two-letter ISO 3166-1 alpha-2 country code (uppercase, e.g. US) to filter pricing to a single country.",
 			QueryPath: "filter[country_iso]",
 		},
 		&requestflag.Flag[int64]{
@@ -39,6 +40,10 @@ var pricingProductsRetrieve = cli.Command{
 			Usage:     "Number of items per page (max 100).",
 			Default:   20,
 			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
 	Action:          handlePricingProductsRetrieve,
@@ -95,29 +100,48 @@ func handlePricingProductsRetrieve(ctx context.Context, cmd *cli.Command) error 
 
 	params := telnyx.PricingProductGetParams{}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.Pricing.Products.Get(
-		ctx,
-		cmd.Value("slug").(string),
-		params,
-		options...,
-	)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "pricing:products retrieve",
-		Transform:      transform,
-	})
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.Pricing.Products.Get(
+			ctx,
+			cmd.Value("slug").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "pricing:products retrieve",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.Pricing.Products.GetAutoPaging(
+			ctx,
+			cmd.Value("slug").(string),
+			params,
+			options...,
+		)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "pricing:products retrieve",
+			Transform:      transform,
+		})
+	}
 }
 
 func handlePricingProductsList(ctx context.Context, cmd *cli.Command) error {

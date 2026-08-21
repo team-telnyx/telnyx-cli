@@ -16,7 +16,7 @@ import (
 
 var oauthGrantsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a single OAuth grant by ID",
+	Usage:   "Returns the details of a single OAuth grant on your account by its ID.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -57,7 +57,7 @@ var oauthGrantsList = cli.Command{
 
 var oauthGrantsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Revoke an OAuth grant",
+	Usage:   "Revokes the specified OAuth grant, withdrawing the access previously granted to\nthe client.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

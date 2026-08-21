@@ -16,7 +16,7 @@ import (
 
 var notificationSettingsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Add a notification setting.",
+	Usage:   "Adds a notification setting that enables delivery of a notification event type\nto a notification profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -56,7 +56,7 @@ var notificationSettingsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var notificationSettingsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a notification setting.",
+	Usage:   "Returns the details of a single notification setting by its identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -71,7 +71,7 @@ var notificationSettingsRetrieve = cli.Command{
 
 var notificationSettingsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List notification settings.",
+	Usage:   "Returns a paginated list of your notification settings, which map notification\nevent types to profiles and channels.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -125,7 +125,7 @@ var notificationSettingsList = requestflag.WithInnerFlags(cli.Command{
 
 var notificationSettingsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a notification setting.",
+	Usage:   "Deletes the specified notification setting, disabling that notification\ndelivery.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

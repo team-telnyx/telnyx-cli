@@ -67,7 +67,7 @@ var trafficPolicyProfilesRetrieve = cli.Command{
 
 var trafficPolicyProfilesUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Updates a traffic policy profile.",
+	Usage:   "Updates the specified traffic policy profile and returns the updated profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -148,7 +148,7 @@ var trafficPolicyProfilesList = cli.Command{
 
 var trafficPolicyProfilesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes the traffic policy profile.",
+	Usage:   "Permanently deletes the specified traffic policy profile from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -16,7 +16,7 @@ func TestEmailInboxesDraftsCreate(t *testing.T) {
 			"--api-key", "string",
 			"email-inboxes:drafts", "create",
 			"--inbox-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--attachment", "{}",
+			"--attachment", "{foo: bar}",
 			"--bcc", "string",
 			"--cc", "string",
 			"--from-email", "from_email",
@@ -25,7 +25,7 @@ func TestEmailInboxesDraftsCreate(t *testing.T) {
 			"--html", "html",
 			"--html-body", "html_body",
 			"--label", "important",
-			"--metadata", "{}",
+			"--metadata", "{foo: bar}",
 			"--reply-to", "reply_to",
 			"--subject", "Quarterly update",
 			"--tag", "string",
@@ -39,7 +39,7 @@ func TestEmailInboxesDraftsCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"attachments:\n" +
-			"  - {}\n" +
+			"  - foo: bar\n" +
 			"bcc:\n" +
 			"  - string\n" +
 			"cc:\n" +
@@ -52,7 +52,8 @@ func TestEmailInboxesDraftsCreate(t *testing.T) {
 			"html_body: html_body\n" +
 			"labels:\n" +
 			"  - important\n" +
-			"metadata: {}\n" +
+			"metadata:\n" +
+			"  foo: bar\n" +
 			"reply_to: reply_to\n" +
 			"subject: Quarterly update\n" +
 			"tags:\n" +
@@ -93,7 +94,7 @@ func TestEmailInboxesDraftsUpdate(t *testing.T) {
 			"email-inboxes:drafts", "update",
 			"--inbox-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--draft-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--attachment", "{}",
+			"--attachment", "{foo: bar}",
 			"--bcc", "string",
 			"--cc", "string",
 			"--from-email", "from_email",
@@ -102,7 +103,7 @@ func TestEmailInboxesDraftsUpdate(t *testing.T) {
 			"--html", "html",
 			"--html-body", "html_body",
 			"--label", "string",
-			"--metadata", "{}",
+			"--metadata", "{foo: bar}",
 			"--reply-to", "reply_to",
 			"--subject", "Quarterly update (revised)",
 			"--tag", "string",
@@ -116,7 +117,7 @@ func TestEmailInboxesDraftsUpdate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"attachments:\n" +
-			"  - {}\n" +
+			"  - foo: bar\n" +
 			"bcc:\n" +
 			"  - string\n" +
 			"cc:\n" +
@@ -129,7 +130,8 @@ func TestEmailInboxesDraftsUpdate(t *testing.T) {
 			"html_body: html_body\n" +
 			"labels:\n" +
 			"  - string\n" +
-			"metadata: {}\n" +
+			"metadata:\n" +
+			"  foo: bar\n" +
 			"reply_to: reply_to\n" +
 			"subject: Quarterly update (revised)\n" +
 			"tags:\n" +
@@ -155,6 +157,7 @@ func TestEmailInboxesDraftsList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-inboxes:drafts", "list",
+			"--max-items", "10",
 			"--inbox-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--filter-status", "draft",
 			"--page-after", "page[after]",
@@ -185,7 +188,7 @@ func TestEmailInboxesDraftsPatch(t *testing.T) {
 			"email-inboxes:drafts", "patch",
 			"--inbox-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--draft-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-			"--attachment", "{}",
+			"--attachment", "{foo: bar}",
 			"--bcc", "string",
 			"--cc", "string",
 			"--from-email", "from_email",
@@ -194,7 +197,7 @@ func TestEmailInboxesDraftsPatch(t *testing.T) {
 			"--html", "html",
 			"--html-body", "html_body",
 			"--label", "string",
-			"--metadata", "{}",
+			"--metadata", "{foo: bar}",
 			"--reply-to", "reply_to",
 			"--subject", "Quarterly update (revised)",
 			"--tag", "string",
@@ -208,7 +211,7 @@ func TestEmailInboxesDraftsPatch(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"attachments:\n" +
-			"  - {}\n" +
+			"  - foo: bar\n" +
 			"bcc:\n" +
 			"  - string\n" +
 			"cc:\n" +
@@ -221,7 +224,8 @@ func TestEmailInboxesDraftsPatch(t *testing.T) {
 			"html_body: html_body\n" +
 			"labels:\n" +
 			"  - string\n" +
-			"metadata: {}\n" +
+			"metadata:\n" +
+			"  foo: bar\n" +
 			"reply_to: reply_to\n" +
 			"subject: Quarterly update (revised)\n" +
 			"tags:\n" +

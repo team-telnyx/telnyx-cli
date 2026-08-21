@@ -15,7 +15,7 @@ import (
 
 var globalIPHealthCheckTypesList = cli.Command{
 	Name:            "list",
-	Usage:           "List all Global IP Health check types.",
+	Usage:           "Returns the health check types available for Global IPs, for use when creating\nGlobal IP health checks.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleGlobalIPHealthCheckTypesList,

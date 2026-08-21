@@ -174,7 +174,7 @@ var verifyProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 
 var verifyProfilesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Gets a single Verify profile.",
+	Usage:   "Returns the details of a single Verify profile by its ID, including its\nverification channel configuration.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

@@ -5,6 +5,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -158,8 +159,60 @@ var emailBlocksRetrieveEvents = cli.Command{
 			Default:   50,
 			QueryPath: "page[size]",
 		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
 	},
 	Action:          handleEmailBlocksRetrieveEvents,
+	HideHelpCommand: true,
+}
+
+var emailBlocksRetrieveExport = cli.Command{
+	Name:    "retrieve-export",
+	Usage:   "Streams the account's suppressions as a chunked CSV (server-side cursor; never\nmaterialized). Content-type `text/csv`, header\n`Content-Disposition: attachment; filename=\"email_blocks_export.csv\"`.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[any]{
+			Name:      "filter-created-after",
+			Usage:     "`created_at > value` (ISO 8601).",
+			QueryPath: "filter[created_after]",
+		},
+		&requestflag.Flag[any]{
+			Name:      "filter-created-before",
+			Usage:     "`created_at < value` (ISO 8601).",
+			QueryPath: "filter[created_before]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-domain-id",
+			Usage:     "Exact-match filter on domain_id (UUID).",
+			QueryPath: "filter[domain_id]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-reason",
+			Usage:     "Exact-match filter on reason.",
+			QueryPath: "filter[reason]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			Usage:     "Offset page number (≥1, default 1).",
+			Default:   1,
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			Usage:     "Page size (1–100, default 25).",
+			Default:   25,
+			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "sort",
+			Usage:     "Sort field. Leading `-` = desc; only `created_at` is sortable. Default `-created_at`. `--` is an error.",
+			Default:   "-created_at",
+			QueryPath: "sort",
+		},
+	},
+	Action:          handleEmailBlocksRetrieveExport,
 	HideHelpCommand: true,
 }
 
@@ -367,27 +420,77 @@ func handleEmailBlocksRetrieveEvents(ctx context.Context, cmd *cli.Command) erro
 
 	params := telnyx.EmailBlockGetEventsParams{}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.EmailBlocks.GetEvents(
-		ctx,
-		cmd.Value("id").(string),
-		params,
-		options...,
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.EmailBlocks.GetEvents(
+			ctx,
+			cmd.Value("id").(string),
+			params,
+			options...,
+		)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-blocks retrieve-events",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.EmailBlocks.GetEventsAutoPaging(
+			ctx,
+			cmd.Value("id").(string),
+			params,
+			options...,
+		)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "email-blocks retrieve-events",
+			Transform:      transform,
+		})
+	}
+}
+
+func handleEmailBlocksRetrieveExport(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
 	)
 	if err != nil {
 		return err
 	}
 
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "email-blocks retrieve-events",
-		Transform:      transform,
-	})
+	params := telnyx.EmailBlockGetExportParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.EmailBlocks.GetExport(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+	_, err = os.Stdout.Write(res)
+	return err
 }

@@ -31,7 +31,7 @@ var aiMissionsKnowledgeBasesCreateKnowledgeBase = cli.Command{
 
 var aiMissionsKnowledgeBasesDeleteKnowledgeBase = cli.Command{
 	Name:    "delete-knowledge-base",
-	Usage:   "Delete a knowledge base from a mission",
+	Usage:   "Detaches the specified knowledge base from the mission so its content is no\nlonger available to agents in subsequent runs.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -51,7 +51,7 @@ var aiMissionsKnowledgeBasesDeleteKnowledgeBase = cli.Command{
 
 var aiMissionsKnowledgeBasesGetKnowledgeBase = cli.Command{
 	Name:    "get-knowledge-base",
-	Usage:   "Get a specific knowledge base by ID",
+	Usage:   "Returns the details of a single knowledge base attached to the specified\nmission.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -71,7 +71,7 @@ var aiMissionsKnowledgeBasesGetKnowledgeBase = cli.Command{
 
 var aiMissionsKnowledgeBasesListKnowledgeBases = cli.Command{
 	Name:    "list-knowledge-bases",
-	Usage:   "List all knowledge bases for a mission",
+	Usage:   "Returns the knowledge bases attached to the specified mission. Knowledge bases\nprovide reference content agents can draw on during runs.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -86,7 +86,7 @@ var aiMissionsKnowledgeBasesListKnowledgeBases = cli.Command{
 
 var aiMissionsKnowledgeBasesUpdateKnowledgeBase = cli.Command{
 	Name:    "update-knowledge-base",
-	Usage:   "Update a knowledge base definition",
+	Usage:   "Replaces the definition of the specified knowledge base on this mission.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

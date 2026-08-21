@@ -16,7 +16,7 @@ import (
 
 var portoutsEventsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Show a specific port-out event.",
+	Usage:   "Returns the details of a single port-out event, including its type and payload.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var portoutsEventsRetrieve = cli.Command{
 
 var portoutsEventsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns a list of all port-out events.",
+	Usage:   "Returns a paginated list of port-out events on your account, such as status\nchanges on port-out requests, with support for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -76,7 +76,7 @@ var portoutsEventsList = requestflag.WithInnerFlags(cli.Command{
 
 var portoutsEventsRepublish = cli.Command{
 	Name:    "republish",
-	Usage:   "Republish a specific port-out event.",
+	Usage:   "Republishes the specified port-out event, triggering re-delivery of the\ncorresponding webhook to your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

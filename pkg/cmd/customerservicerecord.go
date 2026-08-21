@@ -94,7 +94,7 @@ var customerServiceRecordsCreate = requestflag.WithInnerFlags(cli.Command{
 
 var customerServiceRecordsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a specific customer service record.",
+	Usage:   "Returns the details of a single customer service record (CSR) request, including\nits status and any retrieved record data.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -109,7 +109,7 @@ var customerServiceRecordsRetrieve = cli.Command{
 
 var customerServiceRecordsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List customer service records.",
+	Usage:   "Returns a paginated list of your customer service record (CSR) requests, with\nsupport for filtering and sorting.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

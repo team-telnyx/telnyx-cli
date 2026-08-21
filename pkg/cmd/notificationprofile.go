@@ -16,7 +16,7 @@ import (
 
 var notificationProfilesCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Create a notification profile.",
+	Usage:   "Creates a new notification profile, a named grouping used to organize\nnotification settings, and returns it.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -31,7 +31,7 @@ var notificationProfilesCreate = cli.Command{
 
 var notificationProfilesRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get a notification profile.",
+	Usage:   "Returns the details of a single notification profile by its identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -46,7 +46,7 @@ var notificationProfilesRetrieve = cli.Command{
 
 var notificationProfilesUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update a notification profile.",
+	Usage:   "Updates the specified notification profile and returns the updated profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -88,7 +88,7 @@ var notificationProfilesList = cli.Command{
 
 var notificationProfilesDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a notification profile.",
+	Usage:   "Deletes the specified notification profile from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

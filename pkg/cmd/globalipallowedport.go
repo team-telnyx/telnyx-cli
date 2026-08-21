@@ -15,7 +15,7 @@ import (
 
 var globalIPAllowedPortsList = cli.Command{
 	Name:            "list",
-	Usage:           "List all Global IP Allowed Ports",
+	Usage:           "Returns the ports allowed for Global IP traffic, for use when configuring Global\nIP resources.",
 	Suggest:         true,
 	Flags:           []cli.Flag{},
 	Action:          handleGlobalIPAllowedPortsList,

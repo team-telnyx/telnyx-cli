@@ -5,6 +5,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
 	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
@@ -19,7 +20,7 @@ var wireguardPeersCreate = cli.Command{
 	Usage:   "Create a new WireGuard Peer. Current limitation of 5 peers per interface can be\ncreated.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "body",
 			Required: true,
 			BodyRoot: true,
@@ -31,7 +32,7 @@ var wireguardPeersCreate = cli.Command{
 
 var wireguardPeersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve the WireGuard peer.",
+	Usage:   "Returns the details of a single WireGuard peer by its identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -46,7 +47,7 @@ var wireguardPeersRetrieve = cli.Command{
 
 var wireguardPeersUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Update the WireGuard peer.",
+	Usage:   "Updates the specified WireGuard peer and returns the updated peer.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -66,7 +67,7 @@ var wireguardPeersUpdate = cli.Command{
 
 var wireguardPeersList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List all WireGuard peers.",
+	Usage:   "Returns a paginated list of your WireGuard peers, with support for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -101,7 +102,7 @@ var wireguardPeersList = requestflag.WithInnerFlags(cli.Command{
 
 var wireguardPeersDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete the WireGuard peer.",
+	Usage:   "Deletes the specified WireGuard peer from its interface.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -111,6 +112,21 @@ var wireguardPeersDelete = cli.Command{
 		},
 	},
 	Action:          handleWireguardPeersDelete,
+	HideHelpCommand: true,
+}
+
+var wireguardPeersRetrieveConfig = cli.Command{
+	Name:    "retrieve-config",
+	Usage:   "Retrieve Wireguard config template for Peer",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
+		},
+	},
+	Action:          handleWireguardPeersRetrieveConfig,
 	HideHelpCommand: true,
 }
 
@@ -341,4 +357,36 @@ func handleWireguardPeersDelete(ctx context.Context, cmd *cli.Command) error {
 		Title:          "wireguard-peers delete",
 		Transform:      transform,
 	})
+}
+
+func handleWireguardPeersRetrieveConfig(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.WireguardPeers.GetConfig(ctx, cmd.Value("id").(string), options...)
+	if err != nil {
+		return err
+	}
+	_, err = os.Stdout.Write(res)
+	return err
 }

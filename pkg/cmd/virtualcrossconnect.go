@@ -102,7 +102,7 @@ var virtualCrossConnectsCreate = cli.Command{
 
 var virtualCrossConnectsRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Retrieve a Virtual Cross Connect.",
+	Usage:   "Returns the details of a single virtual cross connect by its identifier.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -162,7 +162,7 @@ var virtualCrossConnectsUpdate = cli.Command{
 
 var virtualCrossConnectsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List all Virtual Cross Connects.",
+	Usage:   "Returns a paginated list of the virtual cross connects on your account, with\nsupport for filtering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -197,7 +197,7 @@ var virtualCrossConnectsList = requestflag.WithInnerFlags(cli.Command{
 
 var virtualCrossConnectsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a Virtual Cross Connect.",
+	Usage:   "Deletes the specified virtual cross connect from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

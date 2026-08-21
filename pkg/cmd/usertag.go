@@ -16,7 +16,7 @@ import (
 
 var userTagsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "List all user tags.",
+	Usage:   "Returns the user tags defined on your account, with support for filtering. Tags\nhelp organize resources such as phone numbers.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

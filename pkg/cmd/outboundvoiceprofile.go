@@ -16,7 +16,7 @@ import (
 
 var outboundVoiceProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Create an outbound voice profile.",
+	Usage:   "Creates a new outbound voice profile defining calling permissions, destinations,\nand limits for outbound calls, and returns the created profile.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

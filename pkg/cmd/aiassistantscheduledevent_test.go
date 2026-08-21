@@ -27,6 +27,7 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 			"--max-retries-client-errors", "0",
 			"--retry-interval-secs", "60",
 			"--text", "text",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -50,6 +51,7 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 			"--max-retries-client-errors", "0",
 			"--retry-interval-secs", "60",
 			"--text", "text",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -74,6 +76,7 @@ func TestAIAssistantsScheduledEventsCreate(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants:scheduled-events", "create",
 			"--assistant-id", "assistant_id",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

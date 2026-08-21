@@ -52,6 +52,7 @@ func TestEmailInboxesList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-inboxes", "list",
+			"--max-items", "10",
 			"--page-cursor", "page_cursor",
 			"--page-size", "1",
 		)

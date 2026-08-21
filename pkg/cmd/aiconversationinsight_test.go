@@ -19,6 +19,7 @@ func TestAIConversationsInsightsCreate(t *testing.T) {
 			"--name", "Name",
 			"--json-schema", "string",
 			"--webhook", "",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -33,6 +34,7 @@ func TestAIConversationsInsightsCreate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai:conversations:insights", "create",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

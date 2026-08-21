@@ -149,7 +149,7 @@ var portoutsListRejectionCodes = requestflag.WithInnerFlags(cli.Command{
 
 var portoutsUpdateStatus = cli.Command{
 	Name:    "update-status",
-	Usage:   "Authorize or reject portout request",
+	Usage:   "Updates the status of the specified port-out request, using the status path\nsegment to authorize or reject the port-out.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

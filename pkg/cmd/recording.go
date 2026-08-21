@@ -31,7 +31,7 @@ var recordingsRetrieve = cli.Command{
 
 var recordingsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns a list of your call recordings.",
+	Usage:   "Returns a paginated list of your call recordings, with support for filtering to\nlocate specific recordings.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -118,7 +118,7 @@ var recordingsList = requestflag.WithInnerFlags(cli.Command{
 
 var recordingsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Permanently deletes a call recording.",
+	Usage:   "Permanently deletes the specified call recording and returns the deleted\nrecording resource. The media is removed and can no longer be downloaded.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

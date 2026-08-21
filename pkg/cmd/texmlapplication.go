@@ -16,7 +16,7 @@ import (
 
 var texmlApplicationsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates a TeXML Application.",
+	Usage:   "Creates a TeXML application, which defines the voice URLs and settings used to\nserve TeXML instructions for calls, and returns the created application.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -338,7 +338,7 @@ var texmlApplicationsList = requestflag.WithInnerFlags(cli.Command{
 
 var texmlApplicationsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Deletes a TeXML Application.",
+	Usage:   "Permanently deletes the specified TeXML application from your account.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

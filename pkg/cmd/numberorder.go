@@ -16,7 +16,7 @@ import (
 
 var numberOrdersCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates a phone number order.",
+	Usage:   "Creates an order to purchase the specified phone numbers and returns the created\norder. Track fulfillment through the order's status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -68,7 +68,7 @@ var numberOrdersCreate = requestflag.WithInnerFlags(cli.Command{
 
 var numberOrdersRetrieve = cli.Command{
 	Name:    "retrieve",
-	Usage:   "Get an existing phone number order.",
+	Usage:   "Returns the details of an existing phone number order, including its status and\nthe numbers included.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -83,7 +83,7 @@ var numberOrdersRetrieve = cli.Command{
 
 var numberOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Updates a phone number order.",
+	Usage:   "Updates an existing phone number order, for example to satisfy regulatory\nrequirements attached to the order, and returns the updated order.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -120,7 +120,7 @@ var numberOrdersUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var numberOrdersList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Get a paginated list of number orders.",
+	Usage:   "Returns a paginated list of your phone number orders, with support for\nfiltering.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
