@@ -33,6 +33,8 @@ PRODUCTION_POLICY_PATHS = frozenset(
         ".github/scripts/release_pr_auto_merge.py",
         ".github/scripts/test_classify_production_ci.py",
         ".github/scripts/test_release_pr_auto_merge.py",
+        ".github/scripts/install_release_please.sh",
+        ".github/scripts/test_release_workflow_hardening.py",
         ".github/scripts/test_release_pr_ci_gate.py",
         ".github/scripts/test_validate_next_provenance.py",
         ".github/scripts/test_verify_cli_release.py",
