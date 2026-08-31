@@ -57,8 +57,6 @@ jobs:
           python3 .github/scripts/test_verify_cli_release.py -v
 
       - uses: ./.github/actions/setup-go
-        with:
-          stainless-api-key: ${{ secrets.STAINLESS_API_KEY }}
 
       - name: Link staging branch
         if: github.repository == 'stainless-sdks/telnyx-cli'
@@ -84,8 +82,6 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - uses: ./.github/actions/setup-go
-        with:
-          stainless-api-key: ${{ secrets.STAINLESS_API_KEY }}
 
       - name: Link staging branch
         if: github.repository == 'stainless-sdks/telnyx-cli'
@@ -96,7 +92,7 @@ jobs:
         run: ./scripts/bootstrap
 
       - name: Install Cosign
-        uses: sigstore/cosign-installer@v3
+        uses: sigstore/cosign-installer@7e8b541eb2e61bf99390e1afd4be13a184e9ebc5 # v3.10.1
 
       - name: Run goreleaser
         uses: goreleaser/goreleaser-action@9ed2f89a662bf1735a48bc8557fd212fa902bebf # v6.1.0
@@ -135,8 +131,6 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - uses: ./.github/actions/setup-go
-        with:
-          stainless-api-key: ${{ secrets.STAINLESS_API_KEY }}
 
       - name: Link staging branch
         if: github.repository == 'stainless-sdks/telnyx-cli'
