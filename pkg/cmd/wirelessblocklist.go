@@ -97,11 +97,6 @@ var wirelessBlocklistsList = cli.Command{
 			Usage:     "When the Private Wireless Gateway was last updated.",
 			QueryPath: "filter[type]",
 		},
-		&requestflag.Flag[string]{
-			Name:      "filter-values",
-			Usage:     "Values to filter on (inclusive).",
-			QueryPath: "filter[values]",
-		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",
 			Usage:     "The page number to load.",
@@ -125,7 +120,7 @@ var wirelessBlocklistsList = cli.Command{
 
 var wirelessBlocklistsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Permanently deletes the specified wireless blocklist from your account.",
+	Usage:   "Permanently deletes the specified wireless blocklist from your account. The\nrequest returns `422` when the wireless blocklist is assigned to a SIM Card\nGroup.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -347,22 +342,5 @@ func handleWirelessBlocklistsDelete(ctx context.Context, cmd *cli.Command) error
 		return err
 	}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.WirelessBlocklists.Delete(ctx, cmd.Value("id").(string), options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "wireless-blocklists delete",
-		Transform:      transform,
-	})
+	return client.WirelessBlocklists.Delete(ctx, cmd.Value("id").(string), options...)
 }

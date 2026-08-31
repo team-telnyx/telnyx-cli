@@ -33,6 +33,7 @@ func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 			"--model", "model",
 			"--n", "0",
 			"--presence-penalty", "0",
+			"--reasoning-effort", "none",
 			"--response-format", "{type: text}",
 			"--seed", "0",
 			"--service-tier", "service_tier",
@@ -75,6 +76,7 @@ func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 			"--model", "model",
 			"--n", "0",
 			"--presence-penalty", "0",
+			"--reasoning-effort", "none",
 			"--response-format.type", "text",
 			"--seed", "0",
 			"--service-tier", "service_tier",
@@ -114,6 +116,7 @@ func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 			"model: model\n" +
 			"'n': 0\n" +
 			"presence_penalty: 0\n" +
+			"reasoning_effort: none\n" +
 			"response_format:\n" +
 			"  type: text\n" +
 			"seed: 0\n" +

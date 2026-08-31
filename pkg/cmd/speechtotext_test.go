@@ -37,6 +37,7 @@ func TestSpeechToTextRetrieveTranscription(t *testing.T) {
 			"--language", "language",
 			"--model", "fast",
 			"--redact", "redact",
+			"--sample-rate", "0",
 		)
 	})
 }

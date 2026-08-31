@@ -139,23 +139,3 @@ func TestAICollectionsRetrieveByID(t *testing.T) {
 		)
 	})
 }
-
-func TestAICollectionsRetrieveDocuments(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"ai:collections", "retrieve-documents",
-			"--max-items", "10",
-			"--slug", "support-transcripts",
-			"--filter", "{foo: bar}",
-			"--page-number", "1",
-			"--page-size", "20",
-			"--query", "customer called about billing issue",
-			"--retrieval-type", "hybrid",
-			"--sources", "voice,message",
-			"--top-k", "10",
-		)
-	})
-}
