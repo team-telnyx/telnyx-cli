@@ -14,7 +14,7 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var aiOpenAICreateResponse = cli.Command{
+var aiOpenAICreateResponse = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create-response",
 	Usage:   "Create a response using Telnyx's OpenAI-compatible Responses API. This endpoint\nis compatible with the\n[OpenAI Responses API](https://developers.openai.com/api/reference/responses/overview)\nand may be used with the OpenAI JS or Python SDK by setting the base URL to\n`https://api.telnyx.com/v2/ai/openai`.",
 	Suggest: true,
@@ -39,6 +39,10 @@ var aiOpenAICreateResponse = cli.Command{
 			Usage:    "Model identifier to use for the response, for example `zai-org/GLM-5.1-FP8` or another model available from the Telnyx OpenAI-compatible models endpoint.",
 			BodyPath: "model",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "reasoning",
+			BodyPath: "reasoning",
+		},
 		&requestflag.Flag[string]{
 			Name:     "service-tier",
 			Usage:    "The service tier to use for this request. Supported values vary by model; use `GET /v2/ai/openai/models` and inspect the model's `service_tiers` field. If omitted, Telnyx-hosted models use `default`.",
@@ -52,7 +56,15 @@ var aiOpenAICreateResponse = cli.Command{
 	},
 	Action:          handleAIOpenAICreateResponse,
 	HideHelpCommand: true,
-}
+}, map[string][]requestflag.HasOuterFlag{
+	"reasoning": {
+		&requestflag.InnerFlag[string]{
+			Name:       "reasoning.effort",
+			Usage:      "Controls the reasoning effort for models that support it. Same values and semantics as reasoning_effort on Chat Completions.",
+			InnerField: "effort",
+		},
+	},
+})
 
 var aiOpenAIListModels = cli.Command{
 	Name:            "list-models",

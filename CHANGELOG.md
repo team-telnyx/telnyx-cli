@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.31.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.30.0...v0.31.0) (2026-09-02)
+
+
+### Features
+
+* promote from staging 0870b5d ([c307d49](https://github.com/team-telnyx/telnyx-cli/commit/c307d49190adffa2085d8767ec6b0022116fa422))
+
+
+### Bug Fixes
+
+* **ci:** skip post-merge release readiness ([#93](https://github.com/team-telnyx/telnyx-cli/issues/93)) ([f1ea4df](https://github.com/team-telnyx/telnyx-cli/commit/f1ea4df36a319dd29cfa864ab2572f5059486787))
+
 ## [0.30.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.29.0...v0.30.0) (2026-08-21)
 
 

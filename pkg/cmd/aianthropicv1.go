@@ -33,7 +33,7 @@ var aiAnthropicV1Messages = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "model",
-			Usage:    "The model to use for generating the response, for example `zai-org/GLM-5.2` or another model available from the Telnyx models endpoint.",
+			Usage:    "The model to use for generating the response, for example `zai-org/GLM-5.3-Flash` or another model available from the Telnyx models endpoint.",
 			Required: true,
 			BodyPath: "model",
 		},

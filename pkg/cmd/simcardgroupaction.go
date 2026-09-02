@@ -87,7 +87,7 @@ var simCardGroupsActionsRemovePrivateWirelessGateway = cli.Command{
 
 var simCardGroupsActionsRemoveWirelessBlocklist = cli.Command{
 	Name:    "remove-wireless-blocklist",
-	Usage:   "This action will asynchronously remove an existing Wireless Blocklist to all the\nSIMs in the SIM card group.",
+	Usage:   "This action asynchronously removes the Wireless Blocklist assigned to a SIM Card\nGroup. The request returns `404` when the SIM Card Group does not exist and\n`422` when no Wireless Blocklist is assigned.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -123,7 +123,7 @@ var simCardGroupsActionsSetPrivateWirelessGateway = cli.Command{
 
 var simCardGroupsActionsSetWirelessBlocklist = cli.Command{
 	Name:    "set-wireless-blocklist",
-	Usage:   "This action will asynchronously assign a Wireless Blocklist to all the SIMs in\nthe SIM card group.",
+	Usage:   "This action asynchronously assigns a Wireless Blocklist to all SIMs in the SIM\nCard Group. The request returns `404` when the SIM Card Group does not exist and\n`422` when the Wireless Blocklist does not exist.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

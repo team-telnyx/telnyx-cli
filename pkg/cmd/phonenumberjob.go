@@ -31,12 +31,12 @@ var phoneNumbersJobsRetrieve = cli.Command{
 
 var phoneNumbersJobsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns background jobs that operate on phone numbers. Results can be filtered\nby job type and sorted by creation time, and include pagination metadata.",
+	Usage:   "Returns background jobs that operate on phone numbers. Filter by job type,\ntarget phone numbers, or job status, and sort by creation time. Multiple\nphone-number or status values use OR semantics within that filter; different\nfilter categories use AND semantics. Results include pagination metadata.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
-			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[type]",
+			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[type], filter[phone_number], filter[phone_number][], filter[status][]",
 			QueryPath: "filter",
 		},
 		&requestflag.Flag[int64]{
@@ -61,6 +61,16 @@ var phoneNumbersJobsList = requestflag.WithInnerFlags(cli.Command{
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
 	"filter": {
+		&requestflag.InnerFlag[any]{
+			Name:       "filter.phone-number",
+			Usage:      "Returns jobs that targeted any of the supplied account-owned phone numbers. Values beginning with `+` must contain 1 to 20 digits after the plus sign. The 10-value limit is enforced before duplicate values are removed. Unmatched or non-account-owned identifiers return an empty result. Phone-number filtering must be enabled for the account.",
+			InnerField: "phone_number",
+		},
+		&requestflag.InnerFlag[[]string]{
+			Name:       "filter.status",
+			Usage:      "Returns jobs with any of the supplied statuses. Use repeated `filter[status][]` parameters; scalar and comma-separated status values are not accepted.",
+			InnerField: "status",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "filter.type",
 			Usage:      "Identifies the type of the background job.",
