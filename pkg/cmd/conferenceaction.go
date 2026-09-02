@@ -159,7 +159,7 @@ var conferencesActionsGatherDtmfAudio = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "terminating-digit",
-			Usage:    "Digit that terminates gathering.",
+			Usage:    "Digit that terminates gathering. Set to an empty string to disable the terminating digit entirely, so that a digit such as `#` can be collected as input per `valid_digits`.",
 			Default:  "#",
 			BodyPath: "terminating_digit",
 		},

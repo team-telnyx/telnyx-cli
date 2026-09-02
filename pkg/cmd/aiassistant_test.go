@@ -38,9 +38,9 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--post-conversation-settings", "{enabled: true}",
 			"--privacy-settings", "{data_retention: true}",
 			"--tag", "string",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, send_message_history_updates: true, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
-			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, preset_body_fields: {account_id: bar, source: bar}, preset_query_params: {caller: bar, channel: bar}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
 			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
@@ -107,13 +107,14 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--telephony-settings.noise-suppression", "krisp",
 			"--telephony-settings.noise-suppression-config", "{attenuation_limit: 0, mode: advanced}",
 			"--telephony-settings.recording-settings", "{channels: single, enabled: true, format: wav, stop_on_conversation_end: true}",
+			"--telephony-settings.send-message-history-updates=true",
 			"--telephony-settings.supports-unauthenticated-web-calls=true",
 			"--telephony-settings.time-limit-secs", "30",
 			"--telephony-settings.user-idle-reply-secs", "0",
 			"--telephony-settings.user-idle-timeout-secs", "10",
 			"--telephony-settings.voicemail-detection", "{on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}",
 			"--tool-id", "string",
-			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, preset_body_fields: {account_id: bar, source: bar}, preset_query_params: {caller: bar, channel: bar}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription.api-key-ref", "api_key_ref",
 			"--transcription.language", "language",
 			"--transcription.model", "deepgram/flux",
@@ -363,6 +364,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"    enabled: true\n" +
 			"    format: wav\n" +
 			"    stop_on_conversation_end: true\n" +
+			"  send_message_history_updates: true\n" +
 			"  supports_unauthenticated_web_calls: true\n" +
 			"  time_limit_secs: 30\n" +
 			"  user_idle_reply_secs: 0\n" +
@@ -409,6 +411,12 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"        required:\n" +
 			"          - id\n" +
 			"        type: object\n" +
+			"      preset_body_fields:\n" +
+			"        account_id: bar\n" +
+			"        source: bar\n" +
+			"      preset_query_params:\n" +
+			"        caller: bar\n" +
+			"        channel: bar\n" +
 			"      query_parameters:\n" +
 			"        properties:\n" +
 			"          page: bar\n" +
@@ -522,9 +530,9 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--privacy-settings", "{data_retention: true}",
 			"--promote-to-main=true",
 			"--tag", "string",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, send_message_history_updates: true, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
-			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, preset_body_fields: {account_id: bar, source: bar}, preset_query_params: {caller: bar, channel: bar}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
 			"--version-name", "version_name",
 			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
@@ -593,13 +601,14 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--telephony-settings.noise-suppression", "krisp",
 			"--telephony-settings.noise-suppression-config", "{attenuation_limit: 0, mode: advanced}",
 			"--telephony-settings.recording-settings", "{channels: single, enabled: true, format: wav, stop_on_conversation_end: true}",
+			"--telephony-settings.send-message-history-updates=true",
 			"--telephony-settings.supports-unauthenticated-web-calls=true",
 			"--telephony-settings.time-limit-secs", "30",
 			"--telephony-settings.user-idle-reply-secs", "0",
 			"--telephony-settings.user-idle-timeout-secs", "10",
 			"--telephony-settings.voicemail-detection", "{on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}",
 			"--tool-id", "string",
-			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, preset_body_fields: {account_id: bar, source: bar}, preset_query_params: {caller: bar, channel: bar}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
 			"--transcription.api-key-ref", "api_key_ref",
 			"--transcription.language", "language",
 			"--transcription.model", "deepgram/flux",
@@ -850,6 +859,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"    enabled: true\n" +
 			"    format: wav\n" +
 			"    stop_on_conversation_end: true\n" +
+			"  send_message_history_updates: true\n" +
 			"  supports_unauthenticated_web_calls: true\n" +
 			"  time_limit_secs: 30\n" +
 			"  user_idle_reply_secs: 0\n" +
@@ -896,6 +906,12 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"        required:\n" +
 			"          - id\n" +
 			"        type: object\n" +
+			"      preset_body_fields:\n" +
+			"        account_id: bar\n" +
+			"        source: bar\n" +
+			"      preset_query_params:\n" +
+			"        caller: bar\n" +
+			"        channel: bar\n" +
 			"      query_parameters:\n" +
 			"        properties:\n" +
 			"          page: bar\n" +

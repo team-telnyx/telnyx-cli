@@ -433,7 +433,6 @@ func init() {
 					&aiCollectionsList,
 					&aiCollectionsDelete,
 					&aiCollectionsRetrieveByID,
-					&aiCollectionsRetrieveDocuments,
 				},
 			},
 			{
@@ -725,6 +724,14 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&aiAnthropicV1Messages,
+				},
+			},
+			{
+				Name:     "ai:knowledge:collections",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiKnowledgeCollectionsRetrieveDocuments,
 				},
 			},
 			{

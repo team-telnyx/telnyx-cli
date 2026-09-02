@@ -16,7 +16,7 @@ import (
 
 var wirelessBlocklistValuesList = cli.Command{
 	Name:    "list",
-	Usage:   "Retrieve all wireless blocklist values for a given blocklist type.",
+	Usage:   "Retrieve all wireless blocklist values for a given blocklist type. The request\nreturns `422` when `type` is missing or invalid.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

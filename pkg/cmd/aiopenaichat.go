@@ -107,6 +107,11 @@ var aiOpenAIChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 			Default:  0,
 			BodyPath: "presence_penalty",
 		},
+		&requestflag.Flag[string]{
+			Name:     "reasoning-effort",
+			Usage:    "Controls the reasoning effort for models that support it. When set, the model spends more or less compute on internal reasoning before generating its response. Supported values: none, minimal, low, medium, high, xhigh, max. Not all models support all values; unsupported values are rejected with a 400 error. When omitted, reasoning models use their default effort level.",
+			BodyPath: "reasoning_effort",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "response-format",
 			Usage:    "Use this is you want to guarantee a JSON output without defining a schema. For control over the schema, use `guided_json`.",

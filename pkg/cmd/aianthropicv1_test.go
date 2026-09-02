@@ -17,7 +17,7 @@ func TestAIAnthropicV1Messages(t *testing.T) {
 			"ai:anthropic:v1", "messages",
 			"--max-tokens", "1024",
 			"--message", "{role: bar, content: bar}",
-			"--model", "zai-org/GLM-5.2",
+			"--model", "zai-org/GLM-5.3-Flash",
 			"--api-key-ref", "api_key_ref",
 			"--billing-group-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--fallback-config", "{foo: bar}",
@@ -45,7 +45,7 @@ func TestAIAnthropicV1Messages(t *testing.T) {
 			"messages:\n" +
 			"  - role: bar\n" +
 			"    content: bar\n" +
-			"model: zai-org/GLM-5.2\n" +
+			"model: zai-org/GLM-5.3-Flash\n" +
 			"api_key_ref: api_key_ref\n" +
 			"billing_group_id: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\n" +
 			"fallback_config:\n" +
