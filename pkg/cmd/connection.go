@@ -107,6 +107,15 @@ var connectionsListActiveCalls = cli.Command{
 	HideHelpCommand: true,
 }
 
+var connectionsRetrieveCount = cli.Command{
+	Name:            "retrieve-count",
+	Usage:           "Returns the number of connections associated with the authenticated user,\ngrouped by connection type, together with the connection limits that apply to\nthe user. Forward-only connections are excluded from the counts.",
+	Suggest:         true,
+	Flags:           []cli.Flag{},
+	Action:          handleConnectionsRetrieveCount,
+	HideHelpCommand: true,
+}
+
 func handleConnectionsRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -270,4 +279,43 @@ func handleConnectionsListActiveCalls(ctx context.Context, cmd *cli.Command) err
 			Transform:      transform,
 		})
 	}
+}
+
+func handleConnectionsRetrieveCount(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Connections.GetCount(ctx, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "connections retrieve-count",
+		Transform:      transform,
+	})
 }

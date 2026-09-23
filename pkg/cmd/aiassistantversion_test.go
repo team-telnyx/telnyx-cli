@@ -32,7 +32,8 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"ai:assistants:versions", "update",
 			"--assistant-id", "assistant_id",
 			"--version-id", "version_id",
-			"--conversation-flow", "{nodes: [{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}], start_node_id: n_intake, edges: [{id: e_intake_to_billing, condition: {prompt: The caller is asking about a bill or charge., type: llm}, start_node_id: n_intake, target: {node_id: n_billing, type: node}}, {id: e_intake_to_escalation_assistant, condition: {prompt: The caller has explicitly asked for a human., type: llm}, start_node_id: n_intake, target: {assistant_id: assistant-human-handoff, type: assistant, position: {x: 600, 'y': 80}, voice_mode: distinct}}]}",
+			"--a2a-agent", "{name: billing_agent, url: https://agents.example.com, async: true, headers: [{name: X-Api-Key, value: '{{#integration_secret}}my_agent_api_key{{/integration_secret}}'}], messages: [{content: x, type: request_start, timing_ms: 100}], poll_interval_ms: 500, timeout_ms: 30000}",
+			"--conversation-flow", "{nodes: [{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}], start_node_id: n_intake, edges: [{id: e_intake_to_billing, condition: {prompt: The caller is asking about a bill or charge., type: llm}, start_node_id: n_intake, target: {node_id: n_billing, type: node}}, {id: e_intake_to_escalation_assistant, condition: {prompt: The caller has explicitly asked for a human., type: llm}, start_node_id: n_intake, target: {assistant_id: assistant-human-handoff, type: assistant, position: {x: 600, 'y': 80}, voice_mode: distinct}}]}",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-timeout-ms", "1",
@@ -44,7 +45,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--insight-settings", "{insight_group_id: insight_group_id}",
 			"--instructions", "instructions",
 			"--integration", "{integration_id: integration_id, allowed_list: [string]}",
-			"--interruption-settings", "{disable_greeting_interruption: true, enable: true, start_speaking_plan: {transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}}",
+			"--interruption-settings", "{disable_greeting_interruption: true, enable: true, interrupt_prediction_threshold: 0, start_speaking_plan: {transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}}",
 			"--llm-api-key-ref", "llm_api_key_ref",
 			"--mcp-server", "{id: id, allowed_tools: [string]}",
 			"--messaging-settings", "{conversation_inactivity_minutes: 1, default_messaging_profile_id: default_messaging_profile_id, delivery_status_webhook_url: delivery_status_webhook_url}",
@@ -52,12 +53,12 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--name", "name",
 			"--observability-settings", "{host: host, prompt_label: prompt_label, prompt_name: prompt_name, prompt_sync: enabled, prompt_version: 1, public_key_ref: public_key_ref, secret_key_ref: secret_key_ref, status: enabled}",
 			"--post-conversation-settings", "{enabled: true}",
-			"--privacy-settings", "{data_retention: true}",
+			"--privacy-settings", "{data_retention: true, in_transit_data_locality: true}",
 			"--tag", "string",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, noise_suppression: krisp, noise_suppression_config: {attenuation_limit: 0, mode: advanced}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, send_message_history_updates: true, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, fallback_destination: fallback_destination, noise_suppression: aicoustics, noise_suppression_config: {attenuation_limit: 0, enhancement_level: 0, family: quail, mode: advanced, size: vf}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, send_message_history_updates: true, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
-			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, preset_body_fields: {account_id: bar, source: bar}, preset_query_params: {caller: bar, channel: bar}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
-			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
+			"--tool", "{function: {name: name, description: description, parameters: {foo: bar}}, type: function}",
+			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
 			"--version-name", "version_name",
 			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
@@ -75,7 +76,14 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"ai:assistants:versions", "update",
 			"--assistant-id", "assistant_id",
 			"--version-id", "version_id",
-			"--conversation-flow.nodes", "[{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}]",
+			"--a2a-agent.name", "billing_agent",
+			"--a2a-agent.url", "https://agents.example.com",
+			"--a2a-agent.async=true",
+			"--a2a-agent.headers", "[{name: X-Api-Key, value: '{{#integration_secret}}my_agent_api_key{{/integration_secret}}'}]",
+			"--a2a-agent.messages", "[{content: x, type: request_start, timing_ms: 100}]",
+			"--a2a-agent.poll-interval-ms", "500",
+			"--a2a-agent.timeout-ms", "30000",
+			"--conversation-flow.nodes", "[{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}]",
 			"--conversation-flow.start-node-id", "n_intake",
 			"--conversation-flow.edges", "[{id: e_intake_to_billing, condition: {prompt: The caller is asking about a bill or charge., type: llm}, start_node_id: n_intake, target: {node_id: n_billing, type: node}}, {id: e_intake_to_escalation_assistant, condition: {prompt: The caller has explicitly asked for a human., type: llm}, start_node_id: n_intake, target: {assistant_id: assistant-human-handoff, type: assistant, position: {x: 600, 'y': 80}, voice_mode: distinct}}]",
 			"--description", "description",
@@ -100,6 +108,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--integration.allowed-list", "[string]",
 			"--interruption-settings.disable-greeting-interruption=true",
 			"--interruption-settings.enable=true",
+			"--interruption-settings.interrupt-prediction-threshold", "0",
 			"--interruption-settings.start-speaking-plan", "{transcription_endpointing_plan: {on_no_punctuation_seconds: 0, on_number_seconds: 0, on_punctuation_seconds: 0}, wait_seconds: 0}",
 			"--llm-api-key-ref", "llm_api_key_ref",
 			"--mcp-server.id", "id",
@@ -119,11 +128,13 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--observability-settings.status", "enabled",
 			"--post-conversation-settings.enabled=true",
 			"--privacy-settings.data-retention=true",
+			"--privacy-settings.in-transit-data-locality=true",
 			"--tag", "string",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
 			"--telephony-settings.disable-dtmf=true",
-			"--telephony-settings.noise-suppression", "krisp",
-			"--telephony-settings.noise-suppression-config", "{attenuation_limit: 0, mode: advanced}",
+			"--telephony-settings.fallback-destination", "fallback_destination",
+			"--telephony-settings.noise-suppression", "aicoustics",
+			"--telephony-settings.noise-suppression-config", "{attenuation_limit: 0, enhancement_level: 0, family: quail, mode: advanced, size: vf}",
 			"--telephony-settings.recording-settings", "{channels: single, enabled: true, format: wav, stop_on_conversation_end: true}",
 			"--telephony-settings.send-message-history-updates=true",
 			"--telephony-settings.supports-unauthenticated-web-calls=true",
@@ -132,12 +143,12 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"--telephony-settings.user-idle-timeout-secs", "10",
 			"--telephony-settings.voicemail-detection", "{on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}",
 			"--tool-id", "string",
-			"--tool", "{type: webhook, webhook: {description: description, name: name, url: https://example.com/api/v1/function, async: true, async_timeout_ms: 1, body_parameters: {properties: {age: bar, location: bar}, required: [age, location], type: object}, headers: [{name: name, value: value}], messages: [{content: Let me look that up for you., type: request_start, timing_ms: 100}, {content: Still working on that., timing_ms: 5000, type: request_response_delayed}], method: GET, path_parameters: {properties: {id: bar}, required: [id], type: object}, preset_body_fields: {account_id: bar, source: bar}, preset_query_params: {caller: bar, channel: bar}, query_parameters: {properties: {page: bar}, required: [page], type: object}, store_fields_as_variables: [{name: x, value_path: x}], timeout_ms: 500}}",
+			"--tool", "{function: {name: name, description: description, parameters: {foo: bar}}, type: function}",
 			"--transcription.api-key-ref", "api_key_ref",
 			"--transcription.language", "language",
 			"--transcription.model", "deepgram/flux",
 			"--transcription.region", "region",
-			"--transcription.settings", "{eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}",
+			"--transcription.settings", "{context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}",
 			"--version-name", "version_name",
 			"--voice-settings.voice", "voice",
 			"--voice-settings.api-key-ref", "api_key_ref",
@@ -167,6 +178,19 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
+			"a2a_agents:\n" +
+			"  - name: billing_agent\n" +
+			"    url: https://agents.example.com\n" +
+			"    async: true\n" +
+			"    headers:\n" +
+			"      - name: X-Api-Key\n" +
+			"        value: '{{#integration_secret}}my_agent_api_key{{/integration_secret}}'\n" +
+			"    messages:\n" +
+			"      - content: x\n" +
+			"        type: request_start\n" +
+			"        timing_ms: 100\n" +
+			"    poll_interval_ms: 500\n" +
+			"    timeout_ms: 30000\n" +
 			"conversation_flow:\n" +
 			"  nodes:\n" +
 			"    - id: n_intake\n" +
@@ -195,6 +219,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"        model: deepgram/flux\n" +
 			"        region: region\n" +
 			"        settings:\n" +
+			"          context: context\n" +
 			"          eager_eot_threshold: 0.3\n" +
 			"          enable_endpoint_detection: true\n" +
 			"          end_of_turn_confidence_threshold: 0\n" +
@@ -202,6 +227,8 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"          eot_timeout_ms: 500\n" +
 			"          interim_results: true\n" +
 			"          keyterm: keyterm\n" +
+			"          language_hints:\n" +
+			"            - string\n" +
 			"          max_endpoint_delay_ms: 500\n" +
 			"          max_turn_silence: 100\n" +
 			"          min_turn_silence: 100\n" +
@@ -251,6 +278,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"        model: deepgram/flux\n" +
 			"        region: region\n" +
 			"        settings:\n" +
+			"          context: context\n" +
 			"          eager_eot_threshold: 0.3\n" +
 			"          enable_endpoint_detection: true\n" +
 			"          end_of_turn_confidence_threshold: 0\n" +
@@ -258,6 +286,8 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"          eot_timeout_ms: 500\n" +
 			"          interim_results: true\n" +
 			"          keyterm: keyterm\n" +
+			"          language_hints:\n" +
+			"            - string\n" +
 			"          max_endpoint_delay_ms: 500\n" +
 			"          max_turn_silence: 100\n" +
 			"          min_turn_silence: 100\n" +
@@ -338,6 +368,7 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"interruption_settings:\n" +
 			"  disable_greeting_interruption: true\n" +
 			"  enable: true\n" +
+			"  interrupt_prediction_threshold: 0\n" +
 			"  start_speaking_plan:\n" +
 			"    transcription_endpointing_plan:\n" +
 			"      on_no_punctuation_seconds: 0\n" +
@@ -368,15 +399,20 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"  enabled: true\n" +
 			"privacy_settings:\n" +
 			"  data_retention: true\n" +
+			"  in_transit_data_locality: true\n" +
 			"tags:\n" +
 			"  - string\n" +
 			"telephony_settings:\n" +
 			"  default_texml_app_id: default_texml_app_id\n" +
 			"  disable_dtmf: true\n" +
-			"  noise_suppression: krisp\n" +
+			"  fallback_destination: fallback_destination\n" +
+			"  noise_suppression: aicoustics\n" +
 			"  noise_suppression_config:\n" +
 			"    attenuation_limit: 0\n" +
+			"    enhancement_level: 0\n" +
+			"    family: quail\n" +
 			"    mode: advanced\n" +
+			"    size: vf\n" +
 			"  recording_settings:\n" +
 			"    channels: single\n" +
 			"    enabled: true\n" +
@@ -397,60 +433,19 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"tool_ids:\n" +
 			"  - string\n" +
 			"tools:\n" +
-			"  - type: webhook\n" +
-			"    webhook:\n" +
-			"      description: description\n" +
+			"  - function:\n" +
 			"      name: name\n" +
-			"      url: https://example.com/api/v1/function\n" +
-			"      async: true\n" +
-			"      async_timeout_ms: 1\n" +
-			"      body_parameters:\n" +
-			"        properties:\n" +
-			"          age: bar\n" +
-			"          location: bar\n" +
-			"        required:\n" +
-			"          - age\n" +
-			"          - location\n" +
-			"        type: object\n" +
-			"      headers:\n" +
-			"        - name: name\n" +
-			"          value: value\n" +
-			"      messages:\n" +
-			"        - content: Let me look that up for you.\n" +
-			"          type: request_start\n" +
-			"          timing_ms: 100\n" +
-			"        - content: Still working on that.\n" +
-			"          timing_ms: 5000\n" +
-			"          type: request_response_delayed\n" +
-			"      method: GET\n" +
-			"      path_parameters:\n" +
-			"        properties:\n" +
-			"          id: bar\n" +
-			"        required:\n" +
-			"          - id\n" +
-			"        type: object\n" +
-			"      preset_body_fields:\n" +
-			"        account_id: bar\n" +
-			"        source: bar\n" +
-			"      preset_query_params:\n" +
-			"        caller: bar\n" +
-			"        channel: bar\n" +
-			"      query_parameters:\n" +
-			"        properties:\n" +
-			"          page: bar\n" +
-			"        required:\n" +
-			"          - page\n" +
-			"        type: object\n" +
-			"      store_fields_as_variables:\n" +
-			"        - name: x\n" +
-			"          value_path: x\n" +
-			"      timeout_ms: 500\n" +
+			"      description: description\n" +
+			"      parameters:\n" +
+			"        foo: bar\n" +
+			"    type: function\n" +
 			"transcription:\n" +
 			"  api_key_ref: api_key_ref\n" +
 			"  language: language\n" +
 			"  model: deepgram/flux\n" +
 			"  region: region\n" +
 			"  settings:\n" +
+			"    context: context\n" +
 			"    eager_eot_threshold: 0.3\n" +
 			"    enable_endpoint_detection: true\n" +
 			"    end_of_turn_confidence_threshold: 0\n" +
@@ -458,6 +453,8 @@ func TestAIAssistantsVersionsUpdate(t *testing.T) {
 			"    eot_timeout_ms: 500\n" +
 			"    interim_results: true\n" +
 			"    keyterm: keyterm\n" +
+			"    language_hints:\n" +
+			"      - string\n" +
 			"    max_endpoint_delay_ms: 500\n" +
 			"    max_turn_silence: 100\n" +
 			"    min_turn_silence: 100\n" +

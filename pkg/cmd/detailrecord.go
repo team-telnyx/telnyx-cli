@@ -21,7 +21,7 @@ var detailRecordsList = requestflag.WithInnerFlags(cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
-			Usage:     "Filter records on a given record attribute and value. <br/>Example: filter[status]=delivered. <br/>Required: filter[record_type] must be specified.",
+			Usage:     "Filter records on a given record attribute and value. <br/>Example: filter[status]=delivered. <br/>Required: filter[record_type] must be specified. <br/>The valid filter fields depend on the record_type: filtering by a field that does not exist for the selected record_type is rejected with a 400 error. Call-control and sip-trunking records use started_at, finished_at and answered_at (they have no created_at); messaging records use created_at. To list the fields available for a record_type, use the /v2/detail_records/options endpoint.",
 			QueryPath: "filter",
 		},
 		&requestflag.Flag[int64]{
@@ -34,7 +34,7 @@ var detailRecordsList = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[[]string]{
 			Name:      "sort",
-			Usage:     "Specifies the sort order for results. <br/>Example: sort=-created_at",
+			Usage:     "Specifies the sort order for results. <br/>Example: sort=-created_at <br/>The valid sort fields depend on the record_type: sort by a field that does not exist for the selected record_type is rejected with a 400 error. Call-control and sip-trunking records use started_at, finished_at and answered_at (they have no created_at); messaging records use created_at. To list the fields available for a record_type, use the /v2/detail_records/options endpoint.",
 			QueryPath: "sort",
 		},
 		&requestflag.Flag[int64]{

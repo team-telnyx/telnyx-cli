@@ -57,6 +57,11 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  true,
 			BodyPath: "enabled",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "features",
+			Usage:    "Telnyx product features the messaging customer can enable on the messaging profile. Keys map to individual feature flags; unknown keys are accepted and preserved for forward compatibility with rolling deployments.",
+			BodyPath: "features",
+		},
 		&requestflag.Flag[*string]{
 			Name:     "health-webhook-url",
 			Usage:    "A URL to receive health check webhooks for numbers in this profile.",
@@ -123,6 +128,13 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleMessagingProfilesCreate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"features": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "features.ai-opt-out-detection-enabled",
+			Usage:      "Enables AI detection of inbound opt-out messages that do not follow the standard STOP/UNSTOP/HELP opt-out keyword pattern. When enabled, the messaging platform applies an AI model to identify non-standard opt-out requests (e.g. natural-language phrases) and treats them as opt-outs.",
+			InnerField: "ai_opt_out_detection_enabled",
+		},
+	},
 	"number-pool-settings": {
 		&requestflag.InnerFlag[float64]{
 			Name:       "number-pool-settings.long-code-weight",
@@ -224,6 +236,11 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Specifies whether the messaging profile is enabled or not.",
 			BodyPath: "enabled",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "features",
+			Usage:    "Telnyx product features the messaging customer can enable on the messaging profile. Keys map to individual feature flags; unknown keys are accepted and preserved for forward compatibility with rolling deployments.",
+			BodyPath: "features",
+		},
 		&requestflag.Flag[bool]{
 			Name:     "mms-fall-back-to-sms",
 			Usage:    "enables SMS fallback for MMS messages.",
@@ -251,6 +268,18 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "number-pool-settings",
 			Usage:    "Number Pool allows you to send messages from a pool of numbers of different types, assigning\nweights to each type. The pool consists of all the long code and toll free numbers\nassigned to the messaging profile.\n\nTo disable this feature, set the object field to `null`.\n",
 			BodyPath: "number_pool_settings",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "redaction-enabled",
+			Usage:    "Set to true to enable message content redaction on this profile, or false to disable it. Ignored if the organization is not on the redaction allowlist. See the [Message Redaction guide](/docs/messaging/messages/message-redaction) for what is redacted.",
+			Default:  false,
+			BodyPath: "redaction_enabled",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "redaction-level",
+			Usage:    "The redaction level to apply when redaction is enabled. 1: redact message records and reporting only. 2 (default): also redact inbound webhook payloads. See the [Message Redaction guide](/docs/messaging/messages/message-redaction).",
+			Default:  2,
+			BodyPath: "redaction_level",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "smart-encoding",
@@ -292,6 +321,13 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleMessagingProfilesUpdate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"features": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "features.ai-opt-out-detection-enabled",
+			Usage:      "Enables AI detection of inbound opt-out messages that do not follow the standard STOP/UNSTOP/HELP opt-out keyword pattern. When enabled, the messaging platform applies an AI model to identify non-standard opt-out requests (e.g. natural-language phrases) and treats them as opt-outs.",
+			InnerField: "ai_opt_out_detection_enabled",
+		},
+	},
 	"number-pool-settings": {
 		&requestflag.InnerFlag[float64]{
 			Name:       "number-pool-settings.long-code-weight",

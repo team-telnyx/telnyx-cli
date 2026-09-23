@@ -735,6 +735,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:typesafe:v1",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiTypesafeV1Systemone,
+				},
+			},
+			{
 				Name:     "audit-events",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -979,6 +987,7 @@ func init() {
 					&connectionsRetrieve,
 					&connectionsList,
 					&connectionsListActiveCalls,
+					&connectionsRetrieveCount,
 				},
 			},
 			{
@@ -2667,6 +2676,14 @@ func init() {
 				},
 			},
 			{
+				Name:     "texml:calls",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&texmlCallsCreate,
+				},
+			},
+			{
 				Name:     "texml:accounts",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3257,6 +3274,7 @@ func init() {
 					&whatsappPhoneNumbersGet,
 					&whatsappPhoneNumbersResendVerification,
 					&whatsappPhoneNumbersRetrieveConversationWindow,
+					&whatsappPhoneNumbersRetrievePhoneNumber,
 					&whatsappPhoneNumbersVerify,
 				},
 			},
@@ -3323,6 +3341,15 @@ func init() {
 				Commands: []*cli.Command{
 					&x402CreditAccountCreateQuote,
 					&x402CreditAccountSettle,
+				},
+			},
+			{
+				Name:     "x402:credit-account:payments",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&x402CreditAccountPaymentsRetrieve,
+					&x402CreditAccountPaymentsList,
 				},
 			},
 			{
@@ -3512,14 +3539,6 @@ func init() {
 				Commands: []*cli.Command{
 					&voiceSDKCallReportsRetrieve,
 					&voiceSDKCallReportsList,
-				},
-			},
-			{
-				Name:     "sip-registration-status",
-				Category: "API RESOURCE",
-				Suggest:  true,
-				Commands: []*cli.Command{
-					&sipRegistrationStatusRetrieve,
 				},
 			},
 			{
@@ -3892,6 +3911,77 @@ func init() {
 					&meetingSessionsArtifactsCreate,
 					&meetingSessionsArtifactsRetrieve,
 					&meetingSessionsArtifactsList,
+				},
+			},
+			{
+				Name:     "external-requirements:sub-number-orders",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&externalRequirementsSubNumberOrdersRetrieve,
+					&externalRequirementsSubNumberOrdersUpdate,
+				},
+			},
+			{
+				Name:     "compute:funcs",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&computeFuncsRetrieveLogs,
+					&computeFuncsRetrieveMetricAggregates,
+					&computeFuncsRetrieveRevisions,
+					&computeFuncsRetrieveShipInspection,
+				},
+			},
+			{
+				Name:     "compute:funcs:export",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&computeFuncsExportCreate,
+					&computeFuncsExportList,
+					&computeFuncsExportDeleteAll,
+				},
+			},
+			{
+				Name:     "noise-suppression-engines",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&noiseSuppressionEnginesList,
+				},
+			},
+			{
+				Name:     "bot-challenge",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&botChallengeCreate,
+				},
+			},
+			{
+				Name:     "bot-sessions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&botSessionsList,
+				},
+			},
+			{
+				Name:     "bot-signup",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&botSignupCreate,
+					&botSignupResendMagicLink,
+				},
+			},
+			{
+				Name:     "machine-payments",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&machinePaymentsAccountCredit,
 				},
 			},
 			{

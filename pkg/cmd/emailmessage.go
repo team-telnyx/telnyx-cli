@@ -248,11 +248,12 @@ var emailMessagesDelete = cli.Command{
 
 var emailMessagesBatch = requestflag.WithInnerFlags(cli.Command{
 	Name:    "batch",
-	Usage:   "Creates up to 50 email messages in a single request.",
+	Usage:   "Creates up to 1,000 email messages in a single request. Request-wide admission\nchecks run first and can reject the whole batch before message creation. After\nthose checks pass, each message is validated and sent independently; item-level\nfailures do not affect other messages, and the processed batch returns 207\nMulti-Status.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "message",
+			Usage:    "Array of email messages to send. Up to 1,000 messages per batch request. Each message is validated and sent independently; per-message failures do not affect other messages in the batch.",
 			Required: true,
 			BodyPath: "messages",
 		},

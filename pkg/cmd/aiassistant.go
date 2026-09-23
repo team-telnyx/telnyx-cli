@@ -30,6 +30,12 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Required: true,
 			BodyPath: "name",
 		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "a2a-agent",
+			Usage:    "A2A agents this assistant can delegate to. Tools are not stored here: at the start of every conversation each agent's card is fetched and one tool is derived per skill the card advertises, named `a2a_<name>_<skill_id>`. The following limits are not enforced when the assistant is saved, and anything past them is dropped when the conversation starts: 64 agents per assistant, 64 skills per card, 128 derived tools per assistant, and a 6 second budget for all card fetches combined. An agent whose card cannot be fetched costs the assistant that capability for the conversation; it does not fail the call.",
+			Default:  []map[string]any{},
+			BodyPath: "a2a_agents",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "conversation-flow",
 			Usage:    "Conversation flow as supplied by API clients (create / update).\n\nA directed graph of `FlowNodeReq` connected by `FlowEdge`s. Validation\nenforces unique node/edge IDs, that `start_node_id` references a real\nnode, and that every edge's endpoints reference real nodes.",
@@ -113,7 +119,7 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "post-conversation-settings",
-			Usage:    "Configuration for post-conversation processing. When enabled, the assistant receives one additional LLM turn after the conversation ends, allowing it to execute tool calls such as logging to a CRM or sending a summary. The assistant can execute multiple parallel or sequential tools during this phase. Telephony-control tools (e.g. hangup, transfer) are unavailable post-conversation. Beta feature.",
+			Usage:    "Configuration for post-conversation processing. When enabled, the assistant receives one additional LLM turn after the conversation ends, allowing it to execute final tool calls such as sending a summary or updating a record via webhook or function tools. Integration and MCP server tools are not available post-conversation; call-control tools (e.g. hangup, transfer) are also unavailable. Beta feature.",
 			BodyPath: "post_conversation_settings",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -161,6 +167,43 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleAIAssistantsCreate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"a2a-agent": {
+		&requestflag.InnerFlag[string]{
+			Name:       "a2a-agent.name",
+			Usage:      "Identifies the agent and seeds the names of the tools derived from its card (`a2a_<name>_<skill_id>`). Characters outside `[A-Za-z0-9_]` are replaced with `_` before the tool name is built, so two agents whose names differ only in punctuation collide and are rejected.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "a2a-agent.url",
+			Usage:      "The agent's base URL, or the URL of its agent card. At most 2,048 bytes once UTF-8 encoded. `/.well-known/agent-card.json` is appended to the path unless it already ends in `.json`. Must be an `http://` or `https://` URL for an externally reachable host: internal destinations (`localhost`, private and reserved IP ranges, `.local` domains) are rejected, and the hostname may not contain a `{{...}}` placeholder. Placeholders in the path are allowed.",
+			InnerField: "url",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "a2a-agent.async",
+			Usage:      "When `true`, the assistant hands the turn straight back to the model and the agent's answer is delivered into the conversation once it arrives, instead of the caller waiting for it in silence.",
+			InnerField: "async",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "a2a-agent.headers",
+			Usage:      "Headers sent when fetching this agent's card and on every call made to it. Use them to authenticate to the agent.",
+			InnerField: "headers",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "a2a-agent.messages",
+			Usage:      "Filler messages spoken while a call to this agent is in progress. `request_start` messages are spoken immediately when the call begins. `request_response_delayed` messages are spoken after `timing_ms` has elapsed only if the agent has not answered yet. Filler messages are not used when `async` is `true`.",
+			InnerField: "messages",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "a2a-agent.poll-interval-ms",
+			Usage:      "How often, in milliseconds, to poll an agent task that has not finished yet. Defaults to 500.",
+			InnerField: "poll_interval_ms",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "a2a-agent.timeout-ms",
+			Usage:      "Total budget, in milliseconds, for one call to this agent, including any time spent polling a task that is still running. Omit to inherit the assistant's tool timeout.",
+			InnerField: "timeout_ms",
+		},
+	},
 	"conversation-flow": {
 		&requestflag.InnerFlag[[]map[string]any]{
 			Name:       "conversation-flow.nodes",
@@ -261,6 +304,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Whether users can interrupt the assistant while it is speaking.",
 			InnerField: "enable",
 		},
+		&requestflag.InnerFlag[*float64]{
+			Name:       "interruption-settings.interrupt-prediction-threshold",
+			Usage:      "Interrupt-prediction sensitivity, from 0.0 to 1.0. Set to null or 0.0 to disable interrupt prediction.",
+			InnerField: "interrupt_prediction_threshold",
+		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "interruption-settings.start-speaking-plan",
 			Usage:      "Controls when the assistant starts speaking after the user stops. These thresholds primarily apply to non turn-taking transcription models. For turn-taking models like `deepgram/flux`, end-of-turn detection is driven by the transcription end-of-turn settings under `transcription.settings` instead.",
@@ -345,6 +393,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "If true, conversation history and insights will be stored. If false, they will not be stored. This in‑tool toggle governs solely the retention of conversation history and insights via the AI assistant. It has no effect on any separate recording, transcription, or storage configuration that you have set at the account, number, or application level. All such external settings remain in force regardless of your selection here.",
 			InnerField: "data_retention",
 		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "privacy-settings.in-transit-data-locality",
+			Usage:      "Requires every model call made for a web chat turn to be received and served inside your organization's data-locality region, rather than only stored there. Applies to web chat only — voice and messaging assistants are unaffected. Enabling it requires a data-locality region with in-region inference (USA, EU, AUS, UAE; see [Inference regions](https://developers.telnyx.com/docs/inference/models/regions)) and Telnyx-hosted models for the assistant, its fallback, and any conversation-flow node that overrides the model; the request is rejected otherwise. Once enabled, send chat requests to your region's API hostname: a request entering the platform in another region is rejected rather than forwarded, because forwarding it would already have moved the content across the border. Defaults to false.",
+			InnerField: "in_transit_data_locality",
+		},
 	},
 	"telephony-settings": {
 		&requestflag.InnerFlag[string]{
@@ -358,13 +411,18 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "disable_dtmf",
 		},
 		&requestflag.InnerFlag[string]{
+			Name:       "telephony-settings.fallback-destination",
+			Usage:      "Destination number or SIP URI to transfer the caller to when the AI conversation ends abnormally, for example because of an assistant-side error, so the caller is not left in dead air. This only fires for abnormal ends: it does not fire when the conversation ends on purpose (the caller hung up, the assistant completed normally, the caller hung up after a relay handoff, or voicemail was detected), and it does not fire when the assistant already transferred or bridged the call.",
+			InnerField: "fallback_destination",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "telephony-settings.noise-suppression",
-			Usage:      "The noise suppression engine to use. Use 'disabled' to turn off noise suppression.",
+			Usage:      "The noise suppression engine to use. 'aicoustics' is STT-optimized and recommended for AI assistants (configure through noise_suppression_config). Use 'disabled' to turn off noise suppression.",
 			InnerField: "noise_suppression",
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "telephony-settings.noise-suppression-config",
-			Usage:      "Configuration for noise suppression. Only applicable when noise_suppression is 'deepfilternet'.",
+			Usage:      "Configuration for noise suppression. Applicable fields depend on the engine: 'attenuation_limit' and 'mode' only when noise_suppression is 'deepfilternet'; 'family', 'size' and 'enhancement_level' only when noise_suppression is 'aicoustics'.",
 			InnerField: "noise_suppression_config",
 		},
 		&requestflag.InnerFlag[map[string]any]{
@@ -411,12 +469,12 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4` and `soniox/stt-rt-v5`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language; `settings.language_hints` can pin multiple languages at once instead. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-streaming` is a multilingual streaming model with configurable turn detection.\n- `xai/grok-stt` is a multilingual Grok STT model.\n- `soniox/stt-rt-v4` is a multilingual streaming model with automatic language detection and configurable endpointing.\n- `nvidia/parakeet-v3` is a multilingual transcription model with automatic language detection.\n- `humain/realtime` is a streaming model with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` is a turn-based streaming model covering 10 European languages with automatic language detection.\n- `cohere/ar-stt` is a non-streaming Arabic and English transcription model.",
+			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-3-5-pro` is a multilingual streaming model with configurable turn detection. The legacy alias `assemblyai/universal-streaming` is still accepted and resolves to the same model.\n- `xai/grok-stt` is a multilingual Grok STT model.\n- `soniox/stt-rt-v4` and `soniox/stt-rt-v5` are multilingual streaming models with automatic language detection, configurable endpointing, term biasing (`context`), and `language_hints`.\n- `nvidia/parakeet-v3` is a multilingual transcription model with automatic language detection.\n- `omi-health/omi-med-stt-v1` is an English-only medical transcription model (Parakeet-based).\n- `humain/realtime` is a streaming model with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` is a turn-based streaming model covering 10 European languages with automatic language detection.\n- `cohere/ar-stt` is a non-streaming Arabic and English transcription model.",
 			InnerField: "model",
 		},
 		&requestflag.InnerFlag[string]{
@@ -590,6 +648,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Required:  true,
 			PathParam: "assistant_id",
 		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "a2a-agent",
+			Usage:    "A2A agents this assistant can delegate to. Tools are not stored here: at the start of every conversation each agent's card is fetched and one tool is derived per skill the card advertises, named `a2a_<name>_<skill_id>`. The following limits are not enforced when the assistant is saved, and anything past them is dropped when the conversation starts: 64 agents per assistant, 64 skills per card, 128 derived tools per assistant, and a 6 second budget for all card fetches combined. An agent whose card cannot be fetched costs the assistant that capability for the conversation; it does not fail the call. Omit this field to leave the assistant's agents unchanged; send an empty array to remove them all.",
+			BodyPath: "a2a_agents",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "conversation-flow",
 			Usage:    "Conversation flow as supplied by API clients (create / update).\n\nA directed graph of `FlowNodeReq` connected by `FlowEdge`s. Validation\nenforces unique node/edge IDs, that `start_node_id` references a real\nnode, and that every edge's endpoints reference real nodes.",
@@ -682,7 +745,7 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "post-conversation-settings",
-			Usage:    "Configuration for post-conversation processing. When enabled, the assistant receives one additional LLM turn after the conversation ends, allowing it to execute tool calls such as logging to a CRM or sending a summary. The assistant can execute multiple parallel or sequential tools during this phase. Telephony-control tools (e.g. hangup, transfer) are unavailable post-conversation. Beta feature.",
+			Usage:    "Configuration for post-conversation processing. When enabled, the assistant receives one additional LLM turn after the conversation ends, allowing it to execute final tool calls such as sending a summary or updating a record via webhook or function tools. Integration and MCP server tools are not available post-conversation; call-control tools (e.g. hangup, transfer) are also unavailable. Beta feature.",
 			BodyPath: "post_conversation_settings",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -707,12 +770,12 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "tool-id",
-			Usage:    "IDs of shared tools to attach to the assistant. New integrations should prefer `tool_ids` over inline `tools`.",
+			Usage:    "IDs of shared tools to attach to the assistant. New integrations should prefer `tool_ids` over inline `tools`. On update, a sent `tool_ids` array fully replaces the assistant's attached shared tools; omit the field to leave them unchanged. Single-instance tool types are counted across inline `tools` and `tool_ids` combined, so attaching a shared tool of such a type when an instance already exists returns HTTP 400 with error code 10015.",
 			BodyPath: "tool_ids",
 		},
 		&requestflag.Flag[[]map[string]any]{
 			Name:     "tool",
-			Usage:    "Deprecated for new integrations. Inline tool definitions available to the assistant. Prefer `tool_ids` to attach shared tools created with the AI Tools endpoints.",
+			Usage:    "Deprecated for new integrations. Inline tool definitions available to the assistant. Prefer `tool_ids` to attach shared tools created with the AI Tools endpoints. On update, a sent `tools` array fully replaces the assistant's inline tools; omit the field to leave the inline tools unchanged. Each tool type except `function`, `webhook`, and `client_side_tool` allows at most one instance per assistant, counted across inline `tools` and shared `tool_ids` combined — sending a duplicate of such a type returns HTTP 400 with error code 10015. Responses merge shared tools into `tools` with `shared: true`; when updating, omit those tools from the `tools` array and manage them through `tool_ids` instead.",
 			BodyPath: "tools",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -738,6 +801,43 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleAIAssistantsUpdate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"a2a-agent": {
+		&requestflag.InnerFlag[string]{
+			Name:       "a2a-agent.name",
+			Usage:      "Identifies the agent and seeds the names of the tools derived from its card (`a2a_<name>_<skill_id>`). Characters outside `[A-Za-z0-9_]` are replaced with `_` before the tool name is built, so two agents whose names differ only in punctuation collide and are rejected.",
+			InnerField: "name",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "a2a-agent.url",
+			Usage:      "The agent's base URL, or the URL of its agent card. At most 2,048 bytes once UTF-8 encoded. `/.well-known/agent-card.json` is appended to the path unless it already ends in `.json`. Must be an `http://` or `https://` URL for an externally reachable host: internal destinations (`localhost`, private and reserved IP ranges, `.local` domains) are rejected, and the hostname may not contain a `{{...}}` placeholder. Placeholders in the path are allowed.",
+			InnerField: "url",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "a2a-agent.async",
+			Usage:      "When `true`, the assistant hands the turn straight back to the model and the agent's answer is delivered into the conversation once it arrives, instead of the caller waiting for it in silence.",
+			InnerField: "async",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "a2a-agent.headers",
+			Usage:      "Headers sent when fetching this agent's card and on every call made to it. Use them to authenticate to the agent.",
+			InnerField: "headers",
+		},
+		&requestflag.InnerFlag[[]map[string]any]{
+			Name:       "a2a-agent.messages",
+			Usage:      "Filler messages spoken while a call to this agent is in progress. `request_start` messages are spoken immediately when the call begins. `request_response_delayed` messages are spoken after `timing_ms` has elapsed only if the agent has not answered yet. Filler messages are not used when `async` is `true`.",
+			InnerField: "messages",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "a2a-agent.poll-interval-ms",
+			Usage:      "How often, in milliseconds, to poll an agent task that has not finished yet. Defaults to 500.",
+			InnerField: "poll_interval_ms",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "a2a-agent.timeout-ms",
+			Usage:      "Total budget, in milliseconds, for one call to this agent, including any time spent polling a task that is still running. Omit to inherit the assistant's tool timeout.",
+			InnerField: "timeout_ms",
+		},
+	},
 	"conversation-flow": {
 		&requestflag.InnerFlag[[]map[string]any]{
 			Name:       "conversation-flow.nodes",
@@ -838,6 +938,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Whether users can interrupt the assistant while it is speaking.",
 			InnerField: "enable",
 		},
+		&requestflag.InnerFlag[*float64]{
+			Name:       "interruption-settings.interrupt-prediction-threshold",
+			Usage:      "Interrupt-prediction sensitivity, from 0.0 to 1.0. Set to null or 0.0 to disable interrupt prediction.",
+			InnerField: "interrupt_prediction_threshold",
+		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "interruption-settings.start-speaking-plan",
 			Usage:      "Controls when the assistant starts speaking after the user stops. These thresholds primarily apply to non turn-taking transcription models. For turn-taking models like `deepgram/flux`, end-of-turn detection is driven by the transcription end-of-turn settings under `transcription.settings` instead.",
@@ -922,6 +1027,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "If true, conversation history and insights will be stored. If false, they will not be stored. This in‑tool toggle governs solely the retention of conversation history and insights via the AI assistant. It has no effect on any separate recording, transcription, or storage configuration that you have set at the account, number, or application level. All such external settings remain in force regardless of your selection here.",
 			InnerField: "data_retention",
 		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "privacy-settings.in-transit-data-locality",
+			Usage:      "Requires every model call made for a web chat turn to be received and served inside your organization's data-locality region, rather than only stored there. Applies to web chat only — voice and messaging assistants are unaffected. Enabling it requires a data-locality region with in-region inference (USA, EU, AUS, UAE; see [Inference regions](https://developers.telnyx.com/docs/inference/models/regions)) and Telnyx-hosted models for the assistant, its fallback, and any conversation-flow node that overrides the model; the request is rejected otherwise. Once enabled, send chat requests to your region's API hostname: a request entering the platform in another region is rejected rather than forwarded, because forwarding it would already have moved the content across the border. Defaults to false.",
+			InnerField: "in_transit_data_locality",
+		},
 	},
 	"telephony-settings": {
 		&requestflag.InnerFlag[string]{
@@ -935,13 +1045,18 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "disable_dtmf",
 		},
 		&requestflag.InnerFlag[string]{
+			Name:       "telephony-settings.fallback-destination",
+			Usage:      "Destination number or SIP URI to transfer the caller to when the AI conversation ends abnormally, for example because of an assistant-side error, so the caller is not left in dead air. This only fires for abnormal ends: it does not fire when the conversation ends on purpose (the caller hung up, the assistant completed normally, the caller hung up after a relay handoff, or voicemail was detected), and it does not fire when the assistant already transferred or bridged the call.",
+			InnerField: "fallback_destination",
+		},
+		&requestflag.InnerFlag[string]{
 			Name:       "telephony-settings.noise-suppression",
-			Usage:      "The noise suppression engine to use. Use 'disabled' to turn off noise suppression.",
+			Usage:      "The noise suppression engine to use. 'aicoustics' is STT-optimized and recommended for AI assistants (configure through noise_suppression_config). Use 'disabled' to turn off noise suppression.",
 			InnerField: "noise_suppression",
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "telephony-settings.noise-suppression-config",
-			Usage:      "Configuration for noise suppression. Only applicable when noise_suppression is 'deepfilternet'.",
+			Usage:      "Configuration for noise suppression. Applicable fields depend on the engine: 'attenuation_limit' and 'mode' only when noise_suppression is 'deepfilternet'; 'family', 'size' and 'enhancement_level' only when noise_suppression is 'aicoustics'.",
 			InnerField: "noise_suppression_config",
 		},
 		&requestflag.InnerFlag[map[string]any]{
@@ -988,12 +1103,12 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4` and `soniox/stt-rt-v5`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language; `settings.language_hints` can pin multiple languages at once instead. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-streaming` is a multilingual streaming model with configurable turn detection.\n- `xai/grok-stt` is a multilingual Grok STT model.\n- `soniox/stt-rt-v4` is a multilingual streaming model with automatic language detection and configurable endpointing.\n- `nvidia/parakeet-v3` is a multilingual transcription model with automatic language detection.\n- `humain/realtime` is a streaming model with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` is a turn-based streaming model covering 10 European languages with automatic language detection.\n- `cohere/ar-stt` is a non-streaming Arabic and English transcription model.",
+			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-3-5-pro` is a multilingual streaming model with configurable turn detection. The legacy alias `assemblyai/universal-streaming` is still accepted and resolves to the same model.\n- `xai/grok-stt` is a multilingual Grok STT model.\n- `soniox/stt-rt-v4` and `soniox/stt-rt-v5` are multilingual streaming models with automatic language detection, configurable endpointing, term biasing (`context`), and `language_hints`.\n- `nvidia/parakeet-v3` is a multilingual transcription model with automatic language detection.\n- `omi-health/omi-med-stt-v1` is an English-only medical transcription model (Parakeet-based).\n- `humain/realtime` is a streaming model with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` is a turn-based streaming model covering 10 European languages with automatic language detection.\n- `cohere/ar-stt` is a non-streaming Arabic and English transcription model.",
 			InnerField: "model",
 		},
 		&requestflag.InnerFlag[string]{

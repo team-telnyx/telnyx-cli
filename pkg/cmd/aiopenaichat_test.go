@@ -23,17 +23,16 @@ func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 			"--early-stopping=true",
 			"--enable-thinking=true",
 			"--frequency-penalty", "0",
-			"--guided-choice", "string",
-			"--guided-json", "{foo: bar}",
-			"--guided-regex", "guided_regex",
 			"--length-penalty", "0",
 			"--logprobs=true",
 			"--max-tokens", "0",
 			"--min-p", "0",
+			"--mode", "preferred",
 			"--model", "model",
 			"--n", "0",
 			"--presence-penalty", "0",
 			"--reasoning-effort", "none",
+			"--region", "USA",
 			"--response-format", "{type: text}",
 			"--seed", "0",
 			"--service-tier", "service_tier",
@@ -66,18 +65,17 @@ func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 			"--early-stopping=true",
 			"--enable-thinking=true",
 			"--frequency-penalty", "0",
-			"--guided-choice", "string",
-			"--guided-json", "{foo: bar}",
-			"--guided-regex", "guided_regex",
 			"--length-penalty", "0",
 			"--logprobs=true",
 			"--max-tokens", "0",
 			"--min-p", "0",
+			"--mode", "preferred",
 			"--model", "model",
 			"--n", "0",
 			"--presence-penalty", "0",
 			"--reasoning-effort", "none",
-			"--response-format.type", "text",
+			"--region", "USA",
+			"--response-format", "{type: text}",
 			"--seed", "0",
 			"--service-tier", "service_tier",
 			"--stop", "string",
@@ -104,19 +102,16 @@ func TestAIOpenAIChatCreateCompletion(t *testing.T) {
 			"early_stopping: true\n" +
 			"enable_thinking: true\n" +
 			"frequency_penalty: 0\n" +
-			"guided_choice:\n" +
-			"  - string\n" +
-			"guided_json:\n" +
-			"  foo: bar\n" +
-			"guided_regex: guided_regex\n" +
 			"length_penalty: 0\n" +
 			"logprobs: true\n" +
 			"max_tokens: 0\n" +
 			"min_p: 0\n" +
+			"mode: preferred\n" +
 			"model: model\n" +
 			"'n': 0\n" +
 			"presence_penalty: 0\n" +
 			"reasoning_effort: none\n" +
+			"region: USA\n" +
 			"response_format:\n" +
 			"  type: text\n" +
 			"seed: 0\n" +

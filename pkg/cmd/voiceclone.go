@@ -121,7 +121,7 @@ var voiceClonesDelete = cli.Command{
 
 var voiceClonesCreateFromUpload = cli.Command{
 	Name:    "create-from-upload",
-	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. For best results, provide 5–10 seconds of\nclear speech. Maximum file size: 5MB for Telnyx, 20MB for Minimax.",
+	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. For best results, provide 5–60 seconds of\nclear speech (Ultra accepts up to 60 seconds; Qwen3TTS auto-trims to 10 seconds;\nMinimax accepts up to 5 minutes). Maximum file size: 5MB for Telnyx, 20MB for\nMinimax.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

@@ -283,11 +283,46 @@ var texmlAccountsConferencesParticipantsParticipants = requestflag.WithInnerFlag
 			Usage:    "Whether to detect if a human or an answering machine picked up the call. Use `Enable` if you would like to ne notified as soon as the called party is identified. Use `DetectMessageEnd`, if you would like to leave a message on an answering machine.",
 			BodyPath: "MachineDetection",
 		},
+		&requestflag.Flag[int64]{
+			Name:     "machine-detection-beep-max-frequency",
+			Usage:    "Highest frequency, in Hz, that a tone can reach and still be treated as a beep. Only used when MachineDetection is enabled.",
+			BodyPath: "MachineDetectionBeepMaxFrequency",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "machine-detection-beep-min-frequency",
+			Usage:    "Lowest frequency, in Hz, that a tone must reach to be treated as a beep. Raising it above 480 excludes North American ringback (440 + 480 Hz), which can otherwise be reported as a beep when the `freq_only` profile is in use. Only used when MachineDetection is enabled.",
+			BodyPath: "MachineDetectionBeepMinFrequency",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "machine-detection-beep-min-tone-duration",
+			Usage:    "Shortest tone, in milliseconds, that can be treated as a beep. Raising it rejects brief tones such as call-progress blips. Only used when MachineDetection is enabled.",
+			BodyPath: "MachineDetectionBeepMinToneDuration",
+		},
 		&requestflag.Flag[string]{
 			Name:     "machine-detection-beep-profile",
 			Usage:    "Selects which detectors must validate a beep. `both` requires the amplitude and frequency detectors to agree. `freq_only` uses the frequency detector alone, for beeps whose volume is too unsteady for the default profile. Only used when MachineDetection is enabled.",
 			Default:  "both",
 			BodyPath: "MachineDetectionBeepProfile",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "machine-detection-beep-spectral-confirmation",
+			Usage:    "When enabled, a candidate beep must pass an additional spectral check before it is reported. Only used when MachineDetection is enabled.",
+			BodyPath: "MachineDetectionBeepSpectralConfirmation",
+		},
+		&requestflag.Flag[float64]{
+			Name:     "machine-detection-beep-spectral-min-purity",
+			Usage:    "Minimum spectral purity, from 0 to 1, for a tone to be treated as a beep. Raising it rejects mixed tones such as ringback, which combines two frequencies. Only used when MachineDetection is enabled.",
+			BodyPath: "MachineDetectionBeepSpectralMinPurity",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "machine-detection-beep-spectral-reject-fax-cng",
+			Usage:    "When enabled, the fax CNG tone is rejected rather than reported as a beep. Only used when MachineDetection is enabled.",
+			BodyPath: "MachineDetectionBeepSpectralRejectFaxCng",
+		},
+		&requestflag.Flag[int64]{
+			Name:     "machine-detection-beep-spectral-window",
+			Usage:    "Length of the spectral confirmation window, in milliseconds. Only used when MachineDetection is enabled.",
+			BodyPath: "MachineDetectionBeepSpectralWindow",
 		},
 		&requestflag.Flag[int64]{
 			Name:     "machine-detection-silence-timeout",
