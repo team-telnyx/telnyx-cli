@@ -191,7 +191,7 @@ var uacConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "external-uac-settings.password",
-			Usage:      "The SIP password used for digest authentication with the external SIP peer.",
+			Usage:      "The SIP password used for digest authentication with the external SIP peer. For primary accounts created on or after September 8, 2026, this password is returned as `********`. The password is returned in full on create, and on update only when that update changed the password. Accounts created before September 8, 2026 are unaffected.",
 			InnerField: "password",
 		},
 		&requestflag.InnerFlag[string]{
@@ -373,7 +373,7 @@ var uacConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 	"rtcp-settings": {
 		&requestflag.InnerFlag[bool]{
 			Name:       "rtcp-settings.capture-enabled",
-			Usage:      "BETA - Enable the capture and storage of RTCP messages to create QoS reports on the Telnyx Mission Control Portal.",
+			Usage:      "Enable the capture and storage of RTCP messages to create QoS reports on the Telnyx Mission Control Portal.",
 			InnerField: "capture_enabled",
 		},
 		&requestflag.InnerFlag[string]{
@@ -585,7 +585,7 @@ var uacConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "external-uac-settings.password",
-			Usage:      "The SIP password used for digest authentication with the external SIP peer.",
+			Usage:      "The SIP password used for digest authentication with the external SIP peer. For primary accounts created on or after September 8, 2026, this password is returned as `********`. The password is returned in full on create, and on update only when that update changed the password. Accounts created before September 8, 2026 are unaffected.",
 			InnerField: "password",
 		},
 		&requestflag.InnerFlag[string]{
@@ -767,7 +767,7 @@ var uacConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	"rtcp-settings": {
 		&requestflag.InnerFlag[bool]{
 			Name:       "rtcp-settings.capture-enabled",
-			Usage:      "BETA - Enable the capture and storage of RTCP messages to create QoS reports on the Telnyx Mission Control Portal.",
+			Usage:      "Enable the capture and storage of RTCP messages to create QoS reports on the Telnyx Mission Control Portal.",
 			InnerField: "capture_enabled",
 		},
 		&requestflag.InnerFlag[string]{

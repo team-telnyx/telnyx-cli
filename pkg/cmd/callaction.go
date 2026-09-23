@@ -863,12 +863,12 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 	"transcription": {
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `assemblyai/universal-streaming`, `auto` (or unset) enables native multilingual code-switching; ISO 639-1 codes (`en`, `es`, `de`, `fr`, `pt`, `it`, `tr`, `nl`, `sv`, `no`, `da`, `fi`, `hi`, `vi`, `ar`, `he`, `ja`, `zh`) bias the session to that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `assemblyai/universal-3-5-pro` (and its legacy alias `assemblyai/universal-streaming`), `auto` (or unset) enables native multilingual code-switching; ISO 639-1 codes (`en`, `es`, `de`, `fr`, `pt`, `it`, `tr`, `nl`, `sv`, `no`, `da`, `fi`, `hi`, `vi`, `ar`, `he`, `ja`, `zh`) bias the session to that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-streaming` for live streaming transcription.\n- `xai/grok-stt` for live streaming transcription.\n- `soniox/stt-rt-v4` for live streaming multilingual transcription with automatic language detection.\n- `nvidia/parakeet-v3` for multilingual transcription with automatic language detection.\n- `humain/realtime` for live streaming transcription with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` for live streaming turn-based transcription of 10 European languages with automatic language detection.\n- `cohere/ar-stt` for non-streaming Arabic and English transcription.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
+			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-3-5-pro` for live streaming transcription. The legacy alias `assemblyai/universal-streaming` is still accepted and resolves to the same model.\n- `xai/grok-stt` for live streaming transcription.\n- `soniox/stt-rt-v4` for live streaming multilingual transcription with automatic language detection.\n- `nvidia/parakeet-v3` for multilingual transcription with automatic language detection.\n- `omi-health/omi-med-stt-v1` for English-only medical transcription (Parakeet-based).\n- `humain/realtime` for live streaming transcription with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` for live streaming turn-based transcription of 10 European languages with automatic language detection.\n- `cohere/ar-stt` for non-streaming Arabic and English transcription.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
 			InnerField: "model",
 		},
 	},
@@ -1826,12 +1826,12 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 	"transcription": {
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `assemblyai/universal-streaming`, `auto` (or unset) enables native multilingual code-switching; ISO 639-1 codes (`en`, `es`, `de`, `fr`, `pt`, `it`, `tr`, `nl`, `sv`, `no`, `da`, `fi`, `hi`, `vi`, `ar`, `he`, `ja`, `zh`) bias the session to that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. Supported and meaningful values depend on the selected transcription `model`. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language. For `assemblyai/universal-3-5-pro` (and its legacy alias `assemblyai/universal-streaming`), `auto` (or unset) enables native multilingual code-switching; ISO 639-1 codes (`en`, `es`, `de`, `fr`, `pt`, `it`, `tr`, `nl`, `sv`, `no`, `da`, `fi`, `hi`, `vi`, `ar`, `he`, `ja`, `zh`) bias the session to that language. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-streaming` for live streaming transcription.\n- `xai/grok-stt` for live streaming transcription.\n- `soniox/stt-rt-v4` for live streaming multilingual transcription with automatic language detection.\n- `nvidia/parakeet-v3` for multilingual transcription with automatic language detection.\n- `humain/realtime` for live streaming transcription with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` for live streaming turn-based transcription of 10 European languages with automatic language detection.\n- `cohere/ar-stt` for non-streaming Arabic and English transcription.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
+			Usage:      "The speech to text model to be used by the voice assistant. Supported models include:\n\n- `deepgram/flux` (or `flux`) for live streaming turn-taking.\n- `deepgram/nova-3` and `deepgram/nova-2` for live streaming transcription.\n- `speechmatics/standard` and `speechmatics/enhanced` for live streaming transcription.\n- `assemblyai/universal-3-5-pro` for live streaming transcription. The legacy alias `assemblyai/universal-streaming` is still accepted and resolves to the same model.\n- `xai/grok-stt` for live streaming transcription.\n- `soniox/stt-rt-v4` for live streaming multilingual transcription with automatic language detection.\n- `nvidia/parakeet-v3` for multilingual transcription with automatic language detection.\n- `omi-health/omi-med-stt-v1` for English-only medical transcription (Parakeet-based).\n- `humain/realtime` for live streaming transcription with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` for live streaming turn-based transcription of 10 European languages with automatic language detection.\n- `cohere/ar-stt` for non-streaming Arabic and English transcription.\n- `azure/fast` and `azure/realtime`; Azure models require `region`, and unsupported regions require `api_key_ref`.\n- `google/latest_long` for non-streaming multilingual transcription.\n- `distil-whisper/distil-large-v2` for lower-latency English-only non-streaming transcription.\n- `openai/whisper-large-v3-turbo` for multilingual non-streaming transcription with automatic language detection.",
 			InnerField: "model",
 		},
 	},
@@ -2935,6 +2935,11 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Custom headers to be added to the SIP INVITE.",
 			BodyPath: "custom_headers",
 		},
+		&requestflag.Flag[string]{
+			Name:     "diversion",
+			Usage:    "The `to` number of an active inbound call, in +E164 format. Telnyx checks whether there is currently an active inbound call where `to` matches this `diversion` value and `from` matches the `from` number supplied for this request. If such a call exists, the `from` number is treated as verified (since it is already on an active inbound call to you) and can be used as the caller id for this outbound call.",
+			BodyPath: "diversion",
+		},
 		&requestflag.Flag[bool]{
 			Name:     "early-media",
 			Usage:    "If set to false, early media will not be passed to the originating leg.",
@@ -3129,6 +3134,41 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 			Name:       "answering-machine-detection-config.beep-detection-profile",
 			Usage:      "Selects which detectors must validate a beep. `both` requires the amplitude and frequency detectors to agree. `freq_only` uses the frequency detector alone, for beeps whose volume is too unsteady for the default profile.",
 			InnerField: "beep_detection_profile",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.beep-max-frequency-hz",
+			Usage:      "Highest frequency, in Hz, that a tone can reach and still be treated as a beep. Only used when beep detection is active.",
+			InnerField: "beep_max_frequency_hz",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.beep-min-frequency-hz",
+			Usage:      "Lowest frequency, in Hz, that a tone must reach to be treated as a beep. Raising it above 480 excludes North American ringback (440 + 480 Hz), which can otherwise be reported as a beep when the `freq_only` profile is in use. Only used when beep detection is active.",
+			InnerField: "beep_min_frequency_hz",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.beep-min-tone-duration-millis",
+			Usage:      "Shortest tone, in milliseconds, that can be treated as a beep. Raising it rejects brief tones such as call-progress blips. Only used when beep detection is active.",
+			InnerField: "beep_min_tone_duration_millis",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "answering-machine-detection-config.beep-spectral-confirmation",
+			Usage:      "When enabled, a candidate beep must pass an additional spectral check before it is reported. Only used when beep detection is active.",
+			InnerField: "beep_spectral_confirmation",
+		},
+		&requestflag.InnerFlag[float64]{
+			Name:       "answering-machine-detection-config.beep-spectral-min-purity",
+			Usage:      "Minimum spectral purity, from 0 to 1, for a tone to be treated as a beep. Raising it rejects mixed tones such as ringback, which combines two frequencies. Only used when beep detection is active.",
+			InnerField: "beep_spectral_min_purity",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "answering-machine-detection-config.beep-spectral-reject-fax-cng",
+			Usage:      "When enabled, the fax CNG tone is rejected rather than reported as a beep. Only used when beep detection is active.",
+			InnerField: "beep_spectral_reject_fax_cng",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.beep-spectral-window-millis",
+			Usage:      "Length of the spectral confirmation window, in milliseconds. Only used when beep detection is active.",
+			InnerField: "beep_spectral_window_millis",
 		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "answering-machine-detection-config.between-words-silence-millis",

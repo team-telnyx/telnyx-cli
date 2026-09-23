@@ -355,7 +355,7 @@ var fqdnConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 	"rtcp-settings": {
 		&requestflag.InnerFlag[bool]{
 			Name:       "rtcp-settings.capture-enabled",
-			Usage:      "BETA - Enable the capture and storage of RTCP messages to create QoS reports on the Telnyx Mission Control Portal.",
+			Usage:      "Enable the capture and storage of RTCP messages to create QoS reports on the Telnyx Mission Control Portal.",
 			InnerField: "capture_enabled",
 		},
 		&requestflag.InnerFlag[string]{
@@ -729,7 +729,7 @@ var fqdnConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	"rtcp-settings": {
 		&requestflag.InnerFlag[bool]{
 			Name:       "rtcp-settings.capture-enabled",
-			Usage:      "BETA - Enable the capture and storage of RTCP messages to create QoS reports on the Telnyx Mission Control Portal.",
+			Usage:      "Enable the capture and storage of RTCP messages to create QoS reports on the Telnyx Mission Control Portal.",
 			InnerField: "capture_enabled",
 		},
 		&requestflag.InnerFlag[string]{

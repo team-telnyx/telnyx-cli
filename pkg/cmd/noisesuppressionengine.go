@@ -7,35 +7,25 @@ import (
 	"fmt"
 
 	"github.com/team-telnyx/telnyx-cli/internal/apiquery"
-	"github.com/team-telnyx/telnyx-cli/internal/requestflag"
 	"github.com/team-telnyx/telnyx-go/v4"
 	"github.com/team-telnyx/telnyx-go/v4/option"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"
 )
 
-var uacConnectionsActionsCheckRegistrationStatus = cli.Command{
-	Name:    "check-registration-status",
-	Usage:   "Returns the live SIP registration status for a UAC connection. Reports whether\nthe endpoint is currently registered (`status`) and the timestamp of the last\nSIP registration event (`last_registration`).",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "id",
-			Required:  true,
-			PathParam: "id",
-		},
-	},
-	Action:          handleUacConnectionsActionsCheckRegistrationStatus,
+var noiseSuppressionEnginesList = cli.Command{
+	Name:            "list",
+	Usage:           "Returns all noise suppression engines available to the authenticated user.\nEngines gated behind a feature flag are included only when the flag is enabled\nfor the user's account. Results are not paginated; the number of engines is\nexpected to remain small.",
+	Suggest:         true,
+	Flags:           []cli.Flag{},
+	Action:          handleNoiseSuppressionEnginesList,
 	HideHelpCommand: true,
 }
 
-func handleUacConnectionsActionsCheckRegistrationStatus(ctx context.Context, cmd *cli.Command) error {
+func handleNoiseSuppressionEnginesList(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
-		cmd.Set("id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
+
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
@@ -53,7 +43,7 @@ func handleUacConnectionsActionsCheckRegistrationStatus(ctx context.Context, cmd
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.UacConnections.Actions.CheckRegistrationStatus(ctx, cmd.Value("id").(string), options...)
+	_, err = client.NoiseSuppressionEngines.List(ctx, options...)
 	if err != nil {
 		return err
 	}
@@ -66,7 +56,7 @@ func handleUacConnectionsActionsCheckRegistrationStatus(ctx context.Context, cmd
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "uac-connections:actions check-registration-status",
+		Title:          "noise-suppression-engines list",
 		Transform:      transform,
 	})
 }

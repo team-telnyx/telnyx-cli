@@ -33,7 +33,14 @@ func TestTexmlInitiateAICall(t *testing.T) {
 			"--custom-header", "{name: X-Custom-Header, value: custom-value}",
 			"--detection-mode", "Premium",
 			"--machine-detection", "Enable",
+			"--machine-detection-beep-max-frequency", "2000",
+			"--machine-detection-beep-min-frequency", "550",
+			"--machine-detection-beep-min-tone-duration", "300",
 			"--machine-detection-beep-profile", "freq_only",
+			"--machine-detection-beep-spectral-confirmation=true",
+			"--machine-detection-beep-spectral-min-purity", "0.8",
+			"--machine-detection-beep-spectral-reject-fax-cng=true",
+			"--machine-detection-beep-spectral-window", "100",
 			"--machine-detection-prompt-end-timeout", "5000",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
@@ -90,7 +97,14 @@ func TestTexmlInitiateAICall(t *testing.T) {
 			"--custom-header.value", "custom-value",
 			"--detection-mode", "Premium",
 			"--machine-detection", "Enable",
+			"--machine-detection-beep-max-frequency", "2000",
+			"--machine-detection-beep-min-frequency", "550",
+			"--machine-detection-beep-min-tone-duration", "300",
 			"--machine-detection-beep-profile", "freq_only",
+			"--machine-detection-beep-spectral-confirmation=true",
+			"--machine-detection-beep-spectral-min-purity", "0.8",
+			"--machine-detection-beep-spectral-reject-fax-cng=true",
+			"--machine-detection-beep-spectral-window", "100",
 			"--machine-detection-prompt-end-timeout", "5000",
 			"--machine-detection-silence-timeout", "2000",
 			"--machine-detection-speech-end-threshold", "2000",
@@ -144,7 +158,14 @@ func TestTexmlInitiateAICall(t *testing.T) {
 			"    value: custom-value\n" +
 			"DetectionMode: Premium\n" +
 			"MachineDetection: Enable\n" +
+			"MachineDetectionBeepMaxFrequency: 2000\n" +
+			"MachineDetectionBeepMinFrequency: 550\n" +
+			"MachineDetectionBeepMinToneDuration: 300\n" +
 			"MachineDetectionBeepProfile: freq_only\n" +
+			"MachineDetectionBeepSpectralConfirmation: true\n" +
+			"MachineDetectionBeepSpectralMinPurity: 0.8\n" +
+			"MachineDetectionBeepSpectralRejectFaxCng: true\n" +
+			"MachineDetectionBeepSpectralWindow: 100\n" +
 			"MachineDetectionPromptEndTimeout: 5000\n" +
 			"MachineDetectionSilenceTimeout: 2000\n" +
 			"MachineDetectionSpeechEndThreshold: 2000\n" +

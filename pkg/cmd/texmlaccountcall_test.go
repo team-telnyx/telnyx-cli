@@ -70,7 +70,7 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"--api-key", "string",
 			"texml:accounts:calls", "calls",
 			"--account-sid", "account_sid",
-			"--body", "{Url: https://www.example.com/texml.xml, ApplicationSid: example-app-sid, AsyncAmd: true, AsyncAmdStatusCallback: https://www.example.com/callback, AsyncAmdStatusCallbackMethod: GET, CallerId: Info, CancelPlaybackOnDetectMessageEnd: false, CancelPlaybackOnMachineDetection: false, CustomHeaders: [{name: X-Custom-Header, value: custom-value}], DeepfakeDetection: Enable, DeepfakeDetectionCallbackMethod: GET, DeepfakeDetectionCallbackUrl: https://www.example.com/deepfake-callback, DetectionMode: Premium, FallbackUrl: https://www.example.com/instructions-fallback.xml, From: '+13120001234', MachineDetection: Enable, MachineDetectionBeepProfile: freq_only, MachineDetectionPromptEndTimeout: 5000, MachineDetectionSilenceTimeout: 2000, MachineDetectionSpeechEndThreshold: 2000, MachineDetectionSpeechThreshold: 2000, MachineDetectionTimeout: 5000, MediaEncryption: disabled, PreferredCodecs: 'PCMA,PCMU', Record: false, RecordingChannels: dual, RecordingStatusCallback: https://example.com/recording_status_callback, RecordingStatusCallbackEvent: in-progress completed absent, RecordingStatusCallbackMethod: GET, RecordingTimeout: 5, RecordingTrack: inbound, SendRecordingUrl: false, SipAuthPassword: '1234', SipAuthUsername: user, SipRegion: Canada, StatusCallback: https://www.example.com/statuscallback-listener, StatusCallbackEvent: initiated answered, StatusCallbackMethod: GET, SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg, SupervisingRole: monitor, Texml: Texml, TimeLimit: 3600, Timeout: 60, To: '+13121230000', Trim: trim-silence, UrlMethod: GET}",
+			"--body", "{Url: https://www.example.com/texml.xml, ApplicationSid: example-app-sid, AsyncAmd: true, AsyncAmdStatusCallback: https://www.example.com/callback, AsyncAmdStatusCallbackMethod: GET, CallerId: Info, CancelPlaybackOnDetectMessageEnd: false, CancelPlaybackOnMachineDetection: false, CustomHeaders: [{name: X-Custom-Header, value: custom-value}], DeepfakeDetection: Enable, DeepfakeDetectionCallbackMethod: GET, DeepfakeDetectionCallbackUrl: https://www.example.com/deepfake-callback, DetectionMode: Premium, FallbackUrl: https://www.example.com/instructions-fallback.xml, From: '+13120001234', MachineDetection: Enable, MachineDetectionBeepMaxFrequency: 2000, MachineDetectionBeepMinFrequency: 550, MachineDetectionBeepMinToneDuration: 300, MachineDetectionBeepProfile: freq_only, MachineDetectionBeepSpectralConfirmation: true, MachineDetectionBeepSpectralMinPurity: 0.8, MachineDetectionBeepSpectralRejectFaxCng: true, MachineDetectionBeepSpectralWindow: 100, MachineDetectionPromptEndTimeout: 5000, MachineDetectionSilenceTimeout: 2000, MachineDetectionSpeechEndThreshold: 2000, MachineDetectionSpeechThreshold: 2000, MachineDetectionTimeout: 5000, MediaEncryption: disabled, PreferredCodecs: 'PCMA,PCMU', Record: false, RecordingChannels: dual, RecordingStatusCallback: https://example.com/recording_status_callback, RecordingStatusCallbackEvent: in-progress completed absent, RecordingStatusCallbackMethod: GET, RecordingTimeout: 5, RecordingTrack: inbound, SendRecordingUrl: false, SipAuthPassword: '1234', SipAuthUsername: user, SipRegion: Canada, StatusCallback: https://www.example.com/statuscallback-listener, StatusCallbackEvent: initiated answered, StatusCallbackMethod: GET, SuperviseCallSid: v3:MdI91X4lWFEs7IgbBEOT9M4AigoY08M0WWZFISt1Yw2axZ_IiE4pqg, SupervisingRole: monitor, Texml: Texml, TimeLimit: 3600, Timeout: 60, To: '+13121230000', Trim: trim-silence, UrlMethod: GET}",
 		)
 	})
 
@@ -95,7 +95,14 @@ func TestTexmlAccountsCallsCalls(t *testing.T) {
 			"FallbackUrl: https://www.example.com/instructions-fallback.xml\n" +
 			"From: '+13120001234'\n" +
 			"MachineDetection: Enable\n" +
+			"MachineDetectionBeepMaxFrequency: 2000\n" +
+			"MachineDetectionBeepMinFrequency: 550\n" +
+			"MachineDetectionBeepMinToneDuration: 300\n" +
 			"MachineDetectionBeepProfile: freq_only\n" +
+			"MachineDetectionBeepSpectralConfirmation: true\n" +
+			"MachineDetectionBeepSpectralMinPurity: 0.8\n" +
+			"MachineDetectionBeepSpectralRejectFaxCng: true\n" +
+			"MachineDetectionBeepSpectralWindow: 100\n" +
 			"MachineDetectionPromptEndTimeout: 5000\n" +
 			"MachineDetectionSilenceTimeout: 2000\n" +
 			"MachineDetectionSpeechEndThreshold: 2000\n" +

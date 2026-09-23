@@ -53,21 +53,6 @@ var aiOpenAIChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 			Default:  0,
 			BodyPath: "frequency_penalty",
 		},
-		&requestflag.Flag[[]string]{
-			Name:     "guided-choice",
-			Usage:    "If specified, the output will be exactly one of the choices.",
-			BodyPath: "guided_choice",
-		},
-		&requestflag.Flag[map[string]any]{
-			Name:     "guided-json",
-			Usage:    "Must be a valid JSON schema. If specified, the output will follow the JSON schema.",
-			BodyPath: "guided_json",
-		},
-		&requestflag.Flag[string]{
-			Name:     "guided-regex",
-			Usage:    "If specified, the output will follow the regex pattern.",
-			BodyPath: "guided_regex",
-		},
 		&requestflag.Flag[float64]{
 			Name:     "length-penalty",
 			Usage:    "This is used with `use_beam_search` to prefer shorter or longer completions.",
@@ -91,6 +76,12 @@ var aiOpenAIChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "min_p",
 		},
 		&requestflag.Flag[string]{
+			Name:     "mode",
+			Usage:    "How strictly `region` is applied. `preferred` (the default when `region` is set) tries that region first and falls back to another when the model cannot be served there, so a request that would have succeeded still succeeds. `strict` pins the request: it is served from that region or it fails with a 422, never redirected to another region. Requires `region`.",
+			Default:  "preferred",
+			BodyPath: "mode",
+		},
+		&requestflag.Flag[string]{
 			Name:     "model",
 			Usage:    "The language model to chat with.",
 			Default:  "meta-llama/Meta-Llama-3.1-8B-Instruct",
@@ -112,9 +103,14 @@ var aiOpenAIChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Controls the reasoning effort for models that support it. When set, the model spends more or less compute on internal reasoning before generating its response. Supported values: none, minimal, low, medium, high, xhigh, max. Not all models support all values; unsupported values are rejected with a 400 error. When omitted, reasoning models use their default effort level.",
 			BodyPath: "reasoning_effort",
 		},
+		&requestflag.Flag[string]{
+			Name:     "region",
+			Usage:    "Optional data-residency region the request should be served from, using the same vocabulary as your account's Data Locality setting. Behavior depends on `mode`. Supported for Telnyx-hosted models only: a request routed to an external provider never passes through Telnyx model routing, so a region cannot be enforced for it. Omit for today's latency-based routing.",
+			BodyPath: "region",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "response-format",
-			Usage:    "Use this is you want to guarantee a JSON output without defining a schema. For control over the schema, use `guided_json`.",
+			Usage:    "Controls the format of the model output. `json_object` guarantees valid JSON output without defining a schema; `json_schema` constrains the output to the JSON schema you supply via the `json_schema` property and is the supported way to get guaranteed structured output on Telnyx-hosted models.",
 			BodyPath: "response_format",
 		},
 		&requestflag.Flag[int64]{
@@ -183,13 +179,6 @@ var aiOpenAIChatCreateCompletion = requestflag.WithInnerFlags(cli.Command{
 			Name:       "message.role",
 			Usage:      `Allowed values: "system", "user", "assistant", "tool".`,
 			InnerField: "role",
-		},
-	},
-	"response-format": {
-		&requestflag.InnerFlag[string]{
-			Name:       "response-format.type",
-			Usage:      `Allowed values: "text", "json_object".`,
-			InnerField: "type",
 		},
 	},
 })

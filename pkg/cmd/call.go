@@ -109,6 +109,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Name:     "dialogflow-config",
 			BodyPath: "dialogflow_config",
 		},
+		&requestflag.Flag[string]{
+			Name:     "diversion",
+			Usage:    "The `to` number of an active inbound call, in +E164 format. Telnyx checks whether there is currently an active inbound call where `to` matches this `diversion` value and `from` matches the `from` number supplied for this request. If such a call exists, the `from` number is treated as verified (since it is already on an active inbound call to you) and can be used as the caller id for this outbound call.",
+			BodyPath: "diversion",
+		},
 		&requestflag.Flag[bool]{
 			Name:     "enable-dialogflow",
 			Usage:    "Enables Dialogflow for the current call. The default value is false.",
@@ -383,6 +388,41 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Name:       "answering-machine-detection-config.beep-detection-profile",
 			Usage:      "Selects which detectors must validate a beep. `both` requires the amplitude and frequency detectors to agree. `freq_only` uses the frequency detector alone, for beeps whose volume is too unsteady for the default profile.",
 			InnerField: "beep_detection_profile",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.beep-max-frequency-hz",
+			Usage:      "Highest frequency, in Hz, that a tone can reach and still be treated as a beep. Only used when beep detection is active.",
+			InnerField: "beep_max_frequency_hz",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.beep-min-frequency-hz",
+			Usage:      "Lowest frequency, in Hz, that a tone must reach to be treated as a beep. Raising it above 480 excludes North American ringback (440 + 480 Hz), which can otherwise be reported as a beep when the `freq_only` profile is in use. Only used when beep detection is active.",
+			InnerField: "beep_min_frequency_hz",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.beep-min-tone-duration-millis",
+			Usage:      "Shortest tone, in milliseconds, that can be treated as a beep. Raising it rejects brief tones such as call-progress blips. Only used when beep detection is active.",
+			InnerField: "beep_min_tone_duration_millis",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "answering-machine-detection-config.beep-spectral-confirmation",
+			Usage:      "When enabled, a candidate beep must pass an additional spectral check before it is reported. Only used when beep detection is active.",
+			InnerField: "beep_spectral_confirmation",
+		},
+		&requestflag.InnerFlag[float64]{
+			Name:       "answering-machine-detection-config.beep-spectral-min-purity",
+			Usage:      "Minimum spectral purity, from 0 to 1, for a tone to be treated as a beep. Raising it rejects mixed tones such as ringback, which combines two frequencies. Only used when beep detection is active.",
+			InnerField: "beep_spectral_min_purity",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "answering-machine-detection-config.beep-spectral-reject-fax-cng",
+			Usage:      "When enabled, the fax CNG tone is rejected rather than reported as a beep. Only used when beep detection is active.",
+			InnerField: "beep_spectral_reject_fax_cng",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.beep-spectral-window-millis",
+			Usage:      "Length of the spectral confirmation window, in milliseconds. Only used when beep detection is active.",
+			InnerField: "beep_spectral_window_millis",
 		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "answering-machine-detection-config.between-words-silence-millis",

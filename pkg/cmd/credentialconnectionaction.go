@@ -16,7 +16,7 @@ import (
 
 var credentialConnectionsActionsCheckRegistrationStatus = cli.Command{
 	Name:    "check-registration-status",
-	Usage:   "Checks the registration_status for a credential connection,\n(`registration_status`) as well as the timestamp for the last SIP registration\nevent (`registration_status_updated_at`)",
+	Usage:   "Returns the live SIP registration status for a credential connection. Reports\nwhether the endpoint is currently registered (`status`) and the timestamp of the\nlast SIP registration event (`last_registration`).",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

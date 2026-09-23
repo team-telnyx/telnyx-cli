@@ -2220,12 +2220,13 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--call-control-id", "call_control_id",
 			"--to", "+18005550100 or sip:username@sip.telnyx.com;secure=srtp",
 			"--answering-machine-detection", "detect",
-			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, beep_detection_profile: freq_only, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
+			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, beep_detection_profile: freq_only, beep_max_frequency_hz: 2000, beep_min_frequency_hz: 550, beep_min_tone_duration_millis: 300, beep_spectral_confirmation: true, beep_spectral_min_purity: 0.8, beep_spectral_reject_fax_cng: true, beep_spectral_window_millis: 100, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--custom-header", "{name: head_1, value: val_1}",
 			"--custom-header", "{name: head_2, value: val_2}",
+			"--diversion", "+18005550101",
 			"--early-media=true",
 			"--from", "+18005550101",
 			"--from-display-name", "Company Name",
@@ -2276,6 +2277,13 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--answering-machine-detection", "detect",
 			"--answering-machine-detection-config.after-greeting-silence-millis", "1000",
 			"--answering-machine-detection-config.beep-detection-profile", "freq_only",
+			"--answering-machine-detection-config.beep-max-frequency-hz", "2000",
+			"--answering-machine-detection-config.beep-min-frequency-hz", "550",
+			"--answering-machine-detection-config.beep-min-tone-duration-millis", "300",
+			"--answering-machine-detection-config.beep-spectral-confirmation=true",
+			"--answering-machine-detection-config.beep-spectral-min-purity", "0.8",
+			"--answering-machine-detection-config.beep-spectral-reject-fax-cng=true",
+			"--answering-machine-detection-config.beep-spectral-window-millis", "100",
 			"--answering-machine-detection-config.between-words-silence-millis", "1000",
 			"--answering-machine-detection-config.greeting-duration-millis", "1000",
 			"--answering-machine-detection-config.greeting-silence-duration-millis", "2000",
@@ -2292,6 +2300,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--custom-header.value", "val_1",
 			"--custom-header.name", "head_2",
 			"--custom-header.value", "val_2",
+			"--diversion", "+18005550101",
 			"--early-media=true",
 			"--from", "+18005550101",
 			"--from-display-name", "Company Name",
@@ -2340,6 +2349,13 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"answering_machine_detection_config:\n" +
 			"  after_greeting_silence_millis: 1000\n" +
 			"  beep_detection_profile: freq_only\n" +
+			"  beep_max_frequency_hz: 2000\n" +
+			"  beep_min_frequency_hz: 550\n" +
+			"  beep_min_tone_duration_millis: 300\n" +
+			"  beep_spectral_confirmation: true\n" +
+			"  beep_spectral_min_purity: 0.8\n" +
+			"  beep_spectral_reject_fax_cng: true\n" +
+			"  beep_spectral_window_millis: 100\n" +
 			"  between_words_silence_millis: 1000\n" +
 			"  greeting_duration_millis: 1000\n" +
 			"  greeting_silence_duration_millis: 2000\n" +
@@ -2357,6 +2373,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"    value: val_1\n" +
 			"  - name: head_2\n" +
 			"    value: val_2\n" +
+			"diversion: '+18005550101'\n" +
 			"early_media: true\n" +
 			"from: '+18005550101'\n" +
 			"from_display_name: Company Name\n" +

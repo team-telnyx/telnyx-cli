@@ -111,6 +111,21 @@ var whatsappPhoneNumbersRetrieveConversationWindow = cli.Command{
 	HideHelpCommand: true,
 }
 
+var whatsappPhoneNumbersRetrievePhoneNumber = cli.Command{
+	Name:    "retrieve-phone-number",
+	Usage:   "Returns one WhatsApp phone number linked to the authenticated Telnyx account.\nFor a coexistence number in the `syncing` state, the response includes\n`sync_progress`.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "phone-number",
+			Required:  true,
+			PathParam: "phone_number",
+		},
+	},
+	Action:          handleWhatsappPhoneNumbersRetrievePhoneNumber,
+	HideHelpCommand: true,
+}
+
 var whatsappPhoneNumbersVerify = cli.Command{
 	Name:    "verify",
 	Usage:   "Submits the verification code received for the specified WhatsApp phone number.",
@@ -329,6 +344,48 @@ func handleWhatsappPhoneNumbersRetrieveConversationWindow(ctx context.Context, c
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "whatsapp:phone-numbers retrieve-conversation-window",
+		Transform:      transform,
+	})
+}
+
+func handleWhatsappPhoneNumbersRetrievePhoneNumber(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("phone-number") && len(unusedArgs) > 0 {
+		cmd.Set("phone-number", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Whatsapp.PhoneNumbers.GetPhoneNumber(ctx, cmd.Value("phone-number").(string), options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "whatsapp:phone-numbers retrieve-phone-number",
 		Transform:      transform,
 	})
 }

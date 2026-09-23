@@ -8,16 +8,15 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
-func TestSipRegistrationStatusRetrieve(t *testing.T) {
+func TestBotSessionsList(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
 			t,
 			"--api-key", "string",
-			"sip-registration-status", "retrieve",
-			"--credential-type", "uac_external_credential",
-			"--connection-id", "connection_id",
-			"--username", "username",
+			"bot-sessions", "list",
+			"--email", "agent-owner@example.com",
+			"--portal-redirect-token", "01890a7e-e2f7-7c3d-8dbb-9a2c5f3d1e0b",
 		)
 	})
 }
