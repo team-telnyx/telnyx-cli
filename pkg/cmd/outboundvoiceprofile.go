@@ -37,7 +37,7 @@ var outboundVoiceProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "calling-window",
-			Usage:    "(BETA) Specifies the time window and call limits for calls made using this outbound voice profile. Note that all times are UTC in 24-hour clock time.",
+			Usage:    "Specifies the time window and call limits for calls made using this outbound voice profile. Note that all times are UTC in 24-hour clock time.",
 			BodyPath: "calling_window",
 		},
 		&requestflag.Flag[*int64]{
@@ -124,17 +124,17 @@ var outboundVoiceProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 	"calling-window": {
 		&requestflag.InnerFlag[int64]{
 			Name:       "calling-window.calls-per-cld",
-			Usage:      "(BETA) The maximum number of calls that can be initiated to a single called party (CLD) within the calling window. A null value means no limit.",
+			Usage:      "The maximum number of calls that can be initiated to a single called party (CLD) within the calling window. A null value means no limit.",
 			InnerField: "calls_per_cld",
 		},
 		&requestflag.InnerFlag[any]{
 			Name:       "calling-window.end-time",
-			Usage:      "(BETA) The UTC time of day (in HH:MM format, 24-hour clock) when calls are no longer allowed to start.",
+			Usage:      "The UTC time of day (in HH:MM format, 24-hour clock) when calls are no longer allowed to start.",
 			InnerField: "end_time",
 		},
 		&requestflag.InnerFlag[any]{
 			Name:       "calling-window.start-time",
-			Usage:      "(BETA) The UTC time of day (in HH:MM format, 24-hour clock) when calls are allowed to start.",
+			Usage:      "The UTC time of day (in HH:MM format, 24-hour clock) when calls are allowed to start.",
 			InnerField: "start_time",
 		},
 	},
@@ -183,7 +183,7 @@ var outboundVoiceProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "calling-window",
-			Usage:    "(BETA) Specifies the time window and call limits for calls made using this outbound voice profile.",
+			Usage:    "Specifies the time window and call limits for calls made using this outbound voice profile.",
 			BodyPath: "calling_window",
 		},
 		&requestflag.Flag[*int64]{
@@ -270,17 +270,17 @@ var outboundVoiceProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 	"calling-window": {
 		&requestflag.InnerFlag[int64]{
 			Name:       "calling-window.calls-per-cld",
-			Usage:      "(BETA) The maximum number of calls that can be initiated to a single called party (CLD) within the calling window. A null value means no limit.",
+			Usage:      "The maximum number of calls that can be initiated to a single called party (CLD) within the calling window. A null value means no limit.",
 			InnerField: "calls_per_cld",
 		},
 		&requestflag.InnerFlag[any]{
 			Name:       "calling-window.end-time",
-			Usage:      "(BETA) The UTC time of day (in HH:MM format, 24-hour clock) when calls are no longer allowed to start.",
+			Usage:      "The UTC time of day (in HH:MM format, 24-hour clock) when calls are no longer allowed to start.",
 			InnerField: "end_time",
 		},
 		&requestflag.InnerFlag[any]{
 			Name:       "calling-window.start-time",
-			Usage:      "(BETA) The UTC time of day (in HH:MM format, 24-hour clock) when calls are allowed to start.",
+			Usage:      "The UTC time of day (in HH:MM format, 24-hour clock) when calls are allowed to start.",
 			InnerField: "start_time",
 		},
 	},

@@ -23,6 +23,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
+			"--features", "{ai_opt_out_detection_enabled: true}",
 			"--health-webhook-url", "health_webhook_url",
 			"--mms-fall-back-to-sms=true",
 			"--mms-transcoding=true",
@@ -53,6 +54,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
+			"--features.ai-opt-out-detection-enabled=true",
 			"--health-webhook-url", "health_webhook_url",
 			"--mms-fall-back-to-sms=true",
 			"--mms-transcoding=true",
@@ -85,6 +87,8 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"daily_spend_limit: '269125115713'\n" +
 			"daily_spend_limit_enabled: true\n" +
 			"enabled: true\n" +
+			"features:\n" +
+			"  ai_opt_out_detection_enabled: true\n" +
 			"health_webhook_url: health_webhook_url\n" +
 			"mms_fall_back_to_sms: true\n" +
 			"mms_transcoding: true\n" +
@@ -138,11 +142,14 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
+			"--features", "{ai_opt_out_detection_enabled: true}",
 			"--mms-fall-back-to-sms=true",
 			"--mms-transcoding=true",
 			"--mobile-only=true",
 			"--name", "Updated Profile for Messages",
 			"--number-pool-settings", "{long_code_weight: 2, skip_unhealthy: false, toll_free_weight: 10, geomatch: false, sticky_sender: true}",
+			"--redaction-enabled=true",
+			"--redaction-level", "0",
 			"--smart-encoding=true",
 			"--url-shortener-settings", "{domain: example.ex, prefix: cmpny, replace_blacklist_only: true, send_webhooks: false}",
 			"--v1-secret", "rP1VamejkU2v0qIUxntqLW2c",
@@ -168,6 +175,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
+			"--features.ai-opt-out-detection-enabled=true",
 			"--mms-fall-back-to-sms=true",
 			"--mms-transcoding=true",
 			"--mobile-only=true",
@@ -177,6 +185,8 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"--number-pool-settings.toll-free-weight", "10",
 			"--number-pool-settings.geomatch=false",
 			"--number-pool-settings.sticky-sender=true",
+			"--redaction-enabled=true",
+			"--redaction-level", "0",
 			"--smart-encoding=true",
 			"--url-shortener-settings.domain", "example.ex",
 			"--url-shortener-settings.prefix", "cmpny",
@@ -198,6 +208,8 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"daily_spend_limit: '269125115713'\n" +
 			"daily_spend_limit_enabled: true\n" +
 			"enabled: true\n" +
+			"features:\n" +
+			"  ai_opt_out_detection_enabled: true\n" +
 			"mms_fall_back_to_sms: true\n" +
 			"mms_transcoding: true\n" +
 			"mobile_only: true\n" +
@@ -208,6 +220,8 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"  toll_free_weight: 10\n" +
 			"  geomatch: false\n" +
 			"  sticky_sender: true\n" +
+			"redaction_enabled: true\n" +
+			"redaction_level: 0\n" +
 			"smart_encoding: true\n" +
 			"url_shortener_settings:\n" +
 			"  domain: example.ex\n" +

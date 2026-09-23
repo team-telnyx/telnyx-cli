@@ -35,6 +35,12 @@ var aiOpenAICreateResponse = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "instructions",
 		},
 		&requestflag.Flag[string]{
+			Name:     "mode",
+			Usage:    "How strictly `region` is applied. `preferred` (the default when `region` is set) tries that region first and falls back to another when the model cannot be served there, so a request that would have succeeded still succeeds. `strict` pins the request: it is served from that region or it fails with a 422, never redirected to another region. Requires `region`.",
+			Default:  "preferred",
+			BodyPath: "mode",
+		},
+		&requestflag.Flag[string]{
 			Name:     "model",
 			Usage:    "Model identifier to use for the response, for example `zai-org/GLM-5.1-FP8` or another model available from the Telnyx OpenAI-compatible models endpoint.",
 			BodyPath: "model",
@@ -42,6 +48,11 @@ var aiOpenAICreateResponse = requestflag.WithInnerFlags(cli.Command{
 		&requestflag.Flag[map[string]any]{
 			Name:     "reasoning",
 			BodyPath: "reasoning",
+		},
+		&requestflag.Flag[string]{
+			Name:     "region",
+			Usage:    "Optional data-residency region the request should be served from, using the same vocabulary as your account's Data Locality setting. Behavior depends on `mode`. Supported for Telnyx-hosted models only: a request routed to an external provider never passes through Telnyx model routing, so a region cannot be enforced for it. Omit for today's latency-based routing.",
+			BodyPath: "region",
 		},
 		&requestflag.Flag[string]{
 			Name:     "service-tier",

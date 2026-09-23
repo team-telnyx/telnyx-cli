@@ -84,6 +84,18 @@ func TestWhatsappPhoneNumbersRetrieveConversationWindow(t *testing.T) {
 	})
 }
 
+func TestWhatsappPhoneNumbersRetrievePhoneNumber(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"whatsapp:phone-numbers", "retrieve-phone-number",
+			"--phone-number", "phone_number",
+		)
+	})
+}
+
 func TestWhatsappPhoneNumbersVerify(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {

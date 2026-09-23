@@ -19,8 +19,10 @@ func TestAIOpenAICreateResponse(t *testing.T) {
 			"--conversation", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--input", "{'0': bar}",
 			"--instructions", "You are a friendly chatbot.",
+			"--mode", "preferred",
 			"--model", "zai-org/GLM-5.1-FP8",
 			"--reasoning", "{effort: none}",
+			"--region", "USA",
 			"--service-tier", "service_tier",
 			"--stream=false",
 		)
@@ -38,8 +40,10 @@ func TestAIOpenAICreateResponse(t *testing.T) {
 			"--conversation", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--input", "{'0': bar}",
 			"--instructions", "You are a friendly chatbot.",
+			"--mode", "preferred",
 			"--model", "zai-org/GLM-5.1-FP8",
 			"--reasoning.effort", "none",
+			"--region", "USA",
 			"--service-tier", "service_tier",
 			"--stream=false",
 		)
@@ -52,9 +56,11 @@ func TestAIOpenAICreateResponse(t *testing.T) {
 			"input:\n" +
 			"  '0': bar\n" +
 			"instructions: You are a friendly chatbot.\n" +
+			"mode: preferred\n" +
 			"model: zai-org/GLM-5.1-FP8\n" +
 			"reasoning:\n" +
 			"  effort: none\n" +
+			"region: USA\n" +
 			"service_tier: service_tier\n" +
 			"stream: false\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(

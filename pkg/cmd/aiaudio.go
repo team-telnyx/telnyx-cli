@@ -21,30 +21,30 @@ var aiAudioTranscribe = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "model",
-			Usage:    "ID of the model to use. `distil-whisper/distil-large-v2` is lower latency but English-only. `openai/whisper-large-v3-turbo` is multi-lingual but slightly higher latency. `deepgram/nova-3` supports English variants (en, en-US, en-GB, en-AU, en-NZ, en-IN) and only accepts mp3/wav files.",
+			Usage:    "ID of the model to use. `distil-whisper/distil-large-v2` is lower latency but English-only. `openai/whisper-large-v3-turbo` is multi-lingual but slightly higher latency. The `deepgram/*` models only accept mp3/wav files: `deepgram/nova-3` covers ~49 languages plus `multi` and `deepgram/nova-2` covers ~33, while the `-medical` variants are tuned for clinical vocabulary and accept English only (`en` and its regional variants, e.g. `en-US`, `en-GB`). `nvidia/parakeet-v3` is multilingual with automatic language detection; `omi-health/omi-med-stt-v1` is a medical model, English only.",
 			Default:  "distil-whisper/distil-large-v2",
 			Required: true,
 			BodyPath: "model",
 		},
 		&requestflag.Flag[string]{
 			Name:      "file",
-			Usage:     "The audio file object to transcribe, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. File uploads are limited to 100 MB. Cannot be used together with `file_url`. Note: `deepgram/nova-3` only supports mp3 and wav formats.",
+			Usage:     "The audio file object to transcribe, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. File uploads are limited to 100 MB. Cannot be used together with `file_url`. Note: the `deepgram/*` models only support mp3 and wav formats.",
 			BodyPath:  "file",
 			FileInput: true,
 		},
 		&requestflag.Flag[string]{
 			Name:     "file-url",
-			Usage:    "Link to audio file in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. Support for hosted files is limited to 100MB. Cannot be used together with `file`. Note: `deepgram/nova-3` only supports mp3 and wav formats.",
+			Usage:    "Link to audio file in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm. Support for hosted files is limited to 100MB. Cannot be used together with `file`. Note: the `deepgram/*` models only support mp3 and wav formats.",
 			BodyPath: "file_url",
 		},
 		&requestflag.Flag[string]{
 			Name:     "language",
-			Usage:    "The language of the audio to be transcribed. For `deepgram/nova-3`, only English variants are supported: `en`, `en-US`, `en-GB`, `en-AU`, `en-NZ`, `en-IN`. For `openai/whisper-large-v3-turbo`, supports multiple languages. `distil-whisper/distil-large-v2` does not support language parameter.",
+			Usage:    "The language of the audio to be transcribed. `deepgram/nova-3` supports ~49 languages plus `multi`, and `deepgram/nova-2` supports ~33 plus `multi`; the `-medical` variants are English only (`en` and its regional variants, e.g. `en-US`, `en-GB`). Deepgram models validate on the base language and forward the full tag, so regional variants such as `de-CH` and `pt-BR` are accepted where the base language is supported; an unsupported language returns a 400. For `openai/whisper-large-v3-turbo`, supports multiple languages. `distil-whisper/distil-large-v2` does not support language parameter. `nvidia/parakeet-v3` detects the language automatically; `omi-health/omi-med-stt-v1` is English only.",
 			BodyPath: "language",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "model-config",
-			Usage:    "Additional model-specific configuration parameters. Only allowed with `deepgram/nova-3` model. Can include Deepgram-specific options such as `smart_format`, `punctuate`, `diarize`, `utterance`, `numerals`, and `language`. If `language` is provided both as a top-level parameter and in `model_config`, the top-level parameter takes precedence.",
+			Usage:    "Additional model-specific configuration parameters. Only allowed with the `deepgram/*` models. Can include Deepgram-specific options such as `smart_format`, `punctuate`, `diarize`, `utterance`, `numerals`, and `language`. If `language` is provided both as a top-level parameter and in `model_config`, the top-level parameter takes precedence.",
 			BodyPath: "model_config",
 		},
 		&requestflag.Flag[string]{

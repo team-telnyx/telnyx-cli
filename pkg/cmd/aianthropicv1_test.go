@@ -24,6 +24,8 @@ func TestAIAnthropicV1Messages(t *testing.T) {
 			"--max-retries", "0",
 			"--mcp-server", "{foo: bar}",
 			"--metadata", "{foo: bar}",
+			"--mode", "preferred",
+			"--region", "USA",
 			"--service-tier", "service_tier",
 			"--stop-sequence", "string",
 			"--stream=true",
@@ -55,6 +57,8 @@ func TestAIAnthropicV1Messages(t *testing.T) {
 			"  - foo: bar\n" +
 			"metadata:\n" +
 			"  foo: bar\n" +
+			"mode: preferred\n" +
+			"region: USA\n" +
 			"service_tier: service_tier\n" +
 			"stop_sequences:\n" +
 			"  - string\n" +

@@ -14,28 +14,32 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var uacConnectionsActionsCheckRegistrationStatus = cli.Command{
-	Name:    "check-registration-status",
-	Usage:   "Returns the live SIP registration status for a UAC connection. Reports whether\nthe endpoint is currently registered (`status`) and the timestamp of the last\nSIP registration event (`last_registration`).",
+var aiTypesafeV1Systemone = cli.Command{
+	Name:    "systemone",
+	Usage:   "**Beta API.** Telnyx controls model selection.",
 	Suggest: true,
 	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "id",
-			Required:  true,
-			PathParam: "id",
+		&requestflag.Flag[map[string]any]{
+			Name:     "questions",
+			Usage:    "Between 1 and 64 named questions. Each key identifies the corresponding answer.",
+			Required: true,
+			BodyPath: "questions",
+		},
+		&requestflag.Flag[any]{
+			Name:     "state",
+			Usage:    "Shared context evaluated by every question.",
+			Required: true,
+			BodyPath: "state",
 		},
 	},
-	Action:          handleUacConnectionsActionsCheckRegistrationStatus,
+	Action:          handleAITypesafeV1Systemone,
 	HideHelpCommand: true,
 }
 
-func handleUacConnectionsActionsCheckRegistrationStatus(ctx context.Context, cmd *cli.Command) error {
+func handleAITypesafeV1Systemone(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
-		cmd.Set("id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
+
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
@@ -44,16 +48,18 @@ func handleUacConnectionsActionsCheckRegistrationStatus(ctx context.Context, cmd
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
 		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
+		ApplicationJSON,
 		false,
 	)
 	if err != nil {
 		return err
 	}
 
+	params := telnyx.AITypesafeV1SystemoneParams{}
+
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.UacConnections.Actions.CheckRegistrationStatus(ctx, cmd.Value("id").(string), options...)
+	_, err = client.AI.Typesafe.V1.Systemone(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -66,7 +72,7 @@ func handleUacConnectionsActionsCheckRegistrationStatus(ctx context.Context, cmd
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "uac-connections:actions check-registration-status",
+		Title:          "ai:typesafe:v1 systemone",
 		Transform:      transform,
 	})
 }

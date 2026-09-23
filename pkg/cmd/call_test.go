@@ -20,7 +20,7 @@ func TestCallsDial(t *testing.T) {
 			"--from", "+18005550101",
 			"--to", "+18005550100 or sip:username@sip.telnyx.com;secure=srtp",
 			"--answering-machine-detection", "detect",
-			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, beep_detection_profile: freq_only, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
+			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, beep_detection_profile: freq_only, beep_max_frequency_hz: 2000, beep_min_frequency_hz: 550, beep_min_tone_duration_millis: 300, beep_spectral_confirmation: true, beep_spectral_min_purity: 0.8, beep_spectral_reject_fax_cng: true, beep_spectral_window_millis: 100, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
 			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}], voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
@@ -34,6 +34,7 @@ func TestCallsDial(t *testing.T) {
 			"--custom-header", "{name: head_2, value: val_2}",
 			"--deepfake-detection", "{enabled: true, rtp_timeout: 30, timeout: 15}",
 			"--dialogflow-config", "{analyze_sentiment: false, partial_automated_agent_reply: false}",
+			"--diversion", "+18005550101",
 			"--enable-dialogflow=false",
 			"--from-display-name", "Company Name",
 			"--link-to", "ilditnZK_eVysupV21KzmzN_sM29ygfauQojpm4BgFtfX5hXAcjotg==",
@@ -99,6 +100,13 @@ func TestCallsDial(t *testing.T) {
 			"--answering-machine-detection", "detect",
 			"--answering-machine-detection-config.after-greeting-silence-millis", "1000",
 			"--answering-machine-detection-config.beep-detection-profile", "freq_only",
+			"--answering-machine-detection-config.beep-max-frequency-hz", "2000",
+			"--answering-machine-detection-config.beep-min-frequency-hz", "550",
+			"--answering-machine-detection-config.beep-min-tone-duration-millis", "300",
+			"--answering-machine-detection-config.beep-spectral-confirmation=true",
+			"--answering-machine-detection-config.beep-spectral-min-purity", "0.8",
+			"--answering-machine-detection-config.beep-spectral-reject-fax-cng=true",
+			"--answering-machine-detection-config.beep-spectral-window-millis", "100",
 			"--answering-machine-detection-config.between-words-silence-millis", "1000",
 			"--answering-machine-detection-config.greeting-duration-millis", "1000",
 			"--answering-machine-detection-config.greeting-silence-duration-millis", "2000",
@@ -167,6 +175,7 @@ func TestCallsDial(t *testing.T) {
 			"--deepfake-detection.timeout", "15",
 			"--dialogflow-config.analyze-sentiment=false",
 			"--dialogflow-config.partial-automated-agent-reply=false",
+			"--diversion", "+18005550101",
 			"--enable-dialogflow=false",
 			"--from-display-name", "Company Name",
 			"--link-to", "ilditnZK_eVysupV21KzmzN_sM29ygfauQojpm4BgFtfX5hXAcjotg==",
@@ -235,6 +244,13 @@ func TestCallsDial(t *testing.T) {
 			"answering_machine_detection_config:\n" +
 			"  after_greeting_silence_millis: 1000\n" +
 			"  beep_detection_profile: freq_only\n" +
+			"  beep_max_frequency_hz: 2000\n" +
+			"  beep_min_frequency_hz: 550\n" +
+			"  beep_min_tone_duration_millis: 300\n" +
+			"  beep_spectral_confirmation: true\n" +
+			"  beep_spectral_min_purity: 0.8\n" +
+			"  beep_spectral_reject_fax_cng: true\n" +
+			"  beep_spectral_window_millis: 100\n" +
 			"  between_words_silence_millis: 1000\n" +
 			"  greeting_duration_millis: 1000\n" +
 			"  greeting_silence_duration_millis: 2000\n" +
@@ -375,6 +391,7 @@ func TestCallsDial(t *testing.T) {
 			"dialogflow_config:\n" +
 			"  analyze_sentiment: false\n" +
 			"  partial_automated_agent_reply: false\n" +
+			"diversion: '+18005550101'\n" +
 			"enable_dialogflow: false\n" +
 			"from_display_name: Company Name\n" +
 			"link_to: ilditnZK_eVysupV21KzmzN_sM29ygfauQojpm4BgFtfX5hXAcjotg==\n" +

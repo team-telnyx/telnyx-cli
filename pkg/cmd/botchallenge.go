@@ -14,33 +14,32 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
-var sipRegistrationStatusRetrieve = cli.Command{
-	Name:    "retrieve",
-	Usage:   "Returns the live SIP registration status for a Telnyx endpoint: whether it is\ncurrently registered, when the current registration expires, and the last\nresponse Telnyx received from the registrar.",
+var botChallengeCreate = cli.Command{
+	Name:    "create",
+	Usage:   "Generates a reverse-CAPTCHA challenge used to gate the bot signup flow. A random\nactive problem is selected from the pool; math problems are returned obfuscated\n(case randomization, symbol injection, spacing noise) with an unobfuscated\nrounding instruction appended, while string and binary problems are returned\nas-is. The response contains a single-use nonce, the problem text, and the\ncurrent terms-and-conditions and privacy-policy URLs, which must be echoed back\non the signup request. Challenges expire after a short window (10 minutes by\ndefault) and can only be answered once. This endpoint is public and\nunauthenticated.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:      "credential-type",
-			Usage:     "The kind of credential to look up. `uac_external_credential` is keyed by `connection_id`; `telephony_credential` and `sip_credential_connection` are keyed by `username`.",
-			Required:  true,
-			QueryPath: "credential_type",
+			Name:     "llm-model-name",
+			Usage:    "Name of the LLM the client is using.",
+			BodyPath: "llm_model_name",
 		},
 		&requestflag.Flag[string]{
-			Name:      "connection-id",
-			Usage:     "Identifier of the UAC connection to look up. Required when `credential_type` is `uac_external_credential`.",
-			QueryPath: "connection_id",
+			Name:     "llm-parameter-count",
+			Usage:    "Parameter count of the client LLM.",
+			BodyPath: "llm_parameter_count",
 		},
 		&requestflag.Flag[string]{
-			Name:      "username",
-			Usage:     "SIP username to look up. Required when `credential_type` is `telephony_credential` or `sip_credential_connection`.",
-			QueryPath: "username",
+			Name:     "llm-quantization",
+			Usage:    "Quantization of the client LLM.",
+			BodyPath: "llm_quantization",
 		},
 	},
-	Action:          handleSipRegistrationStatusRetrieve,
+	Action:          handleBotChallengeCreate,
 	HideHelpCommand: true,
 }
 
-func handleSipRegistrationStatusRetrieve(ctx context.Context, cmd *cli.Command) error {
+func handleBotChallengeCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
 
@@ -52,18 +51,18 @@ func handleSipRegistrationStatusRetrieve(ctx context.Context, cmd *cli.Command) 
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
 		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
+		ApplicationJSON,
 		false,
 	)
 	if err != nil {
 		return err
 	}
 
-	params := telnyx.SipRegistrationStatusGetParams{}
+	params := telnyx.BotChallengeNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.SipRegistrationStatus.Get(ctx, params, options...)
+	_, err = client.BotChallenge.New(ctx, params, options...)
 	if err != nil {
 		return err
 	}
@@ -76,7 +75,7 @@ func handleSipRegistrationStatusRetrieve(ctx context.Context, cmd *cli.Command) 
 		ExplicitFormat: explicitFormat,
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "sip-registration-status retrieve",
+		Title:          "bot-challenge create",
 		Transform:      transform,
 	})
 }
