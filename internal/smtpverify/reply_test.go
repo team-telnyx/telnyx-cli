@@ -140,6 +140,8 @@ func TestPrintable(t *testing.T) {
 		{"c1 \u009b", `c1 \u009b`},
 		{"bad utf8 \xff", `bad utf8 \xff`},
 		{"unicode ok ü", "unicode ok ü"},
+		{"bidi \u202eoverride", `bidi \u202eoverride`},
+		{"zero\u200bwidth", `zero\u200bwidth`},
 	}
 	for _, tt := range tests {
 		assert.Equal(t, tt.want, printable(tt.in), "%q", tt.in)

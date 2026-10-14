@@ -92,7 +92,9 @@ func (r Result) Verdict() string {
 	case r.Reply != nil:
 		return fmt.Sprintf("FAILED at %s: %s", r.Stage, r.Reply.Text())
 	default:
-		return fmt.Sprintf("FAILED at %s: %s", r.Stage, r.Detail)
+		// Detail can embed peer-controlled text (e.g. certificate names in
+		// an x509 error), so it is escaped like server replies.
+		return fmt.Sprintf("FAILED at %s: %s", r.Stage, printable(r.Detail))
 	}
 }
 
@@ -301,7 +303,11 @@ func (s *session) run(ctx context.Context) Result {
 	if reply.Code == 334 {
 		// A continuation challenge: cancel the exchange (RFC 4954) so the
 		// QUIT that follows is read as a command, not as credentials.
-		if _, err := s.cmd(StageAuth, "*", "", cfg.CommandTimeout); err != nil {
+		cancelReply, err := s.cmd(StageAuth, "*", "", cfg.CommandTimeout)
+		if err != nil {
+			s.t.note(StageAuth, "no reply to *: "+describeIOError(err, cfg.CommandTimeout))
+		}
+		if err != nil || cancelReply.Code == 334 || cancelReply.Code == 421 {
 			return Result{Stage: StageAuth, Reply: &reply, Hint: hintForReply(StageAuth, reply)}
 		}
 	}
@@ -392,13 +398,17 @@ func (s *session) startTLS(ctx context.Context) (Result, bool) {
 	tc := tls.Client(s.conn, tlsCfg)
 	_ = tc.SetDeadline(time.Now().Add(timeout))
 	if err := tc.HandshakeContext(ctx); err != nil {
-		var ne net.Error
-		if ctx.Err() != nil || (errors.As(err, &ne) && ne.Timeout()) {
-			res := s.ioFailure(ctx, StageSTARTTLS, err, timeout)
-			res.Detail = "TLS handshake: " + res.Detail
-			return res, false
+		var certErr *tls.CertificateVerificationError
+		var recordErr tls.RecordHeaderError
+		switch {
+		case ctx.Err() == nil && errors.As(err, &certErr):
+			return Result{Stage: StageSTARTTLS, Detail: "TLS handshake failed: " + err.Error(), Hint: hintTLS}, false
+		case ctx.Err() == nil && errors.As(err, &recordErr):
+			return Result{Stage: StageSTARTTLS, Detail: "TLS handshake failed: " + err.Error(), Hint: hintInjected}, false
 		}
-		return Result{Stage: StageSTARTTLS, Detail: "TLS handshake failed: " + err.Error(), Hint: hintTLS}, false
+		res := s.ioFailure(ctx, StageSTARTTLS, err, timeout) // timeout, cancel, EOF, reset
+		res.Detail = "TLS handshake: " + res.Detail
+		return res, false
 	}
 	st := tc.ConnectionState()
 	verified := fmt.Sprintf("certificate verified for %q", tlsCfg.ServerName)

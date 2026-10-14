@@ -57,6 +57,8 @@ type Script struct {
 	CloseAfter string
 	// StallTLS: answer STARTTLS with 220, then never start the handshake.
 	StallTLS bool
+	// CertName replaces the certificate's DNS name ("localhost").
+	CertName string
 }
 
 // Command is one line the server received.
@@ -87,7 +89,7 @@ type Server struct {
 // Start launches a mock on 127.0.0.1; it is closed on test cleanup.
 func Start(t testing.TB, script Script) *Server {
 	t.Helper()
-	cert, pool := selfSigned(t)
+	cert, pool := selfSigned(t, or(script.CertName, "localhost"))
 	ln, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
 		t.Fatalf("smtpmock: listen: %v", err)
@@ -328,7 +330,7 @@ func (s *Server) handle(raw net.Conn) {
 	}
 }
 
-func selfSigned(t testing.TB) (tls.Certificate, *x509.CertPool) {
+func selfSigned(t testing.TB, dnsName string) (tls.Certificate, *x509.CertPool) {
 	t.Helper()
 	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
@@ -342,7 +344,7 @@ func selfSigned(t testing.TB) (tls.Certificate, *x509.CertPool) {
 		KeyUsage:     x509.KeyUsageDigitalSignature,
 		ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
 		IPAddresses:  []net.IP{net.ParseIP("127.0.0.1")},
-		DNSNames:     []string{"localhost"},
+		DNSNames:     []string{dnsName},
 	}
 	der, err := x509.CreateCertificate(rand.Reader, tmpl, tmpl, &key.PublicKey, key)
 	if err != nil {

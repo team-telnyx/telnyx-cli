@@ -7,6 +7,7 @@ import (
 	"io"
 	"regexp"
 	"strings"
+	"unicode"
 	"unicode/utf8"
 )
 
@@ -28,8 +29,8 @@ func (r Reply) Text() string {
 	return strings.Join(lines, " | ")
 }
 
-// printable escapes C0/C1 control characters, DEL and invalid UTF-8 as
-// \xNN / \u00NN. Replies before STARTTLS are attacker-controllable, and
+// printable escapes C0/C1 control characters, DEL, other non-printing
+// runes (bidi overrides, zero-width) and invalid UTF-8 as \xNN / \uNNNN. Replies before STARTTLS are attacker-controllable, and
 // raw escape sequences could rewrite what a terminal shows (for example
 // paint a fake VERIFIED line). Parsing always uses the raw bytes.
 func printable(s string) string {
@@ -43,7 +44,7 @@ func printable(s string) string {
 			b.WriteRune(r)
 		case r < 0x20 || r == 0x7f:
 			fmt.Fprintf(&b, "\\x%02x", r)
-		case r >= 0x80 && r <= 0x9f:
+		case !unicode.IsPrint(r): // C1, bidi overrides, zero-width, separators
 			fmt.Fprintf(&b, "\\u%04x", r)
 		default:
 			b.WriteString(s[i : i+size])
