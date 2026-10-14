@@ -44,7 +44,7 @@ var enterprisesDirCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:     "certify-brand-is-accurate",
-			Usage:    "Must be `true`.",
+			Usage:    "Certification that the DIR information is accurate. Must be `true` for the DIR to be submitted for vetting.",
 			Required: true,
 			BodyPath: "certify_brand_is_accurate",
 		},
@@ -67,6 +67,11 @@ var enterprisesDirCreate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "display_name",
 		},
 		&requestflag.Flag[[]map[string]any]{
+			Name:     "bpo-authorization",
+			Usage:    "Optional. Approved BPO (Business Process Outsourcer) accounts on your organization authorized to place branded calls for this DIR, each with the signed Letter of Authorization the Brand Owner granted it. Each authorization starts `pending` and takes effect only after an admin reviews its Letter of Authorization. Omit or send an empty list to authorize no BPO on this DIR. Maximum 10.",
+			BodyPath: "bpo_authorizations",
+		},
+		&requestflag.Flag[[]map[string]any]{
 			Name:     "document",
 			Usage:    "Supporting documents. Each `document_id` may appear at most once on a DIR.",
 			BodyPath: "documents",
@@ -82,10 +87,27 @@ var enterprisesDirCreate = requestflag.WithInnerFlags(cli.Command{
 			Default:  false,
 			BodyPath: "reselling",
 		},
+		&requestflag.Flag[*string]{
+			Name:     "webhook-url",
+			Usage:    "Optional `https://` URL that receives webhook notifications when this DIR's compliance review completes (rejection outcomes include structured rejection reasons). Maximum 2048 characters.",
+			BodyPath: "webhook_url",
+		},
 	},
 	Action:          handleEnterprisesDirCreate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"bpo-authorization": {
+		&requestflag.InnerFlag[string]{
+			Name:       "bpo-authorization.bpo-enterprise-id",
+			Usage:      "Enterprise id of an approved BPO (Business Process Outsourcer) account on your organization to authorize for this DIR.",
+			InnerField: "bpo_enterprise_id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "bpo-authorization.loa-document-id",
+			Usage:      "Id of the signed Letter of Authorization document (uploaded via the Telnyx Documents API) in which the Brand Owner authorizes this BPO.",
+			InnerField: "loa_document_id",
+		},
+	},
 	"document": {
 		&requestflag.InnerFlag[string]{
 			Name:       "document.document-id",
@@ -99,6 +121,7 @@ var enterprisesDirCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "document.description",
+			Usage:      "An optional note describing this document, for example what it proves.",
 			InnerField: "description",
 		},
 	},
@@ -141,7 +164,7 @@ var enterprisesDirList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "filter-status",
-			Usage:     "DIR lifecycle status.\n- `draft` - newly created; editable; not yet submitted.\n- `submitted` / `in_review` - Telnyx is reviewing.\n- `verified` - approved; phone numbers may be attached.\n- `rejected` - Telnyx rejected this submission; `rejection_reasons` is populated; customer can edit and resubmit.\n- `unsuccessful` - system-side error during processing; customer can edit and resubmit.\n- `suspended` - temporarily disabled (e.g. by an active infringement claim).\n- `expired` - verification expired; customer must resubmit.\n- `infringement_claimed` - a trademark/impersonation claim is open against this DIR.\n- `permanently_rejected` - terminal; cannot be resubmitted.",
+			Usage:     "DIR lifecycle status.\n- `draft` - newly created; editable; not yet submitted.\n- `submitted` / `in_review` - Telnyx is reviewing.\n- `verified` - approved; phone numbers may be attached.\n- `rejected` - Telnyx rejected this submission; `rejection_reasons` is populated; customer can edit and resubmit.\n- `unsuccessful` - system-side error during processing; customer can edit and resubmit.\n- `suspended` - temporarily disabled (e.g. by an active infringement claim).\n- `expired` - verification expired; customer must resubmit.\n- `infringement_claimed` - a trademark/impersonation claim is open against this DIR.\n- `permanently_rejected` - terminal; cannot be resubmitted.\n- `delete_requested` - you have requested deletion; the DIR still exists and Telnyx is completing the removal (de-registration and cleanup). A verified DIR keeps serving its branded identity, and keeps billing, until the removal finishes.",
 			QueryPath: "filter[status]",
 		},
 		&requestflag.Flag[int64]{

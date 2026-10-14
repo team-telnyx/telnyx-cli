@@ -103,6 +103,11 @@ var aiConversationsList = cli.Command{
 			QueryPath: "metadata->assistant_id",
 		},
 		&requestflag.Flag[string]{
+			Name:      "metadata-assistant-version-id",
+			Usage:     "Filter by assistant version ID (e.g., `metadata->assistant_version_id=eq.20250812T114318034399`). The version that handled the conversation is stored in metadata when the conversation starts; conversations created before this field was tracked, or that never resolved a version, have no `assistant_version_id` and do not match this filter.",
+			QueryPath: "metadata->assistant_version_id",
+		},
+		&requestflag.Flag[string]{
 			Name:      "metadata-call-control-id",
 			Usage:     "Filter by call control ID (e.g., `metadata->call_control_id=eq.v3:123`)",
 			QueryPath: "metadata->call_control_id",

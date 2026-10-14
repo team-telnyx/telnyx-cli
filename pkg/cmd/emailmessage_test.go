@@ -159,6 +159,8 @@ func TestEmailMessagesList(t *testing.T) {
 			"--api-key", "string",
 			"email-messages", "list",
 			"--max-items", "10",
+			"--filter-metadata", "filter[metadata]",
+			"--filter-tags", "filter[tags]",
 			"--page-cursor", "page_cursor",
 			"--page-size", "1",
 		)
@@ -370,6 +372,30 @@ func TestEmailMessagesRetrieveEvents(t *testing.T) {
 			"--email-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--page-cursor", "page_cursor",
 			"--page-size", "1",
+		)
+	})
+}
+
+func TestEmailMessagesUpdateSchedule(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"email-messages", "update-schedule",
+			"--email-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--scheduled-at", "'2099-08-07T14:30:00Z'",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("scheduled_at: '2099-08-07T14:30:00Z'")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"email-messages", "update-schedule",
+			"--email-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 		)
 	})
 }

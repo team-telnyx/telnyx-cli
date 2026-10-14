@@ -18,7 +18,7 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 			"--bucket-name", "Bucket Name",
 			"--document-chunk-overlap-size", "512",
 			"--document-chunk-size", "1024",
-			"--embedding-model", "thenlper/gte-large",
+			"--embedding-model", "intfloat/multilingual-e5-large",
 			"--loader", "default",
 			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
@@ -30,7 +30,7 @@ func TestAIEmbeddingsCreate(t *testing.T) {
 			"bucket_name: Bucket Name\n" +
 			"document_chunk_overlap_size: 512\n" +
 			"document_chunk_size: 1024\n" +
-			"embedding_model: thenlper/gte-large\n" +
+			"embedding_model: intfloat/multilingual-e5-large\n" +
 			"loader: default\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

@@ -195,6 +195,18 @@ func TestEmailDomainsRetrieveHealth(t *testing.T) {
 	})
 }
 
+func TestEmailDomainsRotateDkim(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"email-domains", "rotate-dkim",
+			"--domain-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+		)
+	})
+}
+
 func TestEmailDomainsVerify(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {

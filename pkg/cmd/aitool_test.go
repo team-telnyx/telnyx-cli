@@ -22,7 +22,7 @@ func TestAIToolsCreate(t *testing.T) {
 			"--function", "{foo: bar}",
 			"--handoff", "{foo: bar}",
 			"--invite", "{foo: bar}",
-			"--pay", "{connector_name: connector_name, currency: currency, description: description, payment_method: payment_method}",
+			"--pay", "{connector_name: connector_name, connector_parameters: {campaignid: bar, customer_ref: bar}, currency: currency, description: description, payment_method: payment_method, valid_card_types: [visa, mastercard]}",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--update-dynamic-variables", "{description: Collect caller details into conversation variables., name: collect_details, updatable_variables: [{name: customer_name, description: The caller's full name., type: string}]}",
@@ -47,9 +47,11 @@ func TestAIToolsCreate(t *testing.T) {
 			"--handoff", "{foo: bar}",
 			"--invite", "{foo: bar}",
 			"--pay.connector-name", "connector_name",
+			"--pay.connector-parameters", "{campaignid: bar, customer_ref: bar}",
 			"--pay.currency", "currency",
 			"--pay.description", "description",
 			"--pay.payment-method", "payment_method",
+			"--pay.valid-card-types", "[visa, mastercard]",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--update-dynamic-variables.description", "Collect caller details into conversation variables.",
@@ -75,9 +77,15 @@ func TestAIToolsCreate(t *testing.T) {
 			"  foo: bar\n" +
 			"pay:\n" +
 			"  connector_name: connector_name\n" +
+			"  connector_parameters:\n" +
+			"    campaignid: bar\n" +
+			"    customer_ref: bar\n" +
 			"  currency: currency\n" +
 			"  description: description\n" +
 			"  payment_method: payment_method\n" +
+			"  valid_card_types:\n" +
+			"    - visa\n" +
+			"    - mastercard\n" +
 			"retrieval:\n" +
 			"  foo: bar\n" +
 			"timeout_ms: 0\n" +
@@ -124,7 +132,7 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--function", "{foo: bar}",
 			"--handoff", "{foo: bar}",
 			"--invite", "{foo: bar}",
-			"--pay", "{connector_name: connector_name, currency: currency, description: description, payment_method: payment_method}",
+			"--pay", "{connector_name: connector_name, connector_parameters: {campaignid: bar, customer_ref: bar}, currency: currency, description: description, payment_method: payment_method, valid_card_types: [visa, mastercard]}",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--type", "type",
@@ -149,9 +157,11 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--handoff", "{foo: bar}",
 			"--invite", "{foo: bar}",
 			"--pay.connector-name", "connector_name",
+			"--pay.connector-parameters", "{campaignid: bar, customer_ref: bar}",
 			"--pay.currency", "currency",
 			"--pay.description", "description",
 			"--pay.payment-method", "payment_method",
+			"--pay.valid-card-types", "[visa, mastercard]",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--type", "type",
@@ -176,9 +186,15 @@ func TestAIToolsUpdate(t *testing.T) {
 			"  foo: bar\n" +
 			"pay:\n" +
 			"  connector_name: connector_name\n" +
+			"  connector_parameters:\n" +
+			"    campaignid: bar\n" +
+			"    customer_ref: bar\n" +
 			"  currency: currency\n" +
 			"  description: description\n" +
 			"  payment_method: payment_method\n" +
+			"  valid_card_types:\n" +
+			"    - visa\n" +
+			"    - mastercard\n" +
 			"retrieval:\n" +
 			"  foo: bar\n" +
 			"timeout_ms: 0\n" +

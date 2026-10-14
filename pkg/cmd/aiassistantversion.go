@@ -60,9 +60,19 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "a2a_agents",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "avatar-settings",
+			Usage:    "**Beta:** Configuration for the Telnyx open-source avatar provider. The launch catalog supports six avatars and office, studio, or reception backgrounds.",
+			BodyPath: "avatar_settings",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "conversation-flow",
 			Usage:    "Conversation flow as supplied by API clients (create / update).\n\nA directed graph of `FlowNodeReq` connected by `FlowEdge`s. Validation\nenforces unique node/edge IDs, that `start_node_id` references a real\nnode, and that every edge's endpoints reference real nodes.",
 			BodyPath: "conversation_flow",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "delegation-settings",
+			Usage:    "Splits the conversation between a frontend model that talks to the caller and a backend model that does the work. On the GPT-Live route the frontend model cannot call tools at all — when it needs something done it raises a delegation and waits. On the chat completion route the frontend keeps a single `delegate` tool that returns immediately, so the conversation carries on while the backend works. Either way the backend's answer is spoken as commentary or kept as silent context, depending on `speak_results`. Beta feature.",
+			BodyPath: "delegation_settings",
 		},
 		&requestflag.Flag[string]{
 			Name:     "description",
@@ -193,6 +203,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "voice_settings",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "websocket-settings",
+			Usage:    "Streams conversation and telephony events to a WebSocket server you host, and accepts messages injected back into the conversation. Telnyx opens the connection as a client, once per conversation. Delivery is best effort throughout: while the connection is down events are dropped rather than queued, and no socket failure is ever allowed to affect the call. Beta feature.",
+			BodyPath: "websocket_settings",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "widget-settings",
 			Usage:    "Configuration settings for the assistant's web widget.",
 			BodyPath: "widget_settings",
@@ -238,10 +253,32 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "timeout_ms",
 		},
 	},
+	"avatar-settings": {
+		&requestflag.InnerFlag[string]{
+			Name:       "avatar-settings.avatar-id",
+			Usage:      "The Telnyx avatar to render.",
+			InnerField: "avatar_id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "avatar-settings.background-id",
+			Usage:      "The background to render.",
+			InnerField: "background_id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "avatar-settings.model",
+			Usage:      "Required avatar model identifier, separate from `avatar_id`. The supported value is `foxtrot-1`. Omission, null, and unsupported model identifiers are rejected.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "avatar-settings.provider",
+			Usage:      "Selects the Telnyx open-source avatar provider.",
+			InnerField: "provider",
+		},
+	},
 	"conversation-flow": {
 		&requestflag.InnerFlag[[]map[string]any]{
 			Name:       "conversation-flow.nodes",
-			Usage:      "All nodes in the flow. Must contain `start_node_id`. Each node is a prompt node (`type: prompt`) or a tool node (`type: tool`).",
+			Usage:      "All nodes in the flow. Must contain `start_node_id`. Each node is a prompt node (`type: prompt`), a tool node (`type: tool`), or a speak node (`type: speak`).",
 			InnerField: "nodes",
 		},
 		&requestflag.InnerFlag[string]{
@@ -253,6 +290,42 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "conversation-flow.edges",
 			Usage:      "Directed transitions between nodes. May be empty for a single-node flow.",
 			InnerField: "edges",
+		},
+	},
+	"delegation-settings": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "delegation-settings.enabled",
+			Usage:      "Whether the assistant delegates work to a backend model. Defaults to `true`: a GPT-Live assistant with delegation disabled can hold a conversation but can never look anything up or run a tool.",
+			InnerField: "enabled",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "delegation-settings.external-llm",
+			InnerField: "external_llm",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "delegation-settings.instructions",
+			Usage:      "Extra instructions for the backend model, in addition to the assistant's own. Use this for the business rules the backend needs and the talking model does not.",
+			InnerField: "instructions",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "delegation-settings.llm-api-key-ref",
+			Usage:      "Integration secret identifier for the backend model's API key. Required for models from providers other than Telnyx, OpenAI and Anthropic. A raw `api_key` is rejected rather than ignored, so that no plaintext credential is stored on the assistant.",
+			InnerField: "llm_api_key_ref",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "delegation-settings.mode",
+			Usage:      "Who answers a delegation. `telnyx` runs the backend model on Telnyx with the assistant's own tools, MCP servers and observability. `client` relays the delegation to a server you host over the WebSocket configured in `websocket_settings`: Telnyx sends a `session.delegation.created` frame and waits for your `session.delegation.completed` answer. That answer is text only, since the socket offers no tool vocabulary. If no socket is connected the delegation is refused and the assistant tells the caller it cannot look things up right now. Defaults to `telnyx`.",
+			InnerField: "mode",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "delegation-settings.model",
+			Usage:      "The backend model that answers delegations. Must be a model available for AI Assistants. When enabling `telnyx` delegation, explicitly set this field or `external_llm.model`; a configuration without either backend model is rejected. Only applies when `mode` is `telnyx`.",
+			InnerField: "model",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "delegation-settings.speak-results",
+			Usage:      "Whether the backend's answer is spoken to the caller. When `true` the result is appended as commentary and paraphrased aloud; when `false` it is kept as silent context that informs later answers without being read out. Defaults to `true`.",
+			InnerField: "speak_results",
 		},
 	},
 	"external-llm": {
@@ -434,6 +507,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 	"telephony-settings": {
+		&requestflag.InnerFlag[bool]{
+			Name:       "telephony-settings.conversation-ended-full-history",
+			Usage:      "When enabled, the `messages` array of the `call.conversation.ended` webhook contains the full conversation history in order: user and assistant turns, assistant tool calls (`tool_calls`), tool results (`role: tool` with `tool_call_id`), and informational `system` and `developer` entries. The assistant's instructions are never included. When disabled, `messages` contains only user and assistant text turns.",
+			InnerField: "conversation_ended_full_history",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "telephony-settings.default-texml-app-id",
 			Usage:      "Default Texml App used for voice calls with your assistant. This will be created automatically on assistant creation.",
@@ -501,6 +579,16 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Integration secret identifier for the transcription provider API key. Currently used for Azure transcription regions that require a customer-provided API key.",
 			InnerField: "api_key_ref",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "transcription.challenger",
+			Usage:      "A second speech-to-text model that transcribes alongside `transcription.model`, and the rule that decides which transcript the assistant uses.",
+			InnerField: "challenger",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "transcription.fallback-models",
+			Usage:      "Up to 3 streaming models that take over transcription, in this order, when the model in use fails, at the start of a call or mid-call. `model` must be a streaming model too, and must support `language` alongside other models. On update, a list replaces the stored one: omit the field to keep the stored list, or send `null` or `[]` to remove it. When an update changes `model` or `language`, stored fallbacks that no longer fit are removed without an error. Can't be combined with `challenger`, the language booster; to replace a stored language booster, send `challenger: null` in the same request.",
+			InnerField: "fallback_models",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
 			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4` and `soniox/stt-rt-v5`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language; `settings.language_hints` can pin multiple languages at once instead. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
@@ -508,7 +596,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-3-5-pro` is a multilingual streaming model with configurable turn detection. The legacy alias `assemblyai/universal-streaming` is still accepted and resolves to the same model.\n- `xai/grok-stt` is a multilingual Grok STT model.\n- `soniox/stt-rt-v4` and `soniox/stt-rt-v5` are multilingual streaming models with automatic language detection, configurable endpointing, term biasing (`context`), and `language_hints`.\n- `nvidia/parakeet-v3` is a multilingual transcription model with automatic language detection.\n- `omi-health/omi-med-stt-v1` is an English-only medical transcription model (Parakeet-based).\n- `humain/realtime` is a streaming model with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` is a turn-based streaming model covering 10 European languages with automatic language detection.\n- `cohere/ar-stt` is a non-streaming Arabic and English transcription model.",
+			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-3-5-pro` is a multilingual streaming model with configurable turn detection. The legacy alias `assemblyai/universal-streaming` is still accepted and resolves to the same model.\n- `xai/grok-stt` is a multilingual Grok STT model.\n- `soniox/stt-rt-v4` and `soniox/stt-rt-v5` are multilingual streaming models with automatic language detection, configurable endpointing, term biasing (`context`), and `language_hints`.\n- `nvidia/parakeet-v3` is a multilingual transcription model with automatic language detection.\n- `omi-health/omi-med-stt-v1` is an English-only medical transcription model (Parakeet-based).\n- `humain/realtime` is a streaming model with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` is a turn-based streaming model covering 10 European languages with automatic language detection.\n- `cohere/ar-stt` is a non-streaming Arabic and English transcription model.\n- `telnyx/basira` is a non-streaming Arabic transcription model.",
 			InnerField: "model",
 		},
 		&requestflag.InnerFlag[string]{
@@ -524,7 +612,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	"voice-settings": {
 		&requestflag.InnerFlag[string]{
 			Name:       "voice-settings.voice",
-			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/docs/tts-stt/tts-available-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart).\nThe voice portion of the identifier supports [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables) using mustache syntax (e.g. `Telnyx.Ultra.{{voice_id}}`). The variable is resolved at call time from your dynamic variables webhook, allowing you to select the voice dynamically per call.",
+			Usage:      "The voice to be used by the voice assistant. Check the full list of [available voices](https://developers.telnyx.com/docs/tts-stt/tts-available-voices) via our voices API.\nTo use ElevenLabs, you must reference your ElevenLabs API key as an integration secret under the `api_key_ref` field. See [integration secrets documentation](https://developers.telnyx.com/api-reference/integration-secrets/create-a-secret) for details. For Telnyx voices, use `Telnyx.<model_id>.<voice_id>` (e.g. Telnyx.KokoroTTS.af_heart). For Soniox voices, use `Soniox.tts-rt-v2.<voice_id>` (e.g. Soniox.tts-rt-v2.Emma); every Soniox voice speaks all supported languages.\nThe voice portion of the identifier supports [dynamic variables](https://developers.telnyx.com/docs/inference/ai-assistants/dynamic-variables) using mustache syntax (e.g. `Telnyx.Ultra.{{voice_id}}`). The variable is resolved at call time from your dynamic variables webhook, allowing you to select the voice dynamically per call.",
 			InnerField: "voice",
 		},
 		&requestflag.InnerFlag[string]{
@@ -567,6 +655,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Determines how stable the voice is and the randomness between each generation. Lower values create a broader emotional range; higher values produce more consistent, monotonous output. Only applicable when using ElevenLabs.",
 			InnerField: "temperature",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "voice-settings.tool-call-audio",
+			Usage:      "Optional sound played to the caller while the assistant runs a tool (for example a webhook or MCP tool). It replaces the background audio until the tool responds, then the background audio resumes. Defaults to null, which plays no sound; send `null` on update to clear it. Not played in conference calls.",
+			InnerField: "tool_call_audio",
+		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "voice-settings.use-speaker-boost",
 			Usage:      "Amplifies similarity to the original speaker voice. Increases computational load and latency slightly. Only applicable when using ElevenLabs.",
@@ -574,8 +667,25 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "voice-settings.voice-speed",
-			Usage:      "The speed of the voice in the range [0.25, 2.0]. 1.0 is deafult speed. Larger numbers make the voice faster, smaller numbers make it slower. This is only applicable for Telnyx Natural voices.",
+			Usage:      "The speed of the voice in the range [0.6, 1.5]. 1.0 is the default speed. Larger numbers make the voice faster, smaller numbers make it slower. Applies to Telnyx `Ultra` voices; values outside this range are rejected by the synthesis engine. Soniox voices support a speed range of 0.7 to 1.3.",
 			InnerField: "voice_speed",
+		},
+	},
+	"websocket-settings": {
+		&requestflag.InnerFlag[string]{
+			Name:       "websocket-settings.auth-ref",
+			Usage:      "Integration secret identifier whose value Telnyx sends as an `Authorization: Bearer <value>` header on the upgrade request. Resolved on every connection attempt, so a rotated secret is picked up by the next reconnect.",
+			InnerField: "auth_ref",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "websocket-settings.enabled",
+			Usage:      "Whether Telnyx opens a WebSocket to `url` for each of this assistant's conversations. Defaults to `false`.",
+			InnerField: "enabled",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "websocket-settings.url",
+			Usage:      "The `ws://` or `wss://` endpoint Telnyx connects to. Required when `enabled` is `true`. Must be externally reachable — localhost, private IP ranges and `.local` domains are rejected.",
+			InnerField: "url",
 		},
 	},
 	"widget-settings": {

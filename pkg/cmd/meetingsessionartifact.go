@@ -16,7 +16,7 @@ import (
 
 var meetingSessionsArtifactsCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Requests asynchronous generation of one `summary` or `action_items` artifact.\nEach type requires its own request. Generation requires transcript content and\nconfigured inference and currently reads at most the first 10,000 segments, so\nexceptionally long transcripts may produce incomplete artifacts or fail model\nlimits.",
+	Usage:   "Requests asynchronous generation of one artifact: `summary`, `action_items`,\n`decisions`, `topics`, `open_questions`, or `custom`. Each request produces one\nartifact. `custom` is answered from a `prompt` you supply, which is required for\n`custom` and rejected on the five named types. Generation requires transcript\ncontent and configured inference and currently reads at most the first 10,000\nsegments, so exceptionally long transcripts may produce incomplete artifacts or\nfail model limits. **Not idempotent, and every call is billed**: each request is\na separate inference run, so a retry or a duplicate POST produces a second\nartifact and a second charge. Guard the call rather than relying on the service\nto collapse it. The automatic `summarize_on_end` attempt is billed on the same\nbasis.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -26,9 +26,14 @@ var meetingSessionsArtifactsCreate = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "type",
-			Usage:    "Type of artifact to generate from the session.",
+			Usage:    "What to generate from the transcript. `custom` is answered from a `prompt` you supply; the five named types need none.",
 			Required: true,
 			BodyPath: "type",
+		},
+		&requestflag.Flag[string]{
+			Name:     "prompt",
+			Usage:    "An open-ended request answered from the transcript. Required when `type` is `custom`, and rejected with 400 on any named type. Trimmed before storage and echoed back in artifact responses and the `artifact.completed` webhook.",
+			BodyPath: "prompt",
 		},
 	},
 	Action:          handleMeetingSessionsArtifactsCreate,

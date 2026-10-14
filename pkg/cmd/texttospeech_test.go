@@ -26,6 +26,7 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			"--output-type", "binary_output",
 			"--provider", "aws",
 			"--resemble", "{api_key: string, format: string, precision: string, sample_rate: string}",
+			"--soniox", "{voice_id: Emma, audio_format: mp3, language: en, model_id: tts-rt-v2, reduce_silence: true, sample_rate: 8000, speed: 1}",
 			"--telnyx", "{emotion: neutral, response_format: mp3, sampling_rate: 24000, voice_speed: 1, volume: 1}",
 			"--text", "string",
 			"--text-type", "text",
@@ -75,6 +76,13 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			"--resemble.format", "string",
 			"--resemble.precision", "string",
 			"--resemble.sample-rate", "string",
+			"--soniox.voice-id", "Emma",
+			"--soniox.audio-format", "mp3",
+			"--soniox.language", "en",
+			"--soniox.model-id", "tts-rt-v2",
+			"--soniox.reduce-silence=true",
+			"--soniox.sample-rate", "8000",
+			"--soniox.speed", "1",
 			"--telnyx.emotion", "neutral",
 			"--telnyx.response-format", "mp3",
 			"--telnyx.sampling-rate", "24000",
@@ -133,6 +141,14 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			"  format: string\n" +
 			"  precision: string\n" +
 			"  sample_rate: string\n" +
+			"soniox:\n" +
+			"  voice_id: Emma\n" +
+			"  audio_format: mp3\n" +
+			"  language: en\n" +
+			"  model_id: tts-rt-v2\n" +
+			"  reduce_silence: true\n" +
+			"  sample_rate: 8000\n" +
+			"  speed: 1\n" +
 			"telnyx:\n" +
 			"  emotion: neutral\n" +
 			"  response_format: mp3\n" +

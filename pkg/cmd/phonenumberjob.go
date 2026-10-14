@@ -31,12 +31,12 @@ var phoneNumbersJobsRetrieve = cli.Command{
 
 var phoneNumbersJobsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns background jobs that operate on phone numbers. Filter by job type,\ntarget phone numbers, or job status, and sort by creation time. Multiple\nphone-number or status values use OR semantics within that filter; different\nfilter categories use AND semantics. Results include pagination metadata.",
+	Usage:   "Returns background jobs that operate on phone numbers. Filter by job type,\ntarget phone numbers, job status, or creation-time customer reference, and sort\nby creation time. Multiple phone-number or status values use OR semantics within\nthat filter; different filter categories use AND semantics. Results include\npagination metadata.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
 			Name:      "filter",
-			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[type], filter[phone_number], filter[phone_number][], filter[status][]",
+			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[type], filter[phone_number], filter[phone_number][], filter[status][], filter[customer_reference]",
 			QueryPath: "filter",
 		},
 		&requestflag.Flag[int64]{
@@ -61,6 +61,11 @@ var phoneNumbersJobsList = requestflag.WithInnerFlags(cli.Command{
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
 	"filter": {
+		&requestflag.InnerFlag[string]{
+			Name:       "filter.customer-reference",
+			Usage:      "Returns jobs whose creation-time customer reference exactly matches the supplied value, not the current reference on a phone number. Only jobs within the lookup window (90 days by default) are returned. Supply a single non-blank string of up to 250 characters, without null characters, using `filter[customer_reference]=yourcustomerrefhere`. An invalid filter value returns HTTP 422.",
+			InnerField: "customer_reference",
+		},
 		&requestflag.InnerFlag[any]{
 			Name:       "filter.phone-number",
 			Usage:      "Returns jobs that targeted any of the supplied account-owned phone numbers. Values beginning with `+` must contain 1 to 20 digits after the plus sign. The 10-value limit is enforced before duplicate values are removed. Unmatched or non-account-owned identifiers return an empty result. Phone-number filtering must be enabled for the account.",

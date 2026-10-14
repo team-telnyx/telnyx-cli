@@ -298,7 +298,9 @@ func init() {
 					&aiAssistantsClone,
 					&aiAssistantsGetTexml,
 					&aiAssistantsImports,
+					&aiAssistantsRestore,
 					&aiAssistantsSendSMS,
+					&aiAssistantsWhatsapp,
 				},
 			},
 			{
@@ -400,6 +402,15 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&aiAssistantsInstructionsEnhance,
+				},
+			},
+			{
+				Name:     "ai:assistants:deleted",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiAssistantsDeletedList,
+					&aiAssistantsDeletedGet,
 				},
 			},
 			{
@@ -740,6 +751,59 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&aiTypesafeV1Systemone,
+				},
+			},
+			{
+				Name:     "ai:memory:namespaces",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMemoryNamespacesCreate,
+					&aiMemoryNamespacesRetrieve,
+					&aiMemoryNamespacesList,
+					&aiMemoryNamespacesDelete,
+				},
+			},
+			{
+				Name:     "ai:memory:namespaces:profiles",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMemoryNamespacesProfilesList,
+					&aiMemoryNamespacesProfilesDelete,
+					&aiMemoryNamespacesProfilesIngest,
+					&aiMemoryNamespacesProfilesPreview,
+					&aiMemoryNamespacesProfilesRecall,
+					&aiMemoryNamespacesProfilesRemember,
+					&aiMemoryNamespacesProfilesRetrieveSummary,
+				},
+			},
+			{
+				Name:     "ai:memory:namespaces:profiles:memories",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMemoryNamespacesProfilesMemoriesRetrieve,
+					&aiMemoryNamespacesProfilesMemoriesList,
+				},
+			},
+			{
+				Name:     "ai:memory:namespaces:profiles:sources",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMemoryNamespacesProfilesSourcesRetrieve,
+					&aiMemoryNamespacesProfilesSourcesList,
+					&aiMemoryNamespacesProfilesSourcesDelete,
+				},
+			},
+			{
+				Name:     "ai:memory:namespaces:settings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiMemoryNamespacesSettingsList,
+					&aiMemoryNamespacesSettingsPatchAll,
 				},
 			},
 			{
@@ -3316,12 +3380,30 @@ func init() {
 				},
 			},
 			{
+				Name:     "whatsapp:phone-numbers:calling-routing",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappPhoneNumbersCallingRoutingList,
+					&whatsappPhoneNumbersCallingRoutingPatchAll,
+				},
+			},
+			{
 				Name:     "whatsapp:user-data",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&whatsappUserDataRetrieve,
 					&whatsappUserDataUpdate,
+				},
+			},
+			{
+				Name:     "whatsapp:signup",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappSignupList,
+					&whatsappSignupRetrieveStatus,
 				},
 			},
 			{
@@ -3414,6 +3496,7 @@ func init() {
 					&enterprisesReputationDisable,
 					&enterprisesReputationEnable,
 					&enterprisesReputationUpdateFrequency,
+					&enterprisesReputationUpdateWebhook,
 				},
 			},
 			{
@@ -3425,7 +3508,9 @@ func init() {
 					&enterprisesReputationNumbersList,
 					&enterprisesReputationNumbersAssociate,
 					&enterprisesReputationNumbersDisassociate,
+					&enterprisesReputationNumbersOwnershipConfirm,
 					&enterprisesReputationNumbersRefresh,
+					&enterprisesReputationNumbersRetrieveOwnership,
 				},
 			},
 			{
@@ -3448,12 +3533,30 @@ func init() {
 				},
 			},
 			{
+				Name:     "enterprises:reputation:external-verification",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesReputationExternalVerificationCreate,
+					&enterprisesReputationExternalVerificationList,
+				},
+			},
+			{
 				Name:     "enterprises:dir",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&enterprisesDirCreate,
 					&enterprisesDirList,
+				},
+			},
+			{
+				Name:     "enterprises:verify-email",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&enterprisesVerifyEmailCreate,
+					&enterprisesVerifyEmailConfirm,
 				},
 			},
 			{
@@ -3559,9 +3662,11 @@ func init() {
 					&dirUpdate,
 					&dirList,
 					&dirDelete,
+					&dirBpoLoa,
 					&dirListDocumentTypes,
 					&dirListInfringementClaims,
 					&dirNewLoa,
+					&dirRetrieveBpoAuthorizations,
 					&dirSubmit,
 					&dirUpdateInfringement,
 				},
@@ -3657,6 +3762,7 @@ func init() {
 					&emailDomainsDelete,
 					&emailDomainsRetrieveDNSRecords,
 					&emailDomainsRetrieveHealth,
+					&emailDomainsRotateDkim,
 					&emailDomainsVerify,
 				},
 			},
@@ -3777,6 +3883,7 @@ func init() {
 					&emailMessagesDeleteAll,
 					&emailMessagesDeleteSchedule,
 					&emailMessagesRetrieveEvents,
+					&emailMessagesUpdateSchedule,
 				},
 			},
 			{
@@ -3982,6 +4089,67 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&machinePaymentsAccountCredit,
+				},
+			},
+			{
+				Name:     "spend-limits",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&spendLimitsCreate,
+					&spendLimitsUpdate,
+					&spendLimitsList,
+					&spendLimitsDelete,
+				},
+			},
+			{
+				Name:     "llm-token-gateway:usage",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&llmTokenGatewayUsageRetrieveExport,
+					&llmTokenGatewayUsageRetrieveSummary,
+				},
+			},
+			{
+				Name:     "llm-token-gateway:spend",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&llmTokenGatewaySpendRetrieveEvents,
+					&llmTokenGatewaySpendRetrieveSummary,
+				},
+			},
+			{
+				Name:     "llm-token-gateway:token-groups",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&llmTokenGatewayTokenGroupsCreate,
+					&llmTokenGatewayTokenGroupsRetrieve,
+					&llmTokenGatewayTokenGroupsUpdate,
+					&llmTokenGatewayTokenGroupsList,
+					&llmTokenGatewayTokenGroupsDelete,
+				},
+			},
+			{
+				Name:     "llm-token-gateway:token-keys",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&llmTokenGatewayTokenKeysCreate,
+					&llmTokenGatewayTokenKeysRetrieve,
+					&llmTokenGatewayTokenKeysUpdate,
+					&llmTokenGatewayTokenKeysList,
+					&llmTokenGatewayTokenKeysDelete,
+				},
+			},
+			{
+				Name:     "sip-registration-status",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&sipRegistrationStatusList,
 				},
 			},
 			{

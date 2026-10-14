@@ -16,7 +16,7 @@ import (
 
 var emailEventsList = cli.Command{
 	Name:    "list",
-	Usage:   "Lists account-level email events sorted oldest first by\n`occurred_at asc, id asc`.",
+	Usage:   "Lists account-level email events sorted oldest first by\n`occurred_at asc, id asc`. Each row contains a legacy email.-prefixed event_type\nand an additive canonical_event_type. Gateway rejection renders email.failed\nwith canonical email.gw_reject; ambiguous injection timeout renders\nemail.injection_timeout in both; MTA expiration renders email.bounced with\ncanonical email.expired. Message-scoped queued, sending, sandbox, cancelled, and\ndaily_limit_exceeded rows fan out per durable recipient with stable derived IDs\nmatching webhook delivery. Scheduled is the cardinality exception: account\npolling retains one message-scoped scheduled row with its stored event ID, while\nscheduled webhook publication fans out per recipient with derived IDs; reconcile\nscheduled events by message ID, event type, and occurrence time rather than\nevent UUID. Recipient-scoped stored rows retain their stored UUIDs across\npolling and webhook delivery. Legacy names are derived from stored rows; an\nAdminBounce row stored as failed renders email.failed in polling while its\nwebhook retains email.bounced, both with canonical email.failed.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -26,7 +26,7 @@ var emailEventsList = cli.Command{
 		},
 		&requestflag.Flag[any]{
 			Name:      "event-type",
-			Usage:     "Comma-separated list of event types to include. Also accepts repeated query parameters (e.g. event_type=delivered&event_type=bounced). Unknown values return no matches.",
+			Usage:     "Comma-separated list of event types to include. Also accepts repeated\nquery parameters (e.g. event_type=delivered&event_type=bounced).\nUnknown values return no matches.\n\nDual-name compatibility: values are accepted\nbare or `email.`-prefixed. A legacy value keeps matching the\nrows it matched pre-rename — no widening: `failed` also\nmatches the rows that now store the canonical names of the\noutcomes it covered (`gw_reject`, `injection_timeout`,\n`expired`); `bounced` matches stored `bounced` rows only\n(recipient-scoped Expirations stored `failed` pre-rename and\nnever matched `bounced`, so `expired` is deliberately not a\n`bounced` expansion). A canonical value matches its own rows\nplus legacy rows whose recorded payload evidence proves that\noutcome (`expired` also surfaces legacy `bounced` rows with\n`bounce_category: transient`). The additive\n`canonical_event_type` field in each response row names the\ncanonical outcome.\n",
 			QueryPath: "event_type",
 		},
 		&requestflag.Flag[any]{
@@ -34,25 +34,21 @@ var emailEventsList = cli.Command{
 			Usage:     "Inclusive ISO 8601 start timestamp. Defaults to 30 days ago when omitted.",
 			QueryPath: "from",
 		},
-		&requestflag.Flag[string]{
-			Name:      "page-cursor",
-			Usage:     "Opaque URL-safe Base64 cursor returned by a previous list response.",
-			QueryPath: "page_cursor",
-		},
 		&requestflag.Flag[int64]{
 			Name:      "page-size",
 			Usage:     "Number of results to return. Defaults to 25; maximum is 100. Invalid values are clamped to the valid range.",
 			Default:   25,
 			QueryPath: "page_size",
 		},
+		&requestflag.Flag[string]{
+			Name:      "page-cursor",
+			Usage:     "Opaque URL-safe Base64 cursor returned by a previous event list response. The legacy `page[after]` and flat `page_cursor` forms are also accepted.",
+			QueryPath: "page[cursor]",
+		},
 		&requestflag.Flag[any]{
 			Name:      "to",
 			Usage:     "Inclusive ISO 8601 end timestamp. When `from` is provided without `to`, defaults to `from + 30 days`.",
 			QueryPath: "to",
-		},
-		&requestflag.Flag[int64]{
-			Name:  "max-items",
-			Usage: "The maximum number of items to return (use -1 for unlimited).",
 		},
 	},
 	Action:          handleEmailEventsList,
@@ -100,38 +96,24 @@ func handleEmailEventsList(ctx context.Context, cmd *cli.Command) error {
 
 	params := telnyx.EmailEventListParams{}
 
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.EmailEvents.List(ctx, params, options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	if format == "raw" {
-		var res []byte
-		options = append(options, option.WithResponseBodyInto(&res))
-		_, err = client.EmailEvents.List(ctx, params, options...)
-		if err != nil {
-			return err
-		}
-		obj := gjson.ParseBytes(res)
-		return ShowJSON(obj, ShowJSONOpts{
-			ExplicitFormat: explicitFormat,
-			Format:         format,
-			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "email-events list",
-			Transform:      transform,
-		})
-	} else {
-		iter := client.EmailEvents.ListAutoPaging(ctx, params, options...)
-		maxItems := int64(-1)
-		if cmd.IsSet("max-items") {
-			maxItems = cmd.Value("max-items").(int64)
-		}
-		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
-			ExplicitFormat: explicitFormat,
-			Format:         format,
-			RawOutput:      cmd.Root().Bool("raw-output"),
-			Title:          "email-events list",
-			Transform:      transform,
-		})
-	}
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "email-events list",
+		Transform:      transform,
+	})
 }
 
 func handleEmailEventsRetrieveStats(ctx context.Context, cmd *cli.Command) error {

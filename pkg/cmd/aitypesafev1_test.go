@@ -17,6 +17,7 @@ func TestAITypesafeV1Systemone(t *testing.T) {
 			"ai:typesafe:v1", "systemone",
 			"--questions", "{team: {criteria: {billing: Payments and refunds, technical_support: Service faults and technical problems, sales: New purchases}, instructions: Choose the team that should handle this incident., type: choice}, production_incident: {instructions: Does the message describe an active production incident?, type: noul, criteria: {'false': 'false', 'true': 'true'}}, urgency: {criteria: [Low, Normal, High, Critical], instructions: Rate operational urgency., type: score}}",
 			"--state", "Our production calls are failing. Every customer is affected.",
+			"--model", "telnyx/decision-flash",
 		)
 	})
 
@@ -45,7 +46,8 @@ func TestAITypesafeV1Systemone(t *testing.T) {
 			"      - Critical\n" +
 			"    instructions: Rate operational urgency.\n" +
 			"    type: score\n" +
-			"state: Our production calls are failing. Every customer is affected.\n")
+			"state: Our production calls are failing. Every customer is affected.\n" +
+			"model: telnyx/decision-flash\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

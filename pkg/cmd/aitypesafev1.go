@@ -16,7 +16,7 @@ import (
 
 var aiTypesafeV1Systemone = cli.Command{
 	Name:    "systemone",
-	Usage:   "**Beta API.** Telnyx controls model selection.",
+	Usage:   "**Beta API.** Choose telnyx/decision-flash for the lowest cost and latency, or\ntelnyx/decision-pro for decisions that require long context, including inputs\nbeyond Jev’s 32k per-decision limit. Omitted model defaults to\ntelnyx/decision-flash.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
@@ -30,6 +30,12 @@ var aiTypesafeV1Systemone = cli.Command{
 			Usage:    "Shared context evaluated by every question.",
 			Required: true,
 			BodyPath: "state",
+		},
+		&requestflag.Flag[string]{
+			Name:     "model",
+			Usage:    "Public model alias. telnyx/decision-flash offers the lowest cost and latency; telnyx/decision-pro supports decisions that require long context, including inputs beyond Jev’s 32k per-decision limit. Applies to every question in the request. Other values are rejected.",
+			Default:  "telnyx/decision-flash",
+			BodyPath: "model",
 		},
 	},
 	Action:          handleAITypesafeV1Systemone,

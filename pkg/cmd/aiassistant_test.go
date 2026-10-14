@@ -19,7 +19,9 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--instructions", "instructions",
 			"--name", "name",
 			"--a2a-agent", "{name: billing_agent, url: https://agents.example.com, async: true, headers: [{name: X-Api-Key, value: '{{#integration_secret}}my_agent_api_key{{/integration_secret}}'}], messages: [{content: x, type: request_start, timing_ms: 100}], poll_interval_ms: 500, timeout_ms: 30000}",
-			"--conversation-flow", "{nodes: [{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}], start_node_id: n_intake, edges: [{id: e_intake_to_billing, condition: {prompt: The caller is asking about a bill or charge., type: llm}, start_node_id: n_intake, target: {node_id: n_billing, type: node}}, {id: e_intake_to_escalation_assistant, condition: {prompt: The caller has explicitly asked for a human., type: llm}, start_node_id: n_intake, target: {assistant_id: assistant-human-handoff, type: assistant, position: {x: 600, 'y': 80}, voice_mode: distinct}}]}",
+			"--avatar-settings", "{avatar_id: elena, background_id: office, model: foxtrot-1, provider: telnyx}",
+			"--conversation-flow", "{nodes: [{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}}], start_node_id: n_intake, edges: [{id: e_intake_to_billing, condition: {prompt: The caller is asking about a bill or charge., type: llm}, start_node_id: n_intake, target: {node_id: n_billing, type: node}}, {id: e_intake_to_escalation_assistant, condition: {prompt: The caller has explicitly asked for a human., type: llm}, start_node_id: n_intake, target: {assistant_id: assistant-human-handoff, type: assistant, position: {x: 600, 'y': 80}, voice_mode: distinct}}]}",
+			"--delegation-settings", "{enabled: true, external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions: instructions, llm_api_key_ref: llm_api_key_ref, mode: telnyx, model: model, speak_results: true}",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-timeout-ms", "1",
@@ -39,11 +41,12 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--post-conversation-settings", "{enabled: true}",
 			"--privacy-settings", "{data_retention: true, in_transit_data_locality: true}",
 			"--tag", "string",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, fallback_destination: fallback_destination, noise_suppression: aicoustics, noise_suppression_config: {attenuation_limit: 0, enhancement_level: 0, family: quail, mode: advanced, size: vf}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, send_message_history_updates: true, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{conversation_ended_full_history: true, default_texml_app_id: default_texml_app_id, disable_dtmf: true, fallback_destination: fallback_destination, noise_suppression: aicoustics, noise_suppression_config: {attenuation_limit: 0, enhancement_level: 0, family: quail, mode: advanced, size: vf}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, send_message_history_updates: true, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
 			"--tool", "{function: {name: name, description: description, parameters: {foo: bar}}, type: function}",
-			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
-			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
+			"--transcription", "{api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
+			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}",
+			"--websocket-settings", "{auth_ref: auth_ref, enabled: true, url: url}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
 			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
@@ -67,9 +70,20 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--a2a-agent.messages", "[{content: x, type: request_start, timing_ms: 100}]",
 			"--a2a-agent.poll-interval-ms", "500",
 			"--a2a-agent.timeout-ms", "30000",
-			"--conversation-flow.nodes", "[{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}]",
+			"--avatar-settings.avatar-id", "elena",
+			"--avatar-settings.background-id", "office",
+			"--avatar-settings.model", "foxtrot-1",
+			"--avatar-settings.provider", "telnyx",
+			"--conversation-flow.nodes", "[{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}}]",
 			"--conversation-flow.start-node-id", "n_intake",
 			"--conversation-flow.edges", "[{id: e_intake_to_billing, condition: {prompt: The caller is asking about a bill or charge., type: llm}, start_node_id: n_intake, target: {node_id: n_billing, type: node}}, {id: e_intake_to_escalation_assistant, condition: {prompt: The caller has explicitly asked for a human., type: llm}, start_node_id: n_intake, target: {assistant_id: assistant-human-handoff, type: assistant, position: {x: 600, 'y': 80}, voice_mode: distinct}}]",
+			"--delegation-settings.enabled=true",
+			"--delegation-settings.external-llm", "{base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}",
+			"--delegation-settings.instructions", "instructions",
+			"--delegation-settings.llm-api-key-ref", "llm_api_key_ref",
+			"--delegation-settings.mode", "telnyx",
+			"--delegation-settings.model", "model",
+			"--delegation-settings.speak-results=true",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-timeout-ms", "1",
@@ -112,6 +126,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--privacy-settings.data-retention=true",
 			"--privacy-settings.in-transit-data-locality=true",
 			"--tag", "string",
+			"--telephony-settings.conversation-ended-full-history=true",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
 			"--telephony-settings.disable-dtmf=true",
 			"--telephony-settings.fallback-destination", "fallback_destination",
@@ -127,6 +142,8 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--tool-id", "string",
 			"--tool", "{function: {name: name, description: description, parameters: {foo: bar}}, type: function}",
 			"--transcription.api-key-ref", "api_key_ref",
+			"--transcription.challenger", "{model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
+			"--transcription.fallback-models", "[{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}]",
 			"--transcription.language", "language",
 			"--transcription.model", "deepgram/flux",
 			"--transcription.region", "region",
@@ -140,8 +157,12 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"--voice-settings.speed", "0",
 			"--voice-settings.style", "0",
 			"--voice-settings.temperature", "0",
+			"--voice-settings.tool-call-audio", "{type: predefined_media, value: typing, volume: 0.5}",
 			"--voice-settings.use-speaker-boost=true",
 			"--voice-settings.voice-speed", "0",
+			"--websocket-settings.auth-ref", "auth_ref",
+			"--websocket-settings.enabled=true",
+			"--websocket-settings.url", "url",
 			"--widget-settings.agent-thinking-text", "agent_thinking_text",
 			"--widget-settings.audio-visualizer-config", "{color: verdant, preset: preset}",
 			"--widget-settings.default-state", "expanded",
@@ -175,6 +196,11 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"        timing_ms: 100\n" +
 			"    poll_interval_ms: 500\n" +
 			"    timeout_ms: 30000\n" +
+			"avatar_settings:\n" +
+			"  avatar_id: elena\n" +
+			"  background_id: office\n" +
+			"  model: foxtrot-1\n" +
+			"  provider: telnyx\n" +
 			"conversation_flow:\n" +
 			"  nodes:\n" +
 			"    - id: n_intake\n" +
@@ -199,6 +225,63 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"      tools_mode: replace\n" +
 			"      transcription:\n" +
 			"        api_key_ref: api_key_ref\n" +
+			"        challenger:\n" +
+			"          model: deepgram/nova-3\n" +
+			"          language: en\n" +
+			"          rule: best_turn\n" +
+			"          settings:\n" +
+			"            context: context\n" +
+			"            eager_eot_threshold: 0.3\n" +
+			"            enable_endpoint_detection: true\n" +
+			"            end_of_turn_confidence_threshold: 0\n" +
+			"            eot_threshold: 0.5\n" +
+			"            eot_timeout_ms: 500\n" +
+			"            interim_results: true\n" +
+			"            keyterm: keyterm\n" +
+			"            language_hints:\n" +
+			"              - string\n" +
+			"            max_endpoint_delay_ms: 500\n" +
+			"            max_turn_silence: 100\n" +
+			"            min_turn_silence: 100\n" +
+			"            numerals: true\n" +
+			"            smart_format: true\n" +
+			"        fallback_models:\n" +
+			"          - model: deepgram/nova-3\n" +
+			"            language: en\n" +
+			"            settings:\n" +
+			"              context: context\n" +
+			"              eager_eot_threshold: 0.3\n" +
+			"              enable_endpoint_detection: true\n" +
+			"              end_of_turn_confidence_threshold: 0\n" +
+			"              eot_threshold: 0.5\n" +
+			"              eot_timeout_ms: 500\n" +
+			"              interim_results: true\n" +
+			"              keyterm: Telnyx,VoIP,SIP\n" +
+			"              language_hints:\n" +
+			"                - string\n" +
+			"              max_endpoint_delay_ms: 500\n" +
+			"              max_turn_silence: 100\n" +
+			"              min_turn_silence: 100\n" +
+			"              numerals: true\n" +
+			"              smart_format: true\n" +
+			"          - model: soniox/stt-rt-v5\n" +
+			"            language: en\n" +
+			"            settings:\n" +
+			"              context: Telnyx,VoIP,SIP\n" +
+			"              eager_eot_threshold: 0.3\n" +
+			"              enable_endpoint_detection: true\n" +
+			"              end_of_turn_confidence_threshold: 0\n" +
+			"              eot_threshold: 0.5\n" +
+			"              eot_timeout_ms: 500\n" +
+			"              interim_results: true\n" +
+			"              keyterm: keyterm\n" +
+			"              language_hints:\n" +
+			"                - string\n" +
+			"              max_endpoint_delay_ms: 500\n" +
+			"              max_turn_silence: 100\n" +
+			"              min_turn_silence: 100\n" +
+			"              numerals: true\n" +
+			"              smart_format: true\n" +
 			"        language: language\n" +
 			"        model: deepgram/flux\n" +
 			"        region: region\n" +
@@ -232,6 +315,10 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"        speed: 0\n" +
 			"        style: 0\n" +
 			"        temperature: 0\n" +
+			"        tool_call_audio:\n" +
+			"          type: predefined_media\n" +
+			"          value: typing\n" +
+			"          volume: 0.5\n" +
 			"        use_speaker_boost: true\n" +
 			"        voice_speed: 0\n" +
 			"    - id: n_billing\n" +
@@ -258,6 +345,63 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"      tools_mode: append\n" +
 			"      transcription:\n" +
 			"        api_key_ref: api_key_ref\n" +
+			"        challenger:\n" +
+			"          model: deepgram/nova-3\n" +
+			"          language: en\n" +
+			"          rule: best_turn\n" +
+			"          settings:\n" +
+			"            context: context\n" +
+			"            eager_eot_threshold: 0.3\n" +
+			"            enable_endpoint_detection: true\n" +
+			"            end_of_turn_confidence_threshold: 0\n" +
+			"            eot_threshold: 0.5\n" +
+			"            eot_timeout_ms: 500\n" +
+			"            interim_results: true\n" +
+			"            keyterm: keyterm\n" +
+			"            language_hints:\n" +
+			"              - string\n" +
+			"            max_endpoint_delay_ms: 500\n" +
+			"            max_turn_silence: 100\n" +
+			"            min_turn_silence: 100\n" +
+			"            numerals: true\n" +
+			"            smart_format: true\n" +
+			"        fallback_models:\n" +
+			"          - model: deepgram/nova-3\n" +
+			"            language: en\n" +
+			"            settings:\n" +
+			"              context: context\n" +
+			"              eager_eot_threshold: 0.3\n" +
+			"              enable_endpoint_detection: true\n" +
+			"              end_of_turn_confidence_threshold: 0\n" +
+			"              eot_threshold: 0.5\n" +
+			"              eot_timeout_ms: 500\n" +
+			"              interim_results: true\n" +
+			"              keyterm: Telnyx,VoIP,SIP\n" +
+			"              language_hints:\n" +
+			"                - string\n" +
+			"              max_endpoint_delay_ms: 500\n" +
+			"              max_turn_silence: 100\n" +
+			"              min_turn_silence: 100\n" +
+			"              numerals: true\n" +
+			"              smart_format: true\n" +
+			"          - model: soniox/stt-rt-v5\n" +
+			"            language: en\n" +
+			"            settings:\n" +
+			"              context: Telnyx,VoIP,SIP\n" +
+			"              eager_eot_threshold: 0.3\n" +
+			"              enable_endpoint_detection: true\n" +
+			"              end_of_turn_confidence_threshold: 0\n" +
+			"              eot_threshold: 0.5\n" +
+			"              eot_timeout_ms: 500\n" +
+			"              interim_results: true\n" +
+			"              keyterm: keyterm\n" +
+			"              language_hints:\n" +
+			"                - string\n" +
+			"              max_endpoint_delay_ms: 500\n" +
+			"              max_turn_silence: 100\n" +
+			"              min_turn_silence: 100\n" +
+			"              numerals: true\n" +
+			"              smart_format: true\n" +
 			"        language: language\n" +
 			"        model: deepgram/flux\n" +
 			"        region: region\n" +
@@ -291,6 +435,10 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"        speed: 0\n" +
 			"        style: 0\n" +
 			"        temperature: 0\n" +
+			"        tool_call_audio:\n" +
+			"          type: predefined_media\n" +
+			"          value: typing\n" +
+			"          volume: 0.5\n" +
 			"        use_speaker_boost: true\n" +
 			"        voice_speed: 0\n" +
 			"  start_node_id: n_intake\n" +
@@ -315,6 +463,21 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"          x: 600\n" +
 			"          'y': 80\n" +
 			"        voice_mode: distinct\n" +
+			"delegation_settings:\n" +
+			"  enabled: true\n" +
+			"  external_llm:\n" +
+			"    base_url: base_url\n" +
+			"    model: model\n" +
+			"    authentication_method: token\n" +
+			"    certificate_ref: certificate_ref\n" +
+			"    forward_metadata: true\n" +
+			"    llm_api_key_ref: llm_api_key_ref\n" +
+			"    token_retrieval_url: token_retrieval_url\n" +
+			"  instructions: instructions\n" +
+			"  llm_api_key_ref: llm_api_key_ref\n" +
+			"  mode: telnyx\n" +
+			"  model: model\n" +
+			"  speak_results: true\n" +
 			"description: description\n" +
 			"dynamic_variables:\n" +
 			"  foo: bar\n" +
@@ -385,6 +548,7 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"tags:\n" +
 			"  - string\n" +
 			"telephony_settings:\n" +
+			"  conversation_ended_full_history: true\n" +
 			"  default_texml_app_id: default_texml_app_id\n" +
 			"  disable_dtmf: true\n" +
 			"  fallback_destination: fallback_destination\n" +
@@ -423,6 +587,63 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"    type: function\n" +
 			"transcription:\n" +
 			"  api_key_ref: api_key_ref\n" +
+			"  challenger:\n" +
+			"    model: deepgram/nova-3\n" +
+			"    language: en\n" +
+			"    rule: best_turn\n" +
+			"    settings:\n" +
+			"      context: context\n" +
+			"      eager_eot_threshold: 0.3\n" +
+			"      enable_endpoint_detection: true\n" +
+			"      end_of_turn_confidence_threshold: 0\n" +
+			"      eot_threshold: 0.5\n" +
+			"      eot_timeout_ms: 500\n" +
+			"      interim_results: true\n" +
+			"      keyterm: keyterm\n" +
+			"      language_hints:\n" +
+			"        - string\n" +
+			"      max_endpoint_delay_ms: 500\n" +
+			"      max_turn_silence: 100\n" +
+			"      min_turn_silence: 100\n" +
+			"      numerals: true\n" +
+			"      smart_format: true\n" +
+			"  fallback_models:\n" +
+			"    - model: deepgram/nova-3\n" +
+			"      language: en\n" +
+			"      settings:\n" +
+			"        context: context\n" +
+			"        eager_eot_threshold: 0.3\n" +
+			"        enable_endpoint_detection: true\n" +
+			"        end_of_turn_confidence_threshold: 0\n" +
+			"        eot_threshold: 0.5\n" +
+			"        eot_timeout_ms: 500\n" +
+			"        interim_results: true\n" +
+			"        keyterm: Telnyx,VoIP,SIP\n" +
+			"        language_hints:\n" +
+			"          - string\n" +
+			"        max_endpoint_delay_ms: 500\n" +
+			"        max_turn_silence: 100\n" +
+			"        min_turn_silence: 100\n" +
+			"        numerals: true\n" +
+			"        smart_format: true\n" +
+			"    - model: soniox/stt-rt-v5\n" +
+			"      language: en\n" +
+			"      settings:\n" +
+			"        context: Telnyx,VoIP,SIP\n" +
+			"        eager_eot_threshold: 0.3\n" +
+			"        enable_endpoint_detection: true\n" +
+			"        end_of_turn_confidence_threshold: 0\n" +
+			"        eot_threshold: 0.5\n" +
+			"        eot_timeout_ms: 500\n" +
+			"        interim_results: true\n" +
+			"        keyterm: keyterm\n" +
+			"        language_hints:\n" +
+			"          - string\n" +
+			"        max_endpoint_delay_ms: 500\n" +
+			"        max_turn_silence: 100\n" +
+			"        min_turn_silence: 100\n" +
+			"        numerals: true\n" +
+			"        smart_format: true\n" +
 			"  language: language\n" +
 			"  model: deepgram/flux\n" +
 			"  region: region\n" +
@@ -455,8 +676,16 @@ func TestAIAssistantsCreate(t *testing.T) {
 			"  speed: 0\n" +
 			"  style: 0\n" +
 			"  temperature: 0\n" +
+			"  tool_call_audio:\n" +
+			"    type: predefined_media\n" +
+			"    value: typing\n" +
+			"    volume: 0.5\n" +
 			"  use_speaker_boost: true\n" +
 			"  voice_speed: 0\n" +
+			"websocket_settings:\n" +
+			"  auth_ref: auth_ref\n" +
+			"  enabled: true\n" +
+			"  url: url\n" +
 			"widget_settings:\n" +
 			"  agent_thinking_text: agent_thinking_text\n" +
 			"  audio_visualizer_config:\n" +
@@ -505,7 +734,9 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"ai:assistants", "update",
 			"--assistant-id", "assistant_id",
 			"--a2a-agent", "{name: billing_agent, url: https://agents.example.com, async: true, headers: [{name: X-Api-Key, value: '{{#integration_secret}}my_agent_api_key{{/integration_secret}}'}], messages: [{content: x, type: request_start, timing_ms: 100}], poll_interval_ms: 500, timeout_ms: 30000}",
-			"--conversation-flow", "{nodes: [{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}], start_node_id: n_intake, edges: [{id: e_intake_to_billing, condition: {prompt: The caller is asking about a bill or charge., type: llm}, start_node_id: n_intake, target: {node_id: n_billing, type: node}}, {id: e_intake_to_escalation_assistant, condition: {prompt: The caller has explicitly asked for a human., type: llm}, start_node_id: n_intake, target: {assistant_id: assistant-human-handoff, type: assistant, position: {x: 600, 'y': 80}, voice_mode: distinct}}]}",
+			"--avatar-settings", "{avatar_id: elena, background_id: office, model: foxtrot-1, provider: telnyx}",
+			"--conversation-flow", "{nodes: [{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}}], start_node_id: n_intake, edges: [{id: e_intake_to_billing, condition: {prompt: The caller is asking about a bill or charge., type: llm}, start_node_id: n_intake, target: {node_id: n_billing, type: node}}, {id: e_intake_to_escalation_assistant, condition: {prompt: The caller has explicitly asked for a human., type: llm}, start_node_id: n_intake, target: {assistant_id: assistant-human-handoff, type: assistant, position: {x: 600, 'y': 80}, voice_mode: distinct}}]}",
+			"--delegation-settings", "{enabled: true, external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions: instructions, llm_api_key_ref: llm_api_key_ref, mode: telnyx, model: model, speak_results: true}",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-timeout-ms", "1",
@@ -528,12 +759,13 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--privacy-settings", "{data_retention: true, in_transit_data_locality: true}",
 			"--promote-to-main=true",
 			"--tag", "string",
-			"--telephony-settings", "{default_texml_app_id: default_texml_app_id, disable_dtmf: true, fallback_destination: fallback_destination, noise_suppression: aicoustics, noise_suppression_config: {attenuation_limit: 0, enhancement_level: 0, family: quail, mode: advanced, size: vf}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, send_message_history_updates: true, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
+			"--telephony-settings", "{conversation_ended_full_history: true, default_texml_app_id: default_texml_app_id, disable_dtmf: true, fallback_destination: fallback_destination, noise_suppression: aicoustics, noise_suppression_config: {attenuation_limit: 0, enhancement_level: 0, family: quail, mode: advanced, size: vf}, recording_settings: {channels: single, enabled: true, format: wav, stop_on_conversation_end: true}, send_message_history_updates: true, supports_unauthenticated_web_calls: true, time_limit_secs: 30, user_idle_reply_secs: 0, user_idle_timeout_secs: 10, voicemail_detection: {on_voicemail_detected: {action: stop_assistant, voicemail_message: {message: message, prompt: prompt, type: prompt}}}}",
 			"--tool-id", "string",
 			"--tool", "{function: {name: name, description: description, parameters: {foo: bar}}, type: function}",
-			"--transcription", "{api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
+			"--transcription", "{api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
 			"--version-name", "version_name",
-			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
+			"--voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}",
+			"--websocket-settings", "{auth_ref: auth_ref, enabled: true, url: url}",
 			"--widget-settings", "{agent_thinking_text: agent_thinking_text, audio_visualizer_config: {color: verdant, preset: preset}, default_state: expanded, give_feedback_url: give_feedback_url, logo_icon_url: logo_icon_url, position: fixed, report_issue_url: report_issue_url, speak_to_interrupt_text: speak_to_interrupt_text, start_call_text: start_call_text, theme: light, view_history_url: view_history_url}",
 		)
 	})
@@ -555,9 +787,20 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--a2a-agent.messages", "[{content: x, type: request_start, timing_ms: 100}]",
 			"--a2a-agent.poll-interval-ms", "500",
 			"--a2a-agent.timeout-ms", "30000",
-			"--conversation-flow.nodes", "[{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}]",
+			"--avatar-settings.avatar-id", "elena",
+			"--avatar-settings.background-id", "office",
+			"--avatar-settings.model", "foxtrot-1",
+			"--avatar-settings.provider", "telnyx",
+			"--conversation-flow.nodes", "[{id: n_intake, instructions: Greet the caller and ask what they're calling about., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: replace, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Intake, position: {x: 120, 'y': 80}, shared_tool_ids: [tool-faq-kb], tools_mode: replace, transcription: {api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}}, {id: n_billing, instructions: Focus on billing questions. Look up the caller's latest invoice with the billing tool before answering., external_llm: {base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}, instructions_mode: append, llm_api_key_ref: my-key-ref, model: moonshotai/Kimi-K2.6, name: Billing, position: {x: 420, 'y': 80}, shared_tool_ids: [tool-billing-lookup], tools_mode: append, transcription: {api_key_ref: api_key_ref, challenger: {model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, fallback_models: [{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}], language: language, model: deepgram/flux, region: region, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, type: prompt, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, tool_call_audio: {type: predefined_media, value: typing, volume: 0.5}, use_speaker_boost: true, voice_speed: 0}}]",
 			"--conversation-flow.start-node-id", "n_intake",
 			"--conversation-flow.edges", "[{id: e_intake_to_billing, condition: {prompt: The caller is asking about a bill or charge., type: llm}, start_node_id: n_intake, target: {node_id: n_billing, type: node}}, {id: e_intake_to_escalation_assistant, condition: {prompt: The caller has explicitly asked for a human., type: llm}, start_node_id: n_intake, target: {assistant_id: assistant-human-handoff, type: assistant, position: {x: 600, 'y': 80}, voice_mode: distinct}}]",
+			"--delegation-settings.enabled=true",
+			"--delegation-settings.external-llm", "{base_url: base_url, model: model, authentication_method: token, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, token_retrieval_url: token_retrieval_url}",
+			"--delegation-settings.instructions", "instructions",
+			"--delegation-settings.llm-api-key-ref", "llm_api_key_ref",
+			"--delegation-settings.mode", "telnyx",
+			"--delegation-settings.model", "model",
+			"--delegation-settings.speak-results=true",
 			"--description", "description",
 			"--dynamic-variables", "{foo: bar}",
 			"--dynamic-variables-webhook-timeout-ms", "1",
@@ -603,6 +846,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--privacy-settings.in-transit-data-locality=true",
 			"--promote-to-main=true",
 			"--tag", "string",
+			"--telephony-settings.conversation-ended-full-history=true",
 			"--telephony-settings.default-texml-app-id", "default_texml_app_id",
 			"--telephony-settings.disable-dtmf=true",
 			"--telephony-settings.fallback-destination", "fallback_destination",
@@ -618,6 +862,8 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--tool-id", "string",
 			"--tool", "{function: {name: name, description: description, parameters: {foo: bar}}, type: function}",
 			"--transcription.api-key-ref", "api_key_ref",
+			"--transcription.challenger", "{model: deepgram/nova-3, language: en, rule: best_turn, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}",
+			"--transcription.fallback-models", "[{model: deepgram/nova-3, language: en, settings: {context: context, eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: 'Telnyx,VoIP,SIP', language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}, {model: soniox/stt-rt-v5, language: en, settings: {context: 'Telnyx,VoIP,SIP', eager_eot_threshold: 0.3, enable_endpoint_detection: true, end_of_turn_confidence_threshold: 0, eot_threshold: 0.5, eot_timeout_ms: 500, interim_results: true, keyterm: keyterm, language_hints: [string], max_endpoint_delay_ms: 500, max_turn_silence: 100, min_turn_silence: 100, numerals: true, smart_format: true}}]",
 			"--transcription.language", "language",
 			"--transcription.model", "deepgram/flux",
 			"--transcription.region", "region",
@@ -632,8 +878,12 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"--voice-settings.speed", "0",
 			"--voice-settings.style", "0",
 			"--voice-settings.temperature", "0",
+			"--voice-settings.tool-call-audio", "{type: predefined_media, value: typing, volume: 0.5}",
 			"--voice-settings.use-speaker-boost=true",
 			"--voice-settings.voice-speed", "0",
+			"--websocket-settings.auth-ref", "auth_ref",
+			"--websocket-settings.enabled=true",
+			"--websocket-settings.url", "url",
 			"--widget-settings.agent-thinking-text", "agent_thinking_text",
 			"--widget-settings.audio-visualizer-config", "{color: verdant, preset: preset}",
 			"--widget-settings.default-state", "expanded",
@@ -664,6 +914,11 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"        timing_ms: 100\n" +
 			"    poll_interval_ms: 500\n" +
 			"    timeout_ms: 30000\n" +
+			"avatar_settings:\n" +
+			"  avatar_id: elena\n" +
+			"  background_id: office\n" +
+			"  model: foxtrot-1\n" +
+			"  provider: telnyx\n" +
 			"conversation_flow:\n" +
 			"  nodes:\n" +
 			"    - id: n_intake\n" +
@@ -688,6 +943,63 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"      tools_mode: replace\n" +
 			"      transcription:\n" +
 			"        api_key_ref: api_key_ref\n" +
+			"        challenger:\n" +
+			"          model: deepgram/nova-3\n" +
+			"          language: en\n" +
+			"          rule: best_turn\n" +
+			"          settings:\n" +
+			"            context: context\n" +
+			"            eager_eot_threshold: 0.3\n" +
+			"            enable_endpoint_detection: true\n" +
+			"            end_of_turn_confidence_threshold: 0\n" +
+			"            eot_threshold: 0.5\n" +
+			"            eot_timeout_ms: 500\n" +
+			"            interim_results: true\n" +
+			"            keyterm: keyterm\n" +
+			"            language_hints:\n" +
+			"              - string\n" +
+			"            max_endpoint_delay_ms: 500\n" +
+			"            max_turn_silence: 100\n" +
+			"            min_turn_silence: 100\n" +
+			"            numerals: true\n" +
+			"            smart_format: true\n" +
+			"        fallback_models:\n" +
+			"          - model: deepgram/nova-3\n" +
+			"            language: en\n" +
+			"            settings:\n" +
+			"              context: context\n" +
+			"              eager_eot_threshold: 0.3\n" +
+			"              enable_endpoint_detection: true\n" +
+			"              end_of_turn_confidence_threshold: 0\n" +
+			"              eot_threshold: 0.5\n" +
+			"              eot_timeout_ms: 500\n" +
+			"              interim_results: true\n" +
+			"              keyterm: Telnyx,VoIP,SIP\n" +
+			"              language_hints:\n" +
+			"                - string\n" +
+			"              max_endpoint_delay_ms: 500\n" +
+			"              max_turn_silence: 100\n" +
+			"              min_turn_silence: 100\n" +
+			"              numerals: true\n" +
+			"              smart_format: true\n" +
+			"          - model: soniox/stt-rt-v5\n" +
+			"            language: en\n" +
+			"            settings:\n" +
+			"              context: Telnyx,VoIP,SIP\n" +
+			"              eager_eot_threshold: 0.3\n" +
+			"              enable_endpoint_detection: true\n" +
+			"              end_of_turn_confidence_threshold: 0\n" +
+			"              eot_threshold: 0.5\n" +
+			"              eot_timeout_ms: 500\n" +
+			"              interim_results: true\n" +
+			"              keyterm: keyterm\n" +
+			"              language_hints:\n" +
+			"                - string\n" +
+			"              max_endpoint_delay_ms: 500\n" +
+			"              max_turn_silence: 100\n" +
+			"              min_turn_silence: 100\n" +
+			"              numerals: true\n" +
+			"              smart_format: true\n" +
 			"        language: language\n" +
 			"        model: deepgram/flux\n" +
 			"        region: region\n" +
@@ -721,6 +1033,10 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"        speed: 0\n" +
 			"        style: 0\n" +
 			"        temperature: 0\n" +
+			"        tool_call_audio:\n" +
+			"          type: predefined_media\n" +
+			"          value: typing\n" +
+			"          volume: 0.5\n" +
 			"        use_speaker_boost: true\n" +
 			"        voice_speed: 0\n" +
 			"    - id: n_billing\n" +
@@ -747,6 +1063,63 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"      tools_mode: append\n" +
 			"      transcription:\n" +
 			"        api_key_ref: api_key_ref\n" +
+			"        challenger:\n" +
+			"          model: deepgram/nova-3\n" +
+			"          language: en\n" +
+			"          rule: best_turn\n" +
+			"          settings:\n" +
+			"            context: context\n" +
+			"            eager_eot_threshold: 0.3\n" +
+			"            enable_endpoint_detection: true\n" +
+			"            end_of_turn_confidence_threshold: 0\n" +
+			"            eot_threshold: 0.5\n" +
+			"            eot_timeout_ms: 500\n" +
+			"            interim_results: true\n" +
+			"            keyterm: keyterm\n" +
+			"            language_hints:\n" +
+			"              - string\n" +
+			"            max_endpoint_delay_ms: 500\n" +
+			"            max_turn_silence: 100\n" +
+			"            min_turn_silence: 100\n" +
+			"            numerals: true\n" +
+			"            smart_format: true\n" +
+			"        fallback_models:\n" +
+			"          - model: deepgram/nova-3\n" +
+			"            language: en\n" +
+			"            settings:\n" +
+			"              context: context\n" +
+			"              eager_eot_threshold: 0.3\n" +
+			"              enable_endpoint_detection: true\n" +
+			"              end_of_turn_confidence_threshold: 0\n" +
+			"              eot_threshold: 0.5\n" +
+			"              eot_timeout_ms: 500\n" +
+			"              interim_results: true\n" +
+			"              keyterm: Telnyx,VoIP,SIP\n" +
+			"              language_hints:\n" +
+			"                - string\n" +
+			"              max_endpoint_delay_ms: 500\n" +
+			"              max_turn_silence: 100\n" +
+			"              min_turn_silence: 100\n" +
+			"              numerals: true\n" +
+			"              smart_format: true\n" +
+			"          - model: soniox/stt-rt-v5\n" +
+			"            language: en\n" +
+			"            settings:\n" +
+			"              context: Telnyx,VoIP,SIP\n" +
+			"              eager_eot_threshold: 0.3\n" +
+			"              enable_endpoint_detection: true\n" +
+			"              end_of_turn_confidence_threshold: 0\n" +
+			"              eot_threshold: 0.5\n" +
+			"              eot_timeout_ms: 500\n" +
+			"              interim_results: true\n" +
+			"              keyterm: keyterm\n" +
+			"              language_hints:\n" +
+			"                - string\n" +
+			"              max_endpoint_delay_ms: 500\n" +
+			"              max_turn_silence: 100\n" +
+			"              min_turn_silence: 100\n" +
+			"              numerals: true\n" +
+			"              smart_format: true\n" +
 			"        language: language\n" +
 			"        model: deepgram/flux\n" +
 			"        region: region\n" +
@@ -780,6 +1153,10 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"        speed: 0\n" +
 			"        style: 0\n" +
 			"        temperature: 0\n" +
+			"        tool_call_audio:\n" +
+			"          type: predefined_media\n" +
+			"          value: typing\n" +
+			"          volume: 0.5\n" +
 			"        use_speaker_boost: true\n" +
 			"        voice_speed: 0\n" +
 			"  start_node_id: n_intake\n" +
@@ -804,6 +1181,21 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"          x: 600\n" +
 			"          'y': 80\n" +
 			"        voice_mode: distinct\n" +
+			"delegation_settings:\n" +
+			"  enabled: true\n" +
+			"  external_llm:\n" +
+			"    base_url: base_url\n" +
+			"    model: model\n" +
+			"    authentication_method: token\n" +
+			"    certificate_ref: certificate_ref\n" +
+			"    forward_metadata: true\n" +
+			"    llm_api_key_ref: llm_api_key_ref\n" +
+			"    token_retrieval_url: token_retrieval_url\n" +
+			"  instructions: instructions\n" +
+			"  llm_api_key_ref: llm_api_key_ref\n" +
+			"  mode: telnyx\n" +
+			"  model: model\n" +
+			"  speak_results: true\n" +
 			"description: description\n" +
 			"dynamic_variables:\n" +
 			"  foo: bar\n" +
@@ -877,6 +1269,7 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"tags:\n" +
 			"  - string\n" +
 			"telephony_settings:\n" +
+			"  conversation_ended_full_history: true\n" +
 			"  default_texml_app_id: default_texml_app_id\n" +
 			"  disable_dtmf: true\n" +
 			"  fallback_destination: fallback_destination\n" +
@@ -915,6 +1308,63 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"    type: function\n" +
 			"transcription:\n" +
 			"  api_key_ref: api_key_ref\n" +
+			"  challenger:\n" +
+			"    model: deepgram/nova-3\n" +
+			"    language: en\n" +
+			"    rule: best_turn\n" +
+			"    settings:\n" +
+			"      context: context\n" +
+			"      eager_eot_threshold: 0.3\n" +
+			"      enable_endpoint_detection: true\n" +
+			"      end_of_turn_confidence_threshold: 0\n" +
+			"      eot_threshold: 0.5\n" +
+			"      eot_timeout_ms: 500\n" +
+			"      interim_results: true\n" +
+			"      keyterm: keyterm\n" +
+			"      language_hints:\n" +
+			"        - string\n" +
+			"      max_endpoint_delay_ms: 500\n" +
+			"      max_turn_silence: 100\n" +
+			"      min_turn_silence: 100\n" +
+			"      numerals: true\n" +
+			"      smart_format: true\n" +
+			"  fallback_models:\n" +
+			"    - model: deepgram/nova-3\n" +
+			"      language: en\n" +
+			"      settings:\n" +
+			"        context: context\n" +
+			"        eager_eot_threshold: 0.3\n" +
+			"        enable_endpoint_detection: true\n" +
+			"        end_of_turn_confidence_threshold: 0\n" +
+			"        eot_threshold: 0.5\n" +
+			"        eot_timeout_ms: 500\n" +
+			"        interim_results: true\n" +
+			"        keyterm: Telnyx,VoIP,SIP\n" +
+			"        language_hints:\n" +
+			"          - string\n" +
+			"        max_endpoint_delay_ms: 500\n" +
+			"        max_turn_silence: 100\n" +
+			"        min_turn_silence: 100\n" +
+			"        numerals: true\n" +
+			"        smart_format: true\n" +
+			"    - model: soniox/stt-rt-v5\n" +
+			"      language: en\n" +
+			"      settings:\n" +
+			"        context: Telnyx,VoIP,SIP\n" +
+			"        eager_eot_threshold: 0.3\n" +
+			"        enable_endpoint_detection: true\n" +
+			"        end_of_turn_confidence_threshold: 0\n" +
+			"        eot_threshold: 0.5\n" +
+			"        eot_timeout_ms: 500\n" +
+			"        interim_results: true\n" +
+			"        keyterm: keyterm\n" +
+			"        language_hints:\n" +
+			"          - string\n" +
+			"        max_endpoint_delay_ms: 500\n" +
+			"        max_turn_silence: 100\n" +
+			"        min_turn_silence: 100\n" +
+			"        numerals: true\n" +
+			"        smart_format: true\n" +
 			"  language: language\n" +
 			"  model: deepgram/flux\n" +
 			"  region: region\n" +
@@ -948,8 +1398,16 @@ func TestAIAssistantsUpdate(t *testing.T) {
 			"  speed: 0\n" +
 			"  style: 0\n" +
 			"  temperature: 0\n" +
+			"  tool_call_audio:\n" +
+			"    type: predefined_media\n" +
+			"    value: typing\n" +
+			"    volume: 0.5\n" +
 			"  use_speaker_boost: true\n" +
 			"  voice_speed: 0\n" +
+			"websocket_settings:\n" +
+			"  auth_ref: auth_ref\n" +
+			"  enabled: true\n" +
+			"  url: url\n" +
 			"widget_settings:\n" +
 			"  agent_thinking_text: agent_thinking_text\n" +
 			"  audio_visualizer_config:\n" +
@@ -992,6 +1450,7 @@ func TestAIAssistantsDelete(t *testing.T) {
 			"--api-key", "string",
 			"ai:assistants", "delete",
 			"--assistant-id", "assistant_id",
+			"--hard-delete=true",
 		)
 	})
 }
@@ -1082,6 +1541,18 @@ func TestAIAssistantsImports(t *testing.T) {
 	})
 }
 
+func TestAIAssistantsRestore(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai:assistants", "restore",
+			"--assistant-id", "assistant_id",
+		)
+	})
+}
+
 func TestAIAssistantsSendSMS(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
@@ -1112,6 +1583,40 @@ func TestAIAssistantsSendSMS(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"ai:assistants", "send-sms",
+			"--assistant-id", "assistant_id",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
+		)
+	})
+}
+
+func TestAIAssistantsWhatsapp(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai:assistants", "whatsapp",
+			"--assistant-id", "assistant_id",
+			"--content", "Send the login verification code 482913 to the customer.",
+			"--from", "+13125550001",
+			"--to", "+13125550002",
+			"--conversation-metadata", "{order_id: A1}",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"content: Send the login verification code 482913 to the customer.\n" +
+			"from: '+13125550001'\n" +
+			"to: '+13125550002'\n" +
+			"conversation_metadata:\n" +
+			"  order_id: A1\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"ai:assistants", "whatsapp",
 			"--assistant-id", "assistant_id",
 			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)

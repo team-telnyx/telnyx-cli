@@ -84,7 +84,7 @@ var emailMessagesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
-			Usage:    "Custom metadata. Write-only; not returned in responses.",
+			Usage:    "Custom metadata key/value pairs. Stored on the message, returned on message responses, and propagated to Email Detail Records. Usable in `filter[metadata]` when listing messages.",
 			BodyPath: "metadata",
 		},
 		&requestflag.Flag[any]{
@@ -99,12 +99,13 @@ var emailMessagesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:     "sandbox-mode",
+			Usage:    "Validates and accepts the message without injecting it into the MTA or outbound Kafka path. Nothing is delivered: sandbox records are non-billable, consume no daily-send-limit quota, and feed no delivery-reputation signals.\n\nThe reserved sandbox test-recipient domain is `test.telnyx.com`. In sandbox mode, these addresses produce deterministic recipient-scoped lifecycle events:\n\n- `delivered@test.telnyx.com`: queued -> sending -> sent -> delivered\n- `hard-bounce@test.telnyx.com`: queued -> sending -> sent -> bounced (permanent)\n- `soft-bounce@test.telnyx.com`: queued -> sending -> sent -> bounced (transient)\n- `complaint@test.telnyx.com`: queued -> sending -> sent -> complained\n- `suppressed@test.telnyx.com`: queued -> suppressed\n- `invalid@test.telnyx.com`: queued -> sending -> failed (invalid recipient)\n- `dkim-fail@test.telnyx.com`: queued -> sending -> failed (DKIM unavailable)\n- `rate-limit@test.telnyx.com`: queued -> sending -> failed (rate limit exceeded)\n\nMatching is case-insensitive for both the local part and the domain and requires the exact domain `test.telnyx.com` — subdomains and other domains do not match. Mixed sandbox sends simulate only reserved test recipients; other recipients retain ordinary sandbox behavior (accepted, no delivery attempted). Hard-bounce and complaint outcomes also use the normal automatic-suppression pipeline. Non-sandbox sends to these addresses use the normal delivery path.",
 			Default:  false,
 			BodyPath: "sandbox_mode",
 		},
 		&requestflag.Flag[any]{
 			Name:     "scheduled-at",
-			Usage:    "Future ISO 8601 time to schedule sending. Invalid or past timestamps\nare silently ignored and the email is sent immediately. The legacy\nalias `send_at` is still accepted for backward compatibility; when\nboth are provided, `scheduled_at` wins.\n",
+			Usage:    "Future ISO 8601 delivery time. Invalid or non-future timestamps are rejected. Single sends return HTTP 422; in batch sends the invalid item is reported in the 207 per-item errors while other items continue. `send_at` remains a deprecated request alias. A non-null `scheduled_at` takes precedence over `send_at`; when `scheduled_at` is omitted or null, `send_at` is used.",
 			BodyPath: "scheduled_at",
 		},
 		&requestflag.Flag[any]{
@@ -119,7 +120,7 @@ var emailMessagesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "tag",
-			Usage:    "Tags for categorization and reporting. Stored on the message and propagated to Email Detail Records. Not returned in API responses.",
+			Usage:    "Tags for categorization and filtering. Stored on the message, returned on message responses, and propagated to Email Detail Records. Usable in `filter[tags]` when listing messages.",
 			BodyPath: "tags",
 		},
 		&requestflag.Flag[string]{
@@ -128,7 +129,7 @@ var emailMessagesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "template-variables",
-			Usage:    "Variables for Liquid template rendering. Non-object values may cause a 422 validation error on message creation, but are silently treated as an empty object for template rendering.",
+			Usage:    "Variables for Liquid template rendering. Non-object values may cause a 422 validation error on message creation, but are silently treated as an empty object for template rendering. When the template enables `strict_variables`, a missing required variable fails the request with 422 (single send) or a per-item `unprocessable_entity` error (batch) naming the variable; no message is persisted for the failed item.",
 			Default:  map[string]any{},
 			BodyPath: "template_variables",
 		},
@@ -208,9 +209,19 @@ var emailMessagesRetrieve = cli.Command{
 
 var emailMessagesList = cli.Command{
 	Name:    "list",
-	Usage:   "Lists messages sorted newest first by `created_at desc, id desc`. No filters\nother than cursor pagination are implemented. The legacy `/v2/emails` GET route\nis a backward-compatible alias for this operation.",
+	Usage:   "Lists messages sorted newest first by `created_at desc, id desc`. Tags and\nmetadata filters compose with cursor pagination. The legacy `/v2/emails` GET\nroute is a backward-compatible alias for this operation.",
 	Suggest: true,
 	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "filter-metadata",
+			Usage:     "Metadata containment filter, supplied as a JSON object or comma-separated `key=value` pairs. All supplied key/value pairs must be contained in the message metadata. An empty value or empty JSON object omits the filter. Malformed values, valid non-object JSON, pairs without `=`, empty keys, and non-string/nested query shapes return HTTP 400.",
+			QueryPath: "filter[metadata]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-tags",
+			Usage:     "Comma-separated tags. Each segment is trimmed, and messages having at least one supplied tag are returned; matching is exact and case-sensitive after trimming. Because commas delimit values and surrounding whitespace is removed, this filter cannot represent stored tags containing literal commas or leading/trailing whitespace. An empty value omits the filter. Empty segments and non-string/nested query shapes return HTTP 400.",
+			QueryPath: "filter[tags]",
+		},
 		&requestflag.Flag[string]{
 			Name:      "page-cursor",
 			Usage:     "Opaque URL-safe Base64 cursor returned by a previous list response.",
@@ -248,7 +259,7 @@ var emailMessagesDelete = cli.Command{
 
 var emailMessagesBatch = requestflag.WithInnerFlags(cli.Command{
 	Name:    "batch",
-	Usage:   "Creates up to 1,000 email messages in a single request. Request-wide admission\nchecks run first and can reject the whole batch before message creation. After\nthose checks pass, each message is validated and sent independently; item-level\nfailures do not affect other messages, and the processed batch returns 207\nMulti-Status.",
+	Usage:   "Creates up to 1,000 email messages in a single request. Request-wide admission\nchecks run first and can reject the whole batch before message creation. After\nthose checks pass, each message is validated and sent independently; item-level\nfailures do not affect other messages, and the processed batch returns 207\nMulti-Status. Per-message failures include validation errors; when a template\nhas `strict_variables` enabled, a missing required variable produces a per-item\n`unprocessable_entity` error naming that variable while the other messages\ncontinue.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[[]map[string]any]{
@@ -259,7 +270,7 @@ var emailMessagesBatch = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:     "sandbox-mode",
-			Usage:    "Applies sandbox mode to all messages in the batch. Overrides any per-message sandbox_mode in the messages array.",
+			Usage:    "Applies sandbox mode to all messages in the batch and overrides any per-message `sandbox_mode` value — each message's effective `sandbox_mode` is exactly this envelope value. Reserved recipients at `test.telnyx.com` produce the deterministic event chains documented on CreateEmailRequest.sandbox_mode; no batch item is injected into the MTA or outbound Kafka path. Sandbox batch items are non-billable, consume no daily-send-limit quota, and feed no delivery-reputation signals.",
 			Default:  false,
 			BodyPath: "sandbox_mode",
 		},
@@ -323,7 +334,7 @@ var emailMessagesBatch = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "message.metadata",
-			Usage:      "Custom metadata. Write-only; not returned in responses.",
+			Usage:      "Custom metadata key/value pairs. Stored on the message, returned on message responses, and propagated to Email Detail Records. Usable in `filter[metadata]` when listing messages.",
 			InnerField: "metadata",
 		},
 		&requestflag.InnerFlag[any]{
@@ -332,11 +343,12 @@ var emailMessagesBatch = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "message.sandbox-mode",
+			Usage:      "Per-message sandbox flag. The batch-level `sandbox_mode` envelope value is authoritative: it overwrites every message's `sandbox_mode` before processing, including the `false` default when the envelope omits the field. A per-item `sandbox_mode: true` inside a non-sandbox batch is therefore a real send. Set the envelope field to run any batch item in sandbox mode.",
 			InnerField: "sandbox_mode",
 		},
 		&requestflag.InnerFlag[any]{
 			Name:       "message.scheduled-at",
-			Usage:      "Future ISO 8601 time to schedule sending. Invalid or past timestamps\nare silently ignored and the email is sent immediately. The legacy\nalias `send_at` is still accepted for backward compatibility; when\nboth are provided, `scheduled_at` wins.\n",
+			Usage:      "Future ISO 8601 delivery time. Invalid or non-future timestamps are rejected. Single sends return HTTP 422; in batch sends the invalid item is reported in the 207 per-item errors while other items continue. `send_at` remains a deprecated request alias. A non-null `scheduled_at` takes precedence over `send_at`; when `scheduled_at` is omitted or null, `send_at` is used.",
 			InnerField: "scheduled_at",
 		},
 		&requestflag.InnerFlag[any]{
@@ -351,7 +363,7 @@ var emailMessagesBatch = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "message.tags",
-			Usage:      "Tags for categorization and reporting. Stored on the message and propagated to Email Detail Records. Not returned in API responses.",
+			Usage:      "Tags for categorization and filtering. Stored on the message, returned on message responses, and propagated to Email Detail Records. Usable in `filter[tags]` when listing messages.",
 			InnerField: "tags",
 		},
 		&requestflag.InnerFlag[string]{
@@ -360,7 +372,7 @@ var emailMessagesBatch = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "message.template-variables",
-			Usage:      "Variables for Liquid template rendering. Non-object values may cause a 422 validation error on message creation, but are silently treated as an empty object for template rendering.",
+			Usage:      "Variables for Liquid template rendering. Non-object values may cause a 422 validation error on message creation, but are silently treated as an empty object for template rendering. When the template enables `strict_variables`, a missing required variable fails the request with 422 (single send) or a per-item `unprocessable_entity` error (batch) naming the variable; no message is persisted for the failed item.",
 			InnerField: "template_variables",
 		},
 		&requestflag.InnerFlag[string]{
@@ -434,6 +446,27 @@ var emailMessagesRetrieveEvents = cli.Command{
 		},
 	},
 	Action:          handleEmailMessagesRetrieveEvents,
+	HideHelpCommand: true,
+}
+
+var emailMessagesUpdateSchedule = cli.Command{
+	Name:    "update-schedule",
+	Usage:   "Moves an existing scheduled email to a new future send time. Only the delivery\ntime (`scheduled_at`) changes; the message ID, content, recipients, tags, and\nmetadata remain unchanged. Returns `409 Conflict` if the message is no longer\nscheduled or its scheduled-send worker has already started processing it. This\nroute emits no dedicated `rescheduled` event.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "email-id",
+			Required:  true,
+			PathParam: "email_id",
+		},
+		&requestflag.Flag[any]{
+			Name:     "scheduled-at",
+			Usage:    "New ISO 8601 delivery time. Must be strictly in the future.",
+			Required: true,
+			BodyPath: "scheduled_at",
+		},
+	},
+	Action:          handleEmailMessagesUpdateSchedule,
 	HideHelpCommand: true,
 }
 
@@ -773,4 +806,53 @@ func handleEmailMessagesRetrieveEvents(ctx context.Context, cmd *cli.Command) er
 			Transform:      transform,
 		})
 	}
+}
+
+func handleEmailMessagesUpdateSchedule(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("email-id") && len(unusedArgs) > 0 {
+		cmd.Set("email-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.EmailMessageUpdateScheduleParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.EmailMessages.UpdateSchedule(
+		ctx,
+		cmd.Value("email-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "email-messages update-schedule",
+		Transform:      transform,
+	})
 }

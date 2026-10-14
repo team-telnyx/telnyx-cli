@@ -39,18 +39,18 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "answering-machine-detection",
-			Usage:    "Enables Answering Machine Detection. Telnyx offers Premium and Standard detections. With Premium detection, when a call is answered, Telnyx runs real-time detection and sends a `call.machine.premium.detection.ended` webhook with one of the following results: `human_residence`, `human_business`, `machine`, `silence` or `fax_detected`. If we detect a beep, we also send a `call.machine.premium.greeting.ended` webhook with the result of `beep_detected`. If we detect a beep before `call.machine.premium.detection.ended` we only send `call.machine.premium.greeting.ended`, and if we detect a beep after `call.machine.premium.detection.ended`, we send both webhooks. With Standard detection, when a call is answered, Telnyx runs real-time detection to determine if it was picked up by a human or a machine and sends an `call.machine.detection.ended` webhook with the analysis result. If `greeting_end` or `detect_words` is used and a `machine` is detected, you will receive another `call.machine.greeting.ended` webhook when the answering machine greeting ends with a beep or silence. If `detect_beep` is used, you will only receive `call.machine.greeting.ended` if a beep is detected.",
+			Usage:    "Enables Answering Machine Detection. Telnyx offers Premium and Standard detections. With Premium detection, when a call is answered, Telnyx runs real-time detection and sends a `call.machine.premium.detection.ended` webhook with one of the following results: `human_residence`, `human_business`, `machine`, `silence` or `fax_detected`. If we detect a beep, we also send a `call.machine.premium.greeting.ended` webhook with the result of `beep_detected`. If we detect a beep before `call.machine.premium.detection.ended` we only send `call.machine.premium.greeting.ended`, and if we detect a beep after `call.machine.premium.detection.ended`, we send both webhooks. With Standard detection, when a call is answered, Telnyx runs real-time detection to determine if it was picked up by a human or a machine and sends an `call.machine.detection.ended` webhook with the analysis result. If `greeting_end` or `detect_words` is used and a `machine` is detected, you will receive another `call.machine.greeting.ended` webhook when the answering machine greeting ends with a beep or silence. If `detect_beep` is used, you will only receive `call.machine.greeting.ended` if a beep is detected. If `answering_machine_detection` is set to `premium_ios_call_screening_detection`, Premium AMD runs with iOS Call Screening support: after an initial `machine` result, Telnyx listens for the iOS call-screening prompt to end or for an Apple Call Screening tone, sends `call.machine.premium.greeting.ended` with `result=prompt_ended` or `call.machine.premium.call_screening.detected` with `result=screening` respectively. When the Apple Call Screening tone is detected, Premium AMD is restarted on the screened call and a `call.machine.premium.detection.ended` webhook with the post-screening classification follows.",
 			Default:  "disabled",
 			BodyPath: "answering_machine_detection",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "answering-machine-detection-config",
-			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance. Only `total_analysis_time_millis` and `greeting_duration_millis` parameters are applicable when `premium` is selected as answering_machine_detection.",
+			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance. Only `total_analysis_time_millis` and `greeting_duration_millis` parameters are applicable when `premium` is selected as answering_machine_detection. `prompt_end_timeout_millis` is additionally applicable when `premium_ios_call_screening_detection` is selected.",
 			BodyPath: "answering_machine_detection_config",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "assistant",
-			Usage:    "AI Assistant configuration. All fields except `id` are optional — the assistant's stored configuration will be used as fallback for any omitted fields.",
+			Usage:    "AI Assistant configuration and per-call overrides. All fields except `id` are optional. Omitted assistant fields use the stored configuration. Supplied `voice_settings` and `transcription` objects replace their stored objects rather than merging individual settings; include every setting you want to retain. `dynamic_variables` are merged, with request values taking precedence.",
 			BodyPath: "assistant",
 		},
 		&requestflag.Flag[string]{
@@ -460,6 +460,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "maximum_word_length_millis",
 		},
 		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.prompt-end-timeout-millis",
+			Usage:      "Maximum time Telnyx waits, in milliseconds, for the iOS call-screening prompt to end after Premium AMD initially detects a `machine`. Used when `answering_machine_detection` is `premium_ios_call_screening_detection`. Defaults to 5000 milliseconds.",
+			InnerField: "prompt_end_timeout_millis",
+		},
+		&requestflag.InnerFlag[int64]{
 			Name:       "answering-machine-detection-config.silence-threshold",
 			Usage:      "Minimum noise threshold for any analysis.",
 			InnerField: "silence_threshold",
@@ -535,6 +540,11 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 			Name:       "assistant.tools",
 			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
 			InnerField: "tools",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.transcription",
+			Usage:      "The settings associated with speech to text for the voice assistant. This is only relevant if the assistant uses a text-to-text language model. Any assistant using a model with native audio support (e.g. `fixie-ai/ultravox-v0_4`) will ignore this field.",
+			InnerField: "transcription",
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.voice-settings",
@@ -676,7 +686,7 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "conversation-relay-config.transcription-engine-config",
-			Usage:      "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object.",
+			Usage:      "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object. With Deepgram Flux (`deepgram/flux`), `interim_results`, `eot_threshold` and `eager_eot_threshold` control the interim prompts and the `eagerEndOfTurn` and `turnResumed` frames sent to your WebSocket server.",
 			InnerField: "transcription_engine_config",
 		},
 		&requestflag.InnerFlag[string]{
@@ -686,7 +696,7 @@ var callsDial = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "conversation-relay-config.voice",
-			Usage:      "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.",
+			Usage:      "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-CA-LiamNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **Soniox:** Use `Soniox.<ModelId>.<VoiceId>` (e.g., `Soniox.tts-rt-v2.Emma`). Supported model: `tts-rt-v2`. Browse the catalog via the [Voices API](https://developers.telnyx.com/api-reference/text-to-speech-commands/list-available-voices). Every voice speaks all supported languages; set `language` to the two-letter ISO 639-1 code of the text, for example `it`. SSML is not supported. Use `voice_settings` to configure `speed` (0.7 to 1.3) and `reduce_silence`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.",
 			InnerField: "voice",
 		},
 		&requestflag.InnerFlag[map[string]any]{

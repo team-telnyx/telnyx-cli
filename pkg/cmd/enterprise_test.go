@@ -286,6 +286,7 @@ func TestEnterprisesList(t *testing.T) {
 			"enterprises", "list",
 			"--max-items", "10",
 			"--filter-legal-name-contains", "Acme",
+			"--filter-role-type", "bpo",
 			"--legal-name", "Acme",
 			"--page-number", "1",
 			"--page-size", "10",

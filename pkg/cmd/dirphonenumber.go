@@ -36,11 +36,6 @@ var dirPhoneNumbersList = cli.Command{
 			Default:   20,
 			QueryPath: "page[size]",
 		},
-		&requestflag.Flag[string]{
-			Name:      "status",
-			Usage:     "Phone-number lifecycle status.\n- `submitted` / `in_review` - Telnyx is reviewing the batch this number belongs to.\n- `verified` - approved; the DIR's display identity will be shown on outbound calls from this number.\n- `unsuccessful` - Telnyx rejected this submission; the customer may re-add to retry.\n- `suspended` - temporarily disabled (e.g. by an active infringement claim on the DIR).\n- `expired` - verification expired; re-add to renew.\n- `permanently_rejected` - terminal; cannot be re-added on this or any other DIR you own.",
-			QueryPath: "status",
-		},
 		&requestflag.Flag[int64]{
 			Name:  "max-items",
 			Usage: "The maximum number of items to return (use -1 for unlimited).",
@@ -52,7 +47,7 @@ var dirPhoneNumbersList = cli.Command{
 
 var dirPhoneNumbersAdd = requestflag.WithInnerFlags(cli.Command{
 	Name:    "add",
-	Usage:   "Register phone numbers under a DIR. The enterprise is resolved server-side from\nthe DIR id. Same body, failure modes, and batch semantics whichever path form\nyou use.",
+	Usage:   "Register phone numbers under a DIR. The enterprise is resolved server-side from\nthe DIR id.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -89,6 +84,7 @@ var dirPhoneNumbersAdd = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "document.description",
+			Usage:      "An optional note describing this document, for example what it proves.",
 			InnerField: "description",
 		},
 	},
@@ -106,6 +102,7 @@ var dirPhoneNumbersRemove = cli.Command{
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "phone-number",
+			Usage:    "The phone numbers to remove from this brand, in E.164 format, up to 100 per request. They must currently be attached to this brand.",
 			Required: true,
 			BodyPath: "phone_numbers",
 		},

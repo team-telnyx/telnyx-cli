@@ -17,6 +17,7 @@ func TestPrivateWirelessGatewaysCreate(t *testing.T) {
 			"private-wireless-gateways", "create",
 			"--name", "My private wireless gateway",
 			"--network-id", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
+			"--address-mode", "static",
 			"--region-code", "dc2",
 		)
 	})
@@ -26,6 +27,7 @@ func TestPrivateWirelessGatewaysCreate(t *testing.T) {
 		pipeData := []byte("" +
 			"name: My private wireless gateway\n" +
 			"network_id: 6a09cdc3-8948-47f0-aa62-74ac943d6c58\n" +
+			"address_mode: static\n" +
 			"region_code: dc2\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,

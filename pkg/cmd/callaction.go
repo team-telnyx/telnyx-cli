@@ -62,7 +62,7 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "assistant",
-			Usage:    "AI Assistant configuration. All fields except `id` are optional — the assistant's stored configuration will be used as fallback for any omitted fields.",
+			Usage:    "AI Assistant configuration and per-call overrides. All fields except `id` are optional. Omitted assistant fields use the stored configuration. Supplied `voice_settings` and `transcription` objects replace their stored objects rather than merging individual settings; include every setting you want to retain. `dynamic_variables` are merged, with request values taking precedence.",
 			BodyPath: "assistant",
 		},
 		&requestflag.Flag[string]{
@@ -198,7 +198,7 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:     "transcription",
-			Usage:    "Enable transcription upon call answer. The default value is false.",
+			Usage:    "Enable standalone call transcription upon call answer. The default value is false. Configure this feature with `transcription_config`. To configure speech recognition for an AI assistant, use `assistant.transcription` instead.",
 			Default:  false,
 			BodyPath: "transcription",
 		},
@@ -304,6 +304,11 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "tools",
 		},
 		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.transcription",
+			Usage:      "The settings associated with speech to text for the voice assistant. This is only relevant if the assistant uses a text-to-text language model. Any assistant using a model with native audio support (e.g. `fixie-ai/ultravox-v0_4`) will ignore this field.",
+			InnerField: "transcription",
+		},
+		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.voice-settings",
 			InnerField: "voice_settings",
 		},
@@ -371,7 +376,7 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "conversation-relay-config.transcription-engine-config",
-			Usage:      "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object.",
+			Usage:      "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object. With Deepgram Flux (`deepgram/flux`), `interim_results`, `eot_threshold` and `eager_eot_threshold` control the interim prompts and the `eagerEndOfTurn` and `turnResumed` frames sent to your WebSocket server.",
 			InnerField: "transcription_engine_config",
 		},
 		&requestflag.InnerFlag[string]{
@@ -381,7 +386,7 @@ var callsActionsAnswer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "conversation-relay-config.voice",
-			Usage:      "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.",
+			Usage:      "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-CA-LiamNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **Soniox:** Use `Soniox.<ModelId>.<VoiceId>` (e.g., `Soniox.tts-rt-v2.Emma`). Supported model: `tts-rt-v2`. Browse the catalog via the [Voices API](https://developers.telnyx.com/api-reference/text-to-speech-commands/list-available-voices). Every voice speaks all supported languages; set `language` to the two-letter ISO 639-1 code of the text, for example `it`. SSML is not supported. Use `voice_settings` to configure `speed` (0.7 to 1.3) and `reduce_silence`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.",
 			InnerField: "voice",
 		},
 		&requestflag.InnerFlag[map[string]any]{
@@ -806,7 +811,7 @@ var callsActionsGatherUsingAI = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.",
+			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-CA-LiamNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **Soniox:** Use `Soniox.<ModelId>.<VoiceId>` (e.g., `Soniox.tts-rt-v2.Emma`). Supported model: `tts-rt-v2`. Browse the catalog via the [Voices API](https://developers.telnyx.com/api-reference/text-to-speech-commands/list-available-voices). Every voice speaks all supported languages; set `language` to the two-letter ISO 639-1 code of the text, for example `it`. SSML is not supported. Use `voice_settings` to configure `speed` (0.7 to 1.3) and `reduce_silence`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.",
 			Default:  "Telnyx.KokoroTTS.af",
 			BodyPath: "voice",
 		},
@@ -979,7 +984,7 @@ var callsActionsGatherUsingSpeak = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery). Use `voice_settings` to configure custom deployments, regions, or API keys.\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n- **Telnyx:** Use `Telnyx.<model_id>.<voice_id>` (e.g., `Telnyx.KokoroTTS.af`). Use `voice_settings` to configure voice_speed and other synthesis parameters. `Bayan` provides Arabic (multiple dialects) and English voices (e.g., `Telnyx.Bayan.Ahmed`, `Telnyx.Bayan.Amanda`). `Sukhan` provides Urdu voices (e.g., `Telnyx.Sukhan.urdu-professor`); `voice_speed` is not supported.\n- **Minimax:** Use `Minimax.<ModelId>.<VoiceId>` (e.g., `Minimax.speech-02-hd.Wise_Woman`). Supported models: `speech-02-turbo`, `speech-02-hd`, `speech-2.6-turbo`, `speech-2.8-turbo`. Use `voice_settings` to configure speed, volume, pitch, and language_boost.\n- **Resemble:** Use `Resemble.Turbo.<voice_id>` (e.g., `Resemble.Turbo.my_voice`). Only `Turbo` model is supported. Use `voice_settings` to configure precision, sample_rate, and format.\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`. Use `voice_settings` to configure `delivery_mode` (`STABLE`, `BALANCED`, `CREATIVE`), supported by `TTS2` only.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.\n\nFor service_level basic, you may define the gender of the speaker (male or female).",
+			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery). Use `voice_settings` to configure custom deployments, regions, or API keys.\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n- **Telnyx:** Use `Telnyx.<model_id>.<voice_id>` (e.g., `Telnyx.KokoroTTS.af`). Use `voice_settings` to configure voice_speed and other synthesis parameters. `Bayan` provides Arabic (multiple dialects) and English voices (e.g., `Telnyx.Bayan.Ahmed`, `Telnyx.Bayan.Amanda`). `Sukhan` provides Urdu voices (e.g., `Telnyx.Sukhan.urdu-professor`); `voice_speed` is not supported.\n- **Minimax:** Use `Minimax.<ModelId>.<VoiceId>` (e.g., `Minimax.speech-02-hd.Wise_Woman`). Supported models: `speech-02-turbo`, `speech-02-hd`, `speech-2.6-turbo`, `speech-2.8-turbo`. Use `voice_settings` to configure speed, volume, pitch, and language_boost.\n- **Resemble:** Use `Resemble.Turbo.<voice_id>` (e.g., `Resemble.Turbo.my_voice`). Only `Turbo` model is supported. Use `voice_settings` to configure precision, sample_rate, and format.\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`. Use `voice_settings` to configure `delivery_mode` (`STABLE`, `BALANCED`, `CREATIVE`), supported by `TTS2` only.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **Soniox:** Use `Soniox.<ModelId>.<VoiceId>` (e.g., `Soniox.tts-rt-v2.Emma`). Supported model: `tts-rt-v2`. Browse the catalog via the [Voices API](https://developers.telnyx.com/api-reference/text-to-speech-commands/list-available-voices). Every voice speaks all supported languages; set `language` to the two-letter ISO 639-1 code of the text, for example `it`. SSML is not supported. Use `voice_settings` to configure `speed` (0.7 to 1.3) and `reduce_silence`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.\n\nFor service_level basic, you may define the gender of the speaker (male or female).",
 			Required: true,
 			BodyPath: "voice",
 		},
@@ -1289,6 +1294,12 @@ var callsActionsPay = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Metadata forwarded to the Pay connector.",
 			BodyPath: "metadata",
 		},
+		&requestflag.Flag[int64]{
+			Name:     "min-postal-code-length",
+			Usage:    "Minimum number of digits the caller must enter when collecting a credit-card billing postal code. Applies only when `postal_code` is `true` or `\"true\"` and no `payment_token` is supplied. The default is 1. The maximum number of digits collected is the greater of 10 and this value. This does not validate the length of a postal code supplied directly in `postal_code`.",
+			Default:  1,
+			BodyPath: "min_postal_code_length",
+		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "parameters",
 			Usage:    "Additional parameters forwarded to the Pay connector.",
@@ -1304,6 +1315,12 @@ var callsActionsPay = requestflag.WithInnerFlags(cli.Command{
 			Name:     "payment-token",
 			Usage:    "Existing payment token. When supplied, payment-detail collection is skipped.",
 			BodyPath: "payment_token",
+		},
+		&requestflag.Flag[any]{
+			Name:     "postal-code",
+			Usage:    "Controls billing postal code collection for credit-card payments when no `payment_token` is supplied. Set to `true` or the string `\"true\"` (the default) to prompt the caller for a postal code. Set to `false` or the string `\"false\"` to skip the postal code prompt without supplying a postal code to the payment connector. Supply any other non-empty string, such as `\"90210\"`, to use that postal code without prompting. Empty or whitespace-only strings are rejected. This option does not affect ACH debit payments or payments using an existing token.",
+			Default:  "true",
+			BodyPath: "postal_code",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "prompts",
@@ -1464,7 +1481,7 @@ var callsActionsReject = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "cause",
-			Usage:    "Cause for call rejection.",
+			Usage:    "Cause for call rejection. The cause sets the SIP response the caller receives: `USER_BUSY` sends 486 User Busy, `CALL_REJECTED` sends 603 Decline, `NOT_FOUND` sends 404 Not Found, and `TEMPORARILY_UNAVAILABLE` sends 480 Temporarily Unavailable.",
 			Required: true,
 			BodyPath: "cause",
 		},
@@ -1605,7 +1622,7 @@ var callsActionsSpeak = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery). Use `voice_settings` to configure custom deployments, regions, or API keys.\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n- **Telnyx:** Use `Telnyx.<model_id>.<voice_id>` (e.g., `Telnyx.KokoroTTS.af`). Use `voice_settings` to configure voice_speed and other synthesis parameters. `Bayan` provides Arabic (multiple dialects) and English voices (e.g., `Telnyx.Bayan.Ahmed`, `Telnyx.Bayan.Amanda`). `Sukhan` provides Urdu voices (e.g., `Telnyx.Sukhan.urdu-professor`); `voice_speed` is not supported.\n- **Minimax:** Use `Minimax.<ModelId>.<VoiceId>` (e.g., `Minimax.speech-02-hd.Wise_Woman`). Supported models: `speech-02-turbo`, `speech-02-hd`, `speech-2.6-turbo`, `speech-2.8-turbo`. Use `voice_settings` to configure speed, volume, pitch, and language_boost.\n- **Resemble:** Use `Resemble.Turbo.<voice_id>` (e.g., `Resemble.Turbo.my_voice`). Only `Turbo` model is supported. Use `voice_settings` to configure precision, sample_rate, and format.\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`. Use `voice_settings` to configure `delivery_mode` (`STABLE`, `BALANCED`, `CREATIVE`), supported by `TTS2` only.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.\n\nFor service_level basic, you may define the gender of the speaker (male or female).",
+			Usage:    "Specifies the voice used in speech synthesis.\n\n- Define voices using the format `<Provider>.<Model>.<VoiceId>`. Specifying only the provider will give default values for voice_id and model_id.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery). Use `voice_settings` to configure custom deployments, regions, or API keys.\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.eleven_multilingual_v2.21m00Tcm4TlvDq8ikWAM`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration identifier secret in `\"voice_settings\": {\"api_key_ref\": \"<secret_identifier>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n- **Telnyx:** Use `Telnyx.<model_id>.<voice_id>` (e.g., `Telnyx.KokoroTTS.af`). Use `voice_settings` to configure voice_speed and other synthesis parameters. `Bayan` provides Arabic (multiple dialects) and English voices (e.g., `Telnyx.Bayan.Ahmed`, `Telnyx.Bayan.Amanda`). `Sukhan` provides Urdu voices (e.g., `Telnyx.Sukhan.urdu-professor`); `voice_speed` is not supported.\n- **Minimax:** Use `Minimax.<ModelId>.<VoiceId>` (e.g., `Minimax.speech-02-hd.Wise_Woman`). Supported models: `speech-02-turbo`, `speech-02-hd`, `speech-2.6-turbo`, `speech-2.8-turbo`. Use `voice_settings` to configure speed, volume, pitch, and language_boost.\n- **Resemble:** Use `Resemble.Turbo.<voice_id>` (e.g., `Resemble.Turbo.my_voice`). Only `Turbo` model is supported. Use `voice_settings` to configure precision, sample_rate, and format.\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`. Use `voice_settings` to configure `delivery_mode` (`STABLE`, `BALANCED`, `CREATIVE`), supported by `TTS2` only.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **Soniox:** Use `Soniox.<ModelId>.<VoiceId>` (e.g., `Soniox.tts-rt-v2.Emma`). Supported model: `tts-rt-v2`. Browse the catalog via the [Voices API](https://developers.telnyx.com/api-reference/text-to-speech-commands/list-available-voices). Every voice speaks all supported languages; set `language` to the two-letter ISO 639-1 code of the text, for example `it`. SSML is not supported. Use `voice_settings` to configure `speed` (0.7 to 1.3) and `reduce_silence`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.\n\nFor service_level basic, you may define the gender of the speaker (male or female).",
 			Required: true,
 			BodyPath: "voice",
 		},
@@ -1673,7 +1690,7 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "assistant",
-			Usage:    "AI Assistant configuration. All fields except `id` are optional — the assistant's stored configuration will be used as fallback for any omitted fields.",
+			Usage:    "AI Assistant configuration and per-call overrides. All fields except `id` are optional. Omitted assistant fields use the stored configuration. Supplied `voice_settings` and `transcription` objects replace their stored objects rather than merging individual settings; include every setting you want to retain. `dynamic_variables` are merged, with request values taking precedence.",
 			BodyPath: "assistant",
 		},
 		&requestflag.Flag[string]{
@@ -1788,6 +1805,11 @@ var callsActionsStartAIAssistant = requestflag.WithInnerFlags(cli.Command{
 			Name:       "assistant.tools",
 			Usage:      "Inline tool definitions available to the assistant (webhook, retrieval, transfer, hangup, etc.). Overrides the assistant's stored tools if provided.",
 			InnerField: "tools",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.transcription",
+			Usage:      "The settings associated with speech to text for the voice assistant. This is only relevant if the assistant uses a text-to-text language model. Any assistant using a model with native audio support (e.g. `fixie-ai/ultravox-v0_4`) will ignore this field.",
+			InnerField: "transcription",
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.voice-settings",
@@ -1945,7 +1967,7 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "transcription-engine-config",
-			Usage:    "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object.",
+			Usage:    "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object. With Deepgram Flux (`deepgram/flux`), `interim_results`, `eot_threshold` and `eager_eot_threshold` control the interim prompts and the `eagerEndOfTurn` and `turnResumed` frames sent to your WebSocket server.",
 			BodyPath: "transcription_engine_config",
 		},
 		&requestflag.Flag[string]{
@@ -1960,7 +1982,7 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>. (e.g. Azure.en-CA-ClaraNeural, Azure.en-CA-LiamNeural, Azure.en-US-BrianMultilingualNeural, Azure.en-US-Ava:DragonHDLatestNeural. For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).)\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.",
+			Usage:    "The voice to be used by the voice assistant. Currently we support ElevenLabs, Telnyx and AWS voices.\n\n **Supported Providers:**\n- **AWS:** Use `AWS.Polly.<VoiceId>` (e.g., `AWS.Polly.Joanna`). For neural voices, which provide more realistic, human-like speech, append `-Neural` to the `VoiceId` (e.g., `AWS.Polly.Joanna-Neural`). Check the [available voices](https://docs.aws.amazon.com/polly/latest/dg/available-voices.html) for compatibility.\n- **Azure:** Use `Azure.<VoiceId>` (e.g., `Azure.en-CA-ClaraNeural`, `Azure.en-CA-LiamNeural`, `Azure.en-US-BrianMultilingualNeural`, `Azure.en-US-Ava:DragonHDLatestNeural`). For a complete list of voices, go to [Azure Voice Gallery](https://speech.microsoft.com/portal/voicegallery).\n- **ElevenLabs:** Use `ElevenLabs.<ModelId>.<VoiceId>` (e.g., `ElevenLabs.BaseModel.John`). The `ModelId` part is optional. To use ElevenLabs, you must provide your ElevenLabs API key as an integration secret under `\"voice_settings\": {\"api_key_ref\": \"<secret_id>\"}`. See [integration secrets documentation](https://developers.telnyx.com/api/secrets-manager/integration-secrets/create-integration-secret) for details. Check [available voices](https://elevenlabs.io/docs/api-reference/get-voices).\n - **Telnyx:** Use `Telnyx.<model_id>.<voice_id>`\n- **Inworld:** Use `Inworld.<ModelId>.<VoiceId>` (e.g., `Inworld.Mini.Loretta`, `Inworld.Max.Oliver`, `Inworld.TTS2.Loretta`). Supported models: `Mini`, `Max`, `TTS2`.\n- **Fish Audio:** Use `FishAudio.<ModelId>.<VoiceId>` (e.g., `FishAudio.s2.1-pro.<reference_id>`). Supported models: `s2.1-pro`, `s2-pro`, `s1`. `VoiceId` is a Fish Voice-Library reference ID.\n- **Soniox:** Use `Soniox.<ModelId>.<VoiceId>` (e.g., `Soniox.tts-rt-v2.Emma`). Supported model: `tts-rt-v2`. Browse the catalog via the [Voices API](https://developers.telnyx.com/api-reference/text-to-speech-commands/list-available-voices). Every voice speaks all supported languages; set `language` to the two-letter ISO 639-1 code of the text, for example `it`. SSML is not supported. Use `voice_settings` to configure `speed` (0.7 to 1.3) and `reduce_silence`.\n- **xAI:** Use `xAI.<VoiceId>` (e.g., `xAI.eve`). Available voices: `eve`, `ara`, `rex`, `sal`, `leo`.\n- **Humain:** Use `Humain.<VoiceId>` (e.g., `Humain.sara-ar`). Available voices: `sara-en`, `abdulaziz-en`, `sara-ar`, `abdulaziz-ar`, `nourah-ar`, `abdullah-ar`. Native Arabic (Saudi dialect) and English voices only — no `ModelId` segment.",
 			Default:  "Telnyx.KokoroTTS.af",
 			BodyPath: "voice",
 		},
@@ -2047,7 +2069,7 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "language.transcription-engine-config",
-			Usage:      "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object.",
+			Usage:      "Engine-specific transcription settings for Conversation Relay. This accepts the same provider-specific options used by the Call Transcription Start command, such as `transcription_model`, without requiring the engine discriminator to be repeated inside this object. With Deepgram Flux (`deepgram/flux`), `interim_results`, `eot_threshold` and `eager_eot_threshold` control the interim prompts and the `eagerEndOfTurn` and `turnResumed` frames sent to your WebSocket server.",
 			InnerField: "transcription_engine_config",
 		},
 		&requestflag.InnerFlag[string]{
@@ -2069,6 +2091,23 @@ var callsActionsStartConversationRelay = requestflag.WithInnerFlags(cli.Command{
 			Name:       "language.voice-settings",
 			Usage:      "The settings associated with the voice selected",
 			InnerField: "voice_settings",
+		},
+	},
+	"transcription-engine-config": {
+		&requestflag.InnerFlag[float64]{
+			Name:       "transcription-engine-config.eager-eot-threshold",
+			Usage:      "Deepgram Flux: confidence at which an `eagerEndOfTurn` frame is sent before the final prompt, followed by `turnResumed` if the caller keeps talking. When omitted, these frames are not sent.",
+			InnerField: "eager_eot_threshold",
+		},
+		&requestflag.InnerFlag[float64]{
+			Name:       "transcription-engine-config.eot-threshold",
+			Usage:      "Deepgram Flux: confidence required to end the caller's turn.",
+			InnerField: "eot_threshold",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "transcription-engine-config.interim-results",
+			Usage:      "Deepgram Flux: send interim transcripts as `prompt` frames with `last: false`.",
+			InnerField: "interim_results",
 		},
 	},
 })
@@ -2906,13 +2945,13 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "answering-machine-detection",
-			Usage:    "Enables Answering Machine Detection. When a call is answered, Telnyx runs real-time detection to determine if it was picked up by a human or a machine and sends an `call.machine.detection.ended` webhook with the analysis result. If 'greeting_end' or 'detect_words' is used and a 'machine' is detected, you will receive another 'call.machine.greeting.ended' webhook when the answering machine greeting ends with a beep or silence. If `detect_beep` is used, you will only receive 'call.machine.greeting.ended' if a beep is detected.",
+			Usage:    "Enables Answering Machine Detection. When a call is answered, Telnyx runs real-time detection to determine if it was picked up by a human or a machine and sends an `call.machine.detection.ended` webhook with the analysis result. If 'greeting_end' or 'detect_words' is used and a 'machine' is detected, you will receive another 'call.machine.greeting.ended' webhook when the answering machine greeting ends with a beep or silence. If `detect_beep` is used, you will only receive 'call.machine.greeting.ended' if a beep is detected. If `answering_machine_detection` is set to `premium_ios_call_screening_detection`, Premium AMD runs with iOS Call Screening support: after an initial `machine` result, Telnyx listens for the iOS call-screening prompt to end or for an Apple Call Screening tone, sends `call.machine.premium.greeting.ended` with `result=prompt_ended` or `call.machine.premium.call_screening.detected` with `result=screening` respectively. When the Apple Call Screening tone is detected, Premium AMD is restarted on the screened call and a `call.machine.premium.detection.ended` webhook with the post-screening classification follows.",
 			Default:  "disabled",
 			BodyPath: "answering_machine_detection",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "answering-machine-detection-config",
-			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance. Only `total_analysis_time_millis` and `greeting_duration_millis` parameters are applicable when `premium` is selected as answering_machine_detection.",
+			Usage:    "Optional configuration parameters to modify 'answering_machine_detection' performance. Only `total_analysis_time_millis` and `greeting_duration_millis` parameters are applicable when `premium` is selected as answering_machine_detection. `prompt_end_timeout_millis` is additionally applicable when `premium_ios_call_screening_detection` is selected.",
 			BodyPath: "answering_machine_detection_config",
 		},
 		&requestflag.Flag[string]{
@@ -3204,6 +3243,11 @@ var callsActionsTransfer = requestflag.WithInnerFlags(cli.Command{
 			Name:       "answering-machine-detection-config.maximum-word-length-millis",
 			Usage:      "If a single word lasts longer than this threshold, consider it a machine.",
 			InnerField: "maximum_word_length_millis",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "answering-machine-detection-config.prompt-end-timeout-millis",
+			Usage:      "Maximum time Telnyx waits, in milliseconds, for the iOS call-screening prompt to end after Premium AMD initially detects a `machine`. Used when `answering_machine_detection` is `premium_ios_call_screening_detection`. Defaults to 5000 milliseconds.",
+			InnerField: "prompt_end_timeout_millis",
 		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "answering-machine-detection-config.silence-threshold",

@@ -130,14 +130,14 @@ var texmlAccountsCallsRetrieveCalls = cli.Command{
 			QueryPath: "EndTime",
 		},
 		&requestflag.Flag[string]{
-			Name:      "end-time-gt",
-			Usage:     "Filters calls by their end date (after). Expected format is YYYY-MM-DD",
-			QueryPath: "EndTime_gt",
-		},
-		&requestflag.Flag[string]{
 			Name:      "end-time-lt",
 			Usage:     "Filters calls by their end date (before). Expected format is YYYY-MM-DD",
-			QueryPath: "EndTime_lt",
+			QueryPath: "EndTime<",
+		},
+		&requestflag.Flag[string]{
+			Name:      "end-time-gt",
+			Usage:     "Filters calls by their end date (after). Expected format is YYYY-MM-DD",
+			QueryPath: "EndTime>",
 		},
 		&requestflag.Flag[string]{
 			Name:      "from",
@@ -165,14 +165,14 @@ var texmlAccountsCallsRetrieveCalls = cli.Command{
 			QueryPath: "StartTime",
 		},
 		&requestflag.Flag[string]{
-			Name:      "start-time-gt",
-			Usage:     "Filters calls by their start date (after). Expected format is YYYY-MM-DD",
-			QueryPath: "StartTime_gt",
-		},
-		&requestflag.Flag[string]{
 			Name:      "start-time-lt",
 			Usage:     "Filters calls by their start date (before). Expected format is YYYY-MM-DD",
-			QueryPath: "StartTime_lt",
+			QueryPath: "StartTime<",
+		},
+		&requestflag.Flag[string]{
+			Name:      "start-time-gt",
+			Usage:     "Filters calls by their start date (after). Expected format is YYYY-MM-DD",
+			QueryPath: "StartTime>",
 		},
 		&requestflag.Flag[string]{
 			Name:      "status",

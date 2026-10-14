@@ -81,6 +81,11 @@ var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The name of the pay connector configured in the Telnyx API. Must reference an existing pay connector for this organization.",
 			InnerField: "connector_name",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "pay.connector-parameters",
+			Usage:      "Custom key/value parameters forwarded to the pay connector as `parameters` in the processor request. String values may use `{{dynamic_variable}}` templating, resolved per call.",
+			InnerField: "connector_parameters",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "pay.currency",
 			Usage:      "Default currency for payments processed by this tool.",
@@ -88,13 +93,18 @@ var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "pay.description",
-			Usage:      "Optional description of the pay tool that will be passed to the assistant.",
+			Usage:      "Description of the pay tool shown to the assistant so it knows when to call the tool. Not sent to the payment connector — the per-call `description` argument the assistant passes is what reaches the processor.",
 			InnerField: "description",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "pay.payment-method",
 			Usage:      "Default payment method for payments processed by this tool.",
 			InnerField: "payment_method",
+		},
+		&requestflag.InnerFlag[[]string]{
+			Name:       "pay.valid-card-types",
+			Usage:      "Restricts accepted card numbers to the listed card types. When the caller enters a card number that does not match one of the listed types, Pay treats the input as invalid and re-prompts for the card number.",
+			InnerField: "valid_card_types",
 		},
 	},
 	"update-dynamic-variables": {
@@ -196,6 +206,11 @@ var aiToolsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "The name of the pay connector configured in the Telnyx API. Must reference an existing pay connector for this organization.",
 			InnerField: "connector_name",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "pay.connector-parameters",
+			Usage:      "Custom key/value parameters forwarded to the pay connector as `parameters` in the processor request. String values may use `{{dynamic_variable}}` templating, resolved per call.",
+			InnerField: "connector_parameters",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "pay.currency",
 			Usage:      "Default currency for payments processed by this tool.",
@@ -203,13 +218,18 @@ var aiToolsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "pay.description",
-			Usage:      "Optional description of the pay tool that will be passed to the assistant.",
+			Usage:      "Description of the pay tool shown to the assistant so it knows when to call the tool. Not sent to the payment connector — the per-call `description` argument the assistant passes is what reaches the processor.",
 			InnerField: "description",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "pay.payment-method",
 			Usage:      "Default payment method for payments processed by this tool.",
 			InnerField: "payment_method",
+		},
+		&requestflag.InnerFlag[[]string]{
+			Name:       "pay.valid-card-types",
+			Usage:      "Restricts accepted card numbers to the listed card types. When the caller enters a card number that does not match one of the listed types, Pay treats the input as invalid and re-prompts for the card number.",
+			InnerField: "valid_card_types",
 		},
 	},
 	"update-dynamic-variables": {
@@ -491,22 +511,5 @@ func handleAIToolsDelete(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.AI.Tools.Delete(ctx, cmd.Value("tool-id").(string), options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "ai:tools delete",
-		Transform:      transform,
-	})
+	return client.AI.Tools.Delete(ctx, cmd.Value("tool-id").(string), options...)
 }

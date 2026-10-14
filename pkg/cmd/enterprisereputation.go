@@ -91,6 +91,27 @@ var enterprisesReputationUpdateFrequency = cli.Command{
 	HideHelpCommand: true,
 }
 
+var enterprisesReputationUpdateWebhook = cli.Command{
+	Name:    "update-webhook",
+	Usage:   "Set the HTTPS URL that receives number-ownership events for this enterprise:\n`number_reputation.number.flagged`, `number_reputation.number.removed` and\n`number_reputation.external_verification.status_changed`. Send\n`webhook_url: null` to stop receiving them.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "enterprise-id",
+			Required:  true,
+			PathParam: "enterprise_id",
+		},
+		&requestflag.Flag[*string]{
+			Name:     "webhook-url",
+			Usage:    "HTTPS URL on a publicly routable host. Send `null` to stop receiving number-ownership events.",
+			Required: true,
+			BodyPath: "webhook_url",
+		},
+	},
+	Action:          handleEnterprisesReputationUpdateWebhook,
+	HideHelpCommand: true,
+}
+
 func handleEnterprisesReputationRetrieve(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -252,6 +273,55 @@ func handleEnterprisesReputationUpdateFrequency(ctx context.Context, cmd *cli.Co
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "enterprises:reputation update-frequency",
+		Transform:      transform,
+	})
+}
+
+func handleEnterprisesReputationUpdateWebhook(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("enterprise-id") && len(unusedArgs) > 0 {
+		cmd.Set("enterprise-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.EnterpriseReputationUpdateWebhookParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Enterprises.Reputation.UpdateWebhook(
+		ctx,
+		cmd.Value("enterprise-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "enterprises:reputation update-webhook",
 		Transform:      transform,
 	})
 }

@@ -37,6 +37,7 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "doing-business-as",
+			Usage:    "The trade name your business operates under if it is different from your legal name, also called a Doing Business As (DBA) name. Leave blank if you only use your legal name.",
 			Required: true,
 			BodyPath: "doing_business_as",
 		},
@@ -48,18 +49,19 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "industry",
-			Usage:    "Industry classification.",
+			Usage:    "The industry your business operates in. Choose the closest match from the list; if your value is not accepted, pick the nearest category.",
 			Required: true,
 			BodyPath: "industry",
 		},
 		&requestflag.Flag[string]{
 			Name:     "jurisdiction-of-incorporation",
+			Usage:    "The state, province, or country where your business was legally incorporated, for example Delaware.",
 			Required: true,
 			BodyPath: "jurisdiction_of_incorporation",
 		},
 		&requestflag.Flag[string]{
 			Name:     "legal-name",
-			Usage:    "Legal name of the enterprise.",
+			Usage:    "Your business's full registered legal name, exactly as it appears on your incorporation or tax documents, 3 to 64 characters.",
 			Required: true,
 			BodyPath: "legal_name",
 		},
@@ -93,37 +95,38 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "website",
+			Usage:    "Your business's public website address, including https://. Leave blank if your business has no website.",
 			Required: true,
 			BodyPath: "website",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "corporate-registration-number",
-			Usage:    "Optional corporate-registration / company-number identifier.",
+			Usage:    "The official number your company received when it was legally registered or incorporated (for example from your state or national business registry). It is on your certificate of incorporation.",
 			BodyPath: "corporate_registration_number",
 		},
 		&requestflag.Flag[string]{
 			Name:     "customer-reference",
-			Usage:    "Optional free-form string the caller can attach for their own bookkeeping. Telnyx does not interpret it.",
+			Usage:    "Your own label for this account. Enter any reference that helps you find it in your records. Telnyx does not use it during vetting.",
 			BodyPath: "customer_reference",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "dun-bradstreet-number",
-			Usage:    "Optional D-U-N-S Number.",
+			Usage:    "Your optional 9-digit D-U-N-S Number issued by Dun & Bradstreet, a unique identifier for your business. Leave blank if you do not have one.",
 			BodyPath: "dun_bradstreet_number",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "primary-business-domain-sic-code",
-			Usage:    "Optional SIC code for the primary line of business.",
+			Usage:    "The 4-digit Standard Industrial Classification code for your main line of business, which tells us what industry you operate in. Look it up in the SIC code directory if you are unsure.",
 			BodyPath: "primary_business_domain_sic_code",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "professional-license-number",
-			Usage:    "Optional professional-license number for regulated industries.",
+			Usage:    "If your business operates under a professional license (for example legal, medical, or financial services), enter the license number issued by the licensing authority. Leave blank if it does not apply.",
 			BodyPath: "professional_license_number",
 		},
 		&requestflag.Flag[string]{
 			Name:     "role-type",
-			Usage:    "`enterprise` for an organization registering its own DIRs; `bpo` for a Business Process Outsourcer placing calls on behalf of one or more enterprises.",
+			Usage:    "`enterprise` for an organization registering its own DIRs (the default, and the right choice when the calls display your own brand). `bpo` for a Business Process Outsourcer: a call center that places calls on behalf of other enterprises and displays their brand. A `bpo` enterprise describes the call center itself and cannot own a DIR. Each client the call center calls for gets its own `enterprise` in the same account, with the client's DIR under it; that DIR is then linked to the `bpo` enterprise through `bpo_authorizations`. Fixed at creation.",
 			Default:  "enterprise",
 			BodyPath: "role_type",
 		},
@@ -139,6 +142,7 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-address.city",
+			Usage:      "The city of your registered business address.",
 			InnerField: "city",
 		},
 		&requestflag.InnerFlag[string]{
@@ -148,56 +152,66 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-address.postal-code",
+			Usage:      "The postal or ZIP code of your registered business address.",
 			InnerField: "postal_code",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-address.street-address",
+			Usage:      "The street address of your registered business, including the building number and street name.",
 			InnerField: "street_address",
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "billing-address.extended-address",
+			Usage:      "An optional second address line, such as a suite, unit, or floor. Leave blank if it does not apply.",
 			InnerField: "extended_address",
 		},
 	},
 	"billing-contact": {
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-contact.email",
+			Usage:      "The email address of the person Telnyx should contact about billing for this account.",
 			InnerField: "email",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-contact.first-name",
+			Usage:      "The first name of the person Telnyx should contact about billing for this account.",
 			InnerField: "first_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-contact.last-name",
+			Usage:      "The last name of the person Telnyx should contact about billing for this account.",
 			InnerField: "last_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-contact.phone-number",
-			Usage:      "E.164 format with leading `+`.",
+			Usage:      "The phone number of the billing contact, in E.164 format, for example +12125551234.",
 			InnerField: "phone_number",
 		},
 	},
 	"organization-contact": {
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.email",
+			Usage:      "The email address of the main person Telnyx should contact about this account. For a call center (BPO) account this is the email you will verify later, so use a mailbox you can access.",
 			InnerField: "email",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.first-name",
+			Usage:      "The first name of the main person Telnyx should contact about this account.",
 			InnerField: "first_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.job-title",
+			Usage:      "The job title of the main person Telnyx should contact about this account.",
 			InnerField: "job_title",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.last-name",
+			Usage:      "The last name of the main person Telnyx should contact about this account.",
 			InnerField: "last_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.phone-number",
-			Usage:      "E.164 format with leading `+`.",
+			Usage:      "The phone number of the main contact, in E.164 format, for example +12125551234.",
 			InnerField: "phone_number",
 		},
 	},
@@ -209,6 +223,7 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-physical-address.city",
+			Usage:      "The city of your registered business address.",
 			InnerField: "city",
 		},
 		&requestflag.InnerFlag[string]{
@@ -218,14 +233,17 @@ var enterprisesCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-physical-address.postal-code",
+			Usage:      "The postal or ZIP code of your registered business address.",
 			InnerField: "postal_code",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-physical-address.street-address",
+			Usage:      "The street address of your registered business, including the building number and street name.",
 			InnerField: "street_address",
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "organization-physical-address.extended-address",
+			Usage:      "An optional second address line, such as a suite, unit, or floor. Leave blank if it does not apply.",
 			InnerField: "extended_address",
 		},
 	},
@@ -266,41 +284,47 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[*string]{
 			Name:     "corporate-registration-number",
+			Usage:    "The official number your company received when it was legally registered or incorporated (for example from your state or national business registry). It is on your certificate of incorporation.",
 			BodyPath: "corporate_registration_number",
 		},
 		&requestflag.Flag[string]{
 			Name:     "customer-reference",
+			Usage:    "Your own label for this account. Enter any reference that helps you find it in your records. Telnyx does not use it during vetting.",
 			BodyPath: "customer_reference",
 		},
 		&requestflag.Flag[string]{
 			Name:     "doing-business-as",
+			Usage:    "The trade name your business operates under if it is different from your legal name, also called a Doing Business As (DBA) name. Leave blank if you only use your legal name.",
 			BodyPath: "doing_business_as",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "dun-bradstreet-number",
+			Usage:    "Your optional 9-digit D-U-N-S Number issued by Dun & Bradstreet, a unique identifier for your business. Leave blank if you do not have one.",
 			BodyPath: "dun_bradstreet_number",
 		},
 		&requestflag.Flag[string]{
 			Name:     "fein",
+			Usage:    "US Federal Employer Identification Number (`NN-NNNNNNN`) or Canadian equivalent.",
 			BodyPath: "fein",
 		},
 		&requestflag.Flag[string]{
 			Name:     "industry",
-			Usage:    `Allowed values: "accounting", "finance", "billing", "collections", "business", "charity", "nonprofit", "communications", "telecom", "customer service", "support", "delivery", "shipping", "logistics", "education", "financial", "banking", "government", "public", "healthcare", "health", "pharmacy", "medical", "insurance", "legal", "law", "notifications", "scheduling", "real estate", "property", "retail", "ecommerce", "sales", "marketing", "software", "technology", "tech", "media", "surveys", "market research", "travel", "hospitality", "hotel".`,
+			Usage:    "The industry your business operates in. Choose the closest match from the list; if your value is not accepted, pick the nearest category.",
 			BodyPath: "industry",
 		},
 		&requestflag.Flag[string]{
 			Name:     "jurisdiction-of-incorporation",
-			Usage:    "Updated state/province/country of incorporation. Optional on update.",
+			Usage:    "The state, province, or country where your business was legally incorporated, for example Delaware.",
 			BodyPath: "jurisdiction_of_incorporation",
 		},
 		&requestflag.Flag[string]{
 			Name:     "legal-name",
-			Usage:    "Legal name of the enterprise.",
+			Usage:    "Your business's full registered legal name, exactly as it appears on your incorporation or tax documents, 3 to 64 characters.",
 			BodyPath: "legal_name",
 		},
 		&requestflag.Flag[string]{
 			Name:     "number-of-employees",
+			Usage:    "Approximate headcount range. Used for vetting heuristics; pick the bucket that contains your current employee count.",
 			BodyPath: "number_of_employees",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -309,6 +333,7 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "organization-legal-type",
+			Usage:    "Legal-entity form. Pick the form that matches your incorporation documents:\n- `corporation` - C-corp or S-corp.\n- `llc` - limited liability company.\n- `partnership` - general/limited partnership.\n- `nonprofit` - non-profit corporation, charitable trust, or 501(c)(3)/equivalent.\n- `other` - anything else (sole proprietorships, government bodies, DBAs, etc.). You may be asked for additional documents during vetting.",
 			BodyPath: "organization_legal_type",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -317,14 +342,17 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[*string]{
 			Name:     "primary-business-domain-sic-code",
+			Usage:    "The 4-digit Standard Industrial Classification code for your main line of business, which tells us what industry you operate in. Look it up in the SIC code directory if you are unsure.",
 			BodyPath: "primary_business_domain_sic_code",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "professional-license-number",
+			Usage:    "If your business operates under a professional license (for example legal, medical, or financial services), enter the license number issued by the licensing authority. Leave blank if it does not apply.",
 			BodyPath: "professional_license_number",
 		},
 		&requestflag.Flag[string]{
 			Name:     "website",
+			Usage:    "Your business's public website address, including https://. Leave blank if your business has no website.",
 			BodyPath: "website",
 		},
 	},
@@ -339,6 +367,7 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-address.city",
+			Usage:      "The city of your registered business address.",
 			InnerField: "city",
 		},
 		&requestflag.InnerFlag[string]{
@@ -348,56 +377,66 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-address.postal-code",
+			Usage:      "The postal or ZIP code of your registered business address.",
 			InnerField: "postal_code",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-address.street-address",
+			Usage:      "The street address of your registered business, including the building number and street name.",
 			InnerField: "street_address",
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "billing-address.extended-address",
+			Usage:      "An optional second address line, such as a suite, unit, or floor. Leave blank if it does not apply.",
 			InnerField: "extended_address",
 		},
 	},
 	"billing-contact": {
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-contact.email",
+			Usage:      "The email address of the person Telnyx should contact about billing for this account.",
 			InnerField: "email",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-contact.first-name",
+			Usage:      "The first name of the person Telnyx should contact about billing for this account.",
 			InnerField: "first_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-contact.last-name",
+			Usage:      "The last name of the person Telnyx should contact about billing for this account.",
 			InnerField: "last_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "billing-contact.phone-number",
-			Usage:      "E.164 format with leading `+`.",
+			Usage:      "The phone number of the billing contact, in E.164 format, for example +12125551234.",
 			InnerField: "phone_number",
 		},
 	},
 	"organization-contact": {
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.email",
+			Usage:      "The email address of the main person Telnyx should contact about this account. For a call center (BPO) account this is the email you will verify later, so use a mailbox you can access.",
 			InnerField: "email",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.first-name",
+			Usage:      "The first name of the main person Telnyx should contact about this account.",
 			InnerField: "first_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.job-title",
+			Usage:      "The job title of the main person Telnyx should contact about this account.",
 			InnerField: "job_title",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.last-name",
+			Usage:      "The last name of the main person Telnyx should contact about this account.",
 			InnerField: "last_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-contact.phone-number",
-			Usage:      "E.164 format with leading `+`.",
+			Usage:      "The phone number of the main contact, in E.164 format, for example +12125551234.",
 			InnerField: "phone_number",
 		},
 	},
@@ -409,6 +448,7 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-physical-address.city",
+			Usage:      "The city of your registered business address.",
 			InnerField: "city",
 		},
 		&requestflag.InnerFlag[string]{
@@ -418,14 +458,17 @@ var enterprisesUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-physical-address.postal-code",
+			Usage:      "The postal or ZIP code of your registered business address.",
 			InnerField: "postal_code",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "organization-physical-address.street-address",
+			Usage:      "The street address of your registered business, including the building number and street name.",
 			InnerField: "street_address",
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "organization-physical-address.extended-address",
+			Usage:      "An optional second address line, such as a suite, unit, or floor. Leave blank if it does not apply.",
 			InnerField: "extended_address",
 		},
 	},
@@ -440,6 +483,11 @@ var enterprisesList = cli.Command{
 			Name:      "filter-legal-name-contains",
 			Usage:     "Case-insensitive partial match on legal name.",
 			QueryPath: "filter[legal_name][contains]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-role-type",
+			Usage:     "Only return enterprises of this type: `bpo` for call-center (BPO) enterprises, `enterprise` for normal enterprises. Omit to return both.",
+			QueryPath: "filter[role_type]",
 		},
 		&requestflag.Flag[string]{
 			Name:      "legal-name",
@@ -484,7 +532,7 @@ var enterprisesDelete = cli.Command{
 
 var enterprisesBrandedCalling = cli.Command{
 	Name:    "branded-calling",
-	Usage:   "Branded Calling is a paid product that must be activated on each enterprise.\nActivation is idempotent:",
+	Usage:   "Branded Calling must be activated on each enterprise. Activation is idempotent:",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

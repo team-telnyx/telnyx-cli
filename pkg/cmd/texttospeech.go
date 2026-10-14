@@ -72,6 +72,11 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "resemble",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "soniox",
+			Usage:    "Soniox provider-specific parameters. Every voice speaks all supported languages; set `language` to the language of the text.",
+			BodyPath: "soniox",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "telnyx",
 			Usage:    "Telnyx provider-specific parameters. For the `Ultra` model, use `voice_speed`, `volume`, and `emotion`. `Bayan` and `Sukhan` don't use `temperature`, `volume`, or `emotion`, and don't support `voice_speed`. `Sukhan`'s `response_format` is restricted to `mp3` or `pcm` (no `wav`).",
 			BodyPath: "telnyx",
@@ -252,6 +257,43 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "sample_rate",
 		},
 	},
+	"soniox": {
+		&requestflag.InnerFlag[string]{
+			Name:       "soniox.voice-id",
+			Usage:      "Soniox voice name from the [voices listing](https://developers.telnyx.com/api-reference/text-to-speech-commands/list-available-voices), for example `Emma`.",
+			InnerField: "voice_id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "soniox.audio-format",
+			Usage:      "Audio output format.",
+			InnerField: "audio_format",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "soniox.language",
+			Usage:      "Two-letter ISO 639-1 code of the text.",
+			InnerField: "language",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "soniox.model-id",
+			Usage:      "Soniox model.",
+			InnerField: "model_id",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "soniox.reduce-silence",
+			Usage:      "Shortens the pauses between words.",
+			InnerField: "reduce_silence",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "soniox.sample-rate",
+			Usage:      "Audio sample rate in Hz. `pcm_mulaw` and `pcm_alaw` accept 8000 only; `mp3` does not accept 8000. Defaults to 24000, or 8000 for `pcm_mulaw` and `pcm_alaw`.",
+			InnerField: "sample_rate",
+		},
+		&requestflag.InnerFlag[float64]{
+			Name:       "soniox.speed",
+			Usage:      "Speaking rate. 1.0 is normal speed.",
+			InnerField: "speed",
+		},
+	},
 	"telnyx": {
 		&requestflag.InnerFlag[string]{
 			Name:       "telnyx.emotion",
@@ -270,12 +312,12 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "telnyx.voice-speed",
-			Usage:      "Voice speed multiplier. Applies to all models except `Bayan` and `Sukhan`, which don't support it. Range: 0.5 to 2.0.",
+			Usage:      "Voice speed multiplier. Telnyx `Ultra` voices accept values from 0.6 to 1.5 — requests outside that range are rejected by the synthesis engine. `KokoroTTS` and `Qwen3TTS` accept the field but do not apply it. `Bayan` and `Sukhan` don't support it.",
 			InnerField: "voice_speed",
 		},
 		&requestflag.InnerFlag[float64]{
 			Name:       "telnyx.volume",
-			Usage:      "Volume level for the Ultra model. Range: 0.0 to 2.0.",
+			Usage:      "Volume level for the Ultra model. Telnyx `Ultra` voices accept values from 0.5 to 2.0 — requests outside that range are rejected by the synthesis engine. `KokoroTTS`, `Qwen3TTS`, `Bayan`, and `Sukhan` voices accept the field but do not apply it.",
 			InnerField: "volume",
 		},
 	},

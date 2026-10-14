@@ -20,7 +20,6 @@ func TestDirPhoneNumbersList(t *testing.T) {
 			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
 			"--page-number", "1",
 			"--page-size", "20",
-			"--status", "submitted",
 		)
 	})
 }
