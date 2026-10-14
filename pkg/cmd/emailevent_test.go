@@ -15,12 +15,11 @@ func TestEmailEventsList(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"email-events", "list",
-			"--max-items", "10",
 			"--email-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--event-type", "string",
 			"--from", "'2019-12-27T18:11:19.117Z'",
-			"--page-cursor", "page_cursor",
 			"--page-size", "1",
+			"--page-cursor", "page[cursor]",
 			"--to", "'2019-12-27T18:11:19.117Z'",
 		)
 	})

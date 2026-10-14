@@ -31,8 +31,10 @@ func TestEnterprisesReputationNumbersList(t *testing.T) {
 			"enterprises:reputation:numbers", "list",
 			"--max-items", "10",
 			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--filter-ownership-status", "verified",
 			"--filter-phone-number-contains", "+16035551234",
 			"--filter-phone-number-eq", "+16035551234",
+			"--filter-source", "external",
 			"--page-number", "1",
 			"--page-size", "10",
 		)
@@ -80,6 +82,35 @@ func TestEnterprisesReputationNumbersDisassociate(t *testing.T) {
 	})
 }
 
+func TestEnterprisesReputationNumbersOwnershipConfirm(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"enterprises:reputation:numbers", "ownership-confirm",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--phone-number", "+19493253498",
+			"--still-own=true",
+			"--evidence-document-id", "2a7e8337-e803-4057-a4ae-26c40eb0bc6c",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"still_own: true\n" +
+			"evidence_document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"enterprises:reputation:numbers", "ownership-confirm",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--phone-number", "+19493253498",
+		)
+	})
+}
+
 func TestEnterprisesReputationNumbersRefresh(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
@@ -102,6 +133,19 @@ func TestEnterprisesReputationNumbersRefresh(t *testing.T) {
 			"--api-key", "string",
 			"enterprises:reputation:numbers", "refresh",
 			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+		)
+	})
+}
+
+func TestEnterprisesReputationNumbersRetrieveOwnership(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"enterprises:reputation:numbers", "retrieve-ownership",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--phone-number", "+19493253498",
 		)
 	})
 }

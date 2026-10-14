@@ -31,6 +31,7 @@ func TestDirUpdate(t *testing.T) {
 			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
 			"--authorizer-email", "dev@stainless.com",
 			"--authorizer-name", "authorizer_name",
+			"--bpo-authorization", "{bpo_enterprise_id: 4a6192a4-573d-446d-b3ce-aff9117272a6, loa_document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c}",
 			"--call-reason", "Appointment reminders",
 			"--call-reason", "Billing inquiries",
 			"--call-reason", "Lab results",
@@ -41,6 +42,7 @@ func TestDirUpdate(t *testing.T) {
 			"--document", "{document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c, document_type: business_registration, description: Certificate of incorporation.}",
 			"--logo-url", "https://acmeplumbing.example.com/logo-v2-256.bmp",
 			"--reselling=true",
+			"--webhook-url", "https://mapleridge.example.com/webhooks/branded-calling",
 		)
 	})
 
@@ -56,6 +58,8 @@ func TestDirUpdate(t *testing.T) {
 			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
 			"--authorizer-email", "dev@stainless.com",
 			"--authorizer-name", "authorizer_name",
+			"--bpo-authorization.bpo-enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--bpo-authorization.loa-document-id", "2a7e8337-e803-4057-a4ae-26c40eb0bc6c",
 			"--call-reason", "Appointment reminders",
 			"--call-reason", "Billing inquiries",
 			"--call-reason", "Lab results",
@@ -68,6 +72,7 @@ func TestDirUpdate(t *testing.T) {
 			"--document.description", "Certificate of incorporation.",
 			"--logo-url", "https://acmeplumbing.example.com/logo-v2-256.bmp",
 			"--reselling=true",
+			"--webhook-url", "https://mapleridge.example.com/webhooks/branded-calling",
 		)
 	})
 
@@ -76,6 +81,9 @@ func TestDirUpdate(t *testing.T) {
 		pipeData := []byte("" +
 			"authorizer_email: dev@stainless.com\n" +
 			"authorizer_name: authorizer_name\n" +
+			"bpo_authorizations:\n" +
+			"  - bpo_enterprise_id: 4a6192a4-573d-446d-b3ce-aff9117272a6\n" +
+			"    loa_document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c\n" +
 			"call_reasons:\n" +
 			"  - Appointment reminders\n" +
 			"  - Billing inquiries\n" +
@@ -89,7 +97,8 @@ func TestDirUpdate(t *testing.T) {
 			"    document_type: business_registration\n" +
 			"    description: Certificate of incorporation.\n" +
 			"logo_url: https://acmeplumbing.example.com/logo-v2-256.bmp\n" +
-			"reselling: true\n")
+			"reselling: true\n" +
+			"webhook_url: https://mapleridge.example.com/webhooks/branded-calling\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -128,6 +137,54 @@ func TestDirDelete(t *testing.T) {
 			"--api-key", "string",
 			"dir", "delete",
 			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
+		)
+	})
+}
+
+func TestDirBpoLoa(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"dir", "bpo-loa",
+			"--dir-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--bpo-enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--signature", "{image_base64: x, signer_name: signer_name}",
+			"--output", "/dev/null",
+		)
+	})
+
+	t.Run("inner flags", func(t *testing.T) {
+		// Check that inner flags have been set up correctly
+		requestflag.CheckInnerFlags(dirBpoLoa)
+
+		// Alternative argument passing style using inner flags
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"dir", "bpo-loa",
+			"--dir-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--bpo-enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--signature.image-base64", "x",
+			"--signature.signer-name", "signer_name",
+			"--output", "/dev/null",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("" +
+			"bpo_enterprise_id: 4a6192a4-573d-446d-b3ce-aff9117272a6\n" +
+			"signature:\n" +
+			"  image_base64: x\n" +
+			"  signer_name: signer_name\n")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"dir", "bpo-loa",
+			"--dir-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--output", "/dev/null",
 		)
 	})
 }
@@ -229,6 +286,20 @@ func TestDirNewLoa(t *testing.T) {
 			"dir", "new-loa",
 			"--dir-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--output", "/dev/null",
+		)
+	})
+}
+
+func TestDirRetrieveBpoAuthorizations(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"dir", "retrieve-bpo-authorizations",
+			"--dir-id", "16635d38-75a6-4481-82e8-69af60e05011",
+			"--page-number", "1",
+			"--page-size", "20",
 		)
 	})
 }

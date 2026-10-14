@@ -37,7 +37,7 @@ var meetingSessionsActionsSendChat = cli.Command{
 
 var meetingSessionsActionsSpeak = cli.Command{
 	Name:    "speak",
-	Usage:   "Sends audio / text-to-speech into a meeting session.",
+	Usage:   "Sends audio / text-to-speech into a meeting session. With a Telnyx AI Assistant\n(or avatar) attached, the bot is a webpage-output bot: the speak audio routes\nthrough the assistant's output page rather than the bot mic and plays once the\nassistant is connected -- it is not refused. If that page cannot be reached,\ndelivery fails with the 502 below, which may arrive without an error envelope,\nso branch on the status code before parsing a body. The assistant is designed to\nown the conversation, so prefer letting it speak or use `send_chat`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

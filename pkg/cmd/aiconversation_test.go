@@ -86,6 +86,7 @@ func TestAIConversationsList(t *testing.T) {
 			"--last-message-at", "last_message_at",
 			"--limit", "1",
 			"--metadata-assistant-id", "metadata->assistant_id",
+			"--metadata-assistant-version-id", "metadata->assistant_version_id",
 			"--metadata-call-control-id", "metadata->call_control_id",
 			"--metadata-telnyx-agent-target", "metadata->telnyx_agent_target",
 			"--metadata-telnyx-conversation-channel", "metadata->telnyx_conversation_channel",

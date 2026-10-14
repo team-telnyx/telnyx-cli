@@ -37,7 +37,7 @@ var aiEmbeddingsCreate = cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "embedding-model",
 			Usage:    "Supported models to vectorize and embed documents.",
-			Default:  "thenlper/gte-large",
+			Default:  "intfloat/multilingual-e5-large",
 			BodyPath: "embedding_model",
 		},
 		&requestflag.Flag[string]{

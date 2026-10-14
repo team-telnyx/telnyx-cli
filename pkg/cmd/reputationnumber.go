@@ -46,6 +46,11 @@ var reputationNumbersList = cli.Command{
 			QueryPath: "filter[enterprise_id]",
 		},
 		&requestflag.Flag[string]{
+			Name:      "filter-ownership-status",
+			Usage:     "Result of ongoing ownership checks. `verified`: the number is with the carrier on record. `pending_confirmation`: the number's carrier changed, or a periodic ownership re-verification is due; confirm you still own it before `confirm_by`. `flagged`: a periodic re-verification went unanswered; the number stays monitored and is not removed, but confirm ownership (`POST .../ownership_confirm`) to return it to `verified`. `removed`: the number is no longer monitored; returned by `POST .../ownership_confirm` with `still_own: false`, and when listing numbers with `filter[ownership_status]=removed`.",
+			QueryPath: "filter[ownership_status]",
+		},
+		&requestflag.Flag[string]{
 			Name:      "filter-phone-number-contains",
 			Usage:     "Partial match on phone number. Must contain at least 5 digits.",
 			QueryPath: "filter[phone_number][contains]",
@@ -54,6 +59,11 @@ var reputationNumbersList = cli.Command{
 			Name:      "filter-phone-number-eq",
 			Usage:     "Exact phone-number match (E.164).",
 			QueryPath: "filter[phone_number][eq]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-source",
+			Usage:     "Where the phone number is hosted. `telnyx`: in your Telnyx inventory. `external`: a number you own that is hosted with another provider.",
+			QueryPath: "filter[source]",
 		},
 		&requestflag.Flag[int64]{
 			Name:      "page-number",

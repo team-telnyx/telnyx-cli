@@ -67,6 +67,7 @@ var infringementClaimsContest = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "document.description",
+			Usage:      "An optional note describing this document, for example what it proves.",
 			InnerField: "description",
 		},
 	},

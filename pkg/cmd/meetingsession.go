@@ -27,7 +27,7 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "assistant",
-			Usage:    "Request options for attaching a voice assistant to the session. Routing fields (`call_control_connection_id`, `from`, and `loopback_sip_uri`) are used only to establish the assistant call leg and are omitted from response objects. `audio_gate` is returned with `id` in the assistant response object.",
+			Usage:    "Attach a Telnyx AI Assistant to the session. Supply the Assistant's ID; the Meeting service connects it to the meeting directly. The Call Control connection, caller ID and loopback SIP URI previously required here have been removed and are now rejected as unknown fields.",
 			BodyPath: "assistant",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -52,6 +52,11 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "camera_image",
 		},
 		&requestflag.Flag[string]{
+			Name:     "chat-on-enter",
+			Usage:    "A message the bot posts to the meeting's chat as soon as it becomes active — typically a recording disclosure. Delivered at most once. Independent of `speak_on_enter`: both may be set, and the chat message posts first because it does not wait for text-to-speech or avatar startup. Rejected with 422 `unsupported_capability` on platforms without meeting chat.",
+			BodyPath: "chat_on_enter",
+		},
+		&requestflag.Flag[string]{
 			Name:     "idempotency-key",
 			Usage:    "Client-supplied idempotency key to safely retry creation requests without duplicating sessions. Lookup is scoped to the authenticated account and compares the key only; the request payload is not fingerprinted or compared.",
 			BodyPath: "idempotency_key",
@@ -68,7 +73,7 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "speak-on-enter",
-			Usage:    "Text the bot speaks when it enters the meeting.",
+			Usage:    "Text the bot speaks when it enters the meeting. **Not spoken when an `assistant` is attached**: the value is accepted and echoed back on the session, but the assistant owns the voice and the line is never delivered, with no event reporting the omission. Use `chat_on_enter` to announce an assistant-backed bot.",
 			BodyPath: "speak_on_enter",
 		},
 		&requestflag.Flag[bool]{
@@ -98,24 +103,19 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 			InnerField: "id",
 		},
 		&requestflag.InnerFlag[string]{
-			Name:       "assistant.call-control-connection-id",
-			Usage:      "Call control connection used to bridge the assistant into the meeting audio.",
-			InnerField: "call_control_connection_id",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "assistant.from",
-			Usage:      "E.164 calling number used as the originating party for the assistant call leg.",
-			InnerField: "from",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "assistant.loopback-sip-uri",
-			Usage:      "SIP URI to which the assistant media loopback is established.",
-			InnerField: "loopback_sip_uri",
-		},
-		&requestflag.InnerFlag[string]{
 			Name:       "assistant.audio-gate",
-			Usage:      "Audio gating strategy for the assistant call leg.",
+			Usage:      "Audio gating strategy for the assistant call leg. `half_duplex` (default) sends the assistant a single mixed meeting stream and mutes it while the assistant speaks, so the assistant cannot hear itself and cannot be interrupted. `full_duplex` sends a separate stream per participant, which allows barge-in and removes self-hearing, and COSTS SIGNIFICANTLY MORE: per-participant streams multiply the per-minute cost by the number of participants.",
 			InnerField: "audio_gate",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "assistant.dynamic-variables",
+			Usage:      "Per-conversation values for the [dynamic variables](/docs/inference/ai-assistants/dynamic-variables) used in the Assistant's instructions, greeting, or tools. Delivered before the Assistant's first utterance, so they resolve for the opening line as well as the rest of the conversation. At most 63 entries; keys 1-128 characters; values must be strings. The map is budgeted in aggregate at 1,047,552 bytes (1023 KiB) rather than capped per value. `streaming_audio`, `ai_assistant_streaming_audio` and `meeting_session_id` are reserved and rejected with `400 invalid_request` -- they toggle provider infrastructure or are set by the service rather than fill a prompt template.",
+			InnerField: "dynamic_variables",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "assistant.leave-on-end",
+			Usage:      "Leave the meeting when the Assistant's conversation reaches a terminal state -- `ended` **or** `failed`. Off by default, which leaves the bot in the meeting after the Assistant stops. Fires once: a second terminal transition does not leave twice, and a leave the provider refuses is logged without changing how the session settles.",
+			InnerField: "leave_on_end",
 		},
 	},
 	"avatar": {
@@ -209,7 +209,7 @@ var meetingSessionsDelete = cli.Command{
 
 var meetingSessionsDeleteRecordingMedia = cli.Command{
 	Name:    "delete-recording-media",
-	Usage:   "**Not yet available in production** — this route is not currently routed on\napi.telnyx.com and returns a generic 404; it is documented ahead of rollout.\nIrreversibly requests deletion of provider-hosted aggregate recording media\nunder the provider contract. The operation retains the Telnyx-local Meeting\nsession, transcript segments, events, artifacts, and usage records. It is\nseparate from `DELETE /meeting_sessions/{id}`, which stops or cancels\nparticipation without deleting the persisted session. A missing/foreign session\nreturns 404; provider deletion failures return 502.",
+	Usage:   "Irreversibly requests deletion of the aggregate recording media for the session.\nThe operation retains the Telnyx-local Meeting session, transcript segments,\nevents, artifacts, and usage records. It is separate from\n`DELETE /meeting_sessions/{id}`, which stops or cancels participation without\ndeleting the persisted session. A missing/foreign session returns 404; provider\ndeletion failures return 502.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

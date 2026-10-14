@@ -17,11 +17,12 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"--api-key", "string",
 			"meeting-sessions", "create",
 			"--meeting-url", "https://zoom.us/j/1234567890",
-			"--assistant", "{id: asst_fake-uuid-1234, call_control_connection_id: conn-fake-abcdef, from: '+12025550199', loopback_sip_uri: sip:loopback@example.invalid, audio_gate: half_duplex}",
+			"--assistant", "{id: asst_fake-uuid-1234, audio_gate: half_duplex, dynamic_variables: {candidate_name: Ada Lovelace, role: Staff Engineer}, leave_on_end: true}",
 			"--avatar", "{api_key: fake_avatar_api_key_do_not_use, avatar_id: avatar_fake-001, provider: anam}",
 			"--barge-in=true",
 			"--bot-name", "Notetaker",
 			"--camera-image", "{base64_data: /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAACAAIBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EAB4QAAAEBwAAAAAAAAAAAAAAAAAEBgcCFic1RVNi/9oACAEBAAA/AH8hGJbWR09TxKW4vhC2qHgf/9k=, format: jpeg}",
+			"--chat-on-enter", "x",
 			"--idempotency-key", "x",
 			"--join-at", "'2019-12-27T18:11:19.117Z'",
 			"--metadata", "{foo: bar}",
@@ -43,16 +44,16 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"meeting-sessions", "create",
 			"--meeting-url", "https://zoom.us/j/1234567890",
 			"--assistant.id", "asst_fake-uuid-1234",
-			"--assistant.call-control-connection-id", "conn-fake-abcdef",
-			"--assistant.from", "+12025550199",
-			"--assistant.loopback-sip-uri", "sip:loopback@example.invalid",
 			"--assistant.audio-gate", "half_duplex",
+			"--assistant.dynamic-variables", "{candidate_name: Ada Lovelace, role: Staff Engineer}",
+			"--assistant.leave-on-end=true",
 			"--avatar.api-key", "fake_avatar_api_key_do_not_use",
 			"--avatar.avatar-id", "avatar_fake-001",
 			"--avatar.provider", "anam",
 			"--barge-in=true",
 			"--bot-name", "Notetaker",
 			"--camera-image", "{base64_data: /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAACAAIBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EAB4QAAAEBwAAAAAAAAAAAAAAAAAEBgcCFic1RVNi/9oACAEBAAA/AH8hGJbWR09TxKW4vhC2qHgf/9k=, format: jpeg}",
+			"--chat-on-enter", "x",
 			"--idempotency-key", "x",
 			"--join-at", "'2019-12-27T18:11:19.117Z'",
 			"--metadata", "{foo: bar}",
@@ -69,10 +70,11 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"meeting_url: https://zoom.us/j/1234567890\n" +
 			"assistant:\n" +
 			"  id: asst_fake-uuid-1234\n" +
-			"  call_control_connection_id: conn-fake-abcdef\n" +
-			"  from: '+12025550199'\n" +
-			"  loopback_sip_uri: sip:loopback@example.invalid\n" +
 			"  audio_gate: half_duplex\n" +
+			"  dynamic_variables:\n" +
+			"    candidate_name: Ada Lovelace\n" +
+			"    role: Staff Engineer\n" +
+			"  leave_on_end: true\n" +
 			"avatar:\n" +
 			"  api_key: fake_avatar_api_key_do_not_use\n" +
 			"  avatar_id: avatar_fake-001\n" +
@@ -83,6 +85,7 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"  base64_data: >-\n" +
 			"    /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAACAAIBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EAB4QAAAEBwAAAAAAAAAAAAAAAAAEBgcCFic1RVNi/9oACAEBAAA/AH8hGJbWR09TxKW4vhC2qHgf/9k=\n" +
 			"  format: jpeg\n" +
+			"chat_on_enter: x\n" +
 			"idempotency_key: x\n" +
 			"join_at: '2019-12-27T18:11:19.117Z'\n" +
 			"metadata:\n" +

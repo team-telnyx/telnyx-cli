@@ -290,6 +290,21 @@ var emailDomainsRetrieveHealth = cli.Command{
 	HideHelpCommand: true,
 }
 
+var emailDomainsRotateDkim = cli.Command{
+	Name:    "rotate-dkim",
+	Usage:   "Generates a new DKIM key for the domain, activates it, and retires the previous\nkey. The response includes the updated DKIM DNS records the customer must\npublish. Selectors are fixed, so rotation replaces the TXT value at the existing\n`<selector>._domainkey.<domain>` host rather than adding a second record —\n`old_selector_retained` is false and the new TXT value must be published\npromptly, since signing switches to the new key immediately and the old TXT\nvalue will no longer match. The previous key is retired to a `retiring` state\n(retained, not revoked) so it can be revoked after the DNS propagation grace\nperiod.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "domain-id",
+			Required:  true,
+			PathParam: "domain_id",
+		},
+	},
+	Action:          handleEmailDomainsRotateDkim,
+	HideHelpCommand: true,
+}
+
 var emailDomainsVerify = cli.Command{
 	Name:    "verify",
 	Usage:   "Checks the published DNS records against the records required for the email\ndomain and returns the latest verification results.",
@@ -621,6 +636,48 @@ func handleEmailDomainsRetrieveHealth(ctx context.Context, cmd *cli.Command) err
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "email-domains retrieve-health",
+		Transform:      transform,
+	})
+}
+
+func handleEmailDomainsRotateDkim(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("domain-id") && len(unusedArgs) > 0 {
+		cmd.Set("domain-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.EmailDomains.RotateDkim(ctx, cmd.Value("domain-id").(string), options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "email-domains rotate-dkim",
 		Transform:      transform,
 	})
 }

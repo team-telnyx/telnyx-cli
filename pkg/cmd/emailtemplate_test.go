@@ -16,10 +16,14 @@ func TestEmailTemplatesCreate(t *testing.T) {
 			"--api-key", "string",
 			"email-templates", "create",
 			"--name", "Welcome Email",
+			"--autoescape=true",
 			"--html-body", "<h1>Hello {{ first_name }}</h1>",
+			"--strict-variables=true",
 			"--subject", "Welcome, {{ first_name }}!",
 			"--text-body", "Hello {{ first_name }}",
-			"--variable", "string",
+			"--variable-schema", "{foo: {required: true, default: default}}",
+			"--variable", "[string]",
+			"--variables-mode", "automatic",
 			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
@@ -28,11 +32,18 @@ func TestEmailTemplatesCreate(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
 			"name: Welcome Email\n" +
+			"autoescape: true\n" +
 			"html_body: <h1>Hello {{ first_name }}</h1>\n" +
+			"strict_variables: true\n" +
 			"subject: Welcome, {{ first_name }}!\n" +
 			"text_body: Hello {{ first_name }}\n" +
+			"variable_schema:\n" +
+			"  foo:\n" +
+			"    required: true\n" +
+			"    default: default\n" +
 			"variables:\n" +
-			"  - string\n")
+			"  - string\n" +
+			"variables_mode: automatic\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -62,23 +73,34 @@ func TestEmailTemplatesUpdate(t *testing.T) {
 			"--api-key", "string",
 			"email-templates", "update",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--autoescape=true",
 			"--html-body", "html_body",
 			"--name", "name",
+			"--strict-variables=true",
 			"--subject", "Welcome aboard, {{first_name}}!",
 			"--text-body", "text_body",
-			"--variable", "string",
+			"--variable-schema", "{foo: {required: true, default: default}}",
+			"--variable", "[string]",
+			"--variables-mode", "automatic",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
+			"autoescape: true\n" +
 			"html_body: html_body\n" +
 			"name: name\n" +
+			"strict_variables: true\n" +
 			"subject: Welcome aboard, {{first_name}}!\n" +
 			"text_body: text_body\n" +
+			"variable_schema:\n" +
+			"  foo:\n" +
+			"    required: true\n" +
+			"    default: default\n" +
 			"variables:\n" +
-			"  - string\n")
+			"  - string\n" +
+			"variables_mode: automatic\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
@@ -96,6 +118,10 @@ func TestEmailTemplatesList(t *testing.T) {
 			"--api-key", "string",
 			"email-templates", "list",
 			"--max-items", "10",
+			"--filter-autoescape", "true",
+			"--filter-content-type", "html_and_text",
+			"--filter-query", "filter[query]",
+			"--filter-strict-variables", "true",
 			"--page-cursor", "page_cursor",
 			"--page-size", "1",
 		)
@@ -148,23 +174,34 @@ func TestEmailTemplatesReplace(t *testing.T) {
 			"--api-key", "string",
 			"email-templates", "replace",
 			"--id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+			"--autoescape=true",
 			"--html-body", "html_body",
 			"--name", "name",
+			"--strict-variables=true",
 			"--subject", "Welcome aboard, {{first_name}}!",
 			"--text-body", "text_body",
-			"--variable", "string",
+			"--variable-schema", "{foo: {required: true, default: default}}",
+			"--variable", "[string]",
+			"--variables-mode", "automatic",
 		)
 	})
 
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
+			"autoescape: true\n" +
 			"html_body: html_body\n" +
 			"name: name\n" +
+			"strict_variables: true\n" +
 			"subject: Welcome aboard, {{first_name}}!\n" +
 			"text_body: text_body\n" +
+			"variable_schema:\n" +
+			"  foo:\n" +
+			"    required: true\n" +
+			"    default: default\n" +
 			"variables:\n" +
-			"  - string\n")
+			"  - string\n" +
+			"variables_mode: automatic\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

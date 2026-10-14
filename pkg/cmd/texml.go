@@ -16,7 +16,7 @@ import (
 
 var texmlInitiateAICall = requestflag.WithInnerFlags(cli.Command{
 	Name:    "initiate-ai-call",
-	Usage:   "Initiate an outbound AI call with warm-up support. Validates parameters, builds\nan internal TeXML with an AI Assistant configuration, encodes instructions into\nclient state, and calls the dial API. The Twiml, Texml, and Url parameters are\nnot allowed and will result in a 422 error.",
+	Usage:   "Initiate an outbound AI call with warm-up support: Telnyx attempts to warm up\nthe assistant identified by `AIAssistantId` before placing the call and starts\nit automatically when the called party answers. Validates parameters, builds an\ninternal TeXML with an AI Assistant configuration, encodes instructions into\nclient state, and calls the dial API. The Twiml, Texml, and Url parameters are\nnot allowed and will result in a 422 error.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -26,7 +26,7 @@ var texmlInitiateAICall = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "ai-assistant-id",
-			Usage:    "The ID of the AI assistant to use for the call.",
+			Usage:    "The ID of the AI assistant to use for the call. Telnyx attempts to warm up this assistant before the call is placed and starts it automatically when the called party answers.",
 			Required: true,
 			BodyPath: "AIAssistantId",
 		},

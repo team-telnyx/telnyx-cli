@@ -82,3 +82,27 @@ func TestEnterprisesReputationUpdateFrequency(t *testing.T) {
 		)
 	})
 }
+
+func TestEnterprisesReputationUpdateWebhook(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"enterprises:reputation", "update-webhook",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--webhook-url", "https://example.com/webhooks/telnyx",
+		)
+	})
+
+	t.Run("piping data", func(t *testing.T) {
+		// Test piping YAML data over stdin
+		pipeData := []byte("webhook_url: https://example.com/webhooks/telnyx")
+		mocktest.TestRunMockTestWithPipeAndFlags(
+			t, pipeData,
+			"--api-key", "string",
+			"enterprises:reputation", "update-webhook",
+			"--enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+		)
+	})
+}

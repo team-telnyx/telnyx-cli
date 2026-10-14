@@ -25,10 +25,22 @@ var emailTemplatesCreate = cli.Command{
 			Required: true,
 			BodyPath: "name",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "autoescape",
+			Usage:    "Per-template HTML autoescaping setting. Defaults to `false` for backward compatibility. When `true`, the rendered `html_body` HTML-escapes each Liquid expression's output at the output boundary (after its filters run, before concatenation with literal template markup). Input values are never mutated and `subject`/`text_body` are never autoescaped. The boundary escape is idempotent: HTML entities already present in the output (e.g. from an explicit `escape` filter) are preserved, so an explicit `escape`/`escape_once` is never double-escaped, and markup introduced by any later filter in the chain is still escaped.",
+			Default:  false,
+			BodyPath: "autoescape",
+		},
 		&requestflag.Flag[*string]{
 			Name:     "html-body",
 			Usage:    "Liquid template HTML body.",
 			BodyPath: "html_body",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "strict-variables",
+			Usage:    "Per-template strict variable-validation setting. Defaults to `false` for backward compatibility. When `true`, a send or render that is missing a variable marked `required: true` in `variable_schema` fails with 422 naming the variable. Missing optional variables never fail; their schema `default` (when set) is applied to the render.",
+			Default:  false,
+			BodyPath: "strict_variables",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "subject",
@@ -40,10 +52,20 @@ var emailTemplatesCreate = cli.Command{
 			Usage:    "Liquid template text body.",
 			BodyPath: "text_body",
 		},
-		&requestflag.Flag[[]string]{
+		&requestflag.Flag[map[string]any]{
+			Name:     "variable-schema",
+			Usage:    "Structured variable requirements. Required variables cannot define defaults; invalid combinations return 422. This is independent of the legacy `variables` array. On render with `strict_variables` enabled: `required` variables must be supplied as non-empty values — absent, `null`, empty string, empty object `{}`, and empty array `[]` all fail with 422 naming the variable, while present values such as `false` and `0` pass (they are present, not empty). Optional variables fall back to their `default` when absent.",
+			BodyPath: "variable_schema",
+		},
+		&requestflag.Flag[any]{
 			Name:     "variable",
-			Usage:    "Template variables. Auto-extracted from subject/body fields when absent.",
+			Usage:    "Persisted variable names. In `automatic` mode a non-null array is rejected; in `explicit` mode this is the exact manual array and each item is limited to 255 Unicode code points.",
 			BodyPath: "variables",
+		},
+		&requestflag.Flag[string]{
+			Name:     "variables-mode",
+			Usage:    "Controls how `variables` is maintained. If both fields are omitted (or `variables` is null), the template uses `automatic` mode and extracts variable names from the effective subject, HTML body, and text body. A non-null `variables` array with no mode selects `explicit`. `automatic` rejects a simultaneous non-null array; `explicit` requires a non-null array, including valid `[]`, and preserves its exact order, duplicates, and string contents.",
+			BodyPath: "variables_mode",
 		},
 		&requestflag.Flag[string]{
 			Name:       "idempotency-key",
@@ -79,6 +101,11 @@ var emailTemplatesUpdate = cli.Command{
 			Required:  true,
 			PathParam: "id",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "autoescape",
+			Usage:    "Per-template HTML autoescaping setting.",
+			BodyPath: "autoescape",
+		},
 		&requestflag.Flag[*string]{
 			Name:     "html-body",
 			Usage:    "Liquid template HTML body.",
@@ -87,6 +114,11 @@ var emailTemplatesUpdate = cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "name",
 			BodyPath: "name",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "strict-variables",
+			Usage:    "Per-template strict variable-validation setting.",
+			BodyPath: "strict_variables",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "subject",
@@ -98,9 +130,20 @@ var emailTemplatesUpdate = cli.Command{
 			Usage:    "Liquid template text body.",
 			BodyPath: "text_body",
 		},
-		&requestflag.Flag[[]string]{
+		&requestflag.Flag[map[string]any]{
+			Name:     "variable-schema",
+			Usage:    "Structured variable requirements. Required variables cannot define defaults; invalid combinations return 422. Set to `null` to clear the schema.",
+			BodyPath: "variable_schema",
+		},
+		&requestflag.Flag[any]{
 			Name:     "variable",
+			Usage:    "Persisted variable names. In `automatic` mode a non-null array is rejected; in `explicit` mode this is the exact manual array and each item is limited to 255 Unicode code points.",
 			BodyPath: "variables",
+		},
+		&requestflag.Flag[string]{
+			Name:     "variables-mode",
+			Usage:    "Controls how `variables` is maintained. Setting `automatic` re-extracts immediately from the effective subject, HTML body, and text body and rejects a simultaneous non-null array. Setting `explicit` requires the exact non-null array, including valid `[]`. With the mode omitted, a non-null array selects explicit mode, null selects automatic mode, and omitting both fields preserves the current mode. Source-content changes re-extract only in automatic mode.",
+			BodyPath: "variables_mode",
 		},
 	},
 	Action:          handleEmailTemplatesUpdate,
@@ -109,9 +152,29 @@ var emailTemplatesUpdate = cli.Command{
 
 var emailTemplatesList = cli.Command{
 	Name:    "list",
-	Usage:   "Lists templates sorted newest first by `created_at desc, id desc`.",
+	Usage:   "Lists templates sorted newest first by `created_at desc, id desc`. Optional\nfilters match a case-insensitive literal name/subject query, stored body\npresence, and the `strict_variables` and `autoescape` settings. Filters\nintersect, remain scoped to the authenticated account, and apply before cursor\npagination. Invalid filter names or values return 400.",
 	Suggest: true,
 	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "filter-autoescape",
+			Usage:     "Exact match on the template's `autoescape` option. Only the exact query strings `true` and `false` are accepted; other values, including blank, return 400.",
+			QueryPath: "filter[autoescape]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-content-type",
+			Usage:     "Matches templates by stored body presence. `html_and_text` requires both an HTML and text body; `html_only` requires HTML and no text body; `text_only` requires text and no HTML body; `no_body` requires neither. `null` and exactly `\"\"` count as absent; whitespace-only strings count as content. An empty or unsupported value returns a 400 response.",
+			QueryPath: "filter[content_type]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-query",
+			Usage:     "Case-insensitive literal substring match over the template `name` or stored `subject` only; bodies are never searched. `%`, `_`, and `\\` are literal characters with no wildcard meaning. A blank value is treated as omitted.",
+			QueryPath: "filter[query]",
+		},
+		&requestflag.Flag[string]{
+			Name:      "filter-strict-variables",
+			Usage:     "Exact match on the template's `strict_variables` option. Only the exact query strings `true` and `false` are accepted; other values, including blank, return 400.",
+			QueryPath: "filter[strict_variables]",
+		},
 		&requestflag.Flag[string]{
 			Name:      "page-cursor",
 			Usage:     "Opaque URL-safe Base64 cursor returned by a previous list response.",
@@ -178,6 +241,11 @@ var emailTemplatesReplace = cli.Command{
 			Required:  true,
 			PathParam: "id",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "autoescape",
+			Usage:    "Per-template HTML autoescaping setting.",
+			BodyPath: "autoescape",
+		},
 		&requestflag.Flag[*string]{
 			Name:     "html-body",
 			Usage:    "Liquid template HTML body.",
@@ -186,6 +254,11 @@ var emailTemplatesReplace = cli.Command{
 		&requestflag.Flag[string]{
 			Name:     "name",
 			BodyPath: "name",
+		},
+		&requestflag.Flag[bool]{
+			Name:     "strict-variables",
+			Usage:    "Per-template strict variable-validation setting.",
+			BodyPath: "strict_variables",
 		},
 		&requestflag.Flag[*string]{
 			Name:     "subject",
@@ -197,9 +270,20 @@ var emailTemplatesReplace = cli.Command{
 			Usage:    "Liquid template text body.",
 			BodyPath: "text_body",
 		},
-		&requestflag.Flag[[]string]{
+		&requestflag.Flag[map[string]any]{
+			Name:     "variable-schema",
+			Usage:    "Structured variable requirements. Required variables cannot define defaults; invalid combinations return 422. Set to `null` to clear the schema.",
+			BodyPath: "variable_schema",
+		},
+		&requestflag.Flag[any]{
 			Name:     "variable",
+			Usage:    "Persisted variable names. In `automatic` mode a non-null array is rejected; in `explicit` mode this is the exact manual array and each item is limited to 255 Unicode code points.",
 			BodyPath: "variables",
+		},
+		&requestflag.Flag[string]{
+			Name:     "variables-mode",
+			Usage:    "Controls how `variables` is maintained. Setting `automatic` re-extracts immediately from the effective subject, HTML body, and text body and rejects a simultaneous non-null array. Setting `explicit` requires the exact non-null array, including valid `[]`. With the mode omitted, a non-null array selects explicit mode, null selects automatic mode, and omitting both fields preserves the current mode. Source-content changes re-extract only in automatic mode.",
+			BodyPath: "variables_mode",
 		},
 	},
 	Action:          handleEmailTemplatesReplace,

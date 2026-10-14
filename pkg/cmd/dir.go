@@ -32,7 +32,7 @@ var dirRetrieve = cli.Command{
 
 var dirUpdate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "update",
-	Usage:   "Edit a DIR. DIRs in `draft`, `rejected`, `unsuccessful`, or `suspended` can be\nedited freely: PATCH is a pure edit, `status` is never changed, and you re-vet\nby calling `POST /v2/dir/{dir_id}/submit` explicitly. A `verified` DIR can also\nbe edited in place: a PATCH that changes any value returns the DIR to `draft`\nand branded delivery stops until you re-submit and the DIR is approved again,\nwhile a PATCH that changes nothing (an empty body or values identical to the\ncurrent ones) leaves the DIR `verified`, so idempotent retries are safe. DIRs in\nany other status (`submitted`, `in_review`, `expired`, `infringement_claimed`,\n`permanently_rejected`) cannot be edited.",
+	Usage:   "Edit a DIR. DIRs in `draft`, `rejected`, `unsuccessful`, or `suspended` can be\nedited freely: PATCH is a pure edit, `status` is never changed, and you re-vet\nby calling `POST /v2/dir/{dir_id}/submit` explicitly. A `verified` DIR can also\nbe edited in place: a PATCH that changes any value returns the DIR to `draft`;\nthe currently approved identity keeps displaying, and the edited content goes\nlive only after you re-submit and the DIR is approved again. A PATCH that\nchanges nothing (an empty body or values identical to the current ones) leaves\nthe DIR `verified`, so idempotent retries are safe. Changing only\n`bpo_authorizations` or `webhook_url` is the exception: the DIR stays\n`verified`. Each BPO authorization is reviewed on its own instead. DIRs in any\nother status (`submitted`, `in_review`, `expired`, `infringement_claimed`,\n`permanently_rejected`) cannot be edited.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -49,6 +49,11 @@ var dirUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "authorizer-name",
 			Usage:    "Name of the person at your enterprise authorizing this DIR. Must be a real individual.",
 			BodyPath: "authorizer_name",
+		},
+		&requestflag.Flag[[]map[string]any]{
+			Name:     "bpo-authorization",
+			Usage:    "Optional. Replace this DIR's authorized BPO (Business Process Outsourcer) accounts with these, each with its signed Letter of Authorization. The supplied list replaces the current one: a BPO left out has its authorization removed, and a new BPO (or a changed Letter of Authorization) is created `pending` admin review. Send an empty list to clear all authorizations; omit the field to leave them unchanged. Editing this list does not re-vet the DIR. Maximum 10.",
+			BodyPath: "bpo_authorizations",
 		},
 		&requestflag.Flag[[]string]{
 			Name:     "call-reason",
@@ -90,10 +95,27 @@ var dirUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Set to true if your organization places calls on behalf of other enterprises (BPO/reseller). Updating this triggers re-vetting on next submit.",
 			BodyPath: "reselling",
 		},
+		&requestflag.Flag[*string]{
+			Name:     "webhook-url",
+			Usage:    "Optional `https://` URL that receives webhook notifications when this DIR's compliance review completes. Send `null` to clear. Changing only this field on a `verified` DIR does not re-vet it. Maximum 2048 characters.",
+			BodyPath: "webhook_url",
+		},
 	},
 	Action:          handleDirUpdate,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"bpo-authorization": {
+		&requestflag.InnerFlag[string]{
+			Name:       "bpo-authorization.bpo-enterprise-id",
+			Usage:      "Enterprise id of an approved BPO (Business Process Outsourcer) account on your organization to authorize for this DIR.",
+			InnerField: "bpo_enterprise_id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "bpo-authorization.loa-document-id",
+			Usage:      "Id of the signed Letter of Authorization document (uploaded via the Telnyx Documents API) in which the Brand Owner authorizes this BPO.",
+			InnerField: "loa_document_id",
+		},
+	},
 	"document": {
 		&requestflag.InnerFlag[string]{
 			Name:       "document.document-id",
@@ -107,6 +129,7 @@ var dirUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "document.description",
+			Usage:      "An optional note describing this document, for example what it proves.",
 			InnerField: "description",
 		},
 	},
@@ -144,7 +167,7 @@ var dirList = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:      "filter-status",
-			Usage:     "DIR lifecycle status.\n- `draft` - newly created; editable; not yet submitted.\n- `submitted` / `in_review` - Telnyx is reviewing.\n- `verified` - approved; phone numbers may be attached.\n- `rejected` - Telnyx rejected this submission; `rejection_reasons` is populated; customer can edit and resubmit.\n- `unsuccessful` - system-side error during processing; customer can edit and resubmit.\n- `suspended` - temporarily disabled (e.g. by an active infringement claim).\n- `expired` - verification expired; customer must resubmit.\n- `infringement_claimed` - a trademark/impersonation claim is open against this DIR.\n- `permanently_rejected` - terminal; cannot be resubmitted.",
+			Usage:     "DIR lifecycle status.\n- `draft` - newly created; editable; not yet submitted.\n- `submitted` / `in_review` - Telnyx is reviewing.\n- `verified` - approved; phone numbers may be attached.\n- `rejected` - Telnyx rejected this submission; `rejection_reasons` is populated; customer can edit and resubmit.\n- `unsuccessful` - system-side error during processing; customer can edit and resubmit.\n- `suspended` - temporarily disabled (e.g. by an active infringement claim).\n- `expired` - verification expired; customer must resubmit.\n- `infringement_claimed` - a trademark/impersonation claim is open against this DIR.\n- `permanently_rejected` - terminal; cannot be resubmitted.\n- `delete_requested` - you have requested deletion; the DIR still exists and Telnyx is completing the removal (de-registration and cleanup). A verified DIR keeps serving its branded identity, and keeps billing, until the removal finishes.",
 			QueryPath: "filter[status]",
 		},
 		&requestflag.Flag[int64]{
@@ -176,7 +199,7 @@ var dirList = cli.Command{
 
 var dirDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a DIR. Failure modes: `400` if a child phone number is in a non-deletable\nstatus, `409` if the DIR has an unresolved infringement claim, `404` if the DIR\nis not yours.",
+	Usage:   "Request deletion of a DIR. This does not remove the DIR on this call: it records\nthe request, moves the DIR to `delete_requested`, and Telnyx completes the\nremoval (de-registration and cleanup) shortly after. A verified DIR keeps\nserving its branded identity, and keeps billing, until the removal is executed.\nFailure modes: `400` if a child phone number is still attached or the DIR is\n`in_review` (wait for the review to finish), `409` if the DIR has an unresolved\ninfringement claim, `404` if the DIR is not yours.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -188,6 +211,49 @@ var dirDelete = cli.Command{
 	Action:          handleDirDelete,
 	HideHelpCommand: true,
 }
+
+var dirBpoLoa = requestflag.WithInnerFlags(cli.Command{
+	Name:    "bpo-loa",
+	Usage:   "The Letter of Authorization in which a Brand Owner authorizes an approved BPO\n(Business Process Outsourcer) to place branded calls that display this DIR on\nthe owner's behalf. Both parties are read from the caller's account: the Brand\nOwner is the enterprise that owns the DIR, and the BPO is `bpo_enterprise_id`.\nNo business identity is accepted in the body.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "dir-id",
+			Required:  true,
+			PathParam: "dir_id",
+		},
+		&requestflag.Flag[string]{
+			Name:     "bpo-enterprise-id",
+			Usage:    "The approved BPO enterprise the Brand Owner is authorizing. Must be a BPO account on the caller's organization that has already been approved.",
+			Required: true,
+			BodyPath: "bpo_enterprise_id",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "signature",
+			BodyPath: "signature",
+		},
+		&requestflag.Flag[string]{
+			Name:    "output",
+			Aliases: []string{"o"},
+			Usage:   "The file where the response contents will be stored. Use the value '-' to force output to stdout.",
+		},
+	},
+	Action:          handleDirBpoLoa,
+	HideHelpCommand: true,
+}, map[string][]requestflag.HasOuterFlag{
+	"signature": {
+		&requestflag.InnerFlag[string]{
+			Name:       "signature.image-base64",
+			Usage:      "PNG image, base64-encoded.",
+			InnerField: "image_base64",
+		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "signature.signer-name",
+			Usage:      "Optional. When absent the rendered PDF falls back to the enterprise contact's legal name.",
+			InnerField: "signer_name",
+		},
+	},
+})
 
 var dirListDocumentTypes = cli.Command{
 	Name:            "list-document-types",
@@ -247,12 +313,11 @@ var dirNewLoa = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "agent",
-			Usage:    "Third-party reseller / partner managing the enterprise's phone numbers. Omit when the enterprise works directly with Telnyx.",
+			Usage:    "Third-party reseller / partner managing the enterprise's phone numbers on its behalf, such as a call center (BPO) acting for a client. Omit when the enterprise manages its own numbers.",
 			BodyPath: "agent",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "signature",
-			Usage:    "Optional. When provided the rendered PDF embeds the signature image, printed name, and signed-at date. When absent the PDF is returned unsigned so the customer can sign externally and upload it via the Documents API.",
 			BodyPath: "signature",
 		},
 		&requestflag.Flag[string]{
@@ -267,50 +332,62 @@ var dirNewLoa = requestflag.WithInnerFlags(cli.Command{
 	"agent": {
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.administrative-area",
+			Usage:      "The state or province of the partner's address, as its code, for example IL or ON.",
 			InnerField: "administrative_area",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.city",
+			Usage:      "The city of the partner's address.",
 			InnerField: "city",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.contact-email",
+			Usage:      "The email address of the contact person at the partner.",
 			InnerField: "contact_email",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.contact-name",
+			Usage:      "The name of a contact person at the partner.",
 			InnerField: "contact_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.contact-phone",
+			Usage:      "The phone number of the contact person at the partner, in E.164 format, for example +13125550000.",
 			InnerField: "contact_phone",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.contact-title",
+			Usage:      "The job title of the contact person at the partner.",
 			InnerField: "contact_title",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.country",
+			Usage:      "The two-letter country code of the partner's address, for example US.",
 			InnerField: "country",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.legal-name",
+			Usage:      "The legal name of the third-party partner or reseller managing these numbers on your behalf.",
 			InnerField: "legal_name",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.postal-code",
+			Usage:      "The postal or ZIP code of the partner's address.",
 			InnerField: "postal_code",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "agent.street-address",
+			Usage:      "The street address of the partner, including the building number and street name.",
 			InnerField: "street_address",
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "agent.dba",
+			Usage:      "The trade name (Doing Business As) the partner operates under, if different from its legal name. Leave blank if it does not apply.",
 			InnerField: "dba",
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "agent.extended-address",
+			Usage:      "An optional second address line for the partner, such as a suite, unit, or floor. Leave blank if it does not apply.",
 			InnerField: "extended_address",
 		},
 	},
@@ -327,6 +404,33 @@ var dirNewLoa = requestflag.WithInnerFlags(cli.Command{
 		},
 	},
 })
+
+var dirRetrieveBpoAuthorizations = cli.Command{
+	Name:    "retrieve-bpo-authorizations",
+	Usage:   "List the BPO (Business Process Outsourcer) accounts a Brand Owner has authorized\non this DIR, together with the review state of each authorization.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "dir-id",
+			Required:  true,
+			PathParam: "dir_id",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			Usage:     "1-based page number. Out-of-range values return an empty page with correct meta.",
+			Default:   1,
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			Usage:     "Items per page. Maximum 250; values above are clamped to 250.",
+			Default:   20,
+			QueryPath: "page[size]",
+		},
+	},
+	Action:          handleDirRetrieveBpoAuthorizations,
+	HideHelpCommand: true,
+}
 
 var dirSubmit = cli.Command{
 	Name:    "submit",
@@ -367,7 +471,7 @@ var dirUpdateInfringement = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:     "certify-no-infringement",
-			Usage:    "Must be `true`.",
+			Usage:    "Check to certify that the brand no longer infringes anyone else's trademark or intellectual property.",
 			Required: true,
 			BodyPath: "certify_no_infringement",
 		},
@@ -389,6 +493,7 @@ var dirUpdateInfringement = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[*string]{
 			Name:     "display-name",
+			Usage:    "The business name shown to call recipients, 1 to 35 characters, no emoji, not blank.",
 			BodyPath: "display_name",
 		},
 		&requestflag.Flag[any]{
@@ -420,6 +525,7 @@ var dirUpdateInfringement = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:                  "document.description",
+			Usage:                 "An optional note describing this document, for example what it proves.",
 			InnerField:            "description",
 			OuterIsArrayOfObjects: true,
 		},
@@ -594,7 +700,64 @@ func handleDirDelete(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
-	return client.Dir.Delete(ctx, cmd.Value("dir-id").(string), options...)
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Dir.Delete(ctx, cmd.Value("dir-id").(string), options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "dir delete",
+		Transform:      transform,
+	})
+}
+
+func handleDirBpoLoa(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
+		cmd.Set("dir-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		ApplicationJSON,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.DirBpoLoaParams{}
+
+	response, err := client.Dir.BpoLoa(
+		ctx,
+		cmd.Value("dir-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+	message, err := writeBinaryResponse(response, os.Stdout, cmd.String("output"))
+	if message != "" {
+		fmt.Println(message)
+	}
+	return err
 }
 
 func handleDirListDocumentTypes(ctx context.Context, cmd *cli.Command) error {
@@ -742,6 +905,55 @@ func handleDirNewLoa(ctx context.Context, cmd *cli.Command) error {
 		fmt.Println(message)
 	}
 	return err
+}
+
+func handleDirRetrieveBpoAuthorizations(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("dir-id") && len(unusedArgs) > 0 {
+		cmd.Set("dir-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.DirGetBpoAuthorizationsParams{}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.Dir.GetBpoAuthorizations(
+		ctx,
+		cmd.Value("dir-id").(string),
+		params,
+		options...,
+	)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "dir retrieve-bpo-authorizations",
+		Transform:      transform,
+	})
 }
 
 func handleDirSubmit(ctx context.Context, cmd *cli.Command) error {

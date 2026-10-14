@@ -52,11 +52,11 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "answer",
 			"--call-control-id", "call_control_id",
-			"--assistant", "{id: asst_123, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: 'Hi, I''m your assistant. How can I help?', instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{hangup: {description: description}, type: hangup}], voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}",
+			"--assistant", "{id: asst_123, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}], transcription: {language: language, model: distil-whisper/distil-large-v2}, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
-			"--conversation-relay-config", "{url: wss://example.com/conversation-relay, custom_parameters: {customer_id: bar}, dtmf_detection: true, greeting: Hi! Ask me anything!, interruptible: speech, interruptible_greeting: dtmf, interruption_settings: {enable: true, interruptible: speech, interruptible_greeting: speech, welcome_greeting_interruptible: speech}, language: en-US, languages: [{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {transcription_model: bar}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.Ultra.alloy, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}], provider: elevenlabs, structured_provider: {voice_id: bar, model_id: bar}, transcription_engine: Google, transcription_engine_config: {transcription_model: bar, interim_results: bar, keywords_boosting: bar}, tts_provider: telnyx, voice: Telnyx.KokoroTTS.af, voice_settings: {type: telnyx, voice_speed: 1}}",
+			"--conversation-relay-config", "{url: wss://example.com/conversation-relay, custom_parameters: {customer_id: bar}, dtmf_detection: true, greeting: Hi! Ask me anything!, interruptible: speech, interruptible_greeting: dtmf, interruption_settings: {enable: true, interruptible: speech, interruptible_greeting: speech, welcome_greeting_interruptible: speech}, language: en-US, languages: [{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {eager_eot_threshold: 0.5, eot_threshold: 0.5, interim_results: true}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.Ultra.alloy, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}], provider: elevenlabs, structured_provider: {voice_id: bar, model_id: bar}, transcription_engine: Google, transcription_engine_config: {eager_eot_threshold: 0.5, eot_threshold: 0.5, interim_results: true}, tts_provider: telnyx, voice: Telnyx.KokoroTTS.af, voice_settings: {type: telnyx, voice_speed: 1}}",
 			"--custom-header", "{name: head_1, value: val_1}",
 			"--custom-header", "{name: head_2, value: val_2}",
 			"--deepfake-detection", "{enabled: true, rtp_timeout: 30, timeout: 15}",
@@ -102,7 +102,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--assistant.dynamic-variables", "{customer_name: John, account_id: ACC-12345}",
 			"--assistant.external-llm", "{authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}",
 			"--assistant.fallback-config", "{external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}",
-			"--assistant.greeting", "Hi, I'm your assistant. How can I help?",
+			"--assistant.greeting", "greeting",
 			"--assistant.instructions", "You are a friendly voice assistant.",
 			"--assistant.llm-api-key-ref", "my_llm_api_key",
 			"--assistant.mcp-servers", "[{foo: bar}]",
@@ -110,7 +110,8 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--assistant.name", "name",
 			"--assistant.observability-settings", "{foo: bar}",
 			"--assistant.openai-api-key-ref", "my_openai_api_key",
-			"--assistant.tools", "[{hangup: {description: description}, type: hangup}]",
+			"--assistant.tools", "[{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]",
+			"--assistant.transcription", "{language: language, model: distil-whisper/distil-large-v2}",
 			"--assistant.voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--billing-group-id", "f5586561-8ff0-4291-a0ac-84fe544797bd",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
@@ -123,11 +124,11 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"--conversation-relay-config.interruptible-greeting", "dtmf",
 			"--conversation-relay-config.interruption-settings", "{enable: true, interruptible: speech, interruptible_greeting: speech, welcome_greeting_interruptible: speech}",
 			"--conversation-relay-config.language", "en-US",
-			"--conversation-relay-config.languages", "[{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {transcription_model: bar}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.Ultra.alloy, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}]",
+			"--conversation-relay-config.languages", "[{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {eager_eot_threshold: 0.5, eot_threshold: 0.5, interim_results: true}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.Ultra.alloy, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}]",
 			"--conversation-relay-config.provider", "elevenlabs",
 			"--conversation-relay-config.structured-provider", "{voice_id: bar, model_id: bar}",
 			"--conversation-relay-config.transcription-engine", "Google",
-			"--conversation-relay-config.transcription-engine-config", "{transcription_model: bar, interim_results: bar, keywords_boosting: bar}",
+			"--conversation-relay-config.transcription-engine-config", "{eager_eot_threshold: 0.5, eot_threshold: 0.5, interim_results: true}",
 			"--conversation-relay-config.tts-provider", "telnyx",
 			"--conversation-relay-config.voice", "Telnyx.KokoroTTS.af",
 			"--conversation-relay-config.voice-settings", "{type: telnyx, voice_speed: 1}",
@@ -201,7 +202,7 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"      token_retrieval_url: token_retrieval_url\n" +
 			"    llm_api_key_ref: llm_api_key_ref\n" +
 			"    model: model\n" +
-			"  greeting: Hi, I'm your assistant. How can I help?\n" +
+			"  greeting: greeting\n" +
 			"  instructions: You are a friendly voice assistant.\n" +
 			"  llm_api_key_ref: my_llm_api_key\n" +
 			"  mcp_servers:\n" +
@@ -212,9 +213,15 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"    foo: bar\n" +
 			"  openai_api_key_ref: my_openai_api_key\n" +
 			"  tools:\n" +
-			"    - hangup:\n" +
-			"        description: description\n" +
-			"      type: hangup\n" +
+			"    - book_appointment:\n" +
+			"        api_key_ref: my_calcom_api_key\n" +
+			"        event_type_id: 0\n" +
+			"        attendee_name: attendee_name\n" +
+			"        attendee_timezone: attendee_timezone\n" +
+			"      type: book_appointment\n" +
+			"  transcription:\n" +
+			"    language: language\n" +
+			"    model: distil-whisper/distil-large-v2\n" +
 			"  voice_settings:\n" +
 			"    voice: voice\n" +
 			"    api_key_ref: api_key_ref\n" +
@@ -252,7 +259,9 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"      speech_model: nova-3\n" +
 			"      transcription_engine: Deepgram\n" +
 			"      transcription_engine_config:\n" +
-			"        transcription_model: bar\n" +
+			"        eager_eot_threshold: 0.5\n" +
+			"        eot_threshold: 0.5\n" +
+			"        interim_results: true\n" +
 			"      transcription_provider: Deepgram\n" +
 			"      tts_provider: telnyx\n" +
 			"      voice: Telnyx.Ultra.alloy\n" +
@@ -265,9 +274,9 @@ func TestCallsActionsAnswer(t *testing.T) {
 			"    model_id: bar\n" +
 			"  transcription_engine: Google\n" +
 			"  transcription_engine_config:\n" +
-			"    transcription_model: bar\n" +
-			"    interim_results: bar\n" +
-			"    keywords_boosting: bar\n" +
+			"    eager_eot_threshold: 0.5\n" +
+			"    eot_threshold: 0.5\n" +
+			"    interim_results: true\n" +
 			"  tts_provider: telnyx\n" +
 			"  voice: Telnyx.KokoroTTS.af\n" +
 			"  voice_settings:\n" +
@@ -891,9 +900,11 @@ func TestCallsActionsPay(t *testing.T) {
 			"--language", "en-US",
 			"--max-attempts", "3",
 			"--metadata", "{order_id: bar}",
+			"--min-postal-code-length", "5",
 			"--parameters", "{customer_id: bar}",
 			"--payment-method", "credit-card",
 			"--payment-token", "tok_abc123",
+			"--postal-code=false",
 			"--prompts", "{bank-account-number: x, bank-routing-number: x, expiration-date: x, payment-card-number: [{text: Please enter your card number., attempt: 2 3, card_type: amex, error_type: invalid-card-number}, {text: That card number was not accepted. Please try again., attempt: 2 3, card_type: amex, error_type: invalid-card-number}], postal-code: x, security-code: x}",
 			"--service-level", "service_level",
 			"--timeout-millis", "5000",
@@ -924,9 +935,11 @@ func TestCallsActionsPay(t *testing.T) {
 			"--language", "en-US",
 			"--max-attempts", "3",
 			"--metadata", "{order_id: bar}",
+			"--min-postal-code-length", "5",
 			"--parameters", "{customer_id: bar}",
 			"--payment-method", "credit-card",
 			"--payment-token", "tok_abc123",
+			"--postal-code=false",
 			"--prompts.bank-account-number", "x",
 			"--prompts.bank-routing-number", "x",
 			"--prompts.expiration-date", "x",
@@ -956,10 +969,12 @@ func TestCallsActionsPay(t *testing.T) {
 			"max_attempts: 3\n" +
 			"metadata:\n" +
 			"  order_id: bar\n" +
+			"min_postal_code_length: 5\n" +
 			"parameters:\n" +
 			"  customer_id: bar\n" +
 			"payment_method: credit-card\n" +
 			"payment_token: tok_abc123\n" +
+			"postal_code: false\n" +
 			"prompts:\n" +
 			"  bank-account-number: x\n" +
 			"  bank-routing-number: x\n" +
@@ -1234,7 +1249,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--api-key", "string",
 			"calls:actions", "start-ai-assistant",
 			"--call-control-id", "call_control_id",
-			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}], voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}",
+			"--assistant", "{id: id, dynamic_variables: {customer_name: John, account_id: ACC-12345}, external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, fallback_config: {external_llm: {authentication_method: token, base_url: base_url, certificate_ref: certificate_ref, forward_metadata: true, llm_api_key_ref: llm_api_key_ref, model: model, token_retrieval_url: token_retrieval_url}, llm_api_key_ref: llm_api_key_ref, model: model}, greeting: greeting, instructions: You are a friendly voice assistant., llm_api_key_ref: my_llm_api_key, mcp_servers: [{foo: bar}], model: gpt-4o, name: name, observability_settings: {foo: bar}, openai_api_key_ref: my_openai_api_key, tools: [{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}], transcription: {language: language, model: distil-whisper/distil-large-v2}, voice_settings: {voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}}",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--greeting", "Hello, can you tell me your age and where you live?",
@@ -1269,6 +1284,7 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"--assistant.observability-settings", "{foo: bar}",
 			"--assistant.openai-api-key-ref", "my_openai_api_key",
 			"--assistant.tools", "[{book_appointment: {api_key_ref: my_calcom_api_key, event_type_id: 0, attendee_name: attendee_name, attendee_timezone: attendee_timezone}, type: book_appointment}]",
+			"--assistant.transcription", "{language: language, model: distil-whisper/distil-large-v2}",
 			"--assistant.voice-settings", "{voice: voice, api_key_ref: api_key_ref, background_audio: {type: predefined_media, value: silence, volume: 0.1}, expressive_mode: true, language_boost: auto, similarity_boost: 0, speed: 0, style: 0, temperature: 0, use_speaker_boost: true, voice_speed: 0}",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -1329,6 +1345,9 @@ func TestCallsActionsStartAIAssistant(t *testing.T) {
 			"        attendee_name: attendee_name\n" +
 			"        attendee_timezone: attendee_timezone\n" +
 			"      type: book_appointment\n" +
+			"  transcription:\n" +
+			"    language: language\n" +
+			"    model: distil-whisper/distil-large-v2\n" +
 			"  voice_settings:\n" +
 			"    voice: voice\n" +
 			"    api_key_ref: api_key_ref\n" +
@@ -1384,7 +1403,7 @@ func TestCallsActionsStartConversationRelay(t *testing.T) {
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--conversation-relay-dtmf-detection=true",
-			"--conversation-relay-settings", "{url: wss://example.com/conversation-relay, dtmf_detection: true, interruptible: speech, interruptible_greeting: dtmf, languages: [{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {transcription_model: bar}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.KokoroTTS.af, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}]}",
+			"--conversation-relay-settings", "{url: wss://example.com/conversation-relay, dtmf_detection: true, interruptible: speech, interruptible_greeting: dtmf, languages: [{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {eager_eot_threshold: 0.5, eot_threshold: 0.5, interim_results: true}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.KokoroTTS.af, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}]}",
 			"--conversation-relay-url", "wss://example.com/conversation-relay",
 			"--custom-parameters", "{customer_id: bar}",
 			"--dtmf-detection=true",
@@ -1393,12 +1412,12 @@ func TestCallsActionsStartConversationRelay(t *testing.T) {
 			"--interruptible-greeting", "dtmf",
 			"--interruption-settings", "{enable: true, interruptible: speech, interruptible_greeting: speech, welcome_greeting_interruptible: speech}",
 			"--language", "en-US",
-			"--language", "{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {transcription_model: bar}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.KokoroTTS.af, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}",
+			"--language", "{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {eager_eot_threshold: 0.5, eot_threshold: 0.5, interim_results: true}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.KokoroTTS.af, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}",
 			"--provider", "elevenlabs",
 			"--structured-provider", "{voice_id: bar, model_id: bar}",
 			"--transcription", "{foo: bar}",
 			"--transcription-engine", "Google",
-			"--transcription-engine-config", "{transcription_model: bar, interim_results: bar, keywords_boosting: bar}",
+			"--transcription-engine-config", "{eager_eot_threshold: 0.5, eot_threshold: 0.5, interim_results: true}",
 			"--tts-provider", "telnyx",
 			"--url", "wss://example.com/conversation-relay",
 			"--voice", "Telnyx.KokoroTTS.af",
@@ -1424,7 +1443,7 @@ func TestCallsActionsStartConversationRelay(t *testing.T) {
 			"--conversation-relay-settings.dtmf-detection=true",
 			"--conversation-relay-settings.interruptible", "speech",
 			"--conversation-relay-settings.interruptible-greeting", "dtmf",
-			"--conversation-relay-settings.languages", "[{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {transcription_model: bar}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.KokoroTTS.af, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}]",
+			"--conversation-relay-settings.languages", "[{language: en-US, speech_model: nova-3, transcription_engine: Deepgram, transcription_engine_config: {eager_eot_threshold: 0.5, eot_threshold: 0.5, interim_results: true}, transcription_provider: Deepgram, tts_provider: telnyx, voice: Telnyx.KokoroTTS.af, voice_settings: {type: elevenlabs, api_key_ref: my_elevenlabs_api_key}}]",
 			"--conversation-relay-url", "wss://example.com/conversation-relay",
 			"--custom-parameters", "{customer_id: bar}",
 			"--dtmf-detection=true",
@@ -1439,7 +1458,7 @@ func TestCallsActionsStartConversationRelay(t *testing.T) {
 			"--language.language", "en-US",
 			"--language.speech-model", "nova-3",
 			"--language.transcription-engine", "Deepgram",
-			"--language.transcription-engine-config", "{transcription_model: bar}",
+			"--language.transcription-engine-config", "{eager_eot_threshold: 0.5, eot_threshold: 0.5, interim_results: true}",
 			"--language.transcription-provider", "Deepgram",
 			"--language.tts-provider", "telnyx",
 			"--language.voice", "Telnyx.KokoroTTS.af",
@@ -1448,7 +1467,9 @@ func TestCallsActionsStartConversationRelay(t *testing.T) {
 			"--structured-provider", "{voice_id: bar, model_id: bar}",
 			"--transcription", "{foo: bar}",
 			"--transcription-engine", "Google",
-			"--transcription-engine-config", "{transcription_model: bar, interim_results: bar, keywords_boosting: bar}",
+			"--transcription-engine-config.eager-eot-threshold", "0.5",
+			"--transcription-engine-config.eot-threshold", "0.5",
+			"--transcription-engine-config.interim-results=true",
 			"--tts-provider", "telnyx",
 			"--url", "wss://example.com/conversation-relay",
 			"--voice", "Telnyx.KokoroTTS.af",
@@ -1476,7 +1497,9 @@ func TestCallsActionsStartConversationRelay(t *testing.T) {
 			"      speech_model: nova-3\n" +
 			"      transcription_engine: Deepgram\n" +
 			"      transcription_engine_config:\n" +
-			"        transcription_model: bar\n" +
+			"        eager_eot_threshold: 0.5\n" +
+			"        eot_threshold: 0.5\n" +
+			"        interim_results: true\n" +
 			"      transcription_provider: Deepgram\n" +
 			"      tts_provider: telnyx\n" +
 			"      voice: Telnyx.KokoroTTS.af\n" +
@@ -1501,7 +1524,9 @@ func TestCallsActionsStartConversationRelay(t *testing.T) {
 			"    speech_model: nova-3\n" +
 			"    transcription_engine: Deepgram\n" +
 			"    transcription_engine_config:\n" +
-			"      transcription_model: bar\n" +
+			"      eager_eot_threshold: 0.5\n" +
+			"      eot_threshold: 0.5\n" +
+			"      interim_results: true\n" +
 			"    transcription_provider: Deepgram\n" +
 			"    tts_provider: telnyx\n" +
 			"    voice: Telnyx.KokoroTTS.af\n" +
@@ -1516,9 +1541,9 @@ func TestCallsActionsStartConversationRelay(t *testing.T) {
 			"  foo: bar\n" +
 			"transcription_engine: Google\n" +
 			"transcription_engine_config:\n" +
-			"  transcription_model: bar\n" +
-			"  interim_results: bar\n" +
-			"  keywords_boosting: bar\n" +
+			"  eager_eot_threshold: 0.5\n" +
+			"  eot_threshold: 0.5\n" +
+			"  interim_results: true\n" +
 			"tts_provider: telnyx\n" +
 			"url: wss://example.com/conversation-relay\n" +
 			"voice: Telnyx.KokoroTTS.af\n" +
@@ -2220,7 +2245,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--call-control-id", "call_control_id",
 			"--to", "+18005550100 or sip:username@sip.telnyx.com;secure=srtp",
 			"--answering-machine-detection", "detect",
-			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, beep_detection_profile: freq_only, beep_max_frequency_hz: 2000, beep_min_frequency_hz: 550, beep_min_tone_duration_millis: 300, beep_spectral_confirmation: true, beep_spectral_min_purity: 0.8, beep_spectral_reject_fax_cng: true, beep_spectral_window_millis: 100, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, silence_threshold: 512, total_analysis_time_millis: 5000}",
+			"--answering-machine-detection-config", "{after_greeting_silence_millis: 1000, beep_detection_profile: freq_only, beep_max_frequency_hz: 2000, beep_min_frequency_hz: 550, beep_min_tone_duration_millis: 300, beep_spectral_confirmation: true, beep_spectral_min_purity: 0.8, beep_spectral_reject_fax_cng: true, beep_spectral_window_millis: 100, between_words_silence_millis: 1000, greeting_duration_millis: 1000, greeting_silence_duration_millis: 2000, greeting_total_analysis_time_millis: 50000, initial_silence_millis: 1000, maximum_number_of_words: 1000, maximum_word_length_millis: 2000, prompt_end_timeout_millis: 5000, silence_threshold: 512, total_analysis_time_millis: 5000}",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
 			"--client-state", "aGF2ZSBhIG5pY2UgZGF5ID1d",
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
@@ -2291,6 +2316,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"--answering-machine-detection-config.initial-silence-millis", "1000",
 			"--answering-machine-detection-config.maximum-number-of-words", "1000",
 			"--answering-machine-detection-config.maximum-word-length-millis", "2000",
+			"--answering-machine-detection-config.prompt-end-timeout-millis", "5000",
 			"--answering-machine-detection-config.silence-threshold", "512",
 			"--answering-machine-detection-config.total-analysis-time-millis", "5000",
 			"--audio-url", "http://www.example.com/sounds/greeting.wav",
@@ -2363,6 +2389,7 @@ func TestCallsActionsTransfer(t *testing.T) {
 			"  initial_silence_millis: 1000\n" +
 			"  maximum_number_of_words: 1000\n" +
 			"  maximum_word_length_millis: 2000\n" +
+			"  prompt_end_timeout_millis: 5000\n" +
 			"  silence_threshold: 512\n" +
 			"  total_analysis_time_millis: 5000\n" +
 			"audio_url: http://www.example.com/sounds/greeting.wav\n" +

@@ -25,9 +25,11 @@ func TestEnterprisesDirCreate(t *testing.T) {
 			"--certify-ip-ownership=true",
 			"--certify-no-shaft-content=true",
 			"--display-name", "Acme Plumbing",
+			"--bpo-authorization", "{bpo_enterprise_id: 4a6192a4-573d-446d-b3ce-aff9117272a6, loa_document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c}",
 			"--document", "{document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c, document_type: business_registration, description: Certificate of incorporation.}",
 			"--logo-url", "https://acmeplumbing.example.com/logo-256.bmp",
 			"--reselling=false",
+			"--webhook-url", "https://mapleridge.example.com/webhooks/branded-calling",
 		)
 	})
 
@@ -49,11 +51,14 @@ func TestEnterprisesDirCreate(t *testing.T) {
 			"--certify-ip-ownership=true",
 			"--certify-no-shaft-content=true",
 			"--display-name", "Acme Plumbing",
+			"--bpo-authorization.bpo-enterprise-id", "4a6192a4-573d-446d-b3ce-aff9117272a6",
+			"--bpo-authorization.loa-document-id", "2a7e8337-e803-4057-a4ae-26c40eb0bc6c",
 			"--document.document-id", "2a7e8337-e803-4057-a4ae-26c40eb0bc6c",
 			"--document.document-type", "business_registration",
 			"--document.description", "Certificate of incorporation.",
 			"--logo-url", "https://acmeplumbing.example.com/logo-256.bmp",
 			"--reselling=false",
+			"--webhook-url", "https://mapleridge.example.com/webhooks/branded-calling",
 		)
 	})
 
@@ -69,12 +74,16 @@ func TestEnterprisesDirCreate(t *testing.T) {
 			"certify_ip_ownership: true\n" +
 			"certify_no_shaft_content: true\n" +
 			"display_name: Acme Plumbing\n" +
+			"bpo_authorizations:\n" +
+			"  - bpo_enterprise_id: 4a6192a4-573d-446d-b3ce-aff9117272a6\n" +
+			"    loa_document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c\n" +
 			"documents:\n" +
 			"  - document_id: 2a7e8337-e803-4057-a4ae-26c40eb0bc6c\n" +
 			"    document_type: business_registration\n" +
 			"    description: Certificate of incorporation.\n" +
 			"logo_url: https://acmeplumbing.example.com/logo-256.bmp\n" +
-			"reselling: false\n")
+			"reselling: false\n" +
+			"webhook_url: https://mapleridge.example.com/webhooks/branded-calling\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",
