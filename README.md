@@ -122,6 +122,27 @@ base64-encoding). Note that absolute paths will begin with `@file://` or
 telnyx <command> --arg @data://file.txt
 ```
 
+### Verifying SMTP submission
+
+`telnyx email smtp verify` sends one real message through Telnyx SMTP submission with your own API key and prints every server reply, stage by stage:
+
+```sh
+telnyx email smtp verify \
+  --api-key "$TELNYX_API_KEY" \
+  --host <smtp submission host> \
+  --from you@your-verified-domain.com \
+  --to you@your-verified-domain.com
+```
+
+The command always issues STARTTLS before sending credentials, then authenticates with AUTH PLAIN using the literal username `apikey`. It stops at the first failing reply. The last line is `VERIFIED: message UUID <uuid>` (exit status 0) or `FAILED at <stage>: <server reply>` followed by a hint (exit status 1).
+
+- `--host` (or `TELNYX_SMTP_HOST`) is required; there is no default host yet.
+- `--port` defaults to 587.
+- `--to` defaults to the `--from` address.
+- `--timeout` (default 30s) bounds each reply; `--data-timeout` (default 5m) bounds message acceptance.
+
+The test suite runs against an in-process SMTP server. A live run is opt-in: `go test -tags smtp_live -run TestLive ./internal/smtpverify/` with `TELNYX_SMTP_LIVE_HOST`, `TELNYX_API_KEY` and `TELNYX_SMTP_LIVE_FROM` set.
+
 ## Linking different Go SDK versions
 
 You can link the CLI against a different version of the Telnyx Go SDK

@@ -3728,6 +3728,7 @@ func init() {
 					&infringementClaimsContest,
 				},
 			},
+			emailCommand,
 			{
 				Name:     "email-blocks",
 				Category: "API RESOURCE",
