@@ -21,7 +21,10 @@ var replyHints = map[hintKey]string{
 	{"", 535, "5.7.8"}:          "The API key was rejected. The username is always the literal \"apikey\" (sent by this command); check that --api-key or TELNYX_API_KEY holds a valid Telnyx v2 API key.",
 	{StageAuth, 535, "5.7.1"}:   "The API key is valid but lacks the email send capability. Use a key that is allowed to send email.",
 	{StageData, 535, "5.7.1"}:   "Send authorization failed when the message was submitted. Check the key's email send capability, then retry.",
-	{"", 421, "4.7.0"}:          "Authentication is temporarily unavailable or throttled (repeated failures from your IP or for this key). Nothing was sent; wait and retry.",
+	{StageAuth, 421, "4.7.0"}:   "Authentication is temporarily unavailable or throttled (repeated failures from your IP or for this key). Nothing was sent; wait and retry.",
+	{"", 421, "4.7.0"}:          "The server ended the session after authentication: the key may have been revoked or lost its email send capability, or the service is temporarily unavailable. Retry; if it persists, check the key.",
+	{"", 421, ""}:               "The server closed the session (for example after its 30 s idle timeout between commands). Nothing was accepted; retry.",
+	{"", 552, ""}:               "The message is larger than the server's advertised SIZE limit.",
 	{"", 421, "4.4.2"}:          "The session reached its maximum lifetime. Nothing was sent in the expired session; run the command again.",
 	{"", 530, "5.7.0"}:          "The server treated the session as unauthenticated.",
 	{"", 550, "5.7.1"}:          "The sender was refused. Use a --from address on a verified sending domain that belongs to the same account as the API key; the reply text says which check failed.",
@@ -53,6 +56,7 @@ const (
 	hintNoSTARTTLS = "Telnyx requires STARTTLS on port 587 and rejects AUTH before TLS with \"538 5.7.11 Encryption required\". Check --host and --port, and that nothing on your network strips STARTTLS."
 	hintNoUUID     = "The server accepted the message, but its reply carries no message UUID. Telnyx accepts with \"250 2.0.0 Ok: queued as <uuid>\"; check that --host points at a Telnyx SMTP submission host."
 	hintTLS        = "The TLS handshake failed. Check that --host is the name on the server's certificate."
+	hintInjected   = "The server sent unexpected data before the TLS handshake: something on the network path may be tampering with the connection. Credentials were not sent."
 	hintDNS        = "The host name does not resolve. Check --host."
 	hintDial       = "Could not connect. Check --host and --port, and that your network allows outbound connections to that port."
 )

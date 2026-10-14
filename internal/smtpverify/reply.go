@@ -7,6 +7,7 @@ import (
 	"io"
 	"regexp"
 	"strings"
+	"unicode/utf8"
 )
 
 // Reply is one SMTP server reply, possibly multi-line, kept verbatim.
@@ -16,10 +17,40 @@ type Reply struct {
 	Lines    []string // raw reply lines, CRLF stripped
 }
 
-// Text renders the reply on a single line for verdicts: the raw lines joined
-// with " | " (a multi-line failure reply is rare, but must not be truncated).
+// Text renders the reply on a single line for verdicts: the lines joined
+// with " | " (a multi-line failure reply is rare, but must not be truncated),
+// with control bytes escaped (see printable).
 func (r Reply) Text() string {
-	return strings.Join(r.Lines, " | ")
+	lines := make([]string, len(r.Lines))
+	for i, l := range r.Lines {
+		lines[i] = printable(l)
+	}
+	return strings.Join(lines, " | ")
+}
+
+// printable escapes C0/C1 control characters, DEL and invalid UTF-8 as
+// \xNN / \u00NN. Replies before STARTTLS are attacker-controllable, and
+// raw escape sequences could rewrite what a terminal shows (for example
+// paint a fake VERIFIED line). Parsing always uses the raw bytes.
+func printable(s string) string {
+	var b strings.Builder
+	for i := 0; i < len(s); {
+		r, size := utf8.DecodeRuneInString(s[i:])
+		switch {
+		case r == utf8.RuneError && size == 1:
+			fmt.Fprintf(&b, "\\x%02x", s[i])
+		case r == '\t':
+			b.WriteRune(r)
+		case r < 0x20 || r == 0x7f:
+			fmt.Fprintf(&b, "\\x%02x", r)
+		case r >= 0x80 && r <= 0x9f:
+			fmt.Fprintf(&b, "\\u%04x", r)
+		default:
+			b.WriteString(s[i : i+size])
+		}
+		i += size
+	}
+	return b.String()
 }
 
 // Positive reports a 2xx or 3xx reply.
@@ -125,11 +156,22 @@ func parseEnhancedCode(code int, line string) string {
 	return m[1] + "." + m[2] + "." + m[3]
 }
 
-var uuidRE = regexp.MustCompile(`(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b`)
+const uuidPattern = `[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`
+
+var (
+	queuedUUIDRE = regexp.MustCompile(`(?i)queued as (` + uuidPattern + `)\b`)
+	uuidRE       = regexp.MustCompile(`\b` + uuidPattern + `\b`)
+)
 
 // messageUUID returns the message UUID carried by an accepting DATA reply
-// (Telnyx: "250 2.0.0 Ok: queued as <uuid>"), or "" if there is none.
+// (Telnyx: "250 2.0.0 Ok: queued as <uuid>"), or "" if there is none. The
+// "queued as" form wins; otherwise the first UUID in the reply.
 func messageUUID(r Reply) string {
+	for _, line := range r.Lines {
+		if m := queuedUUIDRE.FindStringSubmatch(line); m != nil {
+			return strings.ToLower(m[1])
+		}
+	}
 	for _, line := range r.Lines {
 		if m := uuidRE.FindString(line); m != "" {
 			return strings.ToLower(m)

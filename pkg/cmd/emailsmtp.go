@@ -47,10 +47,10 @@ func newEmailSMTPVerifyCommand() *cli.Command {
 			"without TLS), authenticates with AUTH PLAIN using the literal username \"apikey\"\n" +
 			"and your API key as the password, then submits one short test message from\n" +
 			"--from to --to (default: the --from address). Every server reply is printed\n" +
-			"verbatim, stage by stage. The final line is either\n" +
-			"\"VERIFIED: message UUID <uuid>\" or \"FAILED at <stage>: <reply>\", followed by\n" +
-			"a hint. The session stops at the first failing reply. Exit status is 0 only\n" +
-			"when verified.\n\n" +
+			"verbatim, stage by stage (control characters escaped). The verdict line is\n" +
+			"\"VERIFIED: message UUID <uuid>\" or \"FAILED at <stage>: <reply>\"; a portal note\n" +
+			"or a hint follows it. The session stops at the first failing reply. Exit\n" +
+			"status is 0 only when verified; scripts should check it rather than the output.\n\n" +
 			"The API key comes from the global --api-key flag or TELNYX_API_KEY.\n" +
 			"This sends a real message, billed like any other send.",
 		Flags: []cli.Flag{

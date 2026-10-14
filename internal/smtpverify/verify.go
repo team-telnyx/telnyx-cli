@@ -119,8 +119,11 @@ func (c Config) normalize() (Config, error) {
 	if c.Host == "" {
 		return c, errors.New("host is required")
 	}
-	if strings.ContainsAny(c.Host, " \t\r\n/@") {
+	if strings.ContainsAny(c.Host, " \t\r\n/@[]") {
 		return c, fmt.Errorf("invalid host %q", c.Host)
+	}
+	if strings.Contains(c.Host, ":") && net.ParseIP(c.Host) == nil {
+		return c, fmt.Errorf("invalid host %q: pass the port separately with --port", c.Host)
 	}
 	if c.Port == 0 {
 		c.Port = DefaultPort
@@ -175,10 +178,47 @@ func parseAddress(field, s string) (string, error) {
 		return "", fmt.Errorf("invalid %s address %q", field, s)
 	}
 	a, err := mail.ParseAddress(s)
-	if err != nil || !strings.Contains(a.Address, "@") {
-		return "", fmt.Errorf("invalid %s address %q", field, s)
+	if err != nil || !plainMailbox(a.Address) {
+		return "", fmt.Errorf("invalid %s address %q: use a plain ASCII address such as name@example.com", field, s)
 	}
 	return a.Address, nil
+}
+
+// plainMailbox accepts dot-atom@domain in ASCII only. net/mail unquotes
+// quoted local parts, so without this check `"a@b> X"@example.com` would
+// inject into the MAIL FROM line; non-ASCII would need SMTPUTF8.
+func plainMailbox(addr string) bool {
+	at := strings.LastIndexByte(addr, '@')
+	if at <= 0 || at == len(addr)-1 {
+		return false
+	}
+	local, domain := addr[:at], addr[at+1:]
+	for _, atom := range strings.Split(local, ".") {
+		if atom == "" {
+			return false
+		}
+		for i := 0; i < len(atom); i++ {
+			c := atom[i]
+			if !isAlnum(c) && !strings.ContainsRune("!#$%&'*+-/=?^_`{|}~", rune(c)) {
+				return false
+			}
+		}
+	}
+	for _, label := range strings.Split(domain, ".") {
+		if label == "" || label[0] == '-' || label[len(label)-1] == '-' {
+			return false
+		}
+		for i := 0; i < len(label); i++ {
+			if c := label[i]; !isAlnum(c) && c != '-' {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func isAlnum(c byte) bool {
+	return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9'
 }
 
 type transcript struct{ w io.Writer }
@@ -191,7 +231,7 @@ func (t transcript) client(stage Stage, text string) { t.line(stage, "C:", text)
 func (t transcript) note(stage Stage, text string)   { t.line(stage, "--", text) }
 func (t transcript) server(stage Stage, r Reply) {
 	for _, l := range r.Lines {
-		t.line(stage, "S:", l)
+		t.line(stage, "S:", printable(l))
 	}
 }
 
@@ -257,6 +297,13 @@ func (s *session) run(ctx context.Context) Result {
 	reply, err := s.cmd(StageAuth, "AUTH PLAIN "+ir, `AUTH PLAIN <redacted: username "apikey", password = API key>`, cfg.CommandTimeout)
 	if err != nil {
 		return s.ioFailure(ctx, StageAuth, err, cfg.CommandTimeout)
+	}
+	if reply.Code == 334 {
+		// A continuation challenge: cancel the exchange (RFC 4954) so the
+		// QUIT that follows is read as a command, not as credentials.
+		if _, err := s.cmd(StageAuth, "*", "", cfg.CommandTimeout); err != nil {
+			return Result{Stage: StageAuth, Reply: &reply, Hint: hintForReply(StageAuth, reply)}
+		}
 	}
 	if reply.Code != 235 {
 		return s.replyFailure(StageAuth, reply)
@@ -328,7 +375,7 @@ func (s *session) startTLS(ctx context.Context) (Result, bool) {
 		return Result{
 			Stage:  StageSTARTTLS,
 			Detail: fmt.Sprintf("server sent %d unexpected plaintext bytes after its STARTTLS reply", n),
-			Hint:   hintTLS,
+			Hint:   hintInjected,
 		}, false
 	}
 
@@ -345,11 +392,21 @@ func (s *session) startTLS(ctx context.Context) (Result, bool) {
 	tc := tls.Client(s.conn, tlsCfg)
 	_ = tc.SetDeadline(time.Now().Add(timeout))
 	if err := tc.HandshakeContext(ctx); err != nil {
+		var ne net.Error
+		if ctx.Err() != nil || (errors.As(err, &ne) && ne.Timeout()) {
+			res := s.ioFailure(ctx, StageSTARTTLS, err, timeout)
+			res.Detail = "TLS handshake: " + res.Detail
+			return res, false
+		}
 		return Result{Stage: StageSTARTTLS, Detail: "TLS handshake failed: " + err.Error(), Hint: hintTLS}, false
 	}
 	st := tc.ConnectionState()
-	s.t.note(StageSTARTTLS, fmt.Sprintf("TLS established: %s, %s, certificate verified for %q",
-		tls.VersionName(st.Version), tls.CipherSuiteName(st.CipherSuite), tlsCfg.ServerName))
+	verified := fmt.Sprintf("certificate verified for %q", tlsCfg.ServerName)
+	if tlsCfg.InsecureSkipVerify {
+		verified = "certificate NOT verified"
+	}
+	s.t.note(StageSTARTTLS, fmt.Sprintf("TLS established: %s, %s, %s",
+		tls.VersionName(st.Version), tls.CipherSuiteName(st.CipherSuite), verified))
 	s.conn, s.r = tc, bufio.NewReader(tc)
 	return Result{}, true
 }
@@ -358,7 +415,8 @@ func (s *session) startTLS(ctx context.Context) (Result, bool) {
 func (s *session) sendMessage() (Reply, error) {
 	msg, msgID := s.buildMessage()
 	_ = s.conn.SetDeadline(time.Now().Add(s.cfg.DataTimeout))
-	s.t.client(StageData, fmt.Sprintf("<message: %d bytes, Message-ID %s>", len(msg), msgID))
+	wireBytes := len(msg) + strings.Count(string(msg), "\n") // LF goes out as CRLF
+	s.t.client(StageData, fmt.Sprintf("<message: %d bytes, Message-ID %s>", wireBytes, msgID))
 	bw := bufio.NewWriter(s.conn)
 	dw := textproto.NewWriter(bw).DotWriter()
 	if _, err := dw.Write(msg); err != nil {
@@ -369,11 +427,8 @@ func (s *session) sendMessage() (Reply, error) {
 	}
 	s.t.client(StageData, ".")
 	reply, err := readReply(s.r)
-	if err != nil {
-		return reply, err
-	}
-	s.t.server(StageData, reply)
-	return reply, nil
+	s.t.server(StageData, reply) // partial lines too: every reply byte is shown
+	return reply, err
 }
 
 func (s *session) buildMessage() ([]byte, string) {
@@ -408,21 +463,15 @@ func (s *session) cmd(stage Stage, line, display string, timeout time.Duration) 
 		return Reply{}, err
 	}
 	reply, err := readReply(s.r)
-	if err != nil {
-		return reply, err
-	}
-	s.t.server(stage, reply)
-	return reply, nil
+	s.t.server(stage, reply) // partial lines too: every reply byte is shown
+	return reply, err
 }
 
 func (s *session) read(stage Stage, timeout time.Duration) (Reply, error) {
 	_ = s.conn.SetDeadline(time.Now().Add(timeout))
 	reply, err := readReply(s.r)
-	if err != nil {
-		return reply, err
-	}
 	s.t.server(stage, reply)
-	return reply, nil
+	return reply, err
 }
 
 // quit ends the session politely; its outcome never changes the verdict.

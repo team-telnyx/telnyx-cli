@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/base64"
 	"net"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -64,6 +65,7 @@ func TestRunSessions(t *testing.T) {
 		wantStage   smtpverify.Stage
 		wantVerbs   []string // commands the server received, in order
 		wantHint    string   // substring
+		wantOutput  []string // transcript substrings
 	}{
 		{
 			name:        "verified",
@@ -175,11 +177,83 @@ func TestRunSessions(t *testing.T) {
 			wantVerbs:   with(verbsUpToRcpt, "QUIT"),
 		},
 		{
-			name:        "DATA refused",
-			script:      smtpmock.Script{DataReply: "530 5.7.0 Authentication required"},
+			name:        "DATA command refused",
+			script:      smtpmock.Script{DataReply: "503 Error: need RCPT command"},
+			wantVerdict: "FAILED at DATA: 503 Error: need RCPT command",
+			wantStage:   smtpverify.StageData,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+		},
+		{
+			name:        "unauthenticated at end of DATA",
+			script:      smtpmock.Script{DataEndReply: "530 5.7.0 Authentication required"},
 			wantVerdict: "FAILED at DATA: 530 5.7.0 Authentication required",
 			wantStage:   smtpverify.StageData,
 			wantVerbs:   with(verbsUpToData, "QUIT"),
+		},
+		{
+			name:        "oversize refused by the server's SIZE guard",
+			script:      smtpmock.Script{DataEndReply: "552 Message too large"},
+			wantVerdict: "FAILED at DATA: 552 Message too large",
+			wantStage:   smtpverify.StageData,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantHint:    "SIZE limit",
+		},
+		{
+			name:        "idle timeout reply closes the session",
+			script:      smtpmock.Script{MailReply: "421 Error: timeout exceeded"},
+			wantVerdict: "FAILED at MAIL FROM: 421 Error: timeout exceeded",
+			wantStage:   smtpverify.StageMailFrom,
+			wantVerbs:   verbsUpToMail,
+			wantHint:    "idle timeout",
+		},
+		{
+			name:        "entitlement lost after AUTH",
+			script:      smtpmock.Script{RcptReply: "421 4.7.0 Temporary authentication failure, retry later"},
+			wantVerdict: "FAILED at RCPT TO: 421 4.7.0 Temporary authentication failure, retry later",
+			wantStage:   smtpverify.StageRcptTo,
+			wantVerbs:   verbsUpToRcpt,
+			wantHint:    "revoked",
+		},
+		{
+			name:        "AUTH continuation challenge is cancelled before QUIT",
+			script:      smtpmock.Script{AuthReply: "334 VXNlcm5hbWU6"},
+			wantVerdict: "FAILED at AUTH: 334 VXNlcm5hbWU6",
+			wantStage:   smtpverify.StageAuth,
+			wantVerbs:   with(verbsUpToAuth, "*", "QUIT"),
+		},
+		{
+			name:        "wrong certificate name: credentials never sent",
+			mutate:      func(c *smtpverify.Config) { wrongName(c) },
+			wantVerdict: "FAILED at STARTTLS: TLS handshake failed: ",
+			wantPrefix:  true,
+			wantStage:   smtpverify.StageSTARTTLS,
+			wantVerbs:   []string{"EHLO", "STARTTLS"},
+			wantHint:    "certificate",
+			wantOutput:  []string{"wrong.example"},
+		},
+		{
+			name:        "stalled TLS handshake is a timeout, not a certificate problem",
+			script:      smtpmock.Script{StallTLS: true},
+			mutate:      func(c *smtpverify.Config) { c.CommandTimeout = 150 * time.Millisecond },
+			wantVerdict: "FAILED at STARTTLS: TLS handshake: timed out after 150ms waiting for the server",
+			wantStage:   smtpverify.StageSTARTTLS,
+			wantVerbs:   []string{"EHLO", "STARTTLS"},
+			wantHint:    "--timeout",
+		},
+		{
+			name:        "partial multi-line reply is still printed",
+			script:      smtpmock.Script{EHLOReply: "250-email-submission.telnyx.com\n250-STARTTLS", CloseAfter: "EHLO"},
+			wantVerdict: "FAILED at EHLO: connection closed by the server",
+			wantStage:   smtpverify.StageEHLO,
+			wantVerbs:   []string{"EHLO"},
+			wantOutput:  []string{"[EHLO]      S: 250-email-submission.telnyx.com\n", "[EHLO]      S: 250-STARTTLS\n"},
+		},
+		{
+			name:        "terminal escapes in a reply are neutralized",
+			script:      smtpmock.Script{Banner: "554 x\x1b[2K\rVERIFIED: message UUID " + smtpmock.QueuedUUID + "\x1b[8m"},
+			wantVerdict: `FAILED at CONNECT: 554 x\x1b[2K\x0dVERIFIED: message UUID ` + smtpmock.QueuedUUID + `\x1b[8m`,
+			wantStage:   smtpverify.StageConnect,
+			wantVerbs:   []string{"QUIT"},
 		},
 		{
 			name:        "quota exhausted at DATA",
@@ -285,8 +359,14 @@ func TestRunSessions(t *testing.T) {
 				assert.NotEmpty(t, res.Hint, "every failure is actionable")
 				assert.Contains(t, out, "hint: "+res.Hint)
 			}
+			for _, want := range tt.wantOutput {
+				assert.Contains(t, out, want)
+			}
+			assert.NotContains(t, out, "\x1b", "raw escape bytes reach the terminal")
+			assert.NotContains(t, out, "\r", "raw CR bytes reach the terminal")
+
 			// The server's view: the session stopped at the first terminal reply.
-			require.Eventually(t, func() bool { return len(srv.Verbs()) >= len(tt.wantVerbs) }, time.Second, 10*time.Millisecond)
+			srv.Wait()
 			assert.Equal(t, tt.wantVerbs, srv.Verbs())
 			// Credentials only ever cross TLS, and never reach the transcript.
 			for _, c := range srv.Commands() {
@@ -295,8 +375,26 @@ func TestRunSessions(t *testing.T) {
 				}
 			}
 			assert.NotContains(t, out, testKey)
-			assert.NotContains(t, out, base64.StdEncoding.EncodeToString([]byte("\x00apikey\x00"+testKey)))
+			assert.NotContains(t, out, authPayload)
+			// Nothing the client put on the wire, including after a failed
+			// handshake, carries the key in the clear.
+			raw := string(srv.Raw())
+			assert.NotContains(t, raw, testKey)
+			assert.NotContains(t, raw, authPayload)
 		})
+	}
+}
+
+var authPayload = base64.StdEncoding.EncodeToString([]byte("\x00apikey\x00" + testKey))
+
+// wrongName keeps the trusted certificate but connects under a name the
+// certificate doesn't cover.
+func wrongName(c *smtpverify.Config) {
+	addr := net.JoinHostPort(c.Host, strconv.Itoa(c.Port))
+	c.Host = "wrong.example"
+	c.Dial = func(ctx context.Context, network, _ string) (net.Conn, error) {
+		var d net.Dialer
+		return d.DialContext(ctx, network, addr)
 	}
 }
 
@@ -448,6 +546,12 @@ func TestRunConfigValidation(t *testing.T) {
 		{"from not an address", func(c *smtpverify.Config) { c.From = "not-an-address" }, "invalid from address"},
 		{"from with CRLF injection", func(c *smtpverify.Config) { c.From = "a@example.com>\r\nRCPT TO:<b@example.com" }, "invalid from address"},
 		{"to with CRLF injection", func(c *smtpverify.Config) { c.To = "a@example.com\r\nDATA" }, "invalid to address"},
+		{"quoted local part injecting a MAIL parameter", func(c *smtpverify.Config) { c.From = `"a@b> SMTPUTF8"@example.com` }, "invalid from address"},
+		{"quoted local part forging the null sender", func(c *smtpverify.Config) { c.From = `">"@example.com` }, "invalid from address"},
+		{"tab in local part", func(c *smtpverify.Config) { c.To = "\"a\tb\"@example.com" }, "invalid to address"},
+		{"non-ASCII address", func(c *smtpverify.Config) { c.To = "ü@exämple.com" }, "plain ASCII address"},
+		{"leading dot", func(c *smtpverify.Config) { c.From = ".a@example.com" }, "invalid from address"},
+		{"host with port", func(c *smtpverify.Config) { c.Host = "smtp.example.com:2525" }, "--port"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

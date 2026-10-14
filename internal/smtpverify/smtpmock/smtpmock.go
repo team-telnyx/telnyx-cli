@@ -12,6 +12,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"crypto/x509/pkix"
+	"io"
 	"math/big"
 	"net"
 	"strings"
@@ -52,6 +53,10 @@ type Script struct {
 	HangOn string
 	// CloseOn: after receiving this verb, close the connection without replying.
 	CloseOn string
+	// CloseAfter: after replying to this verb, close the connection.
+	CloseAfter string
+	// StallTLS: answer STARTTLS with 220, then never start the handshake.
+	StallTLS bool
 }
 
 // Command is one line the server received.
@@ -75,6 +80,7 @@ type Server struct {
 	mu       sync.Mutex
 	commands []Command
 	bodies   []string
+	raw      []byte // every byte received off the wire, TLS records included
 	wg       sync.WaitGroup
 }
 
@@ -103,6 +109,35 @@ func Start(t testing.TB, script Script) *Server {
 		s.wg.Wait()
 	})
 	return s
+}
+
+// Wait stops accepting connections and waits for every session to end
+// (sessions end when the client closes), so the recordings are complete.
+func (s *Server) Wait() {
+	s.ln.Close()
+	s.wg.Wait()
+}
+
+// Raw returns every byte received on the wire, before and after STARTTLS
+// (after it, only TLS records), including bytes a client sent after a
+// failed handshake, which the server drains rather than drops.
+func (s *Server) Raw() []byte {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return append([]byte(nil), s.raw...)
+}
+
+type teeConn struct {
+	net.Conn
+	s *Server
+}
+
+func (c teeConn) Read(p []byte) (int, error) {
+	n, err := c.Conn.Read(p)
+	c.s.mu.Lock()
+	c.s.raw = append(c.s.raw, p[:n]...)
+	c.s.mu.Unlock()
+	return n, err
 }
 
 // Commands returns the received command lines in order.
@@ -140,7 +175,7 @@ func (s *Server) serve() {
 		s.wg.Add(1)
 		go func() {
 			defer s.wg.Done()
-			s.handle(conn)
+			s.handle(teeConn{conn, s})
 		}()
 	}
 }
@@ -164,8 +199,12 @@ func (s *Server) handle(raw net.Conn) {
 	_ = conn.SetDeadline(time.Now().Add(30 * time.Second))
 	r := bufio.NewReader(conn)
 	secure, authed := false, false
+	closeNow := false
 	send := func(reply string) bool { // one write per reply, like a real server
 		_, err := conn.Write([]byte(strings.ReplaceAll(reply, "\n", "\r\n") + "\r\n"))
+		if closeNow {
+			conn.Close()
+		}
 		return err == nil
 	}
 	if !send(or(s.script.Banner, Banner)) {
@@ -186,6 +225,7 @@ func (s *Server) handle(raw net.Conn) {
 		if verb == s.script.CloseOn {
 			return
 		}
+		closeNow = s.script.CloseAfter != "" && verb == s.script.CloseAfter
 		switch verb {
 		case "EHLO":
 			reply := s.script.EHLOReply
@@ -220,8 +260,16 @@ func (s *Server) handle(raw net.Conn) {
 			if !strings.HasPrefix(reply, "220") {
 				continue
 			}
+			if s.script.StallTLS {
+				_, _ = io.Copy(io.Discard, raw) // record until the client hangs up
+				return
+			}
 			tc := tls.Server(raw, s.tlsCfg)
 			if err := tc.Handshake(); err != nil {
+				// Keep reading so anything the client sends after a failed
+				// handshake (e.g. plaintext AUTH) is recorded in Raw.
+				_ = raw.SetDeadline(time.Now().Add(5 * time.Second))
+				_, _ = io.Copy(io.Discard, raw)
 				return
 			}
 			conn, r, secure = tc, bufio.NewReader(tc), true

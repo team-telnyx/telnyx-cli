@@ -120,12 +120,29 @@ func TestMessageUUID(t *testing.T) {
 		{"no uuid", []string{"250 Ok"}, ""},
 		{"not a uuid", []string{"250 2.0.0 Ok: queued as 1234ABCD"}, ""},
 		{"uuid on a later line", []string{"250-accepted", "250 id 0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"}, "0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"},
+		{"queued-as wins over an earlier uuid", []string{"250 trace 11111111-1111-4111-8111-111111111111 queued as 22222222-2222-4222-8222-222222222222"}, "22222222-2222-4222-8222-222222222222"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			assert.Equal(t, tt.want, messageUUID(Reply{Code: 250, Lines: tt.lines}))
 		})
+	}
+}
+
+func TestPrintable(t *testing.T) {
+	t.Parallel()
+	tests := []struct{ in, want string }{
+		{"250 2.0.0 Ok", "250 2.0.0 Ok"},
+		{"220 x\x1b[2K\rfake", `220 x\x1b[2K\x0dfake`},
+		{"tab\tkept", "tab\tkept"},
+		{"del\x7f", `del\x7f`},
+		{"c1 \u009b", `c1 \u009b`},
+		{"bad utf8 \xff", `bad utf8 \xff`},
+		{"unicode ok ü", "unicode ok ü"},
+	}
+	for _, tt := range tests {
+		assert.Equal(t, tt.want, printable(tt.in), "%q", tt.in)
 	}
 }
 

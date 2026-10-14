@@ -127,14 +127,14 @@ telnyx <command> --arg @data://file.txt
 `telnyx email smtp verify` sends one real message through Telnyx SMTP submission with your own API key and prints every server reply, stage by stage:
 
 ```sh
+export TELNYX_API_KEY=...   # or pass --api-key
 telnyx email smtp verify \
-  --api-key "$TELNYX_API_KEY" \
   --host <smtp submission host> \
   --from you@your-verified-domain.com \
   --to you@your-verified-domain.com
 ```
 
-The command always issues STARTTLS before sending credentials, then authenticates with AUTH PLAIN using the literal username `apikey`. It stops at the first failing reply. The last line is `VERIFIED: message UUID <uuid>` (exit status 0) or `FAILED at <stage>: <server reply>` followed by a hint (exit status 1).
+The command always issues STARTTLS before sending credentials, then authenticates with AUTH PLAIN using the literal username `apikey`. It stops at the first failing reply. The verdict line is `VERIFIED: message UUID <uuid>` (exit status 0) or `FAILED at <stage>: <server reply>` (exit status 1), followed by a portal note or a hint. Scripts should check the exit status, not the last line.
 
 - `--host` (or `TELNYX_SMTP_HOST`) is required; there is no default host yet.
 - `--port` defaults to 587.
