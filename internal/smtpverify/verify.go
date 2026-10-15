@@ -19,6 +19,7 @@ import (
 	"net"
 	"net/mail"
 	"net/textproto"
+	"regexp"
 	"slices"
 	"strconv"
 	"strings"
@@ -239,8 +240,25 @@ func authPlainPayload(apiKey string) string {
 // server or proxy may echo the AUTH command back, in a reply, in a
 // malformed line quoted by an error, or in a cut-off fragment, so every
 // transcript line and the Result are passed through it. The key is matched
-// raw and as printable and %q render it.
-type redactor struct{ r *strings.Replacer }
+// raw and as printable and %q render it. A reply may also wrap an echo
+// across its lines, so a reply's lines are first masked together (see
+// reply).
+type redactor struct {
+	r       *strings.Replacer
+	wrapped []wrappedSecret
+}
+
+// wrappedSecret matches one secret form whole or wrapped across the lines of
+// a reply, and the mask it gets.
+type wrappedSecret struct {
+	re   *regexp.Regexp
+	mask string
+}
+
+// replyLineBreak is what may sit between two pieces of a secret a reply
+// wraps: the line break, with any blanks before it, then the next line's
+// reply code, separator and enhanced status code.
+const replyLineBreak = `(?:[\t\r ]*\n\d{3}[ -][\t ]*(?:\d\.\d{1,3}\.\d{1,3}[\t ]+)?)?`
 
 const (
 	redactedKey     = "<redacted: API key>"
@@ -255,17 +273,43 @@ func newRedactor(apiKey string) redactor {
 			pairs = append(pairs, k, redactedKey)
 		}
 	}
-	return redactor{strings.NewReplacer(pairs...)}
+	rd := redactor{r: strings.NewReplacer(pairs...)}
+	for i := 0; i < len(pairs); i += 2 {
+		var pattern strings.Builder
+		for j, c := range pairs[i] {
+			if j > 0 {
+				pattern.WriteString(replyLineBreak)
+			}
+			pattern.WriteString(regexp.QuoteMeta(string(c)))
+		}
+		rd.wrapped = append(rd.wrapped, wrappedSecret{regexp.MustCompile(pattern.String()), pairs[i+1]})
+	}
+	return rd
 }
 
 func (rd redactor) mask(s string) string { return rd.r.Replace(s) }
+
+// reply masks a secret wrapped across a reply's lines, which mask misses
+// because no line holds it whole. The masked span takes in the line breaks
+// inside the secret, so the lines it spans become one and no piece is left
+// to rejoin. Each line still goes through mask afterwards.
+func (rd redactor) reply(lines []string) []string {
+	if len(lines) == 0 {
+		return lines
+	}
+	text := strings.Join(lines, "\n") // reply lines never hold a LF
+	for _, w := range rd.wrapped {
+		text = w.re.ReplaceAllLiteralString(text, w.mask)
+	}
+	return strings.Split(text, "\n")
+}
 
 // result redacts the server text and local detail a Result carries.
 func (rd redactor) result(res Result) Result {
 	if res.Reply != nil {
 		reply := *res.Reply
-		reply.Lines = make([]string, len(res.Reply.Lines))
-		for i, l := range res.Reply.Lines {
+		reply.Lines = rd.reply(res.Reply.Lines)
+		for i, l := range reply.Lines {
 			reply.Lines[i] = rd.mask(l)
 		}
 		res.Reply = &reply
@@ -287,7 +331,7 @@ func (t transcript) line(stage Stage, dir, text string) {
 func (t transcript) client(stage Stage, text string) { t.line(stage, "C:", text) }
 func (t transcript) note(stage Stage, text string)   { t.line(stage, "--", text) }
 func (t transcript) server(stage Stage, r Reply) {
-	for _, l := range r.Lines {
+	for _, l := range t.redact.reply(r.Lines) {
 		t.line(stage, "S:", printable(l))
 	}
 }

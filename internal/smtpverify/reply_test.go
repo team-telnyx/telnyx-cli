@@ -212,6 +212,29 @@ func TestRedactor(t *testing.T) {
 	}
 }
 
+// A secret wrapped across a reply's lines is masked as one span, line breaks
+// and the next line's framing included; lines it does not span are kept.
+func TestRedactorReply(t *testing.T) {
+	t.Parallel()
+	const key = "KEYtest_0123456789abcdef"
+	payload := authPlainPayload(key)
+	tests := []struct {
+		name     string
+		in, want []string
+	}{
+		{"no lines", nil, nil},
+		{"nothing to mask", []string{"250-a", "250 b"}, []string{"250-a", "250 b"}},
+		{"payload over two lines", []string{"535-x " + payload[:5], "535 " + payload[5:] + " y"}, []string{"535-x " + redactedPayload + " y"}},
+		{"key over CR, blanks and enhanced codes", []string{"220 hi", "535-5.7.8 " + key[:3] + " \r", "535-5.7.8  " + key[3:7], "535 5.7.8 " + key[7:], "unrelated"}, []string{"220 hi", "535-5.7.8 " + redactedKey, "unrelated"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			assert.Equal(t, tt.want, newRedactor(key).reply(tt.in))
+		})
+	}
+}
+
 func TestPrintable(t *testing.T) {
 	t.Parallel()
 	tests := []struct{ in, want string }{

@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/base64"
 	"net"
+	"regexp"
 	"strconv"
 	"strings"
 	"testing"
@@ -575,6 +576,96 @@ func TestRunToDefaultsToFrom(t *testing.T) {
 		if strings.HasPrefix(c.Line, "RCPT") {
 			assert.Equal(t, "RCPT TO:<verify@example.com>", c.Line)
 		}
+	}
+}
+
+// A server can wrap an echoed credential across the lines of one reply, so
+// that no line holds it whole ("535-<half1>" / "535 <half2>"). No piece may
+// reach the transcript, the Result or the verdict, and joining the printed
+// reply lines must not rebuild it.
+func TestAstraSplitPayloadMustRedact(t *testing.T) {
+	t.Parallel()
+	const escKey = `KEY"esc\aped_0123456789`
+	escaped := strconv.Quote(escKey)
+	escaped = escaped[1 : len(escaped)-1] // KEY\"esc\\aped_0123456789
+	split := func(s string, at ...int) []string {
+		var pieces []string
+		prev := 0
+		for _, i := range append(at, len(s)) {
+			pieces = append(pieces, s[prev:i])
+			prev = i
+		}
+		return pieces
+	}
+	p, k, e := split(authPayload, 13), split(testKey, 9, 17), split(escaped, 4)
+	tests := []struct {
+		name        string
+		key         string
+		secret      string   // the form the server echoes
+		pieces      []string // as the reply's lines carry it
+		reply       string
+		wantVerdict string
+	}{
+		{
+			name:        "AUTH PLAIN payload split mid-token",
+			key:         testKey,
+			secret:      authPayload,
+			pieces:      p,
+			reply:       "535-5.7.8 Authentication credentials invalid: AUTH PLAIN " + p[0] + "\n535 " + p[1],
+			wantVerdict: "FAILED at AUTH: 535-5.7.8 Authentication credentials invalid: AUTH PLAIN <redacted: AUTH PLAIN credentials>",
+		},
+		{
+			name:        "raw key split across three lines",
+			key:         testKey,
+			secret:      testKey,
+			pieces:      k,
+			reply:       "535-5.7.8 Authentication credentials invalid for apikey:" + k[0] + "\n535-5.7.8 " + k[1] + "\n535 5.7.8 " + k[2] + " (check the key)",
+			wantVerdict: "FAILED at AUTH: 535-5.7.8 Authentication credentials invalid for apikey:<redacted: API key> (check the key)",
+		},
+		{
+			name:        "escaped key split inside an escape",
+			key:         escKey,
+			secret:      escaped,
+			pieces:      e,
+			reply:       `535-5.7.8 Authentication credentials invalid: {"password":"` + e[0] + "\n535 5.7.8 " + e[1] + `"}`,
+			wantVerdict: `FAILED at AUTH: 535-5.7.8 Authentication credentials invalid: {"password":"<redacted: API key>"}`,
+		},
+	}
+	framing := regexp.MustCompile(`^\d{3}[ -](?:\d\.\d{1,3}\.\d{1,3} )?`)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			require.Equal(t, tt.secret, strings.Join(tt.pieces, ""))
+			srv := smtpmock.Start(t, smtpmock.Script{AuthReply: tt.reply})
+			cfg := config(srv)
+			cfg.APIKey = tt.key
+			res, out := run(t, cfg)
+
+			assert.Equal(t, tt.wantVerdict, res.Verdict())
+			assert.Contains(t, out, "[AUTH]      S: "+strings.TrimPrefix(tt.wantVerdict, "FAILED at AUTH: ")+"\n")
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, with(verbsUpToAuth, "QUIT"), srv.Verbs())
+			for _, c := range srv.Commands() {
+				if strings.HasPrefix(c.Line, "AUTH") {
+					assert.Equal(t, "AUTH PLAIN "+base64.StdEncoding.EncodeToString([]byte("\x00apikey\x00"+tt.key)), c.Line)
+				}
+			}
+
+			require.NotNil(t, res.Reply)
+			for name, s := range map[string]string{"output": out, "reply": res.Reply.Text(), "verdict": res.Verdict(), "detail": res.Detail} {
+				for _, piece := range tt.pieces {
+					assert.NotContains(t, s, piece, "a piece of the secret in the %s", name)
+				}
+			}
+			var joined strings.Builder
+			for _, l := range strings.Split(out, "\n") {
+				if _, text, ok := strings.Cut(l, " S: "); ok {
+					joined.WriteString(framing.ReplaceAllString(text, ""))
+				}
+			}
+			assert.NotContains(t, joined.String(), tt.secret, "the printed reply lines rebuild the secret")
+		})
 	}
 }
 
