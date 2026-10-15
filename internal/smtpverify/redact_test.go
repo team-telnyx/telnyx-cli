@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/rand/v2"
 	"runtime"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -66,31 +67,42 @@ func noisySession(r *rand.Rand) []string {
 	return append(lines, smtpmock.ReplyQuit)
 }
 
-// The false-positive control for minFragment: random keys against noisy
-// sessions, with every rule of session and mask, mask nothing. (Over 20,000
-// keys, a session each, minFragment = 7 masked text in 1 session, 6 in 5;
-// see minFragment.)
+// The false-positive control for minFragment and the gap bounds: 40,000
+// random keys, each against a noisy session, its message UUIDs also shown
+// lower-cased as VERIFIED shows them, with every rule of session and mask,
+// mask nothing. The keys run in shards, each a seeded stream of its own, in
+// parallel. (minFragment = 6 masks text in some of these sessions; see
+// minFragment.)
 func TestCoverageFalsePositives(t *testing.T) {
 	t.Parallel()
-	r := rand.New(rand.NewPCG(2353, 6))
-	for range 400 {
-		key := randomKey(r)
-		rd := newRedactor(key)
-		for range 10 {
-			noise := noisySession(r)
-			heard := make([]heardText, len(noise))
-			for i, l := range noise {
-				heard[i] = heardText{text: l}
-			}
-			heard[len(heard)-1].cut = true
-			shown, err := rd.session(context.Background(), heard)
-			require.NoError(t, err)
-			for _, l := range noise {
-				if shown[l] != l || rd.mask(l) != l {
-					t.Errorf("key %s: %q shown as %q, masked as %q", key, l, shown[l], rd.mask(l))
+	const shards, keys = 8, 40000
+	for shard := range shards {
+		t.Run(strconv.Itoa(shard), func(t *testing.T) {
+			t.Parallel()
+			r := rand.New(rand.NewPCG(2353, uint64(shard)))
+			for range keys / shards {
+				key := randomKey(r)
+				rd := newRedactor(key)
+				noise := noisySession(r)
+				var heard []heardText
+				for _, l := range noise {
+					heard = append(heard, heardText{text: l})
+				}
+				heard[len(heard)-1].cut = true
+				for _, l := range noise {
+					if uuid := messageUUID(Reply{Code: 250, Lines: []string{l}}); uuid != "" {
+						heard = append(heard, heardText{text: l[len(l)-len(uuid):], lower: true})
+					}
+				}
+				shown, err := rd.session(context.Background(), heard)
+				require.NoError(t, err)
+				for _, h := range heard {
+					if want := map[bool]string{false: h.text, true: lowerASCII(h.text)}[h.lower]; shown[h.text] != want || rd.mask(h.text) != h.text {
+						t.Errorf("key %s: %q shown as %q, masked as %q", key, h.text, shown[h.text], rd.mask(h.text))
+					}
 				}
 			}
-		}
+		})
 	}
 }
 
@@ -113,9 +125,12 @@ func hostileBanner(body string, size int) []heardText {
 var hostileBodies = map[string]string{
 	"framing over and over":        "250\r",
 	"framing that opens each line": "\r250",
-	"blanks and breaks":            "0 \t \t \t \t\r\n\r\n\r\n\r\n535- \t \t \t \t5.7.8 \t \t \t \t",
+	"blanks and breaks":            "0" + blanks + strings.Repeat("\r\n", maxGapBlanks/2) + "535-" + blanks + "5.7.8" + blanks,
 	"pieces between framing":       authPlainPayload(hostileKey)[:30] + "\r250 " + hostileKey[:20] + "\r",
 }
+
+// blanks is as many blanks in a row as a gap takes.
+var blanks = strings.Repeat(" \t", maxGapBlanks/2)
 
 const hostileKey = "KEY01892F3C4A5B6D7E8F9A0B1C2D3E4F_Vb7Nq2Wx9Rt4Ys6Uk8Jm1Lp3Hd5G"
 

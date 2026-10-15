@@ -799,18 +799,18 @@ var (
 )
 
 // assertNothingRebuildsKey checks every surface a session shows: the output,
-// the verdict, Detail and Reply. None may hold a piece the server sent, nor
-// smtpverify.MinFragment characters in a row of the key or its AUTH PLAIN
-// payload, padded or not. Nor may the server text they print, joined in the
-// order the output shows it (reply lines, cut-off fragments, bytes errors
-// quote, the verdict's reply), framing removed: not the secret the server
-// sent, not MinFragment characters of a secret, and not MinFragment bytes of
-// the key when its base64 runs, alone or all run together, are decoded at
-// every alignment ("=" padding carries no bytes, so this covers the padded
-// and unpadded payload alike).
+// the verdict, Detail, MessageUUID and Reply. None may hold a piece the
+// server sent, nor smtpverify.MinFragment characters in a row of the key or
+// its AUTH PLAIN payload, padded or not. Nor may the server text they print,
+// joined in the order the output shows it (reply lines, cut-off fragments,
+// bytes errors quote, the verdict's reply or message UUID), framing removed:
+// not the secret the server sent, not MinFragment characters of a secret,
+// and not MinFragment bytes of the key when its base64 runs, alone or all
+// run together, are decoded at every alignment ("=" padding carries no
+// bytes, so this covers the padded and unpadded payload alike).
 func assertNothingRebuildsKey(t *testing.T, key, sent string, pieces []string, res smtpverify.Result, out string) {
 	t.Helper()
-	surfaces := map[string]string{"output": out, "verdict": res.Verdict(), "detail": res.Detail}
+	surfaces := map[string]string{"output": out, "verdict": res.Verdict(), "detail": res.Detail, "message UUID": res.MessageUUID}
 	if res.Reply != nil {
 		surfaces["reply"] = res.Reply.Text()
 	}
@@ -830,6 +830,9 @@ func assertNothingRebuildsKey(t *testing.T, key, sent string, pieces []string, r
 			for _, part := range strings.Split(text, " | ") {
 				add(part)
 			}
+		}
+		if text, ok := strings.CutPrefix(l, "VERIFIED: message UUID "); ok {
+			add(text)
 		}
 		for _, q := range quotedText.FindAllString(l, -1) {
 			if text, err := strconv.Unquote(q); err == nil {
@@ -1114,7 +1117,8 @@ func TestAstraR6PiecesMustRedact(t *testing.T) {
 	c := chunks(ck, 12)
 	l := []string{longKey[:13], longKey[13:26], longKey[26:39], longKey[39:51], longKey[51:]}
 	p := chunks(payloadOf(longKey), 12)
-	n := chunks(testKey, smtpverify.MinFragment)
+	nk := testKey[:3*smtpverify.MinFragment]
+	n := chunks(nk, smtpverify.MinFragment)
 	const verified = "VERIFIED: message UUID " + smtpmock.QueuedUUID
 	tests := []struct {
 		name        string
@@ -1209,7 +1213,7 @@ func TestAstraR6PiecesMustRedact(t *testing.T) {
 				MailReply: "250 2.1.0 Ok [3] " + n[2],
 				RcptReply: "250 2.1.5 Ok [1] " + n[0],
 			},
-			sent:        testKey,
+			sent:        nk,
 			pieces:      n,
 			wantVerdict: verified,
 			wantVerbs:   with(verbsUpToData, "QUIT"),
@@ -1233,6 +1237,229 @@ func TestAstraR6PiecesMustRedact(t *testing.T) {
 			srv.Wait()
 			assert.Equal(t, tt.wantVerbs, srv.Verbs())
 			assertNothingRebuildsKey(t, tt.key, tt.sent, tt.pieces, res, out)
+		})
+	}
+}
+
+// r7Key is a key of the Telnyx format, 58 bytes: "KEY", 32 upper-case hex
+// digits, "_", 22 letters and digits. Its hex opens with 8 digits.
+const r7Key = "KEY123456789ABCDEF00B1C2D3E4F5A6B7C_Vb7Nq2Wx9Rt4Ys6Uk8Jm1L"
+
+// pieces7 splits s into pieces of 7 bytes, the last one ending where s
+// does: together they hold all of s.
+func pieces7(s string) []string {
+	var pieces []string
+	for i := 0; i < len(s); i += 7 {
+		pieces = append(pieces, s[min(i, len(s)-7):min(i+7, len(s))])
+	}
+	return pieces
+}
+
+// Astra R7: a key cut into labeled pieces of 7 characters, each in its own
+// reply line, the last in the verdict and the Result's Reply, was printed
+// whole in pieces, as were labeled 7-character pieces of its AUTH PLAIN
+// payload: only 8 characters in a row of a secret were masked. Any 7 are.
+func TestAstraR7SevenCharacterPiecesMustRedact(t *testing.T) {
+	t.Parallel()
+	k := pieces7(r7Key)
+	p := pieces7(payloadOf(r7Key))
+	require.Len(t, k, 9)
+	require.Len(t, p, 13)
+	tests := []struct {
+		name        string
+		script      smtpmock.Script
+		sent        string
+		pieces      []string
+		wantVerdict string
+		wantOutput  []string
+	}{
+		{
+			name: "labeled 7-character pieces of the key",
+			script: smtpmock.Script{
+				AuthReply:    "235-2.7.0 part 1/9: " + k[0] + "\n235-2.7.0 part 2/9: " + k[1] + "\n235 2.7.0 part 3/9: " + k[2],
+				MailReply:    "250-2.1.0 part 4/9: " + k[3] + "\n250 2.1.0 Ok part 5/9: " + k[4],
+				RcptReply:    "250-2.1.5 part 6/9: " + k[5] + "\n250 2.1.5 Ok part 7/9: " + k[6],
+				DataReply:    "354 part 8/9: " + k[7],
+				DataEndReply: "250 2.0.0 part 9/9: " + k[8],
+			},
+			sent:        r7Key,
+			pieces:      k,
+			wantVerdict: "FAILED at DATA: 250 2.0.0 part 9/9: <redacted: API key>",
+			wantOutput: []string{
+				"[AUTH]      S: 235-2.7.0 part 1/9: <redacted: API key>\n",
+				"[MAIL FROM] S: 250 2.1.0 Ok part 5/9: <redacted: API key>\n",
+				"[DATA]      S: 354 part 8/9: <redacted: API key>\n",
+			},
+		},
+		{
+			name: "labeled 7-character pieces of the AUTH PLAIN payload",
+			script: smtpmock.Script{
+				AuthReply:    "235-2.7.0 chunk 1: " + p[0] + "\n235-2.7.0 chunk 2: " + p[1] + "\n235-2.7.0 chunk 3: " + p[2] + "\n235 2.7.0 chunk 4: " + p[3],
+				MailReply:    "250-2.1.0 chunk 5: " + p[4] + "\n250-2.1.0 chunk 6: " + p[5] + "\n250 2.1.0 chunk 7: " + p[6],
+				RcptReply:    "250-2.1.5 chunk 8: " + p[7] + "\n250-2.1.5 chunk 9: " + p[8] + "\n250 2.1.5 chunk 10: " + p[9],
+				DataReply:    "354 chunk 11: " + p[10],
+				DataEndReply: "250-2.0.0 chunk 12: " + p[11] + "\n250 2.0.0 chunk 13: " + p[12],
+			},
+			sent:        payloadOf(r7Key),
+			pieces:      p,
+			wantVerdict: "FAILED at DATA: 250-2.0.0 chunk 12: <redacted: AUTH PLAIN credentials> | 250 2.0.0 chunk 13: <redacted: AUTH PLAIN credentials>",
+			wantOutput: []string{
+				"[AUTH]      S: 235-2.7.0 chunk 1: <redacted: AUTH PLAIN credentials>\n",
+				"[RCPT TO]   S: 250 2.1.5 chunk 10: <redacted: AUTH PLAIN credentials>\n",
+				"[DATA]      S: 354 chunk 11: <redacted: AUTH PLAIN credentials>\n",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			srv := smtpmock.Start(t, tt.script)
+			cfg := config(srv)
+			cfg.APIKey = r7Key
+			res, out := run(t, cfg)
+
+			assert.Equal(t, tt.wantVerdict, res.Verdict())
+			for _, want := range tt.wantOutput {
+				assert.Contains(t, out, want)
+			}
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, with(verbsUpToData, "QUIT"), srv.Verbs())
+			assertNothingRebuildsKey(t, r7Key, tt.sent, tt.pieces, res, out)
+		})
+	}
+}
+
+// Astra R7: the message UUID that VERIFIED prints came from the acceptance
+// reply, but not through redaction, so a server could print key material in
+// it: digits of the key, its hex letters lower-cased, or the rest of a run
+// of the key that the reply before it ends in. The UUID is masked with the
+// session's server text, as the server sent it and as VERIFIED prints it,
+// lower-cased; a UUID that holds no key material is printed as is.
+func TestAstraR7VerifiedUUIDMustRedact(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name       string
+		script     smtpmock.Script
+		pieces     []string
+		wantUUID   string
+		wantOutput []string
+	}{
+		{
+			name:       "UUID opening with 8 digits of the key",
+			script:     smtpmock.Script{DataEndReply: "250 2.0.0 Ok: queued as 12345678-3a0f-4c3e-9d6a-6f1f2b8e4c21"},
+			pieces:     []string{"12345678"},
+			wantUUID:   "<redacted: API key>-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			wantOutput: []string{"[DATA]      S: 250 2.0.0 Ok: queued as <redacted: API key>-3a0f-4c3e-9d6a-6f1f2b8e4c21\n"},
+		},
+		{
+			name:       "UUID of hex letters and digits of the key, lower-cased",
+			script:     smtpmock.Script{DataEndReply: "250 2.0.0 Ok: queued as 89ABCDEF-3A0F-4C3E-9D6A-0B1C2D3E4F5A"},
+			pieces:     []string{"89abcdef", "0b1c2d3e4f5a"},
+			wantUUID:   "<redacted: API key>-3a0f-4c3e-9d6a-<redacted: API key>",
+			wantOutput: []string{"[DATA]      S: 250 2.0.0 Ok: queued as <redacted: API key>-3A0F-4C3E-9D6A-<redacted: API key>\n"},
+		},
+		{
+			name: "run of the key from the QUIT reply into the UUID",
+			script: smtpmock.Script{
+				DataEndReply: "250 2.0.0 Ok: queued as 45678900-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+				QuitReply:    "221 2.0.0 Bye " + r7Key[:6],
+			},
+			pieces:     []string{r7Key[:6]},
+			wantUUID:   "<redacted: API key>00-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			wantOutput: []string{"[QUIT]      S: 221 2.0.0 Bye <redacted: API key>\n"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			srv := smtpmock.Start(t, tt.script)
+			cfg := config(srv)
+			cfg.APIKey = r7Key
+			res, out := run(t, cfg)
+
+			assert.True(t, res.Verified)
+			assert.Equal(t, tt.wantUUID, res.MessageUUID)
+			assert.Equal(t, "VERIFIED: message UUID "+tt.wantUUID, res.Verdict())
+			for _, want := range tt.wantOutput {
+				assert.Contains(t, out, want)
+			}
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, with(verbsUpToData, "QUIT"), srv.Verbs())
+			assertNothingRebuildsKey(t, r7Key, r7Key, nil, res, out)
+			// Nothing the server sent in the key's own case shows lower-cased.
+			for name, s := range map[string]string{"message UUID": res.MessageUUID, "verdict": res.Verdict(), "output": out} {
+				s = strings.ToLower(s)
+				for _, piece := range tt.pieces {
+					assert.NotContains(t, s, strings.ToLower(piece), "a piece of the key in the %s", name)
+				}
+				for i := 0; i+7 <= len(r7Key); i++ {
+					assert.NotContains(t, s, strings.ToLower(r7Key[i:i+7]), "7 characters of the key, in either case, in the %s", name)
+				}
+			}
+		})
+	}
+}
+
+// Astra R7: pieces of a key too short to mask alone, split by five line
+// breaks each opening a line with framing, printed 9 characters of the key:
+// a run split by gaps was masked only across up to 4 line breaks. Up to 8
+// are taken in now, framing and blanks too, still a constant bound.
+func TestAstraR7GapOfFiveLineBreaksMustRedact(t *testing.T) {
+	t.Parallel()
+	framed := func(framing string, n int) string { return strings.Repeat("\n"+framing, n) }
+	tests := []struct {
+		name       string
+		authReply  string
+		pieces     []string
+		wantOutput []string
+	}{
+		{
+			name:      "3-character pieces across 5 line breaks of framing and enhanced codes",
+			authReply: "235-2.7.0 user " + r7Key[:3] + framed("235-2.7.0 ", 4) + "\n235-2.7.0 " + r7Key[3:6] + framed("235-2.7.0 ", 4) + "\n235 2.7.0 " + r7Key[6:9] + " Authentication successful",
+			pieces:    []string{r7Key[:3], r7Key[3:6], r7Key[6:9]},
+			wantOutput: []string{
+				"[AUTH]      S: 235-2.7.0 user <redacted: API key>\n",
+				"[AUTH]      S: 235-2.7.0 <redacted: API key>\n",
+				"[AUTH]      S: 235 2.7.0 <redacted: API key> Authentication successful\n",
+			},
+		},
+		{
+			name:      "6-character pieces across 5 line breaks of framing alone",
+			authReply: "235-2.7.0 user " + r7Key[:6] + framed("235-", 4) + "\n235 " + r7Key[6:12] + " Authentication successful",
+			pieces:    []string{r7Key[:6], r7Key[6:12]},
+			wantOutput: []string{
+				"[AUTH]      S: 235-2.7.0 user <redacted: API key>\n",
+				"[AUTH]      S: 235 <redacted: API key> Authentication successful\n",
+			},
+		},
+		{
+			name:      "6-character pieces across 8 line breaks of framing and enhanced codes",
+			authReply: "235-2.7.0 user " + r7Key[:6] + framed("235-2.7.0 ", 7) + "\n235 2.7.0 " + r7Key[6:12] + " Authentication successful",
+			pieces:    []string{r7Key[:6], r7Key[6:12]},
+			wantOutput: []string{
+				"[AUTH]      S: 235-2.7.0 user <redacted: API key>\n",
+				"[AUTH]      S: 235 2.7.0 <redacted: API key> Authentication successful\n",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			srv := smtpmock.Start(t, smtpmock.Script{AuthReply: tt.authReply})
+			cfg := config(srv)
+			cfg.APIKey = r7Key
+			res, out := run(t, cfg)
+
+			assert.True(t, res.Verified, res.Verdict())
+			for _, want := range tt.wantOutput {
+				assert.Contains(t, out, want)
+			}
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, with(verbsUpToData, "QUIT"), srv.Verbs())
+			assertNothingRebuildsKey(t, r7Key, strings.Join(tt.pieces, ""), nil, res, out)
 		})
 	}
 }

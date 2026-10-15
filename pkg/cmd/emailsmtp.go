@@ -55,6 +55,8 @@ func newEmailSMTPVerifyCommand() *cli.Command {
 			"acceptance reply \"250 2.0.0 Ok: queued as <uuid>\". The session stops at the\n" +
 			"first failing reply. Exit status is 0 only when verified; scripts should check\n" +
 			"it rather than the output.\n\n" +
+			"If the server sends more reply text than can be checked for the API key in\n" +
+			"time, the transcript is withheld and the FAILED verdict says so in plain words.\n\n" +
 			"Ctrl-C stops the session and still prints the transcript so far.\n\n" +
 			"The API key comes from the global --api-key flag or TELNYX_API_KEY.\n" +
 			"This sends a real message, billed like any other send.",

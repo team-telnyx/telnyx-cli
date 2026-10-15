@@ -23,6 +23,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -258,10 +259,10 @@ type redactor struct {
 // or not, and the mask it gets: whole, or any start of it that runs to the
 // end of the text, where a cut-off reply may stop inside it. grams holds
 // each minFragment characters in a row of it, or all of it if shorter (see
-// cover).
+// cover). whole and start are compiled when first used.
 type wrappedSecret struct {
 	secret       string
-	whole, start *regexp.Regexp
+	whole, start func() *regexp.Regexp
 	mask         string
 	grams        map[string]bool
 }
@@ -303,10 +304,11 @@ func newRedactor(apiKey string) redactor {
 		for n, j := min(minFragment, len(pairs[i])), 0; j+n <= len(pairs[i]); j++ {
 			grams[pairs[i][j:j+n]] = true
 		}
+		wholeRE, startRE := whole.String(), start.String()
 		rd.wrapped = append(rd.wrapped, wrappedSecret{
 			secret: pairs[i],
-			whole:  regexp.MustCompile(whole.String()),
-			start:  regexp.MustCompile(start.String()),
+			whole:  sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(wholeRE) }),
+			start:  sync.OnceValue(func() *regexp.Regexp { return regexp.MustCompile(startRE) }),
 			mask:   pairs[i+1],
 			grams:  grams,
 		})
@@ -332,7 +334,7 @@ func (rd redactor) reply(lines []string) []string {
 	}
 	text := strings.Join(lines, "\n") // reply lines never hold a LF
 	for _, w := range rd.wrapped {
-		text = w.whole.ReplaceAllLiteralString(text, w.mask)
+		text = w.whole().ReplaceAllLiteralString(text, w.mask)
 	}
 	return strings.Split(text, "\n")
 }
@@ -364,7 +366,7 @@ func (rd redactor) replyErr(lines []string, err error) ([]string, error) {
 func (rd redactor) cutOff(lines []string) []string {
 	text := strings.Join(lines, "\n")
 	for _, w := range rd.wrapped {
-		if loc := w.start.FindStringIndex(text); loc != nil && strings.Contains(text[loc[0]:], "\n") {
+		if loc := w.start().FindStringIndex(text); loc != nil && strings.Contains(text[loc[0]:], "\n") {
 			text = text[:loc[0]] + w.mask
 		}
 	}
@@ -375,17 +377,16 @@ func (rd redactor) cutOff(lines []string) []string {
 // wherever they are (see cover), and how long a run of a secret that line
 // breaks and framing split must be to be masked (see spanning). It is the
 // shortest length that server text which is not this session's own secret
-// does not match by chance. Against 20,000 random keys of the Telnyx format
-// ("KEY", 32 upper-case hex digits, "_", 22 letters and digits), each with a
-// session of server text far denser in UUIDs, upper-case hex queue IDs,
-// dates, Message-IDs, addresses and MIME base64 than a real one, 8 masked
-// nothing; 7 masked text in 1 session, 6 in 5 and 5 in 85. Upper-case hex
-// and digits matched the key's hex digits, and runs split by framing joined
-// the ends of lines, as "250-SIZE 25000000" and "250-8BITMIME" do against a
-// key holding "000008B". TestCoverageFalsePositives keeps a sample of that.
-// Shorter pieces are shown: up to 7 characters of a key are what chance text
-// holds too.
-const minFragment = 8
+// all but never matches by chance. TestCoverageFalsePositives runs 40,000
+// random keys of the Telnyx format ("KEY", 32 upper-case hex digits, "_", 22
+// letters and digits), each with a session of server text far denser in
+// UUIDs, upper-case hex queue IDs, dates, Message-IDs, addresses and MIME
+// base64 than a real one: 7 masks nothing there (and text in 5 of 400,000
+// such sessions); 6 masked text in 7 of the 40,000, and 5 in 176. Upper-case
+// hex queue IDs and UUIDs, and digits in trace IDs, dates and
+// "SIZE 25000000", matched the key's hex digits. Shorter pieces are shown:
+// up to 6 characters of a key are what chance text holds too.
+const minFragment = 7
 
 // heardText is a string of server bytes that the output shows: a reply
 // line, or the bytes a read error quotes.
@@ -393,16 +394,19 @@ type heardText struct {
 	text   string
 	quoted bool // quoted by an error, as %q renders it
 	cut    bool // cut off before its CRLF: whatever followed never arrived
+	lower  bool // shown lower-cased, as the message UUID is (see messageUUID)
 }
 
 // session masks all of a session's server text together, so that no split
 // of a secret leaves pieces to rejoin: across the lines of a reply, across
 // replies, between a reply and the bytes an error quotes, or between the
-// transcript and the Result. heard is that text in the order the output
-// shows it, the Result's repeat of it last. Joined line by line, it is
-// searched for
+// transcript and the Result, the message UUID that VERIFIED prints
+// included. heard is that text in the order the output shows it, the
+// Result's repeat of it last. Joined line by line, it is searched for
 //   - each piece of minFragment or more characters of a secret, or all of a
 //     shorter secret, wherever it is and whatever is around it (see cover);
+//     in a text shown lower-cased, the message UUID, as it was sent and as
+//     it is shown;
 //   - each run of minFragment or more characters of a secret that a gap
 //     splits, its pieces shorter perhaps (see spanning);
 //   - each start of a secret that runs to the end of a cut-off text, the
@@ -430,6 +434,15 @@ func (rd redactor) session(ctx context.Context, heard []heardText) (map[string]s
 	text := b.String()
 	masks := make([]int, len(text)) // 1 + the index in rd.wrapped of the secret masked at each byte, or 0
 	rd.cover(text, masks)
+	lower := map[string]bool{}
+	at := 0
+	for _, h := range heard {
+		if h.lower {
+			rd.cover(lowerASCII(h.text), masks[at:at+len(h.text)])
+			lower[h.text] = true
+		}
+		at += len(h.text) + 1
+	}
 	for i, w := range rd.wrapped {
 		in, err := spanning(ctx, text, w.secret, cuts)
 		if err != nil {
@@ -442,7 +455,7 @@ func (rd redactor) session(ctx context.Context, heard []heardText) (map[string]s
 		}
 	}
 	union := map[string][]int{}
-	at := 0
+	at = 0
 	for _, h := range heard {
 		m := masks[at : at+len(h.text)]
 		at += len(h.text) + 1
@@ -459,7 +472,11 @@ func (rd redactor) session(ctx context.Context, heard []heardText) (map[string]s
 	}
 	shown := make(map[string]string, len(union))
 	for s, m := range union {
-		shown[s] = rd.render(s, m)
+		if lower[s] {
+			shown[s] = rd.render(lowerASCII(s), m)
+		} else {
+			shown[s] = rd.render(s, m)
+		}
 	}
 	return shown, nil
 }
@@ -485,6 +502,17 @@ func (rd redactor) cover(text string, m []int) {
 			}
 		}
 	}
+}
+
+// lowerASCII lower-cases the ASCII letters of s, byte for byte.
+func lowerASCII(s string) string {
+	b := []byte(s)
+	for i, c := range b {
+		if 'A' <= c && c <= 'Z' {
+			b[i] = c + 'a' - 'A'
+		}
+	}
+	return string(b)
 }
 
 // render shows s with each run of bytes that m marks for the same secret
@@ -758,13 +786,15 @@ func (sc *spanScan) next(edges []edge, p int, j int32) []edge {
 	return edges
 }
 
-// maxGapBreaks and maxGapBlanks bound a gap: at most 4 line breaks, and at
-// most 8 blanks or line breaks in a row. One echo is never split by more
-// than a line break and a line's framing or two; the bounds keep each gap,
-// and so the work at each byte, constant however the server frames its text.
+// maxGapBreaks and maxGapBlanks bound a gap: at most 8 line breaks, and at
+// most 16 blanks or line breaks in a row. One echo is never split by more
+// than a line break and a line's framing or two; a server that splits a key
+// into pieces between lines of framing alone must use more than 8 to keep
+// them apart. The bounds keep each gap, and so the work at each byte,
+// constant however the server frames its text.
 const (
-	maxGapBreaks = 4
-	maxGapBlanks = 8
+	maxGapBreaks = 8
+	maxGapBlanks = 16
 )
 
 // gapEnds appends to ends each i, in order, such that text[q:i] is a gap:
@@ -898,13 +928,14 @@ func (t *transcript) requote(text string) string {
 	return text
 }
 
-// flush masks the session's server text, the Result's repeat of it
-// included, writes the transcript, and returns res with its server text
-// shown as the transcript shows it. It runs once the session ends, however
-// it ends: canceled too, as by Ctrl-C, so masking is bound by its own budget
-// (see redactBudget), not by ctx's cancellation. Past the budget, nothing of
-// the transcript is written, and res becomes a failure that quotes none of
-// it.
+// flush masks the session's server text, the Result's repeat of it and its
+// message UUID included, writes the transcript, and returns res with its
+// server text shown as the transcript shows it, the message UUID
+// lower-cased (run leaves it as the server sent it). It runs once the
+// session ends, however it ends: canceled too, as by Ctrl-C, so masking is
+// bound by its own budget (see redactBudget), not by ctx's cancellation.
+// Past the budget, nothing of the transcript is written, and res becomes a
+// failure that quotes none of it.
 func (t *transcript) flush(ctx context.Context, res Result) Result {
 	heard := slices.Clone(t.heard)
 	var lines []string
@@ -918,6 +949,11 @@ func (t *transcript) flush(ctx context.Context, res Result) Result {
 		if h.quoted && strings.Contains(res.Detail, strconv.Quote(h.text)) {
 			heard = append(heard, h)
 		}
+	}
+	if res.Verified {
+		// The verdict shows the UUID last, lower-cased. A real one holds no
+		// key material, so masking can only mangle a hostile one.
+		heard = append(heard, heardText{text: res.MessageUUID, lower: true})
 	}
 	size := 0
 	for _, h := range heard {
@@ -954,6 +990,9 @@ func (t *transcript) flush(ctx context.Context, res Result) Result {
 			reply.Lines[i] = t.redact.mask(t.shown[l])
 		}
 		res.Reply = &reply
+	}
+	if res.Verified {
+		res.MessageUUID = t.shown[res.MessageUUID]
 	}
 	res.Detail = t.redact.mask(t.requote(res.Detail))
 	res.Hint = t.redact.mask(res.Hint)
@@ -1076,6 +1115,9 @@ func (s *session) run(ctx context.Context) Result {
 	}
 
 	s.quit()
+	// Left as the server sent it: flush masks it as sent and as shown,
+	// lower-cased.
+	uuid = reply.Lines[0][len(reply.Lines[0])-len(uuid):]
 	return Result{Verified: true, MessageUUID: uuid, Stage: StageQuit}
 }
 

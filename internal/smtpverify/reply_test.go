@@ -7,6 +7,7 @@ import (
 	"io"
 	"net"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
@@ -330,12 +331,13 @@ func TestRedactorReplyErr(t *testing.T) {
 }
 
 // session masks a session's server text together: a secret split across
-// replies, framing kept; 8 characters of a secret in a row on their own,
-// not 7, whatever text is around them and in whatever order they come; a run
-// of 8 that framing splits, over at most 4 line breaks; the start of a
+// replies, framing kept; 7 characters of a secret in a row on their own,
+// not 6, whatever text is around them and in whatever order they come; a run
+// of 7 that framing splits, over at most 8 line breaks; the start of a
 // secret running into a cut across a line break, with a CR at the cut or
-// not, but not one within the cut-off line alone; and the same text the same
-// way wherever it is shown.
+// not, but not one within the cut-off line alone; a message UUID as sent
+// and as shown, lower-cased; and the same text the same way wherever it is
+// shown.
 func TestRedactorSession(t *testing.T) {
 	t.Parallel()
 	const key = "KEYtest_0123456789abcdef"
@@ -360,20 +362,24 @@ func TestRedactorSession(t *testing.T) {
 		{"framing that could also be the next character", lines("535-x "+key[:15], "700 "+key[15:]), []string{"535-x " + redactedKey, "700 " + redactedKey}},
 		{"line of framing alone between", lines("535-"+key[:8], "535-", "535 5.7.8 "+key[8:]), []string{"535-" + redactedKey, "535-", "535 5.7.8 " + redactedKey}},
 		{"bare CR inside a line", lines("535 " + key[:12] + "\r" + key[12:] + " y"), []string{"535 " + redactedKey + " y"}},
-		{"7 characters on their own are kept", lines("250 x" + key[3:10] + "y"), []string{"250 x" + key[3:10] + "y"}},
-		{"8 characters on their own", lines("250 x" + key[3:11] + "y"), []string{"250 x" + redactedKey + "y"}},
+		{"6 characters on their own are kept", lines("250 x" + key[3:9] + "y"), []string{"250 x" + key[3:9] + "y"}},
+		{"7 characters on their own", lines("250 x" + key[3:10] + "y"), []string{"250 x" + redactedKey + "y"}},
 		{"pieces around other text", lines("535 5.7.8 for apikey:"+key[:8], "221 Bye "+key[8:16], "250 ok "+key[16:]+" done"), []string{"535 5.7.8 for apikey:" + redactedKey, "221 Bye " + redactedKey, "250 ok " + redactedKey + " done"}},
 		{"pieces out of order", lines("250 a "+key[16:], "250 b "+key[:8], "250 c "+key[8:16]), []string{"250 a " + redactedKey, "250 b " + redactedKey, "250 c " + redactedKey}},
-		{"7-character pieces around other text are kept", lines("250 a "+key[:7]+" b", "250 c "+key[7:14]+" d"), []string{"250 a " + key[:7] + " b", "250 c " + key[7:14] + " d"}},
-		{"run that framing splits, its pieces under 8 characters", lines("535-x "+key[:4], "535 "+key[4:9]), []string{"535-x " + redactedKey, "535 " + redactedKey}},
-		{"run over 4 line breaks", lines("535-x "+key[:4], "535-", "535-", "535-", "535 "+key[4:9]), []string{"535-x " + redactedKey, "535-", "535-", "535-", "535 " + redactedKey}},
-		{"run over 5 line breaks is not joined", lines("535-x "+key[:4], "535-", "535-", "535-", "535-", "535 "+key[4:9]), []string{"535-x " + key[:4], "535-", "535-", "535-", "535-", "535 " + key[4:9]}},
+		{"6-character pieces around other text are kept", lines("250 a "+key[:6]+" b", "250 c "+key[6:12]+" d"), []string{"250 a " + key[:6] + " b", "250 c " + key[6:12] + " d"}},
+		{"run that framing splits, its pieces under 7 characters", lines("535-x "+key[:3], "535 "+key[3:7]), []string{"535-x " + redactedKey, "535 " + redactedKey}},
+		{"run over 8 line breaks", lines(slices.Concat([]string{"535-x " + key[:4]}, slices.Repeat([]string{"535-"}, 7), []string{"535 " + key[4:9]})...), slices.Concat([]string{"535-x " + redactedKey}, slices.Repeat([]string{"535-"}, 7), []string{"535 " + redactedKey})},
+		{"run over 9 line breaks is not joined", lines(slices.Concat([]string{"535-x " + key[:4]}, slices.Repeat([]string{"535-"}, 8), []string{"535 " + key[4:9]})...), slices.Concat([]string{"535-x " + key[:4]}, slices.Repeat([]string{"535-"}, 8), []string{"535 " + key[4:9]})},
 		{"payload tail on its own", lines("535 x " + payload[19:]), []string{"535 x " + redactedPayload}},
-		{"start of the key at a cut after a CR", []heardText{{text: "535-x " + key[:4]}, cut("535 " + key[4:7] + "\r")}, []string{"535-x " + redactedKey, "535 " + redactedKey + "\r"}},
-		{"start of the key across replies at a cut", []heardText{{text: "535 " + key[:4]}, cut("221 " + key[4:7])}, []string{"535 " + redactedKey, "221 " + redactedKey}},
-		{"start not at a cut is kept", lines("535-x "+key[:4], "535 "+key[4:7]), []string{"535-x " + key[:4], "535 " + key[4:7]}},
+		{"start of the key at a cut after a CR", []heardText{{text: "535-x " + key[:4]}, cut("535 " + key[4:6] + "\r")}, []string{"535-x " + redactedKey, "535 " + redactedKey + "\r"}},
+		{"start of the key across replies at a cut", []heardText{{text: "535 " + key[:4]}, cut("221 " + key[4:6])}, []string{"535 " + redactedKey, "221 " + redactedKey}},
+		{"start not at a cut is kept", lines("535-x "+key[:4], "535 "+key[4:6]), []string{"535-x " + key[:4], "535 " + key[4:6]}},
 		{"start within the cut-off line alone is kept", []heardText{cut("250 2.0.0 Ok: queued as 0B6C5B5E-3A")}, []string{"250 2.0.0 Ok: queued as 0B6C5B5E-3A"}},
 		{"start within the cut-off line alone is kept, CR at the cut", []heardText{cut("250 2.0.0 Ok: queued as 0B6C5B5E-3A\r")}, []string{"250 2.0.0 Ok: queued as 0B6C5B5E-3A\r"}},
+		{"message UUID as sent, shown lower-cased", []heardText{{text: "0B6C5B5E-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}}, []string{"0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"}},
+		{"message UUID holding the key's digits", []heardText{{text: "01234567-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}}, []string{redactedKey + "-3a0f-4c3e-9d6a-6f1f2b8e4c21"}},
+		{"message UUID that holds the key once lower-cased", []heardText{{text: "9ABCDEF0-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}}, []string{redactedKey + "0-3a0f-4c3e-9d6a-6f1f2b8e4c21"}},
+		{"message UUID ending a run of the key", []heardText{{text: "221 Bye " + key[:4]}, {text: key[4:7] + "-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}}, []string{"221 Bye " + redactedKey, redactedKey + "-3a0f-4c3e-9d6a-6f1f2b8e4c21"}},
 		{
 			name:  "second half first, repeated after the first",
 			heard: lines("535 5.7.8 "+key[12:], "221 "+key[:12], "535 5.7.8 "+key[12:]),
