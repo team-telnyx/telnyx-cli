@@ -328,6 +328,62 @@ func TestRedactorReplyErr(t *testing.T) {
 	}
 }
 
+// session masks a session's server text together: a secret split across
+// replies, framing kept; 16 characters of a secret in a row on their own,
+// not 15; the start of a secret running into a cut across a line break,
+// with a CR at the cut or not, but not one within the cut-off line alone; and
+// the same text the same way wherever it is shown.
+func TestRedactorSession(t *testing.T) {
+	t.Parallel()
+	const key = "KEYtest_0123456789abcdef"
+	payload := authPlainPayload(key)
+	lines := func(texts ...string) []heardText {
+		var heard []heardText
+		for _, s := range texts {
+			heard = append(heard, heardText{text: s})
+		}
+		return heard
+	}
+	cut := func(s string) heardText { return heardText{text: s, quoted: true, cut: true} }
+	tests := []struct {
+		name  string
+		heard []heardText
+		want  []string // what is shown of each text, in order
+	}{
+		{"nothing to mask", lines("220 hi", "250-a", "250 b"), []string{"220 hi", "250-a", "250 b"}},
+		{"payload halves in two replies", lines("535 "+payload[:19], "221 "+payload[19:]), []string{"535 " + redactedPayload, "221 " + redactedPayload}},
+		{"key halves under 16 characters", lines("535 5.7.8 for apikey:"+key[:12], "221 2.0.0 "+key[12:]), []string{"535 5.7.8 for apikey:" + redactedKey, "221 2.0.0 " + redactedKey}},
+		{"reply code that is part of the key", lines("535-x "+key[:9], key[9:]), []string{"535-x " + redactedKey, redactedKey}},
+		{"framing that could also be the next character", lines("535-x "+key[:15], "700 "+key[15:]), []string{"535-x " + redactedKey, "700 " + redactedKey}},
+		{"line of framing alone between", lines("535-"+key[:8], "535-", "535 5.7.8 "+key[8:]), []string{"535-" + redactedKey, "535-", "535 5.7.8 " + redactedKey}},
+		{"bare CR inside a line", lines("535 " + key[:12] + "\r" + key[12:] + " y"), []string{"535 " + redactedKey + " y"}},
+		{"15 characters on their own are kept", lines("250 x" + key[3:18] + "y"), []string{"250 x" + key[3:18] + "y"}},
+		{"16 characters on their own", lines("250 x" + key[3:19] + "y"), []string{"250 x" + redactedKey + "y"}},
+		{"payload tail on its own", lines("535 x " + payload[19:]), []string{"535 x " + redactedPayload}},
+		{"start of the key at a cut after a CR", []heardText{{text: "535-x " + key[:5]}, cut("535 " + key[5:9] + "\r")}, []string{"535-x " + redactedKey, "535 " + redactedKey + "\r"}},
+		{"start of the key across replies at a cut", []heardText{{text: "535 " + key[:5]}, cut("221 " + key[5:9])}, []string{"535 " + redactedKey, "221 " + redactedKey}},
+		{"start not at a cut is kept", lines("535-x "+key[:5], "535 "+key[5:9]), []string{"535-x " + key[:5], "535 " + key[5:9]}},
+		{"start within the cut-off line alone is kept", []heardText{cut("250 2.0.0 Ok: queued as 0B6C5B5E-3A")}, []string{"250 2.0.0 Ok: queued as 0B6C5B5E-3A"}},
+		{"start within the cut-off line alone is kept, CR at the cut", []heardText{cut("250 2.0.0 Ok: queued as 0B6C5B5E-3A\r")}, []string{"250 2.0.0 Ok: queued as 0B6C5B5E-3A\r"}},
+		{
+			name:  "second half first, repeated after the first",
+			heard: lines("535 5.7.8 "+key[12:], "221 "+key[:12], "535 5.7.8 "+key[12:]),
+			want:  []string{"535 5.7.8 " + redactedKey, "221 " + redactedKey, "535 5.7.8 " + redactedKey},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			shown := newRedactor(key).session(tt.heard)
+			var got []string
+			for _, h := range tt.heard {
+				got = append(got, shown[h.text])
+			}
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
 func TestPrintable(t *testing.T) {
 	t.Parallel()
 	tests := []struct{ in, want string }{

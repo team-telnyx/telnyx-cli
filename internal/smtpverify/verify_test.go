@@ -784,6 +784,340 @@ func TestAstraSplitIntoErrorMustRedact(t *testing.T) {
 	}
 }
 
+// longKey's AUTH PLAIN payload ends in "==": cut before the padding, it still
+// decodes, unpadded, to every byte of the key.
+const longKey = "KEY01892F3C4A5B6D7E8F9A0B1C2D3E4F_Vb7Nq2Wx9Rt4Ys6Uk8Jm1Lp3Hd5G"
+
+func payloadOf(key string) string {
+	return base64.StdEncoding.EncodeToString([]byte("\x00apikey\x00" + key))
+}
+
+var (
+	replyFraming = regexp.MustCompile(`^\d{3}[ -](?:\d\.\d{1,3}\.\d{1,3} )?`)
+	quotedText   = regexp.MustCompile(`"(?:[^"\\]|\\.)*"`)
+	base64Text   = regexp.MustCompile(`[A-Za-z0-9+/]+`)
+)
+
+// assertNothingRebuildsKey checks every surface a session shows: the output,
+// the verdict, Detail and Reply. None may hold a piece the server sent, nor
+// 16 characters in a row of the key or its AUTH PLAIN payload, padded or
+// not. Nor may the server text they print, joined in the order the output
+// shows it (reply lines, cut-off fragments, bytes errors quote, the
+// verdict's reply), framing removed: not the secret the server sent, not 16
+// characters of a secret, and not 8 bytes of the key when its base64 runs,
+// alone or all run together, are decoded unpadded at every alignment.
+func assertNothingRebuildsKey(t *testing.T, key, sent string, pieces []string, res smtpverify.Result, out string) {
+	t.Helper()
+	surfaces := map[string]string{"output": out, "verdict": res.Verdict(), "detail": res.Detail}
+	if res.Reply != nil {
+		surfaces["reply"] = res.Reply.Text()
+	}
+	var joined strings.Builder
+	add := func(text string) {
+		joined.WriteString(replyFraming.ReplaceAllString(strings.ReplaceAll(text, `\x0d`, ""), ""))
+	}
+	for _, l := range strings.Split(out, "\n") {
+		if _, text, ok := strings.Cut(l, " S: "); ok {
+			add(text)
+		}
+		if _, text, ok := strings.Cut(l, " -- incomplete reply line (no CRLF): "); ok {
+			add(text)
+		}
+		if text, ok := strings.CutPrefix(l, "FAILED at "); ok {
+			_, text, _ = strings.Cut(text, ": ")
+			for _, part := range strings.Split(text, " | ") {
+				add(part)
+			}
+		}
+		for _, q := range quotedText.FindAllString(l, -1) {
+			if text, err := strconv.Unquote(q); err == nil {
+				add(text)
+			}
+		}
+	}
+	surfaces["joined server text"] = joined.String()
+
+	payload := payloadOf(key)
+	forms := []string{key, payload, strings.TrimRight(payload, "=")}
+	for name, s := range surfaces {
+		for _, piece := range pieces {
+			assert.NotContains(t, s, piece, "a piece of the secret in the %s", name)
+		}
+		for _, form := range forms {
+			for i := 0; i+16 <= len(form); i++ {
+				assert.NotContains(t, s, form[i:i+16], "16 characters of a secret in the %s", name)
+			}
+		}
+	}
+	assert.NotContains(t, joined.String(), sent, "the printed server text rebuilds the secret")
+	runs := base64Text.FindAllString(joined.String(), -1)
+	for _, run := range append(runs, strings.Join(runs, "")) {
+		for off := 0; off < 4 && off < len(run); off++ {
+			b64 := run[off:]
+			if len(b64)%4 == 1 { // RawStdEncoding rejects a length of 4n+1
+				b64 = b64[:len(b64)-1]
+			}
+			decoded, err := base64.RawStdEncoding.DecodeString(b64)
+			require.NoError(t, err)
+			for i := 0; i+8 <= len(key); i++ {
+				assert.NotContains(t, string(decoded), key[i:i+8], "decoding the printed base64 gives back the key")
+			}
+		}
+	}
+}
+
+// Astra R5: redaction ran per reply, so a secret split across replies (or
+// between a reply and the line ending the next read) printed whole in
+// pieces. The session's server text is redacted together, the Result's
+// repeat of a reply included, so no split leaves a piece to rejoin.
+func TestIndependentAstraCrossReplyMustRedact(t *testing.T) {
+	t.Parallel()
+	p := authPayload
+	k0, k1 := testKey[:12], testKey[12:] // k1 = "456789abcdef": parses as reply code 456
+	l := []string{longKey[:13], longKey[13:26], longKey[26:39], longKey[39:51], longKey[51:]}
+	tests := []struct {
+		name        string
+		key         string
+		script      smtpmock.Script
+		sent        string   // what the server sent of the secret
+		pieces      []string // as the replies carry it
+		wantVerdict string
+		wantVerbs   []string
+		wantOutput  []string
+	}{
+		{
+			name:        "payload: AUTH half, QUIT half",
+			key:         testKey,
+			script:      smtpmock.Script{AuthReply: "535 " + p[:19], QuitReply: "221 " + p[19:]},
+			sent:        p,
+			pieces:      []string{p[:19], p[19:]},
+			wantVerdict: "FAILED at AUTH: 535 <redacted: AUTH PLAIN credentials>",
+			wantVerbs:   with(verbsUpToAuth, "QUIT"),
+			wantOutput:  []string{"[QUIT]      S: 221 <redacted: AUTH PLAIN credentials>\n"},
+		},
+		{
+			name:        "key: halves under 16 characters",
+			key:         testKey,
+			script:      smtpmock.Script{AuthReply: "535 5.7.8 Authentication credentials invalid for apikey:" + k0, QuitReply: "221 2.0.0 " + k1},
+			sent:        testKey,
+			pieces:      []string{k0, k1},
+			wantVerdict: "FAILED at AUTH: 535 5.7.8 Authentication credentials invalid for apikey:<redacted: API key>",
+			wantVerbs:   with(verbsUpToAuth, "QUIT"),
+			wantOutput:  []string{"[QUIT]      S: 221 2.0.0 <redacted: API key>\n"},
+		},
+		{
+			name:        "key: reply, then the line ending the next read",
+			key:         testKey,
+			script:      smtpmock.Script{AuthReply: "535 5.7.8 Authentication credentials invalid for apikey:" + k0, QuitReply: k1},
+			sent:        testKey,
+			pieces:      []string{k0, k1},
+			wantVerdict: "FAILED at AUTH: 535 5.7.8 Authentication credentials invalid for apikey:<redacted: API key>",
+			wantVerbs:   with(verbsUpToAuth, "QUIT"),
+			wantOutput:  []string{`[QUIT]      -- no reply to QUIT: malformed reply: "<redacted: API key>"` + "\n"},
+		},
+		{
+			name:        "key: second half first, the verdict repeating it after the first",
+			key:         testKey,
+			script:      smtpmock.Script{AuthReply: "535 5.7.8 " + k1, QuitReply: "221 " + k0},
+			sent:        testKey,
+			pieces:      []string{k0, k1},
+			wantVerdict: "FAILED at AUTH: 535 5.7.8 <redacted: API key>",
+			wantVerbs:   with(verbsUpToAuth, "QUIT"),
+			wantOutput:  []string{"[AUTH]      S: 535 5.7.8 <redacted: API key>\n", "[QUIT]      S: 221 <redacted: API key>\n"},
+		},
+		{
+			name: "key: across five replies, under 16 characters each",
+			key:  longKey,
+			script: smtpmock.Script{
+				AuthReply:    "235 2.7.0 Authentication successful " + l[0],
+				MailReply:    "250 2.1.0 " + l[1],
+				RcptReply:    "250 2.1.5 " + l[2],
+				DataReply:    "354 " + l[3],
+				DataEndReply: "250 2.0.0 " + l[4],
+			},
+			sent:        longKey,
+			pieces:      l,
+			wantVerdict: "FAILED at DATA: 250 2.0.0 <redacted: API key>",
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantOutput: []string{
+				"[AUTH]      S: 235 2.7.0 Authentication successful <redacted: API key>\n",
+				"[MAIL FROM] S: 250 2.1.0 <redacted: API key>\n",
+				"[RCPT TO]   S: 250 2.1.5 <redacted: API key>\n",
+				"[DATA]      S: 354 <redacted: API key>\n",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			require.Equal(t, tt.sent, strings.Join(tt.pieces, ""))
+			srv := smtpmock.Start(t, tt.script)
+			cfg := config(srv)
+			cfg.APIKey = tt.key
+			res, out := run(t, cfg)
+
+			assert.Equal(t, tt.wantVerdict, res.Verdict())
+			for _, want := range tt.wantOutput {
+				assert.Contains(t, out, want)
+			}
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, tt.wantVerbs, srv.Verbs())
+			assertNothingRebuildsKey(t, tt.key, tt.sent, tt.pieces, res, out)
+		})
+	}
+}
+
+// Astra R5: a cut-off line holding the AUTH PLAIN payload up to its "=="
+// padding was left alone as a lone start of a secret, yet decodes unpadded to
+// the whole key. Any 16 characters in a row of a secret are masked, on their
+// own too.
+func TestIndependentAstraUnpaddedCutMustRedact(t *testing.T) {
+	t.Parallel()
+	const prefix = "535 5.7.8 Authentication credentials invalid"
+	unpadded := payloadOf(longKey)
+	require.True(t, strings.HasSuffix(unpadded, "=="))
+	unpadded = strings.TrimSuffix(unpadded, "==")
+	tests := []struct {
+		name   string
+		key    string
+		sent   string
+		reply  string // cut off after sent
+		masked string // what the output shows of reply
+	}{
+		{
+			name:   "payload cut before its ==",
+			key:    longKey,
+			sent:   unpadded,
+			reply:  prefix + ": AUTH PLAIN ",
+			masked: prefix + ": AUTH PLAIN <redacted: AUTH PLAIN credentials>",
+		},
+		{
+			name:   "payload cut before its =",
+			key:    testKey,
+			sent:   strings.TrimSuffix(authPayload, "="),
+			reply:  prefix + ": AUTH PLAIN ",
+			masked: prefix + ": AUTH PLAIN <redacted: AUTH PLAIN credentials>",
+		},
+		{
+			name:   "key cut after 16 characters",
+			key:    longKey,
+			sent:   longKey[:16],
+			reply:  prefix + " for apikey:",
+			masked: prefix + " for apikey:<redacted: API key>",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			srv := smtpmock.Start(t, smtpmock.Script{AuthPartial: tt.reply + tt.sent})
+			cfg := config(srv)
+			cfg.APIKey = tt.key
+			res, out := run(t, cfg)
+
+			assert.Equal(t, `FAILED at AUTH: incomplete reply "`+tt.masked+`" (no CRLF): connection closed by the server`, res.Verdict())
+			assert.Contains(t, out, "[AUTH]      -- incomplete reply line (no CRLF): "+tt.masked+"\n")
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, verbsUpToAuth, srv.Verbs())
+			assertNothingRebuildsKey(t, tt.key, tt.sent, []string{tt.sent}, res, out)
+		})
+	}
+}
+
+// Astra R5: a reply cut off right after a bare CR ("535-<half1>\r\n535
+// <half2>\r") kept both halves, as the start of a secret had to run to the
+// very end of the text and could not take in the CR. A CR (or blank) at the
+// cut ends the start of a secret like the cut itself.
+func TestIndependentAstraSplitCutAtCRMustRedact(t *testing.T) {
+	t.Parallel()
+	unpadded := strings.TrimSuffix(payloadOf(longKey), "==")
+	u0, u1 := unpadded[:19], unpadded[19:]
+	k0, k1 := testKey[:5], testKey[5:9]
+	tests := []struct {
+		name        string
+		key         string
+		partial     string
+		sent        string
+		pieces      []string
+		wantVerdict string
+		wantOutput  []string
+	}{
+		{
+			name:        "unpadded payload in halves",
+			key:         longKey,
+			partial:     "535-" + u0 + "\r\n535 " + u1 + "\r",
+			sent:        unpadded,
+			pieces:      []string{u0, u1},
+			wantVerdict: `FAILED at AUTH: incomplete reply "535 <redacted: AUTH PLAIN credentials>\r" (no CRLF): connection closed by the server`,
+			wantOutput: []string{
+				"[AUTH]      S: 535-<redacted: AUTH PLAIN credentials>\n",
+				`[AUTH]      -- incomplete reply line (no CRLF): 535 <redacted: AUTH PLAIN credentials>\x0d` + "\n",
+			},
+		},
+		{
+			name:        "start of the key under 16 characters",
+			key:         testKey,
+			partial:     "535-5.7.8 Authentication credentials invalid for apikey:" + k0 + "\r\n535 5.7.8 " + k1 + "\r",
+			sent:        k0 + k1,
+			pieces:      []string{k0, k1},
+			wantVerdict: `FAILED at AUTH: incomplete reply "535 5.7.8 <redacted: API key>\r" (no CRLF): connection closed by the server`,
+			wantOutput: []string{
+				"[AUTH]      S: 535-5.7.8 Authentication credentials invalid for apikey:<redacted: API key>\n",
+				`[AUTH]      -- incomplete reply line (no CRLF): 535 5.7.8 <redacted: API key>\x0d` + "\n",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			require.Equal(t, tt.sent, strings.Join(tt.pieces, ""))
+			srv := smtpmock.Start(t, smtpmock.Script{AuthPartial: tt.partial})
+			cfg := config(srv)
+			cfg.APIKey = tt.key
+			res, out := run(t, cfg)
+
+			assert.Equal(t, tt.wantVerdict, res.Verdict())
+			for _, want := range tt.wantOutput {
+				assert.Contains(t, out, want)
+			}
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, verbsUpToAuth, srv.Verbs())
+			assertNothingRebuildsKey(t, tt.key, tt.sent, tt.pieces, res, out)
+		})
+	}
+}
+
+// The false-positive control for the rules above: a cut-off reply of UUID
+// tails, an address and base64 MIME text, ending in what starts the AUTH
+// PLAIN payload ("A"), CR or not, has nothing in common with the session's
+// secrets but chance single characters, and is printed as sent.
+func TestCutOffNoiseIsNotRedacted(t *testing.T) {
+	t.Parallel()
+	const noise = "250 2.0.0 Ok: queued as 3A0F-4C3E-9D6A-6F1F2B8E4C21 for <ops@example.net>" +
+		" part Q29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PXVzLWFzY2lp ref 0B6C5B5E-3A"
+	for _, end := range []string{"", "\r"} {
+		t.Run(strconv.Quote(end), func(t *testing.T) {
+			t.Parallel()
+			srv := smtpmock.Start(t, smtpmock.Script{
+				AuthReply:      "235 2.7.0 Authentication successful (QWxhZGRpbjpvcGVuIHNlc2FtZQ==)",
+				DataEndPartial: noise + end,
+			})
+			res, out := run(t, config(srv))
+
+			assert.Equal(t, "FAILED at DATA: incomplete reply "+strconv.Quote(noise+end)+" (no CRLF): connection closed by the server", res.Verdict())
+			assert.Contains(t, out, "[AUTH]      S: 235 2.7.0 Authentication successful (QWxhZGRpbjpvcGVuIHNlc2FtZQ==)\n")
+			assert.Contains(t, out, "[DATA]      -- incomplete reply line (no CRLF): "+printableCR(noise+end)+"\n")
+			assert.NotContains(t, out, "<redacted: API key>")
+			assert.NotContains(t, out, "<redacted: AUTH PLAIN credentials>")
+			assertVerdictLast(t, res, out)
+		})
+	}
+}
+
+func printableCR(s string) string { return strings.ReplaceAll(s, "\r", `\x0d`) }
+
 func TestRunDialFailures(t *testing.T) {
 	t.Parallel()
 

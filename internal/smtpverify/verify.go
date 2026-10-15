@@ -106,15 +106,15 @@ func (r Result) Verdict() string {
 // last line. The error is non-nil only for an invalid Config; every
 // session outcome, including failures, is reported in the Result. Neither
 // the output nor the Result carries the API key: server text that echoes
-// it, or the AUTH PLAIN payload, is redacted.
+// it, or the AUTH PLAIN payload, is redacted. Nothing is written until the
+// session ends, as all of its server text is redacted together.
 func Run(ctx context.Context, cfg Config, out io.Writer) (Result, error) {
 	cfg, err := cfg.normalize()
 	if err != nil {
 		return Result{}, err
 	}
-	redact := newRedactor(cfg.APIKey)
-	s := &session{cfg: cfg, t: transcript{out, redact}}
-	res := redact.result(s.run(ctx))
+	s := &session{cfg: cfg, t: &transcript{w: out, redact: newRedactor(cfg.APIKey)}}
+	res := s.t.flush(s.run(ctx))
 	if res.Verified {
 		fmt.Fprintf(out, "\nLook the message up by the UUID below in the Mission Control portal message log.\n%s\n", res.Verdict())
 	} else {
@@ -243,7 +243,9 @@ func authPlainPayload(apiKey string) string {
 // raw and as printable and %q render it. A reply may also wrap an echo
 // across its lines, so a reply's lines are first masked together (see
 // reply), along with the bytes that ended the read if it failed (see
-// replyErr).
+// replyErr). A secret can also be split across replies, or left in pieces
+// that each look harmless, so the transcript masks all of a session's
+// server text together before writing any of it (see session).
 type redactor struct {
 	r       *strings.Replacer
 	wrapped []wrappedSecret
@@ -253,6 +255,7 @@ type redactor struct {
 // or not, and the mask it gets: whole, or any start of it that runs to the
 // end of the text, where a cut-off reply may stop inside it.
 type wrappedSecret struct {
+	secret       string
 	whole, start *regexp.Regexp
 	mask         string
 }
@@ -291,9 +294,10 @@ func newRedactor(apiKey string) redactor {
 		}
 		start.WriteString(`\z`)
 		rd.wrapped = append(rd.wrapped, wrappedSecret{
-			whole: regexp.MustCompile(whole.String()),
-			start: regexp.MustCompile(start.String()),
-			mask:  pairs[i+1],
+			secret: pairs[i],
+			whole:  regexp.MustCompile(whole.String()),
+			start:  regexp.MustCompile(start.String()),
+			mask:   pairs[i+1],
 		})
 	}
 	return rd
@@ -350,43 +354,418 @@ func (rd redactor) cutOff(lines []string) []string {
 	return strings.Split(text, "\n")
 }
 
-// result redacts the server text and local detail a Result carries.
-func (rd redactor) result(res Result) Result {
-	if res.Reply != nil {
-		reply := *res.Reply
-		reply.Lines = rd.reply(res.Reply.Lines)
-		for i, l := range reply.Lines {
-			reply.Lines[i] = rd.mask(l)
-		}
-		res.Reply = &reply
-	}
-	res.Detail = rd.mask(res.Detail)
-	res.Hint = rd.mask(res.Hint)
-	return res
+// minFragment is how many characters of a secret in a row are masked
+// wherever they are, on their own too: a line cut off before the "=="
+// padding of the AUTH PLAIN payload decodes, unpadded, to the whole key.
+// Text that is not a piece of this session's own secrets does not hold 16
+// of their characters in a row by chance.
+const minFragment = 16
+
+// heardText is a string of server bytes that the output shows: a reply
+// line, or the bytes a read error quotes.
+type heardText struct {
+	text   string
+	quoted bool // quoted by an error, as %q renders it
+	cut    bool // cut off before its CRLF: whatever followed never arrived
 }
 
+// session masks all of a session's server text together, so that no split
+// of a secret leaves pieces to rejoin: across the lines of a reply, across
+// replies, between a reply and the bytes an error quotes, or between the
+// transcript and the Result. heard is that text in the order the output
+// shows it, the Result's repeat of it last. Joined line by line, it is
+// searched for
+//   - each run of minFragment or more characters of a secret, or all of a
+//     shorter secret;
+//   - each start of a secret that runs to the end of a cut-off text, the
+//     rest never having arrived, and crosses a line break on the way. Blanks
+//     or a CR may follow it before the cut. A start within the cut-off line
+//     alone may be chance: a cut-off upper-case UUID ending in "A" would
+//     begin the AUTH PLAIN payload.
+//
+// Gaps may split a run (see gapEnds). A run's characters are masked, and the
+// gaps between them within a line; the framing that opens a line is kept. A
+// text shown more than once is masked the same way each time, by the runs
+// found in any of its showings: one showing left unmasked would give away
+// what another masked. session returns what may be shown of each text.
+func (rd redactor) session(heard []heardText) map[string]string {
+	var b strings.Builder
+	var cuts []int
+	for _, h := range heard {
+		b.WriteString(h.text)
+		if h.cut {
+			cuts = append(cuts, b.Len())
+		}
+		b.WriteByte('\n')
+	}
+	text := b.String()
+	masks := make([]int, len(text))             // 1 + the index in rd.wrapped of the secret masked at each byte, or 0
+	for i := len(rd.wrapped) - 1; i >= 0; i-- { // the first secret wins, as in mask
+		for p, in := range runs(text, rd.wrapped[i].secret, cuts) {
+			if in {
+				masks[p] = i + 1
+			}
+		}
+	}
+	union := map[string][]int{}
+	at := 0
+	for _, h := range heard {
+		m := masks[at : at+len(h.text)]
+		at += len(h.text) + 1
+		u, ok := union[h.text]
+		if !ok {
+			union[h.text] = slices.Clone(m)
+			continue
+		}
+		for i, v := range m {
+			if v != 0 && (u[i] == 0 || v < u[i]) {
+				u[i] = v
+			}
+		}
+	}
+	shown := make(map[string]string, len(union))
+	for s, m := range union {
+		var out strings.Builder
+		for i := 0; i < len(s); {
+			j := i + 1
+			for j < len(s) && m[j] == m[i] {
+				j++
+			}
+			if m[i] == 0 {
+				out.WriteString(s[i:j])
+			} else {
+				out.WriteString(rd.wrapped[m[i]-1].mask)
+			}
+			i = j
+		}
+		shown[s] = out.String()
+	}
+	return shown
+}
+
+// runs reports, for each byte of text, whether session masks it for secret;
+// cuts are the ends of cut-off texts. A run is a path through states, each a
+// byte of text read as a character of secret, from one state to the state
+// reading the next character at the next byte or past a gap. The longest
+// run through a state is the longest path into it joined to the longest
+// path out of it.
+func runs(text, secret string, cuts []int) []bool {
+	n := len(text)
+	var at [256][]int // the indexes in secret of each byte value
+	for j := 0; j < len(secret); j++ {
+		at[secret[j]] = append(at[secret[j]], j)
+	}
+	// The states of text[p] are numbered from first[p], one per index in
+	// at[text[p]]; pos and char map a state back to its byte and index.
+	first := make([]int, n+1)
+	for p := 0; p < n; p++ {
+		first[p+1] = first[p] + len(at[text[p]])
+	}
+	pos, char := make([]int, first[n]), make([]int, first[n])
+	for p := 0; p < n; p++ {
+		for i, j := range at[text[p]] {
+			pos[first[p]+i], char[first[p]+i] = p, j
+		}
+	}
+	gaps := map[int][]int{}
+	ends := func(q int) []int {
+		e, ok := gaps[q]
+		if !ok {
+			e = gapEnds(text, q)
+			gaps[q] = e
+		}
+		return e
+	}
+	// next calls f with each state that can follow state s, the byte it
+	// reads and whether a gap comes between.
+	next := func(s int, f func(s2, r int, gap bool)) {
+		p, j := pos[s], char[s]
+		if j+1 == len(secret) {
+			return
+		}
+		follow := func(r int, gap bool) {
+			if i := slices.Index(at[text[r]], j+1); i >= 0 {
+				f(first[r]+i, r, gap)
+			}
+		}
+		if p+1 < n {
+			follow(p+1, false)
+		}
+		for _, r := range ends(p + 1) {
+			if r < n {
+				follow(r, true)
+			}
+		}
+	}
+	into := make([]int, first[n]) // longest path into each state, the state included
+	// For each state a path from secret[0] leads into: whether one crosses
+	// a gap, and the states before it on such paths.
+	crossed := make([]bool, first[n])
+	before := map[int][]int{}
+	for s := range into {
+		into[s] = max(into[s], 1)
+		next(s, func(s2, _ int, gap bool) {
+			into[s2] = max(into[s2], into[s]+1)
+			if into[s] == char[s]+1 {
+				crossed[s2] = crossed[s2] || crossed[s] || gap
+				before[s2] = append(before[s2], s)
+			}
+		})
+	}
+	out := make([]int, first[n]) // longest path out of each state, the state included
+	for s := len(out) - 1; s >= 0; s-- {
+		out[s] = 1
+		next(s, func(s2, _ int, _ bool) { out[s] = max(out[s], out[s2]+1) })
+	}
+
+	in := make([]bool, n)
+	// gap marks the bytes between two characters of a run read at p and r,
+	// unless they end a line: the framing of the next line is kept.
+	gap := func(p, r int) {
+		if !strings.Contains(text[p+1:r], "\n") {
+			for q := p + 1; q < r; q++ {
+				in[q] = true
+			}
+		}
+	}
+	// Where bytes read as a run in more than one way, as when the framing
+	// that opens a line could also be read as characters of the secret, the
+	// longest reading wins: a state is masked only on a longest path, one of
+	// tight edges from a state nothing leads into (head) to a state that
+	// leads nowhere (tail).
+	tight := func(s, s2 int) bool { return into[s2] == into[s]+1 && out[s] == out[s2]+1 }
+	head, tail := make([]bool, first[n]), make([]bool, first[n])
+	for s := range head {
+		head[s] = head[s] || into[s] == 1
+		next(s, func(s2, _ int, _ bool) {
+			if head[s] && tight(s, s2) {
+				head[s2] = true
+			}
+		})
+	}
+	for s := len(tail) - 1; s >= 0; s-- {
+		tail[s] = out[s] == 1
+		next(s, func(s2, _ int, _ bool) {
+			if tail[s2] && tight(s, s2) {
+				tail[s] = true
+			}
+		})
+	}
+	long := min(minFragment, len(secret))
+	for s := range into {
+		if into[s]+out[s]-1 < long || !head[s] || !tail[s] {
+			continue
+		}
+		in[pos[s]] = true
+		next(s, func(s2, r int, isGap bool) {
+			if isGap && tight(s, s2) && tail[s2] {
+				gap(pos[s], r)
+			}
+		})
+	}
+	// blankTo reports whether only blanks, after a gap or not, lie between q
+	// and the cut at e. A CR at the cut ends a line, so is a gap.
+	blankTo := func(q, e int) bool {
+		for _, g := range append([]int{q}, ends(q)...) {
+			if g <= e && strings.Trim(text[g:e], " \t") == "" {
+				return true
+			}
+		}
+		return false
+	}
+	walked := map[int]bool{}
+	for _, e := range cuts {
+		for s := range into {
+			p := pos[s]
+			if p >= e || into[s] != char[s]+1 || !blankTo(p+1, e) {
+				continue
+			}
+			if !crossed[s] && !strings.ContainsAny(strings.TrimRight(text[p+1:e], " \t\r"), "\r\n") {
+				continue
+			}
+			for todo := []int{s}; len(todo) > 0; {
+				s := todo[len(todo)-1]
+				todo = todo[:len(todo)-1]
+				if walked[s] {
+					continue
+				}
+				walked[s] = true
+				in[pos[s]] = true
+				for _, s0 := range before[s] {
+					gap(pos[s0], pos[s])
+					todo = append(todo, s0)
+				}
+			}
+		}
+	}
+	return in
+}
+
+// gapEnds returns each i such that text[q:i] is a gap: what may sit between
+// two characters of a secret that a server splits. That is one or more line
+// breaks, each with any blanks around it and the framing that may open the
+// next line: reply code, separator and enhanced status code, each optional,
+// as in replyLineBreak. A break is a LF, or a CR: a server may end a line
+// with a bare CR, which readLine keeps in the line it reads.
+func gapEnds(text string, q int) []int {
+	if q >= len(text) || strings.IndexByte(" \t\r\n", text[q]) < 0 {
+		return nil
+	}
+	var ends []int
+	seen := map[int]bool{}
+	end := func(i int) {
+		if !seen[i] {
+			seen[i] = true
+			ends = append(ends, i)
+		}
+	}
+	blanks := func(i int) int { // a gap may end after each blank from i
+		for i < len(text) && (text[i] == ' ' || text[i] == '\t') {
+			i++
+			end(i)
+		}
+		return i
+	}
+	for todo, done := []int{q}, map[int]bool{}; len(todo) > 0; {
+		i := todo[len(todo)-1]
+		todo = todo[:len(todo)-1]
+		if done[i] {
+			continue
+		}
+		done[i] = true
+		for i < len(text) && (text[i] == ' ' || text[i] == '\t') {
+			i++
+		}
+		if i == len(text) || text[i] != '\r' && text[i] != '\n' {
+			continue
+		}
+		for i < len(text) && strings.IndexByte(" \t\r\n", text[i]) >= 0 {
+			i++
+			end(i)
+		}
+		k := i
+		if k+3 <= len(text) && isDigit(text[k]) && isDigit(text[k+1]) && isDigit(text[k+2]) {
+			k += 3
+			end(k)
+			if k < len(text) && text[k] == '-' {
+				k++
+				end(k)
+			}
+			k = blanks(k)
+		}
+		for _, j := range []int{i, k} {
+			if m := enhancedFraming.FindStringIndex(text[j:]); m != nil {
+				end(j + m[1])
+				todo = append(todo, blanks(j+m[1]))
+			}
+		}
+		todo = append(todo, k) // another line break may follow
+	}
+	return ends
+}
+
+var enhancedFraming = regexp.MustCompile(`^\d\.\d{1,3}\.\d{1,3}[\t ]`)
+
+func isDigit(c byte) bool { return c >= '0' && c <= '9' }
+
+// transcript holds the session's output until the session ends, so that the
+// server text in all of it, and in the Result, is redacted together (see
+// redactor.session) before any of it is written.
 type transcript struct {
 	w      io.Writer
 	redact redactor
+	lines  []tline
+	heard  []heardText       // the server text the lines show, in order
+	shown  map[string]string // what may be shown of it, once flushed
 }
 
-func (t transcript) line(stage Stage, dir, text string) {
-	fmt.Fprintf(t.w, "%-11s %s %s\n", "["+string(stage)+"]", dir, t.redact.mask(text))
+// tline is one transcript line; text renders it once the session's server
+// text is redacted.
+type tline struct {
+	stage Stage
+	dir   string
+	text  func() string
 }
 
-func (t transcript) client(stage Stage, text string) { t.line(stage, "C:", text) }
-func (t transcript) note(stage Stage, text string)   { t.line(stage, "--", text) }
+func (t *transcript) add(stage Stage, dir string, text func() string) {
+	t.lines = append(t.lines, tline{stage, dir, text})
+}
 
-// server prints reply lines that redactor.reply or replyErr has masked.
-func (t transcript) server(stage Stage, lines []string) {
+func (t *transcript) client(stage Stage, text string) {
+	t.add(stage, "C:", func() string { return text })
+}
+
+// note adds a local note, which may quote what an error quotes of a reply.
+func (t *transcript) note(stage Stage, text string) {
+	t.add(stage, "--", func() string { return t.requote(text) })
+}
+
+// server adds the lines of a reply that redactor.replyErr has masked, and
+// the bytes the error that ended the read quotes, if any. A line cut off
+// before its CRLF is printed after the lines; a rejected line is printed
+// where the error is.
+func (t *transcript) server(stage Stage, lines []string, err error) {
 	for _, l := range lines {
-		t.line(stage, "S:", printable(l))
+		t.heard = append(t.heard, heardText{text: l})
+		t.add(stage, "S:", func() string { return printable(t.shown[l]) })
 	}
+	switch e := err.(type) {
+	case *badLineError:
+		t.heard = append(t.heard, heardText{text: e.line, quoted: true})
+	case *incompleteLineError:
+		t.heard = append(t.heard, heardText{text: e.partial, quoted: true, cut: true})
+		t.add(stage, "--", func() string { return "incomplete reply line (no CRLF): " + printable(t.shown[e.partial]) })
+	}
+}
+
+// requote shows the reply bytes text quotes as an error does (%q) as
+// session redaction left them.
+func (t *transcript) requote(text string) string {
+	for _, h := range t.heard {
+		if shown, ok := t.shown[h.text]; ok && h.quoted && shown != h.text {
+			text = strings.ReplaceAll(text, strconv.Quote(h.text), strconv.Quote(shown))
+		}
+	}
+	return text
+}
+
+// flush masks the session's server text, the Result's repeat of it
+// included, writes the transcript, and returns res with its server text
+// shown as the transcript shows it.
+func (t *transcript) flush(res Result) Result {
+	heard := slices.Clone(t.heard)
+	var lines []string
+	if res.Reply != nil {
+		lines = t.redact.reply(res.Reply.Lines)
+		for _, l := range lines {
+			heard = append(heard, heardText{text: l})
+		}
+	}
+	for _, h := range t.heard {
+		if h.quoted && strings.Contains(res.Detail, strconv.Quote(h.text)) {
+			heard = append(heard, h)
+		}
+	}
+	t.shown = t.redact.session(heard)
+	for _, l := range t.lines {
+		fmt.Fprintf(t.w, "%-11s %s %s\n", "["+string(l.stage)+"]", l.dir, t.redact.mask(l.text()))
+	}
+	if res.Reply != nil {
+		reply := *res.Reply
+		reply.Lines = make([]string, len(lines))
+		for i, l := range lines {
+			reply.Lines[i] = t.redact.mask(t.shown[l])
+		}
+		res.Reply = &reply
+	}
+	res.Detail = t.redact.mask(t.requote(res.Detail))
+	res.Hint = t.redact.mask(res.Hint)
+	return res
 }
 
 type session struct {
 	cfg  Config
-	t    transcript
+	t    *transcript
 	conn net.Conn
 	r    *bufio.Reader
 }
@@ -623,19 +1002,16 @@ func (s *session) read(stage Stage, timeout time.Duration) (Reply, error) {
 	return s.receive(stage)
 }
 
-// receive reads one reply and prints it. Partial replies are printed too,
-// including a line cut off before its CRLF: every reply byte is shown. The
-// lines are redacted together with the bytes the error quotes, and the
-// error returned quotes those bytes redacted, so no later message (a note,
-// the verdict) holds a piece of a secret that rejoins the printed lines.
+// receive reads one reply and adds it to the transcript. Partial replies are
+// shown too, including a line cut off before its CRLF: every reply byte is
+// shown. The lines are redacted together with the bytes the error quotes,
+// and the error returned quotes those bytes redacted, so no later message (a
+// note, the verdict) holds a piece of a secret that rejoins the lines; the
+// transcript then redacts them with the rest of the session's server text.
 func (s *session) receive(stage Stage) (Reply, error) {
 	reply, err := readReply(s.r)
 	lines, err := s.t.redact.replyErr(reply.Lines, err)
-	s.t.server(stage, lines)
-	var cut *incompleteLineError
-	if errors.As(err, &cut) {
-		s.t.note(stage, "incomplete reply line (no CRLF): "+printable(cut.partial))
-	}
+	s.t.server(stage, lines, err)
 	return reply, err
 }
 
