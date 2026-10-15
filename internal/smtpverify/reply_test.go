@@ -235,6 +235,99 @@ func TestRedactorReply(t *testing.T) {
 	}
 }
 
+// A secret wrapped across a reply's lines can run on into the bytes that end
+// the read: a rejected line, framed or not, or a line cut off after the
+// secret or inside it. Those bytes are masked together with the lines, and
+// the error comes back quoting them masked, of the same type and cause.
+func TestRedactorReplyErr(t *testing.T) {
+	t.Parallel()
+	const key = "KEYtest_0123456789abcdef"
+	payload := authPlainPayload(key)
+	tests := []struct {
+		name      string
+		lines     []string
+		err       error
+		wantLines []string
+		wantErr   string
+		wantCause error
+	}{
+		{
+			name:      "rejected line completes the payload",
+			lines:     []string{"535-x " + payload[:5]},
+			err:       &badLineError{why: "code changed mid-reply", line: "550 " + payload[5:] + " y"},
+			wantLines: []string{},
+			wantErr:   `malformed reply: code changed mid-reply in "535-x ` + redactedPayload + ` y"`,
+			wantCause: errMalformedReply,
+		},
+		{
+			name:      "rejected line with no reply code completes the key",
+			lines:     []string{"220-a", "535-x " + key[:9]},
+			err:       &badLineError{why: "reply code 123 out of range", line: key[9:]},
+			wantLines: []string{"220-a"},
+			wantErr:   `malformed reply: reply code 123 out of range in "535-x ` + redactedKey + `"`,
+			wantCause: errMalformedReply,
+		},
+		{
+			name:      "cut-off line completes the key",
+			lines:     []string{"535-x " + key[:3]},
+			err:       &incompleteLineError{partial: "535 5.7.8 " + key[3:] + " (ch", err: io.ErrUnexpectedEOF},
+			wantLines: []string{},
+			wantErr:   `incomplete reply "535-x ` + redactedKey + ` (ch" (no CRLF): unexpected EOF`,
+			wantCause: io.ErrUnexpectedEOF,
+		},
+		{
+			name:      "cut inside the payload",
+			lines:     []string{"250-a", "535-x " + payload[:5]},
+			err:       &incompleteLineError{partial: "535 " + payload[5:20], err: os.ErrDeadlineExceeded},
+			wantLines: []string{"250-a"},
+			wantErr:   `incomplete reply "535-x ` + redactedPayload + `" (no CRLF): i/o timeout`,
+			wantCause: os.ErrDeadlineExceeded,
+		},
+		{
+			name:      "cut after the next line's framing",
+			lines:     []string{"535-x " + key[:5]},
+			err:       &incompleteLineError{partial: "535-", err: io.ErrUnexpectedEOF},
+			wantLines: []string{},
+			wantErr:   `incomplete reply "535-x ` + redactedKey + `" (no CRLF): unexpected EOF`,
+			wantCause: io.ErrUnexpectedEOF,
+		},
+		{
+			name:      "start within the cut-off line alone is kept",
+			err:       &incompleteLineError{partial: "250 2.0.0 Ok: queued as 0B6C5B5E-3A", err: io.ErrUnexpectedEOF},
+			wantLines: []string{},
+			wantErr:   `incomplete reply "250 2.0.0 Ok: queued as 0B6C5B5E-3A" (no CRLF): unexpected EOF`,
+			wantCause: io.ErrUnexpectedEOF,
+		},
+		{
+			name:      "nothing to mask",
+			lines:     []string{"250-a"},
+			err:       &badLineError{why: "code changed mid-reply", line: "251 b"},
+			wantLines: []string{"250-a"},
+			wantErr:   `malformed reply: code changed mid-reply in "251 b"`,
+			wantCause: errMalformedReply,
+		},
+		{
+			name:      "error quoting no bytes",
+			lines:     []string{"535-x " + key[:5], "535 " + key[5:]},
+			err:       io.ErrUnexpectedEOF,
+			wantLines: []string{"535-x " + redactedKey},
+			wantErr:   "unexpected EOF",
+			wantCause: io.ErrUnexpectedEOF,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			lines, err := newRedactor(key).replyErr(tt.lines, tt.err)
+			assert.Equal(t, tt.wantLines, lines)
+			require.Error(t, err)
+			assert.IsType(t, tt.err, err)
+			assert.Equal(t, tt.wantErr, err.Error())
+			assert.True(t, errors.Is(err, tt.wantCause), "cause kept: %v", err)
+		})
+	}
+}
+
 func TestPrintable(t *testing.T) {
 	t.Parallel()
 	tests := []struct{ in, want string }{

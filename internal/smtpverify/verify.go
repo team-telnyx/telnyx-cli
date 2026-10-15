@@ -242,23 +242,26 @@ func authPlainPayload(apiKey string) string {
 // transcript line and the Result are passed through it. The key is matched
 // raw and as printable and %q render it. A reply may also wrap an echo
 // across its lines, so a reply's lines are first masked together (see
-// reply).
+// reply), along with the bytes that ended the read if it failed (see
+// replyErr).
 type redactor struct {
 	r       *strings.Replacer
 	wrapped []wrappedSecret
 }
 
-// wrappedSecret matches one secret form whole or wrapped across the lines of
-// a reply, and the mask it gets.
+// wrappedSecret matches one secret form wrapped across the lines of a reply
+// or not, and the mask it gets: whole, or any start of it that runs to the
+// end of the text, where a cut-off reply may stop inside it.
 type wrappedSecret struct {
-	re   *regexp.Regexp
-	mask string
+	whole, start *regexp.Regexp
+	mask         string
 }
 
 // replyLineBreak is what may sit between two pieces of a secret a reply
 // wraps: the line break, with any blanks before it, then the next line's
-// reply code, separator and enhanced status code.
-const replyLineBreak = `(?:[\t\r ]*\n\d{3}[ -][\t ]*(?:\d\.\d{1,3}\.\d{1,3}[\t ]+)?)?`
+// reply code, separator and enhanced status code. Each part of that framing
+// is optional, as the next line may be one readReply rejects for lacking it.
+const replyLineBreak = `(?:[\t\r ]*\n(?:\d{3}[ -]?)?[\t ]*(?:\d\.\d{1,3}\.\d{1,3}[\t ]+)?)?`
 
 const (
 	redactedKey     = "<redacted: API key>"
@@ -275,14 +278,23 @@ func newRedactor(apiKey string) redactor {
 	}
 	rd := redactor{r: strings.NewReplacer(pairs...)}
 	for i := 0; i < len(pairs); i += 2 {
-		var pattern strings.Builder
+		var whole, start strings.Builder
 		for j, c := range pairs[i] {
-			if j > 0 {
-				pattern.WriteString(replyLineBreak)
+			char := regexp.QuoteMeta(string(c))
+			if j == 0 {
+				whole.WriteString(char)
+				start.WriteString(char)
+				continue
 			}
-			pattern.WriteString(regexp.QuoteMeta(string(c)))
+			whole.WriteString(replyLineBreak + char)
+			start.WriteString(replyLineBreak + `(?:` + char + `|\z)`) // past a cut, the rest never arrived
 		}
-		rd.wrapped = append(rd.wrapped, wrappedSecret{regexp.MustCompile(pattern.String()), pairs[i+1]})
+		start.WriteString(`\z`)
+		rd.wrapped = append(rd.wrapped, wrappedSecret{
+			whole: regexp.MustCompile(whole.String()),
+			start: regexp.MustCompile(start.String()),
+			mask:  pairs[i+1],
+		})
 	}
 	return rd
 }
@@ -299,7 +311,41 @@ func (rd redactor) reply(lines []string) []string {
 	}
 	text := strings.Join(lines, "\n") // reply lines never hold a LF
 	for _, w := range rd.wrapped {
-		text = w.re.ReplaceAllLiteralString(text, w.mask)
+		text = w.whole.ReplaceAllLiteralString(text, w.mask)
+	}
+	return strings.Split(text, "\n")
+}
+
+// replyErr is reply for a reply that readReply gave up on: lines are the
+// lines it read, and err may quote the bytes that ended the read, a line that
+// is not valid SMTP or one cut off before its CRLF. A secret wrapped across
+// the lines can run on into those bytes, so they are masked together with
+// the lines, as one more line; lines that a secret spans fold into the
+// quoted bytes. A cut can also stop inside a secret, so the start of one that
+// runs from the lines into the cut is masked too. err comes back quoting the
+// masked bytes, its cause kept; any other err comes back as is.
+func (rd redactor) replyErr(lines []string, err error) ([]string, error) {
+	switch e := err.(type) {
+	case *badLineError:
+		lines = rd.reply(append(slices.Clone(lines), e.line))
+		return lines[:len(lines)-1], &badLineError{why: e.why, line: lines[len(lines)-1]}
+	case *incompleteLineError:
+		lines = rd.cutOff(rd.reply(append(slices.Clone(lines), e.partial)))
+		return lines[:len(lines)-1], &incompleteLineError{partial: lines[len(lines)-1], err: e.err}
+	}
+	return rd.reply(lines), err
+}
+
+// cutOff masks the start of a secret left at the end of lines, the last of
+// which was cut off before its CRLF, if it runs on from an earlier line. A
+// start within the last line alone may be chance: a cut-off upper-case UUID
+// ending in "A" would begin the AUTH PLAIN payload.
+func (rd redactor) cutOff(lines []string) []string {
+	text := strings.Join(lines, "\n")
+	for _, w := range rd.wrapped {
+		if loc := w.start.FindStringIndex(text); loc != nil && strings.Contains(text[loc[0]:], "\n") {
+			text = text[:loc[0]] + w.mask
+		}
 	}
 	return strings.Split(text, "\n")
 }
@@ -330,8 +376,10 @@ func (t transcript) line(stage Stage, dir, text string) {
 
 func (t transcript) client(stage Stage, text string) { t.line(stage, "C:", text) }
 func (t transcript) note(stage Stage, text string)   { t.line(stage, "--", text) }
-func (t transcript) server(stage Stage, r Reply) {
-	for _, l := range t.redact.reply(r.Lines) {
+
+// server prints reply lines that redactor.reply or replyErr has masked.
+func (t transcript) server(stage Stage, lines []string) {
+	for _, l := range lines {
 		t.line(stage, "S:", printable(l))
 	}
 }
@@ -576,10 +624,14 @@ func (s *session) read(stage Stage, timeout time.Duration) (Reply, error) {
 }
 
 // receive reads one reply and prints it. Partial replies are printed too,
-// including a line cut off before its CRLF: every reply byte is shown.
+// including a line cut off before its CRLF: every reply byte is shown. The
+// lines are redacted together with the bytes the error quotes, and the
+// error returned quotes those bytes redacted, so no later message (a note,
+// the verdict) holds a piece of a secret that rejoins the printed lines.
 func (s *session) receive(stage Stage) (Reply, error) {
 	reply, err := readReply(s.r)
-	s.t.server(stage, reply)
+	lines, err := s.t.redact.replyErr(reply.Lines, err)
+	s.t.server(stage, lines)
 	var cut *incompleteLineError
 	if errors.As(err, &cut) {
 		s.t.note(stage, "incomplete reply line (no CRLF): "+printable(cut.partial))

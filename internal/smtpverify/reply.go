@@ -89,7 +89,7 @@ func readReply(r *bufio.Reader) (Reply, error) {
 			reply.Code = code
 			reply.Enhanced = parseEnhancedCode(code, line)
 		} else if code != reply.Code {
-			return reply, fmt.Errorf("%w: code changed mid-reply in %q", errMalformedReply, line)
+			return reply, &badLineError{why: "code changed mid-reply", line: line}
 		}
 		reply.Lines = append(reply.Lines, line)
 		if sep != '-' {
@@ -115,6 +115,23 @@ func (e *incompleteLineError) Error() string {
 }
 
 func (e *incompleteLineError) Unwrap() error { return e.err }
+
+// badLineError is a reply line that is not valid SMTP. The raw line is kept
+// apart from the message so that it can be redacted together with the reply
+// lines read before it (see redactor.replyErr).
+type badLineError struct {
+	why  string // what is wrong with the line, "" if just malformed
+	line string // raw line, CRLF stripped
+}
+
+func (e *badLineError) Error() string {
+	if e.why == "" {
+		return fmt.Sprintf("%v: %q", errMalformedReply, e.line)
+	}
+	return fmt.Sprintf("%v: %s in %q", errMalformedReply, e.why, e.line)
+}
+
+func (e *badLineError) Unwrap() error { return errMalformedReply }
 
 // readLine reads one CRLF- (or bare LF-) terminated line, bounded in length.
 // Unlike bufio.Reader.ReadLine, which hands back a fragment cut off by EOF
@@ -151,18 +168,18 @@ func readLine(r *bufio.Reader) (string, error) {
 // code and separator (' ' for a final line, '-' for a continuation).
 func parseReplyLine(line string) (int, byte, error) {
 	if len(line) < 3 {
-		return 0, 0, fmt.Errorf("%w: %q", errMalformedReply, line)
+		return 0, 0, &badLineError{line: line}
 	}
 	code := 0
 	for i := 0; i < 3; i++ {
 		c := line[i]
 		if c < '0' || c > '9' {
-			return 0, 0, fmt.Errorf("%w: %q", errMalformedReply, line)
+			return 0, 0, &badLineError{line: line}
 		}
 		code = code*10 + int(c-'0')
 	}
 	if code < 200 || code > 599 {
-		return 0, 0, fmt.Errorf("%w: reply code %d out of range in %q", errMalformedReply, code, line)
+		return 0, 0, &badLineError{why: fmt.Sprintf("reply code %d out of range", code), line: line}
 	}
 	if len(line) == 3 {
 		return code, ' ', nil
@@ -170,7 +187,7 @@ func parseReplyLine(line string) (int, byte, error) {
 	if sep := line[3]; sep == ' ' || sep == '-' {
 		return code, sep, nil
 	}
-	return 0, 0, fmt.Errorf("%w: %q", errMalformedReply, line)
+	return 0, 0, &badLineError{line: line}
 }
 
 // parseEnhancedCode extracts an RFC 3463 code whose class matches the reply

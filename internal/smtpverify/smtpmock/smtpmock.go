@@ -52,6 +52,10 @@ type Script struct {
 	RcptReply            string
 	DataReply            string // reply to DATA itself (354 by default)
 	DataEndReply         string // reply after the terminating "."
+	// AuthPartial replaces AuthReply with bytes written as is, with no
+	// final line ending; the server then closes the connection (a reply
+	// cut off mid-line).
+	AuthPartial string
 	// DataEndPartial replaces DataEndReply with bytes written as is, with no
 	// line ending: the server then closes the connection or, with HangOn
 	// ".", stalls (a reply cut off mid-line).
@@ -287,6 +291,10 @@ func (s *Server) handle(raw net.Conn) {
 			if !secure && !s.script.NoSTARTTLS {
 				send(ReplyEncryption)
 				continue
+			}
+			if s.script.AuthPartial != "" {
+				_, _ = conn.Write([]byte(s.script.AuthPartial))
+				return
 			}
 			reply := strings.ReplaceAll(or(s.script.AuthReply, ReplyAuthOK), Echo, line)
 			authed = strings.HasPrefix(reply, "235")

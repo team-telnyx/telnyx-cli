@@ -669,6 +669,121 @@ func TestAstraSplitPayloadMustRedact(t *testing.T) {
 	}
 }
 
+// The rest of a wrapped echo can also arrive in bytes that end the read: a
+// line whose reply code changed mid-reply, a line with no reply code, or a
+// line cut off before its CRLF, mid-secret or after it. Those bytes reach
+// the transcript and the Result through the error, so they are masked
+// together with the lines read before them. No piece may be printed or
+// returned, and joining the printed reply lines with the bytes quoted by
+// errors must not rebuild what the server sent of the secret.
+func TestAstraSplitIntoErrorMustRedact(t *testing.T) {
+	t.Parallel()
+	k0, k1 := testKey[:9], testKey[9:] // k1 = "123456789abcdef": parses as reply code 123
+	p0, p1 := authPayload[:13], authPayload[13:]
+	tests := []struct {
+		name        string
+		script      smtpmock.Script
+		sent        string   // what the server sent of the secret
+		pieces      []string // as the lines and the bytes ending the read carry it
+		wantVerdict string
+		wantVerbs   []string
+		wantOutput  []string
+	}{
+		{
+			name:        "reply code changes mid-reply",
+			script:      smtpmock.Script{AuthReply: "535-5.7.8 Authentication credentials invalid: AUTH PLAIN " + p0 + "\n550 " + p1},
+			sent:        authPayload,
+			pieces:      []string{p0, p1},
+			wantVerdict: `FAILED at AUTH: malformed reply: code changed mid-reply in "535-5.7.8 Authentication credentials invalid: AUTH PLAIN <redacted: AUTH PLAIN credentials>"`,
+			wantVerbs:   verbsUpToAuth,
+		},
+		{
+			name:        "line with no reply code",
+			script:      smtpmock.Script{AuthReply: "535-5.7.8 Authentication credentials invalid for apikey:" + k0 + "\n" + k1},
+			sent:        testKey,
+			pieces:      []string{k0, k1},
+			wantVerdict: `FAILED at AUTH: malformed reply: reply code 123 out of range in "535-5.7.8 Authentication credentials invalid for apikey:<redacted: API key>"`,
+			wantVerbs:   verbsUpToAuth,
+		},
+		{
+			name:        "line cut off after the second half",
+			script:      smtpmock.Script{AuthPartial: "535-5.7.8 Authentication credentials invalid for apikey:" + k0 + "\r\n535 5.7.8 " + k1 + " (check the k"},
+			sent:        testKey,
+			pieces:      []string{k0, k1},
+			wantVerdict: `FAILED at AUTH: incomplete reply "535-5.7.8 Authentication credentials invalid for apikey:<redacted: API key> (check the k" (no CRLF): connection closed by the server`,
+			wantVerbs:   verbsUpToAuth,
+			wantOutput:  []string{"[AUTH]      -- incomplete reply line (no CRLF): 535-5.7.8 Authentication credentials invalid for apikey:<redacted: API key> (check the k\n"},
+		},
+		{
+			name:        "line cut off inside the second half",
+			script:      smtpmock.Script{AuthPartial: "535-5.7.8 Authentication credentials invalid: AUTH PLAIN " + p0 + "\r\n535 5.7.8 " + p1[:17]},
+			sent:        p0 + p1[:17],
+			pieces:      []string{p0, p1[:17]},
+			wantVerdict: `FAILED at AUTH: incomplete reply "535-5.7.8 Authentication credentials invalid: AUTH PLAIN <redacted: AUTH PLAIN credentials>" (no CRLF): connection closed by the server`,
+			wantVerbs:   verbsUpToAuth,
+			wantOutput:  []string{"[AUTH]      -- incomplete reply line (no CRLF): 535-5.7.8 Authentication credentials invalid: AUTH PLAIN <redacted: AUTH PLAIN credentials>\n"},
+		},
+		{
+			name: "QUIT reply code changes mid-reply",
+			script: smtpmock.Script{
+				AuthReply: "535 5.7.8 Authentication credentials invalid",
+				QuitReply: "221-Bye apikey:" + k0 + "\n421 " + k1,
+			},
+			sent:        testKey,
+			pieces:      []string{k0, k1},
+			wantVerdict: "FAILED at AUTH: 535 5.7.8 Authentication credentials invalid",
+			wantVerbs:   with(verbsUpToAuth, "QUIT"),
+			wantOutput:  []string{`[QUIT]      -- no reply to QUIT: malformed reply: code changed mid-reply in "221-Bye apikey:<redacted: API key>"` + "\n"},
+		},
+	}
+	framing := regexp.MustCompile(`^\d{3}[ -](?:\d\.\d{1,3}\.\d{1,3} )?`)
+	quoted := regexp.MustCompile(`"(?:[^"\\]|\\.)*"`)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			require.Equal(t, tt.sent, strings.Join(tt.pieces, ""))
+			srv := smtpmock.Start(t, tt.script)
+			res, out := run(t, config(srv))
+
+			assert.Equal(t, tt.wantVerdict, res.Verdict())
+			assert.Equal(t, smtpverify.StageAuth, res.Stage)
+			for _, want := range tt.wantOutput {
+				assert.Contains(t, out, want)
+			}
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, tt.wantVerbs, srv.Verbs())
+
+			texts := map[string]string{"output": out, "verdict": res.Verdict(), "detail": res.Detail}
+			if res.Reply != nil {
+				texts["reply"] = res.Reply.Text()
+			}
+			for name, s := range texts {
+				for _, piece := range tt.pieces {
+					assert.NotContains(t, s, piece, "a piece of the secret in the %s", name)
+				}
+			}
+			// Every reply byte the output shows, in order: the reply lines,
+			// the cut-off fragment, and the lines errors quote.
+			var joined strings.Builder
+			for _, l := range strings.Split(out, "\n") {
+				if _, text, ok := strings.Cut(l, " S: "); ok {
+					joined.WriteString(framing.ReplaceAllString(text, ""))
+				}
+				if _, text, ok := strings.Cut(l, " -- incomplete reply line (no CRLF): "); ok {
+					joined.WriteString(framing.ReplaceAllString(text, ""))
+				}
+				for _, q := range quoted.FindAllString(l, -1) {
+					text, err := strconv.Unquote(q)
+					require.NoError(t, err)
+					joined.WriteString(framing.ReplaceAllString(text, ""))
+				}
+			}
+			assert.NotContains(t, joined.String(), tt.sent, "the printed reply lines and error texts rebuild the secret")
+		})
+	}
+}
+
 func TestRunDialFailures(t *testing.T) {
 	t.Parallel()
 
