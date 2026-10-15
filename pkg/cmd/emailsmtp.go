@@ -10,7 +10,9 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 
 	"github.com/team-telnyx/telnyx-cli/internal/smtpverify"
 	"github.com/urfave/cli/v3"
@@ -53,6 +55,7 @@ func newEmailSMTPVerifyCommand() *cli.Command {
 			"acceptance reply \"250 2.0.0 Ok: queued as <uuid>\". The session stops at the\n" +
 			"first failing reply. Exit status is 0 only when verified; scripts should check\n" +
 			"it rather than the output.\n\n" +
+			"Ctrl-C stops the session and still prints the transcript so far.\n\n" +
 			"The API key comes from the global --api-key flag or TELNYX_API_KEY.\n" +
 			"This sends a real message, billed like any other send.",
 		Flags: []cli.Flag{
@@ -102,6 +105,12 @@ func handleEmailSMTPVerify(ctx context.Context, cmd *cli.Command) error {
 	if out == nil {
 		out = os.Stdout
 	}
+	// Ctrl-C or SIGTERM ends the session early rather than the process: Run
+	// still prints the transcript so far, redacted, and an "interrupted"
+	// verdict. A second signal ends the process at once.
+	ctx, stop := signal.NotifyContext(ctx, os.Interrupt, syscall.SIGTERM)
+	defer stop()
+	context.AfterFunc(ctx, stop)
 	res, err := smtpverify.Run(ctx, cfg, out)
 	if err != nil {
 		return err

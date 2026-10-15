@@ -134,7 +134,7 @@ telnyx email smtp verify \
   --to you@your-verified-domain.com
 ```
 
-The command always issues STARTTLS before sending credentials, then authenticates with AUTH PLAIN using the literal username `apikey`. It stops at the first failing reply. The last line is always the verdict, `VERIFIED: message UUID <uuid>` (exit status 0) or `FAILED at <stage>: <server reply>` (exit status 1), with a portal note or a hint just before it. VERIFIED requires the exact acceptance reply `250 2.0.0 Ok: queued as <uuid>`; a reply cut off before its line ending never counts. The API key never appears in the output, even if the server echoes it back. Scripts should check the exit status rather than parse the output.
+The command always issues STARTTLS before sending credentials, then authenticates with AUTH PLAIN using the literal username `apikey`. It stops at the first failing reply. The last line is always the verdict, `VERIFIED: message UUID <uuid>` (exit status 0) or `FAILED at <stage>: <server reply>` (exit status 1), with a portal note or a hint just before it. VERIFIED requires the exact acceptance reply `250 2.0.0 Ok: queued as <uuid>`; a reply cut off before its line ending never counts. The API key never appears in the output, even if the server echoes it back. Ctrl-C stops the session and still prints the transcript so far, redacted, before an `interrupted` verdict. Scripts should check the exit status rather than parse the output.
 
 - `--host` (or `TELNYX_SMTP_HOST`) is required; there is no default host yet.
 - `--port` defaults to 587.

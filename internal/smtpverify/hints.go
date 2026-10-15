@@ -64,6 +64,7 @@ const (
 	hintInjected        = "The server sent unexpected data before the TLS handshake: something on the network path may be tampering with the connection. Credentials were not sent."
 	hintDNS             = "The host name does not resolve. Check --host."
 	hintDial            = "Could not connect. Check --host and --port, and that your network allows outbound connections to that port."
+	hintWithheld        = "The server sent more reply text than could be checked for the API key in time, so the transcript is not shown. Check --host and --port."
 )
 
 func hintTimeout(d time.Duration) string {

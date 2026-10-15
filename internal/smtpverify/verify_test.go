@@ -800,12 +800,14 @@ var (
 
 // assertNothingRebuildsKey checks every surface a session shows: the output,
 // the verdict, Detail and Reply. None may hold a piece the server sent, nor
-// 16 characters in a row of the key or its AUTH PLAIN payload, padded or
-// not. Nor may the server text they print, joined in the order the output
-// shows it (reply lines, cut-off fragments, bytes errors quote, the
-// verdict's reply), framing removed: not the secret the server sent, not 16
-// characters of a secret, and not 8 bytes of the key when its base64 runs,
-// alone or all run together, are decoded unpadded at every alignment.
+// smtpverify.MinFragment characters in a row of the key or its AUTH PLAIN
+// payload, padded or not. Nor may the server text they print, joined in the
+// order the output shows it (reply lines, cut-off fragments, bytes errors
+// quote, the verdict's reply), framing removed: not the secret the server
+// sent, not MinFragment characters of a secret, and not MinFragment bytes of
+// the key when its base64 runs, alone or all run together, are decoded at
+// every alignment ("=" padding carries no bytes, so this covers the padded
+// and unpadded payload alike).
 func assertNothingRebuildsKey(t *testing.T, key, sent string, pieces []string, res smtpverify.Result, out string) {
 	t.Helper()
 	surfaces := map[string]string{"output": out, "verdict": res.Verdict(), "detail": res.Detail}
@@ -837,6 +839,7 @@ func assertNothingRebuildsKey(t *testing.T, key, sent string, pieces []string, r
 	}
 	surfaces["joined server text"] = joined.String()
 
+	n := smtpverify.MinFragment
 	payload := payloadOf(key)
 	forms := []string{key, payload, strings.TrimRight(payload, "=")}
 	for name, s := range surfaces {
@@ -844,8 +847,8 @@ func assertNothingRebuildsKey(t *testing.T, key, sent string, pieces []string, r
 			assert.NotContains(t, s, piece, "a piece of the secret in the %s", name)
 		}
 		for _, form := range forms {
-			for i := 0; i+16 <= len(form); i++ {
-				assert.NotContains(t, s, form[i:i+16], "16 characters of a secret in the %s", name)
+			for i := 0; i+n <= len(form); i++ {
+				assert.NotContains(t, s, form[i:i+n], "%d characters of a secret in the %s", n, name)
 			}
 		}
 	}
@@ -859,8 +862,8 @@ func assertNothingRebuildsKey(t *testing.T, key, sent string, pieces []string, r
 			}
 			decoded, err := base64.RawStdEncoding.DecodeString(b64)
 			require.NoError(t, err)
-			for i := 0; i+8 <= len(key); i++ {
-				assert.NotContains(t, string(decoded), key[i:i+8], "decoding the printed base64 gives back the key")
+			for i := 0; i+n <= len(key); i++ {
+				assert.NotContains(t, string(decoded), key[i:i+n], "decoding the printed base64 gives back the key")
 			}
 		}
 	}
@@ -1089,6 +1092,151 @@ func TestIndependentAstraSplitCutAtCRMustRedact(t *testing.T) {
 	}
 }
 
+// chunks splits s into pieces of n bytes, the last one perhaps shorter.
+func chunks(s string, n int) []string {
+	var pieces []string
+	for i := 0; i < len(s); i += n {
+		pieces = append(pieces, s[i:min(i+n, len(s))])
+	}
+	return pieces
+}
+
+// Astra R6: pieces under 16 characters, each with other text around it, gave
+// back the whole key: halves around "221 Bye", halves and 12-character chunks
+// in reverse order, five labeled replies, labeled 12-character chunks of the
+// AUTH PLAIN payload. Any smtpverify.MinFragment characters in a row of a
+// secret are masked wherever they are, whatever text is around them and in
+// whatever order they come.
+func TestAstraR6PiecesMustRedact(t *testing.T) {
+	t.Parallel()
+	k := testKey
+	ck := longKey[:60]
+	c := chunks(ck, 12)
+	l := []string{longKey[:13], longKey[13:26], longKey[26:39], longKey[39:51], longKey[51:]}
+	p := chunks(payloadOf(longKey), 12)
+	n := chunks(testKey, smtpverify.MinFragment)
+	const verified = "VERIFIED: message UUID " + smtpmock.QueuedUUID
+	tests := []struct {
+		name        string
+		key         string
+		script      smtpmock.Script
+		sent        string   // what the server sent of the secret, in order
+		pieces      []string // as the replies carry it, in that order
+		wantVerdict string
+		wantVerbs   []string
+		wantOutput  []string
+	}{
+		{
+			name:        "key halves around other text",
+			key:         testKey,
+			script:      smtpmock.Script{AuthReply: "535 5.7.8 Authentication credentials invalid for apikey:" + k[:12], QuitReply: "221 Bye " + k[12:]},
+			sent:        testKey,
+			pieces:      []string{k[:12], k[12:]},
+			wantVerdict: "FAILED at AUTH: 535 5.7.8 Authentication credentials invalid for apikey:<redacted: API key>",
+			wantVerbs:   with(verbsUpToAuth, "QUIT"),
+			wantOutput:  []string{"[QUIT]      S: 221 Bye <redacted: API key>\n"},
+		},
+		{
+			name:        "key halves in reverse order",
+			key:         testKey,
+			script:      smtpmock.Script{AuthReply: smtpmock.ReplyAuthOK + " " + k[12:], MailReply: "250 2.1.0 Ok " + k[:12]},
+			sent:        testKey,
+			pieces:      []string{k[:12], k[12:]},
+			wantVerdict: verified,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantOutput:  []string{"[AUTH]      S: " + smtpmock.ReplyAuthOK + " <redacted: API key>\n", "[MAIL FROM] S: 250 2.1.0 Ok <redacted: API key>\n"},
+		},
+		{
+			name: "12-character chunks in reverse order",
+			key:  ck,
+			script: smtpmock.Script{
+				AuthReply: smtpmock.ReplyAuthOK + " " + c[4],
+				MailReply: "250 2.1.0 Ok " + c[3],
+				RcptReply: "250 2.1.5 Ok " + c[2],
+				DataReply: "354 go ahead " + c[1],
+				QuitReply: "221 Bye " + c[0],
+			},
+			sent:        ck,
+			pieces:      c,
+			wantVerdict: verified,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantOutput: []string{
+				"[AUTH]      S: " + smtpmock.ReplyAuthOK + " <redacted: API key>\n",
+				"[DATA]      S: 354 go ahead <redacted: API key>\n",
+				"[QUIT]      S: 221 Bye <redacted: API key>\n",
+			},
+		},
+		{
+			name: "key across five labeled replies",
+			key:  longKey,
+			script: smtpmock.Script{
+				AuthReply:    smtpmock.ReplyAuthOK + " part 1/5: " + l[0],
+				MailReply:    "250 2.1.0 Ok part 2/5: " + l[1],
+				RcptReply:    "250 2.1.5 Ok part 3/5: " + l[2],
+				DataReply:    "354 part 4/5: " + l[3],
+				DataEndReply: "250 2.0.0 part 5/5: " + l[4],
+			},
+			sent:        longKey,
+			pieces:      l,
+			wantVerdict: "FAILED at DATA: 250 2.0.0 part 5/5: <redacted: API key>",
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantOutput:  []string{"[MAIL FROM] S: 250 2.1.0 Ok part 2/5: <redacted: API key>\n", "[DATA]      S: 354 part 4/5: <redacted: API key>\n"},
+		},
+		{
+			name: "labeled 12-character chunks of the AUTH PLAIN payload",
+			key:  longKey,
+			script: smtpmock.Script{
+				AuthReply: "235-2.7.0 chunk 1: " + p[0] + "\n235-2.7.0 chunk 2: " + p[1] + "\n" + smtpmock.ReplyAuthOK + " chunk 3: " + p[2],
+				MailReply: "250-2.1.0 chunk 4: " + p[3] + "\n250 2.1.0 Ok chunk 5: " + p[4],
+				RcptReply: "250-2.1.5 chunk 6: " + p[5] + "\n250 2.1.5 Ok chunk 7: " + p[6],
+				DataReply: "354 chunk 8: " + p[7],
+			},
+			sent:        payloadOf(longKey),
+			pieces:      p,
+			wantVerdict: verified,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantOutput: []string{
+				"[AUTH]      S: 235-2.7.0 chunk 1: <redacted: AUTH PLAIN credentials>\n",
+				"[RCPT TO]   S: 250 2.1.5 Ok chunk 7: <redacted: AUTH PLAIN credentials>\n",
+				"[DATA]      S: 354 chunk 8: <redacted: AUTH PLAIN credentials>\n",
+			},
+		},
+		{
+			name: "labeled chunks of MinFragment characters out of order",
+			key:  testKey,
+			script: smtpmock.Script{
+				AuthReply: smtpmock.ReplyAuthOK + " [2] " + n[1],
+				MailReply: "250 2.1.0 Ok [3] " + n[2],
+				RcptReply: "250 2.1.5 Ok [1] " + n[0],
+			},
+			sent:        testKey,
+			pieces:      n,
+			wantVerdict: verified,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantOutput:  []string{"[RCPT TO]   S: 250 2.1.5 Ok [1] <redacted: API key>\n"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			require.Equal(t, tt.sent, strings.Join(tt.pieces, ""))
+			srv := smtpmock.Start(t, tt.script)
+			cfg := config(srv)
+			cfg.APIKey = tt.key
+			res, out := run(t, cfg)
+
+			assert.Equal(t, tt.wantVerdict, res.Verdict())
+			for _, want := range tt.wantOutput {
+				assert.Contains(t, out, want)
+			}
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, tt.wantVerbs, srv.Verbs())
+			assertNothingRebuildsKey(t, tt.key, tt.sent, tt.pieces, res, out)
+		})
+	}
+}
+
 // The false-positive control for the rules above: a cut-off reply of UUID
 // tails, an address and base64 MIME text, ending in what starts the AUTH
 // PLAIN payload ("A"), CR or not, has nothing in common with the session's
@@ -1178,6 +1326,74 @@ func TestRunCanceled(t *testing.T) {
 	assert.Equal(t, smtpverify.StageAuth, res.Stage)
 	assert.True(t, strings.HasPrefix(res.Verdict(), "FAILED at AUTH: canceled"), res.Verdict())
 	assertVerdictLast(t, res, out.String())
+}
+
+// Canceling the context, as Ctrl-C does, ends the wait for the final DATA
+// reply at once; the transcript so far is still written, masked like any
+// other, then the hint and an "interrupted" verdict.
+func TestRunInterruptedFlushesTranscript(t *testing.T) {
+	t.Parallel()
+	srv := smtpmock.Start(t, smtpmock.Script{
+		AuthReply: smtpmock.ReplyAuthOK + " for apikey:" + testKey[:12],
+		MailReply: "250 2.1.0 Ok " + testKey[12:],
+		HangOn:    ".",
+	})
+	cfg := config(srv)
+	cfg.DataTimeout = 30 * time.Second
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	go func() {
+		for len(srv.Bodies()) == 0 && ctx.Err() == nil {
+			time.Sleep(5 * time.Millisecond)
+		}
+		cancel() // the message is sent: the session waits for the final reply
+	}()
+	var out bytes.Buffer
+	start := time.Now()
+	res, err := smtpverify.Run(ctx, cfg, &out)
+	require.NoError(t, err)
+	assert.Less(t, time.Since(start), 10*time.Second, "the interrupt ends the wait")
+
+	assert.Equal(t, "FAILED at DATA: interrupted", res.Verdict())
+	assert.Equal(t, "The command was interrupted.", res.Hint)
+	for _, want := range []string{
+		"[AUTH]      S: " + smtpmock.ReplyAuthOK + " for apikey:<redacted: API key>\n",
+		"[MAIL FROM] S: 250 2.1.0 Ok <redacted: API key>\n",
+		"[DATA]      C: .\n",
+	} {
+		assert.Contains(t, out.String(), want)
+	}
+	assertVerdictLast(t, res, out.String())
+	assertNothingRebuildsKey(t, testKey, testKey, []string{testKey[:12], testKey[12:]}, res, out.String())
+}
+
+// Astra R6: a banner the parser accepts, of lines full of framing ("250\r"
+// over and over), made redaction quadratic: 16 KB took 10 s and 7.7 GB, far
+// past the command timeout. Redaction is linear now (see
+// TestSessionRedactionIsLinear), so such a session ends as quickly as any.
+func TestRunHostileBannerIsBounded(t *testing.T) {
+	// Not parallel: timed.
+	for name, body := range map[string]string{
+		"framing over and over":        strings.Repeat("250\r", 510),
+		"framing that opens each line": "\r" + strings.Repeat("250\r", 510),
+	} {
+		t.Run(name, func(t *testing.T) {
+			var lines []string
+			for size := 0; size < 16<<10; size += 4 + len(body) {
+				lines = append(lines, "220-"+body)
+			}
+			lines[len(lines)-1] = "220 " + body
+			srv := smtpmock.Start(t, smtpmock.Script{Banner: strings.Join(lines, "\n")})
+			cfg := config(srv)
+			cfg.CommandTimeout = time.Second
+			start := time.Now()
+			res, out := run(t, cfg)
+			assert.Less(t, time.Since(start), 500*time.Millisecond)
+			assert.True(t, res.Verified, res.Verdict())
+			assert.Contains(t, out, "[CONNECT]   S: 220-"+printableCR(body)+"\n")
+			assertVerdictLast(t, res, out)
+		})
+	}
 }
 
 func TestRunConfigValidation(t *testing.T) {

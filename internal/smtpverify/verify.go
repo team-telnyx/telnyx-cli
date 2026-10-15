@@ -107,14 +107,17 @@ func (r Result) Verdict() string {
 // session outcome, including failures, is reported in the Result. Neither
 // the output nor the Result carries the API key: server text that echoes
 // it, or the AUTH PLAIN payload, is redacted. Nothing is written until the
-// session ends, as all of its server text is redacted together.
+// session ends, as all of its server text is redacted together. Canceling
+// ctx ends the session early, with an "interrupted" verdict (a deadline
+// passing, with a "canceled" one); the transcript so far is still written,
+// redacted.
 func Run(ctx context.Context, cfg Config, out io.Writer) (Result, error) {
 	cfg, err := cfg.normalize()
 	if err != nil {
 		return Result{}, err
 	}
 	s := &session{cfg: cfg, t: &transcript{w: out, redact: newRedactor(cfg.APIKey)}}
-	res := s.t.flush(s.run(ctx))
+	res := s.t.flush(ctx, s.run(ctx))
 	if res.Verified {
 		fmt.Fprintf(out, "\nLook the message up by the UUID below in the Mission Control portal message log.\n%s\n", res.Verdict())
 	} else {
@@ -253,11 +256,14 @@ type redactor struct {
 
 // wrappedSecret matches one secret form wrapped across the lines of a reply
 // or not, and the mask it gets: whole, or any start of it that runs to the
-// end of the text, where a cut-off reply may stop inside it.
+// end of the text, where a cut-off reply may stop inside it. grams holds
+// each minFragment characters in a row of it, or all of it if shorter (see
+// cover).
 type wrappedSecret struct {
 	secret       string
 	whole, start *regexp.Regexp
 	mask         string
+	grams        map[string]bool
 }
 
 // replyLineBreak is what may sit between two pieces of a secret a reply
@@ -293,17 +299,28 @@ func newRedactor(apiKey string) redactor {
 			start.WriteString(replyLineBreak + `(?:` + char + `|\z)`) // past a cut, the rest never arrived
 		}
 		start.WriteString(`\z`)
+		grams := map[string]bool{}
+		for n, j := min(minFragment, len(pairs[i])), 0; j+n <= len(pairs[i]); j++ {
+			grams[pairs[i][j:j+n]] = true
+		}
 		rd.wrapped = append(rd.wrapped, wrappedSecret{
 			secret: pairs[i],
 			whole:  regexp.MustCompile(whole.String()),
 			start:  regexp.MustCompile(start.String()),
 			mask:   pairs[i+1],
+			grams:  grams,
 		})
 	}
 	return rd
 }
 
-func (rd redactor) mask(s string) string { return rd.r.Replace(s) }
+// mask masks each piece of minFragment or more characters of a secret in s
+// (see cover), and each whole secret.
+func (rd redactor) mask(s string) string {
+	m := make([]int, len(s))
+	rd.cover(s, m)
+	return rd.r.Replace(rd.render(s, m))
+}
 
 // reply masks a secret wrapped across a reply's lines, which mask misses
 // because no line holds it whole. The masked span takes in the line breaks
@@ -355,11 +372,20 @@ func (rd redactor) cutOff(lines []string) []string {
 }
 
 // minFragment is how many characters of a secret in a row are masked
-// wherever they are, on their own too: a line cut off before the "=="
-// padding of the AUTH PLAIN payload decodes, unpadded, to the whole key.
-// Text that is not a piece of this session's own secrets does not hold 16
-// of their characters in a row by chance.
-const minFragment = 16
+// wherever they are (see cover), and how long a run of a secret that line
+// breaks and framing split must be to be masked (see spanning). It is the
+// shortest length that server text which is not this session's own secret
+// does not match by chance. Against 20,000 random keys of the Telnyx format
+// ("KEY", 32 upper-case hex digits, "_", 22 letters and digits), each with a
+// session of server text far denser in UUIDs, upper-case hex queue IDs,
+// dates, Message-IDs, addresses and MIME base64 than a real one, 8 masked
+// nothing; 7 masked text in 1 session, 6 in 5 and 5 in 85. Upper-case hex
+// and digits matched the key's hex digits, and runs split by framing joined
+// the ends of lines, as "250-SIZE 25000000" and "250-8BITMIME" do against a
+// key holding "000008B". TestCoverageFalsePositives keeps a sample of that.
+// Shorter pieces are shown: up to 7 characters of a key are what chance text
+// holds too.
+const minFragment = 8
 
 // heardText is a string of server bytes that the output shows: a reply
 // line, or the bytes a read error quotes.
@@ -375,20 +401,23 @@ type heardText struct {
 // transcript and the Result. heard is that text in the order the output
 // shows it, the Result's repeat of it last. Joined line by line, it is
 // searched for
-//   - each run of minFragment or more characters of a secret, or all of a
-//     shorter secret;
+//   - each piece of minFragment or more characters of a secret, or all of a
+//     shorter secret, wherever it is and whatever is around it (see cover);
+//   - each run of minFragment or more characters of a secret that a gap
+//     splits, its pieces shorter perhaps (see spanning);
 //   - each start of a secret that runs to the end of a cut-off text, the
 //     rest never having arrived, and crosses a line break on the way. Blanks
 //     or a CR may follow it before the cut. A start within the cut-off line
 //     alone may be chance: a cut-off upper-case UUID ending in "A" would
 //     begin the AUTH PLAIN payload.
 //
-// Gaps may split a run (see gapEnds). A run's characters are masked, and the
-// gaps between them within a line; the framing that opens a line is kept. A
-// text shown more than once is masked the same way each time, by the runs
-// found in any of its showings: one showing left unmasked would give away
-// what another masked. session returns what may be shown of each text.
-func (rd redactor) session(heard []heardText) map[string]string {
+// A piece or run's characters are masked, and the gaps between them within a
+// line; the framing that opens a line is kept. A text shown more than once is
+// masked the same way each time, by what was found in any of its showings:
+// one showing left unmasked would give away what another masked. session
+// returns what may be shown of each text. It gives up with errRedactBudget
+// once ctx is done.
+func (rd redactor) session(ctx context.Context, heard []heardText) (map[string]string, error) {
 	var b strings.Builder
 	var cuts []int
 	for _, h := range heard {
@@ -399,10 +428,15 @@ func (rd redactor) session(heard []heardText) map[string]string {
 		b.WriteByte('\n')
 	}
 	text := b.String()
-	masks := make([]int, len(text))             // 1 + the index in rd.wrapped of the secret masked at each byte, or 0
-	for i := len(rd.wrapped) - 1; i >= 0; i-- { // the first secret wins, as in mask
-		for p, in := range runs(text, rd.wrapped[i].secret, cuts) {
-			if in {
+	masks := make([]int, len(text)) // 1 + the index in rd.wrapped of the secret masked at each byte, or 0
+	rd.cover(text, masks)
+	for i, w := range rd.wrapped {
+		in, err := spanning(ctx, text, w.secret, cuts)
+		if err != nil {
+			return nil, err
+		}
+		for p, ok := range in {
+			if ok && (masks[p] == 0 || i+1 < masks[p]) { // the first secret wins, as in mask
 				masks[p] = i + 1
 			}
 		}
@@ -425,246 +459,381 @@ func (rd redactor) session(heard []heardText) map[string]string {
 	}
 	shown := make(map[string]string, len(union))
 	for s, m := range union {
-		var out strings.Builder
-		for i := 0; i < len(s); {
-			j := i + 1
-			for j < len(s) && m[j] == m[i] {
-				j++
-			}
-			if m[i] == 0 {
-				out.WriteString(s[i:j])
-			} else {
-				out.WriteString(rd.wrapped[m[i]-1].mask)
-			}
-			i = j
-		}
-		shown[s] = out.String()
+		shown[s] = rd.render(s, m)
 	}
-	return shown
+	return shown, nil
 }
 
-// runs reports, for each byte of text, whether session masks it for secret;
-// cuts are the ends of cut-off texts. A run is a path through states, each a
-// byte of text read as a character of secret, from one state to the state
-// reading the next character at the next byte or past a gap. The longest
-// run through a state is the longest path into it joined to the longest
-// path out of it.
-func runs(text, secret string, cuts []int) []bool {
-	n := len(text)
-	var at [256][]int // the indexes in secret of each byte value
-	for j := 0; j < len(secret); j++ {
-		at[secret[j]] = append(at[secret[j]], j)
-	}
-	// The states of text[p] are numbered from first[p], one per index in
-	// at[text[p]]; pos and char map a state back to its byte and index.
-	first := make([]int, n+1)
-	for p := 0; p < n; p++ {
-		first[p+1] = first[p] + len(at[text[p]])
-	}
-	pos, char := make([]int, first[n]), make([]int, first[n])
-	for p := 0; p < n; p++ {
-		for i, j := range at[text[p]] {
-			pos[first[p]+i], char[first[p]+i] = p, j
-		}
-	}
-	gaps := map[int][]int{}
-	ends := func(q int) []int {
-		e, ok := gaps[q]
-		if !ok {
-			e = gapEnds(text, q)
-			gaps[q] = e
-		}
-		return e
-	}
-	// next calls f with each state that can follow state s, the byte it
-	// reads and whether a gap comes between.
-	next := func(s int, f func(s2, r int, gap bool)) {
-		p, j := pos[s], char[s]
-		if j+1 == len(secret) {
-			return
-		}
-		follow := func(r int, gap bool) {
-			if i := slices.Index(at[text[r]], j+1); i >= 0 {
-				f(first[r]+i, r, gap)
-			}
-		}
-		if p+1 < n {
-			follow(p+1, false)
-		}
-		for _, r := range ends(p + 1) {
-			if r < n {
-				follow(r, true)
+// cover sets m[i] for each byte of text that is part of a piece of
+// minFragment or more characters of a secret, all of a shorter one, to 1 +
+// the index in rd.wrapped of that secret; the first secret wins, as in mask.
+// Those bytes are the windows of text that are minFragment characters of a
+// secret, run together: every piece that long of a secret is masked wherever
+// it is, whatever text is around it, in whatever order and however often the
+// pieces come. Each window is looked up in the set of the secret's own, so
+// cover takes time linear in the length of text.
+func (rd redactor) cover(text string, m []int) {
+	for i := len(rd.wrapped) - 1; i >= 0; i-- {
+		w := rd.wrapped[i]
+		n := min(minFragment, len(w.secret))
+		for j, end := 0, 0; j+n <= len(text); j++ {
+			if w.grams[text[j:j+n]] {
+				for k := max(j, end); k < j+n; k++ {
+					m[k] = i + 1
+				}
+				end = j + n
 			}
 		}
 	}
-	into := make([]int, first[n]) // longest path into each state, the state included
-	// For each state a path from secret[0] leads into: whether one crosses
-	// a gap, and the states before it on such paths.
-	crossed := make([]bool, first[n])
-	before := map[int][]int{}
-	for s := range into {
-		into[s] = max(into[s], 1)
-		next(s, func(s2, _ int, gap bool) {
-			into[s2] = max(into[s2], into[s]+1)
-			if into[s] == char[s]+1 {
-				crossed[s2] = crossed[s2] || crossed[s] || gap
-				before[s2] = append(before[s2], s)
-			}
-		})
+}
+
+// render shows s with each run of bytes that m marks for the same secret
+// replaced by that secret's mask.
+func (rd redactor) render(s string, m []int) string {
+	var out strings.Builder
+	for i := 0; i < len(s); {
+		j := i + 1
+		for j < len(s) && m[j] == m[i] {
+			j++
+		}
+		if m[i] == 0 {
+			out.WriteString(s[i:j])
+		} else {
+			out.WriteString(rd.wrapped[m[i]-1].mask)
+		}
+		i = j
 	}
-	out := make([]int, first[n]) // longest path out of each state, the state included
-	for s := len(out) - 1; s >= 0; s-- {
-		out[s] = 1
-		next(s, func(s2, _ int, _ bool) { out[s] = max(out[s], out[s2]+1) })
+	return out.String()
+}
+
+// errRedactBudget is session giving up: masking the server text took longer
+// than its budget (see redactBudget).
+var errRedactBudget = errors.New("redaction budget exceeded")
+
+// redactBudget is how long session may take for n bytes of server text: 1 s
+// per MB, at least 1 s. Masking takes time linear in n, a few ms per 100 KB,
+// so only a fault reaches it; the transcript is then withheld (see flush).
+var redactBudget = func(n int) time.Duration {
+	return max(time.Second, time.Duration(n)*time.Second/(1<<20))
+}
+
+// maxSpanStates bounds the states spanning keeps (about 9 bytes each): the
+// text's length times how often a character occurs in the secret.
+const maxSpanStates = 1 << 24
+
+// spanning reports, for each byte of text, whether it is part of a run of a
+// secret that a gap splits, or of a start of one that runs into a cut; cuts
+// are the ends of cut-off texts. Its pieces may each be shorter than
+// minFragment, which cover would miss. A run is a path through states, each
+// a byte of text read as a character of secret, from one state to the state
+// reading the next character at the next byte or past a gap. The longest run
+// through a state is the longest path into it joined to the longest path out
+// of it.
+//
+// A state has at most one successor at the next byte and one at each end of
+// the gap after it, and a gap has a bounded number of ends (see gapEnds), so
+// each of the passes over the states, in order or in reverse, takes time
+// linear in their number: at most the length of text times the number of
+// times a character occurs in secret. Nothing is cached per byte. spanning
+// gives up with errRedactBudget once ctx is done.
+func spanning(ctx context.Context, text, secret string, cuts []int) ([]bool, error) {
+	sc := newSpanScan(text, secret)
+	if sc.first[len(text)] > maxSpanStates {
+		return nil, errRedactBudget
+	}
+	n, states := len(text), sc.first[len(text)]
+	into := make([]int32, states) // longest path into each state, the state included
+	out := make([]int32, states)  // longest path out of each state, the state included
+	flags := make([]uint8, states)
+	const (
+		crossed = 1 << iota // a path from secret[0] into the state crosses a gap
+		head                // the state is on a longest reading, from where it starts...
+		tail                // ...and on to where it ends
+		gapIn               // a longest reading into the state crosses a gap
+		gapOut              // a longest reading out of the state crosses a gap
+		walked              // the state is on a start of the secret that runs into a cut
+	)
+	var next []edge
+	expired := func(p int) bool { return p%4096 == 0 && ctx.Err() != nil }
+
+	for p := range n {
+		if expired(p) {
+			return nil, errRedactBudget
+		}
+		sc.visit(p)
+		for k, j := range sc.at[text[p]] {
+			s := sc.first[p] + int32(k)
+			into[s] = max(into[s], 1)
+			fromStart := into[s] == j+1
+			next = sc.next(next[:0], p, j)
+			for _, e := range next {
+				into[e.s] = max(into[e.s], into[s]+1)
+				if fromStart && (e.gap || flags[s]&crossed != 0) {
+					flags[e.s] |= crossed
+				}
+			}
+		}
+	}
+	for p := n - 1; p >= 0; p-- {
+		if expired(p) {
+			return nil, errRedactBudget
+		}
+		sc.visit(p)
+		for k, j := range sc.at[text[p]] {
+			s := sc.first[p] + int32(k)
+			out[s] = 1
+			next = sc.next(next[:0], p, j)
+			for _, e := range next {
+				out[s] = max(out[s], out[e.s]+1)
+			}
+		}
+	}
+
+	// Where bytes read as a run in more than one way, as when the framing
+	// that opens a line could also be read as characters of the secret, the
+	// longest reading wins: a state is masked only on a longest path, one of
+	// tight edges from a state nothing leads into (head) to a state that
+	// leads nowhere (tail), and only if that path crosses a gap; cover masks
+	// the rest.
+	tight := func(s, s2 int32) bool { return into[s2] == into[s]+1 && out[s] == out[s2]+1 }
+	for p := range n {
+		if expired(p) {
+			return nil, errRedactBudget
+		}
+		sc.visit(p)
+		for k, j := range sc.at[text[p]] {
+			s := sc.first[p] + int32(k)
+			if into[s] == 1 {
+				flags[s] |= head
+			}
+			if flags[s]&head == 0 {
+				continue
+			}
+			next = sc.next(next[:0], p, j)
+			for _, e := range next {
+				if tight(s, e.s) {
+					flags[e.s] |= head
+					if e.gap || flags[s]&gapIn != 0 {
+						flags[e.s] |= gapIn
+					}
+				}
+			}
+		}
 	}
 
 	in := make([]bool, n)
 	// gap marks the bytes between two characters of a run read at p and r,
 	// unless they end a line: the framing of the next line is kept.
 	gap := func(p, r int) {
-		if !strings.Contains(text[p+1:r], "\n") {
+		if strings.IndexByte(text[p+1:r], '\n') < 0 {
 			for q := p + 1; q < r; q++ {
 				in[q] = true
 			}
 		}
 	}
-	// Where bytes read as a run in more than one way, as when the framing
-	// that opens a line could also be read as characters of the secret, the
-	// longest reading wins: a state is masked only on a longest path, one of
-	// tight edges from a state nothing leads into (head) to a state that
-	// leads nowhere (tail).
-	tight := func(s, s2 int) bool { return into[s2] == into[s]+1 && out[s] == out[s2]+1 }
-	head, tail := make([]bool, first[n]), make([]bool, first[n])
-	for s := range head {
-		head[s] = head[s] || into[s] == 1
-		next(s, func(s2, _ int, _ bool) {
-			if head[s] && tight(s, s2) {
-				head[s2] = true
-			}
-		})
+	// A start of the secret runs into the cut at e if only blanks lie
+	// between its last character and e, after a gap or not. A CR at the cut
+	// ends a line, so is a gap. blanks[i] is where the blanks before cuts[i]
+	// begin, and blanksCR[i] where the blanks and CRs do.
+	blanks, blanksCR := make([]int, len(cuts)), make([]int, len(cuts))
+	for i, e := range cuts {
+		blanks[i] = len(strings.TrimRight(text[:e], " \t"))
+		blanksCR[i] = len(strings.TrimRight(text[:e], " \t\r"))
 	}
-	for s := len(tail) - 1; s >= 0; s-- {
-		tail[s] = out[s] == 1
-		next(s, func(s2, _ int, _ bool) {
-			if tail[s2] && tight(s, s2) {
-				tail[s] = true
+	atCut := func(p int, s int32) bool {
+		for i, e := range cuts {
+			if p >= e {
+				continue
 			}
-		})
-	}
-	long := min(minFragment, len(secret))
-	for s := range into {
-		if into[s]+out[s]-1 < long || !head[s] || !tail[s] {
-			continue
-		}
-		in[pos[s]] = true
-		next(s, func(s2, r int, isGap bool) {
-			if isGap && tight(s, s2) && tail[s2] {
-				gap(pos[s], r)
+			blank := p+1 >= blanks[i]
+			for _, g := range sc.ends {
+				blank = blank || blanks[i] <= g && g <= e
 			}
-		})
-	}
-	// blankTo reports whether only blanks, after a gap or not, lie between q
-	// and the cut at e. A CR at the cut ends a line, so is a gap.
-	blankTo := func(q, e int) bool {
-		for _, g := range append([]int{q}, ends(q)...) {
-			if g <= e && strings.Trim(text[g:e], " \t") == "" {
+			// The start must cross a line break: a gap on its way, or a line
+			// break before the blanks and CR at the cut.
+			if blank && (flags[s]&crossed != 0 || strings.ContainsAny(text[p+1:max(p+1, blanksCR[i])], "\r\n")) {
 				return true
 			}
 		}
 		return false
 	}
-	walked := map[int]bool{}
-	for _, e := range cuts {
-		for s := range into {
-			p := pos[s]
-			if p >= e || into[s] != char[s]+1 || !blankTo(p+1, e) {
+	long := int32(min(minFragment, len(secret)))
+	for p := n - 1; p >= 0; p-- {
+		if expired(p) {
+			return nil, errRedactBudget
+		}
+		sc.visit(p)
+		for k, j := range sc.at[text[p]] {
+			s := sc.first[p] + int32(k)
+			next = sc.next(next[:0], p, j)
+			if out[s] == 1 {
+				flags[s] |= tail
+			}
+			for _, e := range next {
+				if flags[e.s]&tail != 0 && tight(s, e.s) {
+					flags[s] |= tail
+					if e.gap || flags[e.s]&gapOut != 0 {
+						flags[s] |= gapOut
+					}
+				}
+			}
+			if f := flags[s]; f&head != 0 && f&tail != 0 && f&(gapIn|gapOut) != 0 && into[s]+out[s]-1 >= long {
+				in[p] = true
+				for _, e := range next {
+					if e.gap && flags[e.s]&tail != 0 && tight(s, e.s) {
+						gap(p, e.r)
+					}
+				}
+			}
+			// A start of the secret that runs into a cut is masked, and every
+			// path from secret[0] into it, walked back from the cut.
+			if into[s] != j+1 {
 				continue
 			}
-			if !crossed[s] && !strings.ContainsAny(strings.TrimRight(text[p+1:e], " \t\r"), "\r\n") {
-				continue
+			if atCut(p, s) {
+				flags[s] |= walked
 			}
-			for todo := []int{s}; len(todo) > 0; {
-				s := todo[len(todo)-1]
-				todo = todo[:len(todo)-1]
-				if walked[s] {
-					continue
+			for _, e := range next {
+				if flags[e.s]&walked != 0 {
+					flags[s] |= walked
+					gap(p, e.r)
 				}
-				walked[s] = true
-				in[pos[s]] = true
-				for _, s0 := range before[s] {
-					gap(pos[s0], pos[s])
-					todo = append(todo, s0)
-				}
+			}
+			if flags[s]&walked != 0 {
+				in[p] = true
 			}
 		}
 	}
-	return in
+	return in, nil
 }
 
-// gapEnds returns each i such that text[q:i] is a gap: what may sit between
-// two characters of a secret that a server splits. That is one or more line
-// breaks, each with any blanks around it and the framing that may open the
-// next line: reply code, separator and enhanced status code, each optional,
-// as in replyLineBreak. A break is a LF, or a CR: a server may end a line
-// with a bare CR, which readLine keeps in the line it reads.
-func gapEnds(text string, q int) []int {
-	if q >= len(text) || strings.IndexByte(" \t\r\n", text[q]) < 0 {
-		return nil
+// spanScan holds what spanning needs to step from state to state. The states
+// of text[p] are numbered from first[p], one per index in at[text[p]].
+type spanScan struct {
+	text, secret string
+	at           [256][]int32 // the indexes in secret of each byte value
+	rank         []int32      // where each index of secret is in at[secret[j]]
+	first        []int32
+	ends         []int // where a gap after the byte being visited may end
+}
+
+// edge leads to state s, which reads text[r], past a gap or not.
+type edge struct {
+	s   int32
+	r   int
+	gap bool
+}
+
+func newSpanScan(text, secret string) *spanScan {
+	sc := &spanScan{text: text, secret: secret, rank: make([]int32, len(secret)), first: make([]int32, len(text)+1)}
+	for j := 0; j < len(secret); j++ {
+		sc.rank[j] = int32(len(sc.at[secret[j]]))
+		sc.at[secret[j]] = append(sc.at[secret[j]], int32(j))
 	}
-	var ends []int
-	seen := map[int]bool{}
-	end := func(i int) {
-		if !seen[i] {
-			seen[i] = true
+	for p := 0; p < len(text); p++ {
+		sc.first[p+1] = min(sc.first[p]+int32(len(sc.at[text[p]])), maxSpanStates+1)
+	}
+	return sc
+}
+
+// visit readies next for the states of text[p].
+func (sc *spanScan) visit(p int) { sc.ends = gapEnds(sc.ends[:0], sc.text, p+1) }
+
+// next appends to edges each state that can follow the state reading
+// secret[j] at text[p], the byte last visited: the state reading secret[j+1]
+// at the next byte, or at the end of a gap.
+func (sc *spanScan) next(edges []edge, p int, j int32) []edge {
+	if int(j)+1 == len(sc.secret) {
+		return edges
+	}
+	c, k := sc.secret[j+1], sc.rank[j+1]
+	if p+1 < len(sc.text) && sc.text[p+1] == c {
+		edges = append(edges, edge{sc.first[p+1] + k, p + 1, false})
+	}
+	for _, r := range sc.ends {
+		if r < len(sc.text) && sc.text[r] == c {
+			edges = append(edges, edge{sc.first[r] + k, r, true})
+		}
+	}
+	return edges
+}
+
+// maxGapBreaks and maxGapBlanks bound a gap: at most 4 line breaks, and at
+// most 8 blanks or line breaks in a row. One echo is never split by more
+// than a line break and a line's framing or two; the bounds keep each gap,
+// and so the work at each byte, constant however the server frames its text.
+const (
+	maxGapBreaks = 4
+	maxGapBlanks = 8
+)
+
+// gapEnds appends to ends each i, in order, such that text[q:i] is a gap:
+// what may sit between two characters of a secret that a server splits. That
+// is up to maxGapBreaks line breaks, each with blanks around it and the
+// framing that may open the next line: reply code, separator and enhanced
+// status code, each optional, as in replyLineBreak. A break is a LF, or a CR:
+// a server may end a line with a bare CR, which readLine keeps in the line it
+// reads. A gap is at most maxGapBreaks*(4*maxGapBlanks+14) bytes long.
+func gapEnds(ends []int, text string, q int) []int {
+	i := q
+	blanks := func(add bool) {
+		for n := 0; n < maxGapBlanks && i < len(text) && (text[i] == ' ' || text[i] == '\t'); n++ {
+			i++
+			if add {
+				ends = append(ends, i)
+			}
+		}
+	}
+	for range maxGapBreaks {
+		blanks(false)
+		if i == len(text) || text[i] != '\r' && text[i] != '\n' {
+			break
+		}
+		for n := 0; n < maxGapBlanks && i < len(text) && strings.IndexByte(" \t\r\n", text[i]) >= 0; n++ {
+			i++
 			ends = append(ends, i)
 		}
-	}
-	blanks := func(i int) int { // a gap may end after each blank from i
-		for i < len(text) && (text[i] == ' ' || text[i] == '\t') {
-			i++
-			end(i)
-		}
-		return i
-	}
-	for todo, done := []int{q}, map[int]bool{}; len(todo) > 0; {
-		i := todo[len(todo)-1]
-		todo = todo[:len(todo)-1]
-		if done[i] {
-			continue
-		}
-		done[i] = true
-		for i < len(text) && (text[i] == ' ' || text[i] == '\t') {
-			i++
-		}
-		if i == len(text) || text[i] != '\r' && text[i] != '\n' {
-			continue
-		}
-		for i < len(text) && strings.IndexByte(" \t\r\n", text[i]) >= 0 {
-			i++
-			end(i)
-		}
-		k := i
-		if k+3 <= len(text) && isDigit(text[k]) && isDigit(text[k+1]) && isDigit(text[k+2]) {
-			k += 3
-			end(k)
-			if k < len(text) && text[k] == '-' {
-				k++
-				end(k)
+		if i+3 <= len(text) && isDigit(text[i]) && isDigit(text[i+1]) && isDigit(text[i+2]) {
+			i += 3
+			ends = append(ends, i)
+			if i < len(text) && text[i] == '-' {
+				i++
+				ends = append(ends, i)
 			}
-			k = blanks(k)
+			blanks(true)
 		}
-		for _, j := range []int{i, k} {
-			if m := enhancedFraming.FindStringIndex(text[j:]); m != nil {
-				end(j + m[1])
-				todo = append(todo, blanks(j+m[1]))
-			}
+		if n := enhancedFraming(text[i:]); n > 0 {
+			i += n
+			ends = append(ends, i)
+			blanks(true)
 		}
-		todo = append(todo, k) // another line break may follow
 	}
 	return ends
 }
 
-var enhancedFraming = regexp.MustCompile(`^\d\.\d{1,3}\.\d{1,3}[\t ]`)
+// enhancedFraming returns the length of the enhanced status code and blank
+// that s begins with ("5.7.8 "), or 0.
+func enhancedFraming(s string) int {
+	if len(s) < 2 || !isDigit(s[0]) || s[1] != '.' {
+		return 0
+	}
+	i := 2
+	digits := func() bool { // one to three
+		n := 0
+		for n < 3 && i < len(s) && isDigit(s[i]) {
+			i, n = i+1, n+1
+		}
+		return n > 0
+	}
+	if !digits() || i == len(s) || s[i] != '.' {
+		return 0
+	}
+	i++
+	if !digits() || i == len(s) || s[i] != ' ' && s[i] != '\t' {
+		return 0
+	}
+	return i + 1
+}
 
 func isDigit(c byte) bool { return c >= '0' && c <= '9' }
 
@@ -731,8 +900,12 @@ func (t *transcript) requote(text string) string {
 
 // flush masks the session's server text, the Result's repeat of it
 // included, writes the transcript, and returns res with its server text
-// shown as the transcript shows it.
-func (t *transcript) flush(res Result) Result {
+// shown as the transcript shows it. It runs once the session ends, however
+// it ends: canceled too, as by Ctrl-C, so masking is bound by its own budget
+// (see redactBudget), not by ctx's cancellation. Past the budget, nothing of
+// the transcript is written, and res becomes a failure that quotes none of
+// it.
+func (t *transcript) flush(ctx context.Context, res Result) Result {
 	heard := slices.Clone(t.heard)
 	var lines []string
 	if res.Reply != nil {
@@ -746,9 +919,33 @@ func (t *transcript) flush(res Result) Result {
 			heard = append(heard, h)
 		}
 	}
-	t.shown = t.redact.session(heard)
+	size := 0
+	for _, h := range heard {
+		size += len(h.text)
+	}
+	budget := redactBudget(size)
+	ctx, cancel := context.WithTimeout(context.WithoutCancel(ctx), budget)
+	defer cancel()
+	shown, err := t.redact.session(ctx, heard)
+	if err != nil {
+		return Result{
+			Stage:  res.Stage,
+			Detail: fmt.Sprintf("transcript withheld: the server's replies (%d bytes) could not be checked for the API key within %s", size, budget),
+			Hint:   hintWithheld,
+		}
+	}
+	t.shown = shown
 	for _, l := range t.lines {
-		fmt.Fprintf(t.w, "%-11s %s %s\n", "["+string(l.stage)+"]", l.dir, t.redact.mask(l.text()))
+		// Client lines are built here, never from server bytes, and the AUTH
+		// line shows a placeholder: cover could only mask a Message-ID's
+		// random digits that happen to match.
+		text := l.text()
+		if l.dir == "C:" {
+			text = t.redact.r.Replace(text)
+		} else {
+			text = t.redact.mask(text)
+		}
+		fmt.Fprintf(t.w, "%-11s %s %s\n", "["+string(l.stage)+"]", l.dir, text)
 	}
 	if res.Reply != nil {
 		reply := *res.Reply
@@ -778,6 +975,9 @@ func (s *session) run(ctx context.Context) Result {
 	dialCtx, cancel := context.WithTimeout(ctx, cfg.CommandTimeout)
 	conn, err := cfg.Dial(dialCtx, "tcp", addr)
 	cancel()
+	if err != nil && ctx.Err() != nil {
+		return canceled(ctx, StageConnect)
+	}
 	if err != nil {
 		return s.dialFailure(err)
 	}
@@ -1031,9 +1231,19 @@ func (s *session) replyFailure(stage Stage, r Reply) Result {
 	return Result{Stage: stage, Reply: &r, Hint: hintForReply(stage, r)}
 }
 
+// canceled is the Result of a session that ctx ended: "interrupted" if it
+// was canceled, as by Ctrl-C.
+func canceled(ctx context.Context, stage Stage) Result {
+	detail := "canceled: " + ctx.Err().Error()
+	if errors.Is(ctx.Err(), context.Canceled) {
+		detail = "interrupted"
+	}
+	return Result{Stage: stage, Detail: detail, Hint: "The command was interrupted."}
+}
+
 func (s *session) ioFailure(ctx context.Context, stage Stage, err error, timeout time.Duration) Result {
 	if ctx.Err() != nil {
-		return Result{Stage: stage, Detail: "canceled: " + ctx.Err().Error(), Hint: "The command was interrupted."}
+		return canceled(ctx, stage)
 	}
 	var cut *incompleteLineError
 	if errors.As(err, &cut) {
