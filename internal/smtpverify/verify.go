@@ -16,6 +16,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"net"
 	"net/mail"
 	"net/textproto"
@@ -402,11 +403,14 @@ type heardText struct {
 // replies, between a reply and the bytes an error quotes, or between the
 // transcript and the Result, the message UUID that VERIFIED prints
 // included. heard is that text in the order the output shows it, the
-// Result's repeat of it last. Joined line by line, it is searched for
+// Result's repeat of it last. Joined line by line, it is searched twice: as
+// the server sent it, and with a text shown lower-cased, the message UUID,
+// lower-cased wherever it is. VERIFIED shows the UUID lower-cased, after the
+// QUIT reply, and the reply that carried it shows it as sent, before the
+// QUIT reply, so a reader can join a run of a secret into the UUID or out of
+// it in either case. Each search looks for
 //   - each piece of minFragment or more characters of a secret, or all of a
 //     shorter secret, wherever it is and whatever is around it (see cover);
-//     in a text shown lower-cased, the message UUID, as it was sent and as
-//     it is shown;
 //   - each run of minFragment or more characters of a secret that a gap
 //     splits, its pieces shorter perhaps (see spanning);
 //   - each start of a secret that runs to the end of a cut-off text, the
@@ -415,59 +419,85 @@ type heardText struct {
 //     alone may be chance: a cut-off upper-case UUID ending in "A" would
 //     begin the AUTH PLAIN payload.
 //
-// A piece or run's characters are masked, and the gaps between them within a
-// line; the framing that opens a line is kept. A text shown more than once is
-// masked the same way each time, by what was found in any of its showings:
-// one showing left unmasked would give away what another masked. session
-// returns what may be shown of each text. It gives up with errRedactBudget
-// once ctx is done.
+// What either search finds is masked: a piece or run's characters, and the
+// gaps between them within a line; the framing that opens a line is kept. A
+// text shown more than once is masked the same way each time, by what was
+// found in any of its showings, and so is a text shown lower-cased wherever
+// it is, in either case: one showing left unmasked would give away what
+// another masked. session returns what may be shown of each text. It gives
+// up with errRedactBudget once ctx is done, the two searches sharing its
+// budget.
 func (rd redactor) session(ctx context.Context, heard []heardText) (map[string]string, error) {
 	var b strings.Builder
 	var cuts []int
+	lower := map[string]bool{}
 	for _, h := range heard {
 		b.WriteString(h.text)
 		if h.cut {
 			cuts = append(cuts, b.Len())
 		}
 		b.WriteByte('\n')
-	}
-	text := b.String()
-	masks := make([]int, len(text)) // 1 + the index in rd.wrapped of the secret masked at each byte, or 0
-	rd.cover(text, masks)
-	lower := map[string]bool{}
-	at := 0
-	for _, h := range heard {
-		if h.lower {
-			rd.cover(lowerASCII(h.text), masks[at:at+len(h.text)])
+		if h.lower && h.text != "" {
 			lower[h.text] = true
 		}
-		at += len(h.text) + 1
+	}
+	text := b.String()
+	lowered := slices.Sorted(maps.Keys(lower))
+	asShown := text // lower-casing keeps every byte where it is
+	for _, s := range lowered {
+		asShown = strings.ReplaceAll(asShown, s, lowerASCII(s))
+	}
+	views := []string{text}
+	if asShown != text {
+		views = append(views, asShown)
+	}
+	masks := make([]int, len(text)) // 1 + the index in rd.wrapped of the secret masked at each byte, or 0
+	for _, v := range views {
+		rd.cover(v, masks)
 	}
 	for i, w := range rd.wrapped {
-		in, err := spanning(ctx, text, w.secret, cuts)
-		if err != nil {
-			return nil, err
-		}
-		for p, ok := range in {
-			if ok && (masks[p] == 0 || i+1 < masks[p]) { // the first secret wins, as in mask
-				masks[p] = i + 1
+		for _, v := range views {
+			in, err := spanning(ctx, v, w.secret, cuts)
+			if err != nil {
+				return nil, err
 			}
+			for p, ok := range in {
+				if ok && (masks[p] == 0 || i+1 < masks[p]) { // the first secret wins, as in mask
+					masks[p] = i + 1
+				}
+			}
+		}
+	}
+	// A text shown lower-cased is masked alike wherever it shows, in either
+	// case.
+	for _, s := range lowered {
+		s = lowerASCII(s)
+		var at []int
+		for p := 0; ; p += len(s) {
+			i := strings.Index(asShown[p:], s)
+			if i < 0 {
+				break
+			}
+			p += i
+			at = append(at, p)
+		}
+		m := make([]int, len(s))
+		for _, p := range at {
+			merge(m, masks[p:p+len(s)])
+		}
+		for _, p := range at {
+			merge(masks[p:p+len(s)], m)
 		}
 	}
 	union := map[string][]int{}
-	at = 0
+	at := 0
 	for _, h := range heard {
 		m := masks[at : at+len(h.text)]
 		at += len(h.text) + 1
-		u, ok := union[h.text]
-		if !ok {
+		if u, ok := union[h.text]; ok {
+			merge(u, m)
+		} else {
 			union[h.text] = slices.Clone(m)
-			continue
-		}
-		for i, v := range m {
-			if v != 0 && (u[i] == 0 || v < u[i]) {
-				u[i] = v
-			}
 		}
 	}
 	shown := make(map[string]string, len(union))
@@ -500,6 +530,16 @@ func (rd redactor) cover(text string, m []int) {
 				}
 				end = j + n
 			}
+		}
+	}
+}
+
+// merge marks in dst each byte that src marks; the first secret wins, as in
+// mask.
+func merge(dst, src []int) {
+	for i, v := range src {
+		if v != 0 && (dst[i] == 0 || v < dst[i]) {
+			dst[i] = v
 		}
 	}
 }

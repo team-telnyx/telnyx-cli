@@ -150,22 +150,36 @@ func redactCost(t *testing.T, heard []heardText) (time.Duration, uint64) {
 	return elapsed, after.TotalAlloc - before.TotalAlloc
 }
 
+// upperUUID is a message UUID that the server sent in upper case. VERIFIED
+// shows it lower-cased, so session searches the text twice.
+var upperUUID = heardText{text: "0B6C5B5E-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}
+
 // Astra R6: a 16 KB banner of lines of "250\r" took 10 s and 7.7 GB to redact,
 // and twice the text four times the memory. A gap is bounded now, and
 // nothing is cached per byte, so redaction takes time and memory linear in
 // the text: hostile banners take well under 250 ms and a few MB, and twice
-// the text takes about twice the memory.
+// the text takes about twice the memory. So they do when the session ends
+// VERIFIED with an upper-case message UUID, and the text is searched twice.
 func TestSessionRedactionIsLinear(t *testing.T) {
 	// Not parallel: timed, and it measures allocation.
 	for name, body := range hostileBodies {
-		t.Run(name, func(t *testing.T) {
-			elapsed, alloc := redactCost(t, hostileBanner(body, 16<<10))
-			_, alloc2 := redactCost(t, hostileBanner(body, 32<<10))
-			t.Logf("16 KB: %v, %.1f MiB; 32 KB: %.1f MiB", elapsed, float64(alloc)/(1<<20), float64(alloc2)/(1<<20))
-			assert.Less(t, elapsed, 250*time.Millisecond)
-			assert.Less(t, alloc, uint64(16<<20))
-			assert.Less(t, float64(alloc2)/float64(alloc), 2.5, "twice the text, about twice the memory")
-		})
+		for _, verified := range []bool{false, true} {
+			banner := func(size int) []heardText {
+				heard := hostileBanner(body, size)
+				if verified {
+					heard = append(heard, upperUUID)
+				}
+				return heard
+			}
+			t.Run(fmt.Sprintf("%s, verified %t", name, verified), func(t *testing.T) {
+				elapsed, alloc := redactCost(t, banner(16<<10))
+				_, alloc2 := redactCost(t, banner(32<<10))
+				t.Logf("16 KB: %v, %.1f MiB; 32 KB: %.1f MiB", elapsed, float64(alloc)/(1<<20), float64(alloc2)/(1<<20))
+				assert.Less(t, elapsed, 250*time.Millisecond)
+				assert.Less(t, alloc, uint64(16<<20))
+				assert.Less(t, float64(alloc2)/float64(alloc), 2.5, "twice the text, about twice the memory")
+			})
+		}
 	}
 }
 

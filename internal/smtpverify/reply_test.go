@@ -380,6 +380,17 @@ func TestRedactorSession(t *testing.T) {
 		{"message UUID holding the key's digits", []heardText{{text: "01234567-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}}, []string{redactedKey + "-3a0f-4c3e-9d6a-6f1f2b8e4c21"}},
 		{"message UUID that holds the key once lower-cased", []heardText{{text: "9ABCDEF0-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}}, []string{redactedKey + "0-3a0f-4c3e-9d6a-6f1f2b8e4c21"}},
 		{"message UUID ending a run of the key", []heardText{{text: "221 Bye " + key[:4]}, {text: key[4:7] + "-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}}, []string{"221 Bye " + redactedKey, redactedKey + "-3a0f-4c3e-9d6a-6f1f2b8e4c21"}},
+		{"message UUID ending a run of the key once lower-cased", []heardText{{text: "221 Bye 789"}, {text: "ABCDEF00-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}}, []string{"221 Bye " + redactedKey, redactedKey + "00-3a0f-4c3e-9d6a-6f1f2b8e4c21"}},
+		{
+			name:  "message UUID starting a run of the key once lower-cased, in the reply that carried it",
+			heard: []heardText{{text: "250 2.0.0 Ok: queued as 3A0F9999-3A0F-4C3E-9D6A-000000789ABC"}, {text: "221 2.0.0 def"}, {text: "3A0F9999-3A0F-4C3E-9D6A-000000789ABC", lower: true}},
+			want:  []string{"250 2.0.0 Ok: queued as 3A0F9999-3A0F-4C3E-9D6A-000000" + redactedKey, "221 2.0.0 " + redactedKey, "3a0f9999-3a0f-4c3e-9d6a-000000" + redactedKey},
+		},
+		{
+			name:  "message UUID masked alike in the reply that carried it",
+			heard: []heardText{{text: "250 2.0.0 Ok: queued as BCDEF000-3A0F-4C3E-9D6A-6F1F2B8E4C21"}, {text: "221 Bye 789a"}, {text: "BCDEF000-3A0F-4C3E-9D6A-6F1F2B8E4C21", lower: true}},
+			want:  []string{"250 2.0.0 Ok: queued as " + redactedKey + "000-3A0F-4C3E-9D6A-6F1F2B8E4C21", "221 Bye " + redactedKey, redactedKey + "000-3a0f-4c3e-9d6a-6f1f2b8e4c21"},
+		},
 		{
 			name:  "second half first, repeated after the first",
 			heard: lines("535 5.7.8 "+key[12:], "221 "+key[:12], "535 5.7.8 "+key[12:]),

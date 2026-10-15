@@ -1464,6 +1464,171 @@ func TestAstraR7GapOfFiveLineBreaksMustRedact(t *testing.T) {
 	}
 }
 
+// r8Key is Astra R8's key, of the Telnyx format, 58 bytes: its last 22
+// characters hold a run of lower-case hex letters, "abcdef".
+const r8Key = "KEY0123456789ABCDEF0123456789ABCDEF_xyabcdefuvwxyz01234567"
+
+// assertNoPairRebuildsKey checks that no reply line a session prints,
+// framing removed, joined to a showing of the message UUID, before it or
+// after it, holds smtpverify.MinFragment characters in a row of key. The
+// UUID shows in the acceptance line as sent, and so lower-cased too, as
+// VERIFIED shows it, and in VERIFIED.
+func assertNoPairRebuildsKey(t *testing.T, key string, res smtpverify.Result, out string) {
+	t.Helper()
+	var texts []string
+	uuids := []string{res.MessageUUID}
+	for _, l := range strings.Split(out, "\n") {
+		if _, text, ok := strings.Cut(l, " S: "); ok {
+			texts = append(texts, replyFraming.ReplaceAllString(text, ""))
+			if _, uuid, ok := strings.Cut(text, " queued as "); ok {
+				uuids = append(uuids, uuid, strings.ToLower(uuid))
+			}
+		}
+	}
+	n := smtpverify.MinFragment
+	for _, a := range texts {
+		for _, u := range uuids {
+			for k := 0; k+n <= len(key); k++ {
+				assert.NotContains(t, a+u, key[k:k+n], "%d characters of the key in %q joined to %q", n, a, u)
+				assert.NotContains(t, u+a, key[k:k+n], "%d characters of the key in %q joined to %q", n, u, a)
+			}
+		}
+	}
+}
+
+// Astra R8: a run of the key from the QUIT reply into the message UUID was
+// printed whole when the server sent the UUID in upper case: VERIFIED shows
+// it lower-cased, so the QUIT reply's "xya" and the UUID's "bcdef" rejoined
+// as "xyabcdef", but runs split by a gap were looked for only in the text as
+// the server sent it, "xya" then "BCDEF". They are looked for in the text as
+// it is shown too, the UUID lower-cased wherever it is, in VERIFIED and in
+// the acceptance line, which comes before the QUIT reply, so that the UUID
+// may end a run or start one, whichever case it shows in. The UUID is masked
+// the same way wherever it shows: one showing left unmasked would give away
+// what another masked.
+func TestAstraR8LowerCasedUUIDMustRedact(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name       string
+		uuid       string // as the server sends it
+		quit       string
+		wantUUID   string
+		wantOutput []string
+	}{
+		{
+			name:     "Astra's probe: QUIT reply ends xya, upper-case UUID opens BCDEF",
+			uuid:     "BCDEF999-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			quit:     "221 Bye xya",
+			wantUUID: "<redacted: API key>999-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			wantOutput: []string{
+				"[DATA]      S: 250 2.0.0 Ok: queued as <redacted: API key>999-3a0f-4c3e-9d6a-6f1f2b8e4c21\n",
+				"[QUIT]      S: 221 Bye <redacted: API key>\n",
+			},
+		},
+		{
+			name:     "QUIT reply ends xy, upper-case UUID opens ABCDEF",
+			uuid:     "ABCDEF99-3A0F-4C3E-9D6A-6F1F2B8E4C21",
+			quit:     "221 Bye xy",
+			wantUUID: "<redacted: API key>99-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			wantOutput: []string{
+				"[DATA]      S: 250 2.0.0 Ok: queued as <redacted: API key>99-3A0F-4C3E-9D6A-6F1F2B8E4C21\n",
+				"[QUIT]      S: 221 Bye <redacted: API key>\n",
+			},
+		},
+		{
+			name:     "QUIT reply ends xyabcd, upper-case UUID opens EF",
+			uuid:     "EF999999-3A0F-4C3E-9D6A-6F1F2B8E4C21",
+			quit:     "221 Bye xyabcd",
+			wantUUID: "<redacted: API key>999999-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			wantOutput: []string{
+				"[DATA]      S: 250 2.0.0 Ok: queued as <redacted: API key>999999-3A0F-4C3E-9D6A-6F1F2B8E4C21\n",
+				"[QUIT]      S: 221 Bye <redacted: API key>\n",
+			},
+		},
+		{
+			name:     "QUIT reply ends xya, mixed-case UUID opens bCdEf",
+			uuid:     "bCdEf999-3A0F-4C3E-9D6A-6F1F2B8E4C21",
+			quit:     "221 Bye xya",
+			wantUUID: "<redacted: API key>999-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			wantOutput: []string{
+				"[DATA]      S: 250 2.0.0 Ok: queued as <redacted: API key>999-3A0F-4C3E-9D6A-6F1F2B8E4C21\n",
+				"[QUIT]      S: 221 Bye <redacted: API key>\n",
+			},
+		},
+		{
+			name:     "QUIT reply ends xya, lower-case UUID opens bcdef",
+			uuid:     "bcdef999-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			quit:     "221 Bye xya",
+			wantUUID: "<redacted: API key>999-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			wantOutput: []string{
+				"[DATA]      S: 250 2.0.0 Ok: queued as <redacted: API key>999-3a0f-4c3e-9d6a-6f1f2b8e4c21\n",
+				"[QUIT]      S: 221 Bye <redacted: API key>\n",
+			},
+		},
+		{
+			name:     "upper-case UUID ends ABC, QUIT reply opens defuvw",
+			uuid:     "3A0F9999-3A0F-4C3E-9D6A-000000000ABC",
+			quit:     "221 2.0.0 defuvw",
+			wantUUID: "3a0f9999-3a0f-4c3e-9d6a-000000000<redacted: API key>",
+			wantOutput: []string{
+				"[DATA]      S: 250 2.0.0 Ok: queued as 3A0F9999-3A0F-4C3E-9D6A-000000000<redacted: API key>\n",
+				"[QUIT]      S: 221 2.0.0 <redacted: API key>\n",
+			},
+		},
+		{
+			name:     "lower-case UUID ends abc, QUIT reply opens defuvw",
+			uuid:     "3a0f9999-3a0f-4c3e-9d6a-000000000abc",
+			quit:     "221 2.0.0 defuvw",
+			wantUUID: "3a0f9999-3a0f-4c3e-9d6a-000000000<redacted: API key>",
+			wantOutput: []string{
+				"[DATA]      S: 250 2.0.0 Ok: queued as 3a0f9999-3a0f-4c3e-9d6a-000000000<redacted: API key>\n",
+				"[QUIT]      S: 221 2.0.0 <redacted: API key>\n",
+			},
+		},
+		{
+			name:     "key's own upper case: QUIT reply ends 9AB, UUID opens CDEF01",
+			uuid:     "CDEF0199-3A0F-4C3E-9D6A-6F1F2B8E4C21",
+			quit:     "221 Bye 9AB",
+			wantUUID: "<redacted: API key>99-3a0f-4c3e-9d6a-6f1f2b8e4c21",
+			wantOutput: []string{
+				"[DATA]      S: 250 2.0.0 Ok: queued as <redacted: API key>99-3A0F-4C3E-9D6A-6F1F2B8E4C21\n",
+				"[QUIT]      S: 221 Bye <redacted: API key>\n",
+			},
+		},
+		{
+			name:     "key's own upper case: UUID ends 789ABC, QUIT reply opens DEF012",
+			uuid:     "5A0F9999-3A0F-4C3E-9D6A-000000789ABC",
+			quit:     "221 2.0.0 DEF012",
+			wantUUID: "5a0f9999-3a0f-4c3e-9d6a-000000<redacted: API key>",
+			wantOutput: []string{
+				"[DATA]      S: 250 2.0.0 Ok: queued as 5A0F9999-3A0F-4C3E-9D6A-000000<redacted: API key>\n",
+				"[QUIT]      S: 221 2.0.0 <redacted: API key>\n",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			srv := smtpmock.Start(t, smtpmock.Script{DataEndReply: "250 2.0.0 Ok: queued as " + tt.uuid, QuitReply: tt.quit})
+			cfg := config(srv)
+			cfg.APIKey = r8Key
+			res, out := run(t, cfg)
+
+			assert.True(t, res.Verified, res.Verdict())
+			assert.Equal(t, tt.wantUUID, res.MessageUUID)
+			assert.Equal(t, "VERIFIED: message UUID "+tt.wantUUID, res.Verdict())
+			for _, want := range tt.wantOutput {
+				assert.Contains(t, out, want)
+			}
+			assertVerdictLast(t, res, out)
+			srv.Wait()
+			assert.Equal(t, with(verbsUpToData, "QUIT"), srv.Verbs())
+			assertNothingRebuildsKey(t, r8Key, r8Key, nil, res, out)
+			assertNoPairRebuildsKey(t, r8Key, res, out)
+		})
+	}
+}
+
 // The false-positive control for the rules above: a cut-off reply of UUID
 // tails, an address and base64 MIME text, ending in what starts the AUTH
 // PLAIN payload ("A"), CR or not, has nothing in common with the session's
