@@ -4,8 +4,12 @@ import (
 	"bufio"
 	"errors"
 	"io"
+	"net"
+	"os"
+	"strconv"
 	"strings"
 	"testing"
+	"testing/iotest"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -97,6 +101,48 @@ func TestReadReply(t *testing.T) {
 	}
 }
 
+// RFC 5321 §4.2: a reply line ends in CRLF. A fragment the server cut off
+// (by closing or stalling) is an error, never a line, however complete it
+// looks: an unterminated acceptance must not become VERIFIED.
+func TestReadReplyRejectsUnterminatedLine(t *testing.T) {
+	t.Parallel()
+	const accepted = "250 2.0.0 Ok: queued as 0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"
+	tests := []struct {
+		name        string
+		wire        io.Reader
+		wantLines   []string // complete lines before the fragment
+		wantPartial string
+		wantTimeout bool // else the cause is io.ErrUnexpectedEOF
+	}{
+		{name: "EOF after partial 250 acceptance", wire: strings.NewReader(accepted), wantPartial: accepted},
+		{name: "EOF after CR without LF", wire: strings.NewReader(accepted + "\r"), wantPartial: accepted + "\r"},
+		{name: "EOF mid final line of a multi-line reply", wire: strings.NewReader("250-a\r\n" + accepted), wantLines: []string{"250-a"}, wantPartial: accepted},
+		{
+			name:        "timeout after partial 250 acceptance",
+			wire:        io.MultiReader(strings.NewReader(accepted), iotest.ErrReader(os.ErrDeadlineExceeded)),
+			wantPartial: accepted,
+			wantTimeout: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			got, err := readReply(bufio.NewReader(tt.wire))
+			var cut *incompleteLineError
+			require.True(t, errors.As(err, &cut), "got %v, want an incomplete line", err)
+			assert.Equal(t, tt.wantPartial, cut.partial)
+			if tt.wantTimeout {
+				var ne net.Error
+				assert.True(t, errors.As(err, &ne) && ne.Timeout(), "timeout cause kept: %v", err)
+			} else {
+				assert.True(t, errors.Is(err, io.ErrUnexpectedEOF), "got %v", err)
+			}
+			assert.Equal(t, tt.wantLines, got.Lines, "the fragment is not a reply line")
+			assert.Empty(t, messageUUID(got))
+		})
+	}
+}
+
 func TestReadReplyConsumesExactlyOneReply(t *testing.T) {
 	t.Parallel()
 	r := bufio.NewReader(strings.NewReader("250-a\r\n250 b\r\n221 Bye\r\n"))
@@ -108,24 +154,60 @@ func TestReadReplyConsumesExactlyOneReply(t *testing.T) {
 	assert.Equal(t, []string{"221 Bye"}, second.Lines)
 }
 
+// Only the contract's acceptance reply carries the message UUID; any other
+// UUID-shaped token is someone else's ID and must not be promoted.
 func TestMessageUUID(t *testing.T) {
 	t.Parallel()
+	const id = "0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"
 	tests := []struct {
 		name  string
 		lines []string
 		want  string
 	}{
-		{"contract shape", []string{"250 2.0.0 Ok: queued as 0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"}, "0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"},
-		{"upper case normalized", []string{"250 2.0.0 Ok: queued as 0B6C5B5E-3A0F-4C3E-9D6A-6F1F2B8E4C21"}, "0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"},
+		{"contract shape", []string{"250 2.0.0 Ok: queued as " + id}, id},
+		{"upper-case hex normalized", []string{"250 2.0.0 Ok: queued as 0B6C5B5E-3A0F-4C3E-9D6A-6F1F2B8E4C21"}, id},
 		{"no uuid", []string{"250 Ok"}, ""},
 		{"not a uuid", []string{"250 2.0.0 Ok: queued as 1234ABCD"}, ""},
-		{"uuid on a later line", []string{"250-accepted", "250 id 0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"}, "0b6c5b5e-3a0f-4c3e-9d6a-6f1f2b8e4c21"},
-		{"queued-as wins over an earlier uuid", []string{"250 trace 11111111-1111-4111-8111-111111111111 queued as 22222222-2222-4222-8222-222222222222"}, "22222222-2222-4222-8222-222222222222"},
+		{"trace id", []string{"250 2.0.0 accepted; trace " + id + "@mta"}, ""},
+		{"bare uuid", []string{"250 2.0.0 " + id}, ""},
+		{"uuid on a later line", []string{"250-accepted", "250 id " + id}, ""},
+		{"multi-line reply ending in the shape", []string{"250-accepted", "250 2.0.0 Ok: queued as " + id}, ""},
+		{"phrase after other text", []string{"250 trace 11111111-1111-4111-8111-111111111111 queued as " + id}, ""},
+		{"trailing text", []string{"250 2.0.0 Ok: queued as " + id + " (trace 11111111-1111-4111-8111-111111111111)"}, ""},
+		{"uuid run on", []string{"250 2.0.0 Ok: queued as " + id + "0"}, ""},
+		{"missing enhanced code", []string{"250 Ok: queued as " + id}, ""},
+		{"other enhanced code", []string{"250 2.6.0 Ok: queued as " + id}, ""},
+		{"phrase case differs", []string{"250 2.0.0 OK: QUEUED AS " + id}, ""},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			assert.Equal(t, tt.want, messageUUID(Reply{Code: 250, Lines: tt.lines}))
+		})
+	}
+}
+
+// Whatever the server echoes back — the key, or the AUTH PLAIN payload that
+// carries it — is masked, raw or as printable and %q render it.
+func TestRedactor(t *testing.T) {
+	t.Parallel()
+	const key = "KEYtest_0123456789abcdef"
+	payload := authPlainPayload(key)
+	tests := []struct {
+		name, key, in, want string
+	}{
+		{"AUTH PLAIN payload", key, "535 5.7.8 invalid: AUTH PLAIN " + payload, "535 5.7.8 invalid: AUTH PLAIN " + redactedPayload},
+		{"raw key", key, "235 ok for apikey:" + key + ".", "235 ok for apikey:" + redactedKey + "."},
+		{"key in decoded payload", key, printable("\x00apikey\x00" + key), `\x00apikey\x00` + redactedKey},
+		{"every occurrence", key, key + " " + payload + " " + key, redactedKey + " " + redactedPayload + " " + redactedKey},
+		{"key as printable escapes it", "KEY\x01x", printable("x KEY\x01x"), "x " + redactedKey},
+		{"key as %q escapes it", `KEY"x\`, strconv.Quote(`a KEY"x\ b`), `"a ` + redactedKey + ` b"`},
+		{"nothing to mask", key, "250 2.1.0 Ok", "250 2.1.0 Ok"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			assert.Equal(t, tt.want, newRedactor(tt.key).mask(tt.in))
 		})
 	}
 }

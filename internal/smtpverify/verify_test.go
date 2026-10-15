@@ -53,6 +53,25 @@ func with(verbs []string, more ...string) []string {
 	return append(append([]string{}, verbs...), more...)
 }
 
+// assertVerdictLast pins the output's ending: the hint (or, when verified,
+// the portal note) and then the verdict, which is always the last line. No
+// earlier line may read as a VERIFIED verdict.
+func assertVerdictLast(t *testing.T, res smtpverify.Result, out string) {
+	t.Helper()
+	require.True(t, strings.HasSuffix(out, "\n"), "output ends with a newline")
+	lines := strings.Split(strings.TrimSuffix(out, "\n"), "\n")
+	require.GreaterOrEqual(t, len(lines), 2)
+	assert.Equal(t, res.Verdict(), lines[len(lines)-1], "the verdict is the last line")
+	if res.Verified {
+		assert.Contains(t, lines[len(lines)-2], "Mission Control portal message log", "the portal note comes just before the verdict")
+	} else {
+		assert.Equal(t, "hint: "+res.Hint, lines[len(lines)-2], "the hint comes just before the verdict")
+	}
+	for _, l := range lines[:len(lines)-1] {
+		assert.False(t, strings.HasPrefix(l, "VERIFIED"), "only the last line is a verdict: %q", l)
+	}
+}
+
 func TestRunSessions(t *testing.T) {
 	t.Parallel()
 
@@ -319,6 +338,73 @@ func TestRunSessions(t *testing.T) {
 			wantHint:    "no message UUID",
 		},
 		{
+			name:        "trace UUID in an acceptance is not the message UUID",
+			script:      smtpmock.Script{DataEndReply: "250 2.0.0 accepted; trace " + smtpmock.QueuedUUID + "@mta"},
+			wantVerdict: "FAILED at DATA: 250 2.0.0 accepted; trace " + smtpmock.QueuedUUID + "@mta",
+			wantStage:   smtpverify.StageData,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantHint:    "no message UUID",
+		},
+		{
+			name:        "acceptance phrase with a trailing trace UUID is not the contract shape",
+			script:      smtpmock.Script{DataEndReply: smtpmock.ReplyQueued + " trace 11111111-1111-4111-8111-111111111111"},
+			wantVerdict: "FAILED at DATA: " + smtpmock.ReplyQueued + " trace 11111111-1111-4111-8111-111111111111",
+			wantStage:   smtpverify.StageData,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantHint:    "no message UUID",
+		},
+		{
+			name:        "multi-line acceptance is not the contract shape",
+			script:      smtpmock.Script{DataEndReply: "250-accepted\n" + smtpmock.ReplyQueued},
+			wantVerdict: "FAILED at DATA: 250-accepted | " + smtpmock.ReplyQueued,
+			wantStage:   smtpverify.StageData,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantHint:    "no message UUID",
+		},
+		{
+			name:        "acceptance cut off by a close is not VERIFIED",
+			script:      smtpmock.Script{DataEndPartial: smtpmock.ReplyQueued},
+			wantVerdict: `FAILED at DATA: incomplete reply "` + smtpmock.ReplyQueued + `" (no CRLF): connection closed by the server`,
+			wantStage:   smtpverify.StageData,
+			wantVerbs:   verbsUpToData,
+			wantHint:    "cut off",
+			wantOutput:  []string{"[DATA]      -- incomplete reply line (no CRLF): " + smtpmock.ReplyQueued + "\n"},
+		},
+		{
+			name:        "acceptance cut off by a stall is not VERIFIED",
+			script:      smtpmock.Script{DataEndPartial: smtpmock.ReplyQueued, HangOn: "."},
+			mutate:      func(c *smtpverify.Config) { c.DataTimeout = 150 * time.Millisecond },
+			wantVerdict: `FAILED at DATA: incomplete reply "` + smtpmock.ReplyQueued + `" (no CRLF): timed out after 150ms waiting for the server`,
+			wantStage:   smtpverify.StageData,
+			wantVerbs:   verbsUpToData,
+			wantHint:    "cut off",
+			wantOutput:  []string{"[DATA]      -- incomplete reply line (no CRLF): " + smtpmock.ReplyQueued + "\n"},
+		},
+		{
+			name:        "AUTH payload echoed in a rejection is redacted",
+			script:      smtpmock.Script{AuthReply: "535 5.7.8 Authentication credentials invalid: " + smtpmock.Echo},
+			wantVerdict: "FAILED at AUTH: 535 5.7.8 Authentication credentials invalid: AUTH PLAIN <redacted: AUTH PLAIN credentials>",
+			wantStage:   smtpverify.StageAuth,
+			wantVerbs:   with(verbsUpToAuth, "QUIT"),
+			wantHint:    `literal "apikey"`,
+			wantOutput:  []string{"[AUTH]      S: 535 5.7.8 Authentication credentials invalid: AUTH PLAIN <redacted: AUTH PLAIN credentials>\n"},
+		},
+		{
+			name:        "AUTH payload echoed as a malformed reply is redacted",
+			script:      smtpmock.Script{AuthReply: smtpmock.Echo},
+			wantVerdict: `FAILED at AUTH: malformed reply: "AUTH PLAIN <redacted: AUTH PLAIN credentials>"`,
+			wantStage:   smtpverify.StageAuth,
+			wantVerbs:   verbsUpToAuth,
+		},
+		{
+			name:        "API key echoed in an acceptance is redacted",
+			script:      smtpmock.Script{AuthReply: "235 2.7.0 Authentication successful for apikey:" + testKey},
+			wantVerdict: "VERIFIED: message UUID " + smtpmock.QueuedUUID,
+			wantStage:   smtpverify.StageQuit,
+			wantVerbs:   with(verbsUpToData, "QUIT"),
+			wantOutput:  []string{"[AUTH]      S: 235 2.7.0 Authentication successful for apikey:<redacted: API key>\n"},
+		},
+		{
 			name:        "no reply to AUTH: stage timeout",
 			script:      smtpmock.Script{HangOn: "AUTH"},
 			mutate:      func(c *smtpverify.Config) { c.CommandTimeout = 150 * time.Millisecond },
@@ -369,13 +455,12 @@ func TestRunSessions(t *testing.T) {
 			}
 			assert.Equal(t, tt.wantStage, res.Stage)
 			assert.Equal(t, strings.HasPrefix(tt.wantVerdict, "VERIFIED"), res.Verified)
-			assert.Contains(t, out, "\n"+res.Verdict()+"\n", "verdict line printed")
+			assertVerdictLast(t, res, out)
 			if tt.wantHint != "" {
 				assert.Contains(t, res.Hint, tt.wantHint)
 			}
 			if !res.Verified {
 				assert.NotEmpty(t, res.Hint, "every failure is actionable")
-				assert.Contains(t, out, "hint: "+res.Hint)
 			}
 			for _, want := range tt.wantOutput {
 				assert.Contains(t, out, want)
@@ -394,6 +479,13 @@ func TestRunSessions(t *testing.T) {
 			}
 			assert.NotContains(t, out, testKey)
 			assert.NotContains(t, out, authPayload)
+			// Nor does the Result, whatever the server echoed.
+			assert.NotContains(t, res.Detail, testKey)
+			assert.NotContains(t, res.Detail, authPayload)
+			if res.Reply != nil {
+				assert.NotContains(t, res.Reply.Text(), testKey)
+				assert.NotContains(t, res.Reply.Text(), authPayload)
+			}
 			// Nothing the client put on the wire, including after a failed
 			// handshake, carries the key in the clear.
 			raw := string(srv.Raw())
@@ -445,6 +537,7 @@ func TestRunVerifiedTranscript(t *testing.T) {
 	} {
 		assert.Contains(t, out, want)
 	}
+	assertVerdictLast(t, res, out)
 
 	// AUTH PLAIN carries authzid "", authcid "apikey", password = the key.
 	var auth string
@@ -525,7 +618,7 @@ func TestRunDialFailures(t *testing.T) {
 			assert.Nil(t, res.Reply)
 			assert.True(t, strings.HasPrefix(res.Verdict(), "FAILED at CONNECT: "), res.Verdict())
 			assert.Contains(t, res.Hint, tt.wantHint)
-			assert.Contains(t, out, res.Verdict())
+			assertVerdictLast(t, res, out)
 		})
 	}
 }
@@ -544,6 +637,7 @@ func TestRunCanceled(t *testing.T) {
 	assert.Less(t, time.Since(start), 5*time.Second, "cancellation interrupts a blocked read")
 	assert.Equal(t, smtpverify.StageAuth, res.Stage)
 	assert.True(t, strings.HasPrefix(res.Verdict(), "FAILED at AUTH: canceled"), res.Verdict())
+	assertVerdictLast(t, res, out.String())
 }
 
 func TestRunConfigValidation(t *testing.T) {

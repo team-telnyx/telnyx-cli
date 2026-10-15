@@ -47,10 +47,12 @@ func newEmailSMTPVerifyCommand() *cli.Command {
 			"without TLS), authenticates with AUTH PLAIN using the literal username \"apikey\"\n" +
 			"and your API key as the password, then submits one short test message from\n" +
 			"--from to --to (default: the --from address). Every server reply is printed\n" +
-			"verbatim, stage by stage (control characters escaped). The verdict line is\n" +
-			"\"VERIFIED: message UUID <uuid>\" or \"FAILED at <stage>: <reply>\"; a portal note\n" +
-			"or a hint follows it. The session stops at the first failing reply. Exit\n" +
-			"status is 0 only when verified; scripts should check it rather than the output.\n\n" +
+			"verbatim, stage by stage (control characters escaped, credentials redacted).\n" +
+			"The last line is the verdict, \"VERIFIED: message UUID <uuid>\" or \"FAILED at\n" +
+			"<stage>: <reply>\", after a portal note or a hint. VERIFIED requires the exact\n" +
+			"acceptance reply \"250 2.0.0 Ok: queued as <uuid>\". The session stops at the\n" +
+			"first failing reply. Exit status is 0 only when verified; scripts should check\n" +
+			"it rather than the output.\n\n" +
 			"The API key comes from the global --api-key flag or TELNYX_API_KEY.\n" +
 			"This sends a real message, billed like any other send.",
 		Flags: []cli.Flag{
@@ -105,7 +107,9 @@ func handleEmailSMTPVerify(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 	if !res.Verified {
-		return fmt.Errorf("SMTP verification failed at %s", res.Stage)
+		// The verdict must stay the last line printed: exit 1 without an
+		// error message (cli.Exit with "" prints nothing).
+		return cli.Exit("", 1)
 	}
 	return nil
 }

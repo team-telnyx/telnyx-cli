@@ -31,6 +31,10 @@ const (
 	ReplyQueued     = "250 2.0.0 Ok: queued as " + QueuedUUID
 )
 
+// Echo in AuthReply is replaced with the AUTH command line as received,
+// credentials included: some proxies and MTAs echo it back.
+const Echo = "{echo}"
+
 // Script controls the server's replies. Zero values give a fully
 // successful contract-shaped session. Reply fields may hold multi-line
 // replies separated by "\n".
@@ -48,7 +52,11 @@ type Script struct {
 	RcptReply            string
 	DataReply            string // reply to DATA itself (354 by default)
 	DataEndReply         string // reply after the terminating "."
-	QuitReply            string
+	// DataEndPartial replaces DataEndReply with bytes written as is, with no
+	// line ending: the server then closes the connection or, with HangOn
+	// ".", stalls (a reply cut off mid-line).
+	DataEndPartial string
+	QuitReply      string
 	// HangOn: after receiving this verb, never reply (timeout tests).
 	HangOn string
 	// CloseOn: after receiving this verb, close the connection without replying.
@@ -280,7 +288,7 @@ func (s *Server) handle(raw net.Conn) {
 				send(ReplyEncryption)
 				continue
 			}
-			reply := or(s.script.AuthReply, ReplyAuthOK)
+			reply := strings.ReplaceAll(or(s.script.AuthReply, ReplyAuthOK), Echo, line)
 			authed = strings.HasPrefix(reply, "235")
 			send(reply)
 		case "MAIL":
@@ -315,6 +323,12 @@ func (s *Server) handle(raw net.Conn) {
 			s.mu.Lock()
 			s.bodies = append(s.bodies, body.String())
 			s.mu.Unlock()
+			if s.script.DataEndPartial != "" {
+				_, _ = conn.Write([]byte(s.script.DataEndPartial))
+				if s.script.HangOn != "." {
+					return
+				}
+			}
 			if s.script.HangOn == "." {
 				continue
 			}

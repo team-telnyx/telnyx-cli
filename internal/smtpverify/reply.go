@@ -2,6 +2,7 @@ package smtpverify
 
 import (
 	"bufio"
+	"bytes"
 	"errors"
 	"fmt"
 	"io"
@@ -100,20 +101,48 @@ func readReply(r *bufio.Reader) (Reply, error) {
 	}
 }
 
+// incompleteLineError is a reply line the server cut off: the connection
+// closed or stalled before the line ending. RFC 5321 §4.2 replies end in
+// CRLF, so the fragment is never parsed: an unterminated
+// "250 2.0.0 Ok: queued as <uuid>" is not an acceptance.
+type incompleteLineError struct {
+	partial string // raw bytes received, unparsed
+	err     error  // io.ErrUnexpectedEOF, a timeout, ...
+}
+
+func (e *incompleteLineError) Error() string {
+	return fmt.Sprintf("incomplete reply %q (no CRLF): %v", e.partial, e.err)
+}
+
+func (e *incompleteLineError) Unwrap() error { return e.err }
+
 // readLine reads one CRLF- (or bare LF-) terminated line, bounded in length.
+// Unlike bufio.Reader.ReadLine, which hands back a fragment cut off by EOF
+// or a timeout as if it were a whole line, a line without its LF is an
+// *incompleteLineError.
 func readLine(r *bufio.Reader) (string, error) {
-	var b strings.Builder
+	var line []byte
 	for {
-		chunk, isPrefix, err := r.ReadLine()
-		if err != nil {
-			return "", err
+		chunk, err := r.ReadSlice('\n')
+		line = append(line, chunk...)
+		terminated := err == nil
+		if terminated {
+			line = bytes.TrimSuffix(line[:len(line)-1], []byte{'\r'})
 		}
-		b.Write(chunk)
-		if b.Len() > maxReplyLineBytes {
+		if len(line) > maxReplyLineBytes {
 			return "", fmt.Errorf("%w: line longer than %d bytes", errMalformedReply, maxReplyLineBytes)
 		}
-		if !isPrefix {
-			return b.String(), nil
+		switch {
+		case terminated:
+			return string(line), nil
+		case errors.Is(err, bufio.ErrBufferFull):
+			continue
+		case len(line) == 0:
+			return "", err
+		case errors.Is(err, io.EOF):
+			return "", &incompleteLineError{partial: string(line), err: io.ErrUnexpectedEOF}
+		default:
+			return "", &incompleteLineError{partial: string(line), err: err}
 		}
 	}
 }
@@ -159,26 +188,23 @@ func parseEnhancedCode(code int, line string) string {
 
 const uuidPattern = `[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`
 
-var (
-	queuedUUIDRE = regexp.MustCompile(`(?i)queued as (` + uuidPattern + `)\b`)
-	uuidRE       = regexp.MustCompile(`\b` + uuidPattern + `\b`)
-)
+// acceptedRE is the Telnyx acceptance reply (SMTP submission contract), the
+// only reply that carries the message UUID the portal keys on.
+var acceptedRE = regexp.MustCompile(`^250 2\.0\.0 Ok: queued as (` + uuidPattern + `)$`)
 
-// messageUUID returns the message UUID carried by an accepting DATA reply
-// (Telnyx: "250 2.0.0 Ok: queued as <uuid>"), or "" if there is none. The
-// "queued as" form wins; otherwise the first UUID in the reply.
+// messageUUID returns the message UUID from a final DATA reply in exactly
+// the contract's shape, the single line "250 2.0.0 Ok: queued as <uuid>",
+// or "". A UUID anywhere else (a trace or queue ID, extra text, another
+// line) is not the message UUID, so it is never promoted to one.
 func messageUUID(r Reply) string {
-	for _, line := range r.Lines {
-		if m := queuedUUIDRE.FindStringSubmatch(line); m != nil {
-			return strings.ToLower(m[1])
-		}
+	if len(r.Lines) != 1 {
+		return ""
 	}
-	for _, line := range r.Lines {
-		if m := uuidRE.FindString(line); m != "" {
-			return strings.ToLower(m)
-		}
+	m := acceptedRE.FindStringSubmatch(r.Lines[0])
+	if m == nil {
+		return ""
 	}
-	return ""
+	return strings.ToLower(m[1])
 }
 
 // capabilities parses an EHLO reply into upper-cased keyword -> parameters.

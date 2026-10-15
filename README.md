@@ -134,14 +134,14 @@ telnyx email smtp verify \
   --to you@your-verified-domain.com
 ```
 
-The command always issues STARTTLS before sending credentials, then authenticates with AUTH PLAIN using the literal username `apikey`. It stops at the first failing reply. The verdict line is `VERIFIED: message UUID <uuid>` (exit status 0) or `FAILED at <stage>: <server reply>` (exit status 1), followed by a portal note or a hint. Scripts should check the exit status, not the last line.
+The command always issues STARTTLS before sending credentials, then authenticates with AUTH PLAIN using the literal username `apikey`. It stops at the first failing reply. The last line is always the verdict, `VERIFIED: message UUID <uuid>` (exit status 0) or `FAILED at <stage>: <server reply>` (exit status 1), with a portal note or a hint just before it. VERIFIED requires the exact acceptance reply `250 2.0.0 Ok: queued as <uuid>`; a reply cut off before its line ending never counts. The API key never appears in the output, even if the server echoes it back. Scripts should check the exit status rather than parse the output.
 
 - `--host` (or `TELNYX_SMTP_HOST`) is required; there is no default host yet.
 - `--port` defaults to 587.
 - `--to` defaults to the `--from` address.
 - `--timeout` (default 30s) bounds each reply; `--data-timeout` (default 5m) bounds message acceptance.
 
-The test suite runs against an in-process SMTP server. A live run is opt-in: `go test -tags smtp_live -run TestLive ./internal/smtpverify/` with `TELNYX_SMTP_LIVE_HOST`, `TELNYX_API_KEY` and `TELNYX_SMTP_LIVE_FROM` set.
+The test suite runs against an in-process SMTP server. A live run is opt-in: `go test -tags smtp_live -run TestLive -v ./internal/smtpverify/` with `TELNYX_API_KEY` and `TELNYX_SMTP_LIVE_FROM` set (`TELNYX_SMTP_LIVE_HOST` defaults to the dev front door). When a prerequisite is missing (credentials unset, or the dev front door not resolving yet) the run is reported as `GATED` and skipped with exit status 0; any failure past that gate fails the test.
 
 ## Linking different Go SDK versions
 

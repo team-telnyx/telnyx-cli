@@ -1,8 +1,9 @@
 // Package smtpverify runs one real SMTP submission session against a Telnyx
 // SMTP submission host — STARTTLS, AUTH PLAIN with the literal username
 // "apikey" and the caller's API key, MAIL FROM, RCPT TO, DATA, QUIT — and
-// prints a stage-by-stage transcript of every server reply, verbatim,
-// followed by a single verdict line.
+// prints a stage-by-stage transcript of every server reply, verbatim
+// (credentials redacted), then a hint or portal note, and last a single
+// verdict line.
 package smtpverify
 
 import (
@@ -18,6 +19,7 @@ import (
 	"net"
 	"net/mail"
 	"net/textproto"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -98,20 +100,24 @@ func (r Result) Verdict() string {
 	}
 }
 
-// Run validates cfg, performs the session, and writes the transcript and
-// verdict to out. The error is non-nil only for an invalid Config; every
-// session outcome, including failures, is reported in the Result.
+// Run validates cfg, performs the session, and writes the transcript, a
+// hint or portal note, and the verdict to out; the verdict is always the
+// last line. The error is non-nil only for an invalid Config; every
+// session outcome, including failures, is reported in the Result. Neither
+// the output nor the Result carries the API key: server text that echoes
+// it, or the AUTH PLAIN payload, is redacted.
 func Run(ctx context.Context, cfg Config, out io.Writer) (Result, error) {
 	cfg, err := cfg.normalize()
 	if err != nil {
 		return Result{}, err
 	}
-	s := &session{cfg: cfg, t: transcript{out}}
-	res := s.run(ctx)
+	redact := newRedactor(cfg.APIKey)
+	s := &session{cfg: cfg, t: transcript{out, redact}}
+	res := redact.result(s.run(ctx))
 	if res.Verified {
-		fmt.Fprintf(out, "\n%s\nLook the message up by this UUID in the Mission Control portal message log.\n", res.Verdict())
+		fmt.Fprintf(out, "\nLook the message up by the UUID below in the Mission Control portal message log.\n%s\n", res.Verdict())
 	} else {
-		fmt.Fprintf(out, "\n%s\nhint: %s\n", res.Verdict(), res.Hint)
+		fmt.Fprintf(out, "\nhint: %s\n%s\n", res.Hint, res.Verdict())
 	}
 	return res, nil
 }
@@ -223,10 +229,59 @@ func isAlnum(c byte) bool {
 	return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9'
 }
 
-type transcript struct{ w io.Writer }
+// authPlainPayload is the AUTH PLAIN initial response: authzid empty,
+// authcid "apikey", password = API key.
+func authPlainPayload(apiKey string) string {
+	return base64.StdEncoding.EncodeToString([]byte("\x00" + AuthUsername + "\x00" + apiKey))
+}
+
+// redactor masks the API key and the AUTH PLAIN payload that carries it. A
+// server or proxy may echo the AUTH command back, in a reply, in a
+// malformed line quoted by an error, or in a cut-off fragment, so every
+// transcript line and the Result are passed through it. The key is matched
+// raw and as printable and %q render it.
+type redactor struct{ r *strings.Replacer }
+
+const (
+	redactedKey     = "<redacted: API key>"
+	redactedPayload = "<redacted: AUTH PLAIN credentials>"
+)
+
+func newRedactor(apiKey string) redactor {
+	pairs := []string{authPlainPayload(apiKey), redactedPayload} // first: wins over a key inside it
+	quoted := strconv.Quote(apiKey)
+	for _, k := range []string{apiKey, printable(apiKey), quoted[1 : len(quoted)-1]} {
+		if !slices.Contains(pairs, k) {
+			pairs = append(pairs, k, redactedKey)
+		}
+	}
+	return redactor{strings.NewReplacer(pairs...)}
+}
+
+func (rd redactor) mask(s string) string { return rd.r.Replace(s) }
+
+// result redacts the server text and local detail a Result carries.
+func (rd redactor) result(res Result) Result {
+	if res.Reply != nil {
+		reply := *res.Reply
+		reply.Lines = make([]string, len(res.Reply.Lines))
+		for i, l := range res.Reply.Lines {
+			reply.Lines[i] = rd.mask(l)
+		}
+		res.Reply = &reply
+	}
+	res.Detail = rd.mask(res.Detail)
+	res.Hint = rd.mask(res.Hint)
+	return res
+}
+
+type transcript struct {
+	w      io.Writer
+	redact redactor
+}
 
 func (t transcript) line(stage Stage, dir, text string) {
-	fmt.Fprintf(t.w, "%-11s %s %s\n", "["+string(stage)+"]", dir, text)
+	fmt.Fprintf(t.w, "%-11s %s %s\n", "["+string(stage)+"]", dir, t.redact.mask(text))
 }
 
 func (t transcript) client(stage Stage, text string) { t.line(stage, "C:", text) }
@@ -291,12 +346,10 @@ func (s *session) run(ctx context.Context) Result {
 		return res
 	}
 
-	// AUTH PLAIN: authzid empty, authcid "apikey", password = API key.
 	if !hasAuthMechanism(caps, "PLAIN") {
 		s.t.note(StageAuth, "server did not advertise AUTH PLAIN after STARTTLS; trying it anyway")
 	}
-	ir := base64.StdEncoding.EncodeToString([]byte("\x00" + AuthUsername + "\x00" + cfg.APIKey))
-	reply, err := s.cmd(StageAuth, "AUTH PLAIN "+ir, `AUTH PLAIN <redacted: username "apikey", password = API key>`, cfg.CommandTimeout)
+	reply, err := s.cmd(StageAuth, "AUTH PLAIN "+authPlainPayload(cfg.APIKey), `AUTH PLAIN <redacted: username "apikey", password = API key>`, cfg.CommandTimeout)
 	if err != nil {
 		return s.ioFailure(ctx, StageAuth, err, cfg.CommandTimeout)
 	}
@@ -436,9 +489,7 @@ func (s *session) sendMessage() (Reply, error) {
 		return Reply{}, err
 	}
 	s.t.client(StageData, ".")
-	reply, err := readReply(s.r)
-	s.t.server(StageData, reply) // partial lines too: every reply byte is shown
-	return reply, err
+	return s.receive(StageData)
 }
 
 func (s *session) buildMessage() ([]byte, string) {
@@ -472,15 +523,23 @@ func (s *session) cmd(stage Stage, line, display string, timeout time.Duration) 
 	if _, err := io.WriteString(s.conn, line+"\r\n"); err != nil {
 		return Reply{}, err
 	}
-	reply, err := readReply(s.r)
-	s.t.server(stage, reply) // partial lines too: every reply byte is shown
-	return reply, err
+	return s.receive(stage)
 }
 
 func (s *session) read(stage Stage, timeout time.Duration) (Reply, error) {
 	_ = s.conn.SetDeadline(time.Now().Add(timeout))
+	return s.receive(stage)
+}
+
+// receive reads one reply and prints it. Partial replies are printed too,
+// including a line cut off before its CRLF: every reply byte is shown.
+func (s *session) receive(stage Stage) (Reply, error) {
 	reply, err := readReply(s.r)
 	s.t.server(stage, reply)
+	var cut *incompleteLineError
+	if errors.As(err, &cut) {
+		s.t.note(stage, "incomplete reply line (no CRLF): "+printable(cut.partial))
+	}
 	return reply, err
 }
 
@@ -503,6 +562,10 @@ func (s *session) replyFailure(stage Stage, r Reply) Result {
 func (s *session) ioFailure(ctx context.Context, stage Stage, err error, timeout time.Duration) Result {
 	if ctx.Err() != nil {
 		return Result{Stage: stage, Detail: "canceled: " + ctx.Err().Error(), Hint: "The command was interrupted."}
+	}
+	var cut *incompleteLineError
+	if errors.As(err, &cut) {
+		return Result{Stage: stage, Detail: fmt.Sprintf("incomplete reply %q (no CRLF): %s", cut.partial, describeIOError(cut.err, timeout)), Hint: hintIncomplete}
 	}
 	var ne net.Error
 	if errors.As(err, &ne) && ne.Timeout() {

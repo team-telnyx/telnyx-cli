@@ -39,10 +39,17 @@ func TestEmailSMTPVerifyRegistered(t *testing.T) {
 }
 
 func TestEmailSMTPVerifyCommand(t *testing.T) {
-	// Not parallel: subtests use t.Setenv and the package-level TLS hook.
+	// Not parallel: subtests use t.Setenv, the package-level TLS hook, and
+	// urfave/cli's process-wide exit hooks.
 	tlsSrv := smtpmock.Start(t, smtpmock.Script{})
 	authFail := smtpmock.Start(t, smtpmock.Script{AuthReply: "535 5.7.8 Authentication credentials invalid"})
 	t.Cleanup(func() { emailSMTPVerifyTLSConfig = nil })
+	exitCode := -1 // -1: OsExiter not called
+	var stderr bytes.Buffer
+	oldExiter, oldErrWriter := cli.OsExiter, cli.ErrWriter
+	cli.OsExiter = func(code int) { exitCode = code }
+	cli.ErrWriter = &stderr
+	t.Cleanup(func() { cli.OsExiter, cli.ErrWriter = oldExiter, oldErrWriter })
 
 	hostPort := func(s *smtpmock.Server) []string {
 		return []string{"--host", s.Host, "--port", strings.TrimPrefix(s.Addr, s.Host+":")}
@@ -52,7 +59,9 @@ func TestEmailSMTPVerifyCommand(t *testing.T) {
 		server     *smtpmock.Server // trusted for STARTTLS
 		env        map[string]string
 		args       []string
-		wantErr    string // "" = success
+		wantErr    string // usage error, returned before any session
+		wantExit   int    // exit status set via cli.Exit, with nothing printed
+		wantLast   string // last line of output: the verdict
 		wantOutput []string
 		wantNoOut  bool
 		check      func(t *testing.T)
@@ -94,8 +103,8 @@ func TestEmailSMTPVerifyCommand(t *testing.T) {
 			wantOutput: []string{
 				"[AUTH]      S: " + smtpmock.ReplyAuthOK,
 				"[RCPT TO]   C: RCPT TO:<verify@example.com>",
-				"VERIFIED: message UUID " + smtpmock.QueuedUUID,
 			},
+			wantLast: "VERIFIED: message UUID " + smtpmock.QueuedUUID,
 		},
 		{
 			name:   "host and API key from the environment",
@@ -104,18 +113,18 @@ func TestEmailSMTPVerifyCommand(t *testing.T) {
 			args:   []string{"--port", strings.TrimPrefix(tlsSrv.Addr, tlsSrv.Host+":"), "--from", "verify@example.com", "--to", "ops@example.net"},
 			wantOutput: []string{
 				"[RCPT TO]   C: RCPT TO:<ops@example.net>",
-				"VERIFIED: message UUID " + smtpmock.QueuedUUID,
 			},
+			wantLast: "VERIFIED: message UUID " + smtpmock.QueuedUUID,
 		},
 		{
-			name:    "failure exits non-zero with the transcript and verdict printed",
-			server:  authFail,
-			args:    append(hostPort(authFail), "--api-key", "KEYbad", "--from", "verify@example.com"),
-			wantErr: "SMTP verification failed at AUTH",
+			name:     "failure exits 1 with the verdict as the last line, hint before it",
+			server:   authFail,
+			args:     append(hostPort(authFail), "--api-key", "KEYbad", "--from", "verify@example.com"),
+			wantExit: 1,
 			wantOutput: []string{
-				"FAILED at AUTH: 535 5.7.8 Authentication credentials invalid",
-				`hint: The API key was rejected.`,
+				"\nhint: The API key was rejected.",
 			},
+			wantLast: "FAILED at AUTH: 535 5.7.8 Authentication credentials invalid",
 			check: func(t *testing.T) {
 				assert.False(t, slices.Contains(authFail.Verbs(), "MAIL"), "session stops at the first failing reply")
 			},
@@ -132,17 +141,33 @@ func TestEmailSMTPVerifyCommand(t *testing.T) {
 			if tt.server != nil {
 				emailSMTPVerifyTLSConfig = tt.server.ClientTLS
 			}
+			exitCode = -1
+			stderr.Reset()
 			var out bytes.Buffer
 			args := append([]string{"telnyx", "email", "smtp", "verify"}, tt.args...)
 			err := newEmailTestRoot(&out).Run(context.Background(), args)
-			if tt.wantErr == "" {
-				require.NoError(t, err, out.String())
-			} else {
+			switch {
+			case tt.wantErr != "":
 				require.Error(t, err)
 				assert.Contains(t, err.Error(), tt.wantErr)
+			case tt.wantExit != 0:
+				require.Error(t, err)
+				var exitErr cli.ExitCoder
+				require.ErrorAs(t, err, &exitErr)
+				assert.Equal(t, tt.wantExit, exitErr.ExitCode())
+				assert.Equal(t, tt.wantExit, exitCode, "the process exits with the failure status")
+				assert.Empty(t, err.Error(), "no error message would print after the verdict")
+				assert.Empty(t, stderr.String(), "nothing printed after the verdict")
+			default:
+				require.NoError(t, err, out.String())
+				assert.Equal(t, -1, exitCode, "no exit on success")
 			}
 			for _, want := range tt.wantOutput {
 				assert.Contains(t, out.String(), want)
+			}
+			if tt.wantLast != "" {
+				lines := strings.Split(strings.TrimSuffix(out.String(), "\n"), "\n")
+				assert.Equal(t, tt.wantLast, lines[len(lines)-1], "the verdict is the last line printed")
 			}
 			if tt.wantNoOut {
 				assert.Empty(t, out.String())

@@ -5,10 +5,10 @@ import (
 	"time"
 )
 
-// Hints are user guidance printed after a FAILED verdict. They key off the
-// reply code + enhanced code the Telnyx submission tier publishes (its
-// SMTP protocol contract); the server's own reply text is always printed
-// verbatim and is never rewritten.
+// Hints are user guidance printed just before a FAILED verdict. They key
+// off the reply code + enhanced code the Telnyx submission tier publishes
+// (its SMTP protocol contract); the server's own reply text is always
+// printed verbatim and is never rewritten.
 
 type hintKey struct {
 	stage    Stage // "" matches any stage
@@ -57,7 +57,8 @@ func hintForReply(stage Stage, r Reply) string {
 
 const (
 	hintNoSTARTTLS      = "Telnyx requires STARTTLS on port 587 and rejects AUTH before TLS with \"538 5.7.11 Encryption required\". Check --host and --port, and that nothing on your network strips STARTTLS."
-	hintNoUUID          = "The server accepted the message, but its reply carries no message UUID. Telnyx accepts with \"250 2.0.0 Ok: queued as <uuid>\"; check that --host points at a Telnyx SMTP submission host."
+	hintNoUUID          = "The server accepted the message, but not with the Telnyx acceptance reply \"250 2.0.0 Ok: queued as <uuid>\", so there is no message UUID to look up (a UUID elsewhere in a reply is not one). Check that --host points at a Telnyx SMTP submission host."
+	hintIncomplete      = "The server's reply was cut off before its line ending (SMTP replies end in CRLF), so it does not count, even if it began like an acceptance. If it came after the message was sent, the message may still have been queued: check the portal message log before retrying."
 	hintTLS             = "The TLS handshake failed. Check that --host is the name on the server's certificate."
 	hintEntitlementLost = "The server ended the session after authentication: the key may have been revoked or lost its email send capability, or the service is temporarily unavailable. Retry; if it persists, check the key."
 	hintInjected        = "The server sent unexpected data before the TLS handshake: something on the network path may be tampering with the connection. Credentials were not sent."
