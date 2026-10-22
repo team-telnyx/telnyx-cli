@@ -730,6 +730,7 @@ func TestCallsActionsHangup(t *testing.T) {
 			"--command-id", "891510ac-f3e4-11e8-af5b-de00688a4901",
 			"--custom-header", "{name: head_1, value: val_1}",
 			"--custom-header", "{name: head_2, value: val_2}",
+			"--reason", "Call completed elsewhere",
 		)
 	})
 
@@ -749,6 +750,7 @@ func TestCallsActionsHangup(t *testing.T) {
 			"--custom-header.value", "val_1",
 			"--custom-header.name", "head_2",
 			"--custom-header.value", "val_2",
+			"--reason", "Call completed elsewhere",
 		)
 	})
 
@@ -761,7 +763,8 @@ func TestCallsActionsHangup(t *testing.T) {
 			"  - name: head_1\n" +
 			"    value: val_1\n" +
 			"  - name: head_2\n" +
-			"    value: val_2\n")
+			"    value: val_2\n" +
+			"reason: Call completed elsewhere\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

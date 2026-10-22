@@ -111,6 +111,7 @@ func TestMessagesSend(t *testing.T) {
 			"--use-profile-webhooks=true",
 			"--webhook-failover-url", "https://backup.example.com/hooks",
 			"--webhook-url", "http://example.com/webhooks",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -135,6 +136,7 @@ func TestMessagesSend(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"messages", "send",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }
@@ -155,6 +157,7 @@ func TestMessagesSendGroupMms(t *testing.T) {
 			"--use-profile-webhooks=true",
 			"--webhook-failover-url", "https://backup.example.com/hooks",
 			"--webhook-url", "http://example.com/webhooks",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -176,6 +179,7 @@ func TestMessagesSendGroupMms(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"messages", "send-group-mms",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }
@@ -198,6 +202,7 @@ func TestMessagesSendLongCode(t *testing.T) {
 			"--use-profile-webhooks=true",
 			"--webhook-failover-url", "https://backup.example.com/hooks",
 			"--webhook-url", "http://example.com/webhooks",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -220,6 +225,7 @@ func TestMessagesSendLongCode(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"messages", "send-long-code",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }
@@ -242,6 +248,7 @@ func TestMessagesSendNumberPool(t *testing.T) {
 			"--use-profile-webhooks=true",
 			"--webhook-failover-url", "https://backup.example.com/hooks",
 			"--webhook-url", "http://example.com/webhooks",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -264,6 +271,7 @@ func TestMessagesSendNumberPool(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"messages", "send-number-pool",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }
@@ -286,6 +294,7 @@ func TestMessagesSendShortCode(t *testing.T) {
 			"--use-profile-webhooks=true",
 			"--webhook-failover-url", "https://backup.example.com/hooks",
 			"--webhook-url", "http://example.com/webhooks",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -308,6 +317,7 @@ func TestMessagesSendShortCode(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"messages", "send-short-code",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }
@@ -326,6 +336,7 @@ func TestMessagesSendWithAlphanumericSender(t *testing.T) {
 			"--use-profile-webhooks=true",
 			"--webhook-failover-url", "webhook_failover_url",
 			"--webhook-url", "webhook_url",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -343,6 +354,7 @@ func TestMessagesSendWithAlphanumericSender(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"messages", "send-with-alphanumeric-sender",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }
@@ -356,10 +368,11 @@ func TestMessagesWhatsapp(t *testing.T) {
 			"messages", "whatsapp",
 			"--from", "+13125551234",
 			"--to", "+13125551234",
-			"--whatsapp-message", "{audio: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, biz_opaque_callback_data: biz_opaque_callback_data, contacts: [{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: name, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}], document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, interactive: {action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}, location: {address: address, latitude: latitude, longitude: longitude, name: name}, reaction: {emoji: emoji, message_id: message_id}, sticker: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, template: {components: [{index: 0, parameters: [{text: text, type: text}], sub_type: quick_reply, type: header}], language: {code: en_US, policy: deterministic}, name: order_confirmation, template_id: 019cd44b-3a1c-781b-956e-bd33e9fd2ac6}, text: {body: Hello from Telnyx!, preview_url: true}, type: audio, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}",
+			"--whatsapp-message", "{audio: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, biz_opaque_callback_data: biz_opaque_callback_data, contacts: [{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: {formatted_name: formatted_name, first_name: first_name, last_name: last_name, middle_name: middle_name, prefix: prefix, suffix: suffix}, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}], document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, interactive: {action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, flow_action: navigate, flow_action_payload: {data: {}, screen: screen}, flow_cta: flow_cta, flow_id: flow_id, flow_message_version: flow_message_version, flow_name: flow_name, flow_token: flow_token, mode: draft, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {type: document, document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}, location: {address: address, latitude: latitude, longitude: longitude, name: name}, reaction: {emoji: emoji, message_id: message_id}, sticker: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, template: {components: [{index: 0, parameters: [{action: {flow_action_data: {}, flow_token: flow_token}, text: text, type: text}], sub_type: quick_reply, type: header}], language: {code: en_US, policy: deterministic}, name: order_confirmation, template_id: 019cd44b-3a1c-781b-956e-bd33e9fd2ac6}, text: {body: Hello from Telnyx!, preview_url: true}, type: audio, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--type", "WHATSAPP",
 			"--webhook-url", "webhook_url",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -376,20 +389,21 @@ func TestMessagesWhatsapp(t *testing.T) {
 			"--to", "+13125551234",
 			"--whatsapp-message.audio", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
 			"--whatsapp-message.biz-opaque-callback-data", "biz_opaque_callback_data",
-			"--whatsapp-message.contacts", "[{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: name, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}]",
+			"--whatsapp-message.contacts", "[{addresses: [{city: city, country: country, country_code: country_code, state: state, street: street, type: type, zip: zip}], birthday: birthday, emails: [{email: email, type: type}], name: {formatted_name: formatted_name, first_name: first_name, last_name: last_name, middle_name: middle_name, prefix: prefix, suffix: suffix}, org: {company: company, department: department, title: title}, phones: [{phone: phone, type: type, wa_id: wa_id}], urls: [{type: type, url: url}]}]",
 			"--whatsapp-message.document", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
 			"--whatsapp-message.image", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
-			"--whatsapp-message.interactive", "{action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}",
+			"--whatsapp-message.interactive", "{action: {button: button, buttons: [{reply: {id: id, title: title}, type: reply}], cards: [{action: {catalog_id: catalog_id, product_retailer_id: product_retailer_id}, body: {text: text}, card_index: 0, header: {image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, type: image, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}], catalog_id: catalog_id, mode: mode, name: name, parameters: {display_text: display_text, flow_action: navigate, flow_action_payload: {data: {}, screen: screen}, flow_cta: flow_cta, flow_id: flow_id, flow_message_version: flow_message_version, flow_name: flow_name, flow_token: flow_token, mode: draft, url: url}, product_retailer_id: product_retailer_id, sections: [{product_items: [{product_retailer_id: product_retailer_id}], rows: [{id: id, description: description, title: title}], title: title}]}, body: {text: text}, footer: {text: text}, header: {type: document, document: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, image: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}, sub_text: sub_text, text: text, video: {caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}}, type: cta_url}",
 			"--whatsapp-message.location", "{address: address, latitude: latitude, longitude: longitude, name: name}",
 			"--whatsapp-message.reaction", "{emoji: emoji, message_id: message_id}",
 			"--whatsapp-message.sticker", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
-			"--whatsapp-message.template", "{components: [{index: 0, parameters: [{text: text, type: text}], sub_type: quick_reply, type: header}], language: {code: en_US, policy: deterministic}, name: order_confirmation, template_id: 019cd44b-3a1c-781b-956e-bd33e9fd2ac6}",
+			"--whatsapp-message.template", "{components: [{index: 0, parameters: [{action: {flow_action_data: {}, flow_token: flow_token}, text: text, type: text}], sub_type: quick_reply, type: header}], language: {code: en_US, policy: deterministic}, name: order_confirmation, template_id: 019cd44b-3a1c-781b-956e-bd33e9fd2ac6}",
 			"--whatsapp-message.text", "{body: Hello from Telnyx!, preview_url: true}",
 			"--whatsapp-message.type", "audio",
 			"--whatsapp-message.video", "{caption: caption, filename: filename, link: http://example.com/media.jpg, voice: true}",
 			"--messaging-profile-id", "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 			"--type", "WHATSAPP",
 			"--webhook-url", "webhook_url",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -418,7 +432,13 @@ func TestMessagesWhatsapp(t *testing.T) {
 			"      emails:\n" +
 			"        - email: email\n" +
 			"          type: type\n" +
-			"      name: name\n" +
+			"      name:\n" +
+			"        formatted_name: formatted_name\n" +
+			"        first_name: first_name\n" +
+			"        last_name: last_name\n" +
+			"        middle_name: middle_name\n" +
+			"        prefix: prefix\n" +
+			"        suffix: suffix\n" +
 			"      org:\n" +
 			"        company: company\n" +
 			"        department: department\n" +
@@ -473,6 +493,16 @@ func TestMessagesWhatsapp(t *testing.T) {
 			"      name: name\n" +
 			"      parameters:\n" +
 			"        display_text: display_text\n" +
+			"        flow_action: navigate\n" +
+			"        flow_action_payload:\n" +
+			"          data: {}\n" +
+			"          screen: screen\n" +
+			"        flow_cta: flow_cta\n" +
+			"        flow_id: flow_id\n" +
+			"        flow_message_version: flow_message_version\n" +
+			"        flow_name: flow_name\n" +
+			"        flow_token: flow_token\n" +
+			"        mode: draft\n" +
 			"        url: url\n" +
 			"      product_retailer_id: product_retailer_id\n" +
 			"      sections:\n" +
@@ -488,6 +518,7 @@ func TestMessagesWhatsapp(t *testing.T) {
 			"    footer:\n" +
 			"      text: text\n" +
 			"    header:\n" +
+			"      type: document\n" +
 			"      document:\n" +
 			"        caption: caption\n" +
 			"        filename: filename\n" +
@@ -523,7 +554,10 @@ func TestMessagesWhatsapp(t *testing.T) {
 			"    components:\n" +
 			"      - index: 0\n" +
 			"        parameters:\n" +
-			"          - text: text\n" +
+			"          - action:\n" +
+			"              flow_action_data: {}\n" +
+			"              flow_token: flow_token\n" +
+			"            text: text\n" +
 			"            type: text\n" +
 			"        sub_type: quick_reply\n" +
 			"        type: header\n" +
@@ -548,6 +582,7 @@ func TestMessagesWhatsapp(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"messages", "whatsapp",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

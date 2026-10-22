@@ -16,7 +16,7 @@ func TestTexmlAccountsConferencesParticipantsRetrieve(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences:participants", "retrieve",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 			"--call-sid-or-participant-label", "call_sid_or_participant_label",
 		)
@@ -30,7 +30,7 @@ func TestTexmlAccountsConferencesParticipantsUpdate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences:participants", "update",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 			"--call-sid-or-participant-label", "call_sid_or_participant_label",
 			"--announce-method", "GET",
@@ -65,7 +65,7 @@ func TestTexmlAccountsConferencesParticipantsUpdate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"texml:accounts:conferences:participants", "update",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 			"--call-sid-or-participant-label", "call_sid_or_participant_label",
 		)
@@ -79,7 +79,7 @@ func TestTexmlAccountsConferencesParticipantsDelete(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences:participants", "delete",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 			"--call-sid-or-participant-label", "call_sid_or_participant_label",
 		)
@@ -93,7 +93,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences:participants", "participants",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 			"--amd-status-callback", "https://www.example.com/amd_result",
 			"--amd-status-callback-method", "GET",
@@ -163,7 +163,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences:participants", "participants",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 			"--amd-status-callback", "https://www.example.com/amd_result",
 			"--amd-status-callback-method", "GET",
@@ -290,7 +290,7 @@ func TestTexmlAccountsConferencesParticipantsParticipants(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"texml:accounts:conferences:participants", "participants",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 		)
 	})
@@ -303,7 +303,7 @@ func TestTexmlAccountsConferencesParticipantsRetrieveParticipants(t *testing.T) 
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences:participants", "retrieve-participants",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 		)
 	})

@@ -15,7 +15,7 @@ func TestTexmlAccountsQueuesCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:queues", "create",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--friendly-name", "Support Queue",
 			"--max-size", "10",
 		)
@@ -30,7 +30,7 @@ func TestTexmlAccountsQueuesCreate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"texml:accounts:queues", "create",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 		)
 	})
 }
@@ -42,7 +42,7 @@ func TestTexmlAccountsQueuesRetrieve(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:queues", "retrieve",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--queue-sid", "queue_sid",
 		)
 	})
@@ -55,7 +55,7 @@ func TestTexmlAccountsQueuesUpdate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:queues", "update",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--queue-sid", "queue_sid",
 			"--max-size", "10",
 		)
@@ -68,7 +68,7 @@ func TestTexmlAccountsQueuesUpdate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"texml:accounts:queues", "update",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--queue-sid", "queue_sid",
 		)
 	})
@@ -82,7 +82,7 @@ func TestTexmlAccountsQueuesList(t *testing.T) {
 			"--api-key", "string",
 			"texml:accounts:queues", "list",
 			"--max-items", "10",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--date-created", "DateCreated",
 			"--date-updated", "DateUpdated",
 			"--page", "0",
@@ -99,7 +99,7 @@ func TestTexmlAccountsQueuesDelete(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:queues", "delete",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--queue-sid", "queue_sid",
 		)
 	})

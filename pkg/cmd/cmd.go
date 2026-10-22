@@ -807,6 +807,17 @@ func init() {
 				},
 			},
 			{
+				Name:     "ai:avatars",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&aiAvatarsCreate,
+					&aiAvatarsRetrieve,
+					&aiAvatarsUpdate,
+					&aiAvatarsList,
+				},
+			},
+			{
 				Name:     "audit-events",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3407,6 +3418,16 @@ func init() {
 				},
 			},
 			{
+				Name:     "whatsapp:hosted-signups",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&whatsappHostedSignupsCreate,
+					&whatsappHostedSignupsRetrieve,
+					&whatsappHostedSignupsList,
+				},
+			},
+			{
 				Name:     "whatsapp-message-templates",
 				Category: "API RESOURCE",
 				Suggest:  true,
@@ -3728,7 +3749,6 @@ func init() {
 					&infringementClaimsContest,
 				},
 			},
-			emailCommand,
 			{
 				Name:     "email-blocks",
 				Category: "API RESOURCE",
@@ -3997,7 +4017,6 @@ func init() {
 					&meetingSessionsDelete,
 					&meetingSessionsDeleteRecordingMedia,
 					&meetingSessionsRetrieveEvents,
-					&meetingSessionsRetrieveRecordings,
 					&meetingSessionsRetrieveTranscript,
 				},
 			},
@@ -4031,10 +4050,19 @@ func init() {
 				},
 			},
 			{
+				Name:     "compute",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&computeRetrieve,
+				},
+			},
+			{
 				Name:     "compute:funcs",
 				Category: "API RESOURCE",
 				Suggest:  true,
 				Commands: []*cli.Command{
+					&computeFuncsList,
 					&computeFuncsRetrieveLogs,
 					&computeFuncsRetrieveMetricAggregates,
 					&computeFuncsRetrieveRevisions,
@@ -4151,6 +4179,26 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&sipRegistrationStatusList,
+				},
+			},
+			{
+				Name:     "dial-metrics",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&dialMetricsList,
+				},
+			},
+			{
+				Name:     "tailscale-subnet-routers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&tailscaleSubnetRoutersCreate,
+					&tailscaleSubnetRoutersRetrieve,
+					&tailscaleSubnetRoutersUpdate,
+					&tailscaleSubnetRoutersList,
+					&tailscaleSubnetRoutersDelete,
 				},
 			},
 			{

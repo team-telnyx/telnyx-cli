@@ -98,7 +98,7 @@ var addressesCreate = cli.Command{
 		},
 		&requestflag.Flag[bool]{
 			Name:     "validate-address",
-			Usage:    "Indicates whether or not the address should be validated for emergency use upon creation or not. This should be left with the default value of `true` unless you have used the `/addresses/actions/validate` endpoint to validate the address separately prior to creation. If an address is not validated for emergency use upon creation and it is not valid, it will not be able to be used for emergency services.",
+			Usage:    "Indicates whether or not the address should be validated for emergency use upon creation or not. This should be left with the default value of `true` unless you have used the `/addresses/actions/validate` endpoint to validate the address separately prior to creation. If an address is not validated for emergency use upon creation and it is not valid, it will not be able to be used for emergency services. In an address record, this flag indicates whether emergency validation was performed at creation: `true` means the record passed emergency validation before it was created; `false` means validation was skipped during this creation request, and the address may have been validated separately. This flag is not a current validity status; emergency use still requires a valid address.",
 			Default:  true,
 			BodyPath: "validate_address",
 		},

@@ -38,6 +38,7 @@ func TestMessagesRcsSend(t *testing.T) {
 			"--sms-fallback", "{from: '+13125551234', text: Hello world!}",
 			"--type", "RCS",
 			"--webhook-url", "webhook_url",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -65,6 +66,7 @@ func TestMessagesRcsSend(t *testing.T) {
 			"--sms-fallback.text", "Hello world!",
 			"--type", "RCS",
 			"--webhook-url", "webhook_url",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 
@@ -208,6 +210,7 @@ func TestMessagesRcsSend(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"messages:rcs", "send",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

@@ -15,7 +15,7 @@ func TestTexmlAccountsCallsStreamsStreamingSidJson(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:calls:streams", "streaming-sid-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--call-sid", "call_sid",
 			"--streaming-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 			"--status", "stopped",
@@ -29,7 +29,7 @@ func TestTexmlAccountsCallsStreamsStreamingSidJson(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"texml:accounts:calls:streams", "streaming-sid-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--call-sid", "call_sid",
 			"--streaming-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)

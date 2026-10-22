@@ -30,6 +30,12 @@ var phoneNumbersCsvDownloadsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:     "Consolidated filter parameter (deepObject style). Originally: filter[has_bundle], filter[tag], filter[connection_id], filter[phone_number], filter[status], filter[voice.connection_name], filter[voice.usage_payment_method], filter[billing_group_id], filter[emergency_address_id], filter[customer_reference]",
 			QueryPath: "filter",
 		},
+		&requestflag.Flag[bool]{
+			Name:      "include-managed-accounts",
+			Usage:     "When true, the CSV includes phone numbers from all managed accounts in addition to the requesting account's own numbers. Only applies to V2 format; ignored for V1. The export appends `user_id` and `email` columns identifying the account that owns each number. When a filter is provided, it applies to the combined set of numbers. Requires access to managed accounts; requests without that access are rejected.",
+			Default:   false,
+			QueryPath: "include_managed_accounts",
+		},
 	},
 	Action:          handlePhoneNumbersCsvDownloadsCreate,
 	HideHelpCommand: true,

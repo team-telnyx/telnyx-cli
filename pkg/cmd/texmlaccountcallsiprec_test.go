@@ -15,7 +15,7 @@ func TestTexmlAccountsCallsSiprecSiprecSidJson(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:calls:siprec", "siprec-sid-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--call-sid", "call_sid",
 			"--siprec-sid", "siprec_sid",
 			"--status", "stopped",
@@ -29,7 +29,7 @@ func TestTexmlAccountsCallsSiprecSiprecSidJson(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"texml:accounts:calls:siprec", "siprec-sid-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--call-sid", "call_sid",
 			"--siprec-sid", "siprec_sid",
 		)

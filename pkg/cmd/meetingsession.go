@@ -16,7 +16,7 @@ import (
 
 var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new meeting session. When an idempotency_key is supplied in the\nrequest body, replay lookup is scoped to the authenticated account and compares\nonly the key; the request payload is not fingerprinted or compared. If a session\nwith that key already exists for the account, the existing session is replayed\n(200); otherwise a new session is created (201). Supports bring-your-own-key\n(BYOK) configuration. The session may enter asynchronous states (e.g. joining,\nwaiting_for_admission) before becoming active. Optional `camera_image` input is\nwrite-only and applies only when no Avatar or Assistant webpage output takes\nprecedence. An ignored URL is not fetched. An effective URL source is resolved\nbefore bot creation; neither the source URL nor image bytes are persisted,\nreturned, or logged. Treat signed URLs as credentials.",
+	Usage:   "Creates a new meeting session. When an idempotency_key is supplied in the\nrequest body, replay lookup is scoped to the authenticated account and compares\nonly the key; the request payload is not fingerprinted or compared. If a session\nwith that key already exists for the account, the existing session is replayed\n(200); otherwise a new session is created (201). The session may enter\nasynchronous states (e.g. joining, waiting_for_admission) before becoming\nactive. Optional `camera_image` input is write-only and applies only when no\navatar or Assistant webpage output takes precedence. An ignored URL is not\nfetched. An effective URL source is resolved before bot creation; neither the\nsource URL nor image bytes are persisted, returned, or logged. Treat signed URLs\nas credentials. With `assistant.avatar: true`, the assistant is read before the\nbot is created: an assistant without a Telnyx avatar configured is rejected with\n400 `invalid_request` (message prefix `assistant_avatar_not_configured:`), an\nunknown assistant with 400 `invalid_request` (prefix `assistant_not_found:`),\nand a failed lookup with 503 `assistant_lookup_unavailable`; no bot is created\nin any of these cases.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -29,11 +29,6 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "assistant",
 			Usage:    "Attach a Telnyx AI Assistant to the session. Supply the Assistant's ID; the Meeting service connects it to the meeting directly. The Call Control connection, caller ID and loopback SIP URI previously required here have been removed and are now rejected as unknown fields.",
 			BodyPath: "assistant",
-		},
-		&requestflag.Flag[map[string]any]{
-			Name:     "avatar",
-			Usage:    "Request options for attaching a bring-your-own-key avatar to the session.",
-			BodyPath: "avatar",
 		},
 		&requestflag.Flag[bool]{
 			Name:     "barge-in",
@@ -73,7 +68,7 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "speak-on-enter",
-			Usage:    "Text the bot speaks when it enters the meeting. **Not spoken when an `assistant` is attached**: the value is accepted and echoed back on the session, but the assistant owns the voice and the line is never delivered, with no event reporting the omission. Use `chat_on_enter` to announce an assistant-backed bot.",
+			Usage:    "Text the bot speaks when it enters the meeting. **Not spoken when an `assistant` is attached**: the value is accepted and echoed back on the session, but the assistant owns the voice and the line is never delivered, with no event reporting the omission. Use `chat_on_enter` to announce an assistant-backed bot. Rejected with 400 `invalid_request` when `assistant.avatar` is `true`.",
 			BodyPath: "speak_on_enter",
 		},
 		&requestflag.Flag[bool]{
@@ -107,6 +102,11 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Audio gating strategy for the assistant call leg. `half_duplex` (default) sends the assistant a single mixed meeting stream and mutes it while the assistant speaks, so the assistant cannot hear itself and cannot be interrupted. `full_duplex` sends a separate stream per participant, which allows barge-in and removes self-hearing, and COSTS SIGNIFICANTLY MORE: per-participant streams multiply the per-minute cost by the number of participants.",
 			InnerField: "audio_gate",
 		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "assistant.avatar",
+			Usage:      "Beta. Show the avatar configured on the assistant (its `avatar_settings`; see [AI Assistant avatars](/docs/inference/ai-assistants/avatars)) as the bot's camera, lip-synced to the assistant's own speech. The request carries no avatar ID or key: the assistant is read at creation and the request is rejected with 400 `invalid_request` if it has no Telnyx avatar configured. Supported on Google Meet, Zoom, Microsoft Teams and Webex; other platforms return 422 `unsupported_capability`. REST-only. Not echoed back on `assistant`; the session's top-level `avatar` and `avatar_state` fields report it instead. If the avatar fails, the session continues voice-only and `avatar_state` becomes `degraded`.",
+			InnerField: "avatar",
+		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.dynamic-variables",
 			Usage:      "Per-conversation values for the [dynamic variables](/docs/inference/ai-assistants/dynamic-variables) used in the Assistant's instructions, greeting, or tools. Delivered before the Assistant's first utterance, so they resolve for the opening line as well as the rest of the conversation. At most 63 entries; keys 1-128 characters; values must be strings. The map is budgeted in aggregate at 1,047,552 bytes (1023 KiB) rather than capped per value. `streaming_audio`, `ai_assistant_streaming_audio` and `meeting_session_id` are reserved and rejected with `400 invalid_request` -- they toggle provider infrastructure or are set by the service rather than fill a prompt template.",
@@ -116,23 +116,6 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "assistant.leave-on-end",
 			Usage:      "Leave the meeting when the Assistant's conversation reaches a terminal state -- `ended` **or** `failed`. Off by default, which leaves the bot in the meeting after the Assistant stops. Fires once: a second terminal transition does not leave twice, and a leave the provider refuses is logged without changing how the session settles.",
 			InnerField: "leave_on_end",
-		},
-	},
-	"avatar": {
-		&requestflag.InnerFlag[string]{
-			Name:       "avatar.api-key",
-			Usage:      "Bring-your-own-key API key for the avatar provider. The key is never stored or returned by the API.",
-			InnerField: "api_key",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "avatar.avatar-id",
-			Usage:      "Identifier of the avatar to use.",
-			InnerField: "avatar_id",
-		},
-		&requestflag.InnerFlag[string]{
-			Name:       "avatar.provider",
-			Usage:      `Avatar provider identifier. Currently only "anam" is supported.`,
-			InnerField: "provider",
 		},
 	},
 })
@@ -209,7 +192,7 @@ var meetingSessionsDelete = cli.Command{
 
 var meetingSessionsDeleteRecordingMedia = cli.Command{
 	Name:    "delete-recording-media",
-	Usage:   "Irreversibly requests deletion of the aggregate recording media for the session.\nThe operation retains the Telnyx-local Meeting session, transcript segments,\nevents, artifacts, and usage records. It is separate from\n`DELETE /meeting_sessions/{id}`, which stops or cancels participation without\ndeleting the persisted session. A missing/foreign session returns 404; provider\ndeletion failures return 502.",
+	Usage:   "Irreversibly requests deletion of the aggregate recording media for the session.\nThe operation retains the Telnyx-local Meeting session, transcript segments,\nevents, artifacts, and usage records. It is separate from\n`DELETE /meeting_sessions/{id}`, which stops or cancels participation without\ndeleting the persisted session. A missing/foreign session returns 404; a\ndeletion request whose outcome is unknown returns 502.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -246,21 +229,6 @@ var meetingSessionsRetrieveEvents = cli.Command{
 		},
 	},
 	Action:          handleMeetingSessionsRetrieveEvents,
-	HideHelpCommand: true,
-}
-
-var meetingSessionsRetrieveRecordings = cli.Command{
-	Name:    "retrieve-recordings",
-	Usage:   "Returns recordings for a meeting session.",
-	Suggest: true,
-	Flags: []cli.Flag{
-		&requestflag.Flag[string]{
-			Name:      "id",
-			Required:  true,
-			PathParam: "id",
-		},
-	},
-	Action:          handleMeetingSessionsRetrieveRecordings,
 	HideHelpCommand: true,
 }
 
@@ -599,48 +567,6 @@ func handleMeetingSessionsRetrieveEvents(ctx context.Context, cmd *cli.Command) 
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "meeting-sessions retrieve-events",
-		Transform:      transform,
-	})
-}
-
-func handleMeetingSessionsRetrieveRecordings(ctx context.Context, cmd *cli.Command) error {
-	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
-	unusedArgs := cmd.Args().Slice()
-	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
-		cmd.Set("id", unusedArgs[0])
-		unusedArgs = unusedArgs[1:]
-	}
-	if len(unusedArgs) > 0 {
-		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
-	}
-
-	options, err := flagOptions(
-		cmd,
-		apiquery.NestedQueryFormatBrackets,
-		apiquery.ArrayQueryFormatComma,
-		EmptyBody,
-		false,
-	)
-	if err != nil {
-		return err
-	}
-
-	var res []byte
-	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.MeetingSessions.GetRecordings(ctx, cmd.Value("id").(string), options...)
-	if err != nil {
-		return err
-	}
-
-	obj := gjson.ParseBytes(res)
-	format := cmd.Root().String("format")
-	explicitFormat := cmd.Root().IsSet("format")
-	transform := cmd.Root().String("transform")
-	return ShowJSON(obj, ShowJSONOpts{
-		ExplicitFormat: explicitFormat,
-		Format:         format,
-		RawOutput:      cmd.Root().Bool("raw-output"),
-		Title:          "meeting-sessions retrieve-recordings",
 		Transform:      transform,
 	})
 }

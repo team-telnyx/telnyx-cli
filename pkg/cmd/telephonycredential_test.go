@@ -136,6 +136,7 @@ func TestTelephonyCredentialsCreateToken(t *testing.T) {
 			"--api-key", "string",
 			"telephony-credentials", "create-token",
 			"--id", "id",
+			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
 	})
 }

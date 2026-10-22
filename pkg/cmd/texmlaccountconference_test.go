@@ -15,7 +15,7 @@ func TestTexmlAccountsConferencesRetrieve(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences", "retrieve",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 		)
 	})
@@ -28,7 +28,7 @@ func TestTexmlAccountsConferencesUpdate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences", "update",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 			"--announce-method", "GET",
 			"--announce-url", "https://www.example.com/announce.xml",
@@ -46,7 +46,7 @@ func TestTexmlAccountsConferencesUpdate(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"texml:accounts:conferences", "update",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 		)
 	})
@@ -59,7 +59,7 @@ func TestTexmlAccountsConferencesRetrieveConferences(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences", "retrieve-conferences",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--date-created", "DateCreated",
 			"--date-updated", "DateUpdated",
 			"--friendly-name", "FriendlyName",
@@ -78,7 +78,7 @@ func TestTexmlAccountsConferencesRetrieveRecordings(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences", "retrieve-recordings",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 		)
 	})
@@ -91,7 +91,7 @@ func TestTexmlAccountsConferencesRetrieveRecordingsJson(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:conferences", "retrieve-recordings-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--conference-sid", "conference_sid",
 		)
 	})
