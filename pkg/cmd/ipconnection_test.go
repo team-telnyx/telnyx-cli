@@ -19,6 +19,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
+			"--bridge-generate-comfort-noise-on-cn=false",
 			"--call-cost-in-webhooks=false",
 			"--connection-name", "string",
 			"--default-on-hold-comfort-noise-enabled=true",
@@ -35,7 +36,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 			"--rtcp-settings", "{capture_enabled: true, port: rtcp-mux, report_frequency_secs: 10}",
 			"--tag", "tag1",
 			"--tag", "tag2",
-			"--transport-protocol", "UDP",
+			"--transport-protocol", "TLS",
 			"--webhook-api-version", "1",
 			"--webhook-event-failover-url", "https://failover.example.com",
 			"--webhook-event-url", "https://example.com",
@@ -55,6 +56,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
+			"--bridge-generate-comfort-noise-on-cn=false",
 			"--call-cost-in-webhooks=false",
 			"--connection-name", "string",
 			"--default-on-hold-comfort-noise-enabled=true",
@@ -101,7 +103,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 			"--rtcp-settings.report-frequency-secs", "10",
 			"--tag", "tag1",
 			"--tag", "tag2",
-			"--transport-protocol", "UDP",
+			"--transport-protocol", "TLS",
 			"--webhook-api-version", "1",
 			"--webhook-event-failover-url", "https://failover.example.com",
 			"--webhook-event-url", "https://example.com",
@@ -115,6 +117,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 			"active: true\n" +
 			"anchorsite_override: Latency\n" +
 			"android_push_credential_id: 06b09dfd-7154-4980-8b75-cebf7a9d4f8e\n" +
+			"bridge_generate_comfort_noise_on_cn: false\n" +
 			"call_cost_in_webhooks: false\n" +
 			"connection_name: string\n" +
 			"default_on_hold_comfort_noise_enabled: true\n" +
@@ -168,7 +171,7 @@ func TestIPConnectionsCreate(t *testing.T) {
 			"tags:\n" +
 			"  - tag1\n" +
 			"  - tag2\n" +
-			"transport_protocol: UDP\n" +
+			"transport_protocol: TLS\n" +
 			"webhook_api_version: '1'\n" +
 			"webhook_event_failover_url: https://failover.example.com\n" +
 			"webhook_event_url: https://example.com\n" +
@@ -204,6 +207,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
+			"--bridge-generate-comfort-noise-on-cn=false",
 			"--call-cost-in-webhooks=false",
 			"--connection-name", "string",
 			"--conversation-persistence=true",
@@ -221,7 +225,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 			"--rtcp-settings", "{capture_enabled: true, port: rtcp-mux, report_frequency_secs: 10}",
 			"--tag", "tag1",
 			"--tag", "tag2",
-			"--transport-protocol", "UDP",
+			"--transport-protocol", "TLS",
 			"--webhook-api-version", "1",
 			"--webhook-event-failover-url", "https://failover.example.com",
 			"--webhook-event-url", "https://example.com",
@@ -242,6 +246,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
+			"--bridge-generate-comfort-noise-on-cn=false",
 			"--call-cost-in-webhooks=false",
 			"--connection-name", "string",
 			"--conversation-persistence=true",
@@ -292,7 +297,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 			"--rtcp-settings.report-frequency-secs", "10",
 			"--tag", "tag1",
 			"--tag", "tag2",
-			"--transport-protocol", "UDP",
+			"--transport-protocol", "TLS",
 			"--webhook-api-version", "1",
 			"--webhook-event-failover-url", "https://failover.example.com",
 			"--webhook-event-url", "https://example.com",
@@ -306,6 +311,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 			"active: true\n" +
 			"anchorsite_override: Latency\n" +
 			"android_push_credential_id: 06b09dfd-7154-4980-8b75-cebf7a9d4f8e\n" +
+			"bridge_generate_comfort_noise_on_cn: false\n" +
 			"call_cost_in_webhooks: false\n" +
 			"connection_name: string\n" +
 			"conversation_persistence: true\n" +
@@ -363,7 +369,7 @@ func TestIPConnectionsUpdate(t *testing.T) {
 			"tags:\n" +
 			"  - tag1\n" +
 			"  - tag2\n" +
-			"transport_protocol: UDP\n" +
+			"transport_protocol: TLS\n" +
 			"webhook_api_version: '1'\n" +
 			"webhook_event_failover_url: https://failover.example.com\n" +
 			"webhook_event_url: https://example.com\n" +

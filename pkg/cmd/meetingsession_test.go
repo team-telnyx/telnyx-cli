@@ -17,8 +17,7 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"--api-key", "string",
 			"meeting-sessions", "create",
 			"--meeting-url", "https://zoom.us/j/1234567890",
-			"--assistant", "{id: asst_fake-uuid-1234, audio_gate: half_duplex, dynamic_variables: {candidate_name: Ada Lovelace, role: Staff Engineer}, leave_on_end: true}",
-			"--avatar", "{api_key: fake_avatar_api_key_do_not_use, avatar_id: avatar_fake-001, provider: anam}",
+			"--assistant", "{id: asst_fake-uuid-1234, audio_gate: full_duplex, avatar: true, dynamic_variables: {foo: string}, leave_on_end: true}",
 			"--barge-in=true",
 			"--bot-name", "Notetaker",
 			"--camera-image", "{base64_data: /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAACAAIBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EAB4QAAAEBwAAAAAAAAAAAAAAAAAEBgcCFic1RVNi/9oACAEBAAA/AH8hGJbWR09TxKW4vhC2qHgf/9k=, format: jpeg}",
@@ -44,12 +43,10 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"meeting-sessions", "create",
 			"--meeting-url", "https://zoom.us/j/1234567890",
 			"--assistant.id", "asst_fake-uuid-1234",
-			"--assistant.audio-gate", "half_duplex",
-			"--assistant.dynamic-variables", "{candidate_name: Ada Lovelace, role: Staff Engineer}",
+			"--assistant.audio-gate", "full_duplex",
+			"--assistant.avatar=true",
+			"--assistant.dynamic-variables", "{foo: string}",
 			"--assistant.leave-on-end=true",
-			"--avatar.api-key", "fake_avatar_api_key_do_not_use",
-			"--avatar.avatar-id", "avatar_fake-001",
-			"--avatar.provider", "anam",
 			"--barge-in=true",
 			"--bot-name", "Notetaker",
 			"--camera-image", "{base64_data: /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAACAAIBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EAB4QAAAEBwAAAAAAAAAAAAAAAAAEBgcCFic1RVNi/9oACAEBAAA/AH8hGJbWR09TxKW4vhC2qHgf/9k=, format: jpeg}",
@@ -70,15 +67,11 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"meeting_url: https://zoom.us/j/1234567890\n" +
 			"assistant:\n" +
 			"  id: asst_fake-uuid-1234\n" +
-			"  audio_gate: half_duplex\n" +
+			"  audio_gate: full_duplex\n" +
+			"  avatar: true\n" +
 			"  dynamic_variables:\n" +
-			"    candidate_name: Ada Lovelace\n" +
-			"    role: Staff Engineer\n" +
+			"    foo: string\n" +
 			"  leave_on_end: true\n" +
-			"avatar:\n" +
-			"  api_key: fake_avatar_api_key_do_not_use\n" +
-			"  avatar_id: avatar_fake-001\n" +
-			"  provider: anam\n" +
 			"barge_in: true\n" +
 			"bot_name: Notetaker\n" +
 			"camera_image:\n" +
@@ -187,18 +180,6 @@ func TestMeetingSessionsRetrieveEvents(t *testing.T) {
 			"--id", "mtgsess_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
 			"--after", "0",
 			"--limit", "1",
-		)
-	})
-}
-
-func TestMeetingSessionsRetrieveRecordings(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	t.Run("regular flags", func(t *testing.T) {
-		mocktest.TestRunMockTestWithFlags(
-			t,
-			"--api-key", "string",
-			"meeting-sessions", "retrieve-recordings",
-			"--id", "mtgsess_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
 		)
 	})
 }

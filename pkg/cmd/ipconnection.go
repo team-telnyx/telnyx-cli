@@ -37,6 +37,12 @@ var ipConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "android_push_credential_id",
 		},
 		&requestflag.Flag[bool]{
+			Name:     "bridge-generate-comfort-noise-on-cn",
+			Usage:    "Stores the connection preference for generating silent RTP toward the opposite call leg when comfort-noise packets (CN, payload type 13) are received during hold. Optional; defaults to false when omitted on creation. Only JSON true and false are accepted; null and non-boolean values are rejected. This preference is independent of default_on_hold_comfort_noise_enabled and does not modify that setting. This API provisions the preference; call-processing behavior is implemented separately.",
+			Default:  false,
+			BodyPath: "bridge_generate_comfort_noise_on_cn",
+		},
+		&requestflag.Flag[bool]{
 			Name:     "call-cost-in-webhooks",
 			Usage:    "Specifies if call cost webhooks should be sent for this connection.",
 			Default:  false,
@@ -66,7 +72,7 @@ var ipConnectionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[*string]{
 			Name:     "encrypted-media",
-			Usage:    "Enable use of SRTP for encryption. Cannot be set if the transport_portocol is TLS.",
+			Usage:    "Enable use of SRTP for encryption. Can only be set when the SIP signaling transport protocol is TLS.",
 			BodyPath: "encrypted_media",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -375,6 +381,12 @@ var ipConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "android_push_credential_id",
 		},
 		&requestflag.Flag[bool]{
+			Name:     "bridge-generate-comfort-noise-on-cn",
+			Usage:    "Stores the connection preference for generating silent RTP toward the opposite call leg when comfort-noise packets (CN, payload type 13) are received during hold. Optional; omitting this field preserves the saved value. Only JSON true and false are accepted; null and non-boolean values are rejected. This preference is independent of default_on_hold_comfort_noise_enabled and does not modify that setting. This API provisions the preference; call-processing behavior is implemented separately.",
+			Default:  false,
+			BodyPath: "bridge_generate_comfort_noise_on_cn",
+		},
+		&requestflag.Flag[bool]{
 			Name:     "call-cost-in-webhooks",
 			Usage:    "Specifies if call cost webhooks should be sent for this connection.",
 			Default:  false,
@@ -409,7 +421,7 @@ var ipConnectionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[*string]{
 			Name:     "encrypted-media",
-			Usage:    "Enable use of SRTP for encryption. Cannot be set if the transport_portocol is TLS.",
+			Usage:    "Enable use of SRTP for encryption. Can only be set when the SIP signaling transport protocol is TLS.",
 			BodyPath: "encrypted_media",
 		},
 		&requestflag.Flag[map[string]any]{

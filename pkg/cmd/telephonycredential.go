@@ -174,6 +174,10 @@ var telephonyCredentialsCreateToken = cli.Command{
 			Required:  true,
 			PathParam: "id",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleTelephonyCredentialsCreateToken,
 	HideHelpCommand: true,
@@ -430,9 +434,16 @@ func handleTelephonyCredentialsCreateToken(ctx context.Context, cmd *cli.Command
 		return err
 	}
 
+	params := telnyx.TelephonyCredentialNewTokenParams{}
+
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
-	_, err = client.TelephonyCredentials.NewToken(ctx, cmd.Value("id").(string), options...)
+	_, err = client.TelephonyCredentials.NewToken(
+		ctx,
+		cmd.Value("id").(string),
+		params,
+		options...,
+	)
 	if err != nil {
 		return err
 	}

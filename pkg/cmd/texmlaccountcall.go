@@ -96,7 +96,7 @@ var texmlAccountsCallsUpdate = cli.Command{
 
 var texmlAccountsCallsCalls = cli.Command{
 	Name:    "calls",
-	Usage:   "Initiate an outbound TeXML call. Telnyx will request TeXML from the XML Request\nURL configured for the connection in the Mission Control Portal.",
+	Usage:   "Initiate an outbound TeXML call. Telnyx will request TeXML from the XML Request\nURL configured for the TeXML Application in the Mission Control Portal.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

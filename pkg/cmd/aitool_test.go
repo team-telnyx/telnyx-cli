@@ -26,6 +26,7 @@ func TestAIToolsCreate(t *testing.T) {
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--update-dynamic-variables", "{description: Collect caller details into conversation variables., name: collect_details, updatable_variables: [{name: customer_name, description: The caller's full name., type: string}]}",
+			"--vision", "{max_frame_age_secs: 1}",
 			"--webhook", "{foo: bar}",
 			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
@@ -57,6 +58,7 @@ func TestAIToolsCreate(t *testing.T) {
 			"--update-dynamic-variables.description", "Collect caller details into conversation variables.",
 			"--update-dynamic-variables.name", "collect_details",
 			"--update-dynamic-variables.updatable-variables", "[{name: customer_name, description: The caller's full name., type: string}]",
+			"--vision.max-frame-age-secs", "1",
 			"--webhook", "{foo: bar}",
 			"--idempotency-key", "8e03978e-40d5-43e8-bc93-6894a57f9326",
 		)
@@ -96,6 +98,8 @@ func TestAIToolsCreate(t *testing.T) {
 			"    - name: customer_name\n" +
 			"      description: The caller's full name.\n" +
 			"      type: string\n" +
+			"vision:\n" +
+			"  max_frame_age_secs: 1\n" +
 			"webhook:\n" +
 			"  foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
@@ -137,6 +141,7 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--timeout-ms", "0",
 			"--type", "type",
 			"--update-dynamic-variables", "{description: Collect caller details into conversation variables., name: collect_details, updatable_variables: [{name: customer_name, description: The caller's full name., type: string}]}",
+			"--vision", "{max_frame_age_secs: 1}",
 			"--webhook", "{foo: bar}",
 		)
 	})
@@ -168,6 +173,7 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--update-dynamic-variables.description", "Collect caller details into conversation variables.",
 			"--update-dynamic-variables.name", "collect_details",
 			"--update-dynamic-variables.updatable-variables", "[{name: customer_name, description: The caller's full name., type: string}]",
+			"--vision.max-frame-age-secs", "1",
 			"--webhook", "{foo: bar}",
 		)
 	})
@@ -206,6 +212,8 @@ func TestAIToolsUpdate(t *testing.T) {
 			"    - name: customer_name\n" +
 			"      description: The caller's full name.\n" +
 			"      type: string\n" +
+			"vision:\n" +
+			"  max_frame_age_secs: 1\n" +
 			"webhook:\n" +
 			"  foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(

@@ -37,7 +37,7 @@ var meetingSessionsActionsSendChat = cli.Command{
 
 var meetingSessionsActionsSpeak = cli.Command{
 	Name:    "speak",
-	Usage:   "Sends audio / text-to-speech into a meeting session. With a Telnyx AI Assistant\n(or avatar) attached, the bot is a webpage-output bot: the speak audio routes\nthrough the assistant's output page rather than the bot mic and plays once the\nassistant is connected -- it is not refused. If that page cannot be reached,\ndelivery fails with the 502 below, which may arrive without an error envelope,\nso branch on the status code before parsing a body. The assistant is designed to\nown the conversation, so prefer letting it speak or use `send_chat`.",
+	Usage:   "Sends audio / text-to-speech into a meeting session. With a Telnyx AI Assistant\nattached, the bot is a webpage-output bot: the speak audio routes through the\nassistant's output page rather than the bot mic and plays once the assistant is\nconnected -- it is not refused. If that page cannot be reached, delivery fails\nwith the 502 below, which may arrive without an error envelope, so branch on the\nstatus code before parsing a body. The assistant is designed to own the\nconversation, so prefer letting it speak or use `send_chat`. With a digital\navatar (`assistant.avatar: true`), speak is refused with 409 `invalid_state`\n(message prefix `avatar_requires_assistant_speech:`): the avatar renders only\nthe assistant's own speech.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -68,7 +68,7 @@ var meetingSessionsActionsSpeak = cli.Command{
 
 var meetingSessionsActionsStopSpeaking = cli.Command{
 	Name:    "stop-speaking",
-	Usage:   "Stops any active text-to-speech playback in a meeting session.",
+	Usage:   "Stops any active text-to-speech playback in a meeting session. Sessions with a\ndigital avatar (`assistant.avatar: true`) return 409 `invalid_state` (message\nprefix `avatar_requires_assistant_speech:`): the avatar renders only the\nassistant's own speech.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

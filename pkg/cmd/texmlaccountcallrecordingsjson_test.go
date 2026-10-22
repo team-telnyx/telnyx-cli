@@ -15,7 +15,7 @@ func TestTexmlAccountsCallsRecordingsJsonRecordingsJson(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:calls:recordings-json", "recordings-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--call-sid", "call_sid",
 			"--play-beep=false",
 			"--recording-channels", "single",
@@ -41,7 +41,7 @@ func TestTexmlAccountsCallsRecordingsJsonRecordingsJson(t *testing.T) {
 			t, pipeData,
 			"--api-key", "string",
 			"texml:accounts:calls:recordings-json", "recordings-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--call-sid", "call_sid",
 		)
 	})
@@ -54,7 +54,7 @@ func TestTexmlAccountsCallsRecordingsJsonRetrieveRecordingsJson(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:calls:recordings-json", "retrieve-recordings-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--call-sid", "call_sid",
 		)
 	})

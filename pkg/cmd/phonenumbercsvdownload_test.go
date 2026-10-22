@@ -18,6 +18,7 @@ func TestPhoneNumbersCsvDownloadsCreate(t *testing.T) {
 			"phone-numbers:csv-downloads", "create",
 			"--csv-format", "V2",
 			"--filter", "{billing_group_id: 62e4bf2e-c278-4282-b524-488d9c9c43b2, connection_id: '1521916448077776306', customer_reference: customer_reference, emergency_address_id: '9102160989215728032', has_bundle: has_bundle, phone_number: phone_number, status: active, tag: tag, voice.connection_name: {contains: test, ends_with: test, eq: test, starts_with: test}, voice.usage_payment_method: channel}",
+			"--include-managed-accounts=true",
 		)
 	})
 
@@ -41,6 +42,7 @@ func TestPhoneNumbersCsvDownloadsCreate(t *testing.T) {
 			"--filter.tag", "tag",
 			"--filter.voice-connection-name", "{contains: test, ends_with: test, eq: test, starts_with: test}",
 			"--filter.voice-usage-payment-method", "channel",
+			"--include-managed-accounts=true",
 		)
 	})
 }

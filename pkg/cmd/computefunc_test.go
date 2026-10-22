@@ -8,6 +8,20 @@ import (
 	"github.com/team-telnyx/telnyx-cli/internal/mocktest"
 )
 
+func TestComputeFuncsList(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"compute:funcs", "list",
+			"--max-items", "10",
+			"--page-number", "1",
+			"--page-size", "1",
+		)
+	})
+}
+
 func TestComputeFuncsRetrieveLogs(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {

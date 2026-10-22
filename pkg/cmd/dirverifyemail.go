@@ -16,7 +16,7 @@ import (
 
 var dirVerifyEmailCreate = cli.Command{
 	Name:    "create",
-	Usage:   "Email a 6-digit code to the DIR's authorizer email to confirm ownership of that\naddress.",
+	Usage:   "Email a 6-digit code to the DIR's authorizer email to confirm ownership of that\naddress. The code goes to the authorizer, not to the caller. If the authorizer\nis someone else (for example a client's executive), that person has to share the\ncode with whoever is completing setup.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

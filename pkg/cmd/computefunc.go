@@ -14,6 +14,32 @@ import (
 	"github.com/urfave/cli/v3"
 )
 
+var computeFuncsList = cli.Command{
+	Name:    "list",
+	Usage:   "List functions for the authenticated organization. Each function includes its\npersisted function-scoped bindings. Actor bindings expose actor_type and\nenv_name, allowing clients to identify every function attached to a Stateful\nActor type.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[int64]{
+			Name:      "page-number",
+			Usage:     "Page number",
+			Default:   1,
+			QueryPath: "page[number]",
+		},
+		&requestflag.Flag[int64]{
+			Name:      "page-size",
+			Usage:     "Page size (maximum 250)",
+			Default:   20,
+			QueryPath: "page[size]",
+		},
+		&requestflag.Flag[int64]{
+			Name:  "max-items",
+			Usage: "The maximum number of items to return (use -1 for unlimited).",
+		},
+	},
+	Action:          handleComputeFuncsList,
+	HideHelpCommand: true,
+}
+
 var computeFuncsRetrieveLogs = cli.Command{
 	Name:    "retrieve-logs",
 	Usage:   "Returns logs oldest first. `type=runtime` (default) returns function\nstdout/stderr. `type=invocations` returns one platform-generated record per HTTP\nrequest served.",
@@ -135,6 +161,61 @@ var computeFuncsRetrieveShipInspection = cli.Command{
 	},
 	Action:          handleComputeFuncsRetrieveShipInspection,
 	HideHelpCommand: true,
+}
+
+func handleComputeFuncsList(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.ComputeFuncListParams{}
+
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	if format == "raw" {
+		var res []byte
+		options = append(options, option.WithResponseBodyInto(&res))
+		_, err = client.Compute.Funcs.List(ctx, params, options...)
+		if err != nil {
+			return err
+		}
+		obj := gjson.ParseBytes(res)
+		return ShowJSON(obj, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "compute:funcs list",
+			Transform:      transform,
+		})
+	} else {
+		iter := client.Compute.Funcs.ListAutoPaging(ctx, params, options...)
+		maxItems := int64(-1)
+		if cmd.IsSet("max-items") {
+			maxItems = cmd.Value("max-items").(int64)
+		}
+		return ShowJSONIterator(iter, maxItems, ShowJSONOpts{
+			ExplicitFormat: explicitFormat,
+			Format:         format,
+			RawOutput:      cmd.Root().Bool("raw-output"),
+			Title:          "compute:funcs list",
+			Transform:      transform,
+		})
+	}
 }
 
 func handleComputeFuncsRetrieveLogs(ctx context.Context, cmd *cli.Command) error {

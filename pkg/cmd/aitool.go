@@ -64,6 +64,10 @@ var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "update_dynamic_variables",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "vision",
+			BodyPath: "vision",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "webhook",
 			BodyPath: "webhook",
 		},
@@ -122,6 +126,13 @@ var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "update-dynamic-variables.updatable-variables",
 			Usage:      "The dynamic variables the assistant is allowed to write. At least one is required.",
 			InnerField: "updatable_variables",
+		},
+	},
+	"vision": {
+		&requestflag.InnerFlag[int64]{
+			Name:       "vision.max-frame-age-secs",
+			Usage:      "Frames received longer ago than this many seconds are not shown to the assistant, so it never describes a frozen or disconnected camera as live.",
+			InnerField: "max_frame_age_secs",
 		},
 	},
 })
@@ -193,6 +204,10 @@ var aiToolsUpdate = requestflag.WithInnerFlags(cli.Command{
 			BodyPath: "update_dynamic_variables",
 		},
 		&requestflag.Flag[map[string]any]{
+			Name:     "vision",
+			BodyPath: "vision",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "webhook",
 			BodyPath: "webhook",
 		},
@@ -247,6 +262,13 @@ var aiToolsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "update-dynamic-variables.updatable-variables",
 			Usage:      "The dynamic variables the assistant is allowed to write. At least one is required.",
 			InnerField: "updatable_variables",
+		},
+	},
+	"vision": {
+		&requestflag.InnerFlag[int64]{
+			Name:       "vision.max-frame-age-secs",
+			Usage:      "Frames received longer ago than this many seconds are not shown to the assistant, so it never describes a frozen or disconnected camera as live.",
+			InnerField: "max_frame_age_secs",
 		},
 	},
 })

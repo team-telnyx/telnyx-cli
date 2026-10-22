@@ -61,7 +61,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "avatar-settings",
-			Usage:    "**Beta:** Configuration for the Telnyx open-source avatar provider. The launch catalog supports six avatars and office, studio, or reception backgrounds.",
+			Usage:    "**Beta:** Configuration for the Telnyx open-source avatar provider. Use a stock avatar or an organization-owned custom avatar returned by the Avatars API. Discover the available stock catalog with GET /v2/ai/avatars and filter[avatar_type]=stock; follow meta.total_pages to load every page.",
 			BodyPath: "avatar_settings",
 		},
 		&requestflag.Flag[map[string]any]{
@@ -256,7 +256,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 	"avatar-settings": {
 		&requestflag.InnerFlag[string]{
 			Name:       "avatar-settings.avatar-id",
-			Usage:      "The Telnyx avatar to render.",
+			Usage:      "Stable identifier returned by the Avatars API. Discover available stock IDs with GET /v2/ai/avatars and filter[avatar_type]=stock rather than maintaining a fixed list. Custom avatar IDs use the `avatar_` prefix and must belong to the authenticated organization. The service validates that the selected avatar is available.",
 			InnerField: "avatar_id",
 		},
 		&requestflag.InnerFlag[string]{
@@ -387,6 +387,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Reference to an Insight Group. Insights in this group will be run automatically for all the assistant's conversations.",
 			InnerField: "insight_group_id",
 		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "insight-settings.model",
+			Usage:      "The model that generates the assistant's insights when a conversation ends. It runs every insight in the group, Telnyx-managed insights included. Must be `zai-org/GLM-5.3-Flash` or `meta-llama/Llama-3.3-70B-Instruct`; any other model returns `422`. When omitted on create, it defaults to `zai-org/GLM-5.3-Flash`; when omitted on update, the current model is kept. `null` uses Telnyx's default insight models, which assistants created before this setting have. Insights of messaging conversations, and insights regenerated later, always use Telnyx's default insight models.",
+			InnerField: "model",
+		},
 	},
 	"integration": {
 		&requestflag.InnerFlag[string]{
@@ -505,6 +510,11 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Requires every model call made for a web chat turn to be received and served inside your organization's data-locality region, rather than only stored there. Applies to web chat only — voice and messaging assistants are unaffected. Enabling it requires a data-locality region with in-region inference (USA, EU, AUS, UAE; see [Inference regions](https://developers.telnyx.com/docs/inference/models/regions)) and Telnyx-hosted models for the assistant, its fallback, and any conversation-flow node that overrides the model; the request is rejected otherwise. Once enabled, send chat requests to your region's API hostname: a request entering the platform in another region is rejected rather than forwarded, because forwarding it would already have moved the content across the border. Defaults to false.",
 			InnerField: "in_transit_data_locality",
 		},
+		&requestflag.InnerFlag[string]{
+			Name:       "privacy-settings.pii-redaction",
+			Usage:      "Controls redaction of personally identifiable information (PII) from the conversation history that is stored for this assistant. `disabled` (default) stores content as-is. `redact` replaces detected PII with `<PII:type/>` placeholders (e.g. `<PII:name/>`, `<PII:phone/>`) as the stored copies are written: message content (user, assistant, and tool-result messages) and tool-call arguments are redacted when written to conversation history, so the stored transcript, its read-back via the history API, and any insights generated from the stored messages contain the placeholders instead of the PII; response bodies returned by webhook tools are redacted too, as stored in the webhook logs — a per-conversation record separate from the transcript. In the Mission Control Portal this field appears as a \"PII Redaction\" on/off toggle, where Enabled corresponds to `redact`. Redaction runs when the stored copy is written, after the LLM has generated its reply: the live conversation is not redacted, the assistant's tools keep receiving the full (unredacted) values during the call, and the LLM still sees full content in its context window. Call recordings (including any recording layout configured under telephony settings) and the payloads of messages/webhooks delivered during the call are never redacted by this setting. The set of detected PII types (names, street addresses, phone numbers, email addresses, government identifiers like SSN and driver's license numbers, credit card and bank account numbers, IP addresses, dates of birth, and other identifiers unique to a person) is fixed by Telnyx and cannot be configured or extended per assistant. Assistants with `redact` cannot be used for SMS/WhatsApp messaging (that combination is rejected with a 400 error); voice and web chat are unaffected.",
+			InnerField: "pii_redaction",
+		},
 	},
 	"telephony-settings": {
 		&requestflag.InnerFlag[bool]{
@@ -554,7 +564,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "telephony-settings.time-limit-secs",
-			Usage:      "Maximum duration in seconds for the AI assistant to participate on the call. When this limit is reached the assistant will be stopped. This limit does not apply to portions of a call without an active assistant (for instance, a call transferred to a human representative).",
+			Usage:      "Maximum duration in seconds for the AI assistant to participate on the call. When this limit is reached the assistant will be stopped. Stopping the assistant does not itself hang up the call, and what happens next depends on how the assistant is running. On Call Control (ai_assistant_start) the call leg stays connected and continues to be billed until it is hung up (for example with the Hangup call command) or until the call ends for another reason. On TeXML, the assistant's `<Connect><AIAssistant>` instruction ends; in the default TeXML setup for assistants no instructions follow it, so the call is hung up. Your application receives a call.conversation.ended webhook when the assistant stops. This limit does not apply to portions of a call without an active assistant (for instance, a call transferred to a human representative).",
 			InnerField: "time_limit_secs",
 		},
 		&requestflag.InnerFlag[int64]{
@@ -564,7 +574,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[int64]{
 			Name:       "telephony-settings.user-idle-timeout-secs",
-			Usage:      "Maximum duration in seconds of end user silence on the call. When this limit is reached the assistant will be stopped. This limit does not apply to portions of a call without an active assistant (for instance, a call transferred to a human representative).",
+			Usage:      "Maximum duration in seconds of end user silence on the call. When this limit is reached the assistant will be stopped. Stopping the assistant does not itself hang up the call, and what happens next depends on how the assistant is running. On Call Control (ai_assistant_start) the call leg stays connected and continues to be billed until it is hung up (for example with the Hangup call command) or until the call ends for another reason. On TeXML, the assistant's `<Connect><AIAssistant>` instruction ends; in the default TeXML setup for assistants no instructions follow it, so the call is hung up. Your application receives a call.conversation.ended webhook when the assistant stops. This limit does not apply to portions of a call without an active assistant (for instance, a call transferred to a human representative).",
 			InnerField: "user_idle_timeout_secs",
 		},
 		&requestflag.InnerFlag[map[string]any]{
@@ -591,12 +601,12 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.language",
-			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4` and `soniox/stt-rt-v5`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language; `settings.language_hints` can pin multiple languages at once instead. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted.",
+			Usage:      "The language of the audio to be transcribed. If not set, or if set to `auto`, supported models will automatically detect the language. For `deepgram/flux`, supported values are: `auto` (Telnyx language detection controls the language hint), `multi` (no language hint), and language-specific hints `en`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `ja`, `it`, and `nl`. For `soniox/stt-rt-v4` and `soniox/stt-rt-v5`, `auto` omits the language hint and lets Soniox auto-detect; ISO 639-1 codes (e.g. `en`, `es`) bias detection toward that language; `settings.language_hints` can pin multiple languages at once instead. For `humain/realtime`, supported values are `ar`, `en`, `codeswitch` (Arabic/English code-switching), and `auto` (resolves server-side to code-switching). Unlike other models, `humain/realtime` does not fall back to `auto` when `language` is omitted — omitting it applies `en` instead. For `reson8/turns`, supported values are `auto` (or unset) for automatic language detection, and the language codes `nl`, `en`, `fr`, `fy`, `de`, `it`, `pl`, `pt`, `es`, and `sv` to fix the transcription language. For `cohere/ar-stt`, supported values are `ar` and `en`; unlike other models, this model does not auto-detect and defaults to `ar` when `language` is omitted. For `speechmatics/linden-1`, there is no auto-detect; set a code from Speechmatics' Realtime language list (67 language codes, including `es-bilingual-en` for Spanish and English bilingual, and the spelling and script variants `en-US`, `en-GB`, `en-AU`, `cmn-Hans`, and `cmn-Hant`; `en` alone uses the default spelling); unset defaults to `en`, while an explicit `auto`, `auto_beta`, or `multi` is rejected with a 400.",
 			InnerField: "language",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "transcription.model",
-			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-3-5-pro` is a multilingual streaming model with configurable turn detection. The legacy alias `assemblyai/universal-streaming` is still accepted and resolves to the same model.\n- `xai/grok-stt` is a multilingual Grok STT model.\n- `soniox/stt-rt-v4` and `soniox/stt-rt-v5` are multilingual streaming models with automatic language detection, configurable endpointing, term biasing (`context`), and `language_hints`.\n- `nvidia/parakeet-v3` is a multilingual transcription model with automatic language detection.\n- `omi-health/omi-med-stt-v1` is an English-only medical transcription model (Parakeet-based).\n- `humain/realtime` is a streaming model with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` is a turn-based streaming model covering 10 European languages with automatic language detection.\n- `cohere/ar-stt` is a non-streaming Arabic and English transcription model.\n- `telnyx/basira` is a non-streaming Arabic transcription model.",
+			Usage:      "The speech to text model to be used by the voice assistant. All Deepgram models are run on-premise.\n\n- `deepgram/flux` is optimized for turn-taking with multilingual language hints.\n- `deepgram/nova-3` is multilingual with automatic language detection.\n- `deepgram/nova-2` is Deepgram's previous-generation multilingual model.\n- `speechmatics/standard` is a Speechmatics model self-hosted by Telnyx; it supports a fixed set of language packs (including bilingual packs such as `ar_en`) and defaults to `en`.\n- `speechmatics/linden-1` (preview) is a vendor-hosted streaming model with no auto-detect; set `language` from Speechmatics' Realtime language list (defaults to `en`).\n- `azure/fast` is a multilingual Azure transcription model.\n- `assemblyai/universal-3-5-pro` is a multilingual streaming model with configurable turn detection. The legacy alias `assemblyai/universal-streaming` is still accepted and resolves to the same model.\n- `xai/grok-stt` is a multilingual Grok STT model.\n- `soniox/stt-rt-v4` and `soniox/stt-rt-v5` are multilingual streaming models with automatic language detection, configurable endpointing, term biasing (`context`), and `language_hints`.\n- `nvidia/parakeet-v3` is a multilingual transcription model with automatic language detection.\n- `omi-health/omi-med-stt-v1` is an English-only medical transcription model (Parakeet-based).\n- `humain/realtime` is a streaming model with native Arabic and Arabic/English code-switching support.\n- `reson8/turns` is a turn-based streaming model covering 10 European languages with automatic language detection.\n- `cohere/ar-stt` is a non-streaming Arabic and English transcription model.\n- `telnyx/basira` is a non-streaming Arabic transcription model.",
 			InnerField: "model",
 		},
 		&requestflag.InnerFlag[string]{
@@ -748,7 +758,7 @@ var aiAssistantsVersionsUpdate = requestflag.WithInnerFlags(cli.Command{
 
 var aiAssistantsVersionsList = cli.Command{
 	Name:    "list",
-	Usage:   "Retrieves all versions of a specific assistant with complete configuration and\nmetadata",
+	Usage:   "Retrieves all versions of a specific assistant with complete configuration and\nmetadata. An assistant keeps at most 10 versions, including the main version.\nWhen an update takes it past that limit, the oldest versions are permanently\ndeleted. The main version and any version referenced by a traffic distribution\nrule are never deleted this way.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

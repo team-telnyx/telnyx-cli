@@ -85,6 +85,10 @@ var messagesRcsSend = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "The URL where webhooks related to this message will be sent.",
 			BodyPath: "webhook_url",
 		},
+		&requestflag.Flag[string]{
+			Name:       "idempotency-key",
+			HeaderPath: "Idempotency-Key",
+		},
 	},
 	Action:          handleMessagesRcsSend,
 	HideHelpCommand: true,

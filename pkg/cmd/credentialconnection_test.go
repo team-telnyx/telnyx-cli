@@ -22,6 +22,7 @@ func TestCredentialConnectionsCreate(t *testing.T) {
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
+			"--bridge-generate-comfort-noise-on-cn=false",
 			"--call-cost-in-webhooks=false",
 			"--default-on-hold-comfort-noise-enabled=false",
 			"--dtmf-type", "RFC 2833",
@@ -60,6 +61,7 @@ func TestCredentialConnectionsCreate(t *testing.T) {
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
+			"--bridge-generate-comfort-noise-on-cn=false",
 			"--call-cost-in-webhooks=false",
 			"--default-on-hold-comfort-noise-enabled=false",
 			"--dtmf-type", "RFC 2833",
@@ -117,6 +119,7 @@ func TestCredentialConnectionsCreate(t *testing.T) {
 			"active: true\n" +
 			"anchorsite_override: Latency\n" +
 			"android_push_credential_id: 06b09dfd-7154-4980-8b75-cebf7a9d4f8e\n" +
+			"bridge_generate_comfort_noise_on_cn: false\n" +
 			"call_cost_in_webhooks: false\n" +
 			"default_on_hold_comfort_noise_enabled: false\n" +
 			"dtmf_type: RFC 2833\n" +
@@ -200,6 +203,7 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
+			"--bridge-generate-comfort-noise-on-cn=false",
 			"--call-cost-in-webhooks=false",
 			"--connection-name", "my name",
 			"--conversation-persistence=true",
@@ -240,6 +244,7 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 			"--active=true",
 			"--anchorsite-override", "Latency",
 			"--android-push-credential-id", "06b09dfd-7154-4980-8b75-cebf7a9d4f8e",
+			"--bridge-generate-comfort-noise-on-cn=false",
 			"--call-cost-in-webhooks=false",
 			"--connection-name", "my name",
 			"--conversation-persistence=true",
@@ -298,6 +303,7 @@ func TestCredentialConnectionsUpdate(t *testing.T) {
 			"active: true\n" +
 			"anchorsite_override: Latency\n" +
 			"android_push_credential_id: 06b09dfd-7154-4980-8b75-cebf7a9d4f8e\n" +
+			"bridge_generate_comfort_noise_on_cn: false\n" +
 			"call_cost_in_webhooks: false\n" +
 			"connection_name: my name\n" +
 			"conversation_persistence: true\n" +

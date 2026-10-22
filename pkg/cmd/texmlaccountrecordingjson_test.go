@@ -15,7 +15,7 @@ func TestTexmlAccountsRecordingsJsonDeleteRecordingSidJson(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:recordings:json", "delete-recording-sid-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--recording-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
@@ -28,7 +28,7 @@ func TestTexmlAccountsRecordingsJsonRetrieveRecordingSidJson(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"texml:accounts:recordings:json", "retrieve-recording-sid-json",
-			"--account-sid", "account_sid",
+			"--account-sid", "f5586561-8ff0-4291-a51b-c7dfe4139ff9",
 			"--recording-sid", "6a09cdc3-8948-47f0-aa62-74ac943d6c58",
 		)
 	})
