@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.34.0...v0.35.0) (2026-10-28)
+
+
+### Features
+
+* promote from staging d3648eb ([b5da404](https://github.com/team-telnyx/telnyx-cli/commit/b5da404bd30d1422c7a94455b4bd32adba545834))
+
 ## [0.34.0](https://github.com/team-telnyx/telnyx-cli/compare/v0.33.0...v0.34.0) (2026-10-22)
 
 

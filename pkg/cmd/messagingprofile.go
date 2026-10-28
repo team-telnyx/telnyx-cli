@@ -67,6 +67,11 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "A URL to receive health check webhooks for numbers in this profile.",
 			BodyPath: "health_webhook_url",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "mm7-metadata",
+			Usage:    "MM7 settings for inbound messages",
+			BodyPath: "mm7_metadata",
+		},
 		&requestflag.Flag[bool]{
 			Name:     "mms-fall-back-to-sms",
 			Usage:    "enables SMS fallback for MMS messages.",
@@ -133,6 +138,18 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "features.ai-opt-out-detection-enabled",
 			Usage:      "Enables AI detection of inbound opt-out messages that do not follow the standard STOP/UNSTOP/HELP opt-out keyword pattern. When enabled, the messaging platform applies an AI model to identify non-standard opt-out requests (e.g. natural-language phrases) and treats them as opt-outs.",
 			InnerField: "ai_opt_out_detection_enabled",
+		},
+	},
+	"mm7-metadata": {
+		&requestflag.InnerFlag[string]{
+			Name:       "mm7-metadata.mm7-failover-webhook-url",
+			Usage:      "Failover webhook URL to receive inbound MM7 traffic",
+			InnerField: "mm7_failover_webhook_url",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "mm7-metadata.mm7-webhook-url",
+			Usage:      "Webhook URL to receive inbound MM7 traffic",
+			InnerField: "mm7_webhook_url",
 		},
 	},
 	"number-pool-settings": {
@@ -241,6 +258,11 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:    "Telnyx product features the messaging customer can enable on the messaging profile. Keys map to individual feature flags; unknown keys are accepted and preserved for forward compatibility with rolling deployments.",
 			BodyPath: "features",
 		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "mm7-metadata",
+			Usage:    "MM7 settings for inbound messages",
+			BodyPath: "mm7_metadata",
+		},
 		&requestflag.Flag[bool]{
 			Name:     "mms-fall-back-to-sms",
 			Usage:    "enables SMS fallback for MMS messages.",
@@ -326,6 +348,18 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "features.ai-opt-out-detection-enabled",
 			Usage:      "Enables AI detection of inbound opt-out messages that do not follow the standard STOP/UNSTOP/HELP opt-out keyword pattern. When enabled, the messaging platform applies an AI model to identify non-standard opt-out requests (e.g. natural-language phrases) and treats them as opt-outs.",
 			InnerField: "ai_opt_out_detection_enabled",
+		},
+	},
+	"mm7-metadata": {
+		&requestflag.InnerFlag[string]{
+			Name:       "mm7-metadata.mm7-failover-webhook-url",
+			Usage:      "Failover webhook URL to receive inbound MM7 traffic",
+			InnerField: "mm7_failover_webhook_url",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "mm7-metadata.mm7-webhook-url",
+			Usage:      "Webhook URL to receive inbound MM7 traffic",
+			InnerField: "mm7_webhook_url",
 		},
 	},
 	"number-pool-settings": {

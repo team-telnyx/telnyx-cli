@@ -25,6 +25,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"--enabled=true",
 			"--features", "{ai_opt_out_detection_enabled: true}",
 			"--health-webhook-url", "health_webhook_url",
+			"--mm7-metadata", "{mm7_failover_webhook_url: https://backup.example.com/hooks, mm7_webhook_url: https://www.example.com/hooks}",
 			"--mms-fall-back-to-sms=true",
 			"--mms-transcoding=true",
 			"--mobile-only=true",
@@ -56,6 +57,8 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"--enabled=true",
 			"--features.ai-opt-out-detection-enabled=true",
 			"--health-webhook-url", "health_webhook_url",
+			"--mm7-metadata.mm7-failover-webhook-url", "https://backup.example.com/hooks",
+			"--mm7-metadata.mm7-webhook-url", "https://www.example.com/hooks",
 			"--mms-fall-back-to-sms=true",
 			"--mms-transcoding=true",
 			"--mobile-only=true",
@@ -90,6 +93,9 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"features:\n" +
 			"  ai_opt_out_detection_enabled: true\n" +
 			"health_webhook_url: health_webhook_url\n" +
+			"mm7_metadata:\n" +
+			"  mm7_failover_webhook_url: https://backup.example.com/hooks\n" +
+			"  mm7_webhook_url: https://www.example.com/hooks\n" +
 			"mms_fall_back_to_sms: true\n" +
 			"mms_transcoding: true\n" +
 			"mobile_only: true\n" +
@@ -143,6 +149,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
 			"--features", "{ai_opt_out_detection_enabled: true}",
+			"--mm7-metadata", "{mm7_failover_webhook_url: https://backup.example.com/hooks, mm7_webhook_url: https://www.example.com/hooks}",
 			"--mms-fall-back-to-sms=true",
 			"--mms-transcoding=true",
 			"--mobile-only=true",
@@ -176,6 +183,8 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
 			"--features.ai-opt-out-detection-enabled=true",
+			"--mm7-metadata.mm7-failover-webhook-url", "https://backup.example.com/hooks",
+			"--mm7-metadata.mm7-webhook-url", "https://www.example.com/hooks",
 			"--mms-fall-back-to-sms=true",
 			"--mms-transcoding=true",
 			"--mobile-only=true",
@@ -210,6 +219,9 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"enabled: true\n" +
 			"features:\n" +
 			"  ai_opt_out_detection_enabled: true\n" +
+			"mm7_metadata:\n" +
+			"  mm7_failover_webhook_url: https://backup.example.com/hooks\n" +
+			"  mm7_webhook_url: https://www.example.com/hooks\n" +
 			"mms_fall_back_to_sms: true\n" +
 			"mms_transcoding: true\n" +
 			"mobile_only: true\n" +
