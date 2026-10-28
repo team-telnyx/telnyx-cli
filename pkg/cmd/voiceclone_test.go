@@ -72,6 +72,7 @@ func TestVoiceClonesList(t *testing.T) {
 			"--api-key", "string",
 			"voice-clones", "list",
 			"--max-items", "10",
+			"--filter-model-id", "Qwen3TTS",
 			"--filter-name", "filter[name]",
 			"--filter-provider", "telnyx",
 			"--page-number", "1",

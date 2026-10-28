@@ -237,11 +237,6 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 	},
 	"resemble": {
 		&requestflag.InnerFlag[string]{
-			Name:       "resemble.api-key",
-			Usage:      "Custom Resemble API key.",
-			InnerField: "api_key",
-		},
-		&requestflag.InnerFlag[string]{
 			Name:       "resemble.format",
 			Usage:      "Audio output format.",
 			InnerField: "format",

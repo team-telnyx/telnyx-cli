@@ -68,6 +68,11 @@ var voiceClonesList = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
+			Name:      "filter-model-id",
+			Usage:     "Filter by TTS model. Case-insensitive.",
+			QueryPath: "filter[model_id]",
+		},
+		&requestflag.Flag[string]{
 			Name:      "filter-name",
 			Usage:     "Case-insensitive substring filter on the name field.",
 			QueryPath: "filter[name]",
@@ -121,7 +126,7 @@ var voiceClonesDelete = cli.Command{
 
 var voiceClonesCreateFromUpload = cli.Command{
 	Name:    "create-from-upload",
-	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. Maximum file size: 20MB. Reference audio is\ntrimmed per model: Qwen3TTS and Bayan use the first 10 seconds, Ultra uses up to\n60 seconds, and Minimax accepts 10 seconds to 5 minutes. Ultra clones return\n`202` with status `pending`; all other models return `201` with status `active`.\nBayan clones require `ref_text` (the exact transcript of the reference audio)\nand support `ar` (default) and `en` only.",
+	Usage:   "Creates a new voice clone by uploading an audio file directly. Supported\nformats: WAV, MP3, FLAC, OGG, M4A. Maximum file size: 20MB. Reference audio is\ntrimmed per model: Qwen3TTS, Bayan, and Resemble use the first 10 seconds, Ultra\nuses up to 60 seconds, and Minimax accepts 10 seconds to 5 minutes. Ultra clones\nreturn `202` with status `pending`; all other models return `201` with status\n`active`. Bayan clones require `ref_text` (the exact transcript of the reference\naudio) and support `ar` (default) and `en` only. Resemble clones\n(`provider: resemble`) take `model_id` `Pro`, `Turbo`, or `Urdu`.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
