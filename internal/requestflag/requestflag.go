@@ -305,14 +305,14 @@ func (f *Flag[T]) PreParse() error {
 func (f *Flag[T]) PostParse() error {
 	if !f.hasBeenSet {
 		if val, source, found := f.Sources.LookupWithSource(); found {
-			if val != "" || reflect.TypeOf(f.value).Kind() == reflect.String {
+			if val != "" || (reflect.TypeFor[T]() != nil && reflect.TypeFor[T]().Kind() == reflect.String) {
 				if err := f.Set(f.Name, val); err != nil {
 					return fmt.Errorf(
 						"could not parse %[1]q as %[2]T value from %[3]s for flag %[4]s: %[5]s",
 						val, f.value, source, f.Name, err,
 					)
 				}
-			} else if val == "" && reflect.TypeOf(f.value).Kind() == reflect.Bool {
+			} else if val == "" && (reflect.TypeFor[T]() != nil && reflect.TypeFor[T]().Kind() == reflect.Bool) {
 				_ = f.Set(f.Name, "false")
 			}
 

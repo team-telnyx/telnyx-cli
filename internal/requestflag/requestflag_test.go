@@ -436,6 +436,46 @@ func TestFlagSet(t *testing.T) {
 	})
 }
 
+func TestPostParseEnvVarHandling(t *testing.T) {
+	t.Run("empty env var sets string flag to empty string", func(t *testing.T) {
+		const envKey = "REQUESTFLAG_TEST_EMPTY_STRING"
+		t.Setenv(envKey, "")
+
+		flag := &Flag[string]{
+			Name:    "string-flag",
+			Default: "default-string",
+			Sources: cli.EnvVars(envKey),
+		}
+
+		assert.NoError(t, flag.PreParse())
+		assert.NoError(t, flag.PostParse())
+
+		// Empty env var value should override the default.
+		assert.Equal(t, "", flag.Get())
+		assert.True(t, flag.IsSet())
+		assert.Equal(t, 1, flag.Count())
+	})
+
+	t.Run("empty env var sets bool flag to false", func(t *testing.T) {
+		const envKey = "REQUESTFLAG_TEST_EMPTY_BOOL"
+		t.Setenv(envKey, "")
+
+		flag := &Flag[bool]{
+			Name:    "bool-flag",
+			Default: true,
+			Sources: cli.EnvVars(envKey),
+		}
+
+		assert.NoError(t, flag.PreParse())
+		assert.NoError(t, flag.PostParse())
+
+		// Empty env var value should map to false for bool flags.
+		assert.Equal(t, false, flag.Get())
+		assert.True(t, flag.IsSet())
+		assert.Equal(t, 1, flag.Count())
+	})
+}
+
 func TestParseTimeWithFormats(t *testing.T) {
 	t.Parallel()
 
