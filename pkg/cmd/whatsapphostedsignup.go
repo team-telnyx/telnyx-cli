@@ -21,7 +21,7 @@ var whatsappHostedSignupsCreate = cli.Command{
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
 			Name:     "app-id",
-			Usage:    "Meta App ID linked to the Telnyx account. The app must be enabled.",
+			Usage:    "Meta App ID linked to the Telnyx account or its manager account. The app must be enabled.",
 			Required: true,
 			BodyPath: "app_id",
 		},

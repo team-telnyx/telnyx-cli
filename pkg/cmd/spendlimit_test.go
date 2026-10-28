@@ -17,6 +17,7 @@ func TestSpendLimitsCreate(t *testing.T) {
 			"spend-limits", "create",
 			"--amount", "100",
 			"--product", "inference",
+			"--credential-id", "KEY0192F3A1B2C3D4E5F6A7B8C9D0E1F2",
 			"--period", "daily",
 			"--reason", "Team budget",
 			"--unlimited=false",
@@ -28,6 +29,7 @@ func TestSpendLimitsCreate(t *testing.T) {
 		pipeData := []byte("" +
 			"amount: 100\n" +
 			"product: inference\n" +
+			"credential_id: KEY0192F3A1B2C3D4E5F6A7B8C9D0E1F2\n" +
 			"period: daily\n" +
 			"reason: Team budget\n" +
 			"unlimited: false\n")
@@ -48,6 +50,7 @@ func TestSpendLimitsUpdate(t *testing.T) {
 			"spend-limits", "update",
 			"--product", "inference",
 			"--amount", "100",
+			"--credential-id", "KEY0192F3A1B2C3D4E5F6A7B8C9D0E1F2",
 			"--period", "daily",
 			"--reason", "Raised for the product launch",
 			"--unlimited=false",
@@ -65,6 +68,7 @@ func TestSpendLimitsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"spend-limits", "update",
 			"--product", "inference",
+			"--credential-id", "KEY0192F3A1B2C3D4E5F6A7B8C9D0E1F2",
 			"--period", "daily",
 		)
 	})
@@ -89,6 +93,7 @@ func TestSpendLimitsDelete(t *testing.T) {
 			"--api-key", "string",
 			"spend-limits", "delete",
 			"--product", "inference",
+			"--credential-id", "KEY0192F3A1B2C3D4E5F6A7B8C9D0E1F2",
 			"--period", "daily",
 			"--reason", "reason",
 		)

@@ -25,7 +25,7 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			"--minimax", "{language_boost: string, pitch: 0, response_format: string, speed: 0, vol: 0}",
 			"--output-type", "binary_output",
 			"--provider", "aws",
-			"--resemble", "{api_key: string, format: string, precision: string, sample_rate: string}",
+			"--resemble", "{format: string, precision: string, sample_rate: string}",
 			"--soniox", "{voice_id: Emma, audio_format: mp3, language: en, model_id: tts-rt-v2, reduce_silence: true, sample_rate: 8000, speed: 1}",
 			"--telnyx", "{emotion: neutral, response_format: mp3, sampling_rate: 24000, voice_speed: 1, volume: 1}",
 			"--text", "string",
@@ -72,7 +72,6 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			"--minimax.vol", "0",
 			"--output-type", "binary_output",
 			"--provider", "aws",
-			"--resemble.api-key", "string",
 			"--resemble.format", "string",
 			"--resemble.precision", "string",
 			"--resemble.sample-rate", "string",
@@ -137,7 +136,6 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			"output_type: binary_output\n" +
 			"provider: aws\n" +
 			"resemble:\n" +
-			"  api_key: string\n" +
 			"  format: string\n" +
 			"  precision: string\n" +
 			"  sample_rate: string\n" +
