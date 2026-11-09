@@ -149,7 +149,7 @@ var aiConversationsList = cli.Command{
 
 var aiConversationsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Delete a specific conversation by its ID.",
+	Usage:   "Delete a specific conversation by its ID. Permanently deletes the conversation\nand its associated data: the conversation's messages, its insight generation\nresults, any conversation memories, and its webhook request logs. Recordings are\nnot deleted — recordings are managed separately through the /v2/recordings\nendpoints. This action cannot be undone.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -213,6 +213,26 @@ var aiConversationsAddMessage = cli.Command{
 		},
 	},
 	Action:          handleAIConversationsAddMessage,
+	HideHelpCommand: true,
+}
+
+var aiConversationsDeleteDelete = cli.Command{
+	Name:    "delete-delete",
+	Usage:   "Delete one insight generation request for a conversation. Generation results are\nstored per conversation and per insight template; deleting a request permanently\nremoves the stored result but does not stop insight generation from running\nagain. To remove every insight result for the conversation, delete the\nconversation itself. A successful delete returns an empty response.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "conversation-id",
+			Required:  true,
+			PathParam: "conversation_id",
+		},
+		&requestflag.Flag[string]{
+			Name:      "insight-id",
+			Required:  true,
+			PathParam: "insight_id",
+		},
+	},
+	Action:          handleAIConversationsDeleteDelete,
 	HideHelpCommand: true,
 }
 
@@ -456,6 +476,40 @@ func handleAIConversationsAddMessage(ctx context.Context, cmd *cli.Command) erro
 	return client.AI.Conversations.AddMessage(
 		ctx,
 		cmd.Value("conversation-id").(string),
+		params,
+		options...,
+	)
+}
+
+func handleAIConversationsDeleteDelete(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("insight-id") && len(unusedArgs) > 0 {
+		cmd.Set("insight-id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	params := telnyx.AIConversationDeleteDeleteParams{
+		ConversationID: cmd.Value("conversation-id").(string),
+	}
+
+	return client.AI.Conversations.DeleteDelete(
+		ctx,
+		cmd.Value("insight-id").(string),
 		params,
 		options...,
 	)

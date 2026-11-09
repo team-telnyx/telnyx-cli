@@ -499,6 +499,7 @@ func init() {
 					&aiConversationsList,
 					&aiConversationsDelete,
 					&aiConversationsAddMessage,
+					&aiConversationsDeleteDelete,
 					&aiConversationsRetrieveConversationsInsights,
 				},
 			},
@@ -2836,6 +2837,7 @@ func init() {
 					&telephonyCredentialsList,
 					&telephonyCredentialsDelete,
 					&telephonyCredentialsCreateToken,
+					&telephonyCredentialsRetrieveTokenMaterial,
 				},
 			},
 			{
@@ -4114,6 +4116,7 @@ func init() {
 					&meetingSessionsDelete,
 					&meetingSessionsDeleteRecordingMedia,
 					&meetingSessionsRetrieveEvents,
+					&meetingSessionsRetrieveRecordings,
 					&meetingSessionsRetrieveTranscript,
 				},
 			},
@@ -4390,6 +4393,152 @@ func init() {
 				Suggest:  true,
 				Commands: []*cli.Command{
 					&tunnelsActionsRotateToken,
+				},
+			},
+			{
+				Name:     "user-profile",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&userProfileList,
+					&userProfilePatchAll,
+				},
+			},
+			{
+				Name:     "agent-gateways",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysCreate,
+					&agentGatewaysRetrieve,
+					&agentGatewaysList,
+					&agentGatewaysDelete,
+					&agentGatewaysRetrieveModels,
+					&agentGatewaysRetrieveSpendLogs,
+				},
+			},
+			{
+				Name:     "agent-gateways:apis",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysAPIsCreate,
+					&agentGatewaysAPIsUpdate,
+					&agentGatewaysAPIsList,
+					&agentGatewaysAPIsDelete,
+				},
+			},
+			{
+				Name:     "agent-gateways:guardrails",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysGuardrailsCreate,
+					&agentGatewaysGuardrailsUpdate,
+					&agentGatewaysGuardrailsList,
+					&agentGatewaysGuardrailsDelete,
+				},
+			},
+			{
+				Name:     "agent-gateways:keys",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysKeysCreate,
+					&agentGatewaysKeysUpdate,
+					&agentGatewaysKeysList,
+					&agentGatewaysKeysDelete,
+				},
+			},
+			{
+				Name:     "agent-gateways:keys:tool-permissions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysKeysToolPermissionsCreate,
+					&agentGatewaysKeysToolPermissionsList,
+				},
+			},
+			{
+				Name:     "agent-gateways:mcp-servers",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysMcpServersCreate,
+					&agentGatewaysMcpServersUpdate,
+					&agentGatewaysMcpServersList,
+					&agentGatewaysMcpServersDelete,
+				},
+			},
+			{
+				Name:     "agent-gateways:policies",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysPoliciesCreate,
+					&agentGatewaysPoliciesRetrieve,
+					&agentGatewaysPoliciesUpdate,
+					&agentGatewaysPoliciesList,
+					&agentGatewaysPoliciesDelete,
+				},
+			},
+			{
+				Name:     "agent-gateways:policy-attachments",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysPolicyAttachmentsCreate,
+					&agentGatewaysPolicyAttachmentsList,
+					&agentGatewaysPolicyAttachmentsDelete,
+				},
+			},
+			{
+				Name:     "agent-gateways:teams",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysTeamsCreate,
+					&agentGatewaysTeamsUpdate,
+					&agentGatewaysTeamsList,
+					&agentGatewaysTeamsDelete,
+				},
+			},
+			{
+				Name:     "agent-gateways:teams:tool-permissions",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&agentGatewaysTeamsToolPermissionsCreate,
+					&agentGatewaysTeamsToolPermissionsList,
+				},
+			},
+			{
+				Name:     "calendar-connections",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&calendarConnectionsCreate,
+					&calendarConnectionsRetrieve,
+					&calendarConnectionsUpdate,
+					&calendarConnectionsList,
+					&calendarConnectionsDelete,
+				},
+			},
+			{
+				Name:     "calendar-connections:meetings",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&calendarConnectionsMeetingsUpdate,
+					&calendarConnectionsMeetingsList,
+				},
+			},
+			{
+				Name:     "meeting-bot:calendar",
+				Category: "API RESOURCE",
+				Suggest:  true,
+				Commands: []*cli.Command{
+					&meetingBotCalendarRetrieveOAuthCallback,
 				},
 			},
 			{

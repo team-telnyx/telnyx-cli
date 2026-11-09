@@ -16,7 +16,7 @@ import (
 
 var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 	Name:    "create",
-	Usage:   "Creates a new meeting session. When an idempotency_key is supplied in the\nrequest body, replay lookup is scoped to the authenticated account and compares\nonly the key; the request payload is not fingerprinted or compared. If a session\nwith that key already exists for the account, the existing session is replayed\n(200); otherwise a new session is created (201). The session may enter\nasynchronous states (e.g. joining, waiting_for_admission) before becoming\nactive. Optional `camera_image` input is write-only and applies only when no\navatar or Assistant webpage output takes precedence. An ignored URL is not\nfetched. An effective URL source is resolved before bot creation; neither the\nsource URL nor image bytes are persisted, returned, or logged. Treat signed URLs\nas credentials. With `assistant.avatar: true`, the assistant is read before the\nbot is created: an assistant without a Telnyx avatar configured is rejected with\n400 `invalid_request` (message prefix `assistant_avatar_not_configured:`), an\nunknown assistant with 400 `invalid_request` (prefix `assistant_not_found:`),\nand a failed lookup with 503 `assistant_lookup_unavailable`; no bot is created\nin any of these cases.",
+	Usage:   "Creates a meeting session and returns 201, or 200 for a replay. Use a unique\n`idempotency_key` per intended join and reuse the same key and request on\nretries. Reusing a key with a different join configuration or meeting URL can\nreturn 409 invalid_state. Always retry with the original request. The session\ncan pass through joining and waiting_for_admission before active. Optional\n`camera_image` input is write-only and applies when no assistant avatar takes\nprecedence. An ignored URL is not fetched. An effective URL source is resolved\nbefore bot creation; the source URL and image bytes are not returned in the\nsession response. Treat signed URLs as credentials. With\n`assistant.avatar: true`, the assistant is read before the bot is created: an\nassistant without a Telnyx avatar configured is rejected with 400\n`invalid_request` (message prefix `assistant_avatar_not_configured:`), an\nunknown assistant with 400 `invalid_request` (prefix `assistant_not_found:`),\nand a failed lookup with 503 `assistant_lookup_unavailable`; no bot is created\nin any of these cases.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -27,7 +27,7 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "assistant",
-			Usage:    "Attach a Telnyx AI Assistant to the session. Supply the Assistant's ID; the Meeting service connects it to the meeting directly. The Call Control connection, caller ID and loopback SIP URI previously required here have been removed and are now rejected as unknown fields.",
+			Usage:    "Attach a Telnyx AI Assistant owned by the authenticated account. Supply its ID and optional conversation settings. Unknown fields are rejected.",
 			BodyPath: "assistant",
 		},
 		&requestflag.Flag[bool]{
@@ -43,32 +43,53 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "camera-image",
-			Usage:    "Write-only static camera-tile image for this session, not a native account or participant profile photo. Supply exactly one JPEG source. When effective, the image is used as the bot's static camera/video output; presentation varies by meeting platform and recording configuration and is not guaranteed in recordings. An effective Avatar or Assistant webpage output takes precedence, so this input is ignored and a URL source is not fetched.",
+			Usage:    "Not supported for Google Meet and Teams joins (422 unsupported_capability). Write-only static camera-tile image for this session, not an account or participant profile photo. Supply exactly one JPEG source. When effective, the image is used as the bot's static camera/video output; presentation varies by meeting platform and recording configuration and is not guaranteed in recordings. An attached assistant or avatar takes precedence, so this input is ignored and a URL source is not fetched.",
 			BodyPath: "camera_image",
 		},
 		&requestflag.Flag[string]{
 			Name:     "chat-on-enter",
-			Usage:    "A message the bot posts to the meeting's chat as soon as it becomes active — typically a recording disclosure. Delivered at most once. Independent of `speak_on_enter`: both may be set, and the chat message posts first because it does not wait for text-to-speech or avatar startup. Rejected with 422 `unsupported_capability` on platforms without meeting chat.",
+			Usage:    "A message the bot posts to the meeting's chat as soon as it becomes active — typically a recording disclosure. Delivered at most once. Independent of `speak_on_enter`: both may be set, and the chat message posts first because it does not wait for text-to-speech or avatar startup. Rejected with 422 `unsupported_capability` on platforms without meeting chat. For Google Meet and Teams, text must be nonblank, at most 4096 UTF-8 bytes, with no control characters except tabs and line breaks. Counts toward the 1000-chat-request session limit.",
 			BodyPath: "chat_on_enter",
 		},
 		&requestflag.Flag[string]{
 			Name:     "idempotency-key",
-			Usage:    "Client-supplied idempotency key to safely retry creation requests without duplicating sessions. Lookup is scoped to the authenticated account and compares the key only; the request payload is not fingerprinted or compared.",
+			Usage:    "Use a unique key per intended join and reuse the same key and request on retries. Reusing a key with a different join configuration or meeting URL can return 409 invalid_state. Always retry with the original request.",
 			BodyPath: "idempotency_key",
 		},
 		&requestflag.Flag[any]{
 			Name:     "join-at",
-			Usage:    "ISO-8601 timestamp in the future at which the bot should join. If omitted, the bot joins immediately.",
+			Usage:    "Future ISO-8601 join timestamp including timezone. Google Meet and Teams accept dates at most three years ahead. Omit for an immediate join. Assistant sessions created through this endpoint must join immediately.",
 			BodyPath: "join_at",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "leave-policy",
+			Usage:    "Automatic departure settings for Google Meet and Teams. Omitted fields use the default behavior. Set at creation; cannot be changed later. Zoom ignores this policy.",
+			BodyPath: "leave_policy",
 		},
 		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
 			Usage:    "Arbitrary key-value metadata attached to the session. The serialized JSON representation must not exceed 16384 characters at runtime.",
 			BodyPath: "metadata",
 		},
+		&requestflag.Flag[bool]{
+			Name:     "recording",
+			Usage:    "Google Meet and Teams only. Defaults to true when recording_export is supplied and false otherwise. True requires recording_export.bucket; false cannot be combined with recording_export. Fixed at creation, with no pause/resume action. Zoom rejects recording, recording_view, and recording_export with 422 unsupported_capability; omit these fields for Zoom.",
+			BodyPath: "recording",
+		},
+		&requestflag.Flag[map[string]any]{
+			Name:     "recording-export",
+			Usage:    "Customer-owned Telnyx Storage destination for recording exports. Uses the authenticated organization and user; do not supply credentials, region, organization ID or object key.",
+			BodyPath: "recording_export",
+		},
+		&requestflag.Flag[string]{
+			Name:     "recording-view",
+			Usage:    "Recording layout for Google Meet and Teams. Defaults to speaker_view. Accepted at creation only; does not enable recording by itself.",
+			Default:  "speaker_view",
+			BodyPath: "recording_view",
+		},
 		&requestflag.Flag[string]{
 			Name:     "speak-on-enter",
-			Usage:    "Text the bot speaks when it enters the meeting. **Not spoken when an `assistant` is attached**: the value is accepted and echoed back on the session, but the assistant owns the voice and the line is never delivered, with no event reporting the omission. Use `chat_on_enter` to announce an assistant-backed bot. Rejected with 400 `invalid_request` when `assistant.avatar` is `true`.",
+			Usage:    "Text the bot speaks after joining. Available for sessions without a digital avatar. With an AI Assistant, the greeting waits until the assistant is connected. Rejected with 400 invalid_request when assistant.avatar is true.",
 			BodyPath: "speak_on_enter",
 		},
 		&requestflag.Flag[bool]{
@@ -79,7 +100,7 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "voice",
-			Usage:    "Session-default voice identifier used for `speak_on_enter` and ordinary speak actions. A voice supplied on an individual speak action overrides this default for that utterance.",
+			Usage:    "Session-default voice identifier used for `speak_on_enter` and ordinary speak actions. A voice supplied on an individual speak action overrides this default for that utterance. With an assistant attached, its conversational voice remains configured on the assistant.",
 			BodyPath: "voice",
 		},
 		&requestflag.Flag[string]{
@@ -99,23 +120,72 @@ var meetingSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "assistant.audio-gate",
-			Usage:      "Audio gating strategy for the assistant call leg. `half_duplex` (default) sends the assistant a single mixed meeting stream and mutes it while the assistant speaks, so the assistant cannot hear itself and cannot be interrupted. `full_duplex` sends a separate stream per participant, which allows barge-in and removes self-hearing, and COSTS SIGNIFICANTLY MORE: per-participant streams multiply the per-minute cost by the number of participants.",
+			Usage:      "Use half_duplex (default) to pause listening while the assistant speaks, or full_duplex to allow participants to interrupt. Full-duplex pricing depends on participant audio usage; see the Meeting pricing guide.",
 			InnerField: "audio_gate",
 		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "assistant.avatar",
-			Usage:      "Beta. Show the avatar configured on the assistant (its `avatar_settings`; see [AI Assistant avatars](/docs/inference/ai-assistants/avatars)) as the bot's camera, lip-synced to the assistant's own speech. The request carries no avatar ID or key: the assistant is read at creation and the request is rejected with 400 `invalid_request` if it has no Telnyx avatar configured. Supported on Google Meet, Zoom, Microsoft Teams and Webex; other platforms return 422 `unsupported_capability`. REST-only. Not echoed back on `assistant`; the session's top-level `avatar` and `avatar_state` fields report it instead. If the avatar fails, the session continues voice-only and `avatar_state` becomes `degraded`.",
+			Usage:      "Beta. Show the avatar configured on the assistant (its `avatar_settings`; see [AI Assistant avatars](/docs/inference/ai-assistants/avatars)) as the bot's camera, lip-synced to the assistant's own speech. The request carries no avatar ID or key: the assistant is read at creation and the request is rejected with 400 `invalid_request` if it has no Telnyx avatar configured. Available for Google Meet, Zoom, and Teams sessions. REST-only. Not echoed back on `assistant`; the session's top-level `avatar` and `avatar_state` fields report it instead. If the avatar fails, the session continues voice-only and `avatar_state` becomes `degraded`.",
 			InnerField: "avatar",
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "assistant.dynamic-variables",
-			Usage:      "Per-conversation values for the [dynamic variables](/docs/inference/ai-assistants/dynamic-variables) used in the Assistant's instructions, greeting, or tools. Delivered before the Assistant's first utterance, so they resolve for the opening line as well as the rest of the conversation. At most 63 entries; keys 1-128 characters; values must be strings. The map is budgeted in aggregate at 1,047,552 bytes (1023 KiB) rather than capped per value. `streaming_audio`, `ai_assistant_streaming_audio` and `meeting_session_id` are reserved and rejected with `400 invalid_request` -- they toggle provider infrastructure or are set by the service rather than fill a prompt template.",
+			Usage:      "Per-conversation values for the [dynamic variables](/docs/inference/ai-assistants/dynamic-variables) used in the Assistant's instructions, greeting, or tools. Delivered before the Assistant's first utterance, so they resolve for the opening line as well as the rest of the conversation. At most 63 entries; keys 1-128 characters; values must be strings. The map is budgeted in aggregate at 1,047,552 bytes (1023 KiB) rather than capped per value. `streaming_audio`, `ai_assistant_streaming_audio` and `meeting_session_id` are reserved and rejected with `400 invalid_request`.",
 			InnerField: "dynamic_variables",
 		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "assistant.leave-on-end",
-			Usage:      "Leave the meeting when the Assistant's conversation reaches a terminal state -- `ended` **or** `failed`. Off by default, which leaves the bot in the meeting after the Assistant stops. Fires once: a second terminal transition does not leave twice, and a leave the provider refuses is logged without changing how the session settles.",
+			Usage:      "Leave when the assistant conversation ends or fails. Defaults to false. Other leave-policy rules and explicit leave requests still apply.",
 			InnerField: "leave_on_end",
+		},
+	},
+	"leave-policy": {
+		&requestflag.InnerFlag[int64]{
+			Name:       "leave-policy.alone-seconds",
+			Usage:      "Seconds alone after another participant has attended and left. Does not start just because the bot arrives first.",
+			InnerField: "alone_seconds",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "leave-policy.bot-name-keywords",
+			Usage:      "Case-insensitive names or phrases identifying other bots to exclude when deciding whether this bot is alone. Matching splits names on spaces, hyphens and underscores. Null or an empty array disables filtering.",
+			InnerField: "bot_name_keywords",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "leave-policy.host-wait-seconds",
+			Usage:      "Seconds to wait for the host to start the meeting.",
+			InnerField: "host_wait_seconds",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "leave-policy.lobby-wait-seconds",
+			Usage:      "Seconds to wait for lobby admission.",
+			InnerField: "lobby_wait_seconds",
+		},
+		&requestflag.InnerFlag[*int64]{
+			Name:       "leave-policy.max-duration-seconds",
+			Usage:      "Maximum seconds after joining. Null means no per-join duration limit; service safety limits still apply.",
+			InnerField: "max_duration_seconds",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "leave-policy.silence-grace-seconds",
+			Usage:      "Seconds after joining before silence detection starts a fresh inactivity timer.",
+			InnerField: "silence_grace_seconds",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "leave-policy.silence-seconds",
+			Usage:      "Continuous audio inactivity before departure after the silence grace period.",
+			InnerField: "silence_seconds",
+		},
+	},
+	"recording-export": {
+		&requestflag.InnerFlag[string]{
+			Name:       "recording-export.bucket",
+			Usage:      "Existing accessible bucket. Consecutive dots and IPv4-address names are rejected.",
+			InnerField: "bucket",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "recording-export.prefix",
+			Usage:      "Optional object-key prefix. One trailing slash is normalized. Empty path segments, . and .. segments are rejected.",
+			InnerField: "prefix",
 		},
 	},
 })
@@ -137,7 +207,7 @@ var meetingSessionsRetrieve = cli.Command{
 
 var meetingSessionsUpdate = cli.Command{
 	Name:    "update",
-	Usage:   "Updates mutable properties of a meeting session. Only sessions in the scheduled\nstate can be updated; any other state returns 409 with the invalid_state error\ncode. All request fields are optional, and an empty object is a valid no-op\nupdate.",
+	Usage:   "Updates mutable properties of a meeting session. Only sessions in the scheduled\nstate can be updated; any other state returns 409 with the invalid_state error\ncode. All request fields are optional, and an empty object is a valid no-op\nupdate. Calendar-controlled Google Meet and Teams sessions return 409\ncalendar_managed; change the event instead. A conflicting pending edit returns\n409 edit_in_progress. On a timeout or 503, read the session and retry the same\nchanges.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -162,7 +232,7 @@ var meetingSessionsUpdate = cli.Command{
 
 var meetingSessionsList = cli.Command{
 	Name:    "list",
-	Usage:   "Returns a list of meeting sessions, optionally filtered by status.",
+	Usage:   "Returns a list of meeting sessions, optionally filtered by status. List items\nomit assistant.dynamic_variables and recording_export. Some items include\nremote_state_observed_at; retrieve the individual session for current state.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -177,7 +247,7 @@ var meetingSessionsList = cli.Command{
 
 var meetingSessionsDelete = cli.Command{
 	Name:    "delete",
-	Usage:   "Stops a meeting session without deleting its persisted record. Scheduled bots\nare cancelled, while bots that are joining or active are asked to leave. The\npersisted meeting session record remains available.",
+	Usage:   "Stops a meeting session without deleting its persisted record. Scheduled bots\nare cancelled, while bots that are joining or active are asked to leave. The\npersisted meeting session record remains available. A successful response can\nreport leaving while departure is pending. Poll until ended, failed, or\nadmission_denied. Exported Storage objects are unaffected.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -192,7 +262,7 @@ var meetingSessionsDelete = cli.Command{
 
 var meetingSessionsDeleteRecordingMedia = cli.Command{
 	Name:    "delete-recording-media",
-	Usage:   "Irreversibly requests deletion of the aggregate recording media for the session.\nThe operation retains the Telnyx-local Meeting session, transcript segments,\nevents, artifacts, and usage records. It is separate from\n`DELETE /meeting_sessions/{id}`, which stops or cancels participation without\ndeleting the persisted session. A missing/foreign session returns 404; a\ndeletion request whose outcome is unknown returns 502.",
+	Usage:   "Irreversibly requests deletion of the aggregate recording media for the session.\nThe operation retains the Telnyx-local Meeting session, transcript segments,\nevents, artifacts, and usage records. It is separate from\n`DELETE /meeting_sessions/{id}`, which stops or cancels participation without\ndeleting the persisted session. A missing/foreign session returns 404; a\ndeletion request whose outcome is unknown returns 502. Customer Storage exports\ndo not support this operation (422 unsupported_capability); delete the exported\nobject through Storage instead. Stopping a session does not delete an exported\nobject.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -232,9 +302,24 @@ var meetingSessionsRetrieveEvents = cli.Command{
 	HideHelpCommand: true,
 }
 
+var meetingSessionsRetrieveRecordings = cli.Command{
+	Name:    "retrieve-recordings",
+	Usage:   "Retrieve recording export status. Customer Storage exports include\nrecording_export with the bucket, region, key and pending/exported/failed\nstatus, or null when no reference is available. The data array is empty for\nthese exports. Download or share the object using the Storage API once its\nstatus is exported. Zoom recordings and existing Google Meet or Teams recordings\nheld by the Meeting service continue returning temporary download links in data\nthrough this same endpoint and session ID. Those recordings do not require\nStorage setup or migration. Refresh this endpoint when a link expires. Select\nthe download method from the returned fields, not the platform alone.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
+		},
+	},
+	Action:          handleMeetingSessionsRetrieveRecordings,
+	HideHelpCommand: true,
+}
+
 var meetingSessionsRetrieveTranscript = cli.Command{
 	Name:    "retrieve-transcript",
-	Usage:   "Returns transcript segments ordered by ascending `seq`. Default `limit` is 100\nand maximum is 1,000. Continue with `after=meta.next_after`. A long-poll timeout\nreturns 200 with empty `data` and `meta.next_after: null`; retain the cursor\nsupplied to that request because null is not a replacement cursor.",
+	Usage:   "Returns transcript segments ordered by ascending seq. Default limit is 100,\nmaximum 1000. Continue with after=meta.next_after. On an empty page,\nmeta.next_after preserves a positive supplied after cursor, or is null when no\npositive cursor was supplied. wait_seconds holds an empty read for up to 25\nseconds; a timeout still returns 200.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -567,6 +652,48 @@ func handleMeetingSessionsRetrieveEvents(ctx context.Context, cmd *cli.Command) 
 		Format:         format,
 		RawOutput:      cmd.Root().Bool("raw-output"),
 		Title:          "meeting-sessions retrieve-events",
+		Transform:      transform,
+	})
+}
+
+func handleMeetingSessionsRetrieveRecordings(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.MeetingSessions.GetRecordings(ctx, cmd.Value("id").(string), options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "meeting-sessions retrieve-recordings",
 		Transform:      transform,
 	})
 }

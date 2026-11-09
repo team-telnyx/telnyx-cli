@@ -22,7 +22,7 @@ func TestAIToolsCreate(t *testing.T) {
 			"--function", "{foo: bar}",
 			"--handoff", "{foo: bar}",
 			"--invite", "{foo: bar}",
-			"--pay", "{connector_name: connector_name, connector_parameters: {campaignid: bar, customer_ref: bar}, currency: currency, description: description, payment_method: payment_method, valid_card_types: [visa, mastercard]}",
+			"--pay", "{connector_name: connector_name, connector_parameters: {campaignid: bar, customer_ref: bar}, currency: currency, description: description, inter_digit_timeout_millis: 1, max_attempts: 1, min_postal_code_length: 5, payment_method: payment_method, postal_code: false, prompts: {bank-account-number: x, bank-routing-number: x, expiration-date: x, payment-card-number: x, postal-code: x, security-code: x}, timeout_millis: 12000, valid_card_types: [visa, mastercard]}",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--update-dynamic-variables", "{description: Collect caller details into conversation variables., name: collect_details, updatable_variables: [{name: customer_name, description: The caller's full name., type: string}]}",
@@ -51,7 +51,13 @@ func TestAIToolsCreate(t *testing.T) {
 			"--pay.connector-parameters", "{campaignid: bar, customer_ref: bar}",
 			"--pay.currency", "currency",
 			"--pay.description", "description",
+			"--pay.inter-digit-timeout-millis", "1",
+			"--pay.max-attempts", "1",
+			"--pay.min-postal-code-length", "5",
 			"--pay.payment-method", "payment_method",
+			"--pay.postal-code=false",
+			"--pay.prompts", "{bank-account-number: x, bank-routing-number: x, expiration-date: x, payment-card-number: x, postal-code: x, security-code: x}",
+			"--pay.timeout-millis", "12000",
 			"--pay.valid-card-types", "[visa, mastercard]",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
@@ -84,7 +90,19 @@ func TestAIToolsCreate(t *testing.T) {
 			"    customer_ref: bar\n" +
 			"  currency: currency\n" +
 			"  description: description\n" +
+			"  inter_digit_timeout_millis: 1\n" +
+			"  max_attempts: 1\n" +
+			"  min_postal_code_length: 5\n" +
 			"  payment_method: payment_method\n" +
+			"  postal_code: false\n" +
+			"  prompts:\n" +
+			"    bank-account-number: x\n" +
+			"    bank-routing-number: x\n" +
+			"    expiration-date: x\n" +
+			"    payment-card-number: x\n" +
+			"    postal-code: x\n" +
+			"    security-code: x\n" +
+			"  timeout_millis: 12000\n" +
 			"  valid_card_types:\n" +
 			"    - visa\n" +
 			"    - mastercard\n" +
@@ -136,7 +154,7 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--function", "{foo: bar}",
 			"--handoff", "{foo: bar}",
 			"--invite", "{foo: bar}",
-			"--pay", "{connector_name: connector_name, connector_parameters: {campaignid: bar, customer_ref: bar}, currency: currency, description: description, payment_method: payment_method, valid_card_types: [visa, mastercard]}",
+			"--pay", "{connector_name: connector_name, connector_parameters: {campaignid: bar, customer_ref: bar}, currency: currency, description: description, inter_digit_timeout_millis: 1, max_attempts: 1, min_postal_code_length: 5, payment_method: payment_method, postal_code: false, prompts: {bank-account-number: x, bank-routing-number: x, expiration-date: x, payment-card-number: x, postal-code: x, security-code: x}, timeout_millis: 12000, valid_card_types: [visa, mastercard]}",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
 			"--type", "type",
@@ -165,7 +183,13 @@ func TestAIToolsUpdate(t *testing.T) {
 			"--pay.connector-parameters", "{campaignid: bar, customer_ref: bar}",
 			"--pay.currency", "currency",
 			"--pay.description", "description",
+			"--pay.inter-digit-timeout-millis", "1",
+			"--pay.max-attempts", "1",
+			"--pay.min-postal-code-length", "5",
 			"--pay.payment-method", "payment_method",
+			"--pay.postal-code=false",
+			"--pay.prompts", "{bank-account-number: x, bank-routing-number: x, expiration-date: x, payment-card-number: x, postal-code: x, security-code: x}",
+			"--pay.timeout-millis", "12000",
 			"--pay.valid-card-types", "[visa, mastercard]",
 			"--retrieval", "{foo: bar}",
 			"--timeout-ms", "0",
@@ -197,7 +221,19 @@ func TestAIToolsUpdate(t *testing.T) {
 			"    customer_ref: bar\n" +
 			"  currency: currency\n" +
 			"  description: description\n" +
+			"  inter_digit_timeout_millis: 1\n" +
+			"  max_attempts: 1\n" +
+			"  min_postal_code_length: 5\n" +
 			"  payment_method: payment_method\n" +
+			"  postal_code: false\n" +
+			"  prompts:\n" +
+			"    bank-account-number: x\n" +
+			"    bank-routing-number: x\n" +
+			"    expiration-date: x\n" +
+			"    payment-card-number: x\n" +
+			"    postal-code: x\n" +
+			"    security-code: x\n" +
+			"  timeout_millis: 12000\n" +
 			"  valid_card_types:\n" +
 			"    - visa\n" +
 			"    - mastercard\n" +

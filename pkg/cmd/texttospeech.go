@@ -20,6 +20,11 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{
+			Name:     "assemblyai",
+			Usage:    "AssemblyAI provider-specific parameters. Every voice speaks all six supported languages; set `language` to the language of the text.",
+			BodyPath: "assemblyai",
+		},
+		&requestflag.Flag[map[string]any]{
 			Name:     "aws",
 			Usage:    "AWS Polly provider-specific parameters.",
 			BodyPath: "aws",
@@ -110,6 +115,33 @@ var textToSpeechGenerateSpeech = requestflag.WithInnerFlags(cli.Command{
 	Action:          handleTextToSpeechGenerateSpeech,
 	HideHelpCommand: true,
 }, map[string][]requestflag.HasOuterFlag{
+	"assemblyai": {
+		&requestflag.InnerFlag[string]{
+			Name:       "assemblyai.voice-id",
+			Usage:      "AssemblyAI voice from the [voices listing](https://developers.telnyx.com/api-reference/text-to-speech-commands/list-available-voices), for example `aai-jane`.",
+			InnerField: "voice_id",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assemblyai.audio-format",
+			Usage:      "Audio output format.",
+			InnerField: "audio_format",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assemblyai.language",
+			Usage:      "Two-letter ISO 639-1 code of the text. AssemblyAI does not detect the language.",
+			InnerField: "language",
+		},
+		&requestflag.InnerFlag[string]{
+			Name:       "assemblyai.model-id",
+			Usage:      "AssemblyAI model.",
+			InnerField: "model_id",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "assemblyai.sample-rate",
+			Usage:      "Audio sample rate in Hz. Defaults to 24000, or 8000 for `pcm_mulaw` and `pcm_alaw`.",
+			InnerField: "sample_rate",
+		},
+	},
 	"aws": {
 		&requestflag.InnerFlag[string]{
 			Name:       "aws.language-code",

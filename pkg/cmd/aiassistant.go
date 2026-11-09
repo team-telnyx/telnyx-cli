@@ -315,6 +315,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Integration secret identifier for the client certificate used with certificate authentication.",
 			InnerField: "certificate_ref",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "external-llm.extra-headers",
+			Usage:      "Custom HTTP headers Telnyx sets on every request to the external LLM endpoint, in addition to the authentication header. Keys are header names, values are static strings. At most 32 headers. Reserved names are rejected: accept-encoding, authorization, connection, content-encoding, content-length, content-type, cookie, expect, host, keep-alive, proxy-authenticate, proxy-authorization, proxy-connection, set-cookie, te, trailer, transfer-encoding, upgrade, x-host-rewrite, x-request-id, x-trace-id, and any x-telnyx-* or x-stainless-* header; '_' counts as '-' when names are compared. Names must be valid HTTP header names (RFC 7230 token, at most 128 characters) and must not repeat (case-insensitive). Values must be printable ASCII, at most 4096 characters, with no leading or trailing whitespace. Values are stored as plain text and returned when the assistant is retrieved.",
+			InnerField: "extra_headers",
+		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "external-llm.forward-metadata",
 			Usage:      "When `true`, Telnyx forwards the assistant's dynamic variables to the external LLM endpoint as a top-level `extra_metadata` object on the chat completion request body. Defaults to `false`. Example payload sent to the external endpoint: `{\"extra_metadata\": {\"customer_name\": \"Jane\", \"account_id\": \"acct_789\", \"telnyx_agent_target\": \"+13125550100\", \"telnyx_end_user_target\": \"+13125550123\"}}`. Distinct from OpenAI's native `metadata` field, which has its own size and type limits.",
@@ -389,7 +394,7 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "interruption-settings.start-speaking-plan",
-			Usage:      "Controls when the assistant starts speaking after the user stops. These thresholds primarily apply to non turn-taking transcription models. For turn-taking models like `deepgram/flux`, end-of-turn detection is driven by the transcription end-of-turn settings under `transcription.settings` instead.",
+			Usage:      "Controls when the assistant starts speaking after the user stops. These thresholds primarily apply to non turn-taking transcription models. For turn-taking models like `deepgram/flux`, end-of-turn detection is driven by the transcription end-of-turn settings under `transcription.settings` instead.\n\nSending any `start_speaking_plan` object — an empty `{}` included (the stored config fills in field defaults) — engages per-turn transcript matching: on each turn the transcript tail is evaluated against the configured `transcription_endpointing_plan` tiers, and the wait is set to the matching tier's seconds. When the transcript ends without terminal punctuation or a number and `transcription_endpointing_plan` is set, its `on_no_punctuation_seconds` tier applies. Only when no tier matches (`transcription_endpointing_plan` unset or null) does the wait stay on `wait_seconds`. Setting `start_speaking_plan` to `null` (or omitting it) turns per-turn matching off entirely, and the assistant starts speaking as soon as silence is detected.",
 			InnerField: "start_speaking_plan",
 		},
 	},
@@ -473,7 +478,7 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "privacy-settings.in-transit-data-locality",
-			Usage:      "Requires every model call made for a web chat turn to be received and served inside your organization's data-locality region, rather than only stored there. Applies to web chat only — voice and messaging assistants are unaffected. Enabling it requires a data-locality region with in-region inference (USA, EU, AUS, UAE; see [Inference regions](https://developers.telnyx.com/docs/inference/models/regions)) and Telnyx-hosted models for the assistant, its fallback, and any conversation-flow node that overrides the model; the request is rejected otherwise. Once enabled, send chat requests to your region's API hostname: a request entering the platform in another region is rejected rather than forwarded, because forwarding it would already have moved the content across the border. Defaults to false.",
+			Usage:      "Requires this assistant's conversations to be processed inside your organization's data-locality region, rather than only stored there, on every channel: for web chat, every model call of a turn; for voice, the call's model calls and the Telnyx-hosted speech services it uses; for SMS and WhatsApp, the model calls of each turn (how messages travel through carriers is not covered). Covered processing that cannot be handled in region fails rather than being served elsewhere. Enabling it requires a data-locality region with in-region inference (USA, EU, AUS, UAE; see [Inference regions](https://developers.telnyx.com/docs/inference/models/regions)), models for the assistant, its fallback, and any conversation-flow node that overrides the model that are either Telnyx-hosted or a customer-provided `external_llm` endpoint (third-party model providers are refused), and, when `insight_settings.model` is set, an insight model available in that region; the request is rejected otherwise. A voice call fails when it starts if its STT model or TTS voice is not self-hosted by Telnyx, if the assistant uses a speech-to-speech model, or if the call's media is anchored outside the region. URLs Telnyx is configured to call — an `external_llm` endpoint, webhook tools, Voice API callbacks, or a recording storage destination — are followed as-is: Telnyx cannot verify where a customer-supplied URL processes requests, and keeping those steps in your region is your responsibility. Once enabled, send web chat requests and WebSocket or WebRTC conversations to your region's API hostname: one entering the platform in another region is refused rather than forwarded, because forwarding it would already have moved the content across the border. See [Data residency](https://developers.telnyx.com/docs/inference/data-residency#in-region-processing-for-ai-assistants). Defaults to false.",
 			InnerField: "in_transit_data_locality",
 		},
 		&requestflag.InnerFlag[string]{
@@ -502,6 +507,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "telephony-settings.fallback-destination",
 			Usage:      "Destination number or SIP URI to transfer the caller to when the AI conversation ends abnormally, for example because of an assistant-side error, so the caller is not left in dead air. This only fires for abnormal ends: it does not fire when the conversation ends on purpose (the caller hung up, the assistant completed normally, the caller hung up after a relay handoff, or voicemail was detected), and it does not fire when the assistant already transferred or bridged the call.",
 			InnerField: "fallback_destination",
+		},
+		&requestflag.InnerFlag[*int64]{
+			Name:       "telephony-settings.greeting-delay-ms",
+			Usage:      "Milliseconds to wait after an inbound call is answered before the assistant starts and speaks its greeting. Increase it if the beginning of the greeting is cut off on some connections (for example, WebRTC calls). When unset (`null`), the platform default of 250 ms is used. Set to `0` to start without a delay. Maximum 2000.",
+			InnerField: "greeting_delay_ms",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "telephony-settings.noise-suppression",
@@ -605,6 +615,11 @@ var aiAssistantsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "voice-settings.expressive-mode",
 			Usage:      "Enables emotionally expressive speech using SSML emotion tags. When enabled, the assistant uses audio tags like angry, excited, content, and sad to add emotional nuance. Only supported for Telnyx Ultra voices.",
 			InnerField: "expressive_mode",
+		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "voice-settings.language",
+			Usage:      "Two-letter ISO 639-1 code of the language the voice speaks, for example `es`. Only applicable to Soniox and AssemblyAI voices, which speak every language of their model. AssemblyAI accepts `en`, `es`, `de`, `fr`, `it`, and `pt`, as a literal code: a dynamic variable is rejected. When unset, the voice speaks English.",
+			InnerField: "language",
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "voice-settings.language-boost",
@@ -1069,6 +1084,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Integration secret identifier for the client certificate used with certificate authentication.",
 			InnerField: "certificate_ref",
 		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "external-llm.extra-headers",
+			Usage:      "Custom HTTP headers Telnyx sets on every request to the external LLM endpoint, in addition to the authentication header. Keys are header names, values are static strings. At most 32 headers. Reserved names are rejected: accept-encoding, authorization, connection, content-encoding, content-length, content-type, cookie, expect, host, keep-alive, proxy-authenticate, proxy-authorization, proxy-connection, set-cookie, te, trailer, transfer-encoding, upgrade, x-host-rewrite, x-request-id, x-trace-id, and any x-telnyx-* or x-stainless-* header; '_' counts as '-' when names are compared. Names must be valid HTTP header names (RFC 7230 token, at most 128 characters) and must not repeat (case-insensitive). Values must be printable ASCII, at most 4096 characters, with no leading or trailing whitespace. Values are stored as plain text and returned when the assistant is retrieved.",
+			InnerField: "extra_headers",
+		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "external-llm.forward-metadata",
 			Usage:      "When `true`, Telnyx forwards the assistant's dynamic variables to the external LLM endpoint as a top-level `extra_metadata` object on the chat completion request body. Defaults to `false`. Example payload sent to the external endpoint: `{\"extra_metadata\": {\"customer_name\": \"Jane\", \"account_id\": \"acct_789\", \"telnyx_agent_target\": \"+13125550100\", \"telnyx_end_user_target\": \"+13125550123\"}}`. Distinct from OpenAI's native `metadata` field, which has its own size and type limits.",
@@ -1143,7 +1163,7 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[map[string]any]{
 			Name:       "interruption-settings.start-speaking-plan",
-			Usage:      "Controls when the assistant starts speaking after the user stops. These thresholds primarily apply to non turn-taking transcription models. For turn-taking models like `deepgram/flux`, end-of-turn detection is driven by the transcription end-of-turn settings under `transcription.settings` instead.",
+			Usage:      "Controls when the assistant starts speaking after the user stops. These thresholds primarily apply to non turn-taking transcription models. For turn-taking models like `deepgram/flux`, end-of-turn detection is driven by the transcription end-of-turn settings under `transcription.settings` instead.\n\nSending any `start_speaking_plan` object — an empty `{}` included (the stored config fills in field defaults) — engages per-turn transcript matching: on each turn the transcript tail is evaluated against the configured `transcription_endpointing_plan` tiers, and the wait is set to the matching tier's seconds. When the transcript ends without terminal punctuation or a number and `transcription_endpointing_plan` is set, its `on_no_punctuation_seconds` tier applies. Only when no tier matches (`transcription_endpointing_plan` unset or null) does the wait stay on `wait_seconds`. Setting `start_speaking_plan` to `null` (or omitting it) turns per-turn matching off entirely, and the assistant starts speaking as soon as silence is detected.",
 			InnerField: "start_speaking_plan",
 		},
 	},
@@ -1227,7 +1247,7 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 		},
 		&requestflag.InnerFlag[bool]{
 			Name:       "privacy-settings.in-transit-data-locality",
-			Usage:      "Requires every model call made for a web chat turn to be received and served inside your organization's data-locality region, rather than only stored there. Applies to web chat only — voice and messaging assistants are unaffected. Enabling it requires a data-locality region with in-region inference (USA, EU, AUS, UAE; see [Inference regions](https://developers.telnyx.com/docs/inference/models/regions)) and Telnyx-hosted models for the assistant, its fallback, and any conversation-flow node that overrides the model; the request is rejected otherwise. Once enabled, send chat requests to your region's API hostname: a request entering the platform in another region is rejected rather than forwarded, because forwarding it would already have moved the content across the border. Defaults to false.",
+			Usage:      "Requires this assistant's conversations to be processed inside your organization's data-locality region, rather than only stored there, on every channel: for web chat, every model call of a turn; for voice, the call's model calls and the Telnyx-hosted speech services it uses; for SMS and WhatsApp, the model calls of each turn (how messages travel through carriers is not covered). Covered processing that cannot be handled in region fails rather than being served elsewhere. Enabling it requires a data-locality region with in-region inference (USA, EU, AUS, UAE; see [Inference regions](https://developers.telnyx.com/docs/inference/models/regions)), models for the assistant, its fallback, and any conversation-flow node that overrides the model that are either Telnyx-hosted or a customer-provided `external_llm` endpoint (third-party model providers are refused), and, when `insight_settings.model` is set, an insight model available in that region; the request is rejected otherwise. A voice call fails when it starts if its STT model or TTS voice is not self-hosted by Telnyx, if the assistant uses a speech-to-speech model, or if the call's media is anchored outside the region. URLs Telnyx is configured to call — an `external_llm` endpoint, webhook tools, Voice API callbacks, or a recording storage destination — are followed as-is: Telnyx cannot verify where a customer-supplied URL processes requests, and keeping those steps in your region is your responsibility. Once enabled, send web chat requests and WebSocket or WebRTC conversations to your region's API hostname: one entering the platform in another region is refused rather than forwarded, because forwarding it would already have moved the content across the border. See [Data residency](https://developers.telnyx.com/docs/inference/data-residency#in-region-processing-for-ai-assistants). Defaults to false.",
 			InnerField: "in_transit_data_locality",
 		},
 		&requestflag.InnerFlag[string]{
@@ -1256,6 +1276,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "telephony-settings.fallback-destination",
 			Usage:      "Destination number or SIP URI to transfer the caller to when the AI conversation ends abnormally, for example because of an assistant-side error, so the caller is not left in dead air. This only fires for abnormal ends: it does not fire when the conversation ends on purpose (the caller hung up, the assistant completed normally, the caller hung up after a relay handoff, or voicemail was detected), and it does not fire when the assistant already transferred or bridged the call.",
 			InnerField: "fallback_destination",
+		},
+		&requestflag.InnerFlag[*int64]{
+			Name:       "telephony-settings.greeting-delay-ms",
+			Usage:      "Milliseconds to wait after an inbound call is answered before the assistant starts and speaks its greeting. Increase it if the beginning of the greeting is cut off on some connections (for example, WebRTC calls). When unset (`null`), the platform default of 250 ms is used. Set to `0` to start without a delay. Maximum 2000.",
+			InnerField: "greeting_delay_ms",
 		},
 		&requestflag.InnerFlag[string]{
 			Name:       "telephony-settings.noise-suppression",
@@ -1359,6 +1384,11 @@ var aiAssistantsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "voice-settings.expressive-mode",
 			Usage:      "Enables emotionally expressive speech using SSML emotion tags. When enabled, the assistant uses audio tags like angry, excited, content, and sad to add emotional nuance. Only supported for Telnyx Ultra voices.",
 			InnerField: "expressive_mode",
+		},
+		&requestflag.InnerFlag[*string]{
+			Name:       "voice-settings.language",
+			Usage:      "Two-letter ISO 639-1 code of the language the voice speaks, for example `es`. Only applicable to Soniox and AssemblyAI voices, which speak every language of their model. AssemblyAI accepts `en`, `es`, `de`, `fr`, `it`, and `pt`, as a literal code: a dynamic variable is rejected. When unset, the voice speaks English.",
+			InnerField: "language",
 		},
 		&requestflag.InnerFlag[*string]{
 			Name:       "voice-settings.language-boost",
