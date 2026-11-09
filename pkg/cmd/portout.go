@@ -31,7 +31,7 @@ var portoutsRetrieve = cli.Command{
 
 var portoutsList = requestflag.WithInnerFlags(cli.Command{
 	Name:    "list",
-	Usage:   "Returns the portout requests according to filters",
+	Usage:   "Returns the portout requests according to filters. Carrier Port Out API\navailable. Please contact porting@telnyx.com.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[map[string]any]{

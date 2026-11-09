@@ -163,19 +163,19 @@ var emailDedicatedIPsDelete = cli.Command{
 			QueryPath: "reason",
 		},
 		&requestflag.Flag[bool]{
-			Name:     "drain",
+			Name:     "body-drain",
 			Usage:    "Set together with `force: true` to release the last IP in a pool. Acknowledges that mail routed to the emptied pool is held until the pool has a sendable IP again.",
 			Default:  false,
 			BodyPath: "drain",
 		},
 		&requestflag.Flag[bool]{
-			Name:     "force",
+			Name:     "body-force",
 			Usage:    "Set together with `drain: true` to release the last IP in a pool. Either flag alone has no effect.",
 			Default:  false,
 			BodyPath: "force",
 		},
 		&requestflag.Flag[string]{
-			Name:     "reason",
+			Name:     "body-reason",
 			Usage:    "Free-text reason recorded with the release.",
 			BodyPath: "reason",
 		},

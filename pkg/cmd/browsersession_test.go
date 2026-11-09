@@ -19,7 +19,7 @@ func TestBrowserSessionsCreate(t *testing.T) {
 			"--policy", "{allowed_domains: [example.com]}",
 			"--idempotency-key", "x",
 			"--limits", "{idle_timeout_s: 30, lifetime_s: 60}",
-			"--metadata", "{}",
+			"--metadata", "{foo: bar}",
 		)
 	})
 
@@ -36,7 +36,7 @@ func TestBrowserSessionsCreate(t *testing.T) {
 			"--idempotency-key", "x",
 			"--limits.idle-timeout-s", "30",
 			"--limits.lifetime-s", "60",
-			"--metadata", "{}",
+			"--metadata", "{foo: bar}",
 		)
 	})
 
@@ -50,7 +50,8 @@ func TestBrowserSessionsCreate(t *testing.T) {
 			"limits:\n" +
 			"  idle_timeout_s: 30\n" +
 			"  lifetime_s: 60\n" +
-			"metadata: {}\n")
+			"metadata:\n" +
+			"  foo: bar\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
 			t, pipeData,
 			"--api-key", "string",

@@ -17,14 +17,18 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"--api-key", "string",
 			"meeting-sessions", "create",
 			"--meeting-url", "https://zoom.us/j/1234567890",
-			"--assistant", "{id: asst_fake-uuid-1234, audio_gate: full_duplex, avatar: true, dynamic_variables: {foo: string}, leave_on_end: true}",
+			"--assistant", "{id: x, audio_gate: half_duplex, avatar: true, dynamic_variables: {foo: string}, leave_on_end: true}",
 			"--barge-in=true",
 			"--bot-name", "Notetaker",
 			"--camera-image", "{base64_data: /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAACAAIBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EAB4QAAAEBwAAAAAAAAAAAAAAAAAEBgcCFic1RVNi/9oACAEBAAA/AH8hGJbWR09TxKW4vhC2qHgf/9k=, format: jpeg}",
 			"--chat-on-enter", "x",
-			"--idempotency-key", "x",
+			"--idempotency-key", "weekly-planning-2026-11-10",
 			"--join-at", "'2019-12-27T18:11:19.117Z'",
+			"--leave-policy", "{alone_seconds: 300, bot_name_keywords: [x], host_wait_seconds: 1, lobby_wait_seconds: 1, max_duration_seconds: 7200, silence_grace_seconds: 1, silence_seconds: 1}",
 			"--metadata", "{foo: bar}",
+			"--recording=true",
+			"--recording-export", "{bucket: meeting-recordings, prefix: weekly-planning}",
+			"--recording-view", "speaker_view",
 			"--speak-on-enter", "x",
 			"--summarize-on-end=true",
 			"--voice", "x",
@@ -42,8 +46,8 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"--api-key", "string",
 			"meeting-sessions", "create",
 			"--meeting-url", "https://zoom.us/j/1234567890",
-			"--assistant.id", "asst_fake-uuid-1234",
-			"--assistant.audio-gate", "full_duplex",
+			"--assistant.id", "x",
+			"--assistant.audio-gate", "half_duplex",
 			"--assistant.avatar=true",
 			"--assistant.dynamic-variables", "{foo: string}",
 			"--assistant.leave-on-end=true",
@@ -51,9 +55,20 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"--bot-name", "Notetaker",
 			"--camera-image", "{base64_data: /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAACAAIBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EAB4QAAAEBwAAAAAAAAAAAAAAAAAEBgcCFic1RVNi/9oACAEBAAA/AH8hGJbWR09TxKW4vhC2qHgf/9k=, format: jpeg}",
 			"--chat-on-enter", "x",
-			"--idempotency-key", "x",
+			"--idempotency-key", "weekly-planning-2026-11-10",
 			"--join-at", "'2019-12-27T18:11:19.117Z'",
+			"--leave-policy.alone-seconds", "300",
+			"--leave-policy.bot-name-keywords", "[x]",
+			"--leave-policy.host-wait-seconds", "1",
+			"--leave-policy.lobby-wait-seconds", "1",
+			"--leave-policy.max-duration-seconds", "7200",
+			"--leave-policy.silence-grace-seconds", "1",
+			"--leave-policy.silence-seconds", "1",
 			"--metadata", "{foo: bar}",
+			"--recording=true",
+			"--recording-export.bucket", "meeting-recordings",
+			"--recording-export.prefix", "weekly-planning",
+			"--recording-view", "speaker_view",
 			"--speak-on-enter", "x",
 			"--summarize-on-end=true",
 			"--voice", "x",
@@ -66,8 +81,8 @@ func TestMeetingSessionsCreate(t *testing.T) {
 		pipeData := []byte("" +
 			"meeting_url: https://zoom.us/j/1234567890\n" +
 			"assistant:\n" +
-			"  id: asst_fake-uuid-1234\n" +
-			"  audio_gate: full_duplex\n" +
+			"  id: x\n" +
+			"  audio_gate: half_duplex\n" +
 			"  avatar: true\n" +
 			"  dynamic_variables:\n" +
 			"    foo: string\n" +
@@ -79,10 +94,24 @@ func TestMeetingSessionsCreate(t *testing.T) {
 			"    /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAACAAIBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EAB4QAAAEBwAAAAAAAAAAAAAAAAAEBgcCFic1RVNi/9oACAEBAAA/AH8hGJbWR09TxKW4vhC2qHgf/9k=\n" +
 			"  format: jpeg\n" +
 			"chat_on_enter: x\n" +
-			"idempotency_key: x\n" +
+			"idempotency_key: weekly-planning-2026-11-10\n" +
 			"join_at: '2019-12-27T18:11:19.117Z'\n" +
+			"leave_policy:\n" +
+			"  alone_seconds: 300\n" +
+			"  bot_name_keywords:\n" +
+			"    - x\n" +
+			"  host_wait_seconds: 1\n" +
+			"  lobby_wait_seconds: 1\n" +
+			"  max_duration_seconds: 7200\n" +
+			"  silence_grace_seconds: 1\n" +
+			"  silence_seconds: 1\n" +
 			"metadata:\n" +
 			"  foo: bar\n" +
+			"recording: true\n" +
+			"recording_export:\n" +
+			"  bucket: meeting-recordings\n" +
+			"  prefix: weekly-planning\n" +
+			"recording_view: speaker_view\n" +
 			"speak_on_enter: x\n" +
 			"summarize_on_end: true\n" +
 			"voice: x\n" +
@@ -180,6 +209,18 @@ func TestMeetingSessionsRetrieveEvents(t *testing.T) {
 			"--id", "mtgsess_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
 			"--after", "0",
 			"--limit", "1",
+		)
+	})
+}
+
+func TestMeetingSessionsRetrieveRecordings(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"meeting-sessions", "retrieve-recordings",
+			"--id", "mtgsess_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
 		)
 	})
 }

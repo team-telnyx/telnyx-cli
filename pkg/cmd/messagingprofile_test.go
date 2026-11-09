@@ -23,7 +23,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
-			"--features", "{ai_opt_out_detection_enabled: true}",
+			"--features", "{ai_opt_out_detection_enabled: true, auto_chunk_long_messages: true}",
 			"--health-webhook-url", "health_webhook_url",
 			"--mm7-metadata", "{mm7_failover_webhook_url: https://backup.example.com/hooks, mm7_webhook_url: https://www.example.com/hooks}",
 			"--mms-fall-back-to-sms=true",
@@ -56,6 +56,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
 			"--features.ai-opt-out-detection-enabled=true",
+			"--features.auto-chunk-long-messages=true",
 			"--health-webhook-url", "health_webhook_url",
 			"--mm7-metadata.mm7-failover-webhook-url", "https://backup.example.com/hooks",
 			"--mm7-metadata.mm7-webhook-url", "https://www.example.com/hooks",
@@ -92,6 +93,7 @@ func TestMessagingProfilesCreate(t *testing.T) {
 			"enabled: true\n" +
 			"features:\n" +
 			"  ai_opt_out_detection_enabled: true\n" +
+			"  auto_chunk_long_messages: true\n" +
 			"health_webhook_url: health_webhook_url\n" +
 			"mm7_metadata:\n" +
 			"  mm7_failover_webhook_url: https://backup.example.com/hooks\n" +
@@ -148,7 +150,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"--daily-spend-limit", "269125115713",
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
-			"--features", "{ai_opt_out_detection_enabled: true}",
+			"--features", "{ai_opt_out_detection_enabled: true, auto_chunk_long_messages: true}",
 			"--mm7-metadata", "{mm7_failover_webhook_url: https://backup.example.com/hooks, mm7_webhook_url: https://www.example.com/hooks}",
 			"--mms-fall-back-to-sms=true",
 			"--mms-transcoding=true",
@@ -183,6 +185,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"--daily-spend-limit-enabled=true",
 			"--enabled=true",
 			"--features.ai-opt-out-detection-enabled=true",
+			"--features.auto-chunk-long-messages=true",
 			"--mm7-metadata.mm7-failover-webhook-url", "https://backup.example.com/hooks",
 			"--mm7-metadata.mm7-webhook-url", "https://www.example.com/hooks",
 			"--mms-fall-back-to-sms=true",
@@ -219,6 +222,7 @@ func TestMessagingProfilesUpdate(t *testing.T) {
 			"enabled: true\n" +
 			"features:\n" +
 			"  ai_opt_out_detection_enabled: true\n" +
+			"  auto_chunk_long_messages: true\n" +
 			"mm7_metadata:\n" +
 			"  mm7_failover_webhook_url: https://backup.example.com/hooks\n" +
 			"  mm7_webhook_url: https://www.example.com/hooks\n" +

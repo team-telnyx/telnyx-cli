@@ -16,7 +16,7 @@ import (
 
 var meetingSessionsActionsSendChat = cli.Command{
 	Name:    "send-chat",
-	Usage:   "Sends a chat message into a meeting session.",
+	Usage:   "Send chat as the bot in an active meeting. Returns 202 with data.accepted=true.\nGoogle Meet and Teams confirm sending before success; 502 chat_not_sent means\nnot sent, while chat_delivery_unknown means delivery may have occurred. Inspect\nchat and chat.sent events before retrying an uncertain send. Each request is a\nnew message and is not idempotent. Google Meet and Teams allow at most 1000 chat\nrequests per session, including an entrance message; exceeding this returns 409\ninvalid_state.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
@@ -26,7 +26,7 @@ var meetingSessionsActionsSendChat = cli.Command{
 		},
 		&requestflag.Flag[string]{
 			Name:     "text",
-			Usage:    "Chat message text to send in the meeting.",
+			Usage:    "Message text, 1–4000 characters. On Google Meet and Teams, also at most 4096 UTF-8 bytes and nonblank; control characters other than tab and line breaks are rejected. CRLF is normalized to LF.",
 			Required: true,
 			BodyPath: "text",
 		},
@@ -37,7 +37,7 @@ var meetingSessionsActionsSendChat = cli.Command{
 
 var meetingSessionsActionsSpeak = cli.Command{
 	Name:    "speak",
-	Usage:   "Sends audio / text-to-speech into a meeting session. With a Telnyx AI Assistant\nattached, the bot is a webpage-output bot: the speak audio routes through the\nassistant's output page rather than the bot mic and plays once the assistant is\nconnected -- it is not refused. If that page cannot be reached, delivery fails\nwith the 502 below, which may arrive without an error envelope, so branch on the\nstatus code before parsing a body. The assistant is designed to own the\nconversation, so prefer letting it speak or use `send_chat`. With a digital\navatar (`assistant.avatar: true`), speak is refused with 409 `invalid_state`\n(message prefix `avatar_requires_assistant_speech:`): the avatar renders only\nthe assistant's own speech.",
+	Usage:   "Sends audio / text-to-speech into a meeting session. With a Telnyx AI Assistant\nattached, wait for the assistant to connect before requesting speech. If audio\ndelivery fails, the response can be 502, which may arrive without an error\nenvelope, so branch on the status code before parsing a body. The assistant is\ndesigned to own the conversation, so prefer letting it speak or use `send_chat`.\nWith a digital avatar (`assistant.avatar: true`), speak is refused with 409\n`invalid_state` (message prefix `avatar_requires_assistant_speech:`): the avatar\nrenders only the assistant's own speech.",
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{

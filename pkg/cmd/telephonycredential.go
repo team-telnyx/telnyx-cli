@@ -183,6 +183,21 @@ var telephonyCredentialsCreateToken = cli.Command{
 	HideHelpCommand: true,
 }
 
+var telephonyCredentialsRetrieveTokenMaterial = cli.Command{
+	Name:    "retrieve-token-material",
+	Usage:   "Returns the material a server needs to mint login tokens for the credential\nlocally, with no request per token: `kid`, `tel_token` and `signing_secret`. The\nsame material is in the response of `POST /telephony_credentials`. Treat it like\nthe SIP password.",
+	Suggest: true,
+	Flags: []cli.Flag{
+		&requestflag.Flag[string]{
+			Name:      "id",
+			Required:  true,
+			PathParam: "id",
+		},
+	},
+	Action:          handleTelephonyCredentialsRetrieveTokenMaterial,
+	HideHelpCommand: true,
+}
+
 func handleTelephonyCredentialsCreate(ctx context.Context, cmd *cli.Command) error {
 	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
 	unusedArgs := cmd.Args().Slice()
@@ -449,4 +464,46 @@ func handleTelephonyCredentialsCreateToken(ctx context.Context, cmd *cli.Command
 	}
 	_, err = os.Stdout.Write(res)
 	return err
+}
+
+func handleTelephonyCredentialsRetrieveTokenMaterial(ctx context.Context, cmd *cli.Command) error {
+	client := telnyx.NewClient(getDefaultRequestOptions(cmd)...)
+	unusedArgs := cmd.Args().Slice()
+	if !cmd.IsSet("id") && len(unusedArgs) > 0 {
+		cmd.Set("id", unusedArgs[0])
+		unusedArgs = unusedArgs[1:]
+	}
+	if len(unusedArgs) > 0 {
+		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
+	}
+
+	options, err := flagOptions(
+		cmd,
+		apiquery.NestedQueryFormatBrackets,
+		apiquery.ArrayQueryFormatComma,
+		EmptyBody,
+		false,
+	)
+	if err != nil {
+		return err
+	}
+
+	var res []byte
+	options = append(options, option.WithResponseBodyInto(&res))
+	_, err = client.TelephonyCredentials.GetTokenMaterial(ctx, cmd.Value("id").(string), options...)
+	if err != nil {
+		return err
+	}
+
+	obj := gjson.ParseBytes(res)
+	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
+	transform := cmd.Root().String("transform")
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "telephony-credentials retrieve-token-material",
+		Transform:      transform,
+	})
 }
