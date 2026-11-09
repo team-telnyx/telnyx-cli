@@ -100,10 +100,40 @@ var aiToolsCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Description of the pay tool shown to the assistant so it knows when to call the tool. Not sent to the payment connector — the per-call `description` argument the assistant passes is what reaches the processor.",
 			InnerField: "description",
 		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "pay.inter-digit-timeout-millis",
+			Usage:      "Time in milliseconds to wait between consecutive DTMF digits. Omitted means the platform default (5000) applies.",
+			InnerField: "inter_digit_timeout_millis",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "pay.max-attempts",
+			Usage:      "Maximum number of attempts for each payment collection step. Omitted means the platform default (3) applies.",
+			InnerField: "max_attempts",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "pay.min-postal-code-length",
+			Usage:      "Minimum number of digits the caller must enter when collecting a credit-card billing postal code. Applies only when `postal_code` prompts the caller. Omitted means the platform default (1) applies. The maximum number of digits collected is the greater of 10 and this value. This does not validate the length of a postal code supplied directly in `postal_code`.",
+			InnerField: "min_postal_code_length",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "pay.payment-method",
 			Usage:      "Default payment method for payments processed by this tool.",
 			InnerField: "payment_method",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "pay.postal-code",
+			Usage:      "Controls billing postal code collection for credit-card payments. Set to `false` to skip the postal code prompt without supplying a postal code to the payment connector (non-US cards, e.g. Irish Eircodes). Set to `true` to prompt the caller. Supply a non-empty string, such as `\"90210\"`, to use that postal code without prompting. This option does not affect ACH debit payments or payments using an existing token.",
+			InnerField: "postal_code",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "pay.prompts",
+			Usage:      "Custom text-to-speech prompts keyed by payment collection step. The AI assistant merges its own card-number prompt into this map, matching on the same step keys.",
+			InnerField: "prompts",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "pay.timeout-millis",
+			Usage:      "Time in milliseconds to wait for DTMF input for each collection step. Omitted means the platform default (5000) applies. Increase this for slower entry, e.g. a 16-digit card number.",
+			InnerField: "timeout_millis",
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "pay.valid-card-types",
@@ -236,10 +266,40 @@ var aiToolsUpdate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Description of the pay tool shown to the assistant so it knows when to call the tool. Not sent to the payment connector — the per-call `description` argument the assistant passes is what reaches the processor.",
 			InnerField: "description",
 		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "pay.inter-digit-timeout-millis",
+			Usage:      "Time in milliseconds to wait between consecutive DTMF digits. Omitted means the platform default (5000) applies.",
+			InnerField: "inter_digit_timeout_millis",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "pay.max-attempts",
+			Usage:      "Maximum number of attempts for each payment collection step. Omitted means the platform default (3) applies.",
+			InnerField: "max_attempts",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "pay.min-postal-code-length",
+			Usage:      "Minimum number of digits the caller must enter when collecting a credit-card billing postal code. Applies only when `postal_code` prompts the caller. Omitted means the platform default (1) applies. The maximum number of digits collected is the greater of 10 and this value. This does not validate the length of a postal code supplied directly in `postal_code`.",
+			InnerField: "min_postal_code_length",
+		},
 		&requestflag.InnerFlag[string]{
 			Name:       "pay.payment-method",
 			Usage:      "Default payment method for payments processed by this tool.",
 			InnerField: "payment_method",
+		},
+		&requestflag.InnerFlag[any]{
+			Name:       "pay.postal-code",
+			Usage:      "Controls billing postal code collection for credit-card payments. Set to `false` to skip the postal code prompt without supplying a postal code to the payment connector (non-US cards, e.g. Irish Eircodes). Set to `true` to prompt the caller. Supply a non-empty string, such as `\"90210\"`, to use that postal code without prompting. This option does not affect ACH debit payments or payments using an existing token.",
+			InnerField: "postal_code",
+		},
+		&requestflag.InnerFlag[map[string]any]{
+			Name:       "pay.prompts",
+			Usage:      "Custom text-to-speech prompts keyed by payment collection step. The AI assistant merges its own card-number prompt into this map, matching on the same step keys.",
+			InnerField: "prompts",
+		},
+		&requestflag.InnerFlag[int64]{
+			Name:       "pay.timeout-millis",
+			Usage:      "Time in milliseconds to wait for DTMF input for each collection step. Omitted means the platform default (5000) applies. Increase this for slower entry, e.g. a 16-digit card number.",
+			InnerField: "timeout_millis",
 		},
 		&requestflag.InnerFlag[[]string]{
 			Name:       "pay.valid-card-types",

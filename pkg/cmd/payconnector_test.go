@@ -15,7 +15,7 @@ func TestPayConnectorsCreate(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"pay-connectors", "create",
-			"--config", "{auth_type: none, token: {}, endpoint_url: https://processor.example.com/pay, password: {}, timeout: 1, username: {}}",
+			"--config", "{auth_type: none, token: token, endpoint_url: https://processor.example.com/pay, password: password, timeout: 1, username: username}",
 			"--name", "my-payment-connector",
 			"--mode", "test",
 			"--type", "generic",
@@ -27,11 +27,11 @@ func TestPayConnectorsCreate(t *testing.T) {
 		pipeData := []byte("" +
 			"config:\n" +
 			"  auth_type: none\n" +
-			"  token: {}\n" +
+			"  token: token\n" +
 			"  endpoint_url: https://processor.example.com/pay\n" +
-			"  password: {}\n" +
+			"  password: password\n" +
 			"  timeout: 1\n" +
-			"  username: {}\n" +
+			"  username: username\n" +
 			"name: my-payment-connector\n" +
 			"mode: test\n" +
 			"type: generic\n")
@@ -63,7 +63,7 @@ func TestPayConnectorsUpdate(t *testing.T) {
 			"--api-key", "string",
 			"pay-connectors", "update",
 			"--name", "my-payment-connector",
-			"--config", "{password: P, username: P, token: {}, auth_type: basic, endpoint_url: https://processor.example.com/pay, timeout: 1}",
+			"--config", "{password: P, username: P, token: token, auth_type: basic, endpoint_url: https://processor.example.com/pay, timeout: 1}",
 			"--mode", "live",
 			"--type", "generic",
 		)
@@ -75,7 +75,7 @@ func TestPayConnectorsUpdate(t *testing.T) {
 			"config:\n" +
 			"  password: P\n" +
 			"  username: P\n" +
-			"  token: {}\n" +
+			"  token: token\n" +
 			"  auth_type: basic\n" +
 			"  endpoint_url: https://processor.example.com/pay\n" +
 			"  timeout: 1\n" +

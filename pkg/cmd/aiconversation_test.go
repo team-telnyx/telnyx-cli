@@ -153,6 +153,19 @@ func TestAIConversationsAddMessage(t *testing.T) {
 	})
 }
 
+func TestAIConversationsDeleteDelete(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
+	t.Run("regular flags", func(t *testing.T) {
+		mocktest.TestRunMockTestWithFlags(
+			t,
+			"--api-key", "string",
+			"ai:conversations", "delete-delete",
+			"--conversation-id", "conversation_id",
+			"--insight-id", "insight_id",
+		)
+	})
+}
+
 func TestAIConversationsRetrieveConversationsInsights(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {

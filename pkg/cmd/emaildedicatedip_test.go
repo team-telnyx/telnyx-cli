@@ -128,9 +128,9 @@ func TestEmailDedicatedIPsDelete(t *testing.T) {
 			"--drain=true",
 			"--force=true",
 			"--reason", "reason",
-			"--drain=true",
-			"--force=true",
-			"--reason", "No longer needed",
+			"--body-drain=true",
+			"--body-force=true",
+			"--body-reason", "No longer needed",
 		)
 	})
 

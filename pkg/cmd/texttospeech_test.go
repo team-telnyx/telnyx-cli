@@ -16,6 +16,7 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"text-to-speech", "generate-speech",
+			"--assemblyai", "{voice_id: aai-jane, audio_format: mp3, language: en, model_id: assemblyai-tts-1, sample_rate: 8000}",
 			"--aws", "{language_code: string, lexicon_names: [string], output_format: string, sample_rate: string, text_type: text}",
 			"--azure", "{api_key: string, deployment_id: string, effect: string, gender: string, language_code: en-US, output_format: audio-24khz-160kbitrate-mono-mp3, region: string, text_type: text}",
 			"--disable-cache=false",
@@ -45,6 +46,11 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 			t,
 			"--api-key", "string",
 			"text-to-speech", "generate-speech",
+			"--assemblyai.voice-id", "aai-jane",
+			"--assemblyai.audio-format", "mp3",
+			"--assemblyai.language", "en",
+			"--assemblyai.model-id", "assemblyai-tts-1",
+			"--assemblyai.sample-rate", "8000",
 			"--aws.language-code", "string",
 			"--aws.lexicon-names", "[string]",
 			"--aws.output-format", "string",
@@ -101,6 +107,12 @@ func TestTextToSpeechGenerateSpeech(t *testing.T) {
 	t.Run("piping data", func(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("" +
+			"assemblyai:\n" +
+			"  voice_id: aai-jane\n" +
+			"  audio_format: mp3\n" +
+			"  language: en\n" +
+			"  model_id: assemblyai-tts-1\n" +
+			"  sample_rate: 8000\n" +
 			"aws:\n" +
 			"  language_code: string\n" +
 			"  lexicon_names:\n" +

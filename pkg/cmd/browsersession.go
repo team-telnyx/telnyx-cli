@@ -33,7 +33,7 @@ var browserSessionsCreate = requestflag.WithInnerFlags(cli.Command{
 			Name:     "limits",
 			BodyPath: "limits",
 		},
-		&requestflag.Flag[any]{
+		&requestflag.Flag[map[string]any]{
 			Name:     "metadata",
 			Usage:    "Arbitrary key-value metadata.",
 			BodyPath: "metadata",

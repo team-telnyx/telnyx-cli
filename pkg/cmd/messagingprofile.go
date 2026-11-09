@@ -139,6 +139,11 @@ var messagingProfilesCreate = requestflag.WithInnerFlags(cli.Command{
 			Usage:      "Enables AI detection of inbound opt-out messages that do not follow the standard STOP/UNSTOP/HELP opt-out keyword pattern. When enabled, the messaging platform applies an AI model to identify non-standard opt-out requests (e.g. natural-language phrases) and treats them as opt-outs.",
 			InnerField: "ai_opt_out_detection_enabled",
 		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "features.auto-chunk-long-messages",
+			Usage:      "Enables server-side chunking of outbound SMS. When enabled, an outbound message that exceeds the maximum number of segments allowed for its destination (10 segments by default; some aggregators accept up to 25) is automatically split into multiple child messages, each within the segment limit, and sent sequentially in order. Splitting is encoding-aware: GSM-7 bodies split at 153-character boundaries and UCS-2 bodies at 134-byte (67-character) boundaries. When disabled (the default), messages exceeding the segment limit are rejected with an error.",
+			InnerField: "auto_chunk_long_messages",
+		},
 	},
 	"mm7-metadata": {
 		&requestflag.InnerFlag[string]{
@@ -348,6 +353,11 @@ var messagingProfilesUpdate = requestflag.WithInnerFlags(cli.Command{
 			Name:       "features.ai-opt-out-detection-enabled",
 			Usage:      "Enables AI detection of inbound opt-out messages that do not follow the standard STOP/UNSTOP/HELP opt-out keyword pattern. When enabled, the messaging platform applies an AI model to identify non-standard opt-out requests (e.g. natural-language phrases) and treats them as opt-outs.",
 			InnerField: "ai_opt_out_detection_enabled",
+		},
+		&requestflag.InnerFlag[bool]{
+			Name:       "features.auto-chunk-long-messages",
+			Usage:      "Enables server-side chunking of outbound SMS. When enabled, an outbound message that exceeds the maximum number of segments allowed for its destination (10 segments by default; some aggregators accept up to 25) is automatically split into multiple child messages, each within the segment limit, and sent sequentially in order. Splitting is encoding-aware: GSM-7 bodies split at 153-character boundaries and UCS-2 bodies at 134-byte (67-character) boundaries. When disabled (the default), messages exceeding the segment limit are rejected with an error.",
+			InnerField: "auto_chunk_long_messages",
 		},
 	},
 	"mm7-metadata": {
